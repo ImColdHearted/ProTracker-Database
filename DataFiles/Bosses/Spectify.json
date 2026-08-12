@@ -1,0 +1,6 @@
+{
+  "BossID": "spectify",
+  "name": "Spectify",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Spectify.png",
+  "BossCooldown": 288
+}

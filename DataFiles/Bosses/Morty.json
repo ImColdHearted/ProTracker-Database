@@ -1,0 +1,355 @@
+{
+  "bossId": "morty",
+  "name": "Morty",
+  "location": "Mt. Pyre F4",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/BossMorty.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Morty.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Johto Elite 4",
+  "difficulties": {
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 10000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Frillish",
+            "dexNumber": 592,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Sableye",
+            "dexNumber": 302,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Golett",
+            "dexNumber": 622,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Litwick",
+            "dexNumber": 607,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Pumpkaboo",
+            "dexNumber": 710,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Phantump",
+            "dexNumber": 708,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Yamask",
+            "dexNumber": 562,
+            "winStreakRequired": 3
+          }
+        ],
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Spell Tag",
+            "quantity": "1-2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Spell_Tag.png"
+          },
+          {
+            "name": "Shadow Ball",
+            "quantity": "1-3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ghost.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Mega Gengar",
+          "dexNumber": 10038,
+          "nature": "Timid",
+          "ability": "Shadow Tag",
+          "item": "Gengarite",
+          "moves": [
+            "Focus Blast",
+            "Icy Wind",
+            "Shadow Ball",
+            "Sludge Wave",
+            "Hex"
+          ]
+        },
+        {
+          "name": "Froslass",
+          "dexNumber": 478,
+          "nature": "Timid",
+          "ability": "Cursed Body",
+          "item": "Life Orb",
+          "moves": [
+            "Shadow Ball",
+            "Thunder",
+            "Ice Beam",
+            "Signal Beam"
+          ]
+        },
+        {
+          "name": "Gourgeist",
+          "dexNumber": 711,
+          "nature": "Relaxed",
+          "ability": "Pick Up",
+          "item": "Leftovers",
+          "moves": [
+            "Will-O-Wisp",
+            "Leech Seed",
+            "Seed Bomb",
+            "Rock Slide"
+          ]
+        },
+        {
+          "name": "Golurk",
+          "dexNumber": 623,
+          "nature": "Adamant",
+          "ability": "No Guard",
+          "item": "Black Belt",
+          "moves": [
+            "Dynamic Punch",
+            "Earthquake",
+            "Stone Edge",
+            "Ice Punch"
+          ]
+        },
+        {
+          "name": "Cofagrigus",
+          "dexNumber": 563,
+          "nature": "Bold",
+          "ability": "Mummy",
+          "item": "Leftovers",
+          "moves": [
+            "Will-O-Wisp",
+            "Pain Split",
+            "Shadow Ball",
+            "Protect"
+          ]
+        },
+        {
+          "name": "Giratina",
+          "dexNumber": 487,
+          "nature": "Quiet",
+          "ability": "Pressure",
+          "item": "Choice Specs",
+          "moves": [
+            "Shadow Ball",
+            "Earth Power",
+            "Aura Sphere",
+            "Draco Meteor"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 50000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Frillish",
+            "dexNumber": 592,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Sableye",
+            "dexNumber": 302,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Golett",
+            "dexNumber": 622,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Litwick",
+            "dexNumber": 607,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Pumpkaboo",
+            "dexNumber": 710,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Phantump",
+            "dexNumber": 708,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Yamask",
+            "dexNumber": 562,
+            "winStreakRequired": 3
+          }
+        ],
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Spell Tag",
+            "quantity": "1-2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Spell_Tag.png"
+          },
+          {
+            "name": "Shadow Ball",
+            "quantity": "1-3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ghost.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Banettite",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Banettite.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Mega Gengar",
+          "dexNumber": 10038,
+          "nature": "Timid",
+          "ability": "Shadow Tag",
+          "item": "Gengarite",
+          "moves": [
+            "Focus Blast",
+            "Icy Wind",
+            "Shadow Ball",
+            "Sludge Wave",
+            "Hex"
+          ]
+        },
+        {
+          "name": "Froslass",
+          "dexNumber": 478,
+          "nature": "Timid",
+          "ability": "Cursed Body",
+          "item": "Life Orb",
+          "moves": [
+            "Shadow Ball",
+            "Thunder",
+            "Ice Beam",
+            "Signal Beam"
+          ]
+        },
+        {
+          "name": "Gourgeist",
+          "dexNumber": 711,
+          "nature": "Relaxed",
+          "ability": "Pick Up",
+          "item": "Leftovers",
+          "moves": [
+            "Will-O-Wisp",
+            "Leech Seed",
+            "Seed Bomb",
+            "Rock Slide"
+          ]
+        },
+        {
+          "name": "Golurk",
+          "dexNumber": 623,
+          "nature": "Adamant",
+          "ability": "No Guard",
+          "item": "Black Belt",
+          "moves": [
+            "Dynamic Punch",
+            "Earthquake",
+            "Stone Edge",
+            "Ice Punch"
+          ]
+        },
+        {
+          "name": "Cofagrigus",
+          "dexNumber": 563,
+          "nature": "Bold",
+          "ability": "Mummy",
+          "item": "Leftovers",
+          "moves": [
+            "Will-O-Wisp",
+            "Pain Split",
+            "Shadow Ball",
+            "Protect"
+          ]
+        },
+        {
+          "name": "Giratina",
+          "dexNumber": 487,
+          "nature": "Quiet",
+          "ability": "Pressure",
+          "item": "Choice Specs",
+          "moves": [
+            "Shadow Ball",
+            "Earth Power",
+            "Aura Sphere",
+            "Draco Meteor"
+          ]
+        }
+      ]
+    }
+  }
+}

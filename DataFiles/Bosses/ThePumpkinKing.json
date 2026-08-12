@@ -1,0 +1,6 @@
+{
+  "BossID": "thepumpking",
+  "name": "The Pumpkin King",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/The_Pumpkin_King.png",
+  "BossCooldown": 288
+}

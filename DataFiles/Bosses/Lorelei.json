@@ -1,0 +1,6 @@
+{
+  "BossID": "lorelei",
+  "name": "Lorelei",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Lorelei.png",
+  "BossCooldown": 288
+}

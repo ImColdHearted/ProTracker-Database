@@ -1,0 +1,6 @@
+{
+  "BossID": "ltsurge",
+  "name": "Lt. Surge",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Lt._Surge.png",
+  "BossCooldown": 288
+}

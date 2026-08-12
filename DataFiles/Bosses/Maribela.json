@@ -1,0 +1,6 @@
+{
+  "BossID": "maribela",
+  "name": "Maribela",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Maribela.png",
+  "BossCooldown": 288
+}
