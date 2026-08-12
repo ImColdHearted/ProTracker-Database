@@ -1,0 +1,1330 @@
+﻿pokemonId,dexNumber,name,speciesName,identifier,formIdentifier,isDefaultForm,sprite,ocrAliases
+1,1,Bulbasaur,Bulbasaur,bulbasaur,,True,1.png,Bulbasaur | bulbasaur
+2,2,Ivysaur,Ivysaur,ivysaur,,True,2.png,Ivysaur | ivysaur
+3,3,Venusaur,Venusaur,venusaur,,True,3.png,Venusaur | venusaur
+4,4,Charmander,Charmander,charmander,,True,4.png,Charmander | charmander
+5,5,Charmeleon,Charmeleon,charmeleon,,True,5.png,Charmeleon | charmeleon
+6,6,Charizard,Charizard,charizard,,True,6.png,Charizard | charizard
+7,7,Squirtle,Squirtle,squirtle,,True,7.png,Squirtle | squirtle
+8,8,Wartortle,Wartortle,wartortle,,True,8.png,Wartortle | wartortle
+9,9,Blastoise,Blastoise,blastoise,,True,9.png,Blastoise | blastoise
+10,10,Caterpie,Caterpie,caterpie,,True,10.png,Caterpie | caterpie
+11,11,Metapod,Metapod,metapod,,True,11.png,Metapod | metapod
+12,12,Butterfree,Butterfree,butterfree,,True,12.png,Butterfree | butterfree
+13,13,Weedle,Weedle,weedle,,True,13.png,Weedle | weedle
+14,14,Kakuna,Kakuna,kakuna,,True,14.png,Kakuna | kakuna
+15,15,Beedrill,Beedrill,beedrill,,True,15.png,Beedrill | beedrill
+16,16,Pidgey,Pidgey,pidgey,,True,16.png,Pidgey | pidgey
+17,17,Pidgeotto,Pidgeotto,pidgeotto,,True,17.png,Pidgeotto | pidgeotto
+18,18,Pidgeot,Pidgeot,pidgeot,,True,18.png,Pidgeot | pidgeot
+19,19,Rattata,Rattata,rattata,,True,19.png,Rattata | rattata
+20,20,Raticate,Raticate,raticate,,True,20.png,Raticate | raticate
+21,21,Spearow,Spearow,spearow,,True,21.png,Spearow | spearow
+22,22,Fearow,Fearow,fearow,,True,22.png,Fearow | fearow
+23,23,Ekans,Ekans,ekans,,True,23.png,Ekans | ekans
+24,24,Arbok,Arbok,arbok,,True,24.png,Arbok | arbok
+25,25,Pikachu,Pikachu,pikachu,,True,25.png,Pikachu | pikachu
+26,26,Raichu,Raichu,raichu,,True,26.png,Raichu | raichu
+27,27,Sandshrew,Sandshrew,sandshrew,,True,27.png,Sandshrew | sandshrew
+28,28,Sandslash,Sandslash,sandslash,,True,28.png,Sandslash | sandslash
+29,29,Nidoran♀,Nidoran♀,nidoran-f,,True,29.png,Nidoran♀ | nidoran f | nidoran-f
+30,30,Nidorina,Nidorina,nidorina,,True,30.png,Nidorina | nidorina
+31,31,Nidoqueen,Nidoqueen,nidoqueen,,True,31.png,Nidoqueen | nidoqueen
+32,32,Nidoran♂,Nidoran♂,nidoran-m,,True,32.png,Nidoran♂ | nidoran m | nidoran-m
+33,33,Nidorino,Nidorino,nidorino,,True,33.png,Nidorino | nidorino
+34,34,Nidoking,Nidoking,nidoking,,True,34.png,Nidoking | nidoking
+35,35,Clefairy,Clefairy,clefairy,,True,35.png,Clefairy | clefairy
+36,36,Clefable,Clefable,clefable,,True,36.png,Clefable | clefable
+37,37,Vulpix,Vulpix,vulpix,,True,37.png,Vulpix | vulpix
+38,38,Ninetales,Ninetales,ninetales,,True,38.png,Ninetales | ninetales
+39,39,Jigglypuff,Jigglypuff,jigglypuff,,True,39.png,Jigglypuff | jigglypuff
+40,40,Wigglytuff,Wigglytuff,wigglytuff,,True,40.png,Wigglytuff | wigglytuff
+41,41,Zubat,Zubat,zubat,,True,41.png,Zubat | zubat
+42,42,Golbat,Golbat,golbat,,True,42.png,Golbat | golbat
+43,43,Oddish,Oddish,oddish,,True,43.png,Oddish | oddish
+44,44,Gloom,Gloom,gloom,,True,44.png,Gloom | gloom
+45,45,Vileplume,Vileplume,vileplume,,True,45.png,Vileplume | vileplume
+46,46,Paras,Paras,paras,,True,46.png,Paras | paras
+47,47,Parasect,Parasect,parasect,,True,47.png,Parasect | parasect
+48,48,Venonat,Venonat,venonat,,True,48.png,Venonat | venonat
+49,49,Venomoth,Venomoth,venomoth,,True,49.png,Venomoth | venomoth
+50,50,Diglett,Diglett,diglett,,True,50.png,Diglett | diglett
+51,51,Dugtrio,Dugtrio,dugtrio,,True,51.png,Dugtrio | dugtrio
+52,52,Meowth,Meowth,meowth,,True,52.png,Meowth | meowth
+53,53,Persian,Persian,persian,,True,53.png,Persian | persian
+54,54,Psyduck,Psyduck,psyduck,,True,54.png,Psyduck | psyduck
+55,55,Golduck,Golduck,golduck,,True,55.png,Golduck | golduck
+56,56,Mankey,Mankey,mankey,,True,56.png,Mankey | mankey
+57,57,Primeape,Primeape,primeape,,True,57.png,Primeape | primeape
+58,58,Growlithe,Growlithe,growlithe,,True,58.png,Growlithe | growlithe
+59,59,Arcanine,Arcanine,arcanine,,True,59.png,Arcanine | arcanine
+60,60,Poliwag,Poliwag,poliwag,,True,60.png,Poliwag | poliwag
+61,61,Poliwhirl,Poliwhirl,poliwhirl,,True,61.png,Poliwhirl | poliwhirl
+62,62,Poliwrath,Poliwrath,poliwrath,,True,62.png,Poliwrath | poliwrath
+63,63,Abra,Abra,abra,,True,63.png,Abra | abra
+64,64,Kadabra,Kadabra,kadabra,,True,64.png,Kadabra | kadabra
+65,65,Alakazam,Alakazam,alakazam,,True,65.png,Alakazam | alakazam
+66,66,Machop,Machop,machop,,True,66.png,Machop | machop
+67,67,Machoke,Machoke,machoke,,True,67.png,Machoke | machoke
+68,68,Machamp,Machamp,machamp,,True,68.png,Machamp | machamp
+69,69,Bellsprout,Bellsprout,bellsprout,,True,69.png,Bellsprout | bellsprout
+70,70,Weepinbell,Weepinbell,weepinbell,,True,70.png,Weepinbell | weepinbell
+71,71,Victreebel,Victreebel,victreebel,,True,71.png,Victreebel | victreebel
+72,72,Tentacool,Tentacool,tentacool,,True,72.png,Tentacool | tentacool
+73,73,Tentacruel,Tentacruel,tentacruel,,True,73.png,Tentacruel | tentacruel
+74,74,Geodude,Geodude,geodude,,True,74.png,Geodude | geodude
+75,75,Graveler,Graveler,graveler,,True,75.png,Graveler | graveler
+76,76,Golem,Golem,golem,,True,76.png,Golem | golem
+77,77,Ponyta,Ponyta,ponyta,,True,77.png,Ponyta | ponyta
+78,78,Rapidash,Rapidash,rapidash,,True,78.png,Rapidash | rapidash
+79,79,Slowpoke,Slowpoke,slowpoke,,True,79.png,Slowpoke | slowpoke
+80,80,Slowbro,Slowbro,slowbro,,True,80.png,Slowbro | slowbro
+81,81,Magnemite,Magnemite,magnemite,,True,81.png,Magnemite | magnemite
+82,82,Magneton,Magneton,magneton,,True,82.png,Magneton | magneton
+83,83,Farfetch’d,Farfetch’d,farfetchd,,True,83.png,Farfetch’d | farfetchd
+84,84,Doduo,Doduo,doduo,,True,84.png,Doduo | doduo
+85,85,Dodrio,Dodrio,dodrio,,True,85.png,Dodrio | dodrio
+86,86,Seel,Seel,seel,,True,86.png,Seel | seel
+87,87,Dewgong,Dewgong,dewgong,,True,87.png,Dewgong | dewgong
+88,88,Grimer,Grimer,grimer,,True,88.png,Grimer | grimer
+89,89,Muk,Muk,muk,,True,89.png,Muk | muk
+90,90,Shellder,Shellder,shellder,,True,90.png,Shellder | shellder
+91,91,Cloyster,Cloyster,cloyster,,True,91.png,Cloyster | cloyster
+92,92,Gastly,Gastly,gastly,,True,92.png,Gastly | gastly
+93,93,Haunter,Haunter,haunter,,True,93.png,Haunter | haunter
+94,94,Gengar,Gengar,gengar,,True,94.png,Gengar | gengar
+95,95,Onix,Onix,onix,,True,95.png,Onix | onix
+96,96,Drowzee,Drowzee,drowzee,,True,96.png,Drowzee | drowzee
+97,97,Hypno,Hypno,hypno,,True,97.png,Hypno | hypno
+98,98,Krabby,Krabby,krabby,,True,98.png,Krabby | krabby
+99,99,Kingler,Kingler,kingler,,True,99.png,Kingler | kingler
+100,100,Voltorb,Voltorb,voltorb,,True,100.png,Voltorb | voltorb
+101,101,Electrode,Electrode,electrode,,True,101.png,Electrode | electrode
+102,102,Exeggcute,Exeggcute,exeggcute,,True,102.png,Exeggcute | exeggcute
+103,103,Exeggutor,Exeggutor,exeggutor,,True,103.png,Exeggutor | exeggutor
+104,104,Cubone,Cubone,cubone,,True,104.png,Cubone | cubone
+105,105,Marowak,Marowak,marowak,,True,105.png,Marowak | marowak
+106,106,Hitmonlee,Hitmonlee,hitmonlee,,True,106.png,Hitmonlee | hitmonlee
+107,107,Hitmonchan,Hitmonchan,hitmonchan,,True,107.png,Hitmonchan | hitmonchan
+108,108,Lickitung,Lickitung,lickitung,,True,108.png,Lickitung | lickitung
+109,109,Koffing,Koffing,koffing,,True,109.png,Koffing | koffing
+110,110,Weezing,Weezing,weezing,,True,110.png,Weezing | weezing
+111,111,Rhyhorn,Rhyhorn,rhyhorn,,True,111.png,Rhyhorn | rhyhorn
+112,112,Rhydon,Rhydon,rhydon,,True,112.png,Rhydon | rhydon
+113,113,Chansey,Chansey,chansey,,True,113.png,Chansey | chansey
+114,114,Tangela,Tangela,tangela,,True,114.png,Tangela | tangela
+115,115,Kangaskhan,Kangaskhan,kangaskhan,,True,115.png,Kangaskhan | kangaskhan
+116,116,Horsea,Horsea,horsea,,True,116.png,Horsea | horsea
+117,117,Seadra,Seadra,seadra,,True,117.png,Seadra | seadra
+118,118,Goldeen,Goldeen,goldeen,,True,118.png,Goldeen | goldeen
+119,119,Seaking,Seaking,seaking,,True,119.png,Seaking | seaking
+120,120,Staryu,Staryu,staryu,,True,120.png,Staryu | staryu
+121,121,Starmie,Starmie,starmie,,True,121.png,Starmie | starmie
+122,122,Mr. Mime,Mr. Mime,mr-mime,,True,122.png,Mr. Mime | mr mime | mr-mime
+123,123,Scyther,Scyther,scyther,,True,123.png,Scyther | scyther
+124,124,Jynx,Jynx,jynx,,True,124.png,Jynx | jynx
+125,125,Electabuzz,Electabuzz,electabuzz,,True,125.png,Electabuzz | electabuzz
+126,126,Magmar,Magmar,magmar,,True,126.png,Magmar | magmar
+127,127,Pinsir,Pinsir,pinsir,,True,127.png,Pinsir | pinsir
+128,128,Tauros,Tauros,tauros,,True,128.png,Tauros | tauros
+129,129,Magikarp,Magikarp,magikarp,,True,129.png,Magikarp | magikarp
+130,130,Gyarados,Gyarados,gyarados,,True,130.png,Gyarados | gyarados
+131,131,Lapras,Lapras,lapras,,True,131.png,Lapras | lapras
+132,132,Ditto,Ditto,ditto,,True,132.png,Ditto | ditto
+133,133,Eevee,Eevee,eevee,,True,133.png,Eevee | eevee
+134,134,Vaporeon,Vaporeon,vaporeon,,True,134.png,Vaporeon | vaporeon
+135,135,Jolteon,Jolteon,jolteon,,True,135.png,Jolteon | jolteon
+136,136,Flareon,Flareon,flareon,,True,136.png,Flareon | flareon
+137,137,Porygon,Porygon,porygon,,True,137.png,Porygon | porygon
+138,138,Omanyte,Omanyte,omanyte,,True,138.png,Omanyte | omanyte
+139,139,Omastar,Omastar,omastar,,True,139.png,Omastar | omastar
+140,140,Kabuto,Kabuto,kabuto,,True,140.png,Kabuto | kabuto
+141,141,Kabutops,Kabutops,kabutops,,True,141.png,Kabutops | kabutops
+142,142,Aerodactyl,Aerodactyl,aerodactyl,,True,142.png,Aerodactyl | aerodactyl
+143,143,Snorlax,Snorlax,snorlax,,True,143.png,Snorlax | snorlax
+144,144,Articuno,Articuno,articuno,,True,144.png,Articuno | articuno
+145,145,Zapdos,Zapdos,zapdos,,True,145.png,Zapdos | zapdos
+146,146,Moltres,Moltres,moltres,,True,146.png,Moltres | moltres
+147,147,Dratini,Dratini,dratini,,True,147.png,Dratini | dratini
+148,148,Dragonair,Dragonair,dragonair,,True,148.png,Dragonair | dragonair
+149,149,Dragonite,Dragonite,dragonite,,True,149.png,Dragonite | dragonite
+150,150,Mewtwo,Mewtwo,mewtwo,,True,150.png,Mewtwo | mewtwo
+151,151,Mew,Mew,mew,,True,151.png,Mew | mew
+152,152,Chikorita,Chikorita,chikorita,,True,152.png,Chikorita | chikorita
+153,153,Bayleef,Bayleef,bayleef,,True,153.png,Bayleef | bayleef
+154,154,Meganium,Meganium,meganium,,True,154.png,Meganium | meganium
+155,155,Cyndaquil,Cyndaquil,cyndaquil,,True,155.png,Cyndaquil | cyndaquil
+156,156,Quilava,Quilava,quilava,,True,156.png,Quilava | quilava
+157,157,Typhlosion,Typhlosion,typhlosion,,True,157.png,Typhlosion | typhlosion
+158,158,Totodile,Totodile,totodile,,True,158.png,Totodile | totodile
+159,159,Croconaw,Croconaw,croconaw,,True,159.png,Croconaw | croconaw
+160,160,Feraligatr,Feraligatr,feraligatr,,True,160.png,Feraligatr | feraligatr
+161,161,Sentret,Sentret,sentret,,True,161.png,Sentret | sentret
+162,162,Furret,Furret,furret,,True,162.png,Furret | furret
+163,163,Hoothoot,Hoothoot,hoothoot,,True,163.png,Hoothoot | hoothoot
+164,164,Noctowl,Noctowl,noctowl,,True,164.png,Noctowl | noctowl
+165,165,Ledyba,Ledyba,ledyba,,True,165.png,Ledyba | ledyba
+166,166,Ledian,Ledian,ledian,,True,166.png,Ledian | ledian
+167,167,Spinarak,Spinarak,spinarak,,True,167.png,Spinarak | spinarak
+168,168,Ariados,Ariados,ariados,,True,168.png,Ariados | ariados
+169,169,Crobat,Crobat,crobat,,True,169.png,Crobat | crobat
+170,170,Chinchou,Chinchou,chinchou,,True,170.png,Chinchou | chinchou
+171,171,Lanturn,Lanturn,lanturn,,True,171.png,Lanturn | lanturn
+172,172,Pichu,Pichu,pichu,,True,172.png,Pichu | pichu
+173,173,Cleffa,Cleffa,cleffa,,True,173.png,Cleffa | cleffa
+174,174,Igglybuff,Igglybuff,igglybuff,,True,174.png,Igglybuff | igglybuff
+175,175,Togepi,Togepi,togepi,,True,175.png,Togepi | togepi
+176,176,Togetic,Togetic,togetic,,True,176.png,Togetic | togetic
+177,177,Natu,Natu,natu,,True,177.png,Natu | natu
+178,178,Xatu,Xatu,xatu,,True,178.png,Xatu | xatu
+179,179,Mareep,Mareep,mareep,,True,179.png,Mareep | mareep
+180,180,Flaaffy,Flaaffy,flaaffy,,True,180.png,Flaaffy | flaaffy
+181,181,Ampharos,Ampharos,ampharos,,True,181.png,Ampharos | ampharos
+182,182,Bellossom,Bellossom,bellossom,,True,182.png,Bellossom | bellossom
+183,183,Marill,Marill,marill,,True,183.png,Marill | marill
+184,184,Azumarill,Azumarill,azumarill,,True,184.png,Azumarill | azumarill
+185,185,Sudowoodo,Sudowoodo,sudowoodo,,True,185.png,Sudowoodo | sudowoodo
+186,186,Politoed,Politoed,politoed,,True,186.png,Politoed | politoed
+187,187,Hoppip,Hoppip,hoppip,,True,187.png,Hoppip | hoppip
+188,188,Skiploom,Skiploom,skiploom,,True,188.png,Skiploom | skiploom
+189,189,Jumpluff,Jumpluff,jumpluff,,True,189.png,Jumpluff | jumpluff
+190,190,Aipom,Aipom,aipom,,True,190.png,Aipom | aipom
+191,191,Sunkern,Sunkern,sunkern,,True,191.png,Sunkern | sunkern
+192,192,Sunflora,Sunflora,sunflora,,True,192.png,Sunflora | sunflora
+193,193,Yanma,Yanma,yanma,,True,193.png,Yanma | yanma
+194,194,Wooper,Wooper,wooper,,True,194.png,Wooper | wooper
+195,195,Quagsire,Quagsire,quagsire,,True,195.png,Quagsire | quagsire
+196,196,Espeon,Espeon,espeon,,True,196.png,Espeon | espeon
+197,197,Umbreon,Umbreon,umbreon,,True,197.png,Umbreon | umbreon
+198,198,Murkrow,Murkrow,murkrow,,True,198.png,Murkrow | murkrow
+199,199,Slowking,Slowking,slowking,,True,199.png,Slowking | slowking
+200,200,Misdreavus,Misdreavus,misdreavus,,True,200.png,Misdreavus | misdreavus
+201,201,Unown,Unown,unown,,True,201.png,Unown | unown
+202,202,Wobbuffet,Wobbuffet,wobbuffet,,True,202.png,Wobbuffet | wobbuffet
+203,203,Girafarig,Girafarig,girafarig,,True,203.png,Girafarig | girafarig
+204,204,Pineco,Pineco,pineco,,True,204.png,Pineco | pineco
+205,205,Forretress,Forretress,forretress,,True,205.png,Forretress | forretress
+206,206,Dunsparce,Dunsparce,dunsparce,,True,206.png,Dunsparce | dunsparce
+207,207,Gligar,Gligar,gligar,,True,207.png,Gligar | gligar
+208,208,Steelix,Steelix,steelix,,True,208.png,Steelix | steelix
+209,209,Snubbull,Snubbull,snubbull,,True,209.png,Snubbull | snubbull
+210,210,Granbull,Granbull,granbull,,True,210.png,Granbull | granbull
+211,211,Qwilfish,Qwilfish,qwilfish,,True,211.png,Qwilfish | qwilfish
+212,212,Scizor,Scizor,scizor,,True,212.png,Scizor | scizor
+213,213,Shuckle,Shuckle,shuckle,,True,213.png,Shuckle | shuckle
+214,214,Heracross,Heracross,heracross,,True,214.png,Heracross | heracross
+215,215,Sneasel,Sneasel,sneasel,,True,215.png,Sneasel | sneasel
+216,216,Teddiursa,Teddiursa,teddiursa,,True,216.png,Teddiursa | teddiursa
+217,217,Ursaring,Ursaring,ursaring,,True,217.png,Ursaring | ursaring
+218,218,Slugma,Slugma,slugma,,True,218.png,Slugma | slugma
+219,219,Magcargo,Magcargo,magcargo,,True,219.png,Magcargo | magcargo
+220,220,Swinub,Swinub,swinub,,True,220.png,Swinub | swinub
+221,221,Piloswine,Piloswine,piloswine,,True,221.png,Piloswine | piloswine
+222,222,Corsola,Corsola,corsola,,True,222.png,Corsola | corsola
+223,223,Remoraid,Remoraid,remoraid,,True,223.png,Remoraid | remoraid
+224,224,Octillery,Octillery,octillery,,True,224.png,Octillery | octillery
+225,225,Delibird,Delibird,delibird,,True,225.png,Delibird | delibird
+226,226,Mantine,Mantine,mantine,,True,226.png,Mantine | mantine
+227,227,Skarmory,Skarmory,skarmory,,True,227.png,Skarmory | skarmory
+228,228,Houndour,Houndour,houndour,,True,228.png,Houndour | houndour
+229,229,Houndoom,Houndoom,houndoom,,True,229.png,Houndoom | houndoom
+230,230,Kingdra,Kingdra,kingdra,,True,230.png,Kingdra | kingdra
+231,231,Phanpy,Phanpy,phanpy,,True,231.png,Phanpy | phanpy
+232,232,Donphan,Donphan,donphan,,True,232.png,Donphan | donphan
+233,233,Porygon2,Porygon2,porygon2,,True,233.png,Porygon2 | porygon2
+234,234,Stantler,Stantler,stantler,,True,234.png,Stantler | stantler
+235,235,Smeargle,Smeargle,smeargle,,True,235.png,Smeargle | smeargle
+236,236,Tyrogue,Tyrogue,tyrogue,,True,236.png,Tyrogue | tyrogue
+237,237,Hitmontop,Hitmontop,hitmontop,,True,237.png,Hitmontop | hitmontop
+238,238,Smoochum,Smoochum,smoochum,,True,238.png,Smoochum | smoochum
+239,239,Elekid,Elekid,elekid,,True,239.png,Elekid | elekid
+240,240,Magby,Magby,magby,,True,240.png,Magby | magby
+241,241,Miltank,Miltank,miltank,,True,241.png,Miltank | miltank
+242,242,Blissey,Blissey,blissey,,True,242.png,Blissey | blissey
+243,243,Raikou,Raikou,raikou,,True,243.png,Raikou | raikou
+244,244,Entei,Entei,entei,,True,244.png,Entei | entei
+245,245,Suicune,Suicune,suicune,,True,245.png,Suicune | suicune
+246,246,Larvitar,Larvitar,larvitar,,True,246.png,Larvitar | larvitar
+247,247,Pupitar,Pupitar,pupitar,,True,247.png,Pupitar | pupitar
+248,248,Tyranitar,Tyranitar,tyranitar,,True,248.png,Tyranitar | tyranitar
+249,249,Lugia,Lugia,lugia,,True,249.png,Lugia | lugia
+250,250,Ho-Oh,Ho-Oh,ho-oh,,True,250.png,Ho Oh | Ho-Oh | ho oh | ho-oh
+251,251,Celebi,Celebi,celebi,,True,251.png,Celebi | celebi
+252,252,Treecko,Treecko,treecko,,True,252.png,Treecko | treecko
+253,253,Grovyle,Grovyle,grovyle,,True,253.png,Grovyle | grovyle
+254,254,Sceptile,Sceptile,sceptile,,True,254.png,Sceptile | sceptile
+255,255,Torchic,Torchic,torchic,,True,255.png,Torchic | torchic
+256,256,Combusken,Combusken,combusken,,True,256.png,Combusken | combusken
+257,257,Blaziken,Blaziken,blaziken,,True,257.png,Blaziken | blaziken
+258,258,Mudkip,Mudkip,mudkip,,True,258.png,Mudkip | mudkip
+259,259,Marshtomp,Marshtomp,marshtomp,,True,259.png,Marshtomp | marshtomp
+260,260,Swampert,Swampert,swampert,,True,260.png,Swampert | swampert
+261,261,Poochyena,Poochyena,poochyena,,True,261.png,Poochyena | poochyena
+262,262,Mightyena,Mightyena,mightyena,,True,262.png,Mightyena | mightyena
+263,263,Zigzagoon,Zigzagoon,zigzagoon,,True,263.png,Zigzagoon | zigzagoon
+264,264,Linoone,Linoone,linoone,,True,264.png,Linoone | linoone
+265,265,Wurmple,Wurmple,wurmple,,True,265.png,Wurmple | wurmple
+266,266,Silcoon,Silcoon,silcoon,,True,266.png,Silcoon | silcoon
+267,267,Beautifly,Beautifly,beautifly,,True,267.png,Beautifly | beautifly
+268,268,Cascoon,Cascoon,cascoon,,True,268.png,Cascoon | cascoon
+269,269,Dustox,Dustox,dustox,,True,269.png,Dustox | dustox
+270,270,Lotad,Lotad,lotad,,True,270.png,Lotad | lotad
+271,271,Lombre,Lombre,lombre,,True,271.png,Lombre | lombre
+272,272,Ludicolo,Ludicolo,ludicolo,,True,272.png,Ludicolo | ludicolo
+273,273,Seedot,Seedot,seedot,,True,273.png,Seedot | seedot
+274,274,Nuzleaf,Nuzleaf,nuzleaf,,True,274.png,Nuzleaf | nuzleaf
+275,275,Shiftry,Shiftry,shiftry,,True,275.png,Shiftry | shiftry
+276,276,Taillow,Taillow,taillow,,True,276.png,Taillow | taillow
+277,277,Swellow,Swellow,swellow,,True,277.png,Swellow | swellow
+278,278,Wingull,Wingull,wingull,,True,278.png,Wingull | wingull
+279,279,Pelipper,Pelipper,pelipper,,True,279.png,Pelipper | pelipper
+280,280,Ralts,Ralts,ralts,,True,280.png,Ralts | ralts
+281,281,Kirlia,Kirlia,kirlia,,True,281.png,Kirlia | kirlia
+282,282,Gardevoir,Gardevoir,gardevoir,,True,282.png,Gardevoir | gardevoir
+283,283,Surskit,Surskit,surskit,,True,283.png,Surskit | surskit
+284,284,Masquerain,Masquerain,masquerain,,True,284.png,Masquerain | masquerain
+285,285,Shroomish,Shroomish,shroomish,,True,285.png,Shroomish | shroomish
+286,286,Breloom,Breloom,breloom,,True,286.png,Breloom | breloom
+287,287,Slakoth,Slakoth,slakoth,,True,287.png,Slakoth | slakoth
+288,288,Vigoroth,Vigoroth,vigoroth,,True,288.png,Vigoroth | vigoroth
+289,289,Slaking,Slaking,slaking,,True,289.png,Slaking | slaking
+290,290,Nincada,Nincada,nincada,,True,290.png,Nincada | nincada
+291,291,Ninjask,Ninjask,ninjask,,True,291.png,Ninjask | ninjask
+292,292,Shedinja,Shedinja,shedinja,,True,292.png,Shedinja | shedinja
+293,293,Whismur,Whismur,whismur,,True,293.png,Whismur | whismur
+294,294,Loudred,Loudred,loudred,,True,294.png,Loudred | loudred
+295,295,Exploud,Exploud,exploud,,True,295.png,Exploud | exploud
+296,296,Makuhita,Makuhita,makuhita,,True,296.png,Makuhita | makuhita
+297,297,Hariyama,Hariyama,hariyama,,True,297.png,Hariyama | hariyama
+298,298,Azurill,Azurill,azurill,,True,298.png,Azurill | azurill
+299,299,Nosepass,Nosepass,nosepass,,True,299.png,Nosepass | nosepass
+300,300,Skitty,Skitty,skitty,,True,300.png,Skitty | skitty
+301,301,Delcatty,Delcatty,delcatty,,True,301.png,Delcatty | delcatty
+302,302,Sableye,Sableye,sableye,,True,302.png,Sableye | sableye
+303,303,Mawile,Mawile,mawile,,True,303.png,Mawile | mawile
+304,304,Aron,Aron,aron,,True,304.png,Aron | aron
+305,305,Lairon,Lairon,lairon,,True,305.png,Lairon | lairon
+306,306,Aggron,Aggron,aggron,,True,306.png,Aggron | aggron
+307,307,Meditite,Meditite,meditite,,True,307.png,Meditite | meditite
+308,308,Medicham,Medicham,medicham,,True,308.png,Medicham | medicham
+309,309,Electrike,Electrike,electrike,,True,309.png,Electrike | electrike
+310,310,Manectric,Manectric,manectric,,True,310.png,Manectric | manectric
+311,311,Plusle,Plusle,plusle,,True,311.png,Plusle | plusle
+312,312,Minun,Minun,minun,,True,312.png,Minun | minun
+313,313,Volbeat,Volbeat,volbeat,,True,313.png,Volbeat | volbeat
+314,314,Illumise,Illumise,illumise,,True,314.png,Illumise | illumise
+315,315,Roselia,Roselia,roselia,,True,315.png,Roselia | roselia
+316,316,Gulpin,Gulpin,gulpin,,True,316.png,Gulpin | gulpin
+317,317,Swalot,Swalot,swalot,,True,317.png,Swalot | swalot
+318,318,Carvanha,Carvanha,carvanha,,True,318.png,Carvanha | carvanha
+319,319,Sharpedo,Sharpedo,sharpedo,,True,319.png,Sharpedo | sharpedo
+320,320,Wailmer,Wailmer,wailmer,,True,320.png,Wailmer | wailmer
+321,321,Wailord,Wailord,wailord,,True,321.png,Wailord | wailord
+322,322,Numel,Numel,numel,,True,322.png,Numel | numel
+323,323,Camerupt,Camerupt,camerupt,,True,323.png,Camerupt | camerupt
+324,324,Torkoal,Torkoal,torkoal,,True,324.png,Torkoal | torkoal
+325,325,Spoink,Spoink,spoink,,True,325.png,Spoink | spoink
+326,326,Grumpig,Grumpig,grumpig,,True,326.png,Grumpig | grumpig
+327,327,Spinda,Spinda,spinda,,True,327.png,Spinda | spinda
+328,328,Trapinch,Trapinch,trapinch,,True,328.png,Trapinch | trapinch
+329,329,Vibrava,Vibrava,vibrava,,True,329.png,Vibrava | vibrava
+330,330,Flygon,Flygon,flygon,,True,330.png,Flygon | flygon
+331,331,Cacnea,Cacnea,cacnea,,True,331.png,Cacnea | cacnea
+332,332,Cacturne,Cacturne,cacturne,,True,332.png,Cacturne | cacturne
+333,333,Swablu,Swablu,swablu,,True,333.png,Swablu | swablu
+334,334,Altaria,Altaria,altaria,,True,334.png,Altaria | altaria
+335,335,Zangoose,Zangoose,zangoose,,True,335.png,Zangoose | zangoose
+336,336,Seviper,Seviper,seviper,,True,336.png,Seviper | seviper
+337,337,Lunatone,Lunatone,lunatone,,True,337.png,Lunatone | lunatone
+338,338,Solrock,Solrock,solrock,,True,338.png,Solrock | solrock
+339,339,Barboach,Barboach,barboach,,True,339.png,Barboach | barboach
+340,340,Whiscash,Whiscash,whiscash,,True,340.png,Whiscash | whiscash
+341,341,Corphish,Corphish,corphish,,True,341.png,Corphish | corphish
+342,342,Crawdaunt,Crawdaunt,crawdaunt,,True,342.png,Crawdaunt | crawdaunt
+343,343,Baltoy,Baltoy,baltoy,,True,343.png,Baltoy | baltoy
+344,344,Claydol,Claydol,claydol,,True,344.png,Claydol | claydol
+345,345,Lileep,Lileep,lileep,,True,345.png,Lileep | lileep
+346,346,Cradily,Cradily,cradily,,True,346.png,Cradily | cradily
+347,347,Anorith,Anorith,anorith,,True,347.png,Anorith | anorith
+348,348,Armaldo,Armaldo,armaldo,,True,348.png,Armaldo | armaldo
+349,349,Feebas,Feebas,feebas,,True,349.png,Feebas | feebas
+350,350,Milotic,Milotic,milotic,,True,350.png,Milotic | milotic
+351,351,Castform,Castform,castform,,True,351.png,Castform | castform
+352,352,Kecleon,Kecleon,kecleon,,True,352.png,Kecleon | kecleon
+353,353,Shuppet,Shuppet,shuppet,,True,353.png,Shuppet | shuppet
+354,354,Banette,Banette,banette,,True,354.png,Banette | banette
+355,355,Duskull,Duskull,duskull,,True,355.png,Duskull | duskull
+356,356,Dusclops,Dusclops,dusclops,,True,356.png,Dusclops | dusclops
+357,357,Tropius,Tropius,tropius,,True,357.png,Tropius | tropius
+358,358,Chimecho,Chimecho,chimecho,,True,358.png,Chimecho | chimecho
+359,359,Absol,Absol,absol,,True,359.png,Absol | absol
+360,360,Wynaut,Wynaut,wynaut,,True,360.png,Wynaut | wynaut
+361,361,Snorunt,Snorunt,snorunt,,True,361.png,Snorunt | snorunt
+362,362,Glalie,Glalie,glalie,,True,362.png,Glalie | glalie
+363,363,Spheal,Spheal,spheal,,True,363.png,Spheal | spheal
+364,364,Sealeo,Sealeo,sealeo,,True,364.png,Sealeo | sealeo
+365,365,Walrein,Walrein,walrein,,True,365.png,Walrein | walrein
+366,366,Clamperl,Clamperl,clamperl,,True,366.png,Clamperl | clamperl
+367,367,Huntail,Huntail,huntail,,True,367.png,Huntail | huntail
+368,368,Gorebyss,Gorebyss,gorebyss,,True,368.png,Gorebyss | gorebyss
+369,369,Relicanth,Relicanth,relicanth,,True,369.png,Relicanth | relicanth
+370,370,Luvdisc,Luvdisc,luvdisc,,True,370.png,Luvdisc | luvdisc
+371,371,Bagon,Bagon,bagon,,True,371.png,Bagon | bagon
+372,372,Shelgon,Shelgon,shelgon,,True,372.png,Shelgon | shelgon
+373,373,Salamence,Salamence,salamence,,True,373.png,Salamence | salamence
+374,374,Beldum,Beldum,beldum,,True,374.png,Beldum | beldum
+375,375,Metang,Metang,metang,,True,375.png,Metang | metang
+376,376,Metagross,Metagross,metagross,,True,376.png,Metagross | metagross
+377,377,Regirock,Regirock,regirock,,True,377.png,Regirock | regirock
+378,378,Regice,Regice,regice,,True,378.png,Regice | regice
+379,379,Registeel,Registeel,registeel,,True,379.png,Registeel | registeel
+380,380,Latias,Latias,latias,,True,380.png,Latias | latias
+381,381,Latios,Latios,latios,,True,381.png,Latios | latios
+382,382,Kyogre,Kyogre,kyogre,,True,382.png,Kyogre | kyogre
+383,383,Groudon,Groudon,groudon,,True,383.png,Groudon | groudon
+384,384,Rayquaza,Rayquaza,rayquaza,,True,384.png,Rayquaza | rayquaza
+385,385,Jirachi,Jirachi,jirachi,,True,385.png,Jirachi | jirachi
+386,386,Deoxys,Deoxys,deoxys-normal,,True,386.png,Deoxys | deoxys normal | deoxys-normal
+387,387,Turtwig,Turtwig,turtwig,,True,387.png,Turtwig | turtwig
+388,388,Grotle,Grotle,grotle,,True,388.png,Grotle | grotle
+389,389,Torterra,Torterra,torterra,,True,389.png,Torterra | torterra
+390,390,Chimchar,Chimchar,chimchar,,True,390.png,Chimchar | chimchar
+391,391,Monferno,Monferno,monferno,,True,391.png,Monferno | monferno
+392,392,Infernape,Infernape,infernape,,True,392.png,Infernape | infernape
+393,393,Piplup,Piplup,piplup,,True,393.png,Piplup | piplup
+394,394,Prinplup,Prinplup,prinplup,,True,394.png,Prinplup | prinplup
+395,395,Empoleon,Empoleon,empoleon,,True,395.png,Empoleon | empoleon
+396,396,Starly,Starly,starly,,True,396.png,Starly | starly
+397,397,Staravia,Staravia,staravia,,True,397.png,Staravia | staravia
+398,398,Staraptor,Staraptor,staraptor,,True,398.png,Staraptor | staraptor
+399,399,Bidoof,Bidoof,bidoof,,True,399.png,Bidoof | bidoof
+400,400,Bibarel,Bibarel,bibarel,,True,400.png,Bibarel | bibarel
+401,401,Kricketot,Kricketot,kricketot,,True,401.png,Kricketot | kricketot
+402,402,Kricketune,Kricketune,kricketune,,True,402.png,Kricketune | kricketune
+403,403,Shinx,Shinx,shinx,,True,403.png,Shinx | shinx
+404,404,Luxio,Luxio,luxio,,True,404.png,Luxio | luxio
+405,405,Luxray,Luxray,luxray,,True,405.png,Luxray | luxray
+406,406,Budew,Budew,budew,,True,406.png,Budew | budew
+407,407,Roserade,Roserade,roserade,,True,407.png,Roserade | roserade
+408,408,Cranidos,Cranidos,cranidos,,True,408.png,Cranidos | cranidos
+409,409,Rampardos,Rampardos,rampardos,,True,409.png,Rampardos | rampardos
+410,410,Shieldon,Shieldon,shieldon,,True,410.png,Shieldon | shieldon
+411,411,Bastiodon,Bastiodon,bastiodon,,True,411.png,Bastiodon | bastiodon
+412,412,Burmy,Burmy,burmy,,True,412.png,Burmy | burmy
+413,413,Wormadam,Wormadam,wormadam-plant,,True,413.png,Wormadam | wormadam plant | wormadam-plant
+414,414,Mothim,Mothim,mothim,,True,414.png,Mothim | mothim
+415,415,Combee,Combee,combee,,True,415.png,Combee | combee
+416,416,Vespiquen,Vespiquen,vespiquen,,True,416.png,Vespiquen | vespiquen
+417,417,Pachirisu,Pachirisu,pachirisu,,True,417.png,Pachirisu | pachirisu
+418,418,Buizel,Buizel,buizel,,True,418.png,Buizel | buizel
+419,419,Floatzel,Floatzel,floatzel,,True,419.png,Floatzel | floatzel
+420,420,Cherubi,Cherubi,cherubi,,True,420.png,Cherubi | cherubi
+421,421,Cherrim,Cherrim,cherrim,,True,421.png,Cherrim | cherrim
+422,422,Shellos,Shellos,shellos,,True,422.png,Shellos | shellos
+423,423,Gastrodon,Gastrodon,gastrodon,,True,423.png,Gastrodon | gastrodon
+424,424,Ambipom,Ambipom,ambipom,,True,424.png,Ambipom | ambipom
+425,425,Drifloon,Drifloon,drifloon,,True,425.png,Drifloon | drifloon
+426,426,Drifblim,Drifblim,drifblim,,True,426.png,Drifblim | drifblim
+427,427,Buneary,Buneary,buneary,,True,427.png,Buneary | buneary
+428,428,Lopunny,Lopunny,lopunny,,True,428.png,Lopunny | lopunny
+429,429,Mismagius,Mismagius,mismagius,,True,429.png,Mismagius | mismagius
+430,430,Honchkrow,Honchkrow,honchkrow,,True,430.png,Honchkrow | honchkrow
+431,431,Glameow,Glameow,glameow,,True,431.png,Glameow | glameow
+432,432,Purugly,Purugly,purugly,,True,432.png,Purugly | purugly
+433,433,Chingling,Chingling,chingling,,True,433.png,Chingling | chingling
+434,434,Stunky,Stunky,stunky,,True,434.png,Stunky | stunky
+435,435,Skuntank,Skuntank,skuntank,,True,435.png,Skuntank | skuntank
+436,436,Bronzor,Bronzor,bronzor,,True,436.png,Bronzor | bronzor
+437,437,Bronzong,Bronzong,bronzong,,True,437.png,Bronzong | bronzong
+438,438,Bonsly,Bonsly,bonsly,,True,438.png,Bonsly | bonsly
+439,439,Mime Jr.,Mime Jr.,mime-jr,,True,439.png,Mime Jr. | mime jr | mime-jr
+440,440,Happiny,Happiny,happiny,,True,440.png,Happiny | happiny
+441,441,Chatot,Chatot,chatot,,True,441.png,Chatot | chatot
+442,442,Spiritomb,Spiritomb,spiritomb,,True,442.png,Spiritomb | spiritomb
+443,443,Gible,Gible,gible,,True,443.png,Gible | gible
+444,444,Gabite,Gabite,gabite,,True,444.png,Gabite | gabite
+445,445,Garchomp,Garchomp,garchomp,,True,445.png,Garchomp | garchomp
+446,446,Munchlax,Munchlax,munchlax,,True,446.png,Munchlax | munchlax
+447,447,Riolu,Riolu,riolu,,True,447.png,Riolu | riolu
+448,448,Lucario,Lucario,lucario,,True,448.png,Lucario | lucario
+449,449,Hippopotas,Hippopotas,hippopotas,,True,449.png,Hippopotas | hippopotas
+450,450,Hippowdon,Hippowdon,hippowdon,,True,450.png,Hippowdon | hippowdon
+451,451,Skorupi,Skorupi,skorupi,,True,451.png,Skorupi | skorupi
+452,452,Drapion,Drapion,drapion,,True,452.png,Drapion | drapion
+453,453,Croagunk,Croagunk,croagunk,,True,453.png,Croagunk | croagunk
+454,454,Toxicroak,Toxicroak,toxicroak,,True,454.png,Toxicroak | toxicroak
+455,455,Carnivine,Carnivine,carnivine,,True,455.png,Carnivine | carnivine
+456,456,Finneon,Finneon,finneon,,True,456.png,Finneon | finneon
+457,457,Lumineon,Lumineon,lumineon,,True,457.png,Lumineon | lumineon
+458,458,Mantyke,Mantyke,mantyke,,True,458.png,Mantyke | mantyke
+459,459,Snover,Snover,snover,,True,459.png,Snover | snover
+460,460,Abomasnow,Abomasnow,abomasnow,,True,460.png,Abomasnow | abomasnow
+461,461,Weavile,Weavile,weavile,,True,461.png,Weavile | weavile
+462,462,Magnezone,Magnezone,magnezone,,True,462.png,Magnezone | magnezone
+463,463,Lickilicky,Lickilicky,lickilicky,,True,463.png,Lickilicky | lickilicky
+464,464,Rhyperior,Rhyperior,rhyperior,,True,464.png,Rhyperior | rhyperior
+465,465,Tangrowth,Tangrowth,tangrowth,,True,465.png,Tangrowth | tangrowth
+466,466,Electivire,Electivire,electivire,,True,466.png,Electivire | electivire
+467,467,Magmortar,Magmortar,magmortar,,True,467.png,Magmortar | magmortar
+468,468,Togekiss,Togekiss,togekiss,,True,468.png,Togekiss | togekiss
+469,469,Yanmega,Yanmega,yanmega,,True,469.png,Yanmega | yanmega
+470,470,Leafeon,Leafeon,leafeon,,True,470.png,Leafeon | leafeon
+471,471,Glaceon,Glaceon,glaceon,,True,471.png,Glaceon | glaceon
+472,472,Gliscor,Gliscor,gliscor,,True,472.png,Gliscor | gliscor
+473,473,Mamoswine,Mamoswine,mamoswine,,True,473.png,Mamoswine | mamoswine
+474,474,Porygon-Z,Porygon-Z,porygon-z,,True,474.png,Porygon Z | Porygon-Z | porygon z | porygon-z
+475,475,Gallade,Gallade,gallade,,True,475.png,Gallade | gallade
+476,476,Probopass,Probopass,probopass,,True,476.png,Probopass | probopass
+477,477,Dusknoir,Dusknoir,dusknoir,,True,477.png,Dusknoir | dusknoir
+478,478,Froslass,Froslass,froslass,,True,478.png,Froslass | froslass
+479,479,Rotom,Rotom,rotom,,True,479.png,Rotom | rotom
+480,480,Uxie,Uxie,uxie,,True,480.png,Uxie | uxie
+481,481,Mesprit,Mesprit,mesprit,,True,481.png,Mesprit | mesprit
+482,482,Azelf,Azelf,azelf,,True,482.png,Azelf | azelf
+483,483,Dialga,Dialga,dialga,,True,483.png,Dialga | dialga
+484,484,Palkia,Palkia,palkia,,True,484.png,Palkia | palkia
+485,485,Heatran,Heatran,heatran,,True,485.png,Heatran | heatran
+486,486,Regigigas,Regigigas,regigigas,,True,486.png,Regigigas | regigigas
+487,487,Giratina,Giratina,giratina-altered,,True,487.png,Giratina | giratina altered | giratina-altered
+488,488,Cresselia,Cresselia,cresselia,,True,488.png,Cresselia | cresselia
+489,489,Phione,Phione,phione,,True,489.png,Phione | phione
+490,490,Manaphy,Manaphy,manaphy,,True,490.png,Manaphy | manaphy
+491,491,Darkrai,Darkrai,darkrai,,True,491.png,Darkrai | darkrai
+492,492,Shaymin,Shaymin,shaymin-land,,True,492.png,Shaymin | shaymin land | shaymin-land
+493,493,Arceus,Arceus,arceus,,True,493.png,Arceus | arceus
+494,494,Victini,Victini,victini,,True,494.png,Victini | victini
+495,495,Snivy,Snivy,snivy,,True,495.png,Snivy | snivy
+496,496,Servine,Servine,servine,,True,496.png,Servine | servine
+497,497,Serperior,Serperior,serperior,,True,497.png,Serperior | serperior
+498,498,Tepig,Tepig,tepig,,True,498.png,Tepig | tepig
+499,499,Pignite,Pignite,pignite,,True,499.png,Pignite | pignite
+500,500,Emboar,Emboar,emboar,,True,500.png,Emboar | emboar
+501,501,Oshawott,Oshawott,oshawott,,True,501.png,Oshawott | oshawott
+502,502,Dewott,Dewott,dewott,,True,502.png,Dewott | dewott
+503,503,Samurott,Samurott,samurott,,True,503.png,Samurott | samurott
+504,504,Patrat,Patrat,patrat,,True,504.png,Patrat | patrat
+505,505,Watchog,Watchog,watchog,,True,505.png,Watchog | watchog
+506,506,Lillipup,Lillipup,lillipup,,True,506.png,Lillipup | lillipup
+507,507,Herdier,Herdier,herdier,,True,507.png,Herdier | herdier
+508,508,Stoutland,Stoutland,stoutland,,True,508.png,Stoutland | stoutland
+509,509,Purrloin,Purrloin,purrloin,,True,509.png,Purrloin | purrloin
+510,510,Liepard,Liepard,liepard,,True,510.png,Liepard | liepard
+511,511,Pansage,Pansage,pansage,,True,511.png,Pansage | pansage
+512,512,Simisage,Simisage,simisage,,True,512.png,Simisage | simisage
+513,513,Pansear,Pansear,pansear,,True,513.png,Pansear | pansear
+514,514,Simisear,Simisear,simisear,,True,514.png,Simisear | simisear
+515,515,Panpour,Panpour,panpour,,True,515.png,Panpour | panpour
+516,516,Simipour,Simipour,simipour,,True,516.png,Simipour | simipour
+517,517,Munna,Munna,munna,,True,517.png,Munna | munna
+518,518,Musharna,Musharna,musharna,,True,518.png,Musharna | musharna
+519,519,Pidove,Pidove,pidove,,True,519.png,Pidove | pidove
+520,520,Tranquill,Tranquill,tranquill,,True,520.png,Tranquill | tranquill
+521,521,Unfezant,Unfezant,unfezant,,True,521.png,Unfezant | unfezant
+522,522,Blitzle,Blitzle,blitzle,,True,522.png,Blitzle | blitzle
+523,523,Zebstrika,Zebstrika,zebstrika,,True,523.png,Zebstrika | zebstrika
+524,524,Roggenrola,Roggenrola,roggenrola,,True,524.png,Roggenrola | roggenrola
+525,525,Boldore,Boldore,boldore,,True,525.png,Boldore | boldore
+526,526,Gigalith,Gigalith,gigalith,,True,526.png,Gigalith | gigalith
+527,527,Woobat,Woobat,woobat,,True,527.png,Woobat | woobat
+528,528,Swoobat,Swoobat,swoobat,,True,528.png,Swoobat | swoobat
+529,529,Drilbur,Drilbur,drilbur,,True,529.png,Drilbur | drilbur
+530,530,Excadrill,Excadrill,excadrill,,True,530.png,Excadrill | excadrill
+531,531,Audino,Audino,audino,,True,531.png,Audino | audino
+532,532,Timburr,Timburr,timburr,,True,532.png,Timburr | timburr
+533,533,Gurdurr,Gurdurr,gurdurr,,True,533.png,Gurdurr | gurdurr
+534,534,Conkeldurr,Conkeldurr,conkeldurr,,True,534.png,Conkeldurr | conkeldurr
+535,535,Tympole,Tympole,tympole,,True,535.png,Tympole | tympole
+536,536,Palpitoad,Palpitoad,palpitoad,,True,536.png,Palpitoad | palpitoad
+537,537,Seismitoad,Seismitoad,seismitoad,,True,537.png,Seismitoad | seismitoad
+538,538,Throh,Throh,throh,,True,538.png,Throh | throh
+539,539,Sawk,Sawk,sawk,,True,539.png,Sawk | sawk
+540,540,Sewaddle,Sewaddle,sewaddle,,True,540.png,Sewaddle | sewaddle
+541,541,Swadloon,Swadloon,swadloon,,True,541.png,Swadloon | swadloon
+542,542,Leavanny,Leavanny,leavanny,,True,542.png,Leavanny | leavanny
+543,543,Venipede,Venipede,venipede,,True,543.png,Venipede | venipede
+544,544,Whirlipede,Whirlipede,whirlipede,,True,544.png,Whirlipede | whirlipede
+545,545,Scolipede,Scolipede,scolipede,,True,545.png,Scolipede | scolipede
+546,546,Cottonee,Cottonee,cottonee,,True,546.png,Cottonee | cottonee
+547,547,Whimsicott,Whimsicott,whimsicott,,True,547.png,Whimsicott | whimsicott
+548,548,Petilil,Petilil,petilil,,True,548.png,Petilil | petilil
+549,549,Lilligant,Lilligant,lilligant,,True,549.png,Lilligant | lilligant
+550,550,Basculin,Basculin,basculin-red-striped,,True,550.png,Basculin | basculin red striped | basculin-red-striped
+551,551,Sandile,Sandile,sandile,,True,551.png,Sandile | sandile
+552,552,Krokorok,Krokorok,krokorok,,True,552.png,Krokorok | krokorok
+553,553,Krookodile,Krookodile,krookodile,,True,553.png,Krookodile | krookodile
+554,554,Darumaka,Darumaka,darumaka,,True,554.png,Darumaka | darumaka
+555,555,Darmanitan,Darmanitan,darmanitan-standard,,True,555.png,Darmanitan | darmanitan standard | darmanitan-standard
+556,556,Maractus,Maractus,maractus,,True,556.png,Maractus | maractus
+557,557,Dwebble,Dwebble,dwebble,,True,557.png,Dwebble | dwebble
+558,558,Crustle,Crustle,crustle,,True,558.png,Crustle | crustle
+559,559,Scraggy,Scraggy,scraggy,,True,559.png,Scraggy | scraggy
+560,560,Scrafty,Scrafty,scrafty,,True,560.png,Scrafty | scrafty
+561,561,Sigilyph,Sigilyph,sigilyph,,True,561.png,Sigilyph | sigilyph
+562,562,Yamask,Yamask,yamask,,True,562.png,Yamask | yamask
+563,563,Cofagrigus,Cofagrigus,cofagrigus,,True,563.png,Cofagrigus | cofagrigus
+564,564,Tirtouga,Tirtouga,tirtouga,,True,564.png,Tirtouga | tirtouga
+565,565,Carracosta,Carracosta,carracosta,,True,565.png,Carracosta | carracosta
+566,566,Archen,Archen,archen,,True,566.png,Archen | archen
+567,567,Archeops,Archeops,archeops,,True,567.png,Archeops | archeops
+568,568,Trubbish,Trubbish,trubbish,,True,568.png,Trubbish | trubbish
+569,569,Garbodor,Garbodor,garbodor,,True,569.png,Garbodor | garbodor
+570,570,Zorua,Zorua,zorua,,True,570.png,Zorua | zorua
+571,571,Zoroark,Zoroark,zoroark,,True,571.png,Zoroark | zoroark
+572,572,Minccino,Minccino,minccino,,True,572.png,Minccino | minccino
+573,573,Cinccino,Cinccino,cinccino,,True,573.png,Cinccino | cinccino
+574,574,Gothita,Gothita,gothita,,True,574.png,Gothita | gothita
+575,575,Gothorita,Gothorita,gothorita,,True,575.png,Gothorita | gothorita
+576,576,Gothitelle,Gothitelle,gothitelle,,True,576.png,Gothitelle | gothitelle
+577,577,Solosis,Solosis,solosis,,True,577.png,Solosis | solosis
+578,578,Duosion,Duosion,duosion,,True,578.png,Duosion | duosion
+579,579,Reuniclus,Reuniclus,reuniclus,,True,579.png,Reuniclus | reuniclus
+580,580,Ducklett,Ducklett,ducklett,,True,580.png,Ducklett | ducklett
+581,581,Swanna,Swanna,swanna,,True,581.png,Swanna | swanna
+582,582,Vanillite,Vanillite,vanillite,,True,582.png,Vanillite | vanillite
+583,583,Vanillish,Vanillish,vanillish,,True,583.png,Vanillish | vanillish
+584,584,Vanilluxe,Vanilluxe,vanilluxe,,True,584.png,Vanilluxe | vanilluxe
+585,585,Deerling,Deerling,deerling,,True,585.png,Deerling | deerling
+586,586,Sawsbuck,Sawsbuck,sawsbuck,,True,586.png,Sawsbuck | sawsbuck
+587,587,Emolga,Emolga,emolga,,True,587.png,Emolga | emolga
+588,588,Karrablast,Karrablast,karrablast,,True,588.png,Karrablast | karrablast
+589,589,Escavalier,Escavalier,escavalier,,True,589.png,Escavalier | escavalier
+590,590,Foongus,Foongus,foongus,,True,590.png,Foongus | foongus
+591,591,Amoonguss,Amoonguss,amoonguss,,True,591.png,Amoonguss | amoonguss
+592,592,Frillish,Frillish,frillish-male,,True,592.png,Frillish | frillish male | frillish-male
+593,593,Jellicent,Jellicent,jellicent-male,,True,593.png,Jellicent | jellicent male | jellicent-male
+594,594,Alomomola,Alomomola,alomomola,,True,594.png,Alomomola | alomomola
+595,595,Joltik,Joltik,joltik,,True,595.png,Joltik | joltik
+596,596,Galvantula,Galvantula,galvantula,,True,596.png,Galvantula | galvantula
+597,597,Ferroseed,Ferroseed,ferroseed,,True,597.png,Ferroseed | ferroseed
+598,598,Ferrothorn,Ferrothorn,ferrothorn,,True,598.png,Ferrothorn | ferrothorn
+599,599,Klink,Klink,klink,,True,599.png,Klink | klink
+600,600,Klang,Klang,klang,,True,600.png,Klang | klang
+601,601,Klinklang,Klinklang,klinklang,,True,601.png,Klinklang | klinklang
+602,602,Tynamo,Tynamo,tynamo,,True,602.png,Tynamo | tynamo
+603,603,Eelektrik,Eelektrik,eelektrik,,True,603.png,Eelektrik | eelektrik
+604,604,Eelektross,Eelektross,eelektross,,True,604.png,Eelektross | eelektross
+605,605,Elgyem,Elgyem,elgyem,,True,605.png,Elgyem | elgyem
+606,606,Beheeyem,Beheeyem,beheeyem,,True,606.png,Beheeyem | beheeyem
+607,607,Litwick,Litwick,litwick,,True,607.png,Litwick | litwick
+608,608,Lampent,Lampent,lampent,,True,608.png,Lampent | lampent
+609,609,Chandelure,Chandelure,chandelure,,True,609.png,Chandelure | chandelure
+610,610,Axew,Axew,axew,,True,610.png,Axew | axew
+611,611,Fraxure,Fraxure,fraxure,,True,611.png,Fraxure | fraxure
+612,612,Haxorus,Haxorus,haxorus,,True,612.png,Haxorus | haxorus
+613,613,Cubchoo,Cubchoo,cubchoo,,True,613.png,Cubchoo | cubchoo
+614,614,Beartic,Beartic,beartic,,True,614.png,Beartic | beartic
+615,615,Cryogonal,Cryogonal,cryogonal,,True,615.png,Cryogonal | cryogonal
+616,616,Shelmet,Shelmet,shelmet,,True,616.png,Shelmet | shelmet
+617,617,Accelgor,Accelgor,accelgor,,True,617.png,Accelgor | accelgor
+618,618,Stunfisk,Stunfisk,stunfisk,,True,618.png,Stunfisk | stunfisk
+619,619,Mienfoo,Mienfoo,mienfoo,,True,619.png,Mienfoo | mienfoo
+620,620,Mienshao,Mienshao,mienshao,,True,620.png,Mienshao | mienshao
+621,621,Druddigon,Druddigon,druddigon,,True,621.png,Druddigon | druddigon
+622,622,Golett,Golett,golett,,True,622.png,Golett | golett
+623,623,Golurk,Golurk,golurk,,True,623.png,Golurk | golurk
+624,624,Pawniard,Pawniard,pawniard,,True,624.png,Pawniard | pawniard
+625,625,Bisharp,Bisharp,bisharp,,True,625.png,Bisharp | bisharp
+626,626,Bouffalant,Bouffalant,bouffalant,,True,626.png,Bouffalant | bouffalant
+627,627,Rufflet,Rufflet,rufflet,,True,627.png,Rufflet | rufflet
+628,628,Braviary,Braviary,braviary,,True,628.png,Braviary | braviary
+629,629,Vullaby,Vullaby,vullaby,,True,629.png,Vullaby | vullaby
+630,630,Mandibuzz,Mandibuzz,mandibuzz,,True,630.png,Mandibuzz | mandibuzz
+631,631,Heatmor,Heatmor,heatmor,,True,631.png,Heatmor | heatmor
+632,632,Durant,Durant,durant,,True,632.png,Durant | durant
+633,633,Deino,Deino,deino,,True,633.png,Deino | deino
+634,634,Zweilous,Zweilous,zweilous,,True,634.png,Zweilous | zweilous
+635,635,Hydreigon,Hydreigon,hydreigon,,True,635.png,Hydreigon | hydreigon
+636,636,Larvesta,Larvesta,larvesta,,True,636.png,Larvesta | larvesta
+637,637,Volcarona,Volcarona,volcarona,,True,637.png,Volcarona | volcarona
+638,638,Cobalion,Cobalion,cobalion,,True,638.png,Cobalion | cobalion
+639,639,Terrakion,Terrakion,terrakion,,True,639.png,Terrakion | terrakion
+640,640,Virizion,Virizion,virizion,,True,640.png,Virizion | virizion
+641,641,Tornadus,Tornadus,tornadus-incarnate,,True,641.png,Tornadus | tornadus incarnate | tornadus-incarnate
+642,642,Thundurus,Thundurus,thundurus-incarnate,,True,642.png,Thundurus | thundurus incarnate | thundurus-incarnate
+643,643,Reshiram,Reshiram,reshiram,,True,643.png,Reshiram | reshiram
+644,644,Zekrom,Zekrom,zekrom,,True,644.png,Zekrom | zekrom
+645,645,Landorus,Landorus,landorus-incarnate,,True,645.png,Landorus | landorus incarnate | landorus-incarnate
+646,646,Kyurem,Kyurem,kyurem,,True,646.png,Kyurem | kyurem
+647,647,Keldeo,Keldeo,keldeo-ordinary,,True,647.png,Keldeo | keldeo ordinary | keldeo-ordinary
+648,648,Meloetta,Meloetta,meloetta-aria,,True,648.png,Meloetta | meloetta aria | meloetta-aria
+649,649,Genesect,Genesect,genesect,,True,649.png,Genesect | genesect
+650,650,Chespin,Chespin,chespin,,True,650.png,Chespin | chespin
+651,651,Quilladin,Quilladin,quilladin,,True,651.png,Quilladin | quilladin
+652,652,Chesnaught,Chesnaught,chesnaught,,True,652.png,Chesnaught | chesnaught
+653,653,Fennekin,Fennekin,fennekin,,True,653.png,Fennekin | fennekin
+654,654,Braixen,Braixen,braixen,,True,654.png,Braixen | braixen
+655,655,Delphox,Delphox,delphox,,True,655.png,Delphox | delphox
+656,656,Froakie,Froakie,froakie,,True,656.png,Froakie | froakie
+657,657,Frogadier,Frogadier,frogadier,,True,657.png,Frogadier | frogadier
+658,658,Greninja,Greninja,greninja,,True,658.png,Greninja | greninja
+659,659,Bunnelby,Bunnelby,bunnelby,,True,659.png,Bunnelby | bunnelby
+660,660,Diggersby,Diggersby,diggersby,,True,660.png,Diggersby | diggersby
+661,661,Fletchling,Fletchling,fletchling,,True,661.png,Fletchling | fletchling
+662,662,Fletchinder,Fletchinder,fletchinder,,True,662.png,Fletchinder | fletchinder
+663,663,Talonflame,Talonflame,talonflame,,True,663.png,Talonflame | talonflame
+664,664,Scatterbug,Scatterbug,scatterbug,,True,664.png,Scatterbug | scatterbug
+665,665,Spewpa,Spewpa,spewpa,,True,665.png,Spewpa | spewpa
+666,666,Vivillon,Vivillon,vivillon,,True,666.png,Vivillon | vivillon
+667,667,Litleo,Litleo,litleo,,True,667.png,Litleo | litleo
+668,668,Pyroar,Pyroar,pyroar-male,,True,668.png,Pyroar | pyroar male | pyroar-male
+669,669,Flabébé,Flabébé,flabebe,,True,669.png,Flabébé | flabebe
+670,670,Floette,Floette,floette,,True,670.png,Floette | floette
+671,671,Florges,Florges,florges,,True,671.png,Florges | florges
+672,672,Skiddo,Skiddo,skiddo,,True,672.png,Skiddo | skiddo
+673,673,Gogoat,Gogoat,gogoat,,True,673.png,Gogoat | gogoat
+674,674,Pancham,Pancham,pancham,,True,674.png,Pancham | pancham
+675,675,Pangoro,Pangoro,pangoro,,True,675.png,Pangoro | pangoro
+676,676,Furfrou,Furfrou,furfrou,,True,676.png,Furfrou | furfrou
+677,677,Espurr,Espurr,espurr,,True,677.png,Espurr | espurr
+678,678,Meowstic,Meowstic,meowstic-male,,True,678.png,Meowstic | meowstic male | meowstic-male
+679,679,Honedge,Honedge,honedge,,True,679.png,Honedge | honedge
+680,680,Doublade,Doublade,doublade,,True,680.png,Doublade | doublade
+681,681,Aegislash,Aegislash,aegislash-shield,,True,681.png,Aegislash | aegislash shield | aegislash-shield
+682,682,Spritzee,Spritzee,spritzee,,True,682.png,Spritzee | spritzee
+683,683,Aromatisse,Aromatisse,aromatisse,,True,683.png,Aromatisse | aromatisse
+684,684,Swirlix,Swirlix,swirlix,,True,684.png,Swirlix | swirlix
+685,685,Slurpuff,Slurpuff,slurpuff,,True,685.png,Slurpuff | slurpuff
+686,686,Inkay,Inkay,inkay,,True,686.png,Inkay | inkay
+687,687,Malamar,Malamar,malamar,,True,687.png,Malamar | malamar
+688,688,Binacle,Binacle,binacle,,True,688.png,Binacle | binacle
+689,689,Barbaracle,Barbaracle,barbaracle,,True,689.png,Barbaracle | barbaracle
+690,690,Skrelp,Skrelp,skrelp,,True,690.png,Skrelp | skrelp
+691,691,Dragalge,Dragalge,dragalge,,True,691.png,Dragalge | dragalge
+692,692,Clauncher,Clauncher,clauncher,,True,692.png,Clauncher | clauncher
+693,693,Clawitzer,Clawitzer,clawitzer,,True,693.png,Clawitzer | clawitzer
+694,694,Helioptile,Helioptile,helioptile,,True,694.png,Helioptile | helioptile
+695,695,Heliolisk,Heliolisk,heliolisk,,True,695.png,Heliolisk | heliolisk
+696,696,Tyrunt,Tyrunt,tyrunt,,True,696.png,Tyrunt | tyrunt
+697,697,Tyrantrum,Tyrantrum,tyrantrum,,True,697.png,Tyrantrum | tyrantrum
+698,698,Amaura,Amaura,amaura,,True,698.png,Amaura | amaura
+699,699,Aurorus,Aurorus,aurorus,,True,699.png,Aurorus | aurorus
+700,700,Sylveon,Sylveon,sylveon,,True,700.png,Sylveon | sylveon
+701,701,Hawlucha,Hawlucha,hawlucha,,True,701.png,Hawlucha | hawlucha
+702,702,Dedenne,Dedenne,dedenne,,True,702.png,Dedenne | dedenne
+703,703,Carbink,Carbink,carbink,,True,703.png,Carbink | carbink
+704,704,Goomy,Goomy,goomy,,True,704.png,Goomy | goomy
+705,705,Sliggoo,Sliggoo,sliggoo,,True,705.png,Sliggoo | sliggoo
+706,706,Goodra,Goodra,goodra,,True,706.png,Goodra | goodra
+707,707,Klefki,Klefki,klefki,,True,707.png,Klefki | klefki
+708,708,Phantump,Phantump,phantump,,True,708.png,Phantump | phantump
+709,709,Trevenant,Trevenant,trevenant,,True,709.png,Trevenant | trevenant
+710,710,Pumpkaboo,Pumpkaboo,pumpkaboo-average,,True,710.png,Pumpkaboo | pumpkaboo average | pumpkaboo-average
+711,711,Gourgeist,Gourgeist,gourgeist-average,,True,711.png,Gourgeist | gourgeist average | gourgeist-average
+712,712,Bergmite,Bergmite,bergmite,,True,712.png,Bergmite | bergmite
+713,713,Avalugg,Avalugg,avalugg,,True,713.png,Avalugg | avalugg
+714,714,Noibat,Noibat,noibat,,True,714.png,Noibat | noibat
+715,715,Noivern,Noivern,noivern,,True,715.png,Noivern | noivern
+716,716,Xerneas,Xerneas,xerneas,,True,716.png,Xerneas | xerneas
+717,717,Yveltal,Yveltal,yveltal,,True,717.png,Yveltal | yveltal
+718,718,Zygarde,Zygarde,zygarde-50,,True,718.png,Zygarde | zygarde 50 | zygarde-50
+719,719,Diancie,Diancie,diancie,,True,719.png,Diancie | diancie
+720,720,Hoopa,Hoopa,hoopa,,True,720.png,Hoopa | hoopa
+721,721,Volcanion,Volcanion,volcanion,,True,721.png,Volcanion | volcanion
+722,722,Rowlet,Rowlet,rowlet,,True,722.png,Rowlet | rowlet
+723,723,Dartrix,Dartrix,dartrix,,True,723.png,Dartrix | dartrix
+724,724,Decidueye,Decidueye,decidueye,,True,724.png,Decidueye | decidueye
+725,725,Litten,Litten,litten,,True,725.png,Litten | litten
+726,726,Torracat,Torracat,torracat,,True,726.png,Torracat | torracat
+727,727,Incineroar,Incineroar,incineroar,,True,727.png,Incineroar | incineroar
+728,728,Popplio,Popplio,popplio,,True,728.png,Popplio | popplio
+729,729,Brionne,Brionne,brionne,,True,729.png,Brionne | brionne
+730,730,Primarina,Primarina,primarina,,True,730.png,Primarina | primarina
+731,731,Pikipek,Pikipek,pikipek,,True,731.png,Pikipek | pikipek
+732,732,Trumbeak,Trumbeak,trumbeak,,True,732.png,Trumbeak | trumbeak
+733,733,Toucannon,Toucannon,toucannon,,True,733.png,Toucannon | toucannon
+734,734,Yungoos,Yungoos,yungoos,,True,734.png,Yungoos | yungoos
+735,735,Gumshoos,Gumshoos,gumshoos,,True,735.png,Gumshoos | gumshoos
+736,736,Grubbin,Grubbin,grubbin,,True,736.png,Grubbin | grubbin
+737,737,Charjabug,Charjabug,charjabug,,True,737.png,Charjabug | charjabug
+738,738,Vikavolt,Vikavolt,vikavolt,,True,738.png,Vikavolt | vikavolt
+739,739,Crabrawler,Crabrawler,crabrawler,,True,739.png,Crabrawler | crabrawler
+740,740,Crabominable,Crabominable,crabominable,,True,740.png,Crabominable | crabominable
+741,741,Oricorio,Oricorio,oricorio-baile,,True,741.png,Oricorio | oricorio baile | oricorio-baile
+742,742,Cutiefly,Cutiefly,cutiefly,,True,742.png,Cutiefly | cutiefly
+743,743,Ribombee,Ribombee,ribombee,,True,743.png,Ribombee | ribombee
+744,744,Rockruff,Rockruff,rockruff,,True,744.png,Rockruff | rockruff
+745,745,Lycanroc,Lycanroc,lycanroc-midday,,True,745.png,Lycanroc | lycanroc midday | lycanroc-midday
+746,746,Wishiwashi,Wishiwashi,wishiwashi-solo,,True,746.png,Wishiwashi | wishiwashi solo | wishiwashi-solo
+747,747,Mareanie,Mareanie,mareanie,,True,747.png,Mareanie | mareanie
+748,748,Toxapex,Toxapex,toxapex,,True,748.png,Toxapex | toxapex
+749,749,Mudbray,Mudbray,mudbray,,True,749.png,Mudbray | mudbray
+750,750,Mudsdale,Mudsdale,mudsdale,,True,750.png,Mudsdale | mudsdale
+751,751,Dewpider,Dewpider,dewpider,,True,751.png,Dewpider | dewpider
+752,752,Araquanid,Araquanid,araquanid,,True,752.png,Araquanid | araquanid
+753,753,Fomantis,Fomantis,fomantis,,True,753.png,Fomantis | fomantis
+754,754,Lurantis,Lurantis,lurantis,,True,754.png,Lurantis | lurantis
+755,755,Morelull,Morelull,morelull,,True,755.png,Morelull | morelull
+756,756,Shiinotic,Shiinotic,shiinotic,,True,756.png,Shiinotic | shiinotic
+757,757,Salandit,Salandit,salandit,,True,757.png,Salandit | salandit
+758,758,Salazzle,Salazzle,salazzle,,True,758.png,Salazzle | salazzle
+759,759,Stufful,Stufful,stufful,,True,759.png,Stufful | stufful
+760,760,Bewear,Bewear,bewear,,True,760.png,Bewear | bewear
+761,761,Bounsweet,Bounsweet,bounsweet,,True,761.png,Bounsweet | bounsweet
+762,762,Steenee,Steenee,steenee,,True,762.png,Steenee | steenee
+763,763,Tsareena,Tsareena,tsareena,,True,763.png,Tsareena | tsareena
+764,764,Comfey,Comfey,comfey,,True,764.png,Comfey | comfey
+765,765,Oranguru,Oranguru,oranguru,,True,765.png,Oranguru | oranguru
+766,766,Passimian,Passimian,passimian,,True,766.png,Passimian | passimian
+767,767,Wimpod,Wimpod,wimpod,,True,767.png,Wimpod | wimpod
+768,768,Golisopod,Golisopod,golisopod,,True,768.png,Golisopod | golisopod
+769,769,Sandygast,Sandygast,sandygast,,True,769.png,Sandygast | sandygast
+770,770,Palossand,Palossand,palossand,,True,770.png,Palossand | palossand
+771,771,Pyukumuku,Pyukumuku,pyukumuku,,True,771.png,Pyukumuku | pyukumuku
+772,772,Type: Null,Type: Null,type-null,,True,772.png,Type: Null | type null | type-null
+773,773,Silvally,Silvally,silvally,,True,773.png,Silvally | silvally
+774,774,Minior,Minior,minior-red-meteor,,True,774.png,Minior | minior red meteor | minior-red-meteor
+775,775,Komala,Komala,komala,,True,775.png,Komala | komala
+776,776,Turtonator,Turtonator,turtonator,,True,776.png,Turtonator | turtonator
+777,777,Togedemaru,Togedemaru,togedemaru,,True,777.png,Togedemaru | togedemaru
+778,778,Mimikyu,Mimikyu,mimikyu-disguised,,True,778.png,Mimikyu | mimikyu disguised | mimikyu-disguised
+779,779,Bruxish,Bruxish,bruxish,,True,779.png,Bruxish | bruxish
+780,780,Drampa,Drampa,drampa,,True,780.png,Drampa | drampa
+781,781,Dhelmise,Dhelmise,dhelmise,,True,781.png,Dhelmise | dhelmise
+782,782,Jangmo-o,Jangmo-o,jangmo-o,,True,782.png,Jangmo o | Jangmo-o | jangmo o | jangmo-o
+783,783,Hakamo-o,Hakamo-o,hakamo-o,,True,783.png,Hakamo o | Hakamo-o | hakamo o | hakamo-o
+784,784,Kommo-o,Kommo-o,kommo-o,,True,784.png,Kommo o | Kommo-o | kommo o | kommo-o
+785,785,Tapu Koko,Tapu Koko,tapu-koko,,True,785.png,Tapu Koko | tapu koko | tapu-koko
+786,786,Tapu Lele,Tapu Lele,tapu-lele,,True,786.png,Tapu Lele | tapu lele | tapu-lele
+787,787,Tapu Bulu,Tapu Bulu,tapu-bulu,,True,787.png,Tapu Bulu | tapu bulu | tapu-bulu
+788,788,Tapu Fini,Tapu Fini,tapu-fini,,True,788.png,Tapu Fini | tapu fini | tapu-fini
+789,789,Cosmog,Cosmog,cosmog,,True,789.png,Cosmog | cosmog
+790,790,Cosmoem,Cosmoem,cosmoem,,True,790.png,Cosmoem | cosmoem
+791,791,Solgaleo,Solgaleo,solgaleo,,True,791.png,Solgaleo | solgaleo
+792,792,Lunala,Lunala,lunala,,True,792.png,Lunala | lunala
+793,793,Nihilego,Nihilego,nihilego,,True,793.png,Nihilego | nihilego
+794,794,Buzzwole,Buzzwole,buzzwole,,True,794.png,Buzzwole | buzzwole
+795,795,Pheromosa,Pheromosa,pheromosa,,True,795.png,Pheromosa | pheromosa
+796,796,Xurkitree,Xurkitree,xurkitree,,True,796.png,Xurkitree | xurkitree
+797,797,Celesteela,Celesteela,celesteela,,True,797.png,Celesteela | celesteela
+798,798,Kartana,Kartana,kartana,,True,798.png,Kartana | kartana
+799,799,Guzzlord,Guzzlord,guzzlord,,True,799.png,Guzzlord | guzzlord
+800,800,Necrozma,Necrozma,necrozma,,True,800.png,Necrozma | necrozma
+801,801,Magearna,Magearna,magearna,,True,801.png,Magearna | magearna
+802,802,Marshadow,Marshadow,marshadow,,True,802.png,Marshadow | marshadow
+803,803,Poipole,Poipole,poipole,,True,803.png,Poipole | poipole
+804,804,Naganadel,Naganadel,naganadel,,True,804.png,Naganadel | naganadel
+805,805,Stakataka,Stakataka,stakataka,,True,805.png,Stakataka | stakataka
+806,806,Blacephalon,Blacephalon,blacephalon,,True,806.png,Blacephalon | blacephalon
+807,807,Zeraora,Zeraora,zeraora,,True,807.png,Zeraora | zeraora
+808,808,Meltan,Meltan,meltan,,True,808.png,Meltan | meltan
+809,809,Melmetal,Melmetal,melmetal,,True,809.png,Melmetal | melmetal
+810,810,Grookey,Grookey,grookey,,True,810.png,Grookey | grookey
+811,811,Thwackey,Thwackey,thwackey,,True,811.png,Thwackey | thwackey
+812,812,Rillaboom,Rillaboom,rillaboom,,True,812.png,Rillaboom | rillaboom
+813,813,Scorbunny,Scorbunny,scorbunny,,True,813.png,Scorbunny | scorbunny
+814,814,Raboot,Raboot,raboot,,True,814.png,Raboot | raboot
+815,815,Cinderace,Cinderace,cinderace,,True,815.png,Cinderace | cinderace
+816,816,Sobble,Sobble,sobble,,True,816.png,Sobble | sobble
+817,817,Drizzile,Drizzile,drizzile,,True,817.png,Drizzile | drizzile
+818,818,Inteleon,Inteleon,inteleon,,True,818.png,Inteleon | inteleon
+819,819,Skwovet,Skwovet,skwovet,,True,819.png,Skwovet | skwovet
+820,820,Greedent,Greedent,greedent,,True,820.png,Greedent | greedent
+821,821,Rookidee,Rookidee,rookidee,,True,821.png,Rookidee | rookidee
+822,822,Corvisquire,Corvisquire,corvisquire,,True,822.png,Corvisquire | corvisquire
+823,823,Corviknight,Corviknight,corviknight,,True,823.png,Corviknight | corviknight
+824,824,Blipbug,Blipbug,blipbug,,True,824.png,Blipbug | blipbug
+825,825,Dottler,Dottler,dottler,,True,825.png,Dottler | dottler
+826,826,Orbeetle,Orbeetle,orbeetle,,True,826.png,Orbeetle | orbeetle
+827,827,Nickit,Nickit,nickit,,True,827.png,Nickit | nickit
+828,828,Thievul,Thievul,thievul,,True,828.png,Thievul | thievul
+829,829,Gossifleur,Gossifleur,gossifleur,,True,829.png,Gossifleur | gossifleur
+830,830,Eldegoss,Eldegoss,eldegoss,,True,830.png,Eldegoss | eldegoss
+831,831,Wooloo,Wooloo,wooloo,,True,831.png,Wooloo | wooloo
+832,832,Dubwool,Dubwool,dubwool,,True,832.png,Dubwool | dubwool
+833,833,Chewtle,Chewtle,chewtle,,True,833.png,Chewtle | chewtle
+834,834,Drednaw,Drednaw,drednaw,,True,834.png,Drednaw | drednaw
+835,835,Yamper,Yamper,yamper,,True,835.png,Yamper | yamper
+836,836,Boltund,Boltund,boltund,,True,836.png,Boltund | boltund
+837,837,Rolycoly,Rolycoly,rolycoly,,True,837.png,Rolycoly | rolycoly
+838,838,Carkol,Carkol,carkol,,True,838.png,Carkol | carkol
+839,839,Coalossal,Coalossal,coalossal,,True,839.png,Coalossal | coalossal
+840,840,Applin,Applin,applin,,True,840.png,Applin | applin
+841,841,Flapple,Flapple,flapple,,True,841.png,Flapple | flapple
+842,842,Appletun,Appletun,appletun,,True,842.png,Appletun | appletun
+843,843,Silicobra,Silicobra,silicobra,,True,843.png,Silicobra | silicobra
+844,844,Sandaconda,Sandaconda,sandaconda,,True,844.png,Sandaconda | sandaconda
+845,845,Cramorant,Cramorant,cramorant,,True,845.png,Cramorant | cramorant
+846,846,Arrokuda,Arrokuda,arrokuda,,True,846.png,Arrokuda | arrokuda
+847,847,Barraskewda,Barraskewda,barraskewda,,True,847.png,Barraskewda | barraskewda
+848,848,Toxel,Toxel,toxel,,True,848.png,Toxel | toxel
+849,849,Toxtricity,Toxtricity,toxtricity-amped,,True,849.png,Toxtricity | toxtricity amped | toxtricity-amped
+850,850,Sizzlipede,Sizzlipede,sizzlipede,,True,850.png,Sizzlipede | sizzlipede
+851,851,Centiskorch,Centiskorch,centiskorch,,True,851.png,Centiskorch | centiskorch
+852,852,Clobbopus,Clobbopus,clobbopus,,True,852.png,Clobbopus | clobbopus
+853,853,Grapploct,Grapploct,grapploct,,True,853.png,Grapploct | grapploct
+854,854,Sinistea,Sinistea,sinistea,,True,854.png,Sinistea | sinistea
+855,855,Polteageist,Polteageist,polteageist,,True,855.png,Polteageist | polteageist
+856,856,Hatenna,Hatenna,hatenna,,True,856.png,Hatenna | hatenna
+857,857,Hattrem,Hattrem,hattrem,,True,857.png,Hattrem | hattrem
+858,858,Hatterene,Hatterene,hatterene,,True,858.png,Hatterene | hatterene
+859,859,Impidimp,Impidimp,impidimp,,True,859.png,Impidimp | impidimp
+860,860,Morgrem,Morgrem,morgrem,,True,860.png,Morgrem | morgrem
+861,861,Grimmsnarl,Grimmsnarl,grimmsnarl,,True,861.png,Grimmsnarl | grimmsnarl
+862,862,Obstagoon,Obstagoon,obstagoon,,True,862.png,Obstagoon | obstagoon
+863,863,Perrserker,Perrserker,perrserker,,True,863.png,Perrserker | perrserker
+864,864,Cursola,Cursola,cursola,,True,864.png,Cursola | cursola
+865,865,Sirfetch’d,Sirfetch’d,sirfetchd,,True,865.png,Sirfetch’d | sirfetchd
+866,866,Mr. Rime,Mr. Rime,mr-rime,,True,866.png,Mr. Rime | mr rime | mr-rime
+867,867,Runerigus,Runerigus,runerigus,,True,867.png,Runerigus | runerigus
+868,868,Milcery,Milcery,milcery,,True,868.png,Milcery | milcery
+869,869,Alcremie,Alcremie,alcremie,,True,869.png,Alcremie | alcremie
+870,870,Falinks,Falinks,falinks,,True,870.png,Falinks | falinks
+871,871,Pincurchin,Pincurchin,pincurchin,,True,871.png,Pincurchin | pincurchin
+872,872,Snom,Snom,snom,,True,872.png,Snom | snom
+873,873,Frosmoth,Frosmoth,frosmoth,,True,873.png,Frosmoth | frosmoth
+874,874,Stonjourner,Stonjourner,stonjourner,,True,874.png,Stonjourner | stonjourner
+875,875,Eiscue,Eiscue,eiscue-ice,,True,875.png,Eiscue | eiscue ice | eiscue-ice
+876,876,Indeedee,Indeedee,indeedee-male,,True,876.png,Indeedee | indeedee male | indeedee-male
+877,877,Morpeko,Morpeko,morpeko-full-belly,,True,877.png,Morpeko | morpeko full belly | morpeko-full-belly
+878,878,Cufant,Cufant,cufant,,True,878.png,Cufant | cufant
+879,879,Copperajah,Copperajah,copperajah,,True,879.png,Copperajah | copperajah
+880,880,Dracozolt,Dracozolt,dracozolt,,True,880.png,Dracozolt | dracozolt
+881,881,Arctozolt,Arctozolt,arctozolt,,True,881.png,Arctozolt | arctozolt
+882,882,Dracovish,Dracovish,dracovish,,True,882.png,Dracovish | dracovish
+883,883,Arctovish,Arctovish,arctovish,,True,883.png,Arctovish | arctovish
+884,884,Duraludon,Duraludon,duraludon,,True,884.png,Duraludon | duraludon
+885,885,Dreepy,Dreepy,dreepy,,True,885.png,Dreepy | dreepy
+886,886,Drakloak,Drakloak,drakloak,,True,886.png,Drakloak | drakloak
+887,887,Dragapult,Dragapult,dragapult,,True,887.png,Dragapult | dragapult
+888,888,Zacian,Zacian,zacian,,True,888.png,Zacian | zacian
+889,889,Zamazenta,Zamazenta,zamazenta,,True,889.png,Zamazenta | zamazenta
+890,890,Eternatus,Eternatus,eternatus,,True,890.png,Eternatus | eternatus
+891,891,Kubfu,Kubfu,kubfu,,True,891.png,Kubfu | kubfu
+892,892,Urshifu,Urshifu,urshifu-single-strike,,True,892.png,Urshifu | urshifu single strike | urshifu-single-strike
+893,893,Zarude,Zarude,zarude,,True,893.png,Zarude | zarude
+894,894,Regieleki,Regieleki,regieleki,,True,894.png,Regieleki | regieleki
+895,895,Regidrago,Regidrago,regidrago,,True,895.png,Regidrago | regidrago
+896,896,Glastrier,Glastrier,glastrier,,True,896.png,Glastrier | glastrier
+897,897,Spectrier,Spectrier,spectrier,,True,897.png,Spectrier | spectrier
+898,898,Calyrex,Calyrex,calyrex,,True,898.png,Calyrex | calyrex
+899,899,Wyrdeer,Wyrdeer,wyrdeer,,True,899.png,Wyrdeer | wyrdeer
+900,900,Kleavor,Kleavor,kleavor,,True,900.png,Kleavor | kleavor
+901,901,Ursaluna,Ursaluna,ursaluna,,True,901.png,Ursaluna | ursaluna
+902,902,Basculegion,Basculegion,basculegion-male,,True,902.png,Basculegion | basculegion male | basculegion-male
+903,903,Sneasler,Sneasler,sneasler,,True,903.png,Sneasler | sneasler
+904,904,Overqwil,Overqwil,overqwil,,True,904.png,Overqwil | overqwil
+905,905,Enamorus,Enamorus,enamorus-incarnate,,True,905.png,Enamorus | enamorus incarnate | enamorus-incarnate
+906,906,Sprigatito,Sprigatito,sprigatito,,True,906.png,Sprigatito | sprigatito
+907,907,Floragato,Floragato,floragato,,True,907.png,Floragato | floragato
+908,908,Meowscarada,Meowscarada,meowscarada,,True,908.png,Meowscarada | meowscarada
+909,909,Fuecoco,Fuecoco,fuecoco,,True,909.png,Fuecoco | fuecoco
+910,910,Crocalor,Crocalor,crocalor,,True,910.png,Crocalor | crocalor
+911,911,Skeledirge,Skeledirge,skeledirge,,True,911.png,Skeledirge | skeledirge
+912,912,Quaxly,Quaxly,quaxly,,True,912.png,Quaxly | quaxly
+913,913,Quaxwell,Quaxwell,quaxwell,,True,913.png,Quaxwell | quaxwell
+914,914,Quaquaval,Quaquaval,quaquaval,,True,914.png,Quaquaval | quaquaval
+915,915,Lechonk,Lechonk,lechonk,,True,915.png,Lechonk | lechonk
+916,916,Oinkologne,Oinkologne,oinkologne-male,,True,916.png,Oinkologne | oinkologne male | oinkologne-male
+917,917,Tarountula,Tarountula,tarountula,,True,917.png,Tarountula | tarountula
+918,918,Spidops,Spidops,spidops,,True,918.png,Spidops | spidops
+919,919,Nymble,Nymble,nymble,,True,919.png,Nymble | nymble
+920,920,Lokix,Lokix,lokix,,True,920.png,Lokix | lokix
+921,921,Pawmi,Pawmi,pawmi,,True,921.png,Pawmi | pawmi
+922,922,Pawmo,Pawmo,pawmo,,True,922.png,Pawmo | pawmo
+923,923,Pawmot,Pawmot,pawmot,,True,923.png,Pawmot | pawmot
+924,924,Tandemaus,Tandemaus,tandemaus,,True,924.png,Tandemaus | tandemaus
+925,925,Maushold,Maushold,maushold-family-of-four,,True,925.png,Maushold | maushold family of four | maushold-family-of-four
+926,926,Fidough,Fidough,fidough,,True,926.png,Fidough | fidough
+927,927,Dachsbun,Dachsbun,dachsbun,,True,927.png,Dachsbun | dachsbun
+928,928,Smoliv,Smoliv,smoliv,,True,928.png,Smoliv | smoliv
+929,929,Dolliv,Dolliv,dolliv,,True,929.png,Dolliv | dolliv
+930,930,Arboliva,Arboliva,arboliva,,True,930.png,Arboliva | arboliva
+931,931,Squawkabilly,Squawkabilly,squawkabilly-green-plumage,,True,931.png,Squawkabilly | squawkabilly green plumage | squawkabilly-green-plumage
+932,932,Nacli,Nacli,nacli,,True,932.png,Nacli | nacli
+933,933,Naclstack,Naclstack,naclstack,,True,933.png,Naclstack | naclstack
+934,934,Garganacl,Garganacl,garganacl,,True,934.png,Garganacl | garganacl
+935,935,Charcadet,Charcadet,charcadet,,True,935.png,Charcadet | charcadet
+936,936,Armarouge,Armarouge,armarouge,,True,936.png,Armarouge | armarouge
+937,937,Ceruledge,Ceruledge,ceruledge,,True,937.png,Ceruledge | ceruledge
+938,938,Tadbulb,Tadbulb,tadbulb,,True,938.png,Tadbulb | tadbulb
+939,939,Bellibolt,Bellibolt,bellibolt,,True,939.png,Bellibolt | bellibolt
+940,940,Wattrel,Wattrel,wattrel,,True,940.png,Wattrel | wattrel
+941,941,Kilowattrel,Kilowattrel,kilowattrel,,True,941.png,Kilowattrel | kilowattrel
+942,942,Maschiff,Maschiff,maschiff,,True,942.png,Maschiff | maschiff
+943,943,Mabosstiff,Mabosstiff,mabosstiff,,True,943.png,Mabosstiff | mabosstiff
+944,944,Shroodle,Shroodle,shroodle,,True,944.png,Shroodle | shroodle
+945,945,Grafaiai,Grafaiai,grafaiai,,True,945.png,Grafaiai | grafaiai
+946,946,Bramblin,Bramblin,bramblin,,True,946.png,Bramblin | bramblin
+947,947,Brambleghast,Brambleghast,brambleghast,,True,947.png,Brambleghast | brambleghast
+948,948,Toedscool,Toedscool,toedscool,,True,948.png,Toedscool | toedscool
+949,949,Toedscruel,Toedscruel,toedscruel,,True,949.png,Toedscruel | toedscruel
+950,950,Klawf,Klawf,klawf,,True,950.png,Klawf | klawf
+951,951,Capsakid,Capsakid,capsakid,,True,951.png,Capsakid | capsakid
+952,952,Scovillain,Scovillain,scovillain,,True,952.png,Scovillain | scovillain
+953,953,Rellor,Rellor,rellor,,True,953.png,Rellor | rellor
+954,954,Rabsca,Rabsca,rabsca,,True,954.png,Rabsca | rabsca
+955,955,Flittle,Flittle,flittle,,True,955.png,Flittle | flittle
+956,956,Espathra,Espathra,espathra,,True,956.png,Espathra | espathra
+957,957,Tinkatink,Tinkatink,tinkatink,,True,957.png,Tinkatink | tinkatink
+958,958,Tinkatuff,Tinkatuff,tinkatuff,,True,958.png,Tinkatuff | tinkatuff
+959,959,Tinkaton,Tinkaton,tinkaton,,True,959.png,Tinkaton | tinkaton
+960,960,Wiglett,Wiglett,wiglett,,True,960.png,Wiglett | wiglett
+961,961,Wugtrio,Wugtrio,wugtrio,,True,961.png,Wugtrio | wugtrio
+962,962,Bombirdier,Bombirdier,bombirdier,,True,962.png,Bombirdier | bombirdier
+963,963,Finizen,Finizen,finizen,,True,963.png,Finizen | finizen
+964,964,Palafin,Palafin,palafin-zero,,True,964.png,Palafin | palafin zero | palafin-zero
+965,965,Varoom,Varoom,varoom,,True,965.png,Varoom | varoom
+966,966,Revavroom,Revavroom,revavroom,,True,966.png,Revavroom | revavroom
+967,967,Cyclizar,Cyclizar,cyclizar,,True,967.png,Cyclizar | cyclizar
+968,968,Orthworm,Orthworm,orthworm,,True,968.png,Orthworm | orthworm
+969,969,Glimmet,Glimmet,glimmet,,True,969.png,Glimmet | glimmet
+970,970,Glimmora,Glimmora,glimmora,,True,970.png,Glimmora | glimmora
+971,971,Greavard,Greavard,greavard,,True,971.png,Greavard | greavard
+972,972,Houndstone,Houndstone,houndstone,,True,972.png,Houndstone | houndstone
+973,973,Flamigo,Flamigo,flamigo,,True,973.png,Flamigo | flamigo
+974,974,Cetoddle,Cetoddle,cetoddle,,True,974.png,Cetoddle | cetoddle
+975,975,Cetitan,Cetitan,cetitan,,True,975.png,Cetitan | cetitan
+976,976,Veluza,Veluza,veluza,,True,976.png,Veluza | veluza
+977,977,Dondozo,Dondozo,dondozo,,True,977.png,Dondozo | dondozo
+978,978,Tatsugiri,Tatsugiri,tatsugiri-curly,,True,978.png,Tatsugiri | tatsugiri curly | tatsugiri-curly
+979,979,Annihilape,Annihilape,annihilape,,True,979.png,Annihilape | annihilape
+980,980,Clodsire,Clodsire,clodsire,,True,980.png,Clodsire | clodsire
+981,981,Farigiraf,Farigiraf,farigiraf,,True,981.png,Farigiraf | farigiraf
+982,982,Dudunsparce,Dudunsparce,dudunsparce-two-segment,,True,982.png,Dudunsparce | dudunsparce two segment | dudunsparce-two-segment
+983,983,Kingambit,Kingambit,kingambit,,True,983.png,Kingambit | kingambit
+984,984,Great Tusk,Great Tusk,great-tusk,,True,984.png,Great Tusk | great tusk | great-tusk
+985,985,Scream Tail,Scream Tail,scream-tail,,True,985.png,Scream Tail | scream tail | scream-tail
+986,986,Brute Bonnet,Brute Bonnet,brute-bonnet,,True,986.png,Brute Bonnet | brute bonnet | brute-bonnet
+987,987,Flutter Mane,Flutter Mane,flutter-mane,,True,987.png,Flutter Mane | flutter mane | flutter-mane
+988,988,Slither Wing,Slither Wing,slither-wing,,True,988.png,Slither Wing | slither wing | slither-wing
+989,989,Sandy Shocks,Sandy Shocks,sandy-shocks,,True,989.png,Sandy Shocks | sandy shocks | sandy-shocks
+990,990,Iron Treads,Iron Treads,iron-treads,,True,990.png,Iron Treads | iron treads | iron-treads
+991,991,Iron Bundle,Iron Bundle,iron-bundle,,True,991.png,Iron Bundle | iron bundle | iron-bundle
+992,992,Iron Hands,Iron Hands,iron-hands,,True,992.png,Iron Hands | iron hands | iron-hands
+993,993,Iron Jugulis,Iron Jugulis,iron-jugulis,,True,993.png,Iron Jugulis | iron jugulis | iron-jugulis
+994,994,Iron Moth,Iron Moth,iron-moth,,True,994.png,Iron Moth | iron moth | iron-moth
+995,995,Iron Thorns,Iron Thorns,iron-thorns,,True,995.png,Iron Thorns | iron thorns | iron-thorns
+996,996,Frigibax,Frigibax,frigibax,,True,996.png,Frigibax | frigibax
+997,997,Arctibax,Arctibax,arctibax,,True,997.png,Arctibax | arctibax
+998,998,Baxcalibur,Baxcalibur,baxcalibur,,True,998.png,Baxcalibur | baxcalibur
+999,999,Gimmighoul,Gimmighoul,gimmighoul,,True,999.png,Gimmighoul | gimmighoul
+1000,1000,Gholdengo,Gholdengo,gholdengo,,True,1000.png,Gholdengo | gholdengo
+1001,1001,Wo-Chien,Wo-Chien,wo-chien,,True,1001.png,Wo Chien | Wo-Chien | wo chien | wo-chien
+1002,1002,Chien-Pao,Chien-Pao,chien-pao,,True,1002.png,Chien Pao | Chien-Pao | chien pao | chien-pao
+1003,1003,Ting-Lu,Ting-Lu,ting-lu,,True,1003.png,Ting Lu | Ting-Lu | ting lu | ting-lu
+1004,1004,Chi-Yu,Chi-Yu,chi-yu,,True,1004.png,Chi Yu | Chi-Yu | chi yu | chi-yu
+1005,1005,Roaring Moon,Roaring Moon,roaring-moon,,True,1005.png,Roaring Moon | roaring moon | roaring-moon
+1006,1006,Iron Valiant,Iron Valiant,iron-valiant,,True,1006.png,Iron Valiant | iron valiant | iron-valiant
+1007,1007,Koraidon,Koraidon,koraidon,,True,1007.png,Koraidon | koraidon
+1008,1008,Miraidon,Miraidon,miraidon,,True,1008.png,Miraidon | miraidon
+1009,1009,Walking Wake,Walking Wake,walking-wake,,True,1009.png,Walking Wake | walking wake | walking-wake
+1010,1010,Iron Leaves,Iron Leaves,iron-leaves,,True,1010.png,Iron Leaves | iron leaves | iron-leaves
+1011,1011,Dipplin,Dipplin,dipplin,,True,1011.png,Dipplin | dipplin
+1012,1012,Poltchageist,Poltchageist,poltchageist,,True,1012.png,Poltchageist | poltchageist
+1013,1013,Sinistcha,Sinistcha,sinistcha,,True,1013.png,Sinistcha | sinistcha
+1014,1014,Okidogi,Okidogi,okidogi,,True,1014.png,Okidogi | okidogi
+1015,1015,Munkidori,Munkidori,munkidori,,True,1015.png,Munkidori | munkidori
+1016,1016,Fezandipiti,Fezandipiti,fezandipiti,,True,1016.png,Fezandipiti | fezandipiti
+1017,1017,Ogerpon,Ogerpon,ogerpon,,True,1017.png,Ogerpon | ogerpon
+1018,1018,Archaludon,Archaludon,archaludon,,True,1018.png,Archaludon | archaludon
+1019,1019,Hydrapple,Hydrapple,hydrapple,,True,1019.png,Hydrapple | hydrapple
+1020,1020,Gouging Fire,Gouging Fire,gouging-fire,,True,1020.png,Gouging Fire | gouging fire | gouging-fire
+1021,1021,Raging Bolt,Raging Bolt,raging-bolt,,True,1021.png,Raging Bolt | raging bolt | raging-bolt
+1022,1022,Iron Boulder,Iron Boulder,iron-boulder,,True,1022.png,Iron Boulder | iron boulder | iron-boulder
+1023,1023,Iron Crown,Iron Crown,iron-crown,,True,1023.png,Iron Crown | iron crown | iron-crown
+1024,1024,Terapagos,Terapagos,terapagos,,True,1024.png,Terapagos | terapagos
+1025,1025,Pecharunt,Pecharunt,pecharunt,,True,1025.png,Pecharunt | pecharunt
+10001,386,Deoxys-Attack,Deoxys,deoxys-attack,deoxys-attack,False,10001.png,Deoxys | Deoxys Attack | Deoxys-Attack | deoxys attack | deoxys-attack
+10002,386,Deoxys-Defense,Deoxys,deoxys-defense,deoxys-defense,False,10002.png,Deoxys | Deoxys Defense | Deoxys-Defense | deoxys defense | deoxys-defense
+10003,386,Deoxys-Speed,Deoxys,deoxys-speed,deoxys-speed,False,10003.png,Deoxys | Deoxys Speed | Deoxys-Speed | deoxys speed | deoxys-speed
+10004,413,Wormadam-Sandy,Wormadam,wormadam-sandy,wormadam-sandy,False,10004.png,Wormadam | Wormadam Sandy | Wormadam-Sandy | wormadam sandy | wormadam-sandy
+10005,413,Wormadam-Trash,Wormadam,wormadam-trash,wormadam-trash,False,10005.png,Wormadam | Wormadam Trash | Wormadam-Trash | wormadam trash | wormadam-trash
+10006,492,Shaymin-Sky,Shaymin,shaymin-sky,shaymin-sky,False,10006.png,Shaymin | Shaymin Sky | Shaymin-Sky | shaymin sky | shaymin-sky
+10007,487,Giratina-Origin,Giratina,giratina-origin,giratina-origin,False,10007.png,Giratina | Giratina Origin | Giratina-Origin | giratina origin | giratina-origin
+10008,479,Rotom-Heat,Rotom,rotom-heat,rotom-heat,False,10008.png,Rotom | Rotom Heat | Rotom-Heat | rotom heat | rotom-heat
+10009,479,Rotom-Wash,Rotom,rotom-wash,rotom-wash,False,10009.png,Rotom | Rotom Wash | Rotom-Wash | rotom wash | rotom-wash
+10010,479,Rotom-Frost,Rotom,rotom-frost,rotom-frost,False,10010.png,Rotom | Rotom Frost | Rotom-Frost | rotom frost | rotom-frost
+10011,479,Rotom-Fan,Rotom,rotom-fan,rotom-fan,False,10011.png,Rotom | Rotom Fan | Rotom-Fan | rotom fan | rotom-fan
+10012,479,Rotom-Mow,Rotom,rotom-mow,rotom-mow,False,10012.png,Rotom | Rotom Mow | Rotom-Mow | rotom mow | rotom-mow
+10013,351,Castform-Sunny,Castform,castform-sunny,castform-sunny,False,10013.png,Castform | Castform Sunny | Castform-Sunny | castform sunny | castform-sunny
+10014,351,Castform-Rainy,Castform,castform-rainy,castform-rainy,False,10014.png,Castform | Castform Rainy | Castform-Rainy | castform rainy | castform-rainy
+10015,351,Castform-Snowy,Castform,castform-snowy,castform-snowy,False,10015.png,Castform | Castform Snowy | Castform-Snowy | castform snowy | castform-snowy
+10016,550,Basculin-Blue-Striped,Basculin,basculin-blue-striped,basculin-blue-striped,False,10016.png,Basculin | Basculin Blue Striped | Basculin-Blue-Striped | basculin blue striped | basculin-blue-striped
+10017,555,Darmanitan-Zen,Darmanitan,darmanitan-zen,darmanitan-zen,False,10017.png,Darmanitan | Darmanitan Zen | Darmanitan-Zen | darmanitan zen | darmanitan-zen
+10018,648,Meloetta-Pirouette,Meloetta,meloetta-pirouette,meloetta-pirouette,False,10018.png,Meloetta | Meloetta Pirouette | Meloetta-Pirouette | meloetta pirouette | meloetta-pirouette
+10019,641,Tornadus-Therian,Tornadus,tornadus-therian,tornadus-therian,False,10019.png,Tornadus | Tornadus Therian | Tornadus-Therian | tornadus therian | tornadus-therian
+10020,642,Thundurus-Therian,Thundurus,thundurus-therian,thundurus-therian,False,10020.png,Thundurus | Thundurus Therian | Thundurus-Therian | thundurus therian | thundurus-therian
+10021,645,Landorus-Therian,Landorus,landorus-therian,landorus-therian,False,10021.png,Landorus | Landorus Therian | Landorus-Therian | landorus therian | landorus-therian
+10022,646,Kyurem-Black,Kyurem,kyurem-black,kyurem-black,False,10022.png,Kyurem | Kyurem Black | Kyurem-Black | kyurem black | kyurem-black
+10023,646,Kyurem-White,Kyurem,kyurem-white,kyurem-white,False,10023.png,Kyurem | Kyurem White | Kyurem-White | kyurem white | kyurem-white
+10024,647,Keldeo-Resolute,Keldeo,keldeo-resolute,keldeo-resolute,False,10024.png,Keldeo | Keldeo Resolute | Keldeo-Resolute | keldeo resolute | keldeo-resolute
+10025,678,Meowstic-Female,Meowstic,meowstic-female,meowstic-female,False,10025.png,Meowstic | Meowstic Female | Meowstic-Female | meowstic female | meowstic-female
+10026,681,Aegislash-Blade,Aegislash,aegislash-blade,aegislash-blade,False,10026.png,Aegislash | Aegislash Blade | Aegislash-Blade | aegislash blade | aegislash-blade
+10027,710,Pumpkaboo-Small,Pumpkaboo,pumpkaboo-small,pumpkaboo-small,False,10027.png,Pumpkaboo | Pumpkaboo Small | Pumpkaboo-Small | pumpkaboo small | pumpkaboo-small
+10028,710,Pumpkaboo-Large,Pumpkaboo,pumpkaboo-large,pumpkaboo-large,False,10028.png,Pumpkaboo | Pumpkaboo Large | Pumpkaboo-Large | pumpkaboo large | pumpkaboo-large
+10029,710,Pumpkaboo-Super,Pumpkaboo,pumpkaboo-super,pumpkaboo-super,False,10029.png,Pumpkaboo | Pumpkaboo Super | Pumpkaboo-Super | pumpkaboo super | pumpkaboo-super
+10030,711,Gourgeist-Small,Gourgeist,gourgeist-small,gourgeist-small,False,10030.png,Gourgeist | Gourgeist Small | Gourgeist-Small | gourgeist small | gourgeist-small
+10031,711,Gourgeist-Large,Gourgeist,gourgeist-large,gourgeist-large,False,10031.png,Gourgeist | Gourgeist Large | Gourgeist-Large | gourgeist large | gourgeist-large
+10032,711,Gourgeist-Super,Gourgeist,gourgeist-super,gourgeist-super,False,10032.png,Gourgeist | Gourgeist Super | Gourgeist-Super | gourgeist super | gourgeist-super
+10033,3,Venusaur-Mega,Venusaur,venusaur-mega,venusaur-mega,False,10033.png,Venusaur | Venusaur Mega | Venusaur-Mega | venusaur mega | venusaur-mega
+10034,6,Charizard-Mega-X,Charizard,charizard-mega-x,charizard-mega-x,False,10034.png,Charizard | Charizard Mega X | Charizard-Mega-X | charizard mega x | charizard-mega-x
+10035,6,Charizard-Mega-Y,Charizard,charizard-mega-y,charizard-mega-y,False,10035.png,Charizard | Charizard Mega Y | Charizard-Mega-Y | charizard mega y | charizard-mega-y
+10036,9,Blastoise-Mega,Blastoise,blastoise-mega,blastoise-mega,False,10036.png,Blastoise | Blastoise Mega | Blastoise-Mega | blastoise mega | blastoise-mega
+10037,65,Alakazam-Mega,Alakazam,alakazam-mega,alakazam-mega,False,10037.png,Alakazam | Alakazam Mega | Alakazam-Mega | alakazam mega | alakazam-mega
+10038,94,Gengar-Mega,Gengar,gengar-mega,gengar-mega,False,10038.png,Gengar | Gengar Mega | Gengar-Mega | gengar mega | gengar-mega
+10039,115,Kangaskhan-Mega,Kangaskhan,kangaskhan-mega,kangaskhan-mega,False,10039.png,Kangaskhan | Kangaskhan Mega | Kangaskhan-Mega | kangaskhan mega | kangaskhan-mega
+10040,127,Pinsir-Mega,Pinsir,pinsir-mega,pinsir-mega,False,10040.png,Pinsir | Pinsir Mega | Pinsir-Mega | pinsir mega | pinsir-mega
+10041,130,Gyarados-Mega,Gyarados,gyarados-mega,gyarados-mega,False,10041.png,Gyarados | Gyarados Mega | Gyarados-Mega | gyarados mega | gyarados-mega
+10042,142,Aerodactyl-Mega,Aerodactyl,aerodactyl-mega,aerodactyl-mega,False,10042.png,Aerodactyl | Aerodactyl Mega | Aerodactyl-Mega | aerodactyl mega | aerodactyl-mega
+10043,150,Mewtwo-Mega-X,Mewtwo,mewtwo-mega-x,mewtwo-mega-x,False,10043.png,Mewtwo | Mewtwo Mega X | Mewtwo-Mega-X | mewtwo mega x | mewtwo-mega-x
+10044,150,Mewtwo-Mega-Y,Mewtwo,mewtwo-mega-y,mewtwo-mega-y,False,10044.png,Mewtwo | Mewtwo Mega Y | Mewtwo-Mega-Y | mewtwo mega y | mewtwo-mega-y
+10045,181,Ampharos-Mega,Ampharos,ampharos-mega,ampharos-mega,False,10045.png,Ampharos | Ampharos Mega | Ampharos-Mega | ampharos mega | ampharos-mega
+10046,212,Scizor-Mega,Scizor,scizor-mega,scizor-mega,False,10046.png,Scizor | Scizor Mega | Scizor-Mega | scizor mega | scizor-mega
+10047,214,Heracross-Mega,Heracross,heracross-mega,heracross-mega,False,10047.png,Heracross | Heracross Mega | Heracross-Mega | heracross mega | heracross-mega
+10048,229,Houndoom-Mega,Houndoom,houndoom-mega,houndoom-mega,False,10048.png,Houndoom | Houndoom Mega | Houndoom-Mega | houndoom mega | houndoom-mega
+10049,248,Tyranitar-Mega,Tyranitar,tyranitar-mega,tyranitar-mega,False,10049.png,Tyranitar | Tyranitar Mega | Tyranitar-Mega | tyranitar mega | tyranitar-mega
+10050,257,Blaziken-Mega,Blaziken,blaziken-mega,blaziken-mega,False,10050.png,Blaziken | Blaziken Mega | Blaziken-Mega | blaziken mega | blaziken-mega
+10051,282,Gardevoir-Mega,Gardevoir,gardevoir-mega,gardevoir-mega,False,10051.png,Gardevoir | Gardevoir Mega | Gardevoir-Mega | gardevoir mega | gardevoir-mega
+10052,303,Mawile-Mega,Mawile,mawile-mega,mawile-mega,False,10052.png,Mawile | Mawile Mega | Mawile-Mega | mawile mega | mawile-mega
+10053,306,Aggron-Mega,Aggron,aggron-mega,aggron-mega,False,10053.png,Aggron | Aggron Mega | Aggron-Mega | aggron mega | aggron-mega
+10054,308,Medicham-Mega,Medicham,medicham-mega,medicham-mega,False,10054.png,Medicham | Medicham Mega | Medicham-Mega | medicham mega | medicham-mega
+10055,310,Manectric-Mega,Manectric,manectric-mega,manectric-mega,False,10055.png,Manectric | Manectric Mega | Manectric-Mega | manectric mega | manectric-mega
+10056,354,Banette-Mega,Banette,banette-mega,banette-mega,False,10056.png,Banette | Banette Mega | Banette-Mega | banette mega | banette-mega
+10057,359,Absol-Mega,Absol,absol-mega,absol-mega,False,10057.png,Absol | Absol Mega | Absol-Mega | absol mega | absol-mega
+10058,445,Garchomp-Mega,Garchomp,garchomp-mega,garchomp-mega,False,10058.png,Garchomp | Garchomp Mega | Garchomp-Mega | garchomp mega | garchomp-mega
+10059,448,Lucario-Mega,Lucario,lucario-mega,lucario-mega,False,10059.png,Lucario | Lucario Mega | Lucario-Mega | lucario mega | lucario-mega
+10060,460,Abomasnow-Mega,Abomasnow,abomasnow-mega,abomasnow-mega,False,10060.png,Abomasnow | Abomasnow Mega | Abomasnow-Mega | abomasnow mega | abomasnow-mega
+10061,670,Floette-Eternal,Floette,floette-eternal,floette-eternal,False,10061.png,Floette | Floette Eternal | Floette-Eternal | floette eternal | floette-eternal
+10062,380,Latias-Mega,Latias,latias-mega,latias-mega,False,10062.png,Latias | Latias Mega | Latias-Mega | latias mega | latias-mega
+10063,381,Latios-Mega,Latios,latios-mega,latios-mega,False,10063.png,Latios | Latios Mega | Latios-Mega | latios mega | latios-mega
+10064,260,Swampert-Mega,Swampert,swampert-mega,swampert-mega,False,10064.png,Swampert | Swampert Mega | Swampert-Mega | swampert mega | swampert-mega
+10065,254,Sceptile-Mega,Sceptile,sceptile-mega,sceptile-mega,False,10065.png,Sceptile | Sceptile Mega | Sceptile-Mega | sceptile mega | sceptile-mega
+10066,302,Sableye-Mega,Sableye,sableye-mega,sableye-mega,False,10066.png,Sableye | Sableye Mega | Sableye-Mega | sableye mega | sableye-mega
+10067,334,Altaria-Mega,Altaria,altaria-mega,altaria-mega,False,10067.png,Altaria | Altaria Mega | Altaria-Mega | altaria mega | altaria-mega
+10068,475,Gallade-Mega,Gallade,gallade-mega,gallade-mega,False,10068.png,Gallade | Gallade Mega | Gallade-Mega | gallade mega | gallade-mega
+10069,531,Audino-Mega,Audino,audino-mega,audino-mega,False,10069.png,Audino | Audino Mega | Audino-Mega | audino mega | audino-mega
+10070,319,Sharpedo-Mega,Sharpedo,sharpedo-mega,sharpedo-mega,False,10070.png,Sharpedo | Sharpedo Mega | Sharpedo-Mega | sharpedo mega | sharpedo-mega
+10071,80,Slowbro-Mega,Slowbro,slowbro-mega,slowbro-mega,False,10071.png,Slowbro | Slowbro Mega | Slowbro-Mega | slowbro mega | slowbro-mega
+10072,208,Steelix-Mega,Steelix,steelix-mega,steelix-mega,False,10072.png,Steelix | Steelix Mega | Steelix-Mega | steelix mega | steelix-mega
+10073,18,Pidgeot-Mega,Pidgeot,pidgeot-mega,pidgeot-mega,False,10073.png,Pidgeot | Pidgeot Mega | Pidgeot-Mega | pidgeot mega | pidgeot-mega
+10074,362,Glalie-Mega,Glalie,glalie-mega,glalie-mega,False,10074.png,Glalie | Glalie Mega | Glalie-Mega | glalie mega | glalie-mega
+10075,719,Diancie-Mega,Diancie,diancie-mega,diancie-mega,False,10075.png,Diancie | Diancie Mega | Diancie-Mega | diancie mega | diancie-mega
+10076,376,Metagross-Mega,Metagross,metagross-mega,metagross-mega,False,10076.png,Metagross | Metagross Mega | Metagross-Mega | metagross mega | metagross-mega
+10077,382,Kyogre-Primal,Kyogre,kyogre-primal,kyogre-primal,False,10077.png,Kyogre | Kyogre Primal | Kyogre-Primal | kyogre primal | kyogre-primal
+10078,383,Groudon-Primal,Groudon,groudon-primal,groudon-primal,False,10078.png,Groudon | Groudon Primal | Groudon-Primal | groudon primal | groudon-primal
+10079,384,Rayquaza-Mega,Rayquaza,rayquaza-mega,rayquaza-mega,False,10079.png,Rayquaza | Rayquaza Mega | Rayquaza-Mega | rayquaza mega | rayquaza-mega
+10080,25,Pikachu-Rock-Star,Pikachu,pikachu-rock-star,pikachu-rock-star,False,10080.png,Pikachu | Pikachu Rock Star | Pikachu-Rock-Star | pikachu rock star | pikachu-rock-star
+10081,25,Pikachu-Belle,Pikachu,pikachu-belle,pikachu-belle,False,10081.png,Pikachu | Pikachu Belle | Pikachu-Belle | pikachu belle | pikachu-belle
+10082,25,Pikachu-Pop-Star,Pikachu,pikachu-pop-star,pikachu-pop-star,False,10082.png,Pikachu | Pikachu Pop Star | Pikachu-Pop-Star | pikachu pop star | pikachu-pop-star
+10083,25,Pikachu-Phd,Pikachu,pikachu-phd,pikachu-phd,False,10083.png,Pikachu | Pikachu Phd | Pikachu-Phd | pikachu phd | pikachu-phd
+10084,25,Pikachu-Libre,Pikachu,pikachu-libre,pikachu-libre,False,10084.png,Pikachu | Pikachu Libre | Pikachu-Libre | pikachu libre | pikachu-libre
+10085,25,Pikachu-Cosplay,Pikachu,pikachu-cosplay,pikachu-cosplay,False,10085.png,Pikachu | Pikachu Cosplay | Pikachu-Cosplay | pikachu cosplay | pikachu-cosplay
+10086,720,Hoopa-Unbound,Hoopa,hoopa-unbound,hoopa-unbound,False,10086.png,Hoopa | Hoopa Unbound | Hoopa-Unbound | hoopa unbound | hoopa-unbound
+10087,323,Camerupt-Mega,Camerupt,camerupt-mega,camerupt-mega,False,10087.png,Camerupt | Camerupt Mega | Camerupt-Mega | camerupt mega | camerupt-mega
+10088,428,Lopunny-Mega,Lopunny,lopunny-mega,lopunny-mega,False,10088.png,Lopunny | Lopunny Mega | Lopunny-Mega | lopunny mega | lopunny-mega
+10089,373,Salamence-Mega,Salamence,salamence-mega,salamence-mega,False,10089.png,Salamence | Salamence Mega | Salamence-Mega | salamence mega | salamence-mega
+10090,15,Beedrill-Mega,Beedrill,beedrill-mega,beedrill-mega,False,10090.png,Beedrill | Beedrill Mega | Beedrill-Mega | beedrill mega | beedrill-mega
+10091,19,Rattata-Alolan,Rattata,rattata-alolan,rattata-alolan,False,10091.png,Rattata | Rattata Alolan | Rattata-Alolan | rattata alolan | rattata-alolan
+10092,20,Raticate-Alolan,Raticate,raticate-alolan,raticate-alolan,False,10092.png,Raticate | Raticate Alolan | Raticate-Alolan | raticate alolan | raticate-alolan
+10093,20,Raticate-Totem-Alolan,Raticate,raticate-totem-alolan,raticate-totem-alolan,False,10093.png,Raticate | Raticate Totem Alolan | Raticate-Totem-Alolan | raticate totem alolan | raticate-totem-alolan
+10094,25,Pikachu-Original-Cap,Pikachu,pikachu-original-cap,pikachu-original-cap,False,10094.png,Pikachu | Pikachu Original Cap | Pikachu-Original-Cap | pikachu original cap | pikachu-original-cap
+10095,25,Pikachu-Hoenn-Cap,Pikachu,pikachu-hoenn-cap,pikachu-hoenn-cap,False,10095.png,Pikachu | Pikachu Hoenn Cap | Pikachu-Hoenn-Cap | pikachu hoenn cap | pikachu-hoenn-cap
+10096,25,Pikachu-Sinnoh-Cap,Pikachu,pikachu-sinnoh-cap,pikachu-sinnoh-cap,False,10096.png,Pikachu | Pikachu Sinnoh Cap | Pikachu-Sinnoh-Cap | pikachu sinnoh cap | pikachu-sinnoh-cap
+10097,25,Pikachu-Unova-Cap,Pikachu,pikachu-unova-cap,pikachu-unova-cap,False,10097.png,Pikachu | Pikachu Unova Cap | Pikachu-Unova-Cap | pikachu unova cap | pikachu-unova-cap
+10098,25,Pikachu-Kalos-Cap,Pikachu,pikachu-kalos-cap,pikachu-kalos-cap,False,10098.png,Pikachu | Pikachu Kalos Cap | Pikachu-Kalos-Cap | pikachu kalos cap | pikachu-kalos-cap
+10099,25,Pikachu-Alolan-Cap,Pikachu,pikachu-alolan-cap,pikachu-alolan-cap,False,10099.png,Pikachu | Pikachu Alolan Cap | Pikachu-Alolan-Cap | pikachu alolan cap | pikachu-alolan-cap
+10100,26,Raichu-Alolan,Raichu,raichu-alolan,raichu-alolan,False,10100.png,Raichu | Raichu Alolan | Raichu-Alolan | raichu alolan | raichu-alolan
+10101,27,Sandshrew-Alolan,Sandshrew,sandshrew-alolan,sandshrew-alolan,False,10101.png,Sandshrew | Sandshrew Alolan | Sandshrew-Alolan | sandshrew alolan | sandshrew-alolan
+10102,28,Sandslash-Alolan,Sandslash,sandslash-alolan,sandslash-alolan,False,10102.png,Sandslash | Sandslash Alolan | Sandslash-Alolan | sandslash alolan | sandslash-alolan
+10103,37,Vulpix-Alolan,Vulpix,vulpix-alolan,vulpix-alolan,False,10103.png,Vulpix | Vulpix Alolan | Vulpix-Alolan | vulpix alolan | vulpix-alolan
+10104,38,Ninetales-Alolan,Ninetales,ninetales-alolan,ninetales-alolan,False,10104.png,Ninetales | Ninetales Alolan | Ninetales-Alolan | ninetales alolan | ninetales-alolan
+10105,50,Diglett-Alolan,Diglett,diglett-alolan,diglett-alolan,False,10105.png,Diglett | Diglett Alolan | Diglett-Alulan | diglett alulan | diglett-alulan
+10106,51,Dugtrio-Alolan,Dugtrio,dugtrio-alolan,dugtrio-alolan,False,10106.png,Dugtrio | Dugtrio Alolan | Dugtrio-Alolan | dugtrio alolan | dugtrio-alolan
+
+10110,75,Graveler-Alolan,Graveler,graveler-alolan,graveler-alolan,False,10110.png,Graveler | Graveler Alolan | Graveler-Alolan | graveler alolan | graveler-alolan
+10111,76,Golem-Alolan,Golem,golem-alolan,golem-alolan,False,10111.png,Golem | Golem Alolan | Golem-Alolan | golem alolan | golem-alolan
+10112,88,Grimer-Alolan,Grimer,grimer-alolan,grimer-alolan,False,10112.png,Grimer | Grimer Alolan | Grimer-Alolan | grimer alolan | grimer-alolan
+10113,89,Muk-Alolan,Muk,muk-alolan,muk-alolan,False,10113.png,Muk | Muk Alolan | Muk-Alolan | muk alolan | muk-alolan
+10114,103,Exeggutor-Alolan,Exeggutor,exeggutor-alolan,exeggutor-alolan,False,10114.png,Exeggutor | Exeggutor Alolan | Exeggutor-Alolan | exeggutor alolan | exeggutor-alolan
+10115,105,Marowak-Alolan,Marowak,marowak-alolan,marowak-alulan,False,10115.png,Marowak | Marowak Alulan | Marowak-Alulan | marowak alulan | marowak-alulan
+
+10121,735,Gumshoos-Totem,Gumshoos,gumshoos-totem,gumshoos-totem,False,10121.png,Gumshoos | Gumshoos Totem | Gumshoos-Totem | gumshoos totem | gumshoos-totem
+10122,738,Vikavolt-Totem,Vikavolt,vikavolt-totem,vikavolt-totem,False,10122.png,Vikavolt | Vikavolt Totem | Vikavolt-Totem | vikavolt totem | vikavolt-totem
+10123,741,Oricorio-Pom-Pom,Oricorio,oricorio-pom-pom,oricorio-pom-pom,False,10123.png,Oricorio | Oricorio Pom Pom | Oricorio-Pom-Pom | oricorio pom pom | oricorio-pom-pom
+10124,741,Oricorio-Pau,Oricorio,oricorio-pau,oricorio-pau,False,10124.png,Oricorio | Oricorio Pau | Oricorio-Pau | oricorio pau | oricorio-pau
+10125,741,Oricorio-Sensu,Oricorio,oricorio-sensu,oricorio-sensu,False,10125.png,Oricorio | Oricorio Sensu | Oricorio-Sensu | oricorio sensu | oricorio-sensu
+10126,745,Lycanroc-Midnight,Lycanroc,lycanroc-midnight,lycanroc-midnight,False,10126.png,Lycanroc | Lycanroc Midnight | Lycanroc-Midnight | lycanroc midnight | lycanroc-midnight
+10127,746,Wishiwashi-School,Wishiwashi,wishiwashi-school,wishiwashi-school,False,10127.png,Wishiwashi | Wishiwashi School | Wishiwashi-School | wishiwashi school | wishiwashi-school
+10128,754,Lurantis-Totem,Lurantis,lurantis-totem,lurantis-totem,False,10128.png,Lurantis | Lurantis Totem | Lurantis-Totem | lurantis totem | lurantis-totem
+10129,758,Salazzle-Totem,Salazzle,salazzle-totem,salazzle-totem,False,10129.png,Salazzle | Salazzle Totem | Salazzle-Totem | salazzle totem | salazzle-totem
+10130,774,Minior-Orange-Meteor,Minior,minior-orange-meteor,minior-orange-meteor,False,10130.png,Minior | Minior Orange Meteor | Minior-Orange-Meteor | minior orange meteor | minior-orange-meteor
+10131,774,Minior-Yellow-Meteor,Minior,minior-yellow-meteor,minior-yellow-meteor,False,10131.png,Minior | Minior Yellow Meteor | Minior-Yellow-Meteor | minior yellow meteor | minior-yellow-meteor
+10132,774,Minior-Green-Meteor,Minior,minior-green-meteor,minior-green-meteor,False,10132.png,Minior | Minior Green Meteor | Minior-Green-Meteor | minior green meteor | minior-green-meteor
+10133,774,Minior-Blue-Meteor,Minior,minior-blue-meteor,minior-blue-meteor,False,10133.png,Minior | Minior Blue Meteor | Minior-Blue-Meteor | minior blue meteor | minior-blue-meteor
+10134,774,Minior-Indigo-Meteor,Minior,minior-indigo-meteor,minior-indigo-meteor,False,10134.png,Minior | Minior Indigo Meteor | Minior-Indigo-Meteor | minior indigo meteor | minior-indigo-meteor
+10135,774,Minior-Violet-Meteor,Minior,minior-violet-meteor,minior-violet-meteor,False,10135.png,Minior | Minior Violet Meteor | Minior-Violet-Meteor | minior violet meteor | minior-violet-meteor
+10136,774,Minior-Red,Minior,minior-red,minior-red,False,10136.png,Minior | Minior Red | Minior-Red | minior red | minior-red
+10137,774,Minior-Orange,Minior,minior-orange,minior-orange,False,10137.png,Minior | Minior Orange | Minior-Orange | minior orange | minior-orange
+10138,774,Minior-Yellow,Minior,minior-yellow,minior-yellow,False,10138.png,Minior | Minior Yellow | Minior-Yellow | minior yellow | minior-yellow
+10139,774,Minior-Green,Minior,minior-green,minior-green,False,10139.png,Minior | Minior Green | Minior-Green | minior green | minior-green
+10140,774,Minior-Blue,Minior,minior-blue,minior-blue,False,10140.png,Minior | Minior Blue | Minior-Blue | minior blue | minior-blue
+10141,774,Minior-Indigo,Minior,minior-indigo,minior-indigo,False,10141.png,Minior | Minior Indigo | Minior-Indigo | minior indigo | minior-indigo
+10142,774,Minior-Violet,Minior,minior-violet,minior-violet,False,10142.png,Minior | Minior Violet | Minior-Violet | minior violet | minior-violet
+10143,778,Mimikyu-Busted,Mimikyu,mimikyu-busted,mimikyu-busted,False,10143.png,Mimikyu | Mimikyu Busted | Mimikyu-Busted | mimikyu busted | mimikyu-busted
+10144,778,Mimikyu-Totem-Disguised,Mimikyu,mimikyu-totem-disguised,mimikyu-totem-disguised,False,10144.png,Mimikyu | Mimikyu Totem Disguised | Mimikyu-Totem-Disguised | mimikyu totem disguised | mimikyu-totem-disguised
+10145,778,Mimikyu-Totem-Busted,Mimikyu,mimikyu-totem-busted,mimikyu-totem-busted,False,10145.png,Mimikyu | Mimikyu Totem Busted | Mimikyu-Totem-Busted | mimikyu totem busted | mimikyu-totem-busted
+10146,784,Kommo-O-Totem,Kommo-o,kommo-o-totem,kommo-o-totem,False,10146.png,Kommo O Totem | Kommo-O-Totem | Kommo-o | kommo o totem | kommo-o-totem
+10147,801,Magearna-Original,Magearna,magearna-original,magearna-original,False,10147.png,Magearna | Magearna Original | Magearna-Original | magearna original | magearna-original
+10148,25,Pikachu-Partner-Cap,Pikachu,pikachu-partner-cap,pikachu-partner-cap,False,10148.png,Pikachu | Pikachu Partner Cap | Pikachu-Partner-Cap | pikachu partner cap | pikachu-partner-cap
+10149,105,Marowak-Totem,Marowak,marowak-totem,marowak-totem,False,10149.png,Marowak | Marowak Totem | Marowak-Totem | marowak totem | marowak-totem
+10150,743,Ribombee-Totem,Ribombee,ribombee-totem,ribombee-totem,False,10150.png,Ribombee | Ribombee Totem | Ribombee-Totem | ribombee totem | ribombee-totem
+10151,744,Rockruff-Own-Tempo,Rockruff,rockruff-own-tempo,rockruff-own-tempo,False,10151.png,Rockruff | Rockruff Own Tempo | Rockruff-Own-Tempo | rockruff own tempo | rockruff-own-tempo
+10152,745,Lycanroc-Dusk,Lycanroc,lycanroc-dusk,lycanroc-dusk,False,10152.png,Lycanroc | Lycanroc Dusk | Lycanroc-Dusk | lycanroc dusk | lycanroc-dusk
+10153,752,Araquanid-Totem,Araquanid,araquanid-totem,araquanid-totem,False,10153.png,Araquanid | Araquanid Totem | Araquanid-Totem | araquanid totem | araquanid-totem
+10154,777,Togedemaru-Totem,Togedemaru,togedemaru-totem,togedemaru-totem,False,10154.png,Togedemaru | Togedemaru Totem | Togedemaru-Totem | togedemaru totem | togedemaru-totem
+10155,800,Necrozma-Dusk,Necrozma,necrozma-dusk,necrozma-dusk,False,10155.png,Necrozma | Necrozma Dusk | Necrozma-Dusk | necrozma dusk | necrozma-dusk
+10156,800,Necrozma-Dawn,Necrozma,necrozma-dawn,necrozma-dawn,False,10156.png,Necrozma | Necrozma Dawn | Necrozma-Dawn | necrozma dawn | necrozma-dawn
+10157,800,Necrozma-Ultra,Necrozma,necrozma-ultra,necrozma-ultra,False,10157.png,Necrozma | Necrozma Ultra | Necrozma-Ultra | necrozma ultra | necrozma-ultra
+10160,25,Pikachu-World-Cap,Pikachu,pikachu-world-cap,pikachu-world-cap,False,10160.png,Pikachu | Pikachu World Cap | Pikachu-World-Cap | pikachu world cap | pikachu-world-cap
+10161,52,Meowth-Galarian,Meowth,meowth-galarian,meowth-galarian,False,10161.png,Meowth | Meowth Galarian | Meowth-Galarian | meowth galarian | meowth-galarian
+10162,77,Ponyta-Galarian,Ponyta,ponyta-galarian,ponyta-galarian,False,10162.png,Ponyta | Ponyta Galarian | Ponyta-Galarian | ponyta galarian | ponyta-galarian
+10163,78,Rapidash-Galarian,Rapidash,rapidash-galarian,rapidash-galarian,False,10163.png,Rapidash | Rapidash Galarian | Rapidash-Galarian | rapidash galarian | rapidash-galarian
+10164,79,Slowpoke-Galarian,Slowpoke,slowpoke-galarian,slowpoke-galarian,False,10164.png,Slowpoke | Slowpoke Galarian | Slowpoke-Galarian | slowpoke galarian | slowpoke-galarian
+10165,80,Slowbro-Galarian,Slowbro,slowbro-galarian,slowbro-galarian,False,10165.png,Slowbro | Slowbro Galarian | Slowbro-Galarian | slowbro galarian | slowbro-galarian
+10166,83,Farfetchd-Galarian,Farfetch’d,farfetchd-galarian,farfetchd-galarian,False,10166.png,Farfetchd Galarian | Farfetchd-Galarian | Farfetch’d | farfetchd galarian | farfetchd-galarian
+10167,110,Weezing-Galarian,Weezing,weezing-galarian,weezing-galarian,False,10167.png,Weezing | Weezing Galarian | Weezing-Galarian | weezing galarian | weezing-galarian
+10168,122,Mr-Mime-Galarian,Mr. Mime,mr-mime-galarian,mr-mime-galarian,False,10168.png,Mr Mime Galarian | Mr-Mime-Galarian | Mr. Mime | mr mime galarian | mr-mime-galarian
+10169,144,Articuno-Galarian,Articuno,articuno-galarian,articuno-galarian,False,10169.png,Articuno | Articuno Galarian | Articuno-Galarian | articuno galarian | articuno-galarian
+10170,145,Zapdos-Galarian,Zapdos,zapdos-galarian,zapdos-galarian,False,10170.png,Zapdos | Zapdos Galarian | Zapdos-Galarian | zapdos galarian | zapdos-galarian
+10174,263,Zigzagoon-Galarian,Zigzagoon,zigzagoon-galarian,zigzagoon-galarian,False,10174.png,Zigzagoon | Zigzagoon Galarian | Zigzagoon-Galarian | zigzagoon galarian | zigzagoon-galarian
+10175,264,Linoone-Galarian,Linoone,linoone-galarian,linoone-galarian,False,10175.png,Linoone | Linoone Galarian | Linoone-Galarian | linoone galarian | linoone-galarian
+10176,554,Darumaka-Galarian,Darumaka,darumaka-galarian,darumaka-galarian,False,10176.png,Darumaka | Darumaka Galarian | Darumaka-Galarian | darumaka galarian | darumaka-galarian
+10177,555,Darmanitan-Galar-Standard,Darmanitan,darmanitan-galar-standard,darmanitan-galarian-standard,False,10177.png,Darmanitan | Darmanitan Galar Standard | Darmanitan-Galar-Standard | darmanitan galar standard | darmanitan-galar-standard
+10178,555,Darmanitan-Galarian-Zen,Darmanitan,darmanitan-galarian-zen,darmanitan-galarian-zen,False,10178.png,Darmanitan | Darmanitan Galarian Zen | Darmanitan-GALAR-ZEN | darmanitan glar zen | darmanitan-glar-zen
+10179,562,Yamask-Galarian,Yamask,yamask-galarian,yamask-galarian,False,10179.png,Yamask | Yamask Galarian | Yamask-Galarian | yamask galarian | yamask-galarian
+10180,618,Stunfisk-Galarian,Stunfisk,stunfisk-galarian,stunfisk-galarian,False,10180.png,Stunfisk | Stunfisk Galarian | Stunfisk-Galarian | stunfisk galarian | stunfisk-galarian
+10181,718,Zygarde-10,Zygarde,zygarde-10,zygarde-10,False,10181.png,Zygarde | Zygarde 10 | Zygarde-10 | zygarde 10 | zygarde-１０
+10183,845,Cramorant-Gorging,Cramorant,cramorant-gorging,cramorant-gorging,False,10183.png,Cramorant | Cramorant Gorging | Cramorant-Gorging | cramorant gorging | cramorant-gorging
+10184,849,Toxtricity-Low-Key,Toxtricity,toxtricity-low-key,toxtricity-low-key,False,10184.png,Toxtricity | Toxtricity Low Key | Toxtricity-Low-Key | toxtricity low key | toxtricity-low-key
+10185,875,Eiscue-Noice,Eiscue,eiscue-noice,eiscue-noice,False,10185.png,Eiscue | Eiscue Noice | Eiscue-Noice | eiscue noice | eiscue-noice
+10186,876,Indeedee-Female,Indeedee,indeedee-female,indeedee-female,False,10186.png,Indeedee | Indeedee Female | Indeedee-Female | indeedee female | indeedee-female
+10187,877,Morpeko-Hangry,Morpeko,morpeko-hangry,morpeko-hangry,False,10187.png,Morpeko | Morpeko Hangry | Morpeko-Hangry | morpeko hangry | morpeko-hangry
+10188,888,Zacian-Crowned,Zacian,zacian-crowned,zacian-crowned,False,10188.png,Zacian | Zacian Crowned | Zacian-Crowned | zacian crowned | zacian-crowned
+10189,889,Zamazenta-Crowned,Zamazenta,zamazenta-crowned,zamazenta-crowned,False,10189.png,Zamazenta | Zamazenta Crowned | Zamazenta-Crowned | zamazenta crowned | zamazenta-crowned
+10190,890,Eternatus-Eternamax,Eternatus,eternatus-eternamax,eternatus-eternamax,False,10190.png,Eternatus | Eternatus Eternamax | Eternatus-Eternamax | eternatus eternamax | eternatus-eternamax
+10191,892,Urshifu-Rapid-Strike,Urshifu,urshifu-rapid-strike,urshifu-rapid-strike,False,10191.png,Urshifu | Urshifu Rapid Strike | Urshifu-Rapid-Strike | urshifu rapid strike | urshifu-rapid-strike
+10192,893,Zarude-Dada,Zarude,zarude-dada,zarude-dada,False,10192.png,Zarude | Zarude Dada | Zarude-Dada | zarude dada | zarude-dada
+10193,898,Calyrex-Ice,Calyrex,calyrex-ice,calyrex-ice,False,10193.png,Calyrex | Calyrex Ice | Calyrex-Ice | calyrex ice | calyrex-ice
+10194,898,Calyrex-Shadow,Calyrex,calyrex-shadow,calyrex-shadow,False,10194.png,Calyrex | Calyrex Shadow | Calyrex-Shadow | calyrex shadow | calyrex-shadow
+10195,3,Venusaur-Gmax,Venusaur,venusaur-gmax,venusaur-gmax,False,10195.png,Venusaur | Venusaur Gmax | Venusaur-Gmax | venusaur gmax | venusaur-gmax
+10196,6,Charizard-Gmax,Charizard,charizard-gmax,charizard-gmax,False,10196.png,Charizard | Charizard Gmax | Charizard-Gmax | charizard gmax | charizard-gmax
+10197,9,Blastoise-Gmax,Blastoise,blastoise-gmax,blastoise-gmax,False,10197.png,Blastoise | Blastoise Gmax | Blastoise-Gmax | blastoise gmax | blastoise-gmax
+10198,12,Butterfree-Gmax,Butterfree,butterfree-gmax,butterfree-gmax,False,10198.png,Butterfree | Butterfree Gmax | Butterfree-Gmax | butterfree gmax | butterfree-gmax
+10199,25,Pikachu-Gmax,Pikachu,pikachu-gmax,pikachu-gmax,False,10199.png,Pikachu | Pikachu Gmax | Pikachu-Gmax | pikachu gmax | pikachu-gmax
+10200,52,Meowth-Gmax,Meowth,meowth-gmax,meowth-gmax,False,10200.png,Meowth | Meowth Gmax | Meowth-Gmax | meowth gmax | meowth-gmax
+10201,68,Machamp-Gmax,Machamp,machamp-gmax,machamp-gmax,False,10201.png,Machamp | Machamp Gmax | Machamp-Gmax | machamp gmax | machamp-gmax
+10202,94,Gengar-Gmax,Gengar,gengar-gmax,gengar-gmax,False,10202.png,Gengar | Gengar Gmax | Gengar-Gmax | gengar gmax | gengar-gmax
+10203,99,Kingler-Gmax,Kingler,kingler-gmax,kingler-gmax,False,10203.png,Kingler | Kingler Gmax | Kingler-Gmax | kingler gmax | kingler-gmax
+10204,131,Lapras-Gmax,Lapras,lapras-gmax,lapras-gmax,False,10204.png,Lapras | Lapras Gmax | Lapras-Gmax | lapras gmax | lapras-gmax
+10205,133,Eevee-Gmax,Eevee,eevee-gmax,eevee-gmax,False,10205.png,Eevee | Eevee Gmax | Eevee-Gmax | eevee gmax | eevee-gmax
+10206,143,Snorlax-Gmax,Snorlax,snorlax-gmax,snorlax-gmax,False,10206.png,Snorlax | Snorlax Gmax | Snorlax-Gmax | snorlax gmax | snorlax-gmax
+10207,569,Garbodor-Gmax,Garbodor,garbodor-gmax,garbodor-gmax,False,10207.png,Garbodor | Garbodor Gmax | Garbodor-Gmax | garbodor gmax | garbodor-gmax
+10208,809,Melmetal-Gmax,Melmetal,melmetal-gmax,melmetal-gmax,False,10208.png,Melmetal | Melmetal Gmax | Melmetal-Gmax | melmetal gmax | melmetal-gmax
+10209,812,Rillaboom-Gmax,Rillaboom,rillaboom-gmax,rillaboom-gmax,False,10209.png,Rillaboom | Rillaboom Gmax | Rillaboom-Gmax | rillaboom gmax | rillaboom-gmax
+10210,815,Cinderace-Gmax,Cinderace,cinderace-gmax,cinderace-gmax,False,10210.png,Cinderace | Cinderace Gmax | Cinderace-Gmax | cinderace gmax | cinderace-gmax
+10211,818,Inteleon-Gmax,Inteleon,inteleon-gmax,inteleon-gmax,False,10211.png,Inteleon | Inteleon Gmax | Inteleon-Gmax | inteleon gmax | inteleon-gmax
+10212,823,Corviknight-Gmax,Corviknight,corviknight-gmax,corviknight-gmax,False,10212.png,Corviknight | Corviknight Gmax | Corviknight-Gmax | corviknight gmax | corviknight-gmax
+10213,826,Orbeetle-Gmax,Orbeetle,orbeetle-gmax,orbeetle-gmax,False,10213.png,Orbeetle | Orbeetle Gmax | Orbeetle-Gmax | orbeetle gmax | orbeetle-gmax
+10214,834,Drednaw-Gmax,Drednaw,drednaw-gmax,drednaw-gmax,False,10214.png,Drednaw | Drednaw Gmax | Drednaw-Gmax | drednaw gmax | drednaw-gmax
+10215,839,Coalossal-Gmax,Coalossal,coalossal-gmax,coalossal-gmax,False,10215.png,Coalossal | Coalossal Gmax | Coalossal-Gmax | coalossal gmax | coalossal-gmax
+10216,841,Flapple-Gmax,Flapple,flapple-gmax,flapple-gmax,False,10216.png,Flapple | Flapple Gmax | Flapple-Gmax | flapple gmax | flapple-gmax
+10217,842,Appletun-Gmax,Appletun,appletun-gmax,appletun-gmax,False,10217.png,Appletun | Appletun Gmax | Appletun-Gmax | appletun gmax | appletun-gmax
+10218,844,Sandaconda-Gmax,Sandaconda,sandaconda-gmax,sandaconda-gmax,False,10218.png,Sandaconda | Sandaconda Gmax | Sandaconda-Gmax | sandaconda gmax | sandaconda-gmax
+10219,849,Toxtricity-Amped-Gmax,Toxtricity,toxtricity-amped-gmax,toxtricity-amped-gmax,False,10219.png,Toxtricity | Toxtricity Amped Gmax | Toxtricity-Amped-Gmax | toxtricity amped gmax | toxtricity-amped-gmax
+10220,851,Centiskorch-Gmax,Centiskorch,centiskorch-gmax,centiskorch-gmax,False,10220.png,Centiskorch | Centiskorch Gmax | Centiskorch-Gmax | centiskorch gmax | centiskorch-gmax
+10221,858,Hatterene-Gmax,Hatterene,hatterene-gmax,hatterene-gmax,False,10221.png,Hatterene | Hatterene Gmax | Hatterene-Gmax | hatterene gmax | hatterene-gmax
+10222,861,Grimmsnarl-Gmax,Grimmsnarl,grimmsnarl-gmax,grimmsnarl-gmax,False,10222.png,Grimmsnarl | Grimmsnarl Gmax | Grimmsnarl-Gmax | grimmsnarl gmax | grimmsnarl-gmax
+10223,869,Alcremie-Gmax,Alcremie,alcremie-gmax,alcremie-gmax,False,10223.png,Alcremie | Alcremie Gmax | Alcremie-Gmax | alcremie gmax | alcremie-gmax
+10224,879,Copperajah-Gmax,Copperajah,copperajah-gmax,copperajah-gmax,False,10224.png,Copperajah | Copperajah Gmax | Copperajah-Gmax | copperajah gmax | copperajah-gmax
+10225,884,Duraludon-Gmax,Duraludon,duraludon-gmax,duraludon-gmax,False,10225.png,Duraludon | Duraludon Gmax | Duraludon-Gmax | duraludon gmax | duraludon-gmax
+10226,892,Urshifu-Single-Strike-Gmax,Urshifu,urshifu-single-strike-gmax,urshifu-single-strike-gmax,False,10226.png,Urshifu | Urshifu Single Strike Gmax | Urshifu-Single-Strike-Gmax | urshifu single strike gmax | urshifu-single-strike-gmax
+10227,892,Urshifu-Rapid-Strike-Gmax,Urshifu,urshifu-rapid-strike-gmax,urshifu-rapid-strike-gmax,False,10227.png,Urshifu | Urshifu Rapid Strike Gmax | Urshifu-Rapid-Strike-Gmax | urshifu rapid strike gmax | urshifu-rapid-strike-gmax
+10228,849,Toxtricity-Low-Key-Gmax,Toxtricity,toxtricity-low-key-gmax,toxtricity-low-key-gmax,False,10228.png,Toxtricity | Toxtricity Low Key Gmax | Toxtricity-Low-Key-Gmax | toxtricity low key gmax | toxtricity-low-key-gmax
+10229,58,Growlithe-Hisui,Growlithe,growlithe-Hisui,growlithe-Hisui,False,10229.png,Growlithe | Growlithe Hisui | Growlithe-Hisui | growlithe Hisui | growlithe-Hisui
+10230,59,Arcanine-Hisui,Arcanine,arcanine-Hisui,arcanine-Hisui,False,10230.png,Arcanine | Arcanine Hisui | Arcanine-Hisui | arcanine Hisui | arcanine-Hisui
+10231,100,Voltorb-Hisui,Voltorb,voltorb-Hisui,voltorb-Hisui,False,10231.png,Voltorb | Voltorb Hisui | Voltorb-Hisui | voltorb Hisui | voltorb-Hisui
+10232,101,Electrode-Hisui,Electrode,electrode-Hisui,electrode-Hisui,False,10232.png,Electrode | Electrode Hisui | Electrode-Hisui | electrode Hisui | electrode-Hisui
+10233,157,Typhlosion-Hisui,Typhlosion,typhlosion-Hisui,typhlosion-Hisui,False,10233.png,Typhlosion | Typhlosion Hisui | Typhlosion-Hisui | typhlosion Hisui | typhlosion-Hisui
+10234,211,Qwilfish-Hisui,Qwilfish,qwilfish-Hisui,qwilfish-Hisui,False,10234.png,Qwilfish | Qwilfish Hisui | Qwilfish-Hisui | qwilfish Hisui | qwilfish-Hisui
+10235,215,Sneasel-Hisui,Sneasel,sneasel-Hisui,sneasel-Hisui,False,10235.png,Sneasel | Sneasel Hisui | Sneasel-Hisui | sneasel Hisui | sneasel-Hisui
+10237,549,Lilligant-Hisui,Lilligant,lilligant-Hisui,lilligant-Hisui,False,10237.png,Lilligant | Lilligant Hisui | Lilligant-Hisui | lilligant Hisui | lilligant-Hisui
+10238,570,Zorua-Hisui,Zorua,zorua-Hisui,zorua-Hisui,False,10238.png,Zorua | Zorua Hisui | Zorua-Hisui | zorua Hisui | zorua-Hisui
+10239,571,Zoroark-Hisui,Zoroark,zoroark-Hisui,zoroark-Hisui,False,10239.png,Zoroark | Zoroark Hisui | Zoroark-Hisui | zoroark Hisui | zoroark-Hisui
+10240,628,Braviary-Hisui,Braviary,braviary-Hisui,braviary-Hisui,False,10240.png,Braviary | Braviary Hisui | Braviary-Hisui | braviary Hisui | braviary-Hisui
+10241,705,Sliggoo-Hisui,Sliggoo,sliggoo-Hisui,sliggoo-Hisui,False,10241.png,Sliggoo | Sliggoo Hisui | Sliggoo-Hisui | sliggoo Hisui | sliggoo-Hisui
+10242,706,Goodra-Hisui,Goodra,goodra-Hisui,goodra-Hisui,False,10242.png,Goodra | Goodra Hisui | Goodra-Hisui | goodra Hisui | goodra-Hisui
+10243,713,Avalugg-Hisui,Avalugg,avalugg-Hisui,avalugg-Hisui,False,10243.png,Avalugg | Avalugg Hisui | Avalugg-Hisui | avalugg Hisui | avalugg-Hisui
+10244,724,Decidueye-Hisui,Decidueye,decidueye-Hisui,decidueye-Hisui,False,10244.png,Decidueye | Decidueye Hisui | Decidueye-Hisui | decidueye Hisui | decidueye-Hisui
+10245,483,Dialga-Origin,Dialga,dialga-origin,dialga-origin,False,10245.png,Dialga | Dialga Origin | Dialga-Origin | dialga origin | dialga-origin
+10246,484,Palkia-Origin,Palkia,palkia-origin,palkia-origin,False,10246.png,Palkia | Palkia Origin | Palkia-Origin | palkia origin | palkia-origin
+10247,550,Basculin-White-Striped,Basculin,basculin-white-striped,basculin-white-striped,False,10247.png,Basculin | Basculin White Striped | Basculin-White-Striped | basculin white striped | basculin-white-striped
+10248,902,Basculegion-Female,Basculegion,basculegion-female,basculegion-female,False,10248.png,Basculegion | Basculegion Female | Basculegion-Female | basculegion female | basculegion-female
+10249,905,Enamorus-Therian,Enamorus,enamorus-therian,enamorus-therian,False,10249.png,Enamorus | Enamorus Therian | Enamorus-Therian | enamorus therian | enamorus-therian
+10250,128,Tauros-Paldea-Combat-Breed,Tauros,tauros-paldea-combat-breed,tauros-paldea-combat-breed,False,10250.png,Tauros | Tauros Paldea Combat Breed | Tauros-Paldea-Combat-Breed | tauros paldea combat breed | tauros-paldea-combat-breed
+10251,128,Tauros-Paldea-Blaze-Breed,Tauros,tauros-paldea-blaze-breed,tauros-paldea-blaze-breed,False,10251.png,Tauros | Tauros Paldea Blaze Breed | Tauros-Paldea-Blaze-Breed | tauros paldea blaze breed | tauros-paldea-blaze-breed
+10252,128,Tauros-Paldea-Aqua-Breed,Tauros,tauros-paldea-aqua-breed,tauros-paldea-aqua-breed,False,10252.png,Tauros | Tauros Paldea Aqua Breed | Tauros-Paldea-Aqua-Breed | tauros paldea aqua breed | tauros-paldea-aqua-breed
+10253,194,Wooper-Paldea,Wooper,wooper-paldea,wooper-paldea,False,10253.png,Wooper | Wooper Paldea | Wooper-Paldea | wooper paldea | wooper-paldea
+10254,916,Oinkologne-Female,Oinkologne,oinkologne-female,oinkologne-female,False,10254.png,Oinkologne | Oinkologne Female | Oinkologne-Female | oinkologne female | oinkologne-female
+10255,982,Dudunsparce-Three-Segment,Dudunsparce,dudunsparce-three-segment,dudunsparce-three-segment,False,10255.png,Dudunsparce | Dudunsparce Three Segment | Dudunsparce-Three-Segment | dudunsparce three segment | dudunsparce-three-segment
+10256,964,Palafin-Hero,Palafin,palafin-hero,palafin-hero,False,10256.png,Palafin | Palafin Hero | Palafin-Hero | palafin hero | palafin-hero
+10257,925,Maushold-Family-Of-Three,Maushold,maushold-family-of-three,maushold-family-of-three,False,10257.png,Maushold | Maushold Family Of Three | Maushold-Family-Of-Three | maushold family of three | maushold-family-of-three
+10258,978,Tatsugiri-Droopy,Tatsugiri,tatsugiri-droopy,tatsugiri-droopy,False,10258.png,Tatsugiri | Tatsugiri Droopy | Tatsugiri-Droopy | tatsugiri droopy | tatsugiri-droopy
+10259,978,Tatsugiri-Stretchy,Tatsugiri,tatsugiri-stretchy,tatsugiri-stretchy,False,10259.png,Tatsugiri | Tatsugiri Stretchy | Tatsugiri-Stretchy | tatsugiri stretchy | tatsugiri-stretchy
+10260,931,Squawkabilly-Blue-Plumage,Squawkabilly,squawkabilly-blue-plumage,squawkabilly-blue-plumage,False,10260.png,Squawkabilly | Squawkabilly Blue Plumage | Squawkabilly-Blue-Plumage | squawkabilly blue plumage | squawkabilly-blue-plumage
+10261,931,Squawkabilly-Yellow-Plumage,Squawkabilly,squawkabilly-yellow-plumage,squawkabilly-yellow-plumage,False,10261.png,Squawkabilly | Squawkabilly Yellow Plumage | Squawkabilly-Yellow-Plumage | squawkabilly yellow plumage | squawkabilly-yellow-plumage
+10262,931,Squawkabilly-White-Plumage,Squawkabilly,squawkabilly-white-plumage,squawkabilly-white-plumage,False,10262.png,Squawkabilly | Squawkabilly White Plumage | Squawkabilly-White-Plumage | squawkabilly white plumage | squawkabilly-white-plumage
+10263,999,Gimmighoul-Roaming,Gimmighoul,gimmighoul-roaming,gimmighoul-roaming,False,10263.png,Gimmighoul | Gimmighoul Roaming | Gimmighoul-Roaming | gimmighoul roaming | gimmighoul-roaming
+10272,901,Ursaluna-Bloodmoon,Ursaluna,ursaluna-bloodmoon,ursaluna-bloodmoon,False,10272.png,Ursaluna | Ursaluna Bloodmoon | Ursaluna-Bloodmoon | ursaluna bloodmoon | ursaluna-bloodmoon
+10273,1017,Ogerpon-Wellspring-Mask,Ogerpon,ogerpon-wellspring-mask,ogerpon-wellspring-mask,False,10273.png,Ogerpon | Ogerpon Wellspring Mask | Ogerpon-Wellspring-Mask | ogerpon wellspring mask | ogerpon-wellspring-mask
+10274,1017,Ogerpon-Hearthflame-Mask,Ogerpon,ogerpon-hearthflame-mask,ogerpon-hearthflame-mask,False,10274.png,Ogerpon | Ogerpon Hearthflame Mask | Ogerpon-Hearthflame-Mask | ogerpon hearthflame mask | ogerpon-hearthflame-mask
+10275,1017,Ogerpon-Cornerstone-Mask,Ogerpon,ogerpon-cornerstone-mask,ogerpon-cornerstone-mask,False,10275.png,Ogerpon | Ogerpon Cornerstone Mask | Ogerpon-Cornerstone-Mask | ogerpon cornerstone mask | ogerpon-cornerstone-mask
+10276,1024,Terapagos-Terastal,Terapagos,terapagos-terastal,terapagos-terastal,False,10276.png,Terapagos | Terapagos Terastal | Terapagos-Terastal | terapagos terastal | terapagos-terastal
+10277,1024,Terapagos-Stellar,Terapagos,terapagos-stellar,terapagos-stellar,False,10277.png,Terapagos | Terapagos Stellar | Terapagos-Stellar | terapagos stellar | terapagos-stellar
+10278,36,Clefable-Mega,Clefable,clefable-mega,clefable-mega,False,10278.png,Clefable | Clefable Mega | Clefable-Mega | clefable mega | clefable-mega
+10279,71,Victreebel-Mega,Victreebel,victreebel-mega,victreebel-mega,False,10279.png,Victreebel | Victreebel Mega | Victreebel-Mega | victreebel mega | victreebel-mega
+10280,121,Starmie-Mega,Starmie,starmie-mega,starmie-mega,False,10280.png,Starmie | Starmie Mega | Starmie-Mega | starmie mega | starmie-mega
+10281,149,Dragonite-Mega,Dragonite,dragonite-mega,dragonite-mega,False,10281.png,Dragonite | Dragonite Mega | Dragonite-Mega | dragonite mega | dragonite-mega
+10282,154,Meganium-Mega,Meganium,meganium-mega,meganium-mega,False,10282.png,Meganium | Meganium Mega | Meganium-Mega | meganium mega | meganium-mega
+10283,160,Feraligatr-Mega,Feraligatr,feraligatr-mega,feraligatr-mega,False,10283.png,Feraligatr | Feraligatr Mega | Feraligatr-Mega | feraligatr mega | feraligatr-mega
+10284,227,Skarmory-Mega,Skarmory,skarmory-mega,skarmory-mega,False,10284.png,Skarmory | Skarmory Mega | Skarmory-Mega | skarmory mega | skarmory-mega
+10285,478,Froslass-Mega,Froslass,froslass-mega,froslass-mega,False,10285.png,Froslass | Froslass Mega | Froslass-Mega | froslass mega | froslass-mega
+10286,500,Emboar-Mega,Emboar,emboar-mega,emboar-mega,False,10286.png,Emboar | Emboar Mega | Emboar-Mega | emboar mega | emboar-mega
+10287,530,Excadrill-Mega,Excadrill,excadrill-mega,excadrill-mega,False,10287.png,Excadrill | Excadrill Mega | Excadrill-Mega | excadrill mega | excadrill-mega
+10288,545,Scolipede-Mega,Scolipede,scolipede-mega,scolipede-mega,False,10288.png,Scolipede | Scolipede Mega | Scolipede-Mega | scolipede mega | scolipede-mega
+10289,560,Scrafty-Mega,Scrafty,scrafty-mega,scrafty-mega,False,10289.png,Scrafty | Scrafty Mega | Scrafty-Mega | scrafty mega | scrafty-mega
+10290,604,Eelektross-Mega,Eelektross,eelektross-mega,eelektross-mega,False,10290.png,Eelektross | Eelektross Mega | Eelektross-Mega | eelektross mega | eelektross-mega
+10291,609,Chandelure-Mega,Chandelure,chandelure-mega,chandelure-mega,False,10291.png,Chandelure | Chandelure Mega | Chandelure-Mega | chandelure mega | chandelure-mega
+10292,652,Chesnaught-Mega,Chesnaught,chesnaught-mega,chesnaught-mega,False,10292.png,Chesnaught | Chesnaught Mega | Chesnaught-Mega | chesnaught mega | chesnaught-mega
+10293,655,Delphox-Mega,Delphox,delphox-mega,delphox-mega,False,10293.png,Delphox | Delphox Mega | Delphox-Mega | delphox mega | delphox-mega
+10294,658,Greninja-Mega,Greninja,greninja-mega,greninja-mega,False,10294.png,Greninja | Greninja Mega | Greninja-Mega | greninja mega | greninja-mega
+10295,668,Pyroar-Mega,Pyroar,pyroar-mega,pyroar-mega,False,10295.png,Pyroar | Pyroar Mega | Pyroar-Mega | pyroar mega | pyroar-mega
+10296,670,Floette-Mega,Floette,floette-mega,floette-mega,False,10296.png,Floette | Floette Mega | Floette-Mega | floette mega | floette-mega
+10297,687,Malamar-Mega,Malamar,malamar-mega,malamar-mega,False,10297.png,Malamar | Malamar Mega | Malamar-Mega | malamar mega | malamar-mega
+10298,689,Barbaracle-Mega,Barbaracle,barbaracle-mega,barbaracle-mega,False,10298.png,Barbaracle | Barbaracle Mega | Barbaracle-Mega | barbaracle mega | barbaracle-mega
+10299,691,Dragalge-Mega,Dragalge,dragalge-mega,dragalge-mega,False,10299.png,Dragalge | Dragalge Mega | Dragalge-Mega | dragalge mega | dragalge-mega
+10300,701,Hawlucha-Mega,Hawlucha,hawlucha-mega,hawlucha-mega,False,10300.png,Hawlucha | Hawlucha Mega | Hawlucha-Mega | hawlucha mega | hawlucha-mega
+10302,780,Drampa-Mega,Drampa,drampa-mega,drampa-mega,False,10302.png,Drampa | Drampa Mega | Drampa-Mega | drampa mega | drampa-mega
+10303,870,Falinks-Mega,Falinks,falinks-mega,falinks-mega,False,10303.png,Falinks | Falinks Mega | Falinks-Mega | falinks mega | falinks-mega
+10304,26,Raichu-Mega-X,Raichu,raichu-mega-x,raichu-mega-x,False,10304.png,Raichu | Raichu Mega X | Raichu-Mega-X | raichu mega x | raichu-mega-x
+10305,26,Raichu-Mega-Y,Raichu,raichu-mega-y,raichu-mega-y,False,10305.png,Raichu | Raichu Mega Y | Raichu-Mega-Y | raichu mega y | raichu-mega-y
+10306,358,Chimecho-Mega,Chimecho,chimecho-mega,chimecho-mega,False,10306.png,Chimecho | Chimecho Mega | Chimecho-Mega | chimecho mega | chimecho-mega
+10307,359,Absol-Mega-Z,Absol,absol-mega-z,absol-mega-z,False,10307.png,Absol | Absol Mega Z | Absol-Mega-Z | absol mega z | absol-mega-z
+10308,398,Staraptor-Mega,Staraptor,staraptor-mega,staraptor-mega,False,10308.png,Staraptor | Staraptor Mega | Staraptor-Mega | staraptor mega | staraptor-mega
+10309,445,Garchomp-Mega-Z,Garchomp,garchomp-mega-z,garchomp-mega-z,False,10309.png,Garchomp | Garchomp Mega Z | Garchomp-Mega-Z | garchomp mega z | garchomp-mega-z
+10310,448,Lucario-Mega-Z,Lucario,lucario-mega-z,lucario-mega-z,False,10310.png,Lucario | Lucario Mega Z | Lucario-Mega-Z | lucario mega z | lucario-mega-z
+10311,485,Heatran-Mega,Heatran,heatran-mega,heatran-mega,False,10311.png,Heatran | Heatran Mega | Heatran-Mega | heatran mega | heatran-mega
+10312,491,Darkrai-Mega,Darkrai,darkrai-mega,darkrai-mega,False,10312.png,Darkrai | Darkrai Mega | Darkrai-Mega | darkrai mega | darkrai-mega
+10313,623,Golurk-Mega,Golurk,golurk-mega,golurk-mega,False,10313.png,Golurk | Golurk Mega | Golurk-Mega | golurk mega | golurk-mega
+10314,678,Meowstic-Male-Mega,Meowstic,meowstic-male-mega,meowstic-male-mega,False,10314.png,Meowstic | Meowstic Male Mega | Meowstic-Male-Mega | meowstic male mega | meowstic-male-mega
+10315,740,Crabominable-Mega,Crabominable,crabominable-mega,crabominable-mega,False,10315.png,Crabominable | Crabominable Mega | Crabominable-Mega | crabominable mega | crabominable-mega
+10316,768,Golisopod-Mega,Golisopod,golisopod-mega,golisopod-mega,False,10316.png,Golisopod | Golisopod Mega | Golisopod-Mega | golisopod mega | golisopod-mega
+10317,801,Magearna-Mega,Magearna,magearna-mega,magearna-mega,False,10317.png,Magearna | Magearna Mega | Magearna-Mega | magearna mega | magearna-mega
+10318,801,Magearna-Original-Mega,Magearna,magearna-original-mega,magearna-original-mega,False,10318.png,Magearna | Magearna Original Mega | Magearna-Original-Mega | magearna original mega | magearna-original-mega
+10319,807,Zeraora-Mega,Zeraora,zeraora-mega,zeraora-mega,False,10319.png,Zeraora | Zeraora Mega | Zeraora-Mega | zeraora mega | zeraora-mega
+10320,952,Scovillain-Mega,Scovillain,scovillain-mega,scovillain-mega,False,10320.png,Scovillain | Scovillain Mega | Scovillain-Mega | scovillain mega | scovillain-mega
+10321,970,Glimmora-Mega,Glimmora,glimmora-mega,glimmora-mega,False,10321.png,Glimmora | Glimmora Mega | Glimmora-Mega | glimmora mega | glimmora-mega
+10322,978,Tatsugiri-Curly-Mega,Tatsugiri,tatsugiri-curly-mega,tatsugiri-curly-mega,False,10322.png,Tatsugiri | Tatsugiri Curly Mega | Tatsugiri-Curly-Mega | tatsugiri curly mega | tatsugiri-curly-mega
+10323,978,Tatsugiri-Droopy-Mega,Tatsugiri,tatsugiri-droopy-mega,tatsugiri-droopy-mega,False,10323.png,Tatsugiri | Tatsugiri Droopy Mega | Tatsugiri-Droopy-Mega | tatsugiri droopy mega | tatsugiri-droopy-mega
+10324,978,Tatsugiri-Stretchy-Mega,Tatsugiri,tatsugiri-stretchy-mega,tatsugiri-stretchy-mega,False,10324.png,Tatsugiri | Tatsugiri Stretchy Mega | Tatsugiri-Stretchy-Mega | tatsugiri stretchy mega | tatsugiri-stretchy-mega
+10325,998,Baxcalibur-Mega,Baxcalibur,baxcalibur-mega,baxcalibur-mega,False,10325.png,Baxcalibur | Baxcalibur Mega | Baxcalibur-Mega | baxcalibur mega | baxcalibur-mega
+10326,678,Meowstic-Female-Mega,Meowstic,meowstic-female-mega,meowstic-female-mega,False,10326.png,Meowstic | Meowstic Female Mega | Meowstic-Female-Mega | meowstic female mega | meowstic-female-mega

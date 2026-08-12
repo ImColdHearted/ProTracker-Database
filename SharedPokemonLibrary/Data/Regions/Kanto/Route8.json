@@ -1,0 +1,143 @@
+[
+  {
+    "id": "route-8-land",
+    "mapId": "route-8",
+    "region": "Kanto",
+    "displayName": "Route 8",
+    "method": "Land",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Abra",
+        "timePeriods": [ "Day" ],
+        "minLevel": 26,
+        "maxLevel": 30,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Ditto",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 31,
+        "maxLevel": 31,
+        "heldItem": "Quick Powder"
+      },
+      {
+        "pokemon": "Ekans",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 26,
+        "maxLevel": 30,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Growlithe",
+        "timePeriods": [ "Day" ],
+        "minLevel": 22,
+        "maxLevel": 22,
+        "heldItem": "Rawst Berry"
+      },
+      {
+        "pokemon": "Haunter",
+        "timePeriods": [ "Night" ],
+        "minLevel": 11,
+        "maxLevel": 11,
+        "heldItem": "Spell Tag"
+      },
+      {
+        "pokemon": "Jigglypuff",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 26,
+        "maxLevel": 30,
+        "heldItem": "Oran Berry"
+      },
+      {
+        "pokemon": "Kadabra",
+        "timePeriods": [ "Morning", "Night" ],
+        "minLevel": 26,
+        "maxLevel": 30,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Meowth",
+        "timePeriods": [ "Night" ],
+        "minLevel": 26,
+        "maxLevel": 30,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Pidgeotto",
+        "timePeriods": [ "Morning" ],
+        "minLevel": 26,
+        "maxLevel": 30,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Snubull",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 26,
+        "maxLevel": 30,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Vulpix",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 26,
+        "maxLevel": 30,
+        "heldItem": "Rawst Berry"
+      }
+    ]
+  },
+  [
+    {
+      "id": "route-8-headbutt",
+      "mapId": "route-8",
+      "region": "Kanto",
+      "displayName": "Route 8",
+      "method": "Headbutt",
+      "requiresMembership": false,
+      "encounters": [
+        {
+          "pokemon": "Pidgey",
+          "timePeriods": [ "Morning", "Day", "Night" ],
+          "minLevel": 18,
+          "maxLevel": 22,
+          "heldItem": null
+        },
+        {
+          "pokemon": "Silcoon",
+          "timePeriods": [ "Morning", "Day", "Night" ],
+          "minLevel": 18,
+          "maxLevel": 22,
+          "heldItem": null
+        },
+        {
+          "pokemon": "Metapod",
+          "timePeriods": [ "Morning", "Day", "Night" ],
+          "minLevel": 18,
+          "maxLevel": 22,
+          "heldItem": null
+        },
+        {
+          "pokemon": "Kakuna",
+          "timePeriods": [ "Morning", "Day", "Night" ],
+          "minLevel": 18,
+          "maxLevel": 22,
+          "heldItem": null
+        },
+        {
+          "pokemon": "Natu",
+          "timePeriods": [ "Morning", "Day", "Night" ],
+          "minLevel": 18,
+          "maxLevel": 22,
+          "heldItem": null
+        },
+        {
+          "pokemon": "Exeggcute",
+          "timePeriods": [ "Morning", "Day", "Night" ],
+          "minLevel": 18,
+          "maxLevel": 22,
+          "heldItem": null
+        }
+      ]
+    }
+  ]
+]

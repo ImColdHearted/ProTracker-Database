@@ -1,0 +1,92 @@
+[
+  {
+    "id": "route-5-land",
+    "mapId": "route-5",
+    "region": "Kanto",
+    "displayName": "Route 5",
+    "method": "Land",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Abra",
+        "timePeriods": [ "Night" ],
+        "minLevel": 18,
+        "maxLevel": 22,
+        "heldItem": "Twisted Spoon"
+      },
+      {
+        "pokemon": "Bellsprout",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 16,
+        "maxLevel": 17,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Combee",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 16,
+        "maxLevel": 17,
+        "heldItem": "Honey"
+      },
+      {
+        "pokemon": "Gloom",
+        "timePeriods": [ "Night" ],
+        "minLevel": 16,
+        "maxLevel": 17,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Jigglypuff",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 17,
+        "heldItem": "Oran Berry"
+      },
+      {
+        "pokemon": "Meowth",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 16,
+        "maxLevel": 17,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Oddish",
+        "timePeriods": [ "Night" ],
+        "minLevel": 16,
+        "maxLevel": 17,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Pidgeotto",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 17,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-5-land",
+    "mapId": "route-5",
+    "region": "Kanto",
+    "displayName": "Route 5",
+    "method": "Land",
+    "requiresMembership": true,
+    "encounters": [
+      {
+        "pokemon": "Shinx",
+        "timePeriods": [ "Night" ],
+        "minLevel": 16,
+        "maxLevel": 17,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Togepi",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 18,
+        "maxLevel": 23,
+        "heldItem": "Shiny Stone"
+      }
+    ]
+  }
+]
