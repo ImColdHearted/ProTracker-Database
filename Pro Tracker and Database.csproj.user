@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\DeepF\source\repos\Foot_Tracker\Foot_Tracker\Resources\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Forms\Appearance\AppearanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\BossTemplate\BossTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Cooldowns\Bosses\BossCooldownForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\EVZones\EVZones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Counterparts\CounterpartHoverForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Counterparts\Counterparts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Counterparts\DoubleBufferedFlowLayoutPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Forms\Excavations\ExcavationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\LegendaryPokemon\LegendaryPokemon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\MegaStones\Test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Interactive Maps\AstrellaMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Interactive Maps\HoennMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Interactive Maps\JohtoMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Interactive Maps\KantoMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Interactive Maps\InteractiveMaps.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\Interactive Maps\SeviiIslandMapForm1-3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Interactive Maps\SeviiIslandMapForm4-7.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Interactive Maps\SinnohMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Pokedex\PokemonFormsPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Pokedex\PokemonSelectorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ProTrackerandDatabase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ProTrackerandDatabaseCompactMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
