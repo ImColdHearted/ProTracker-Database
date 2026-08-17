@@ -1,0 +1,6702 @@
+{
+  "1": {
+    "name": "Bulbasaur",
+    "dexNumber": 1,
+    "sprite": "1.png"
+  },
+  "2": {
+    "name": "Ivysaur",
+    "dexNumber": 2,
+    "sprite": "2.png"
+  },
+  "3": {
+    "name": "Venusaur",
+    "dexNumber": 3,
+    "sprite": "3.png"
+  },
+  "4": {
+    "name": "Charmander",
+    "dexNumber": 4,
+    "sprite": "4.png"
+  },
+  "5": {
+    "name": "Charmeleon",
+    "dexNumber": 5,
+    "sprite": "5.png"
+  },
+  "6": {
+    "name": "Charizard",
+    "dexNumber": 6,
+    "sprite": "6.png"
+  },
+  "7": {
+    "name": "Squirtle",
+    "dexNumber": 7,
+    "sprite": "7.png"
+  },
+  "8": {
+    "name": "Wartortle",
+    "dexNumber": 8,
+    "sprite": "8.png"
+  },
+  "9": {
+    "name": "Blastoise",
+    "dexNumber": 9,
+    "sprite": "9.png"
+  },
+  "10": {
+    "name": "Caterpie",
+    "dexNumber": 10,
+    "sprite": "10.png"
+  },
+  "11": {
+    "name": "Metapod",
+    "dexNumber": 11,
+    "sprite": "11.png"
+  },
+  "12": {
+    "name": "Butterfree",
+    "dexNumber": 12,
+    "sprite": "12.png"
+  },
+  "13": {
+    "name": "Weedle",
+    "dexNumber": 13,
+    "sprite": "13.png"
+  },
+  "14": {
+    "name": "Kakuna",
+    "dexNumber": 14,
+    "sprite": "14.png"
+  },
+  "15": {
+    "name": "Beedrill",
+    "dexNumber": 15,
+    "sprite": "15.png"
+  },
+  "16": {
+    "name": "Pidgey",
+    "dexNumber": 16,
+    "sprite": "16.png"
+  },
+  "17": {
+    "name": "Pidgeotto",
+    "dexNumber": 17,
+    "sprite": "17.png"
+  },
+  "18": {
+    "name": "Pidgeot",
+    "dexNumber": 18,
+    "sprite": "18.png"
+  },
+  "19": {
+    "name": "Rattata",
+    "dexNumber": 19,
+    "sprite": "19.png"
+  },
+  "20": {
+    "name": "Raticate",
+    "dexNumber": 20,
+    "sprite": "20.png"
+  },
+  "21": {
+    "name": "Spearow",
+    "dexNumber": 21,
+    "sprite": "21.png"
+  },
+  "22": {
+    "name": "Fearow",
+    "dexNumber": 22,
+    "sprite": "22.png"
+  },
+  "23": {
+    "name": "Ekans",
+    "dexNumber": 23,
+    "sprite": "23.png"
+  },
+  "24": {
+    "name": "Arbok",
+    "dexNumber": 24,
+    "sprite": "24.png"
+  },
+  "25": {
+    "name": "Pikachu",
+    "dexNumber": 25,
+    "sprite": "25.png"
+  },
+  "26": {
+    "name": "Raichu",
+    "dexNumber": 26,
+    "sprite": "26.png"
+  },
+  "27": {
+    "name": "Sandshrew",
+    "dexNumber": 27,
+    "sprite": "27.png"
+  },
+  "28": {
+    "name": "Sandslash",
+    "dexNumber": 28,
+    "sprite": "28.png"
+  },
+  "29": {
+    "name": "Nidoran♀",
+    "dexNumber": 29,
+    "sprite": "29.png"
+  },
+  "30": {
+    "name": "Nidorina",
+    "dexNumber": 30,
+    "sprite": "30.png"
+  },
+  "31": {
+    "name": "Nidoqueen",
+    "dexNumber": 31,
+    "sprite": "31.png"
+  },
+  "32": {
+    "name": "Nidoran♂",
+    "dexNumber": 32,
+    "sprite": "32.png"
+  },
+  "33": {
+    "name": "Nidorino",
+    "dexNumber": 33,
+    "sprite": "33.png"
+  },
+  "34": {
+    "name": "Nidoking",
+    "dexNumber": 34,
+    "sprite": "34.png"
+  },
+  "35": {
+    "name": "Clefairy",
+    "dexNumber": 35,
+    "sprite": "35.png"
+  },
+  "36": {
+    "name": "Clefable",
+    "dexNumber": 36,
+    "sprite": "36.png"
+  },
+  "37": {
+    "name": "Vulpix",
+    "dexNumber": 37,
+    "sprite": "37.png"
+  },
+  "38": {
+    "name": "Ninetales",
+    "dexNumber": 38,
+    "sprite": "38.png"
+  },
+  "39": {
+    "name": "Jigglypuff",
+    "dexNumber": 39,
+    "sprite": "39.png"
+  },
+  "40": {
+    "name": "Wigglytuff",
+    "dexNumber": 40,
+    "sprite": "40.png"
+  },
+  "41": {
+    "name": "Zubat",
+    "dexNumber": 41,
+    "sprite": "41.png"
+  },
+  "42": {
+    "name": "Golbat",
+    "dexNumber": 42,
+    "sprite": "42.png"
+  },
+  "43": {
+    "name": "Oddish",
+    "dexNumber": 43,
+    "sprite": "43.png"
+  },
+  "44": {
+    "name": "Gloom",
+    "dexNumber": 44,
+    "sprite": "44.png"
+  },
+  "45": {
+    "name": "Vileplume",
+    "dexNumber": 45,
+    "sprite": "45.png"
+  },
+  "46": {
+    "name": "Paras",
+    "dexNumber": 46,
+    "sprite": "46.png"
+  },
+  "47": {
+    "name": "Parasect",
+    "dexNumber": 47,
+    "sprite": "47.png"
+  },
+  "48": {
+    "name": "Venonat",
+    "dexNumber": 48,
+    "sprite": "48.png"
+  },
+  "49": {
+    "name": "Venomoth",
+    "dexNumber": 49,
+    "sprite": "49.png"
+  },
+  "50": {
+    "name": "Diglett",
+    "dexNumber": 50,
+    "sprite": "50.png"
+  },
+  "51": {
+    "name": "Dugtrio",
+    "dexNumber": 51,
+    "sprite": "51.png"
+  },
+  "52": {
+    "name": "Meowth",
+    "dexNumber": 52,
+    "sprite": "52.png"
+  },
+  "53": {
+    "name": "Persian",
+    "dexNumber": 53,
+    "sprite": "53.png"
+  },
+  "54": {
+    "name": "Psyduck",
+    "dexNumber": 54,
+    "sprite": "54.png"
+  },
+  "55": {
+    "name": "Golduck",
+    "dexNumber": 55,
+    "sprite": "55.png"
+  },
+  "56": {
+    "name": "Mankey",
+    "dexNumber": 56,
+    "sprite": "56.png"
+  },
+  "57": {
+    "name": "Primeape",
+    "dexNumber": 57,
+    "sprite": "57.png"
+  },
+  "58": {
+    "name": "Growlithe",
+    "dexNumber": 58,
+    "sprite": "58.png"
+  },
+  "59": {
+    "name": "Arcanine",
+    "dexNumber": 59,
+    "sprite": "59.png"
+  },
+  "60": {
+    "name": "Poliwag",
+    "dexNumber": 60,
+    "sprite": "60.png"
+  },
+  "61": {
+    "name": "Poliwhirl",
+    "dexNumber": 61,
+    "sprite": "61.png"
+  },
+  "62": {
+    "name": "Poliwrath",
+    "dexNumber": 62,
+    "sprite": "62.png"
+  },
+  "63": {
+    "name": "Abra",
+    "dexNumber": 63,
+    "sprite": "63.png"
+  },
+  "64": {
+    "name": "Kadabra",
+    "dexNumber": 64,
+    "sprite": "64.png"
+  },
+  "65": {
+    "name": "Alakazam",
+    "dexNumber": 65,
+    "sprite": "65.png"
+  },
+  "66": {
+    "name": "Machop",
+    "dexNumber": 66,
+    "sprite": "66.png"
+  },
+  "67": {
+    "name": "Machoke",
+    "dexNumber": 67,
+    "sprite": "67.png"
+  },
+  "68": {
+    "name": "Machamp",
+    "dexNumber": 68,
+    "sprite": "68.png"
+  },
+  "69": {
+    "name": "Bellsprout",
+    "dexNumber": 69,
+    "sprite": "69.png"
+  },
+  "70": {
+    "name": "Weepinbell",
+    "dexNumber": 70,
+    "sprite": "70.png"
+  },
+  "71": {
+    "name": "Victreebel",
+    "dexNumber": 71,
+    "sprite": "71.png"
+  },
+  "72": {
+    "name": "Tentacool",
+    "dexNumber": 72,
+    "sprite": "72.png"
+  },
+  "73": {
+    "name": "Tentacruel",
+    "dexNumber": 73,
+    "sprite": "73.png"
+  },
+  "74": {
+    "name": "Geodude",
+    "dexNumber": 74,
+    "sprite": "74.png"
+  },
+  "75": {
+    "name": "Graveler",
+    "dexNumber": 75,
+    "sprite": "75.png"
+  },
+  "76": {
+    "name": "Golem",
+    "dexNumber": 76,
+    "sprite": "76.png"
+  },
+  "77": {
+    "name": "Ponyta",
+    "dexNumber": 77,
+    "sprite": "77.png"
+  },
+  "78": {
+    "name": "Rapidash",
+    "dexNumber": 78,
+    "sprite": "78.png"
+  },
+  "79": {
+    "name": "Slowpoke",
+    "dexNumber": 79,
+    "sprite": "79.png"
+  },
+  "80": {
+    "name": "Slowbro",
+    "dexNumber": 80,
+    "sprite": "80.png"
+  },
+  "81": {
+    "name": "Magnemite",
+    "dexNumber": 81,
+    "sprite": "81.png"
+  },
+  "82": {
+    "name": "Magneton",
+    "dexNumber": 82,
+    "sprite": "82.png"
+  },
+  "83": {
+    "name": "Farfetch’d",
+    "dexNumber": 83,
+    "sprite": "83.png"
+  },
+  "84": {
+    "name": "Doduo",
+    "dexNumber": 84,
+    "sprite": "84.png"
+  },
+  "85": {
+    "name": "Dodrio",
+    "dexNumber": 85,
+    "sprite": "85.png"
+  },
+  "86": {
+    "name": "Seel",
+    "dexNumber": 86,
+    "sprite": "86.png"
+  },
+  "87": {
+    "name": "Dewgong",
+    "dexNumber": 87,
+    "sprite": "87.png"
+  },
+  "88": {
+    "name": "Grimer",
+    "dexNumber": 88,
+    "sprite": "88.png"
+  },
+  "89": {
+    "name": "Muk",
+    "dexNumber": 89,
+    "sprite": "89.png"
+  },
+  "90": {
+    "name": "Shellder",
+    "dexNumber": 90,
+    "sprite": "90.png"
+  },
+  "91": {
+    "name": "Cloyster",
+    "dexNumber": 91,
+    "sprite": "91.png"
+  },
+  "92": {
+    "name": "Gastly",
+    "dexNumber": 92,
+    "sprite": "92.png"
+  },
+  "93": {
+    "name": "Haunter",
+    "dexNumber": 93,
+    "sprite": "93.png"
+  },
+  "94": {
+    "name": "Gengar",
+    "dexNumber": 94,
+    "sprite": "94.png"
+  },
+  "95": {
+    "name": "Onix",
+    "dexNumber": 95,
+    "sprite": "95.png"
+  },
+  "96": {
+    "name": "Drowzee",
+    "dexNumber": 96,
+    "sprite": "96.png"
+  },
+  "97": {
+    "name": "Hypno",
+    "dexNumber": 97,
+    "sprite": "97.png"
+  },
+  "98": {
+    "name": "Krabby",
+    "dexNumber": 98,
+    "sprite": "98.png"
+  },
+  "99": {
+    "name": "Kingler",
+    "dexNumber": 99,
+    "sprite": "99.png"
+  },
+  "100": {
+    "name": "Voltorb",
+    "dexNumber": 100,
+    "sprite": "100.png"
+  },
+  "101": {
+    "name": "Electrode",
+    "dexNumber": 101,
+    "sprite": "101.png"
+  },
+  "102": {
+    "name": "Exeggcute",
+    "dexNumber": 102,
+    "sprite": "102.png"
+  },
+  "103": {
+    "name": "Exeggutor",
+    "dexNumber": 103,
+    "sprite": "103.png"
+  },
+  "104": {
+    "name": "Cubone",
+    "dexNumber": 104,
+    "sprite": "104.png"
+  },
+  "105": {
+    "name": "Marowak",
+    "dexNumber": 105,
+    "sprite": "105.png"
+  },
+  "106": {
+    "name": "Hitmonlee",
+    "dexNumber": 106,
+    "sprite": "106.png"
+  },
+  "107": {
+    "name": "Hitmonchan",
+    "dexNumber": 107,
+    "sprite": "107.png"
+  },
+  "108": {
+    "name": "Lickitung",
+    "dexNumber": 108,
+    "sprite": "108.png"
+  },
+  "109": {
+    "name": "Koffing",
+    "dexNumber": 109,
+    "sprite": "109.png"
+  },
+  "110": {
+    "name": "Weezing",
+    "dexNumber": 110,
+    "sprite": "110.png"
+  },
+  "111": {
+    "name": "Rhyhorn",
+    "dexNumber": 111,
+    "sprite": "111.png"
+  },
+  "112": {
+    "name": "Rhydon",
+    "dexNumber": 112,
+    "sprite": "112.png"
+  },
+  "113": {
+    "name": "Chansey",
+    "dexNumber": 113,
+    "sprite": "113.png"
+  },
+  "114": {
+    "name": "Tangela",
+    "dexNumber": 114,
+    "sprite": "114.png"
+  },
+  "115": {
+    "name": "Kangaskhan",
+    "dexNumber": 115,
+    "sprite": "115.png"
+  },
+  "116": {
+    "name": "Horsea",
+    "dexNumber": 116,
+    "sprite": "116.png"
+  },
+  "117": {
+    "name": "Seadra",
+    "dexNumber": 117,
+    "sprite": "117.png"
+  },
+  "118": {
+    "name": "Goldeen",
+    "dexNumber": 118,
+    "sprite": "118.png"
+  },
+  "119": {
+    "name": "Seaking",
+    "dexNumber": 119,
+    "sprite": "119.png"
+  },
+  "120": {
+    "name": "Staryu",
+    "dexNumber": 120,
+    "sprite": "120.png"
+  },
+  "121": {
+    "name": "Starmie",
+    "dexNumber": 121,
+    "sprite": "121.png"
+  },
+  "122": {
+    "name": "Mr. Mime",
+    "dexNumber": 122,
+    "sprite": "122.png"
+  },
+  "123": {
+    "name": "Scyther",
+    "dexNumber": 123,
+    "sprite": "123.png"
+  },
+  "124": {
+    "name": "Jynx",
+    "dexNumber": 124,
+    "sprite": "124.png"
+  },
+  "125": {
+    "name": "Electabuzz",
+    "dexNumber": 125,
+    "sprite": "125.png"
+  },
+  "126": {
+    "name": "Magmar",
+    "dexNumber": 126,
+    "sprite": "126.png"
+  },
+  "127": {
+    "name": "Pinsir",
+    "dexNumber": 127,
+    "sprite": "127.png"
+  },
+  "128": {
+    "name": "Tauros",
+    "dexNumber": 128,
+    "sprite": "128.png"
+  },
+  "129": {
+    "name": "Magikarp",
+    "dexNumber": 129,
+    "sprite": "129.png"
+  },
+  "130": {
+    "name": "Gyarados",
+    "dexNumber": 130,
+    "sprite": "130.png"
+  },
+  "131": {
+    "name": "Lapras",
+    "dexNumber": 131,
+    "sprite": "131.png"
+  },
+  "132": {
+    "name": "Ditto",
+    "dexNumber": 132,
+    "sprite": "132.png"
+  },
+  "133": {
+    "name": "Eevee",
+    "dexNumber": 133,
+    "sprite": "133.png"
+  },
+  "134": {
+    "name": "Vaporeon",
+    "dexNumber": 134,
+    "sprite": "134.png"
+  },
+  "135": {
+    "name": "Jolteon",
+    "dexNumber": 135,
+    "sprite": "135.png"
+  },
+  "136": {
+    "name": "Flareon",
+    "dexNumber": 136,
+    "sprite": "136.png"
+  },
+  "137": {
+    "name": "Porygon",
+    "dexNumber": 137,
+    "sprite": "137.png"
+  },
+  "138": {
+    "name": "Omanyte",
+    "dexNumber": 138,
+    "sprite": "138.png"
+  },
+  "139": {
+    "name": "Omastar",
+    "dexNumber": 139,
+    "sprite": "139.png"
+  },
+  "140": {
+    "name": "Kabuto",
+    "dexNumber": 140,
+    "sprite": "140.png"
+  },
+  "141": {
+    "name": "Kabutops",
+    "dexNumber": 141,
+    "sprite": "141.png"
+  },
+  "142": {
+    "name": "Aerodactyl",
+    "dexNumber": 142,
+    "sprite": "142.png"
+  },
+  "143": {
+    "name": "Snorlax",
+    "dexNumber": 143,
+    "sprite": "143.png"
+  },
+  "144": {
+    "name": "Articuno",
+    "dexNumber": 144,
+    "sprite": "144.png"
+  },
+  "145": {
+    "name": "Zapdos",
+    "dexNumber": 145,
+    "sprite": "145.png"
+  },
+  "146": {
+    "name": "Moltres",
+    "dexNumber": 146,
+    "sprite": "146.png"
+  },
+  "147": {
+    "name": "Dratini",
+    "dexNumber": 147,
+    "sprite": "147.png"
+  },
+  "148": {
+    "name": "Dragonair",
+    "dexNumber": 148,
+    "sprite": "148.png"
+  },
+  "149": {
+    "name": "Dragonite",
+    "dexNumber": 149,
+    "sprite": "149.png"
+  },
+  "150": {
+    "name": "Mewtwo",
+    "dexNumber": 150,
+    "sprite": "150.png"
+  },
+  "151": {
+    "name": "Mew",
+    "dexNumber": 151,
+    "sprite": "151.png"
+  },
+  "152": {
+    "name": "Chikorita",
+    "dexNumber": 152,
+    "sprite": "152.png"
+  },
+  "153": {
+    "name": "Bayleef",
+    "dexNumber": 153,
+    "sprite": "153.png"
+  },
+  "154": {
+    "name": "Meganium",
+    "dexNumber": 154,
+    "sprite": "154.png"
+  },
+  "155": {
+    "name": "Cyndaquil",
+    "dexNumber": 155,
+    "sprite": "155.png"
+  },
+  "156": {
+    "name": "Quilava",
+    "dexNumber": 156,
+    "sprite": "156.png"
+  },
+  "157": {
+    "name": "Typhlosion",
+    "dexNumber": 157,
+    "sprite": "157.png"
+  },
+  "158": {
+    "name": "Totodile",
+    "dexNumber": 158,
+    "sprite": "158.png"
+  },
+  "159": {
+    "name": "Croconaw",
+    "dexNumber": 159,
+    "sprite": "159.png"
+  },
+  "160": {
+    "name": "Feraligatr",
+    "dexNumber": 160,
+    "sprite": "160.png"
+  },
+  "161": {
+    "name": "Sentret",
+    "dexNumber": 161,
+    "sprite": "161.png"
+  },
+  "162": {
+    "name": "Furret",
+    "dexNumber": 162,
+    "sprite": "162.png"
+  },
+  "163": {
+    "name": "Hoothoot",
+    "dexNumber": 163,
+    "sprite": "163.png"
+  },
+  "164": {
+    "name": "Noctowl",
+    "dexNumber": 164,
+    "sprite": "164.png"
+  },
+  "165": {
+    "name": "Ledyba",
+    "dexNumber": 165,
+    "sprite": "165.png"
+  },
+  "166": {
+    "name": "Ledian",
+    "dexNumber": 166,
+    "sprite": "166.png"
+  },
+  "167": {
+    "name": "Spinarak",
+    "dexNumber": 167,
+    "sprite": "167.png"
+  },
+  "168": {
+    "name": "Ariados",
+    "dexNumber": 168,
+    "sprite": "168.png"
+  },
+  "169": {
+    "name": "Crobat",
+    "dexNumber": 169,
+    "sprite": "169.png"
+  },
+  "170": {
+    "name": "Chinchou",
+    "dexNumber": 170,
+    "sprite": "170.png"
+  },
+  "171": {
+    "name": "Lanturn",
+    "dexNumber": 171,
+    "sprite": "171.png"
+  },
+  "172": {
+    "name": "Pichu",
+    "dexNumber": 172,
+    "sprite": "172.png"
+  },
+  "173": {
+    "name": "Cleffa",
+    "dexNumber": 173,
+    "sprite": "173.png"
+  },
+  "174": {
+    "name": "Igglybuff",
+    "dexNumber": 174,
+    "sprite": "174.png"
+  },
+  "175": {
+    "name": "Togepi",
+    "dexNumber": 175,
+    "sprite": "175.png"
+  },
+  "176": {
+    "name": "Togetic",
+    "dexNumber": 176,
+    "sprite": "176.png"
+  },
+  "177": {
+    "name": "Natu",
+    "dexNumber": 177,
+    "sprite": "177.png"
+  },
+  "178": {
+    "name": "Xatu",
+    "dexNumber": 178,
+    "sprite": "178.png"
+  },
+  "179": {
+    "name": "Mareep",
+    "dexNumber": 179,
+    "sprite": "179.png"
+  },
+  "180": {
+    "name": "Flaaffy",
+    "dexNumber": 180,
+    "sprite": "180.png"
+  },
+  "181": {
+    "name": "Ampharos",
+    "dexNumber": 181,
+    "sprite": "181.png"
+  },
+  "182": {
+    "name": "Bellossom",
+    "dexNumber": 182,
+    "sprite": "182.png"
+  },
+  "183": {
+    "name": "Marill",
+    "dexNumber": 183,
+    "sprite": "183.png"
+  },
+  "184": {
+    "name": "Azumarill",
+    "dexNumber": 184,
+    "sprite": "184.png"
+  },
+  "185": {
+    "name": "Sudowoodo",
+    "dexNumber": 185,
+    "sprite": "185.png"
+  },
+  "186": {
+    "name": "Politoed",
+    "dexNumber": 186,
+    "sprite": "186.png"
+  },
+  "187": {
+    "name": "Hoppip",
+    "dexNumber": 187,
+    "sprite": "187.png"
+  },
+  "188": {
+    "name": "Skiploom",
+    "dexNumber": 188,
+    "sprite": "188.png"
+  },
+  "189": {
+    "name": "Jumpluff",
+    "dexNumber": 189,
+    "sprite": "189.png"
+  },
+  "190": {
+    "name": "Aipom",
+    "dexNumber": 190,
+    "sprite": "190.png"
+  },
+  "191": {
+    "name": "Sunkern",
+    "dexNumber": 191,
+    "sprite": "191.png"
+  },
+  "192": {
+    "name": "Sunflora",
+    "dexNumber": 192,
+    "sprite": "192.png"
+  },
+  "193": {
+    "name": "Yanma",
+    "dexNumber": 193,
+    "sprite": "193.png"
+  },
+  "194": {
+    "name": "Wooper",
+    "dexNumber": 194,
+    "sprite": "194.png"
+  },
+  "195": {
+    "name": "Quagsire",
+    "dexNumber": 195,
+    "sprite": "195.png"
+  },
+  "196": {
+    "name": "Espeon",
+    "dexNumber": 196,
+    "sprite": "196.png"
+  },
+  "197": {
+    "name": "Umbreon",
+    "dexNumber": 197,
+    "sprite": "197.png"
+  },
+  "198": {
+    "name": "Murkrow",
+    "dexNumber": 198,
+    "sprite": "198.png"
+  },
+  "199": {
+    "name": "Slowking",
+    "dexNumber": 199,
+    "sprite": "199.png"
+  },
+  "200": {
+    "name": "Misdreavus",
+    "dexNumber": 200,
+    "sprite": "200.png"
+  },
+  "201": {
+    "name": "Unown",
+    "dexNumber": 201,
+    "sprite": "201.png"
+  },
+  "202": {
+    "name": "Wobbuffet",
+    "dexNumber": 202,
+    "sprite": "202.png"
+  },
+  "203": {
+    "name": "Girafarig",
+    "dexNumber": 203,
+    "sprite": "203.png"
+  },
+  "204": {
+    "name": "Pineco",
+    "dexNumber": 204,
+    "sprite": "204.png"
+  },
+  "205": {
+    "name": "Forretress",
+    "dexNumber": 205,
+    "sprite": "205.png"
+  },
+  "206": {
+    "name": "Dunsparce",
+    "dexNumber": 206,
+    "sprite": "206.png"
+  },
+  "207": {
+    "name": "Gligar",
+    "dexNumber": 207,
+    "sprite": "207.png"
+  },
+  "208": {
+    "name": "Steelix",
+    "dexNumber": 208,
+    "sprite": "208.png"
+  },
+  "209": {
+    "name": "Snubbull",
+    "dexNumber": 209,
+    "sprite": "209.png"
+  },
+  "210": {
+    "name": "Granbull",
+    "dexNumber": 210,
+    "sprite": "210.png"
+  },
+  "211": {
+    "name": "Qwilfish",
+    "dexNumber": 211,
+    "sprite": "211.png"
+  },
+  "212": {
+    "name": "Scizor",
+    "dexNumber": 212,
+    "sprite": "212.png"
+  },
+  "213": {
+    "name": "Shuckle",
+    "dexNumber": 213,
+    "sprite": "213.png"
+  },
+  "214": {
+    "name": "Heracross",
+    "dexNumber": 214,
+    "sprite": "214.png"
+  },
+  "215": {
+    "name": "Sneasel",
+    "dexNumber": 215,
+    "sprite": "215.png"
+  },
+  "216": {
+    "name": "Teddiursa",
+    "dexNumber": 216,
+    "sprite": "216.png"
+  },
+  "217": {
+    "name": "Ursaring",
+    "dexNumber": 217,
+    "sprite": "217.png"
+  },
+  "218": {
+    "name": "Slugma",
+    "dexNumber": 218,
+    "sprite": "218.png"
+  },
+  "219": {
+    "name": "Magcargo",
+    "dexNumber": 219,
+    "sprite": "219.png"
+  },
+  "220": {
+    "name": "Swinub",
+    "dexNumber": 220,
+    "sprite": "220.png"
+  },
+  "221": {
+    "name": "Piloswine",
+    "dexNumber": 221,
+    "sprite": "221.png"
+  },
+  "222": {
+    "name": "Corsola",
+    "dexNumber": 222,
+    "sprite": "222.png"
+  },
+  "223": {
+    "name": "Remoraid",
+    "dexNumber": 223,
+    "sprite": "223.png"
+  },
+  "224": {
+    "name": "Octillery",
+    "dexNumber": 224,
+    "sprite": "224.png"
+  },
+  "225": {
+    "name": "Delibird",
+    "dexNumber": 225,
+    "sprite": "225.png"
+  },
+  "226": {
+    "name": "Mantine",
+    "dexNumber": 226,
+    "sprite": "226.png"
+  },
+  "227": {
+    "name": "Skarmory",
+    "dexNumber": 227,
+    "sprite": "227.png"
+  },
+  "228": {
+    "name": "Houndour",
+    "dexNumber": 228,
+    "sprite": "228.png"
+  },
+  "229": {
+    "name": "Houndoom",
+    "dexNumber": 229,
+    "sprite": "229.png"
+  },
+  "230": {
+    "name": "Kingdra",
+    "dexNumber": 230,
+    "sprite": "230.png"
+  },
+  "231": {
+    "name": "Phanpy",
+    "dexNumber": 231,
+    "sprite": "231.png"
+  },
+  "232": {
+    "name": "Donphan",
+    "dexNumber": 232,
+    "sprite": "232.png"
+  },
+  "233": {
+    "name": "Porygon2",
+    "dexNumber": 233,
+    "sprite": "233.png"
+  },
+  "234": {
+    "name": "Stantler",
+    "dexNumber": 234,
+    "sprite": "234.png"
+  },
+  "235": {
+    "name": "Smeargle",
+    "dexNumber": 235,
+    "sprite": "235.png"
+  },
+  "236": {
+    "name": "Tyrogue",
+    "dexNumber": 236,
+    "sprite": "236.png"
+  },
+  "237": {
+    "name": "Hitmontop",
+    "dexNumber": 237,
+    "sprite": "237.png"
+  },
+  "238": {
+    "name": "Smoochum",
+    "dexNumber": 238,
+    "sprite": "238.png"
+  },
+  "239": {
+    "name": "Elekid",
+    "dexNumber": 239,
+    "sprite": "239.png"
+  },
+  "240": {
+    "name": "Magby",
+    "dexNumber": 240,
+    "sprite": "240.png"
+  },
+  "241": {
+    "name": "Miltank",
+    "dexNumber": 241,
+    "sprite": "241.png"
+  },
+  "242": {
+    "name": "Blissey",
+    "dexNumber": 242,
+    "sprite": "242.png"
+  },
+  "243": {
+    "name": "Raikou",
+    "dexNumber": 243,
+    "sprite": "243.png"
+  },
+  "244": {
+    "name": "Entei",
+    "dexNumber": 244,
+    "sprite": "244.png"
+  },
+  "245": {
+    "name": "Suicune",
+    "dexNumber": 245,
+    "sprite": "245.png"
+  },
+  "246": {
+    "name": "Larvitar",
+    "dexNumber": 246,
+    "sprite": "246.png"
+  },
+  "247": {
+    "name": "Pupitar",
+    "dexNumber": 247,
+    "sprite": "247.png"
+  },
+  "248": {
+    "name": "Tyranitar",
+    "dexNumber": 248,
+    "sprite": "248.png"
+  },
+  "249": {
+    "name": "Lugia",
+    "dexNumber": 249,
+    "sprite": "249.png"
+  },
+  "250": {
+    "name": "Ho-Oh",
+    "dexNumber": 250,
+    "sprite": "250.png"
+  },
+  "251": {
+    "name": "Celebi",
+    "dexNumber": 251,
+    "sprite": "251.png"
+  },
+  "252": {
+    "name": "Treecko",
+    "dexNumber": 252,
+    "sprite": "252.png"
+  },
+  "253": {
+    "name": "Grovyle",
+    "dexNumber": 253,
+    "sprite": "253.png"
+  },
+  "254": {
+    "name": "Sceptile",
+    "dexNumber": 254,
+    "sprite": "254.png"
+  },
+  "255": {
+    "name": "Torchic",
+    "dexNumber": 255,
+    "sprite": "255.png"
+  },
+  "256": {
+    "name": "Combusken",
+    "dexNumber": 256,
+    "sprite": "256.png"
+  },
+  "257": {
+    "name": "Blaziken",
+    "dexNumber": 257,
+    "sprite": "257.png"
+  },
+  "258": {
+    "name": "Mudkip",
+    "dexNumber": 258,
+    "sprite": "258.png"
+  },
+  "259": {
+    "name": "Marshtomp",
+    "dexNumber": 259,
+    "sprite": "259.png"
+  },
+  "260": {
+    "name": "Swampert",
+    "dexNumber": 260,
+    "sprite": "260.png"
+  },
+  "261": {
+    "name": "Poochyena",
+    "dexNumber": 261,
+    "sprite": "261.png"
+  },
+  "262": {
+    "name": "Mightyena",
+    "dexNumber": 262,
+    "sprite": "262.png"
+  },
+  "263": {
+    "name": "Zigzagoon",
+    "dexNumber": 263,
+    "sprite": "263.png"
+  },
+  "264": {
+    "name": "Linoone",
+    "dexNumber": 264,
+    "sprite": "264.png"
+  },
+  "265": {
+    "name": "Wurmple",
+    "dexNumber": 265,
+    "sprite": "265.png"
+  },
+  "266": {
+    "name": "Silcoon",
+    "dexNumber": 266,
+    "sprite": "266.png"
+  },
+  "267": {
+    "name": "Beautifly",
+    "dexNumber": 267,
+    "sprite": "267.png"
+  },
+  "268": {
+    "name": "Cascoon",
+    "dexNumber": 268,
+    "sprite": "268.png"
+  },
+  "269": {
+    "name": "Dustox",
+    "dexNumber": 269,
+    "sprite": "269.png"
+  },
+  "270": {
+    "name": "Lotad",
+    "dexNumber": 270,
+    "sprite": "270.png"
+  },
+  "271": {
+    "name": "Lombre",
+    "dexNumber": 271,
+    "sprite": "271.png"
+  },
+  "272": {
+    "name": "Ludicolo",
+    "dexNumber": 272,
+    "sprite": "272.png"
+  },
+  "273": {
+    "name": "Seedot",
+    "dexNumber": 273,
+    "sprite": "273.png"
+  },
+  "274": {
+    "name": "Nuzleaf",
+    "dexNumber": 274,
+    "sprite": "274.png"
+  },
+  "275": {
+    "name": "Shiftry",
+    "dexNumber": 275,
+    "sprite": "275.png"
+  },
+  "276": {
+    "name": "Taillow",
+    "dexNumber": 276,
+    "sprite": "276.png"
+  },
+  "277": {
+    "name": "Swellow",
+    "dexNumber": 277,
+    "sprite": "277.png"
+  },
+  "278": {
+    "name": "Wingull",
+    "dexNumber": 278,
+    "sprite": "278.png"
+  },
+  "279": {
+    "name": "Pelipper",
+    "dexNumber": 279,
+    "sprite": "279.png"
+  },
+  "280": {
+    "name": "Ralts",
+    "dexNumber": 280,
+    "sprite": "280.png"
+  },
+  "281": {
+    "name": "Kirlia",
+    "dexNumber": 281,
+    "sprite": "281.png"
+  },
+  "282": {
+    "name": "Gardevoir",
+    "dexNumber": 282,
+    "sprite": "282.png"
+  },
+  "283": {
+    "name": "Surskit",
+    "dexNumber": 283,
+    "sprite": "283.png"
+  },
+  "284": {
+    "name": "Masquerain",
+    "dexNumber": 284,
+    "sprite": "284.png"
+  },
+  "285": {
+    "name": "Shroomish",
+    "dexNumber": 285,
+    "sprite": "285.png"
+  },
+  "286": {
+    "name": "Breloom",
+    "dexNumber": 286,
+    "sprite": "286.png"
+  },
+  "287": {
+    "name": "Slakoth",
+    "dexNumber": 287,
+    "sprite": "287.png"
+  },
+  "288": {
+    "name": "Vigoroth",
+    "dexNumber": 288,
+    "sprite": "288.png"
+  },
+  "289": {
+    "name": "Slaking",
+    "dexNumber": 289,
+    "sprite": "289.png"
+  },
+  "290": {
+    "name": "Nincada",
+    "dexNumber": 290,
+    "sprite": "290.png"
+  },
+  "291": {
+    "name": "Ninjask",
+    "dexNumber": 291,
+    "sprite": "291.png"
+  },
+  "292": {
+    "name": "Shedinja",
+    "dexNumber": 292,
+    "sprite": "292.png"
+  },
+  "293": {
+    "name": "Whismur",
+    "dexNumber": 293,
+    "sprite": "293.png"
+  },
+  "294": {
+    "name": "Loudred",
+    "dexNumber": 294,
+    "sprite": "294.png"
+  },
+  "295": {
+    "name": "Exploud",
+    "dexNumber": 295,
+    "sprite": "295.png"
+  },
+  "296": {
+    "name": "Makuhita",
+    "dexNumber": 296,
+    "sprite": "296.png"
+  },
+  "297": {
+    "name": "Hariyama",
+    "dexNumber": 297,
+    "sprite": "297.png"
+  },
+  "298": {
+    "name": "Azurill",
+    "dexNumber": 298,
+    "sprite": "298.png"
+  },
+  "299": {
+    "name": "Nosepass",
+    "dexNumber": 299,
+    "sprite": "299.png"
+  },
+  "300": {
+    "name": "Skitty",
+    "dexNumber": 300,
+    "sprite": "300.png"
+  },
+  "301": {
+    "name": "Delcatty",
+    "dexNumber": 301,
+    "sprite": "301.png"
+  },
+  "302": {
+    "name": "Sableye",
+    "dexNumber": 302,
+    "sprite": "302.png"
+  },
+  "303": {
+    "name": "Mawile",
+    "dexNumber": 303,
+    "sprite": "303.png"
+  },
+  "304": {
+    "name": "Aron",
+    "dexNumber": 304,
+    "sprite": "304.png"
+  },
+  "305": {
+    "name": "Lairon",
+    "dexNumber": 305,
+    "sprite": "305.png"
+  },
+  "306": {
+    "name": "Aggron",
+    "dexNumber": 306,
+    "sprite": "306.png"
+  },
+  "307": {
+    "name": "Meditite",
+    "dexNumber": 307,
+    "sprite": "307.png"
+  },
+  "308": {
+    "name": "Medicham",
+    "dexNumber": 308,
+    "sprite": "308.png"
+  },
+  "309": {
+    "name": "Electrike",
+    "dexNumber": 309,
+    "sprite": "309.png"
+  },
+  "310": {
+    "name": "Manectric",
+    "dexNumber": 310,
+    "sprite": "310.png"
+  },
+  "311": {
+    "name": "Plusle",
+    "dexNumber": 311,
+    "sprite": "311.png"
+  },
+  "312": {
+    "name": "Minun",
+    "dexNumber": 312,
+    "sprite": "312.png"
+  },
+  "313": {
+    "name": "Volbeat",
+    "dexNumber": 313,
+    "sprite": "313.png"
+  },
+  "314": {
+    "name": "Illumise",
+    "dexNumber": 314,
+    "sprite": "314.png"
+  },
+  "315": {
+    "name": "Roselia",
+    "dexNumber": 315,
+    "sprite": "315.png"
+  },
+  "316": {
+    "name": "Gulpin",
+    "dexNumber": 316,
+    "sprite": "316.png"
+  },
+  "317": {
+    "name": "Swalot",
+    "dexNumber": 317,
+    "sprite": "317.png"
+  },
+  "318": {
+    "name": "Carvanha",
+    "dexNumber": 318,
+    "sprite": "318.png"
+  },
+  "319": {
+    "name": "Sharpedo",
+    "dexNumber": 319,
+    "sprite": "319.png"
+  },
+  "320": {
+    "name": "Wailmer",
+    "dexNumber": 320,
+    "sprite": "320.png"
+  },
+  "321": {
+    "name": "Wailord",
+    "dexNumber": 321,
+    "sprite": "321.png"
+  },
+  "322": {
+    "name": "Numel",
+    "dexNumber": 322,
+    "sprite": "322.png"
+  },
+  "323": {
+    "name": "Camerupt",
+    "dexNumber": 323,
+    "sprite": "323.png"
+  },
+  "324": {
+    "name": "Torkoal",
+    "dexNumber": 324,
+    "sprite": "324.png"
+  },
+  "325": {
+    "name": "Spoink",
+    "dexNumber": 325,
+    "sprite": "325.png"
+  },
+  "326": {
+    "name": "Grumpig",
+    "dexNumber": 326,
+    "sprite": "326.png"
+  },
+  "327": {
+    "name": "Spinda",
+    "dexNumber": 327,
+    "sprite": "327.png"
+  },
+  "328": {
+    "name": "Trapinch",
+    "dexNumber": 328,
+    "sprite": "328.png"
+  },
+  "329": {
+    "name": "Vibrava",
+    "dexNumber": 329,
+    "sprite": "329.png"
+  },
+  "330": {
+    "name": "Flygon",
+    "dexNumber": 330,
+    "sprite": "330.png"
+  },
+  "331": {
+    "name": "Cacnea",
+    "dexNumber": 331,
+    "sprite": "331.png"
+  },
+  "332": {
+    "name": "Cacturne",
+    "dexNumber": 332,
+    "sprite": "332.png"
+  },
+  "333": {
+    "name": "Swablu",
+    "dexNumber": 333,
+    "sprite": "333.png"
+  },
+  "334": {
+    "name": "Altaria",
+    "dexNumber": 334,
+    "sprite": "334.png"
+  },
+  "335": {
+    "name": "Zangoose",
+    "dexNumber": 335,
+    "sprite": "335.png"
+  },
+  "336": {
+    "name": "Seviper",
+    "dexNumber": 336,
+    "sprite": "336.png"
+  },
+  "337": {
+    "name": "Lunatone",
+    "dexNumber": 337,
+    "sprite": "337.png"
+  },
+  "338": {
+    "name": "Solrock",
+    "dexNumber": 338,
+    "sprite": "338.png"
+  },
+  "339": {
+    "name": "Barboach",
+    "dexNumber": 339,
+    "sprite": "339.png"
+  },
+  "340": {
+    "name": "Whiscash",
+    "dexNumber": 340,
+    "sprite": "340.png"
+  },
+  "341": {
+    "name": "Corphish",
+    "dexNumber": 341,
+    "sprite": "341.png"
+  },
+  "342": {
+    "name": "Crawdaunt",
+    "dexNumber": 342,
+    "sprite": "342.png"
+  },
+  "343": {
+    "name": "Baltoy",
+    "dexNumber": 343,
+    "sprite": "343.png"
+  },
+  "344": {
+    "name": "Claydol",
+    "dexNumber": 344,
+    "sprite": "344.png"
+  },
+  "345": {
+    "name": "Lileep",
+    "dexNumber": 345,
+    "sprite": "345.png"
+  },
+  "346": {
+    "name": "Cradily",
+    "dexNumber": 346,
+    "sprite": "346.png"
+  },
+  "347": {
+    "name": "Anorith",
+    "dexNumber": 347,
+    "sprite": "347.png"
+  },
+  "348": {
+    "name": "Armaldo",
+    "dexNumber": 348,
+    "sprite": "348.png"
+  },
+  "349": {
+    "name": "Feebas",
+    "dexNumber": 349,
+    "sprite": "349.png"
+  },
+  "350": {
+    "name": "Milotic",
+    "dexNumber": 350,
+    "sprite": "350.png"
+  },
+  "351": {
+    "name": "Castform",
+    "dexNumber": 351,
+    "sprite": "351.png"
+  },
+  "352": {
+    "name": "Kecleon",
+    "dexNumber": 352,
+    "sprite": "352.png"
+  },
+  "353": {
+    "name": "Shuppet",
+    "dexNumber": 353,
+    "sprite": "353.png"
+  },
+  "354": {
+    "name": "Banette",
+    "dexNumber": 354,
+    "sprite": "354.png"
+  },
+  "355": {
+    "name": "Duskull",
+    "dexNumber": 355,
+    "sprite": "355.png"
+  },
+  "356": {
+    "name": "Dusclops",
+    "dexNumber": 356,
+    "sprite": "356.png"
+  },
+  "357": {
+    "name": "Tropius",
+    "dexNumber": 357,
+    "sprite": "357.png"
+  },
+  "358": {
+    "name": "Chimecho",
+    "dexNumber": 358,
+    "sprite": "358.png"
+  },
+  "359": {
+    "name": "Absol",
+    "dexNumber": 359,
+    "sprite": "359.png"
+  },
+  "360": {
+    "name": "Wynaut",
+    "dexNumber": 360,
+    "sprite": "360.png"
+  },
+  "361": {
+    "name": "Snorunt",
+    "dexNumber": 361,
+    "sprite": "361.png"
+  },
+  "362": {
+    "name": "Glalie",
+    "dexNumber": 362,
+    "sprite": "362.png"
+  },
+  "363": {
+    "name": "Spheal",
+    "dexNumber": 363,
+    "sprite": "363.png"
+  },
+  "364": {
+    "name": "Sealeo",
+    "dexNumber": 364,
+    "sprite": "364.png"
+  },
+  "365": {
+    "name": "Walrein",
+    "dexNumber": 365,
+    "sprite": "365.png"
+  },
+  "366": {
+    "name": "Clamperl",
+    "dexNumber": 366,
+    "sprite": "366.png"
+  },
+  "367": {
+    "name": "Huntail",
+    "dexNumber": 367,
+    "sprite": "367.png"
+  },
+  "368": {
+    "name": "Gorebyss",
+    "dexNumber": 368,
+    "sprite": "368.png"
+  },
+  "369": {
+    "name": "Relicanth",
+    "dexNumber": 369,
+    "sprite": "369.png"
+  },
+  "370": {
+    "name": "Luvdisc",
+    "dexNumber": 370,
+    "sprite": "370.png"
+  },
+  "371": {
+    "name": "Bagon",
+    "dexNumber": 371,
+    "sprite": "371.png"
+  },
+  "372": {
+    "name": "Shelgon",
+    "dexNumber": 372,
+    "sprite": "372.png"
+  },
+  "373": {
+    "name": "Salamence",
+    "dexNumber": 373,
+    "sprite": "373.png"
+  },
+  "374": {
+    "name": "Beldum",
+    "dexNumber": 374,
+    "sprite": "374.png"
+  },
+  "375": {
+    "name": "Metang",
+    "dexNumber": 375,
+    "sprite": "375.png"
+  },
+  "376": {
+    "name": "Metagross",
+    "dexNumber": 376,
+    "sprite": "376.png"
+  },
+  "377": {
+    "name": "Regirock",
+    "dexNumber": 377,
+    "sprite": "377.png"
+  },
+  "378": {
+    "name": "Regice",
+    "dexNumber": 378,
+    "sprite": "378.png"
+  },
+  "379": {
+    "name": "Registeel",
+    "dexNumber": 379,
+    "sprite": "379.png"
+  },
+  "380": {
+    "name": "Latias",
+    "dexNumber": 380,
+    "sprite": "380.png"
+  },
+  "381": {
+    "name": "Latios",
+    "dexNumber": 381,
+    "sprite": "381.png"
+  },
+  "382": {
+    "name": "Kyogre",
+    "dexNumber": 382,
+    "sprite": "382.png"
+  },
+  "383": {
+    "name": "Groudon",
+    "dexNumber": 383,
+    "sprite": "383.png"
+  },
+  "384": {
+    "name": "Rayquaza",
+    "dexNumber": 384,
+    "sprite": "384.png"
+  },
+  "385": {
+    "name": "Jirachi",
+    "dexNumber": 385,
+    "sprite": "385.png"
+  },
+  "386": {
+    "name": "Deoxys",
+    "dexNumber": 386,
+    "sprite": "386.png"
+  },
+  "387": {
+    "name": "Turtwig",
+    "dexNumber": 387,
+    "sprite": "387.png"
+  },
+  "388": {
+    "name": "Grotle",
+    "dexNumber": 388,
+    "sprite": "388.png"
+  },
+  "389": {
+    "name": "Torterra",
+    "dexNumber": 389,
+    "sprite": "389.png"
+  },
+  "390": {
+    "name": "Chimchar",
+    "dexNumber": 390,
+    "sprite": "390.png"
+  },
+  "391": {
+    "name": "Monferno",
+    "dexNumber": 391,
+    "sprite": "391.png"
+  },
+  "392": {
+    "name": "Infernape",
+    "dexNumber": 392,
+    "sprite": "392.png"
+  },
+  "393": {
+    "name": "Piplup",
+    "dexNumber": 393,
+    "sprite": "393.png"
+  },
+  "394": {
+    "name": "Prinplup",
+    "dexNumber": 394,
+    "sprite": "394.png"
+  },
+  "395": {
+    "name": "Empoleon",
+    "dexNumber": 395,
+    "sprite": "395.png"
+  },
+  "396": {
+    "name": "Starly",
+    "dexNumber": 396,
+    "sprite": "396.png"
+  },
+  "397": {
+    "name": "Staravia",
+    "dexNumber": 397,
+    "sprite": "397.png"
+  },
+  "398": {
+    "name": "Staraptor",
+    "dexNumber": 398,
+    "sprite": "398.png"
+  },
+  "399": {
+    "name": "Bidoof",
+    "dexNumber": 399,
+    "sprite": "399.png"
+  },
+  "400": {
+    "name": "Bibarel",
+    "dexNumber": 400,
+    "sprite": "400.png"
+  },
+  "401": {
+    "name": "Kricketot",
+    "dexNumber": 401,
+    "sprite": "401.png"
+  },
+  "402": {
+    "name": "Kricketune",
+    "dexNumber": 402,
+    "sprite": "402.png"
+  },
+  "403": {
+    "name": "Shinx",
+    "dexNumber": 403,
+    "sprite": "403.png"
+  },
+  "404": {
+    "name": "Luxio",
+    "dexNumber": 404,
+    "sprite": "404.png"
+  },
+  "405": {
+    "name": "Luxray",
+    "dexNumber": 405,
+    "sprite": "405.png"
+  },
+  "406": {
+    "name": "Budew",
+    "dexNumber": 406,
+    "sprite": "406.png"
+  },
+  "407": {
+    "name": "Roserade",
+    "dexNumber": 407,
+    "sprite": "407.png"
+  },
+  "408": {
+    "name": "Cranidos",
+    "dexNumber": 408,
+    "sprite": "408.png"
+  },
+  "409": {
+    "name": "Rampardos",
+    "dexNumber": 409,
+    "sprite": "409.png"
+  },
+  "410": {
+    "name": "Shieldon",
+    "dexNumber": 410,
+    "sprite": "410.png"
+  },
+  "411": {
+    "name": "Bastiodon",
+    "dexNumber": 411,
+    "sprite": "411.png"
+  },
+  "412": {
+    "name": "Burmy",
+    "dexNumber": 412,
+    "sprite": "412.png"
+  },
+  "413": {
+    "name": "Wormadam",
+    "dexNumber": 413,
+    "sprite": "413.png"
+  },
+  "414": {
+    "name": "Mothim",
+    "dexNumber": 414,
+    "sprite": "414.png"
+  },
+  "415": {
+    "name": "Combee",
+    "dexNumber": 415,
+    "sprite": "415.png"
+  },
+  "416": {
+    "name": "Vespiquen",
+    "dexNumber": 416,
+    "sprite": "416.png"
+  },
+  "417": {
+    "name": "Pachirisu",
+    "dexNumber": 417,
+    "sprite": "417.png"
+  },
+  "418": {
+    "name": "Buizel",
+    "dexNumber": 418,
+    "sprite": "418.png"
+  },
+  "419": {
+    "name": "Floatzel",
+    "dexNumber": 419,
+    "sprite": "419.png"
+  },
+  "420": {
+    "name": "Cherubi",
+    "dexNumber": 420,
+    "sprite": "420.png"
+  },
+  "421": {
+    "name": "Cherrim",
+    "dexNumber": 421,
+    "sprite": "421.png"
+  },
+  "422": {
+    "name": "Shellos",
+    "dexNumber": 422,
+    "sprite": "422.png"
+  },
+  "423": {
+    "name": "Gastrodon",
+    "dexNumber": 423,
+    "sprite": "423.png"
+  },
+  "424": {
+    "name": "Ambipom",
+    "dexNumber": 424,
+    "sprite": "424.png"
+  },
+  "425": {
+    "name": "Drifloon",
+    "dexNumber": 425,
+    "sprite": "425.png"
+  },
+  "426": {
+    "name": "Drifblim",
+    "dexNumber": 426,
+    "sprite": "426.png"
+  },
+  "427": {
+    "name": "Buneary",
+    "dexNumber": 427,
+    "sprite": "427.png"
+  },
+  "428": {
+    "name": "Lopunny",
+    "dexNumber": 428,
+    "sprite": "428.png"
+  },
+  "429": {
+    "name": "Mismagius",
+    "dexNumber": 429,
+    "sprite": "429.png"
+  },
+  "430": {
+    "name": "Honchkrow",
+    "dexNumber": 430,
+    "sprite": "430.png"
+  },
+  "431": {
+    "name": "Glameow",
+    "dexNumber": 431,
+    "sprite": "431.png"
+  },
+  "432": {
+    "name": "Purugly",
+    "dexNumber": 432,
+    "sprite": "432.png"
+  },
+  "433": {
+    "name": "Chingling",
+    "dexNumber": 433,
+    "sprite": "433.png"
+  },
+  "434": {
+    "name": "Stunky",
+    "dexNumber": 434,
+    "sprite": "434.png"
+  },
+  "435": {
+    "name": "Skuntank",
+    "dexNumber": 435,
+    "sprite": "435.png"
+  },
+  "436": {
+    "name": "Bronzor",
+    "dexNumber": 436,
+    "sprite": "436.png"
+  },
+  "437": {
+    "name": "Bronzong",
+    "dexNumber": 437,
+    "sprite": "437.png"
+  },
+  "438": {
+    "name": "Bonsly",
+    "dexNumber": 438,
+    "sprite": "438.png"
+  },
+  "439": {
+    "name": "Mime Jr.",
+    "dexNumber": 439,
+    "sprite": "439.png"
+  },
+  "440": {
+    "name": "Happiny",
+    "dexNumber": 440,
+    "sprite": "440.png"
+  },
+  "441": {
+    "name": "Chatot",
+    "dexNumber": 441,
+    "sprite": "441.png"
+  },
+  "442": {
+    "name": "Spiritomb",
+    "dexNumber": 442,
+    "sprite": "442.png"
+  },
+  "443": {
+    "name": "Gible",
+    "dexNumber": 443,
+    "sprite": "443.png"
+  },
+  "444": {
+    "name": "Gabite",
+    "dexNumber": 444,
+    "sprite": "444.png"
+  },
+  "445": {
+    "name": "Garchomp",
+    "dexNumber": 445,
+    "sprite": "445.png"
+  },
+  "446": {
+    "name": "Munchlax",
+    "dexNumber": 446,
+    "sprite": "446.png"
+  },
+  "447": {
+    "name": "Riolu",
+    "dexNumber": 447,
+    "sprite": "447.png"
+  },
+  "448": {
+    "name": "Lucario",
+    "dexNumber": 448,
+    "sprite": "448.png"
+  },
+  "449": {
+    "name": "Hippopotas",
+    "dexNumber": 449,
+    "sprite": "449.png"
+  },
+  "450": {
+    "name": "Hippowdon",
+    "dexNumber": 450,
+    "sprite": "450.png"
+  },
+  "451": {
+    "name": "Skorupi",
+    "dexNumber": 451,
+    "sprite": "451.png"
+  },
+  "452": {
+    "name": "Drapion",
+    "dexNumber": 452,
+    "sprite": "452.png"
+  },
+  "453": {
+    "name": "Croagunk",
+    "dexNumber": 453,
+    "sprite": "453.png"
+  },
+  "454": {
+    "name": "Toxicroak",
+    "dexNumber": 454,
+    "sprite": "454.png"
+  },
+  "455": {
+    "name": "Carnivine",
+    "dexNumber": 455,
+    "sprite": "455.png"
+  },
+  "456": {
+    "name": "Finneon",
+    "dexNumber": 456,
+    "sprite": "456.png"
+  },
+  "457": {
+    "name": "Lumineon",
+    "dexNumber": 457,
+    "sprite": "457.png"
+  },
+  "458": {
+    "name": "Mantyke",
+    "dexNumber": 458,
+    "sprite": "458.png"
+  },
+  "459": {
+    "name": "Snover",
+    "dexNumber": 459,
+    "sprite": "459.png"
+  },
+  "460": {
+    "name": "Abomasnow",
+    "dexNumber": 460,
+    "sprite": "460.png"
+  },
+  "461": {
+    "name": "Weavile",
+    "dexNumber": 461,
+    "sprite": "461.png"
+  },
+  "462": {
+    "name": "Magnezone",
+    "dexNumber": 462,
+    "sprite": "462.png"
+  },
+  "463": {
+    "name": "Lickilicky",
+    "dexNumber": 463,
+    "sprite": "463.png"
+  },
+  "464": {
+    "name": "Rhyperior",
+    "dexNumber": 464,
+    "sprite": "464.png"
+  },
+  "465": {
+    "name": "Tangrowth",
+    "dexNumber": 465,
+    "sprite": "465.png"
+  },
+  "466": {
+    "name": "Electivire",
+    "dexNumber": 466,
+    "sprite": "466.png"
+  },
+  "467": {
+    "name": "Magmortar",
+    "dexNumber": 467,
+    "sprite": "467.png"
+  },
+  "468": {
+    "name": "Togekiss",
+    "dexNumber": 468,
+    "sprite": "468.png"
+  },
+  "469": {
+    "name": "Yanmega",
+    "dexNumber": 469,
+    "sprite": "469.png"
+  },
+  "470": {
+    "name": "Leafeon",
+    "dexNumber": 470,
+    "sprite": "470.png"
+  },
+  "471": {
+    "name": "Glaceon",
+    "dexNumber": 471,
+    "sprite": "471.png"
+  },
+  "472": {
+    "name": "Gliscor",
+    "dexNumber": 472,
+    "sprite": "472.png"
+  },
+  "473": {
+    "name": "Mamoswine",
+    "dexNumber": 473,
+    "sprite": "473.png"
+  },
+  "474": {
+    "name": "Porygon-Z",
+    "dexNumber": 474,
+    "sprite": "474.png"
+  },
+  "475": {
+    "name": "Gallade",
+    "dexNumber": 475,
+    "sprite": "475.png"
+  },
+  "476": {
+    "name": "Probopass",
+    "dexNumber": 476,
+    "sprite": "476.png"
+  },
+  "477": {
+    "name": "Dusknoir",
+    "dexNumber": 477,
+    "sprite": "477.png"
+  },
+  "478": {
+    "name": "Froslass",
+    "dexNumber": 478,
+    "sprite": "478.png"
+  },
+  "479": {
+    "name": "Rotom",
+    "dexNumber": 479,
+    "sprite": "479.png"
+  },
+  "480": {
+    "name": "Uxie",
+    "dexNumber": 480,
+    "sprite": "480.png"
+  },
+  "481": {
+    "name": "Mesprit",
+    "dexNumber": 481,
+    "sprite": "481.png"
+  },
+  "482": {
+    "name": "Azelf",
+    "dexNumber": 482,
+    "sprite": "482.png"
+  },
+  "483": {
+    "name": "Dialga",
+    "dexNumber": 483,
+    "sprite": "483.png"
+  },
+  "484": {
+    "name": "Palkia",
+    "dexNumber": 484,
+    "sprite": "484.png"
+  },
+  "485": {
+    "name": "Heatran",
+    "dexNumber": 485,
+    "sprite": "485.png"
+  },
+  "486": {
+    "name": "Regigigas",
+    "dexNumber": 486,
+    "sprite": "486.png"
+  },
+  "487": {
+    "name": "Giratina",
+    "dexNumber": 487,
+    "sprite": "487.png"
+  },
+  "488": {
+    "name": "Cresselia",
+    "dexNumber": 488,
+    "sprite": "488.png"
+  },
+  "489": {
+    "name": "Phione",
+    "dexNumber": 489,
+    "sprite": "489.png"
+  },
+  "490": {
+    "name": "Manaphy",
+    "dexNumber": 490,
+    "sprite": "490.png"
+  },
+  "491": {
+    "name": "Darkrai",
+    "dexNumber": 491,
+    "sprite": "491.png"
+  },
+  "492": {
+    "name": "Shaymin",
+    "dexNumber": 492,
+    "sprite": "492.png"
+  },
+  "493": {
+    "name": "Arceus",
+    "dexNumber": 493,
+    "sprite": "493.png"
+  },
+  "494": {
+    "name": "Victini",
+    "dexNumber": 494,
+    "sprite": "494.png"
+  },
+  "495": {
+    "name": "Snivy",
+    "dexNumber": 495,
+    "sprite": "495.png"
+  },
+  "496": {
+    "name": "Servine",
+    "dexNumber": 496,
+    "sprite": "496.png"
+  },
+  "497": {
+    "name": "Serperior",
+    "dexNumber": 497,
+    "sprite": "497.png"
+  },
+  "498": {
+    "name": "Tepig",
+    "dexNumber": 498,
+    "sprite": "498.png"
+  },
+  "499": {
+    "name": "Pignite",
+    "dexNumber": 499,
+    "sprite": "499.png"
+  },
+  "500": {
+    "name": "Emboar",
+    "dexNumber": 500,
+    "sprite": "500.png"
+  },
+  "501": {
+    "name": "Oshawott",
+    "dexNumber": 501,
+    "sprite": "501.png"
+  },
+  "502": {
+    "name": "Dewott",
+    "dexNumber": 502,
+    "sprite": "502.png"
+  },
+  "503": {
+    "name": "Samurott",
+    "dexNumber": 503,
+    "sprite": "503.png"
+  },
+  "504": {
+    "name": "Patrat",
+    "dexNumber": 504,
+    "sprite": "504.png"
+  },
+  "505": {
+    "name": "Watchog",
+    "dexNumber": 505,
+    "sprite": "505.png"
+  },
+  "506": {
+    "name": "Lillipup",
+    "dexNumber": 506,
+    "sprite": "506.png"
+  },
+  "507": {
+    "name": "Herdier",
+    "dexNumber": 507,
+    "sprite": "507.png"
+  },
+  "508": {
+    "name": "Stoutland",
+    "dexNumber": 508,
+    "sprite": "508.png"
+  },
+  "509": {
+    "name": "Purrloin",
+    "dexNumber": 509,
+    "sprite": "509.png"
+  },
+  "510": {
+    "name": "Liepard",
+    "dexNumber": 510,
+    "sprite": "510.png"
+  },
+  "511": {
+    "name": "Pansage",
+    "dexNumber": 511,
+    "sprite": "511.png"
+  },
+  "512": {
+    "name": "Simisage",
+    "dexNumber": 512,
+    "sprite": "512.png"
+  },
+  "513": {
+    "name": "Pansear",
+    "dexNumber": 513,
+    "sprite": "513.png"
+  },
+  "514": {
+    "name": "Simisear",
+    "dexNumber": 514,
+    "sprite": "514.png"
+  },
+  "515": {
+    "name": "Panpour",
+    "dexNumber": 515,
+    "sprite": "515.png"
+  },
+  "516": {
+    "name": "Simipour",
+    "dexNumber": 516,
+    "sprite": "516.png"
+  },
+  "517": {
+    "name": "Munna",
+    "dexNumber": 517,
+    "sprite": "517.png"
+  },
+  "518": {
+    "name": "Musharna",
+    "dexNumber": 518,
+    "sprite": "518.png"
+  },
+  "519": {
+    "name": "Pidove",
+    "dexNumber": 519,
+    "sprite": "519.png"
+  },
+  "520": {
+    "name": "Tranquill",
+    "dexNumber": 520,
+    "sprite": "520.png"
+  },
+  "521": {
+    "name": "Unfezant",
+    "dexNumber": 521,
+    "sprite": "521.png"
+  },
+  "522": {
+    "name": "Blitzle",
+    "dexNumber": 522,
+    "sprite": "522.png"
+  },
+  "523": {
+    "name": "Zebstrika",
+    "dexNumber": 523,
+    "sprite": "523.png"
+  },
+  "524": {
+    "name": "Roggenrola",
+    "dexNumber": 524,
+    "sprite": "524.png"
+  },
+  "525": {
+    "name": "Boldore",
+    "dexNumber": 525,
+    "sprite": "525.png"
+  },
+  "526": {
+    "name": "Gigalith",
+    "dexNumber": 526,
+    "sprite": "526.png"
+  },
+  "527": {
+    "name": "Woobat",
+    "dexNumber": 527,
+    "sprite": "527.png"
+  },
+  "528": {
+    "name": "Swoobat",
+    "dexNumber": 528,
+    "sprite": "528.png"
+  },
+  "529": {
+    "name": "Drilbur",
+    "dexNumber": 529,
+    "sprite": "529.png"
+  },
+  "530": {
+    "name": "Excadrill",
+    "dexNumber": 530,
+    "sprite": "530.png"
+  },
+  "531": {
+    "name": "Audino",
+    "dexNumber": 531,
+    "sprite": "531.png"
+  },
+  "532": {
+    "name": "Timburr",
+    "dexNumber": 532,
+    "sprite": "532.png"
+  },
+  "533": {
+    "name": "Gurdurr",
+    "dexNumber": 533,
+    "sprite": "533.png"
+  },
+  "534": {
+    "name": "Conkeldurr",
+    "dexNumber": 534,
+    "sprite": "534.png"
+  },
+  "535": {
+    "name": "Tympole",
+    "dexNumber": 535,
+    "sprite": "535.png"
+  },
+  "536": {
+    "name": "Palpitoad",
+    "dexNumber": 536,
+    "sprite": "536.png"
+  },
+  "537": {
+    "name": "Seismitoad",
+    "dexNumber": 537,
+    "sprite": "537.png"
+  },
+  "538": {
+    "name": "Throh",
+    "dexNumber": 538,
+    "sprite": "538.png"
+  },
+  "539": {
+    "name": "Sawk",
+    "dexNumber": 539,
+    "sprite": "539.png"
+  },
+  "540": {
+    "name": "Sewaddle",
+    "dexNumber": 540,
+    "sprite": "540.png"
+  },
+  "541": {
+    "name": "Swadloon",
+    "dexNumber": 541,
+    "sprite": "541.png"
+  },
+  "542": {
+    "name": "Leavanny",
+    "dexNumber": 542,
+    "sprite": "542.png"
+  },
+  "543": {
+    "name": "Venipede",
+    "dexNumber": 543,
+    "sprite": "543.png"
+  },
+  "544": {
+    "name": "Whirlipede",
+    "dexNumber": 544,
+    "sprite": "544.png"
+  },
+  "545": {
+    "name": "Scolipede",
+    "dexNumber": 545,
+    "sprite": "545.png"
+  },
+  "546": {
+    "name": "Cottonee",
+    "dexNumber": 546,
+    "sprite": "546.png"
+  },
+  "547": {
+    "name": "Whimsicott",
+    "dexNumber": 547,
+    "sprite": "547.png"
+  },
+  "548": {
+    "name": "Petilil",
+    "dexNumber": 548,
+    "sprite": "548.png"
+  },
+  "549": {
+    "name": "Lilligant",
+    "dexNumber": 549,
+    "sprite": "549.png"
+  },
+  "550": {
+    "name": "Basculin",
+    "dexNumber": 550,
+    "sprite": "550.png"
+  },
+  "551": {
+    "name": "Sandile",
+    "dexNumber": 551,
+    "sprite": "551.png"
+  },
+  "552": {
+    "name": "Krokorok",
+    "dexNumber": 552,
+    "sprite": "552.png"
+  },
+  "553": {
+    "name": "Krookodile",
+    "dexNumber": 553,
+    "sprite": "553.png"
+  },
+  "554": {
+    "name": "Darumaka",
+    "dexNumber": 554,
+    "sprite": "554.png"
+  },
+  "555": {
+    "name": "Darmanitan",
+    "dexNumber": 555,
+    "sprite": "555.png"
+  },
+  "556": {
+    "name": "Maractus",
+    "dexNumber": 556,
+    "sprite": "556.png"
+  },
+  "557": {
+    "name": "Dwebble",
+    "dexNumber": 557,
+    "sprite": "557.png"
+  },
+  "558": {
+    "name": "Crustle",
+    "dexNumber": 558,
+    "sprite": "558.png"
+  },
+  "559": {
+    "name": "Scraggy",
+    "dexNumber": 559,
+    "sprite": "559.png"
+  },
+  "560": {
+    "name": "Scrafty",
+    "dexNumber": 560,
+    "sprite": "560.png"
+  },
+  "561": {
+    "name": "Sigilyph",
+    "dexNumber": 561,
+    "sprite": "561.png"
+  },
+  "562": {
+    "name": "Yamask",
+    "dexNumber": 562,
+    "sprite": "562.png"
+  },
+  "563": {
+    "name": "Cofagrigus",
+    "dexNumber": 563,
+    "sprite": "563.png"
+  },
+  "564": {
+    "name": "Tirtouga",
+    "dexNumber": 564,
+    "sprite": "564.png"
+  },
+  "565": {
+    "name": "Carracosta",
+    "dexNumber": 565,
+    "sprite": "565.png"
+  },
+  "566": {
+    "name": "Archen",
+    "dexNumber": 566,
+    "sprite": "566.png"
+  },
+  "567": {
+    "name": "Archeops",
+    "dexNumber": 567,
+    "sprite": "567.png"
+  },
+  "568": {
+    "name": "Trubbish",
+    "dexNumber": 568,
+    "sprite": "568.png"
+  },
+  "569": {
+    "name": "Garbodor",
+    "dexNumber": 569,
+    "sprite": "569.png"
+  },
+  "570": {
+    "name": "Zorua",
+    "dexNumber": 570,
+    "sprite": "570.png"
+  },
+  "571": {
+    "name": "Zoroark",
+    "dexNumber": 571,
+    "sprite": "571.png"
+  },
+  "572": {
+    "name": "Minccino",
+    "dexNumber": 572,
+    "sprite": "572.png"
+  },
+  "573": {
+    "name": "Cinccino",
+    "dexNumber": 573,
+    "sprite": "573.png"
+  },
+  "574": {
+    "name": "Gothita",
+    "dexNumber": 574,
+    "sprite": "574.png"
+  },
+  "575": {
+    "name": "Gothorita",
+    "dexNumber": 575,
+    "sprite": "575.png"
+  },
+  "576": {
+    "name": "Gothitelle",
+    "dexNumber": 576,
+    "sprite": "576.png"
+  },
+  "577": {
+    "name": "Solosis",
+    "dexNumber": 577,
+    "sprite": "577.png"
+  },
+  "578": {
+    "name": "Duosion",
+    "dexNumber": 578,
+    "sprite": "578.png"
+  },
+  "579": {
+    "name": "Reuniclus",
+    "dexNumber": 579,
+    "sprite": "579.png"
+  },
+  "580": {
+    "name": "Ducklett",
+    "dexNumber": 580,
+    "sprite": "580.png"
+  },
+  "581": {
+    "name": "Swanna",
+    "dexNumber": 581,
+    "sprite": "581.png"
+  },
+  "582": {
+    "name": "Vanillite",
+    "dexNumber": 582,
+    "sprite": "582.png"
+  },
+  "583": {
+    "name": "Vanillish",
+    "dexNumber": 583,
+    "sprite": "583.png"
+  },
+  "584": {
+    "name": "Vanilluxe",
+    "dexNumber": 584,
+    "sprite": "584.png"
+  },
+  "585": {
+    "name": "Deerling",
+    "dexNumber": 585,
+    "sprite": "585.png"
+  },
+  "586": {
+    "name": "Sawsbuck",
+    "dexNumber": 586,
+    "sprite": "586.png"
+  },
+  "587": {
+    "name": "Emolga",
+    "dexNumber": 587,
+    "sprite": "587.png"
+  },
+  "588": {
+    "name": "Karrablast",
+    "dexNumber": 588,
+    "sprite": "588.png"
+  },
+  "589": {
+    "name": "Escavalier",
+    "dexNumber": 589,
+    "sprite": "589.png"
+  },
+  "590": {
+    "name": "Foongus",
+    "dexNumber": 590,
+    "sprite": "590.png"
+  },
+  "591": {
+    "name": "Amoonguss",
+    "dexNumber": 591,
+    "sprite": "591.png"
+  },
+  "592": {
+    "name": "Frillish",
+    "dexNumber": 592,
+    "sprite": "592.png"
+  },
+  "593": {
+    "name": "Jellicent",
+    "dexNumber": 593,
+    "sprite": "593.png"
+  },
+  "594": {
+    "name": "Alomomola",
+    "dexNumber": 594,
+    "sprite": "594.png"
+  },
+  "595": {
+    "name": "Joltik",
+    "dexNumber": 595,
+    "sprite": "595.png"
+  },
+  "596": {
+    "name": "Galvantula",
+    "dexNumber": 596,
+    "sprite": "596.png"
+  },
+  "597": {
+    "name": "Ferroseed",
+    "dexNumber": 597,
+    "sprite": "597.png"
+  },
+  "598": {
+    "name": "Ferrothorn",
+    "dexNumber": 598,
+    "sprite": "598.png"
+  },
+  "599": {
+    "name": "Klink",
+    "dexNumber": 599,
+    "sprite": "599.png"
+  },
+  "600": {
+    "name": "Klang",
+    "dexNumber": 600,
+    "sprite": "600.png"
+  },
+  "601": {
+    "name": "Klinklang",
+    "dexNumber": 601,
+    "sprite": "601.png"
+  },
+  "602": {
+    "name": "Tynamo",
+    "dexNumber": 602,
+    "sprite": "602.png"
+  },
+  "603": {
+    "name": "Eelektrik",
+    "dexNumber": 603,
+    "sprite": "603.png"
+  },
+  "604": {
+    "name": "Eelektross",
+    "dexNumber": 604,
+    "sprite": "604.png"
+  },
+  "605": {
+    "name": "Elgyem",
+    "dexNumber": 605,
+    "sprite": "605.png"
+  },
+  "606": {
+    "name": "Beheeyem",
+    "dexNumber": 606,
+    "sprite": "606.png"
+  },
+  "607": {
+    "name": "Litwick",
+    "dexNumber": 607,
+    "sprite": "607.png"
+  },
+  "608": {
+    "name": "Lampent",
+    "dexNumber": 608,
+    "sprite": "608.png"
+  },
+  "609": {
+    "name": "Chandelure",
+    "dexNumber": 609,
+    "sprite": "609.png"
+  },
+  "610": {
+    "name": "Axew",
+    "dexNumber": 610,
+    "sprite": "610.png"
+  },
+  "611": {
+    "name": "Fraxure",
+    "dexNumber": 611,
+    "sprite": "611.png"
+  },
+  "612": {
+    "name": "Haxorus",
+    "dexNumber": 612,
+    "sprite": "612.png"
+  },
+  "613": {
+    "name": "Cubchoo",
+    "dexNumber": 613,
+    "sprite": "613.png"
+  },
+  "614": {
+    "name": "Beartic",
+    "dexNumber": 614,
+    "sprite": "614.png"
+  },
+  "615": {
+    "name": "Cryogonal",
+    "dexNumber": 615,
+    "sprite": "615.png"
+  },
+  "616": {
+    "name": "Shelmet",
+    "dexNumber": 616,
+    "sprite": "616.png"
+  },
+  "617": {
+    "name": "Accelgor",
+    "dexNumber": 617,
+    "sprite": "617.png"
+  },
+  "618": {
+    "name": "Stunfisk",
+    "dexNumber": 618,
+    "sprite": "618.png"
+  },
+  "619": {
+    "name": "Mienfoo",
+    "dexNumber": 619,
+    "sprite": "619.png"
+  },
+  "620": {
+    "name": "Mienshao",
+    "dexNumber": 620,
+    "sprite": "620.png"
+  },
+  "621": {
+    "name": "Druddigon",
+    "dexNumber": 621,
+    "sprite": "621.png"
+  },
+  "622": {
+    "name": "Golett",
+    "dexNumber": 622,
+    "sprite": "622.png"
+  },
+  "623": {
+    "name": "Golurk",
+    "dexNumber": 623,
+    "sprite": "623.png"
+  },
+  "624": {
+    "name": "Pawniard",
+    "dexNumber": 624,
+    "sprite": "624.png"
+  },
+  "625": {
+    "name": "Bisharp",
+    "dexNumber": 625,
+    "sprite": "625.png"
+  },
+  "626": {
+    "name": "Bouffalant",
+    "dexNumber": 626,
+    "sprite": "626.png"
+  },
+  "627": {
+    "name": "Rufflet",
+    "dexNumber": 627,
+    "sprite": "627.png"
+  },
+  "628": {
+    "name": "Braviary",
+    "dexNumber": 628,
+    "sprite": "628.png"
+  },
+  "629": {
+    "name": "Vullaby",
+    "dexNumber": 629,
+    "sprite": "629.png"
+  },
+  "630": {
+    "name": "Mandibuzz",
+    "dexNumber": 630,
+    "sprite": "630.png"
+  },
+  "631": {
+    "name": "Heatmor",
+    "dexNumber": 631,
+    "sprite": "631.png"
+  },
+  "632": {
+    "name": "Durant",
+    "dexNumber": 632,
+    "sprite": "632.png"
+  },
+  "633": {
+    "name": "Deino",
+    "dexNumber": 633,
+    "sprite": "633.png"
+  },
+  "634": {
+    "name": "Zweilous",
+    "dexNumber": 634,
+    "sprite": "634.png"
+  },
+  "635": {
+    "name": "Hydreigon",
+    "dexNumber": 635,
+    "sprite": "635.png"
+  },
+  "636": {
+    "name": "Larvesta",
+    "dexNumber": 636,
+    "sprite": "636.png"
+  },
+  "637": {
+    "name": "Volcarona",
+    "dexNumber": 637,
+    "sprite": "637.png"
+  },
+  "638": {
+    "name": "Cobalion",
+    "dexNumber": 638,
+    "sprite": "638.png"
+  },
+  "639": {
+    "name": "Terrakion",
+    "dexNumber": 639,
+    "sprite": "639.png"
+  },
+  "640": {
+    "name": "Virizion",
+    "dexNumber": 640,
+    "sprite": "640.png"
+  },
+  "641": {
+    "name": "Tornadus",
+    "dexNumber": 641,
+    "sprite": "641.png"
+  },
+  "642": {
+    "name": "Thundurus",
+    "dexNumber": 642,
+    "sprite": "642.png"
+  },
+  "643": {
+    "name": "Reshiram",
+    "dexNumber": 643,
+    "sprite": "643.png"
+  },
+  "644": {
+    "name": "Zekrom",
+    "dexNumber": 644,
+    "sprite": "644.png"
+  },
+  "645": {
+    "name": "Landorus",
+    "dexNumber": 645,
+    "sprite": "645.png"
+  },
+  "646": {
+    "name": "Kyurem",
+    "dexNumber": 646,
+    "sprite": "646.png"
+  },
+  "647": {
+    "name": "Keldeo",
+    "dexNumber": 647,
+    "sprite": "647.png"
+  },
+  "648": {
+    "name": "Meloetta",
+    "dexNumber": 648,
+    "sprite": "648.png"
+  },
+  "649": {
+    "name": "Genesect",
+    "dexNumber": 649,
+    "sprite": "649.png"
+  },
+  "650": {
+    "name": "Chespin",
+    "dexNumber": 650,
+    "sprite": "650.png"
+  },
+  "651": {
+    "name": "Quilladin",
+    "dexNumber": 651,
+    "sprite": "651.png"
+  },
+  "652": {
+    "name": "Chesnaught",
+    "dexNumber": 652,
+    "sprite": "652.png"
+  },
+  "653": {
+    "name": "Fennekin",
+    "dexNumber": 653,
+    "sprite": "653.png"
+  },
+  "654": {
+    "name": "Braixen",
+    "dexNumber": 654,
+    "sprite": "654.png"
+  },
+  "655": {
+    "name": "Delphox",
+    "dexNumber": 655,
+    "sprite": "655.png"
+  },
+  "656": {
+    "name": "Froakie",
+    "dexNumber": 656,
+    "sprite": "656.png"
+  },
+  "657": {
+    "name": "Frogadier",
+    "dexNumber": 657,
+    "sprite": "657.png"
+  },
+  "658": {
+    "name": "Greninja",
+    "dexNumber": 658,
+    "sprite": "658.png"
+  },
+  "659": {
+    "name": "Bunnelby",
+    "dexNumber": 659,
+    "sprite": "659.png"
+  },
+  "660": {
+    "name": "Diggersby",
+    "dexNumber": 660,
+    "sprite": "660.png"
+  },
+  "661": {
+    "name": "Fletchling",
+    "dexNumber": 661,
+    "sprite": "661.png"
+  },
+  "662": {
+    "name": "Fletchinder",
+    "dexNumber": 662,
+    "sprite": "662.png"
+  },
+  "663": {
+    "name": "Talonflame",
+    "dexNumber": 663,
+    "sprite": "663.png"
+  },
+  "664": {
+    "name": "Scatterbug",
+    "dexNumber": 664,
+    "sprite": "664.png"
+  },
+  "665": {
+    "name": "Spewpa",
+    "dexNumber": 665,
+    "sprite": "665.png"
+  },
+  "666": {
+    "name": "Vivillon",
+    "dexNumber": 666,
+    "sprite": "666.png"
+  },
+  "667": {
+    "name": "Litleo",
+    "dexNumber": 667,
+    "sprite": "667.png"
+  },
+  "668": {
+    "name": "Pyroar",
+    "dexNumber": 668,
+    "sprite": "668.png"
+  },
+  "669": {
+    "name": "Flabébé",
+    "dexNumber": 669,
+    "sprite": "669.png"
+  },
+  "670": {
+    "name": "Floette",
+    "dexNumber": 670,
+    "sprite": "670.png"
+  },
+  "671": {
+    "name": "Florges",
+    "dexNumber": 671,
+    "sprite": "671.png"
+  },
+  "672": {
+    "name": "Skiddo",
+    "dexNumber": 672,
+    "sprite": "672.png"
+  },
+  "673": {
+    "name": "Gogoat",
+    "dexNumber": 673,
+    "sprite": "673.png"
+  },
+  "674": {
+    "name": "Pancham",
+    "dexNumber": 674,
+    "sprite": "674.png"
+  },
+  "675": {
+    "name": "Pangoro",
+    "dexNumber": 675,
+    "sprite": "675.png"
+  },
+  "676": {
+    "name": "Furfrou",
+    "dexNumber": 676,
+    "sprite": "676.png"
+  },
+  "677": {
+    "name": "Espurr",
+    "dexNumber": 677,
+    "sprite": "677.png"
+  },
+  "678": {
+    "name": "Meowstic",
+    "dexNumber": 678,
+    "sprite": "678.png"
+  },
+  "679": {
+    "name": "Honedge",
+    "dexNumber": 679,
+    "sprite": "679.png"
+  },
+  "680": {
+    "name": "Doublade",
+    "dexNumber": 680,
+    "sprite": "680.png"
+  },
+  "681": {
+    "name": "Aegislash",
+    "dexNumber": 681,
+    "sprite": "681.png"
+  },
+  "682": {
+    "name": "Spritzee",
+    "dexNumber": 682,
+    "sprite": "682.png"
+  },
+  "683": {
+    "name": "Aromatisse",
+    "dexNumber": 683,
+    "sprite": "683.png"
+  },
+  "684": {
+    "name": "Swirlix",
+    "dexNumber": 684,
+    "sprite": "684.png"
+  },
+  "685": {
+    "name": "Slurpuff",
+    "dexNumber": 685,
+    "sprite": "685.png"
+  },
+  "686": {
+    "name": "Inkay",
+    "dexNumber": 686,
+    "sprite": "686.png"
+  },
+  "687": {
+    "name": "Malamar",
+    "dexNumber": 687,
+    "sprite": "687.png"
+  },
+  "688": {
+    "name": "Binacle",
+    "dexNumber": 688,
+    "sprite": "688.png"
+  },
+  "689": {
+    "name": "Barbaracle",
+    "dexNumber": 689,
+    "sprite": "689.png"
+  },
+  "690": {
+    "name": "Skrelp",
+    "dexNumber": 690,
+    "sprite": "690.png"
+  },
+  "691": {
+    "name": "Dragalge",
+    "dexNumber": 691,
+    "sprite": "691.png"
+  },
+  "692": {
+    "name": "Clauncher",
+    "dexNumber": 692,
+    "sprite": "692.png"
+  },
+  "693": {
+    "name": "Clawitzer",
+    "dexNumber": 693,
+    "sprite": "693.png"
+  },
+  "694": {
+    "name": "Helioptile",
+    "dexNumber": 694,
+    "sprite": "694.png"
+  },
+  "695": {
+    "name": "Heliolisk",
+    "dexNumber": 695,
+    "sprite": "695.png"
+  },
+  "696": {
+    "name": "Tyrunt",
+    "dexNumber": 696,
+    "sprite": "696.png"
+  },
+  "697": {
+    "name": "Tyrantrum",
+    "dexNumber": 697,
+    "sprite": "697.png"
+  },
+  "698": {
+    "name": "Amaura",
+    "dexNumber": 698,
+    "sprite": "698.png"
+  },
+  "699": {
+    "name": "Aurorus",
+    "dexNumber": 699,
+    "sprite": "699.png"
+  },
+  "700": {
+    "name": "Sylveon",
+    "dexNumber": 700,
+    "sprite": "700.png"
+  },
+  "701": {
+    "name": "Hawlucha",
+    "dexNumber": 701,
+    "sprite": "701.png"
+  },
+  "702": {
+    "name": "Dedenne",
+    "dexNumber": 702,
+    "sprite": "702.png"
+  },
+  "703": {
+    "name": "Carbink",
+    "dexNumber": 703,
+    "sprite": "703.png"
+  },
+  "704": {
+    "name": "Goomy",
+    "dexNumber": 704,
+    "sprite": "704.png"
+  },
+  "705": {
+    "name": "Sliggoo",
+    "dexNumber": 705,
+    "sprite": "705.png"
+  },
+  "706": {
+    "name": "Goodra",
+    "dexNumber": 706,
+    "sprite": "706.png"
+  },
+  "707": {
+    "name": "Klefki",
+    "dexNumber": 707,
+    "sprite": "707.png"
+  },
+  "708": {
+    "name": "Phantump",
+    "dexNumber": 708,
+    "sprite": "708.png"
+  },
+  "709": {
+    "name": "Trevenant",
+    "dexNumber": 709,
+    "sprite": "709.png"
+  },
+  "710": {
+    "name": "Pumpkaboo",
+    "dexNumber": 710,
+    "sprite": "710.png"
+  },
+  "711": {
+    "name": "Gourgeist",
+    "dexNumber": 711,
+    "sprite": "711.png"
+  },
+  "712": {
+    "name": "Bergmite",
+    "dexNumber": 712,
+    "sprite": "712.png"
+  },
+  "713": {
+    "name": "Avalugg",
+    "dexNumber": 713,
+    "sprite": "713.png"
+  },
+  "714": {
+    "name": "Noibat",
+    "dexNumber": 714,
+    "sprite": "714.png"
+  },
+  "715": {
+    "name": "Noivern",
+    "dexNumber": 715,
+    "sprite": "715.png"
+  },
+  "716": {
+    "name": "Xerneas",
+    "dexNumber": 716,
+    "sprite": "716.png"
+  },
+  "717": {
+    "name": "Yveltal",
+    "dexNumber": 717,
+    "sprite": "717.png"
+  },
+  "718": {
+    "name": "Zygarde",
+    "dexNumber": 718,
+    "sprite": "718.png"
+  },
+  "719": {
+    "name": "Diancie",
+    "dexNumber": 719,
+    "sprite": "719.png"
+  },
+  "720": {
+    "name": "Hoopa",
+    "dexNumber": 720,
+    "sprite": "720.png"
+  },
+  "721": {
+    "name": "Volcanion",
+    "dexNumber": 721,
+    "sprite": "721.png"
+  },
+  "722": {
+    "name": "Rowlet",
+    "dexNumber": 722,
+    "sprite": "722.png"
+  },
+  "723": {
+    "name": "Dartrix",
+    "dexNumber": 723,
+    "sprite": "723.png"
+  },
+  "724": {
+    "name": "Decidueye",
+    "dexNumber": 724,
+    "sprite": "724.png"
+  },
+  "725": {
+    "name": "Litten",
+    "dexNumber": 725,
+    "sprite": "725.png"
+  },
+  "726": {
+    "name": "Torracat",
+    "dexNumber": 726,
+    "sprite": "726.png"
+  },
+  "727": {
+    "name": "Incineroar",
+    "dexNumber": 727,
+    "sprite": "727.png"
+  },
+  "728": {
+    "name": "Popplio",
+    "dexNumber": 728,
+    "sprite": "728.png"
+  },
+  "729": {
+    "name": "Brionne",
+    "dexNumber": 729,
+    "sprite": "729.png"
+  },
+  "730": {
+    "name": "Primarina",
+    "dexNumber": 730,
+    "sprite": "730.png"
+  },
+  "731": {
+    "name": "Pikipek",
+    "dexNumber": 731,
+    "sprite": "731.png"
+  },
+  "732": {
+    "name": "Trumbeak",
+    "dexNumber": 732,
+    "sprite": "732.png"
+  },
+  "733": {
+    "name": "Toucannon",
+    "dexNumber": 733,
+    "sprite": "733.png"
+  },
+  "734": {
+    "name": "Yungoos",
+    "dexNumber": 734,
+    "sprite": "734.png"
+  },
+  "735": {
+    "name": "Gumshoos",
+    "dexNumber": 735,
+    "sprite": "735.png"
+  },
+  "736": {
+    "name": "Grubbin",
+    "dexNumber": 736,
+    "sprite": "736.png"
+  },
+  "737": {
+    "name": "Charjabug",
+    "dexNumber": 737,
+    "sprite": "737.png"
+  },
+  "738": {
+    "name": "Vikavolt",
+    "dexNumber": 738,
+    "sprite": "738.png"
+  },
+  "739": {
+    "name": "Crabrawler",
+    "dexNumber": 739,
+    "sprite": "739.png"
+  },
+  "740": {
+    "name": "Crabominable",
+    "dexNumber": 740,
+    "sprite": "740.png"
+  },
+  "741": {
+    "name": "Oricorio",
+    "dexNumber": 741,
+    "sprite": "741.png"
+  },
+  "742": {
+    "name": "Cutiefly",
+    "dexNumber": 742,
+    "sprite": "742.png"
+  },
+  "743": {
+    "name": "Ribombee",
+    "dexNumber": 743,
+    "sprite": "743.png"
+  },
+  "744": {
+    "name": "Rockruff",
+    "dexNumber": 744,
+    "sprite": "744.png"
+  },
+  "745": {
+    "name": "Lycanroc",
+    "dexNumber": 745,
+    "sprite": "745.png"
+  },
+  "746": {
+    "name": "Wishiwashi",
+    "dexNumber": 746,
+    "sprite": "746.png"
+  },
+  "747": {
+    "name": "Mareanie",
+    "dexNumber": 747,
+    "sprite": "747.png"
+  },
+  "748": {
+    "name": "Toxapex",
+    "dexNumber": 748,
+    "sprite": "748.png"
+  },
+  "749": {
+    "name": "Mudbray",
+    "dexNumber": 749,
+    "sprite": "749.png"
+  },
+  "750": {
+    "name": "Mudsdale",
+    "dexNumber": 750,
+    "sprite": "750.png"
+  },
+  "751": {
+    "name": "Dewpider",
+    "dexNumber": 751,
+    "sprite": "751.png"
+  },
+  "752": {
+    "name": "Araquanid",
+    "dexNumber": 752,
+    "sprite": "752.png"
+  },
+  "753": {
+    "name": "Fomantis",
+    "dexNumber": 753,
+    "sprite": "753.png"
+  },
+  "754": {
+    "name": "Lurantis",
+    "dexNumber": 754,
+    "sprite": "754.png"
+  },
+  "755": {
+    "name": "Morelull",
+    "dexNumber": 755,
+    "sprite": "755.png"
+  },
+  "756": {
+    "name": "Shiinotic",
+    "dexNumber": 756,
+    "sprite": "756.png"
+  },
+  "757": {
+    "name": "Salandit",
+    "dexNumber": 757,
+    "sprite": "757.png"
+  },
+  "758": {
+    "name": "Salazzle",
+    "dexNumber": 758,
+    "sprite": "758.png"
+  },
+  "759": {
+    "name": "Stufful",
+    "dexNumber": 759,
+    "sprite": "759.png"
+  },
+  "760": {
+    "name": "Bewear",
+    "dexNumber": 760,
+    "sprite": "760.png"
+  },
+  "761": {
+    "name": "Bounsweet",
+    "dexNumber": 761,
+    "sprite": "761.png"
+  },
+  "762": {
+    "name": "Steenee",
+    "dexNumber": 762,
+    "sprite": "762.png"
+  },
+  "763": {
+    "name": "Tsareena",
+    "dexNumber": 763,
+    "sprite": "763.png"
+  },
+  "764": {
+    "name": "Comfey",
+    "dexNumber": 764,
+    "sprite": "764.png"
+  },
+  "765": {
+    "name": "Oranguru",
+    "dexNumber": 765,
+    "sprite": "765.png"
+  },
+  "766": {
+    "name": "Passimian",
+    "dexNumber": 766,
+    "sprite": "766.png"
+  },
+  "767": {
+    "name": "Wimpod",
+    "dexNumber": 767,
+    "sprite": "767.png"
+  },
+  "768": {
+    "name": "Golisopod",
+    "dexNumber": 768,
+    "sprite": "768.png"
+  },
+  "769": {
+    "name": "Sandygast",
+    "dexNumber": 769,
+    "sprite": "769.png"
+  },
+  "770": {
+    "name": "Palossand",
+    "dexNumber": 770,
+    "sprite": "770.png"
+  },
+  "771": {
+    "name": "Pyukumuku",
+    "dexNumber": 771,
+    "sprite": "771.png"
+  },
+  "772": {
+    "name": "Type: Null",
+    "dexNumber": 772,
+    "sprite": "772.png"
+  },
+  "773": {
+    "name": "Silvally",
+    "dexNumber": 773,
+    "sprite": "773.png"
+  },
+  "774": {
+    "name": "Minior",
+    "dexNumber": 774,
+    "sprite": "774.png"
+  },
+  "775": {
+    "name": "Komala",
+    "dexNumber": 775,
+    "sprite": "775.png"
+  },
+  "776": {
+    "name": "Turtonator",
+    "dexNumber": 776,
+    "sprite": "776.png"
+  },
+  "777": {
+    "name": "Togedemaru",
+    "dexNumber": 777,
+    "sprite": "777.png"
+  },
+  "778": {
+    "name": "Mimikyu",
+    "dexNumber": 778,
+    "sprite": "778.png"
+  },
+  "779": {
+    "name": "Bruxish",
+    "dexNumber": 779,
+    "sprite": "779.png"
+  },
+  "780": {
+    "name": "Drampa",
+    "dexNumber": 780,
+    "sprite": "780.png"
+  },
+  "781": {
+    "name": "Dhelmise",
+    "dexNumber": 781,
+    "sprite": "781.png"
+  },
+  "782": {
+    "name": "Jangmo-o",
+    "dexNumber": 782,
+    "sprite": "782.png"
+  },
+  "783": {
+    "name": "Hakamo-o",
+    "dexNumber": 783,
+    "sprite": "783.png"
+  },
+  "784": {
+    "name": "Kommo-o",
+    "dexNumber": 784,
+    "sprite": "784.png"
+  },
+  "785": {
+    "name": "Tapu Koko",
+    "dexNumber": 785,
+    "sprite": "785.png"
+  },
+  "786": {
+    "name": "Tapu Lele",
+    "dexNumber": 786,
+    "sprite": "786.png"
+  },
+  "787": {
+    "name": "Tapu Bulu",
+    "dexNumber": 787,
+    "sprite": "787.png"
+  },
+  "788": {
+    "name": "Tapu Fini",
+    "dexNumber": 788,
+    "sprite": "788.png"
+  },
+  "789": {
+    "name": "Cosmog",
+    "dexNumber": 789,
+    "sprite": "789.png"
+  },
+  "790": {
+    "name": "Cosmoem",
+    "dexNumber": 790,
+    "sprite": "790.png"
+  },
+  "791": {
+    "name": "Solgaleo",
+    "dexNumber": 791,
+    "sprite": "791.png"
+  },
+  "792": {
+    "name": "Lunala",
+    "dexNumber": 792,
+    "sprite": "792.png"
+  },
+  "793": {
+    "name": "Nihilego",
+    "dexNumber": 793,
+    "sprite": "793.png"
+  },
+  "794": {
+    "name": "Buzzwole",
+    "dexNumber": 794,
+    "sprite": "794.png"
+  },
+  "795": {
+    "name": "Pheromosa",
+    "dexNumber": 795,
+    "sprite": "795.png"
+  },
+  "796": {
+    "name": "Xurkitree",
+    "dexNumber": 796,
+    "sprite": "796.png"
+  },
+  "797": {
+    "name": "Celesteela",
+    "dexNumber": 797,
+    "sprite": "797.png"
+  },
+  "798": {
+    "name": "Kartana",
+    "dexNumber": 798,
+    "sprite": "798.png"
+  },
+  "799": {
+    "name": "Guzzlord",
+    "dexNumber": 799,
+    "sprite": "799.png"
+  },
+  "800": {
+    "name": "Necrozma",
+    "dexNumber": 800,
+    "sprite": "800.png"
+  },
+  "801": {
+    "name": "Magearna",
+    "dexNumber": 801,
+    "sprite": "801.png"
+  },
+  "802": {
+    "name": "Marshadow",
+    "dexNumber": 802,
+    "sprite": "802.png"
+  },
+  "803": {
+    "name": "Poipole",
+    "dexNumber": 803,
+    "sprite": "803.png"
+  },
+  "804": {
+    "name": "Naganadel",
+    "dexNumber": 804,
+    "sprite": "804.png"
+  },
+  "805": {
+    "name": "Stakataka",
+    "dexNumber": 805,
+    "sprite": "805.png"
+  },
+  "806": {
+    "name": "Blacephalon",
+    "dexNumber": 806,
+    "sprite": "806.png"
+  },
+  "807": {
+    "name": "Zeraora",
+    "dexNumber": 807,
+    "sprite": "807.png"
+  },
+  "808": {
+    "name": "Meltan",
+    "dexNumber": 808,
+    "sprite": "808.png"
+  },
+  "809": {
+    "name": "Melmetal",
+    "dexNumber": 809,
+    "sprite": "809.png"
+  },
+  "810": {
+    "name": "Grookey",
+    "dexNumber": 810,
+    "sprite": "810.png"
+  },
+  "811": {
+    "name": "Thwackey",
+    "dexNumber": 811,
+    "sprite": "811.png"
+  },
+  "812": {
+    "name": "Rillaboom",
+    "dexNumber": 812,
+    "sprite": "812.png"
+  },
+  "813": {
+    "name": "Scorbunny",
+    "dexNumber": 813,
+    "sprite": "813.png"
+  },
+  "814": {
+    "name": "Raboot",
+    "dexNumber": 814,
+    "sprite": "814.png"
+  },
+  "815": {
+    "name": "Cinderace",
+    "dexNumber": 815,
+    "sprite": "815.png"
+  },
+  "816": {
+    "name": "Sobble",
+    "dexNumber": 816,
+    "sprite": "816.png"
+  },
+  "817": {
+    "name": "Drizzile",
+    "dexNumber": 817,
+    "sprite": "817.png"
+  },
+  "818": {
+    "name": "Inteleon",
+    "dexNumber": 818,
+    "sprite": "818.png"
+  },
+  "819": {
+    "name": "Skwovet",
+    "dexNumber": 819,
+    "sprite": "819.png"
+  },
+  "820": {
+    "name": "Greedent",
+    "dexNumber": 820,
+    "sprite": "820.png"
+  },
+  "821": {
+    "name": "Rookidee",
+    "dexNumber": 821,
+    "sprite": "821.png"
+  },
+  "822": {
+    "name": "Corvisquire",
+    "dexNumber": 822,
+    "sprite": "822.png"
+  },
+  "823": {
+    "name": "Corviknight",
+    "dexNumber": 823,
+    "sprite": "823.png"
+  },
+  "824": {
+    "name": "Blipbug",
+    "dexNumber": 824,
+    "sprite": "824.png"
+  },
+  "825": {
+    "name": "Dottler",
+    "dexNumber": 825,
+    "sprite": "825.png"
+  },
+  "826": {
+    "name": "Orbeetle",
+    "dexNumber": 826,
+    "sprite": "826.png"
+  },
+  "827": {
+    "name": "Nickit",
+    "dexNumber": 827,
+    "sprite": "827.png"
+  },
+  "828": {
+    "name": "Thievul",
+    "dexNumber": 828,
+    "sprite": "828.png"
+  },
+  "829": {
+    "name": "Gossifleur",
+    "dexNumber": 829,
+    "sprite": "829.png"
+  },
+  "830": {
+    "name": "Eldegoss",
+    "dexNumber": 830,
+    "sprite": "830.png"
+  },
+  "831": {
+    "name": "Wooloo",
+    "dexNumber": 831,
+    "sprite": "831.png"
+  },
+  "832": {
+    "name": "Dubwool",
+    "dexNumber": 832,
+    "sprite": "832.png"
+  },
+  "833": {
+    "name": "Chewtle",
+    "dexNumber": 833,
+    "sprite": "833.png"
+  },
+  "834": {
+    "name": "Drednaw",
+    "dexNumber": 834,
+    "sprite": "834.png"
+  },
+  "835": {
+    "name": "Yamper",
+    "dexNumber": 835,
+    "sprite": "835.png"
+  },
+  "836": {
+    "name": "Boltund",
+    "dexNumber": 836,
+    "sprite": "836.png"
+  },
+  "837": {
+    "name": "Rolycoly",
+    "dexNumber": 837,
+    "sprite": "837.png"
+  },
+  "838": {
+    "name": "Carkol",
+    "dexNumber": 838,
+    "sprite": "838.png"
+  },
+  "839": {
+    "name": "Coalossal",
+    "dexNumber": 839,
+    "sprite": "839.png"
+  },
+  "840": {
+    "name": "Applin",
+    "dexNumber": 840,
+    "sprite": "840.png"
+  },
+  "841": {
+    "name": "Flapple",
+    "dexNumber": 841,
+    "sprite": "841.png"
+  },
+  "842": {
+    "name": "Appletun",
+    "dexNumber": 842,
+    "sprite": "842.png"
+  },
+  "843": {
+    "name": "Silicobra",
+    "dexNumber": 843,
+    "sprite": "843.png"
+  },
+  "844": {
+    "name": "Sandaconda",
+    "dexNumber": 844,
+    "sprite": "844.png"
+  },
+  "845": {
+    "name": "Cramorant",
+    "dexNumber": 845,
+    "sprite": "845.png"
+  },
+  "846": {
+    "name": "Arrokuda",
+    "dexNumber": 846,
+    "sprite": "846.png"
+  },
+  "847": {
+    "name": "Barraskewda",
+    "dexNumber": 847,
+    "sprite": "847.png"
+  },
+  "848": {
+    "name": "Toxel",
+    "dexNumber": 848,
+    "sprite": "848.png"
+  },
+  "849": {
+    "name": "Toxtricity",
+    "dexNumber": 849,
+    "sprite": "849.png"
+  },
+  "850": {
+    "name": "Sizzlipede",
+    "dexNumber": 850,
+    "sprite": "850.png"
+  },
+  "851": {
+    "name": "Centiskorch",
+    "dexNumber": 851,
+    "sprite": "851.png"
+  },
+  "852": {
+    "name": "Clobbopus",
+    "dexNumber": 852,
+    "sprite": "852.png"
+  },
+  "853": {
+    "name": "Grapploct",
+    "dexNumber": 853,
+    "sprite": "853.png"
+  },
+  "854": {
+    "name": "Sinistea",
+    "dexNumber": 854,
+    "sprite": "854.png"
+  },
+  "855": {
+    "name": "Polteageist",
+    "dexNumber": 855,
+    "sprite": "855.png"
+  },
+  "856": {
+    "name": "Hatenna",
+    "dexNumber": 856,
+    "sprite": "856.png"
+  },
+  "857": {
+    "name": "Hattrem",
+    "dexNumber": 857,
+    "sprite": "857.png"
+  },
+  "858": {
+    "name": "Hatterene",
+    "dexNumber": 858,
+    "sprite": "858.png"
+  },
+  "859": {
+    "name": "Impidimp",
+    "dexNumber": 859,
+    "sprite": "859.png"
+  },
+  "860": {
+    "name": "Morgrem",
+    "dexNumber": 860,
+    "sprite": "860.png"
+  },
+  "861": {
+    "name": "Grimmsnarl",
+    "dexNumber": 861,
+    "sprite": "861.png"
+  },
+  "862": {
+    "name": "Obstagoon",
+    "dexNumber": 862,
+    "sprite": "862.png"
+  },
+  "863": {
+    "name": "Perrserker",
+    "dexNumber": 863,
+    "sprite": "863.png"
+  },
+  "864": {
+    "name": "Cursola",
+    "dexNumber": 864,
+    "sprite": "864.png"
+  },
+  "865": {
+    "name": "Sirfetch’d",
+    "dexNumber": 865,
+    "sprite": "865.png"
+  },
+  "866": {
+    "name": "Mr. Rime",
+    "dexNumber": 866,
+    "sprite": "866.png"
+  },
+  "867": {
+    "name": "Runerigus",
+    "dexNumber": 867,
+    "sprite": "867.png"
+  },
+  "868": {
+    "name": "Milcery",
+    "dexNumber": 868,
+    "sprite": "868.png"
+  },
+  "869": {
+    "name": "Alcremie",
+    "dexNumber": 869,
+    "sprite": "869.png"
+  },
+  "870": {
+    "name": "Falinks",
+    "dexNumber": 870,
+    "sprite": "870.png"
+  },
+  "871": {
+    "name": "Pincurchin",
+    "dexNumber": 871,
+    "sprite": "871.png"
+  },
+  "872": {
+    "name": "Snom",
+    "dexNumber": 872,
+    "sprite": "872.png"
+  },
+  "873": {
+    "name": "Frosmoth",
+    "dexNumber": 873,
+    "sprite": "873.png"
+  },
+  "874": {
+    "name": "Stonjourner",
+    "dexNumber": 874,
+    "sprite": "874.png"
+  },
+  "875": {
+    "name": "Eiscue",
+    "dexNumber": 875,
+    "sprite": "875.png"
+  },
+  "876": {
+    "name": "Indeedee",
+    "dexNumber": 876,
+    "sprite": "876.png"
+  },
+  "877": {
+    "name": "Morpeko",
+    "dexNumber": 877,
+    "sprite": "877.png"
+  },
+  "878": {
+    "name": "Cufant",
+    "dexNumber": 878,
+    "sprite": "878.png"
+  },
+  "879": {
+    "name": "Copperajah",
+    "dexNumber": 879,
+    "sprite": "879.png"
+  },
+  "880": {
+    "name": "Dracozolt",
+    "dexNumber": 880,
+    "sprite": "880.png"
+  },
+  "881": {
+    "name": "Arctozolt",
+    "dexNumber": 881,
+    "sprite": "881.png"
+  },
+  "882": {
+    "name": "Dracovish",
+    "dexNumber": 882,
+    "sprite": "882.png"
+  },
+  "883": {
+    "name": "Arctovish",
+    "dexNumber": 883,
+    "sprite": "883.png"
+  },
+  "884": {
+    "name": "Duraludon",
+    "dexNumber": 884,
+    "sprite": "884.png"
+  },
+  "885": {
+    "name": "Dreepy",
+    "dexNumber": 885,
+    "sprite": "885.png"
+  },
+  "886": {
+    "name": "Drakloak",
+    "dexNumber": 886,
+    "sprite": "886.png"
+  },
+  "887": {
+    "name": "Dragapult",
+    "dexNumber": 887,
+    "sprite": "887.png"
+  },
+  "888": {
+    "name": "Zacian",
+    "dexNumber": 888,
+    "sprite": "888.png"
+  },
+  "889": {
+    "name": "Zamazenta",
+    "dexNumber": 889,
+    "sprite": "889.png"
+  },
+  "890": {
+    "name": "Eternatus",
+    "dexNumber": 890,
+    "sprite": "890.png"
+  },
+  "891": {
+    "name": "Kubfu",
+    "dexNumber": 891,
+    "sprite": "891.png"
+  },
+  "892": {
+    "name": "Urshifu",
+    "dexNumber": 892,
+    "sprite": "892.png"
+  },
+  "893": {
+    "name": "Zarude",
+    "dexNumber": 893,
+    "sprite": "893.png"
+  },
+  "894": {
+    "name": "Regieleki",
+    "dexNumber": 894,
+    "sprite": "894.png"
+  },
+  "895": {
+    "name": "Regidrago",
+    "dexNumber": 895,
+    "sprite": "895.png"
+  },
+  "896": {
+    "name": "Glastrier",
+    "dexNumber": 896,
+    "sprite": "896.png"
+  },
+  "897": {
+    "name": "Spectrier",
+    "dexNumber": 897,
+    "sprite": "897.png"
+  },
+  "898": {
+    "name": "Calyrex",
+    "dexNumber": 898,
+    "sprite": "898.png"
+  },
+  "899": {
+    "name": "Wyrdeer",
+    "dexNumber": 899,
+    "sprite": "899.png"
+  },
+  "900": {
+    "name": "Kleavor",
+    "dexNumber": 900,
+    "sprite": "900.png"
+  },
+  "901": {
+    "name": "Ursaluna",
+    "dexNumber": 901,
+    "sprite": "901.png"
+  },
+  "902": {
+    "name": "Basculegion",
+    "dexNumber": 902,
+    "sprite": "902.png"
+  },
+  "903": {
+    "name": "Sneasler",
+    "dexNumber": 903,
+    "sprite": "903.png"
+  },
+  "904": {
+    "name": "Overqwil",
+    "dexNumber": 904,
+    "sprite": "904.png"
+  },
+  "905": {
+    "name": "Enamorus",
+    "dexNumber": 905,
+    "sprite": "905.png"
+  },
+  "906": {
+    "name": "Sprigatito",
+    "dexNumber": 906,
+    "sprite": "906.png"
+  },
+  "907": {
+    "name": "Floragato",
+    "dexNumber": 907,
+    "sprite": "907.png"
+  },
+  "908": {
+    "name": "Meowscarada",
+    "dexNumber": 908,
+    "sprite": "908.png"
+  },
+  "909": {
+    "name": "Fuecoco",
+    "dexNumber": 909,
+    "sprite": "909.png"
+  },
+  "910": {
+    "name": "Crocalor",
+    "dexNumber": 910,
+    "sprite": "910.png"
+  },
+  "911": {
+    "name": "Skeledirge",
+    "dexNumber": 911,
+    "sprite": "911.png"
+  },
+  "912": {
+    "name": "Quaxly",
+    "dexNumber": 912,
+    "sprite": "912.png"
+  },
+  "913": {
+    "name": "Quaxwell",
+    "dexNumber": 913,
+    "sprite": "913.png"
+  },
+  "914": {
+    "name": "Quaquaval",
+    "dexNumber": 914,
+    "sprite": "914.png"
+  },
+  "915": {
+    "name": "Lechonk",
+    "dexNumber": 915,
+    "sprite": "915.png"
+  },
+  "916": {
+    "name": "Oinkologne",
+    "dexNumber": 916,
+    "sprite": "916.png"
+  },
+  "917": {
+    "name": "Tarountula",
+    "dexNumber": 917,
+    "sprite": "917.png"
+  },
+  "918": {
+    "name": "Spidops",
+    "dexNumber": 918,
+    "sprite": "918.png"
+  },
+  "919": {
+    "name": "Nymble",
+    "dexNumber": 919,
+    "sprite": "919.png"
+  },
+  "920": {
+    "name": "Lokix",
+    "dexNumber": 920,
+    "sprite": "920.png"
+  },
+  "921": {
+    "name": "Pawmi",
+    "dexNumber": 921,
+    "sprite": "921.png"
+  },
+  "922": {
+    "name": "Pawmo",
+    "dexNumber": 922,
+    "sprite": "922.png"
+  },
+  "923": {
+    "name": "Pawmot",
+    "dexNumber": 923,
+    "sprite": "923.png"
+  },
+  "924": {
+    "name": "Tandemaus",
+    "dexNumber": 924,
+    "sprite": "924.png"
+  },
+  "925": {
+    "name": "Maushold",
+    "dexNumber": 925,
+    "sprite": "925.png"
+  },
+  "926": {
+    "name": "Fidough",
+    "dexNumber": 926,
+    "sprite": "926.png"
+  },
+  "927": {
+    "name": "Dachsbun",
+    "dexNumber": 927,
+    "sprite": "927.png"
+  },
+  "928": {
+    "name": "Smoliv",
+    "dexNumber": 928,
+    "sprite": "928.png"
+  },
+  "929": {
+    "name": "Dolliv",
+    "dexNumber": 929,
+    "sprite": "929.png"
+  },
+  "930": {
+    "name": "Arboliva",
+    "dexNumber": 930,
+    "sprite": "930.png"
+  },
+  "931": {
+    "name": "Squawkabilly",
+    "dexNumber": 931,
+    "sprite": "931.png"
+  },
+  "932": {
+    "name": "Nacli",
+    "dexNumber": 932,
+    "sprite": "932.png"
+  },
+  "933": {
+    "name": "Naclstack",
+    "dexNumber": 933,
+    "sprite": "933.png"
+  },
+  "934": {
+    "name": "Garganacl",
+    "dexNumber": 934,
+    "sprite": "934.png"
+  },
+  "935": {
+    "name": "Charcadet",
+    "dexNumber": 935,
+    "sprite": "935.png"
+  },
+  "936": {
+    "name": "Armarouge",
+    "dexNumber": 936,
+    "sprite": "936.png"
+  },
+  "937": {
+    "name": "Ceruledge",
+    "dexNumber": 937,
+    "sprite": "937.png"
+  },
+  "938": {
+    "name": "Tadbulb",
+    "dexNumber": 938,
+    "sprite": "938.png"
+  },
+  "939": {
+    "name": "Bellibolt",
+    "dexNumber": 939,
+    "sprite": "939.png"
+  },
+  "940": {
+    "name": "Wattrel",
+    "dexNumber": 940,
+    "sprite": "940.png"
+  },
+  "941": {
+    "name": "Kilowattrel",
+    "dexNumber": 941,
+    "sprite": "941.png"
+  },
+  "942": {
+    "name": "Maschiff",
+    "dexNumber": 942,
+    "sprite": "942.png"
+  },
+  "943": {
+    "name": "Mabosstiff",
+    "dexNumber": 943,
+    "sprite": "943.png"
+  },
+  "944": {
+    "name": "Shroodle",
+    "dexNumber": 944,
+    "sprite": "944.png"
+  },
+  "945": {
+    "name": "Grafaiai",
+    "dexNumber": 945,
+    "sprite": "945.png"
+  },
+  "946": {
+    "name": "Bramblin",
+    "dexNumber": 946,
+    "sprite": "946.png"
+  },
+  "947": {
+    "name": "Brambleghast",
+    "dexNumber": 947,
+    "sprite": "947.png"
+  },
+  "948": {
+    "name": "Toedscool",
+    "dexNumber": 948,
+    "sprite": "948.png"
+  },
+  "949": {
+    "name": "Toedscruel",
+    "dexNumber": 949,
+    "sprite": "949.png"
+  },
+  "950": {
+    "name": "Klawf",
+    "dexNumber": 950,
+    "sprite": "950.png"
+  },
+  "951": {
+    "name": "Capsakid",
+    "dexNumber": 951,
+    "sprite": "951.png"
+  },
+  "952": {
+    "name": "Scovillain",
+    "dexNumber": 952,
+    "sprite": "952.png"
+  },
+  "953": {
+    "name": "Rellor",
+    "dexNumber": 953,
+    "sprite": "953.png"
+  },
+  "954": {
+    "name": "Rabsca",
+    "dexNumber": 954,
+    "sprite": "954.png"
+  },
+  "955": {
+    "name": "Flittle",
+    "dexNumber": 955,
+    "sprite": "955.png"
+  },
+  "956": {
+    "name": "Espathra",
+    "dexNumber": 956,
+    "sprite": "956.png"
+  },
+  "957": {
+    "name": "Tinkatink",
+    "dexNumber": 957,
+    "sprite": "957.png"
+  },
+  "958": {
+    "name": "Tinkatuff",
+    "dexNumber": 958,
+    "sprite": "958.png"
+  },
+  "959": {
+    "name": "Tinkaton",
+    "dexNumber": 959,
+    "sprite": "959.png"
+  },
+  "960": {
+    "name": "Wiglett",
+    "dexNumber": 960,
+    "sprite": "960.png"
+  },
+  "961": {
+    "name": "Wugtrio",
+    "dexNumber": 961,
+    "sprite": "961.png"
+  },
+  "962": {
+    "name": "Bombirdier",
+    "dexNumber": 962,
+    "sprite": "962.png"
+  },
+  "963": {
+    "name": "Finizen",
+    "dexNumber": 963,
+    "sprite": "963.png"
+  },
+  "964": {
+    "name": "Palafin",
+    "dexNumber": 964,
+    "sprite": "964.png"
+  },
+  "965": {
+    "name": "Varoom",
+    "dexNumber": 965,
+    "sprite": "965.png"
+  },
+  "966": {
+    "name": "Revavroom",
+    "dexNumber": 966,
+    "sprite": "966.png"
+  },
+  "967": {
+    "name": "Cyclizar",
+    "dexNumber": 967,
+    "sprite": "967.png"
+  },
+  "968": {
+    "name": "Orthworm",
+    "dexNumber": 968,
+    "sprite": "968.png"
+  },
+  "969": {
+    "name": "Glimmet",
+    "dexNumber": 969,
+    "sprite": "969.png"
+  },
+  "970": {
+    "name": "Glimmora",
+    "dexNumber": 970,
+    "sprite": "970.png"
+  },
+  "971": {
+    "name": "Greavard",
+    "dexNumber": 971,
+    "sprite": "971.png"
+  },
+  "972": {
+    "name": "Houndstone",
+    "dexNumber": 972,
+    "sprite": "972.png"
+  },
+  "973": {
+    "name": "Flamigo",
+    "dexNumber": 973,
+    "sprite": "973.png"
+  },
+  "974": {
+    "name": "Cetoddle",
+    "dexNumber": 974,
+    "sprite": "974.png"
+  },
+  "975": {
+    "name": "Cetitan",
+    "dexNumber": 975,
+    "sprite": "975.png"
+  },
+  "976": {
+    "name": "Veluza",
+    "dexNumber": 976,
+    "sprite": "976.png"
+  },
+  "977": {
+    "name": "Dondozo",
+    "dexNumber": 977,
+    "sprite": "977.png"
+  },
+  "978": {
+    "name": "Tatsugiri",
+    "dexNumber": 978,
+    "sprite": "978.png"
+  },
+  "979": {
+    "name": "Annihilape",
+    "dexNumber": 979,
+    "sprite": "979.png"
+  },
+  "980": {
+    "name": "Clodsire",
+    "dexNumber": 980,
+    "sprite": "980.png"
+  },
+  "981": {
+    "name": "Farigiraf",
+    "dexNumber": 981,
+    "sprite": "981.png"
+  },
+  "982": {
+    "name": "Dudunsparce",
+    "dexNumber": 982,
+    "sprite": "982.png"
+  },
+  "983": {
+    "name": "Kingambit",
+    "dexNumber": 983,
+    "sprite": "983.png"
+  },
+  "984": {
+    "name": "Great Tusk",
+    "dexNumber": 984,
+    "sprite": "984.png"
+  },
+  "985": {
+    "name": "Scream Tail",
+    "dexNumber": 985,
+    "sprite": "985.png"
+  },
+  "986": {
+    "name": "Brute Bonnet",
+    "dexNumber": 986,
+    "sprite": "986.png"
+  },
+  "987": {
+    "name": "Flutter Mane",
+    "dexNumber": 987,
+    "sprite": "987.png"
+  },
+  "988": {
+    "name": "Slither Wing",
+    "dexNumber": 988,
+    "sprite": "988.png"
+  },
+  "989": {
+    "name": "Sandy Shocks",
+    "dexNumber": 989,
+    "sprite": "989.png"
+  },
+  "990": {
+    "name": "Iron Treads",
+    "dexNumber": 990,
+    "sprite": "990.png"
+  },
+  "991": {
+    "name": "Iron Bundle",
+    "dexNumber": 991,
+    "sprite": "991.png"
+  },
+  "992": {
+    "name": "Iron Hands",
+    "dexNumber": 992,
+    "sprite": "992.png"
+  },
+  "993": {
+    "name": "Iron Jugulis",
+    "dexNumber": 993,
+    "sprite": "993.png"
+  },
+  "994": {
+    "name": "Iron Moth",
+    "dexNumber": 994,
+    "sprite": "994.png"
+  },
+  "995": {
+    "name": "Iron Thorns",
+    "dexNumber": 995,
+    "sprite": "995.png"
+  },
+  "996": {
+    "name": "Frigibax",
+    "dexNumber": 996,
+    "sprite": "996.png"
+  },
+  "997": {
+    "name": "Arctibax",
+    "dexNumber": 997,
+    "sprite": "997.png"
+  },
+  "998": {
+    "name": "Baxcalibur",
+    "dexNumber": 998,
+    "sprite": "998.png"
+  },
+  "999": {
+    "name": "Gimmighoul",
+    "dexNumber": 999,
+    "sprite": "999.png"
+  },
+  "1000": {
+    "name": "Gholdengo",
+    "dexNumber": 1000,
+    "sprite": "1000.png"
+  },
+  "1001": {
+    "name": "Wo-Chien",
+    "dexNumber": 1001,
+    "sprite": "1001.png"
+  },
+  "1002": {
+    "name": "Chien-Pao",
+    "dexNumber": 1002,
+    "sprite": "1002.png"
+  },
+  "1003": {
+    "name": "Ting-Lu",
+    "dexNumber": 1003,
+    "sprite": "1003.png"
+  },
+  "1004": {
+    "name": "Chi-Yu",
+    "dexNumber": 1004,
+    "sprite": "1004.png"
+  },
+  "1005": {
+    "name": "Roaring Moon",
+    "dexNumber": 1005,
+    "sprite": "1005.png"
+  },
+  "1006": {
+    "name": "Iron Valiant",
+    "dexNumber": 1006,
+    "sprite": "1006.png"
+  },
+  "1007": {
+    "name": "Koraidon",
+    "dexNumber": 1007,
+    "sprite": "1007.png"
+  },
+  "1008": {
+    "name": "Miraidon",
+    "dexNumber": 1008,
+    "sprite": "1008.png"
+  },
+  "1009": {
+    "name": "Walking Wake",
+    "dexNumber": 1009,
+    "sprite": "1009.png"
+  },
+  "1010": {
+    "name": "Iron Leaves",
+    "dexNumber": 1010,
+    "sprite": "1010.png"
+  },
+  "1011": {
+    "name": "Dipplin",
+    "dexNumber": 1011,
+    "sprite": "1011.png"
+  },
+  "1012": {
+    "name": "Poltchageist",
+    "dexNumber": 1012,
+    "sprite": "1012.png"
+  },
+  "1013": {
+    "name": "Sinistcha",
+    "dexNumber": 1013,
+    "sprite": "1013.png"
+  },
+  "1014": {
+    "name": "Okidogi",
+    "dexNumber": 1014,
+    "sprite": "1014.png"
+  },
+  "1015": {
+    "name": "Munkidori",
+    "dexNumber": 1015,
+    "sprite": "1015.png"
+  },
+  "1016": {
+    "name": "Fezandipiti",
+    "dexNumber": 1016,
+    "sprite": "1016.png"
+  },
+  "1017": {
+    "name": "Ogerpon",
+    "dexNumber": 1017,
+    "sprite": "1017.png"
+  },
+  "1018": {
+    "name": "Archaludon",
+    "dexNumber": 1018,
+    "sprite": "1018.png"
+  },
+  "1019": {
+    "name": "Hydrapple",
+    "dexNumber": 1019,
+    "sprite": "1019.png"
+  },
+  "1020": {
+    "name": "Gouging Fire",
+    "dexNumber": 1020,
+    "sprite": "1020.png"
+  },
+  "1021": {
+    "name": "Raging Bolt",
+    "dexNumber": 1021,
+    "sprite": "1021.png"
+  },
+  "1022": {
+    "name": "Iron Boulder",
+    "dexNumber": 1022,
+    "sprite": "1022.png"
+  },
+  "1023": {
+    "name": "Iron Crown",
+    "dexNumber": 1023,
+    "sprite": "1023.png"
+  },
+  "1024": {
+    "name": "Terapagos",
+    "dexNumber": 1024,
+    "sprite": "1024.png"
+  },
+  "1025": {
+    "name": "Pecharunt",
+    "dexNumber": 1025,
+    "sprite": "1025.png"
+  },
+  "10001": {
+    "name": "Deoxys-Attack",
+    "dexNumber": 386,
+    "sprite": "10001.png"
+  },
+  "10002": {
+    "name": "Deoxys-Defense",
+    "dexNumber": 386,
+    "sprite": "10002.png"
+  },
+  "10003": {
+    "name": "Deoxys-Speed",
+    "dexNumber": 386,
+    "sprite": "10003.png"
+  },
+  "10004": {
+    "name": "Wormadam-Sandy",
+    "dexNumber": 413,
+    "sprite": "10004.png"
+  },
+  "10005": {
+    "name": "Wormadam-Trash",
+    "dexNumber": 413,
+    "sprite": "10005.png"
+  },
+  "10006": {
+    "name": "Shaymin-Sky",
+    "dexNumber": 492,
+    "sprite": "10006.png"
+  },
+  "10007": {
+    "name": "Giratina-Origin",
+    "dexNumber": 487,
+    "sprite": "10007.png"
+  },
+  "10008": {
+    "name": "Rotom-Heat",
+    "dexNumber": 479,
+    "sprite": "10008.png"
+  },
+  "10009": {
+    "name": "Rotom-Wash",
+    "dexNumber": 479,
+    "sprite": "10009.png"
+  },
+  "10010": {
+    "name": "Rotom-Frost",
+    "dexNumber": 479,
+    "sprite": "10010.png"
+  },
+  "10011": {
+    "name": "Rotom-Fan",
+    "dexNumber": 479,
+    "sprite": "10011.png"
+  },
+  "10012": {
+    "name": "Rotom-Mow",
+    "dexNumber": 479,
+    "sprite": "10012.png"
+  },
+  "10013": {
+    "name": "Castform-Sunny",
+    "dexNumber": 351,
+    "sprite": "10013.png"
+  },
+  "10014": {
+    "name": "Castform-Rainy",
+    "dexNumber": 351,
+    "sprite": "10014.png"
+  },
+  "10015": {
+    "name": "Castform-Snowy",
+    "dexNumber": 351,
+    "sprite": "10015.png"
+  },
+  "10016": {
+    "name": "Basculin-Blue-Striped",
+    "dexNumber": 550,
+    "sprite": "10016.png"
+  },
+  "10017": {
+    "name": "Darmanitan-Zen",
+    "dexNumber": 555,
+    "sprite": "10017.png"
+  },
+  "10018": {
+    "name": "Meloetta-Pirouette",
+    "dexNumber": 648,
+    "sprite": "10018.png"
+  },
+  "10019": {
+    "name": "Tornadus-Therian",
+    "dexNumber": 641,
+    "sprite": "10019.png"
+  },
+  "10020": {
+    "name": "Thundurus-Therian",
+    "dexNumber": 642,
+    "sprite": "10020.png"
+  },
+  "10021": {
+    "name": "Landorus-Therian",
+    "dexNumber": 645,
+    "sprite": "10021.png"
+  },
+  "10022": {
+    "name": "Kyurem-Black",
+    "dexNumber": 646,
+    "sprite": "10022.png"
+  },
+  "10023": {
+    "name": "Kyurem-White",
+    "dexNumber": 646,
+    "sprite": "10023.png"
+  },
+  "10024": {
+    "name": "Keldeo-Resolute",
+    "dexNumber": 647,
+    "sprite": "10024.png"
+  },
+  "10025": {
+    "name": "Meowstic-Female",
+    "dexNumber": 678,
+    "sprite": "10025.png"
+  },
+  "10026": {
+    "name": "Aegislash-Blade",
+    "dexNumber": 681,
+    "sprite": "10026.png"
+  },
+  "10027": {
+    "name": "Pumpkaboo-Small",
+    "dexNumber": 710,
+    "sprite": "10027.png"
+  },
+  "10028": {
+    "name": "Pumpkaboo-Large",
+    "dexNumber": 710,
+    "sprite": "10028.png"
+  },
+  "10029": {
+    "name": "Pumpkaboo-Super",
+    "dexNumber": 710,
+    "sprite": "10029.png"
+  },
+  "10030": {
+    "name": "Gourgeist-Small",
+    "dexNumber": 711,
+    "sprite": "10030.png"
+  },
+  "10031": {
+    "name": "Gourgeist-Large",
+    "dexNumber": 711,
+    "sprite": "10031.png"
+  },
+  "10032": {
+    "name": "Gourgeist-Super",
+    "dexNumber": 711,
+    "sprite": "10032.png"
+  },
+  "10033": {
+    "name": "Venusaur-Mega",
+    "dexNumber": 3,
+    "sprite": "10033.png"
+  },
+  "10034": {
+    "name": "Charizard-Mega-X",
+    "dexNumber": 6,
+    "sprite": "10034.png"
+  },
+  "10035": {
+    "name": "Charizard-Mega-Y",
+    "dexNumber": 6,
+    "sprite": "10035.png"
+  },
+  "10036": {
+    "name": "Blastoise-Mega",
+    "dexNumber": 9,
+    "sprite": "10036.png"
+  },
+  "10037": {
+    "name": "Alakazam-Mega",
+    "dexNumber": 65,
+    "sprite": "10037.png"
+  },
+  "10038": {
+    "name": "Gengar-Mega",
+    "dexNumber": 94,
+    "sprite": "10038.png"
+  },
+  "10039": {
+    "name": "Kangaskhan-Mega",
+    "dexNumber": 115,
+    "sprite": "10039.png"
+  },
+  "10040": {
+    "name": "Pinsir-Mega",
+    "dexNumber": 127,
+    "sprite": "10040.png"
+  },
+  "10041": {
+    "name": "Gyarados-Mega",
+    "dexNumber": 130,
+    "sprite": "10041.png"
+  },
+  "10042": {
+    "name": "Aerodactyl-Mega",
+    "dexNumber": 142,
+    "sprite": "10042.png"
+  },
+  "10043": {
+    "name": "Mewtwo-Mega-X",
+    "dexNumber": 150,
+    "sprite": "10043.png"
+  },
+  "10044": {
+    "name": "Mewtwo-Mega-Y",
+    "dexNumber": 150,
+    "sprite": "10044.png"
+  },
+  "10045": {
+    "name": "Ampharos-Mega",
+    "dexNumber": 181,
+    "sprite": "10045.png"
+  },
+  "10046": {
+    "name": "Scizor-Mega",
+    "dexNumber": 212,
+    "sprite": "10046.png"
+  },
+  "10047": {
+    "name": "Heracross-Mega",
+    "dexNumber": 214,
+    "sprite": "10047.png"
+  },
+  "10048": {
+    "name": "Houndoom-Mega",
+    "dexNumber": 229,
+    "sprite": "10048.png"
+  },
+  "10049": {
+    "name": "Tyranitar-Mega",
+    "dexNumber": 248,
+    "sprite": "10049.png"
+  },
+  "10050": {
+    "name": "Blaziken-Mega",
+    "dexNumber": 257,
+    "sprite": "10050.png"
+  },
+  "10051": {
+    "name": "Gardevoir-Mega",
+    "dexNumber": 282,
+    "sprite": "10051.png"
+  },
+  "10052": {
+    "name": "Mawile-Mega",
+    "dexNumber": 303,
+    "sprite": "10052.png"
+  },
+  "10053": {
+    "name": "Aggron-Mega",
+    "dexNumber": 306,
+    "sprite": "10053.png"
+  },
+  "10054": {
+    "name": "Medicham-Mega",
+    "dexNumber": 308,
+    "sprite": "10054.png"
+  },
+  "10055": {
+    "name": "Manectric-Mega",
+    "dexNumber": 310,
+    "sprite": "10055.png"
+  },
+  "10056": {
+    "name": "Banette-Mega",
+    "dexNumber": 354,
+    "sprite": "10056.png"
+  },
+  "10057": {
+    "name": "Absol-Mega",
+    "dexNumber": 359,
+    "sprite": "10057.png"
+  },
+  "10058": {
+    "name": "Garchomp-Mega",
+    "dexNumber": 445,
+    "sprite": "10058.png"
+  },
+  "10059": {
+    "name": "Lucario-Mega",
+    "dexNumber": 448,
+    "sprite": "10059.png"
+  },
+  "10060": {
+    "name": "Abomasnow-Mega",
+    "dexNumber": 460,
+    "sprite": "10060.png"
+  },
+  "10061": {
+    "name": "Floette-Eternal",
+    "dexNumber": 670,
+    "sprite": "10061.png"
+  },
+  "10062": {
+    "name": "Latias-Mega",
+    "dexNumber": 380,
+    "sprite": "10062.png"
+  },
+  "10063": {
+    "name": "Latios-Mega",
+    "dexNumber": 381,
+    "sprite": "10063.png"
+  },
+  "10064": {
+    "name": "Swampert-Mega",
+    "dexNumber": 260,
+    "sprite": "10064.png"
+  },
+  "10065": {
+    "name": "Sceptile-Mega",
+    "dexNumber": 254,
+    "sprite": "10065.png"
+  },
+  "10066": {
+    "name": "Sableye-Mega",
+    "dexNumber": 302,
+    "sprite": "10066.png"
+  },
+  "10067": {
+    "name": "Altaria-Mega",
+    "dexNumber": 334,
+    "sprite": "10067.png"
+  },
+  "10068": {
+    "name": "Gallade-Mega",
+    "dexNumber": 475,
+    "sprite": "10068.png"
+  },
+  "10069": {
+    "name": "Audino-Mega",
+    "dexNumber": 531,
+    "sprite": "10069.png"
+  },
+  "10070": {
+    "name": "Sharpedo-Mega",
+    "dexNumber": 319,
+    "sprite": "10070.png"
+  },
+  "10071": {
+    "name": "Slowbro-Mega",
+    "dexNumber": 80,
+    "sprite": "10071.png"
+  },
+  "10072": {
+    "name": "Steelix-Mega",
+    "dexNumber": 208,
+    "sprite": "10072.png"
+  },
+  "10073": {
+    "name": "Pidgeot-Mega",
+    "dexNumber": 18,
+    "sprite": "10073.png"
+  },
+  "10074": {
+    "name": "Glalie-Mega",
+    "dexNumber": 362,
+    "sprite": "10074.png"
+  },
+  "10075": {
+    "name": "Diancie-Mega",
+    "dexNumber": 719,
+    "sprite": "10075.png"
+  },
+  "10076": {
+    "name": "Metagross-Mega",
+    "dexNumber": 376,
+    "sprite": "10076.png"
+  },
+  "10077": {
+    "name": "Kyogre-Primal",
+    "dexNumber": 382,
+    "sprite": "10077.png"
+  },
+  "10078": {
+    "name": "Groudon-Primal",
+    "dexNumber": 383,
+    "sprite": "10078.png"
+  },
+  "10079": {
+    "name": "Rayquaza-Mega",
+    "dexNumber": 384,
+    "sprite": "10079.png"
+  },
+  "10080": {
+    "name": "Pikachu-Rock-Star",
+    "dexNumber": 25,
+    "sprite": "10080.png"
+  },
+  "10081": {
+    "name": "Pikachu-Belle",
+    "dexNumber": 25,
+    "sprite": "10081.png"
+  },
+  "10082": {
+    "name": "Pikachu-Pop-Star",
+    "dexNumber": 25,
+    "sprite": "10082.png"
+  },
+  "10083": {
+    "name": "Pikachu-Phd",
+    "dexNumber": 25,
+    "sprite": "10083.png"
+  },
+  "10084": {
+    "name": "Pikachu-Libre",
+    "dexNumber": 25,
+    "sprite": "10084.png"
+  },
+  "10085": {
+    "name": "Pikachu-Cosplay",
+    "dexNumber": 25,
+    "sprite": "10085.png"
+  },
+  "10086": {
+    "name": "Hoopa-Unbound",
+    "dexNumber": 720,
+    "sprite": "10086.png"
+  },
+  "10087": {
+    "name": "Camerupt-Mega",
+    "dexNumber": 323,
+    "sprite": "10087.png"
+  },
+  "10088": {
+    "name": "Lopunny-Mega",
+    "dexNumber": 428,
+    "sprite": "10088.png"
+  },
+  "10089": {
+    "name": "Salamence-Mega",
+    "dexNumber": 373,
+    "sprite": "10089.png"
+  },
+  "10090": {
+    "name": "Beedrill-Mega",
+    "dexNumber": 15,
+    "sprite": "10090.png"
+  },
+  "10091": {
+    "name": "Rattata-Alolan",
+    "dexNumber": 19,
+    "sprite": "10091.png"
+  },
+  "10092": {
+    "name": "Raticate-Alolan",
+    "dexNumber": 20,
+    "sprite": "10092.png"
+  },
+  "10093": {
+    "name": "Raticate-Totem-Alolan",
+    "dexNumber": 20,
+    "sprite": "10093.png"
+  },
+  "10094": {
+    "name": "Pikachu-Original-Cap",
+    "dexNumber": 25,
+    "sprite": "10094.png"
+  },
+  "10095": {
+    "name": "Pikachu-Hoenn-Cap",
+    "dexNumber": 25,
+    "sprite": "10095.png"
+  },
+  "10096": {
+    "name": "Pikachu-Sinnoh-Cap",
+    "dexNumber": 25,
+    "sprite": "10096.png"
+  },
+  "10097": {
+    "name": "Pikachu-Unova-Cap",
+    "dexNumber": 25,
+    "sprite": "10097.png"
+  },
+  "10098": {
+    "name": "Pikachu-Kalos-Cap",
+    "dexNumber": 25,
+    "sprite": "10098.png"
+  },
+  "10099": {
+    "name": "Pikachu-Alolan-Cap",
+    "dexNumber": 25,
+    "sprite": "10099.png"
+  },
+  "10100": {
+    "name": "Raichu-Alolan",
+    "dexNumber": 26,
+    "sprite": "10100.png"
+  },
+  "10101": {
+    "name": "Sandshrew-Alolan",
+    "dexNumber": 27,
+    "sprite": "10101.png"
+  },
+  "10102": {
+    "name": "Sandslash-Alolan",
+    "dexNumber": 28,
+    "sprite": "10102.png"
+  },
+  "10103": {
+    "name": "Vulpix-Alolan",
+    "dexNumber": 37,
+    "sprite": "10103.png"
+  },
+  "10104": {
+    "name": "Ninetales-Alolan",
+    "dexNumber": 38,
+    "sprite": "10104.png"
+  },
+  "10105": {
+    "name": "Diglett-Alolan",
+    "dexNumber": 50,
+    "sprite": "10105.png"
+  },
+  "10106": {
+    "name": "Dugtrio-Alolan",
+    "dexNumber": 51,
+    "sprite": "10106.png"
+  },
+  "10107": {
+    "name": "Meowth-Alolan",
+    "dexNumber": 52,
+    "sprite": "10107.png"
+  },
+  "10108": {
+    "name": "Persian-Alolan",
+    "dexNumber": 53,
+    "sprite": "10108.png"
+  },
+  "10109": {
+    "name": "Geodude-Alolan",
+    "dexNumber": 74,
+    "sprite": "10109.png"
+  },
+  "10110": {
+    "name": "Graveler-Alolan",
+    "dexNumber": 75,
+    "sprite": "10110.png"
+  },
+  "10111": {
+    "name": "Golem-Alolan",
+    "dexNumber": 76,
+    "sprite": "10111.png"
+  },
+  "10112": {
+    "name": "Grimer-Alolan",
+    "dexNumber": 88,
+    "sprite": "10112.png"
+  },
+  "10113": {
+    "name": "Muk-Alolan",
+    "dexNumber": 89,
+    "sprite": "10113.png"
+  },
+  "10114": {
+    "name": "Exeggutor-Alolan",
+    "dexNumber": 103,
+    "sprite": "10114.png"
+  },
+  "10115": {
+    "name": "Marowak-Alolan",
+    "dexNumber": 105,
+    "sprite": "10115.png"
+  },
+  "10116": {
+    "name": "Greninja-Battle-Bond",
+    "dexNumber": 658,
+    "sprite": "10116.png"
+  },
+  "10117": {
+    "name": "Greninja-Ash",
+    "dexNumber": 658,
+    "sprite": "10117.png"
+  },
+  "10118": {
+    "name": "Zygarde-10-Power-Construct",
+    "dexNumber": 718,
+    "sprite": "10118.png"
+  },
+  "10119": {
+    "name": "Zygarde-50-Power-Construct",
+    "dexNumber": 718,
+    "sprite": "10119.png"
+  },
+  "10120": {
+    "name": "Zygarde-Complete",
+    "dexNumber": 718,
+    "sprite": "10120.png"
+  },
+  "10121": {
+    "name": "Gumshoos-Totem",
+    "dexNumber": 735,
+    "sprite": "10121.png"
+  },
+  "10122": {
+    "name": "Vikavolt-Totem",
+    "dexNumber": 738,
+    "sprite": "10122.png"
+  },
+  "10123": {
+    "name": "Oricorio-Pom-Pom",
+    "dexNumber": 741,
+    "sprite": "10123.png"
+  },
+  "10124": {
+    "name": "Oricorio-Pau",
+    "dexNumber": 741,
+    "sprite": "10124.png"
+  },
+  "10125": {
+    "name": "Oricorio-Sensu",
+    "dexNumber": 741,
+    "sprite": "10125.png"
+  },
+  "10126": {
+    "name": "Lycanroc-Midnight",
+    "dexNumber": 745,
+    "sprite": "10126.png"
+  },
+  "10127": {
+    "name": "Wishiwashi-School",
+    "dexNumber": 746,
+    "sprite": "10127.png"
+  },
+  "10128": {
+    "name": "Lurantis-Totem",
+    "dexNumber": 754,
+    "sprite": "10128.png"
+  },
+  "10129": {
+    "name": "Salazzle-Totem",
+    "dexNumber": 758,
+    "sprite": "10129.png"
+  },
+  "10130": {
+    "name": "Minior-Orange-Meteor",
+    "dexNumber": 774,
+    "sprite": "10130.png"
+  },
+  "10131": {
+    "name": "Minior-Yellow-Meteor",
+    "dexNumber": 774,
+    "sprite": "10131.png"
+  },
+  "10132": {
+    "name": "Minior-Green-Meteor",
+    "dexNumber": 774,
+    "sprite": "10132.png"
+  },
+  "10133": {
+    "name": "Minior-Blue-Meteor",
+    "dexNumber": 774,
+    "sprite": "10133.png"
+  },
+  "10134": {
+    "name": "Minior-Indigo-Meteor",
+    "dexNumber": 774,
+    "sprite": "10134.png"
+  },
+  "10135": {
+    "name": "Minior-Violet-Meteor",
+    "dexNumber": 774,
+    "sprite": "10135.png"
+  },
+  "10136": {
+    "name": "Minior-Red",
+    "dexNumber": 774,
+    "sprite": "10136.png"
+  },
+  "10137": {
+    "name": "Minior-Orange",
+    "dexNumber": 774,
+    "sprite": "10137.png"
+  },
+  "10138": {
+    "name": "Minior-Yellow",
+    "dexNumber": 774,
+    "sprite": "10138.png"
+  },
+  "10139": {
+    "name": "Minior-Green",
+    "dexNumber": 774,
+    "sprite": "10139.png"
+  },
+  "10140": {
+    "name": "Minior-Blue",
+    "dexNumber": 774,
+    "sprite": "10140.png"
+  },
+  "10141": {
+    "name": "Minior-Indigo",
+    "dexNumber": 774,
+    "sprite": "10141.png"
+  },
+  "10142": {
+    "name": "Minior-Violet",
+    "dexNumber": 774,
+    "sprite": "10142.png"
+  },
+  "10143": {
+    "name": "Mimikyu-Busted",
+    "dexNumber": 778,
+    "sprite": "10143.png"
+  },
+  "10144": {
+    "name": "Mimikyu-Totem-Disguised",
+    "dexNumber": 778,
+    "sprite": "10144.png"
+  },
+  "10145": {
+    "name": "Mimikyu-Totem-Busted",
+    "dexNumber": 778,
+    "sprite": "10145.png"
+  },
+  "10146": {
+    "name": "Kommo-O-Totem",
+    "dexNumber": 784,
+    "sprite": "10146.png"
+  },
+  "10147": {
+    "name": "Magearna-Original",
+    "dexNumber": 801,
+    "sprite": "10147.png"
+  },
+  "10148": {
+    "name": "Pikachu-Partner-Cap",
+    "dexNumber": 25,
+    "sprite": "10148.png"
+  },
+  "10149": {
+    "name": "Marowak-Totem",
+    "dexNumber": 105,
+    "sprite": "10149.png"
+  },
+  "10150": {
+    "name": "Ribombee-Totem",
+    "dexNumber": 743,
+    "sprite": "10150.png"
+  },
+  "10151": {
+    "name": "Rockruff-Own-Tempo",
+    "dexNumber": 744,
+    "sprite": "10151.png"
+  },
+  "10152": {
+    "name": "Lycanroc-Dusk",
+    "dexNumber": 745,
+    "sprite": "10152.png"
+  },
+  "10153": {
+    "name": "Araquanid-Totem",
+    "dexNumber": 752,
+    "sprite": "10153.png"
+  },
+  "10154": {
+    "name": "Togedemaru-Totem",
+    "dexNumber": 777,
+    "sprite": "10154.png"
+  },
+  "10155": {
+    "name": "Necrozma-Dusk",
+    "dexNumber": 800,
+    "sprite": "10155.png"
+  },
+  "10156": {
+    "name": "Necrozma-Dawn",
+    "dexNumber": 800,
+    "sprite": "10156.png"
+  },
+  "10157": {
+    "name": "Necrozma-Ultra",
+    "dexNumber": 800,
+    "sprite": "10157.png"
+  },
+  "10160": {
+    "name": "Pikachu-World-Cap",
+    "dexNumber": 25,
+    "sprite": "10160.png"
+  },
+  "10161": {
+    "name": "Meowth-Galarian",
+    "dexNumber": 52,
+    "sprite": "10161.png"
+  },
+  "10162": {
+    "name": "Ponyta-Galarian",
+    "dexNumber": 77,
+    "sprite": "10162.png"
+  },
+  "10163": {
+    "name": "Rapidash-Galarian",
+    "dexNumber": 78,
+    "sprite": "10163.png"
+  },
+  "10164": {
+    "name": "Slowpoke-Galarian",
+    "dexNumber": 79,
+    "sprite": "10164.png"
+  },
+  "10165": {
+    "name": "Slowbro-Galarian",
+    "dexNumber": 80,
+    "sprite": "10165.png"
+  },
+  "10166": {
+    "name": "Farfetchd-Galarian",
+    "dexNumber": 83,
+    "sprite": "10166.png"
+  },
+  "10167": {
+    "name": "Weezing-Galarian",
+    "dexNumber": 110,
+    "sprite": "10167.png"
+  },
+  "10168": {
+    "name": "Mr-Mime-Galarian",
+    "dexNumber": 122,
+    "sprite": "10168.png"
+  },
+  "10169": {
+    "name": "Articuno-Galarian",
+    "dexNumber": 144,
+    "sprite": "10169.png"
+  },
+  "10170": {
+    "name": "Zapdos-Galarian",
+    "dexNumber": 145,
+    "sprite": "10170.png"
+  },
+  "10171": {
+    "name": "Moltres-Galarian",
+    "dexNumber": 146,
+    "sprite": "10171.png"
+  },
+  "10172": {
+    "name": "Slowking-Galarian",
+    "dexNumber": 199,
+    "sprite": "10172.png"
+  },
+  "10173": {
+    "name": "Corsola-Galarian",
+    "dexNumber": 222,
+    "sprite": "10173.png"
+  },
+  "10174": {
+    "name": "Zigzagoon-Galarian",
+    "dexNumber": 263,
+    "sprite": "10174.png"
+  },
+  "10175": {
+    "name": "Linoone-Galarian",
+    "dexNumber": 264,
+    "sprite": "10175.png"
+  },
+  "10176": {
+    "name": "Darumaka-Galarian",
+    "dexNumber": 554,
+    "sprite": "10176.png"
+  },
+  "10177": {
+    "name": "Darmanitan-Galarian-Standard",
+    "dexNumber": 555,
+    "sprite": "10177.png"
+  },
+  "10178": {
+    "name": "Darmanitan-Galarian-Zen",
+    "dexNumber": 555,
+    "sprite": "10178.png"
+  },
+  "10179": {
+    "name": "Yamask-Galarian",
+    "dexNumber": 562,
+    "sprite": "10179.png"
+  },
+  "10180": {
+    "name": "Stunfisk-Galarian",
+    "dexNumber": 618,
+    "sprite": "10180.png"
+  },
+  "10181": {
+    "name": "Zygarde-10",
+    "dexNumber": 718,
+    "sprite": "10181.png"
+  },
+  "10182": {
+    "name": "Cramorant-Gulping",
+    "dexNumber": 845,
+    "sprite": "10182.png"
+  },
+  "10183": {
+    "name": "Cramorant-Gorging",
+    "dexNumber": 845,
+    "sprite": "10183.png"
+  },
+  "10184": {
+    "name": "Toxtricity-Low-Key",
+    "dexNumber": 849,
+    "sprite": "10184.png"
+  },
+  "10185": {
+    "name": "Eiscue-Noice",
+    "dexNumber": 875,
+    "sprite": "10185.png"
+  },
+  "10186": {
+    "name": "Indeedee-Female",
+    "dexNumber": 876,
+    "sprite": "10186.png"
+  },
+  "10187": {
+    "name": "Morpeko-Hangry",
+    "dexNumber": 877,
+    "sprite": "10187.png"
+  },
+  "10188": {
+    "name": "Zacian-Crowned",
+    "dexNumber": 888,
+    "sprite": "10188.png"
+  },
+  "10189": {
+    "name": "Zamazenta-Crowned",
+    "dexNumber": 889,
+    "sprite": "10189.png"
+  },
+  "10190": {
+    "name": "Eternatus-Eternamax",
+    "dexNumber": 890,
+    "sprite": "10190.png"
+  },
+  "10191": {
+    "name": "Urshifu-Rapid-Strike",
+    "dexNumber": 892,
+    "sprite": "10191.png"
+  },
+  "10192": {
+    "name": "Zarude-Dada",
+    "dexNumber": 893,
+    "sprite": "10192.png"
+  },
+  "10193": {
+    "name": "Calyrex-Ice",
+    "dexNumber": 898,
+    "sprite": "10193.png"
+  },
+  "10194": {
+    "name": "Calyrex-Shadow",
+    "dexNumber": 898,
+    "sprite": "10194.png"
+  },
+  "10195": {
+    "name": "Venusaur-Gmax",
+    "dexNumber": 3,
+    "sprite": "10195.png"
+  },
+  "10196": {
+    "name": "Charizard-Gmax",
+    "dexNumber": 6,
+    "sprite": "10196.png"
+  },
+  "10197": {
+    "name": "Blastoise-Gmax",
+    "dexNumber": 9,
+    "sprite": "10197.png"
+  },
+  "10198": {
+    "name": "Butterfree-Gmax",
+    "dexNumber": 12,
+    "sprite": "10198.png"
+  },
+  "10199": {
+    "name": "Pikachu-Gmax",
+    "dexNumber": 25,
+    "sprite": "10199.png"
+  },
+  "10200": {
+    "name": "Meowth-Gmax",
+    "dexNumber": 52,
+    "sprite": "10200.png"
+  },
+  "10201": {
+    "name": "Machamp-Gmax",
+    "dexNumber": 68,
+    "sprite": "10201.png"
+  },
+  "10202": {
+    "name": "Gengar-Gmax",
+    "dexNumber": 94,
+    "sprite": "10202.png"
+  },
+  "10203": {
+    "name": "Kingler-Gmax",
+    "dexNumber": 99,
+    "sprite": "10203.png"
+  },
+  "10204": {
+    "name": "Lapras-Gmax",
+    "dexNumber": 131,
+    "sprite": "10204.png"
+  },
+  "10205": {
+    "name": "Eevee-Gmax",
+    "dexNumber": 133,
+    "sprite": "10205.png"
+  },
+  "10206": {
+    "name": "Snorlax-Gmax",
+    "dexNumber": 143,
+    "sprite": "10206.png"
+  },
+  "10207": {
+    "name": "Garbodor-Gmax",
+    "dexNumber": 569,
+    "sprite": "10207.png"
+  },
+  "10208": {
+    "name": "Melmetal-Gmax",
+    "dexNumber": 809,
+    "sprite": "10208.png"
+  },
+  "10209": {
+    "name": "Rillaboom-Gmax",
+    "dexNumber": 812,
+    "sprite": "10209.png"
+  },
+  "10210": {
+    "name": "Cinderace-Gmax",
+    "dexNumber": 815,
+    "sprite": "10210.png"
+  },
+  "10211": {
+    "name": "Inteleon-Gmax",
+    "dexNumber": 818,
+    "sprite": "10211.png"
+  },
+  "10212": {
+    "name": "Corviknight-Gmax",
+    "dexNumber": 823,
+    "sprite": "10212.png"
+  },
+  "10213": {
+    "name": "Orbeetle-Gmax",
+    "dexNumber": 826,
+    "sprite": "10213.png"
+  },
+  "10214": {
+    "name": "Drednaw-Gmax",
+    "dexNumber": 834,
+    "sprite": "10214.png"
+  },
+  "10215": {
+    "name": "Coalossal-Gmax",
+    "dexNumber": 839,
+    "sprite": "10215.png"
+  },
+  "10216": {
+    "name": "Flapple-Gmax",
+    "dexNumber": 841,
+    "sprite": "10216.png"
+  },
+  "10217": {
+    "name": "Appletun-Gmax",
+    "dexNumber": 842,
+    "sprite": "10217.png"
+  },
+  "10218": {
+    "name": "Sandaconda-Gmax",
+    "dexNumber": 844,
+    "sprite": "10218.png"
+  },
+  "10219": {
+    "name": "Toxtricity-Amped-Gmax",
+    "dexNumber": 849,
+    "sprite": "10219.png"
+  },
+  "10220": {
+    "name": "Centiskorch-Gmax",
+    "dexNumber": 851,
+    "sprite": "10220.png"
+  },
+  "10221": {
+    "name": "Hatterene-Gmax",
+    "dexNumber": 858,
+    "sprite": "10221.png"
+  },
+  "10222": {
+    "name": "Grimmsnarl-Gmax",
+    "dexNumber": 861,
+    "sprite": "10222.png"
+  },
+  "10223": {
+    "name": "Alcremie-Gmax",
+    "dexNumber": 869,
+    "sprite": "10223.png"
+  },
+  "10224": {
+    "name": "Copperajah-Gmax",
+    "dexNumber": 879,
+    "sprite": "10224.png"
+  },
+  "10225": {
+    "name": "Duraludon-Gmax",
+    "dexNumber": 884,
+    "sprite": "10225.png"
+  },
+  "10226": {
+    "name": "Urshifu-Single-Strike-Gmax",
+    "dexNumber": 892,
+    "sprite": "10226.png"
+  },
+  "10227": {
+    "name": "Urshifu-Rapid-Strike-Gmax",
+    "dexNumber": 892,
+    "sprite": "10227.png"
+  },
+  "10228": {
+    "name": "Toxtricity-Low-Key-Gmax",
+    "dexNumber": 849,
+    "sprite": "10228.png"
+  },
+  "10229": {
+    "name": "Growlithe-Hisui",
+    "dexNumber": 58,
+    "sprite": "10229.png"
+  },
+  "10230": {
+    "name": "Arcanine-Hisui",
+    "dexNumber": 59,
+    "sprite": "10230.png"
+  },
+  "10231": {
+    "name": "Voltorb-Hisui",
+    "dexNumber": 100,
+    "sprite": "10231.png"
+  },
+  "10232": {
+    "name": "Electrode-Hisui",
+    "dexNumber": 101,
+    "sprite": "10232.png"
+  },
+  "10233": {
+    "name": "Typhlosion-Hisui",
+    "dexNumber": 157,
+    "sprite": "10233.png"
+  },
+  "10234": {
+    "name": "Qwilfish-Hisui",
+    "dexNumber": 211,
+    "sprite": "10234.png"
+  },
+  "10235": {
+    "name": "Sneasel-Hisui",
+    "dexNumber": 215,
+    "sprite": "10235.png"
+  },
+  "10236": {
+    "name": "Samurott-Hisui",
+    "dexNumber": 503,
+    "sprite": "10236.png"
+  },
+  "10237": {
+    "name": "Lilligant-Hisui",
+    "dexNumber": 549,
+    "sprite": "10237.png"
+  },
+  "10238": {
+    "name": "Zorua-Hisui",
+    "dexNumber": 570,
+    "sprite": "10238.png"
+  },
+  "10239": {
+    "name": "Zoroark-Hisui",
+    "dexNumber": 571,
+    "sprite": "10239.png"
+  },
+  "10240": {
+    "name": "Braviary-Hisui",
+    "dexNumber": 628,
+    "sprite": "10240.png"
+  },
+  "10241": {
+    "name": "Sliggoo-Hisui",
+    "dexNumber": 705,
+    "sprite": "10241.png"
+  },
+  "10242": {
+    "name": "Goodra-Hisui",
+    "dexNumber": 706,
+    "sprite": "10242.png"
+  },
+  "10243": {
+    "name": "Avalugg-Hisui",
+    "dexNumber": 713,
+    "sprite": "10243.png"
+  },
+  "10244": {
+    "name": "Decidueye-Hisui",
+    "dexNumber": 724,
+    "sprite": "10244.png"
+  },
+  "10245": {
+    "name": "Dialga-Origin",
+    "dexNumber": 483,
+    "sprite": "10245.png"
+  },
+  "10246": {
+    "name": "Palkia-Origin",
+    "dexNumber": 484,
+    "sprite": "10246.png"
+  },
+  "10247": {
+    "name": "Basculin-White-Striped",
+    "dexNumber": 550,
+    "sprite": "10247.png"
+  },
+  "10248": {
+    "name": "Basculegion-Female",
+    "dexNumber": 902,
+    "sprite": "10248.png"
+  },
+  "10249": {
+    "name": "Enamorus-Therian",
+    "dexNumber": 905,
+    "sprite": "10249.png"
+  },
+  "10250": {
+    "name": "Tauros-Paldea-Combat-Breed",
+    "dexNumber": 128,
+    "sprite": "10250.png"
+  },
+  "10251": {
+    "name": "Tauros-Paldea-Blaze-Breed",
+    "dexNumber": 128,
+    "sprite": "10251.png"
+  },
+  "10252": {
+    "name": "Tauros-Paldea-Aqua-Breed",
+    "dexNumber": 128,
+    "sprite": "10252.png"
+  },
+  "10253": {
+    "name": "Wooper-Paldea",
+    "dexNumber": 194,
+    "sprite": "10253.png"
+  },
+  "10254": {
+    "name": "Oinkologne-Female",
+    "dexNumber": 916,
+    "sprite": "10254.png"
+  },
+  "10255": {
+    "name": "Dudunsparce-Three-Segment",
+    "dexNumber": 982,
+    "sprite": "10255.png"
+  },
+  "10256": {
+    "name": "Palafin-Hero",
+    "dexNumber": 964,
+    "sprite": "10256.png"
+  },
+  "10257": {
+    "name": "Maushold-Family-Of-Three",
+    "dexNumber": 925,
+    "sprite": "10257.png"
+  },
+  "10258": {
+    "name": "Tatsugiri-Droopy",
+    "dexNumber": 978,
+    "sprite": "10258.png"
+  },
+  "10259": {
+    "name": "Tatsugiri-Stretchy",
+    "dexNumber": 978,
+    "sprite": "10259.png"
+  },
+  "10260": {
+    "name": "Squawkabilly-Blue-Plumage",
+    "dexNumber": 931,
+    "sprite": "10260.png"
+  },
+  "10261": {
+    "name": "Squawkabilly-Yellow-Plumage",
+    "dexNumber": 931,
+    "sprite": "10261.png"
+  },
+  "10262": {
+    "name": "Squawkabilly-White-Plumage",
+    "dexNumber": 931,
+    "sprite": "10262.png"
+  },
+  "10263": {
+    "name": "Gimmighoul-Roaming",
+    "dexNumber": 999,
+    "sprite": "10263.png"
+  },
+  "10272": {
+    "name": "Ursaluna-Bloodmoon",
+    "dexNumber": 901,
+    "sprite": "10272.png"
+  },
+  "10273": {
+    "name": "Ogerpon-Wellspring-Mask",
+    "dexNumber": 1017,
+    "sprite": "10273.png"
+  },
+  "10274": {
+    "name": "Ogerpon-Hearthflame-Mask",
+    "dexNumber": 1017,
+    "sprite": "10274.png"
+  },
+  "10275": {
+    "name": "Ogerpon-Cornerstone-Mask",
+    "dexNumber": 1017,
+    "sprite": "10275.png"
+  },
+  "10276": {
+    "name": "Terapagos-Terastal",
+    "dexNumber": 1024,
+    "sprite": "10276.png"
+  },
+  "10277": {
+    "name": "Terapagos-Stellar",
+    "dexNumber": 1024,
+    "sprite": "10277.png"
+  },
+  "10278": {
+    "name": "Clefable-Mega",
+    "dexNumber": 36,
+    "sprite": "10278.png"
+  },
+  "10279": {
+    "name": "Victreebel-Mega",
+    "dexNumber": 71,
+    "sprite": "10279.png"
+  },
+  "10280": {
+    "name": "Starmie-Mega",
+    "dexNumber": 121,
+    "sprite": "10280.png"
+  },
+  "10281": {
+    "name": "Dragonite-Mega",
+    "dexNumber": 149,
+    "sprite": "10281.png"
+  },
+  "10282": {
+    "name": "Meganium-Mega",
+    "dexNumber": 154,
+    "sprite": "10282.png"
+  },
+  "10283": {
+    "name": "Feraligatr-Mega",
+    "dexNumber": 160,
+    "sprite": "10283.png"
+  },
+  "10284": {
+    "name": "Skarmory-Mega",
+    "dexNumber": 227,
+    "sprite": "10284.png"
+  },
+  "10285": {
+    "name": "Froslass-Mega",
+    "dexNumber": 478,
+    "sprite": "10285.png"
+  },
+  "10286": {
+    "name": "Emboar-Mega",
+    "dexNumber": 500,
+    "sprite": "10286.png"
+  },
+  "10287": {
+    "name": "Excadrill-Mega",
+    "dexNumber": 530,
+    "sprite": "10287.png"
+  },
+  "10288": {
+    "name": "Scolipede-Mega",
+    "dexNumber": 545,
+    "sprite": "10288.png"
+  },
+  "10289": {
+    "name": "Scrafty-Mega",
+    "dexNumber": 560,
+    "sprite": "10289.png"
+  },
+  "10290": {
+    "name": "Eelektross-Mega",
+    "dexNumber": 604,
+    "sprite": "10290.png"
+  },
+  "10291": {
+    "name": "Chandelure-Mega",
+    "dexNumber": 609,
+    "sprite": "10291.png"
+  },
+  "10292": {
+    "name": "Chesnaught-Mega",
+    "dexNumber": 652,
+    "sprite": "10292.png"
+  },
+  "10293": {
+    "name": "Delphox-Mega",
+    "dexNumber": 655,
+    "sprite": "10293.png"
+  },
+  "10294": {
+    "name": "Greninja-Mega",
+    "dexNumber": 658,
+    "sprite": "10294.png"
+  },
+  "10295": {
+    "name": "Pyroar-Mega",
+    "dexNumber": 668,
+    "sprite": "10295.png"
+  },
+  "10296": {
+    "name": "Floette-Mega",
+    "dexNumber": 670,
+    "sprite": "10296.png"
+  },
+  "10297": {
+    "name": "Malamar-Mega",
+    "dexNumber": 687,
+    "sprite": "10297.png"
+  },
+  "10298": {
+    "name": "Barbaracle-Mega",
+    "dexNumber": 689,
+    "sprite": "10298.png"
+  },
+  "10299": {
+    "name": "Dragalge-Mega",
+    "dexNumber": 691,
+    "sprite": "10299.png"
+  },
+  "10300": {
+    "name": "Hawlucha-Mega",
+    "dexNumber": 701,
+    "sprite": "10300.png"
+  },
+  "10302": {
+    "name": "Drampa-Mega",
+    "dexNumber": 780,
+    "sprite": "10302.png"
+  },
+  "10303": {
+    "name": "Falinks-Mega",
+    "dexNumber": 870,
+    "sprite": "10303.png"
+  },
+  "10304": {
+    "name": "Raichu-Mega-X",
+    "dexNumber": 26,
+    "sprite": "10304.png"
+  },
+  "10305": {
+    "name": "Raichu-Mega-Y",
+    "dexNumber": 26,
+    "sprite": "10305.png"
+  },
+  "10306": {
+    "name": "Chimecho-Mega",
+    "dexNumber": 358,
+    "sprite": "10306.png"
+  },
+  "10307": {
+    "name": "Absol-Mega-Z",
+    "dexNumber": 359,
+    "sprite": "10307.png"
+  },
+  "10308": {
+    "name": "Staraptor-Mega",
+    "dexNumber": 398,
+    "sprite": "10308.png"
+  },
+  "10309": {
+    "name": "Garchomp-Mega-Z",
+    "dexNumber": 445,
+    "sprite": "10309.png"
+  },
+  "10310": {
+    "name": "Lucario-Mega-Z",
+    "dexNumber": 448,
+    "sprite": "10310.png"
+  },
+  "10311": {
+    "name": "Heatran-Mega",
+    "dexNumber": 485,
+    "sprite": "10311.png"
+  },
+  "10312": {
+    "name": "Darkrai-Mega",
+    "dexNumber": 491,
+    "sprite": "10312.png"
+  },
+  "10313": {
+    "name": "Golurk-Mega",
+    "dexNumber": 623,
+    "sprite": "10313.png"
+  },
+  "10314": {
+    "name": "Meowstic-Male-Mega",
+    "dexNumber": 678,
+    "sprite": "10314.png"
+  },
+  "10315": {
+    "name": "Crabominable-Mega",
+    "dexNumber": 740,
+    "sprite": "10315.png"
+  },
+  "10316": {
+    "name": "Golisopod-Mega",
+    "dexNumber": 768,
+    "sprite": "10316.png"
+  },
+  "10317": {
+    "name": "Magearna-Mega",
+    "dexNumber": 801,
+    "sprite": "10317.png"
+  },
+  "10318": {
+    "name": "Magearna-Original-Mega",
+    "dexNumber": 801,
+    "sprite": "10318.png"
+  },
+  "10319": {
+    "name": "Zeraora-Mega",
+    "dexNumber": 807,
+    "sprite": "10319.png"
+  },
+  "10320": {
+    "name": "Scovillain-Mega",
+    "dexNumber": 952,
+    "sprite": "10320.png"
+  },
+  "10321": {
+    "name": "Glimmora-Mega",
+    "dexNumber": 970,
+    "sprite": "10321.png"
+  },
+  "10322": {
+    "name": "Tatsugiri-Curly-Mega",
+    "dexNumber": 978,
+    "sprite": "10322.png"
+  },
+  "10323": {
+    "name": "Tatsugiri-Droopy-Mega",
+    "dexNumber": 978,
+    "sprite": "10323.png"
+  },
+  "10324": {
+    "name": "Tatsugiri-Stretchy-Mega",
+    "dexNumber": 978,
+    "sprite": "10324.png"
+  },
+  "10325": {
+    "name": "Baxcalibur-Mega",
+    "dexNumber": 998,
+    "sprite": "10325.png"
+  },
+  "10326": {
+    "name": "Meowstic-Female-Mega",
+    "dexNumber": 678,
+    "sprite": "10326.png"
+  }
+}
