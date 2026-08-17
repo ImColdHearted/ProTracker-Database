@@ -1,0 +1,465 @@
+{
+  "bossId": "bugsy",
+  "name": "Bugsy",
+  "location": "Amazon Forest (Dock Island)",
+  "locationPicture": "",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Bugsy.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Johto Elite 4",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Pinsir",
+            "dexNumber": 127
+          },
+          {
+            "name": "Scyther",
+            "dexNumber": 123
+          },
+          {
+            "name": "Ferroseed",
+            "dexNumber": 597
+          },
+          {
+            "name": "Snivy",
+            "dexNumber": 495
+          },
+          {
+            "name": "Heracross",
+            "dexNumber": 214
+          },
+          {
+            "name": "Nincada",
+            "dexNumber": 290
+          }
+        ],
+        "items": [
+          {
+            "name": "Silver Powder",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Silver_Powder.png"
+          },
+          {
+            "name": "TM139 U-Turn",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Bug.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "1-3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Straw Hat 1",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Straw_Hat_1.png"
+          },
+          {
+            "name": "Straw Hat 2",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Straw_Hat_2.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Scizor",
+          "dexNumber": 212,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Bullet Punch"
+          ]
+        },
+        {
+          "name": "Genesect",
+          "dexNumber": 649,
+          "nature": "Random",
+          "ability": "Download",
+          "item": "None",
+          "moves": [
+            "Bug Buzz",
+            "Flamethrower",
+            "Ice Beam"
+          ]
+        },
+        {
+          "name": "Scolipede",
+          "dexNumber": 545,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+          ]
+        },
+        {
+          "name": "Heracross",
+          "dexNumber": 214,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+          ]
+        },
+        {
+          "name": "Ninjask",
+          "dexNumber": 291,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Pinsir",
+            "dexNumber": 127
+          },
+          {
+            "name": "Scyther",
+            "dexNumber": 123
+          },
+          {
+            "name": "Ferroseed",
+            "dexNumber": 597
+          },
+          {
+            "name": "Snivy",
+            "dexNumber": 495
+          },
+          {
+            "name": "Heracross",
+            "dexNumber": 214
+          },
+          {
+            "name": "Nincada",
+            "dexNumber": 290
+          }
+        ],
+        "items": [
+          {
+            "name": "Silver Powder",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Silver_Powder.png"
+          },
+          {
+            "name": "TM139 U-Turn",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Bug.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "1-3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Straw Hat 1",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Straw_Hat_1.png"
+          },
+          {
+            "name": "Straw Hat 2",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Straw_Hat_2.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Scizor",
+          "dexNumber": 212,
+          "nature": "Random",
+          "ability": "Technician",
+          "item": "Choice Band",
+          "moves": [
+            "Feint",
+            "Fury Cutter",
+            "Bullet Punch",
+            "Pursuit"
+          ]
+        },
+        {
+          "name": "Genesect",
+          "dexNumber": 649,
+          "nature": "Random",
+          "ability": "Download",
+          "item": "Choice Specs",
+          "moves": [
+            "Bug Buzz",
+            "Flash Cannon",
+            "Ice Beam",
+            "Flamethrower"
+          ]
+        },
+        {
+          "name": "Scolipede",
+          "dexNumber": 545,
+          "nature": "Random",
+          "ability": "Speed Boost",
+          "item": "Life Orb",
+          "moves": [
+            "Mega Horn",
+            "Stone Edge",
+            "Poison Jab",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Passho Berry",
+          "moves": [
+            "Flamethrower",
+            "Quiver Dance",
+            "Bug Buzz",
+            "Roost"
+          ]
+        },
+        {
+          "name": "Mega Heracross",
+          "dexNumber": 10047,
+          "nature": "Random",
+          "ability": "Skill Link",
+          "item": "Heracronite",
+          "moves": [
+            "Rock Blast",
+            "Pin Missle",
+            "Bullet Seed",
+            "Close Combat"
+          ]
+        },
+        {
+          "name": "Ninjask",
+          "dexNumber": 291,
+          "nature": "Random",
+          "ability": "Speed Boost",
+          "item": "Focus Sash",
+          "moves": [
+            "Aerial Ace",
+            "Thief",
+            "Swords Dance",
+            "Leech Life"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Pinsir",
+            "dexNumber": 127
+          },
+          {
+            "name": "Scyther",
+            "dexNumber": 123
+          },
+          {
+            "name": "Ferroseed",
+            "dexNumber": 597
+          },
+          {
+            "name": "Snivy",
+            "dexNumber": 495
+          },
+          {
+            "name": "Heracross",
+            "dexNumber": 214
+          },
+          {
+            "name": "Nincada",
+            "dexNumber": 290
+          }
+        ],
+        "items": [
+          {
+            "name": "Silver Powder",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Silver_Powder.png"
+          },
+          {
+            "name": "TM139 U-Turn",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Bug.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "1-3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Straw Hat 1",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Straw_Hat_1.png"
+          },
+          {
+            "name": "Straw Hat 2",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Straw_Hat_2.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Scizor",
+          "dexNumber": 212,
+          "nature": "Random",
+          "ability": "Technician",
+          "item": "Choice Band",
+          "moves": [
+            "Feint",
+            "Fury Cutter",
+            "Bullet Punch",
+            "Pursuit"
+          ]
+        },
+        {
+          "name": "Genesect",
+          "dexNumber": 649,
+          "nature": "Random",
+          "ability": "Download",
+          "item": "Choice Specs",
+          "moves": [
+            "Bug Buzz",
+            "Flash Cannon",
+            "Ice Beam",
+            "Flamethrower"
+          ]
+        },
+        {
+          "name": "Scolipede",
+          "dexNumber": 545,
+          "nature": "Random",
+          "ability": "Speed Boost",
+          "item": "Life Orb",
+          "moves": [
+            "Mega Horn",
+            "Stone Edge",
+            "Poison Jab",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Passho Berry",
+          "moves": [
+            "Flamethrower",
+            "Quiver Dance",
+            "Bug Buzz",
+            "Roost"
+          ]
+        },
+        {
+          "name": "Mega Heracross",
+          "dexNumber": 10047,
+          "nature": "Random",
+          "ability": "Skill Link",
+          "item": "Heracronite",
+          "moves": [
+            "Rock Blast",
+            "Pin Missle",
+            "Bullet Seed",
+            "Close Combat"
+          ]
+        },
+        {
+          "name": "Ninjask",
+          "dexNumber": 291,
+          "nature": "Random",
+          "ability": "Speed Boost",
+          "item": "Focus Sash",
+          "moves": [
+            "Aerial Ace",
+            "Thief",
+            "Swords Dance",
+            "Leech Life"
+          ]
+        }
+      ]
+    }
+  }
+}

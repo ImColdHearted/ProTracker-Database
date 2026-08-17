@@ -1,0 +1,159 @@
+{
+  "bossId": "guardiansuicune",
+  "name": "Guardian Suicune",
+  "location": "Secluded Lake",
+  "locationPicture": "",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Suicune_Guardian.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Johto Elite 4",
+  "difficulties": {
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Spheal",
+            "dexNumber": 363
+          },
+          {
+            "name": "Snover",
+            "dexNumber": 459
+          },
+          {
+            "name": "Oshawott",
+            "dexNumber": 501
+          },
+          {
+            "name": "Bergmite",
+            "dexNumber": 712
+          },
+          {
+            "name": "Suicune",
+            "dexNumber": 245
+          }
+        ],
+        "items": [
+          {
+            "name": "TM54 - Calm Mind",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Psychic.png"
+          },
+          {
+            "name": "TM105 - Scald",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Water.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Icy Rock",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Icy_Rock.png"
+          },
+          {
+            "name": "Choice Specs",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Specs.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Kyurem",
+          "dexNumber": 646,
+          "nature": "Modest",
+          "ability": "Pressure",
+          "item": "Choice Specs",
+          "moves": [
+            "Blizzard",
+            "Draco Meteor",
+            "Focus Blast",
+            "Flash Cannon"
+          ]
+        },
+        {
+          "name": "Suicune",
+          "dexNumber": 245,
+          "nature": "Bold",
+          "ability": "Pressure",
+          "item": "Leftovers",
+          "moves": [
+            "Calm Mind",
+            "Scald",
+            "Ice Beam",
+            "Air Slash"
+          ]
+        },
+        {
+          "name": "Avalugg",
+          "dexNumber": 713,
+          "nature": "Quiet",
+          "ability": "Sturdy",
+          "item": "Leftovers",
+          "moves": [
+            "Avalanche",
+            "Toxic",
+            "Recover",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Walrein",
+          "dexNumber": 365,
+          "nature": "Calm",
+          "ability": "Thick Fat",
+          "item": "Leftovers",
+          "moves": [
+            "Sheer Cold",
+            "Blizzard",
+            "Surf",
+            "Super Fang"
+          ]
+        },
+        {
+          "name": "Azumarill",
+          "dexNumber": 184,
+          "nature": "Adamant",
+          "ability": "Huge Power",
+          "item": "Choice Band",
+          "moves": [
+            "Aqua Jet",
+            "Play Rough",
+            "Superpower",
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Mamoswine",
+          "dexNumber": 473,
+          "nature": "Jolly",
+          "ability": "Thick Fat",
+          "item": "Life Orb",
+          "moves": [
+            "Earthquake",
+            "Icicle Crash",
+            "Stone Edge",
+            "Ice Shard"
+          ]
+        }
+      ]
+    }
+  }
+}

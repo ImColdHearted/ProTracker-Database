@@ -1,0 +1,6 @@
+{
+  "BossID": "urahara",
+  "name": "Urahara",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Urahara.png",
+  "BossCooldown": 288
+}

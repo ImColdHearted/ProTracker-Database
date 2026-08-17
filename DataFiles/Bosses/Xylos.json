@@ -1,0 +1,6 @@
+{
+  "BossID": "xylos",
+  "name": "Xylos",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Xylos.png",
+  "BossCooldown": 288
+}
