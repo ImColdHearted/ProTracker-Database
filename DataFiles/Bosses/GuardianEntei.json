@@ -1,0 +1,160 @@
+{
+  "bossId": "guardianentei",
+  "name": "Guardian Entei (Hard Only)",
+  "location": "Route 25 Cave",
+  "locationPicture": "",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Entei_Guardian.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Johto Elite 4",
+  "difficulties": {
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Bulbasaur",
+            "dexNumber": 1
+          },
+          {
+            "name": "Charmander",
+            "dexNumber": 4
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 390
+          },
+          {
+            "name": "Tepig",
+            "dexNumber": 498
+          },
+          {
+            "name": "Entei",
+            "dexNumber": 244
+          }
+        ],
+        "items": [
+          {
+            "name": "TM61 - Sunny Day",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Fire.png"
+          },
+          {
+            "name": "TM85 - Flamethrower",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Fire.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Heat Rock",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Heat_Rock.png"
+          },
+          {
+            "name": "Choice Band",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Band.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Entei",
+          "dexNumber": 244,
+          "nature": "Adamant",
+          "ability": "Pressure",
+          "item": "Choice Band",
+          "moves": [
+            "Sacred Fire",
+            "Extreme Speed",
+            "Stone Edge",
+            "Iron Tail",
+            "Flare Blitz"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Jolly",
+          "ability": "Iron Fist",
+          "item": "Life Orb",
+          "moves": [
+            "Close Combat",
+            "Flare Blitz",
+            "Gunk Shot",
+            "Thunder Punch"
+          ]
+        },
+        {
+          "name": "Reshiram",
+          "dexNumber": 643,
+          "nature": "Modest",
+          "ability": "Turboblaze",
+          "item": "Choice Specs",
+          "moves": [
+            "Blue Flare",
+            "Dragon Pulse",
+            "Focus Blast",
+            "Shadow Ball"
+          ]
+        },
+        {
+          "name": "Gliscor",
+          "dexNumber": 472,
+          "nature": "Jolly",
+          "ability": "Poison Heal",
+          "item": "Toxic Orb",
+          "moves": [
+            "Swords Dance",
+            "Earthquake",
+            "Facade",
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Serperior",
+          "dexNumber": 497,
+          "nature": "Timid",
+          "ability": "Contrary",
+          "item": "Miracle Seed",
+          "moves": [
+            "Leaf Storm",
+            "Dragon Pulse",
+            "Leech Seed",
+            "Giga Drain"
+          ]
+        },
+        {
+          "name": "Chandelure",
+          "dexNumber": 609,
+          "nature": "Modest",
+          "ability": "Flame Body",
+          "item": "Choice Scarf",
+          "moves": [
+            "Shadow Ball",
+            "Fire Blast",
+            "Energy Ball",
+            "Psychic"
+          ]
+        }
+      ]
+    }
+  }
+}

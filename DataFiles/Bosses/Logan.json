@@ -1,0 +1,404 @@
+{
+  "bossId": "logan",
+  "name": "Logan",
+  "location": "Cave of Justice (Route 210 North)",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/LoganLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Logan.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Sinnoh Elite 4",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Timburr",
+            "dexNumber": 390
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 532
+          }
+        ],
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-20",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Tamato Berry",
+            "quantity": "25",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tamato_Berry.png"
+          },
+          {
+            "name": "Life Orb",
+            "quantity": "2",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Life_Orb.png"
+          },
+          {
+            "name": "Logan Mask",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Logan_Mask.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Random",
+          "ability": "Iron Fist",
+          "item": "None",
+          "moves": [
+            "Flare Blitz",
+            "Thunder Punch",
+            "Close Combat",
+            "Gunk Shot"
+          ]
+        },
+        {
+          "name": "Gliscor",
+          "dexNumber": 472,
+          "nature": "Random",
+          "ability": "Poison Heal",
+          "item": "None",
+          "moves": [
+            "Facade",
+            "Earthquake",
+            "Roost",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Serperior",
+          "dexNumber": 497,
+          "nature": "Random",
+          "ability": "Contrary",
+          "item": "None",
+          "moves": [
+            "Leech Seed",
+            "Hidden Power (Fire)",
+            "Leaf Storm",
+            "Dragon Pulse"
+          ]
+        },
+        {
+          "name": "Rotom-Wash",
+          "dexNumber": 10009,
+          "nature": "Random",
+          "ability": "Levitate",
+          "item": "None",
+          "moves": [
+            "Hydro Pump",
+            "Discharge",
+            "Will-O-Wisp",
+            "Pain Split"
+          ]
+        },
+        {
+          "name": "Tyranitar",
+          "dexNumber": 248,
+          "nature": "Random",
+          "ability": "Unnerve",
+          "item": "None",
+          "moves": [
+            "Superpower",
+            "Stone Edge",
+            "Crunch",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Dialga",
+          "dexNumber": 483,
+          "nature": "Random",
+          "ability": "Pressure",
+          "item": "None",
+          "moves": [
+            "Thunder",
+            "Dragon Pulse",
+            "Fire Blast",
+            "Earth Power"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Timburr",
+            "dexNumber": 390
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 532
+          }
+        ],
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-20",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Tamato Berry",
+            "quantity": "25",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tamato_Berry.png"
+          },
+          {
+            "name": "Life Orb",
+            "quantity": "2",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Life_Orb.png"
+          },
+          {
+            "name": "Logan Mask",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Logan_Mask.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Random",
+          "ability": "Iron Fist",
+          "item": "Choice Scarf",
+          "moves": [
+            "Flare Blitz",
+            "Thunder Punch",
+            "Close Combat",
+            "Gunk Shot"
+          ]
+        },
+        {
+          "name": "Gliscor",
+          "dexNumber": 472,
+          "nature": "Random",
+          "ability": "Poison Heal",
+          "item": "Toxic Orb",
+          "moves": [
+            "Facade",
+            "Earthquake",
+            "Roost",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Serperior",
+          "dexNumber": 497,
+          "nature": "Random",
+          "ability": "Contrary",
+          "item": "Choice Specs",
+          "moves": [
+            "Leech Seed",
+            "Hidden Power (Fire)",
+            "Leaf Storm",
+            "Dragon Pulse"
+          ]
+        },
+        {
+          "name": "Rotom-Wash",
+          "dexNumber": 10009,
+          "nature": "Random",
+          "ability": "Levitate",
+          "item": "Leftovers",
+          "moves": [
+            "Hydro Pump",
+            "Discharge",
+            "Will-O-Wisp",
+            "Pain Split"
+          ]
+        },
+        {
+          "name": "Mega Tyranitar",
+          "dexNumber": 10049,
+          "nature": "Random",
+          "ability": "Sand Stream",
+          "item": "Tyranitarite",
+          "moves": [
+            "Superpower",
+            "Stone Edge",
+            "Crunch",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Dialga",
+          "dexNumber": 483,
+          "nature": "Random",
+          "ability": "Pressure",
+          "item": "Shuca Berry",
+          "moves": [
+            "Thunder",
+            "Dragon Pulse",
+            "Fire Blast",
+            "Earth Power"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Timburr",
+            "dexNumber": 390
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 532
+          }
+        ],
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-20",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Tamato Berry",
+            "quantity": "25",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tamato_Berry.png"
+          },
+          {
+            "name": "Life Orb",
+            "quantity": "2",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Life_Orb.png"
+          },
+          {
+            "name": "Logan Mask",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Logan_Mask.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Random",
+          "ability": "Iron Fist",
+          "item": "Choice Scarf",
+          "moves": [
+            "Flare Blitz",
+            "Thunder Punch",
+            "Close Combat",
+            "Earthquake",
+            "Gunk Shot"
+          ]
+        },
+        {
+          "name": "Gliscor",
+          "dexNumber": 472,
+          "nature": "Random",
+          "ability": "Poison Heal",
+          "item": "Toxic Orb",
+          "moves": [
+            "Facade",
+            "Earthquake",
+            "Roost",
+            "Swords Dance",
+            "Rock Slide"
+          ]
+        },
+        {
+          "name": "Serperior",
+          "dexNumber": 497,
+          "nature": "Random",
+          "ability": "Contrary",
+          "item": "Choice Specs",
+          "moves": [
+            "Leech Seed",
+            "Hidden Power (Fire)",
+            "Leaf Storm",
+            "Dragon Pulse"
+          ]
+        },
+        {
+          "name": "Rotom-Wash",
+          "dexNumber": 10009,
+          "nature": "Random",
+          "ability": "Levitate",
+          "item": "Leftovers",
+          "moves": [
+            "Hydro Pump",
+            "Discharge",
+            "Will-O-Wisp",
+            "Pain Split"
+          ]
+        },
+        {
+          "name": "Mega Tyranitar",
+          "dexNumber": 10049,
+          "nature": "Random",
+          "ability": "Sand Stream",
+          "item": "Tyranitarite",
+          "moves": [
+            "Superpower",
+            "Stone Edge",
+            "Crunch",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Dialga",
+          "dexNumber": 483,
+          "nature": "Random",
+          "ability": "Pressure",
+          "item": "Shuca Berry",
+          "moves": [
+            "Thunder",
+            "Dragon Pulse",
+            "Fire Blast",
+            "Earth Power",
+            "Aura Sphere"
+          ]
+        }
+      ]
+    }
+  }
+}

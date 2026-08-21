@@ -1,0 +1,6 @@
+{
+  "BossID": "prehax",
+  "name": "Prehax (Easy Only)",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Prehax.png",
+  "BossCooldown": 288
+}

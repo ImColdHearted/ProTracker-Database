@@ -1,0 +1,564 @@
+{
+  "bossId": "ltsurge",
+  "name": "Lt. Surge",
+  "location": "New Mauville (Power Plant)",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/LtSurgeLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Lt._Surge.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Hoenn Elite 4",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Pikachu",
+            "dexNumber": 25
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403
+          },
+          {
+            "name": "Elekid",
+            "dexNumber": 239
+          },
+          {
+            "name": "Helioptile",
+            "dexNumber": 694
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479
+          },
+          {
+            "name": "Tynamo",
+            "dexNumber": 602
+          }
+        ],
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Sun Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Sun_Stone.png"
+          },
+          {
+            "name": "Thunder Stone",
+            "quantity": "",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Thunder_Stone.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "TM24 - Thunderbolt",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Electric.png"
+          },
+          {
+            "name": "TM60 - Hidden Power",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "Manectric Mount",
+            "quantity": "",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Manectric_Mount.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Raichu",
+          "dexNumber": 26,
+          "nature": "Timid",
+          "ability": "Lightning Rod",
+          "item": "None",
+          "moves": [
+            "Thunderbolt",
+            "Hidden Power (Ice)",
+            "Grass Knot",
+            "Focus Blast"
+          ]
+        },
+        {
+          "name": "Manectric",
+          "dexNumber": 310,
+          "nature": "Jolly",
+          "ability": "Lightning Rod",
+          "item": "None",
+          "moves": [
+            "Wild Charge",
+            "Fire Fang",
+            "Ice Fang",
+            "Crunch"
+          ]
+        },
+        {
+          "name": "Heliolisk",
+          "dexNumber": 695,
+          "nature": "Timid",
+          "ability": "Dry Skin",
+          "item": "None",
+          "moves": [
+            "Thunderbolt",
+            "Surf",
+            "Hyper Voice",
+            "Dragon Pulse"
+          ]
+        },
+        {
+          "name": "Luxray",
+          "dexNumber": 405,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "None",
+          "moves": [
+            "Wild Charge",
+            "Fire Fang",
+            "Ice Fang",
+            "Facade"
+          ]
+        },
+        {
+          "name": "Magnezone",
+          "dexNumber": 462,
+          "nature": "Timid",
+          "ability": "Magnet Pull",
+          "item": "None",
+          "moves": [
+            "Thunderbolt",
+            "Flash Cannon",
+            "Signal Beam",
+            "Magnet Rise"
+          ]
+        },
+        {
+          "name": "Jolteon",
+          "dexNumber": 135,
+          "nature": "Timid",
+          "ability": "Volt Absorb",
+          "item": "None",
+          "moves": [
+            "Thunderbolt",
+            "Hidden Power (Ice)",
+            "Shadow Ball",
+            "Signal Beam"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Pikachu",
+            "dexNumber": 25
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403
+          },
+          {
+            "name": "Elekid",
+            "dexNumber": 239
+          },
+          {
+            "name": "Helioptile",
+            "dexNumber": 694
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479
+          },
+          {
+            "name": "Tynamo",
+            "dexNumber": 602
+          }
+        ],
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Sun Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Sun_Stone.png"
+          },
+          {
+            "name": "Thunder Stone",
+            "quantity": "",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Thunder_Stone.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "TM24 - Thunderbolt",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Electric.png"
+          },
+          {
+            "name": "TM60 - Hidden Power",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "Manectric Mount",
+            "quantity": "",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Manectric_Mount.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Raichu",
+          "dexNumber": 26,
+          "nature": "Timid",
+          "ability": "Lightning Rod",
+          "item": "Life Orb",
+          "moves": [
+            "Thunderbolt",
+            "Hidden Power (Ice)",
+            "Grass Knot",
+            "Focus Blast"
+          ]
+        },
+        {
+          "name": "Manectric",
+          "dexNumber": 310,
+          "nature": "Jolly",
+          "ability": "Lightning Rod",
+          "item": "Choice Band",
+          "moves": [
+            "Wild Charge",
+            "Fire Fang",
+            "Ice Fang",
+            "Crunch"
+          ]
+        },
+        {
+          "name": "Heliolisk",
+          "dexNumber": 695,
+          "nature": "Timid",
+          "ability": "Dry Skin",
+          "item": "Choice Scarf",
+          "moves": [
+            "Thunderbolt",
+            "Surf",
+            "Hyper Voice",
+            "Dragon Pulse"
+          ]
+        },
+        {
+          "name": "Luxray",
+          "dexNumber": 405,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "Flame Orb",
+          "moves": [
+            "Wild Charge",
+            "Fire Fang",
+            "Ice Fang",
+            "Facade"
+          ]
+        },
+        {
+          "name": "Magnezone",
+          "dexNumber": 462,
+          "nature": "Timid",
+          "ability": "Magnet Pull",
+          "item": "Life Orb",
+          "moves": [
+            "Thunderbolt",
+            "Flash Cannon",
+            "Signal Beam",
+            "Magnet Rise"
+          ]
+        },
+        {
+          "name": "Jolteon",
+          "dexNumber": 135,
+          "nature": "Timid",
+          "ability": "Volt Absorb",
+          "item": "Choice Scarf",
+          "moves": [
+            "Thunderbolt",
+            "Hidden Power (Ice)",
+            "Shadow Ball",
+            "Signal Beam"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Pikachu",
+            "dexNumber": 25
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403
+          },
+          {
+            "name": "Elekid",
+            "dexNumber": 239
+          },
+          {
+            "name": "Helioptile",
+            "dexNumber": 694
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479
+          },
+          {
+            "name": "Tynamo",
+            "dexNumber": 602
+          }
+        ],
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Sun Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Sun_Stone.png"
+          },
+          {
+            "name": "Thunder Stone",
+            "quantity": "",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Thunder_Stone.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "TM24 - Thunderbolt",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Electric.png"
+          },
+          {
+            "name": "TM60 - Hidden Power",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "Manectric Mount",
+            "quantity": "",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Manectric_Mount.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Rotom-Wash",
+          "dexNumber": 10009,
+          "nature": "Timid",
+          "ability": "Levitate",
+          "item": "Choice Specs",
+          "moves": [
+            "Signal Beam",
+            "Dark Pulse",
+            "Thunderbolt",
+            "Hidden Power (Ice)",
+            "Hydro Pump",
+            "Shadow Ball"
+
+          ]
+        },
+        {
+          "name": "Electivire",
+          "dexNumber": 466,
+          "nature": "Adamant",
+          "ability": "Vital Spirit",
+          "item": "Choice Band",
+          "moves": [
+            "Iron Tail",
+            "Rock Slide",
+            "Wild Charge",
+            "Ice Punch",
+            "Low Kick",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Raichu",
+          "dexNumber": 26,
+          "nature": "Timid",
+          "ability": "Random",
+          "item": "Choice Specs",
+          "moves": [
+            "Grass Knot",
+            "Signal Beam",
+            "Iron Tail",
+            "Thunderbolt",
+            "Hidden Power (Ice)",
+            "Surf",
+            "Focus Blast"
+          ]
+        },
+        {
+          "name": "Zapdos",
+          "dexNumber": 145,
+          "nature": "Timid",
+          "ability": "Pressure",
+          "item": "Choice Specs",
+          "moves": [
+            "Ancient Power",
+            "Signal Beam",
+            "Thunderbolt",
+            "Heat Wave",
+            "Hidden Power (Ice)",
+            "Drill Peck"
+          ]
+        },
+        {
+          "name": "Golem-Alolan",
+          "dexNumber": 10111,
+          "nature": "Adamant",
+          "ability": "Sturdy",
+          "item": "Choice Band",
+          "moves": [
+            "Stone Edge",
+            "Iron Head",
+            "Rock Polish",
+            "Wild Charge",
+            "Earthquake",
+            "Fire Punch",
+            "Close Combat"
+          ]
+        },
+        {
+          "name": "Zekrom",
+          "dexNumber": 644,
+          "nature": "Adamant",
+          "ability": "Teravolt",
+          "item": "Choice Band",
+          "moves": [
+            "Bolt Strike",
+            "Outrage",
+            "Steel Wing",
+            "Rock Slide"
+          ]
+        }
+      ]
+    }
+  }
+}

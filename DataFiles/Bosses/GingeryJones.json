@@ -1,0 +1,432 @@
+{
+  "bossId": "gingeryjones",
+  "name": "Gingery Jones",
+  "location": "Feral Site Excavations (Fiery Path)",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/JonesLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Gingery_Jones.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Hoenn Elite 4, 2400 Excavation Points",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Pancham",
+            "dexNumber": 674
+          },
+          {
+            "name": "Tyrunt",
+            "dexNumber": 696
+          },
+          {
+            "name": "Amaura",
+            "dexNumber": 698
+          },
+          {
+            "name": "Vullaby",
+            "dexNumber": 629
+          },
+          {
+            "name": "Timburr",
+            "dexNumber": 532
+          }
+        ],
+        "items": [
+          {
+            "name": "Claw Fossil",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Claw_Fossil.png"
+          },
+          {
+            "name": "Root Fossil",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Root_Fossil.png"
+          },
+          {
+            "name": "Old Amber",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Old_Amber.png"
+          },
+          {
+            "name": "Armor Fossil",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Armor_Fossil.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Drain Punch",
+            "Knock Off",
+            "Ice Punch"
+          ]
+        },
+        {
+          "name": "Klingklang",
+          "dexNumber": 601,
+          "nature": "Random",
+          "ability": "Clear Body",
+          "item": "None",
+          "moves": [
+            "Wild Charge",
+            "Gear Grind",
+            "Reversal"
+          ]
+        },
+        {
+          "name": "Golurk",
+          "dexNumber": 623,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Ice Punch",
+            "Drain Punch",
+            "Earthquake",
+            "Shadow Punch"
+          ]
+        },
+        {
+          "name": "Mandibuzz",
+          "dexNumber": 630,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Brave Bird",
+            "Knock Off",
+            "Whirlwind"
+          ]
+        },
+        {
+          "name": "Clawitzer",
+          "dexNumber": 693,
+          "nature": "Random",
+          "ability": "Mega Launcher",
+          "item": "None",
+          "moves": [
+            "Ice Beam",
+            "Scald",
+            "Dark Pulse",
+            "Aura Sphere"
+          ]
+        },
+        {
+          "name": "Pangoro",
+          "dexNumber": 675,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Drain Punch",
+            "Swords Dance",
+            "Zen Headbutt",
+            "Knock Off"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Pancham",
+            "dexNumber": 674
+          },
+          {
+            "name": "Tyrunt",
+            "dexNumber": 696
+          },
+          {
+            "name": "Amaura",
+            "dexNumber": 698
+          },
+          {
+            "name": "Vullaby",
+            "dexNumber": 629
+          },
+          {
+            "name": "Timburr",
+            "dexNumber": 532
+          }
+        ],
+        "items": [
+          {
+            "name": "Claw Fossil",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Claw_Fossil.png"
+          },
+          {
+            "name": "Root Fossil",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Root_Fossil.png"
+          },
+          {
+            "name": "Old Amber",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Old_Amber.png"
+          },
+          {
+            "name": "Armor Fossil",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Armor_Fossil.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Choice Band",
+          "moves": [
+            "Drain Punch",
+            "Knock Off",
+            "Ice Punch",
+            "Thunder Punch"
+          ]
+        },
+        {
+          "name": "Klingklang",
+          "dexNumber": 601,
+          "nature": "Random",
+          "ability": "Clear Body",
+          "item": "Choice Band",
+          "moves": [
+            "Wild Charge",
+            "Gear Grind",
+            "Return",
+            "Shift Gear"
+          ]
+        },
+        {
+          "name": "Golurk",
+          "dexNumber": 623,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Choice Band",
+          "moves": [
+            "Ice Punch",
+            "Drain Punch",
+            "Earthquake",
+            "Shadow Punch"
+          ]
+        },
+        {
+          "name": "Mandibuzz",
+          "dexNumber": 630,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Rocky Helmet",
+          "moves": [
+            "Brave Bird",
+            "Knock Off",
+            "Whirlwind"
+          ]
+        },
+        {
+          "name": "Clawitzer",
+          "dexNumber": 693,
+          "nature": "Random",
+          "ability": "Mega Launcher",
+          "item": "Choice Specs",
+          "moves": [
+            "Ice Beam",
+            "Scald",
+            "Dark Pulse",
+            "Aura Sphere"
+          ]
+        },
+        {
+          "name": "Pangoro",
+          "dexNumber": 675,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Choice Band",
+          "moves": [
+            "Drain Punch",
+            "Swords Dance",
+            "Zen Headbutt",
+            "Knock Off"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Pancham",
+            "dexNumber": 674
+          },
+          {
+            "name": "Tyrunt",
+            "dexNumber": 696
+          },
+          {
+            "name": "Amaura",
+            "dexNumber": 698
+          },
+          {
+            "name": "Vullaby",
+            "dexNumber": 629
+          },
+          {
+            "name": "Timburr",
+            "dexNumber": 532
+          }
+        ],
+        "items": [
+          {
+            "name": "Claw Fossil",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Claw_Fossil.png"
+          },
+          {
+            "name": "Root Fossil",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Root_Fossil.png"
+          },
+          {
+            "name": "Old Amber",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Old_Amber.png"
+          },
+          {
+            "name": "Armor Fossil",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Armor_Fossil.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Choice Band",
+          "moves": [
+            "Drain Punch",
+            "Knock Off",
+            "Ice Punch",
+            "Thunder Punch"
+          ]
+        },
+        {
+          "name": "Klingklang",
+          "dexNumber": 601,
+          "nature": "Random",
+          "ability": "Clear Body",
+          "item": "Choice Band",
+          "moves": [
+            "Wild Charge",
+            "Gear Grind",
+            "Return",
+            "Shift Gear"
+          ]
+        },
+        {
+          "name": "Golurk",
+          "dexNumber": 623,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Choice Band",
+          "moves": [
+            "Ice Punch",
+            "Drain Punch",
+            "Earthquake",
+            "Shadow Punch"
+          ]
+        },
+        {
+          "name": "Mandibuzz",
+          "dexNumber": 630,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Rocky Helmet",
+          "moves": [
+            "Brave Bird",
+            "Knock Off",
+            "Whirlwind"
+          ]
+        },
+        {
+          "name": "Clawitzer",
+          "dexNumber": 693,
+          "nature": "Random",
+          "ability": "Mega Launcher",
+          "item": "Choice Specs",
+          "moves": [
+            "Ice Beam",
+            "Scald",
+            "Dark Pulse",
+            "Aura Sphere"
+          ]
+        },
+        {
+          "name": "Pangoro",
+          "dexNumber": 675,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Choice Band",
+          "moves": [
+            "Drain Punch",
+            "Swords Dance",
+            "Zen Headbutt",
+            "Knock Off"
+          ]
+        }
+      ]
+    }
+  }
+}

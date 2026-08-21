@@ -1,0 +1,6 @@
+{
+  "BossID": "terminator",
+  "name": "Terminator",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Terminator.png",
+  "BossCooldown": 288
+}

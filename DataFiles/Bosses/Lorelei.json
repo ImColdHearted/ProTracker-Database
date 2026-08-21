@@ -1,0 +1,503 @@
+{
+  "bossId": "lorelei",
+  "name": "Lorelei",
+  "location": "Ice Path B2F",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/LoreleiLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Lorelei.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Johto Elite 4",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Lapras",
+            "dexNumber": 131
+          },
+          {
+            "name": "Sneasel",
+            "dexNumber": 215
+          },
+          {
+            "name": "Snover",
+            "dexNumber": 459
+          }
+        ],
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Lum Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+          },
+          {
+            "name": "Yache Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Yache_Berry.png"
+          },
+          {
+            "name": "Winter Clothes Blue",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Winter Clothes GM",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Winter Clothes Grey",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Winter Clothes Pink",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Lapras Mount",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lapras_Mount.png"
+          },
+          {
+            "name": "Ice Stone",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Stone.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Nintales-Alolan",
+          "dexNumber": 10104,
+          "nature": "Timid",
+          "ability": "Snow Warning",
+          "item": "None",
+          "moves": [
+            "Icy Wind",
+            "Dazzling Gleam",
+            "Hypnosis",
+            "Confuse Ray"
+          ]
+        },
+        {
+          "name": "Sandslash-Alolan",
+          "dexNumber": 10102,
+          "nature": "Adamant",
+          "ability": "Slush Rush",
+          "item": "None",
+          "moves": [
+            "Icicle Crash",
+            "Earthquake",
+            "Stealth Rock",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Articuno",
+          "dexNumber": 144,
+          "nature": "Timid",
+          "ability": "Pressure",
+          "item": "None",
+          "moves": [
+            "Hail",
+            "Ice Beam",
+            "Icy Wind",
+            "Ancient Power"
+          ]
+        },
+        {
+          "name": "Weavile",
+          "dexNumber": 461,
+          "nature": "Jolly",
+          "ability": "Pressure",
+          "item": "None",
+          "moves": [
+            "Assurance",
+            "Ice Punch",
+            "Brick Break",
+            "Metal Claw"
+          ]
+        },
+        {
+          "name": "Lapras",
+          "dexNumber": 131,
+          "nature": "Calm",
+          "ability": "Water Absorb",
+          "item": "None",
+          "moves": [
+            "Rest",
+            "Surf",
+            "Ice Beam",
+            "Psychic"
+          ]
+        },
+        {
+          "name": "Slowbro",
+          "dexNumber": 80,
+          "nature": "Bold",
+          "ability": "Regenerator",
+          "item": "None",
+          "moves": [
+            "Ice Beam",
+            "Surf",
+            "Flamethower",
+            "Toxic"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Lapras",
+            "dexNumber": 131
+          },
+          {
+            "name": "Sneasel",
+            "dexNumber": 215
+          },
+          {
+            "name": "Snover",
+            "dexNumber": 459
+          }
+        ],
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Lum Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+          },
+          {
+            "name": "Yache Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Yache_Berry.png"
+          },
+          {
+            "name": "Winter Clothes Blue",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Winter Clothes GM",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Winter Clothes Grey",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Winter Clothes Pink",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Lapras Mount",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lapras_Mount.png"
+          },
+          {
+            "name": "Ice Stone",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Stone.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Nintales-Alolan",
+          "dexNumber": 10104,
+          "nature": "Timid",
+          "ability": "Snow Warning",
+          "item": "Icy Rock",
+          "moves": [
+            "Blizzard",
+            "Moonblast",
+            "Nasty Plot",
+            "Freeze-Dry"
+          ]
+        },
+        {
+          "name": "Sandslash-Alolan",
+          "dexNumber": 10102,
+          "nature": "Adamant",
+          "ability": "Slush Rush",
+          "item": "Focus Sash",
+          "moves": [
+            "Earthquake",
+            "Icicle Crash",
+            "Iron Head",
+            "Aqua Tail"
+          ]
+        },
+        {
+          "name": "Articuno",
+          "dexNumber": 144,
+          "nature": "Timid",
+          "ability": "Pressure",
+          "item": "Leftovers",
+          "moves": [
+            "Freeze-Dry",
+            "Hurriance",
+            "Toxic",
+            "Blizzard"
+          ]
+        },
+        {
+          "name": "Weavile",
+          "dexNumber": 461,
+          "nature": "Jolly",
+          "ability": "Pressure",
+          "item": "Black Glasses",
+          "moves": [
+            "Ice Shard",
+            "Knock Off",
+            "Icicle Crash",
+            "Low Kick"
+          ]
+        },
+        {
+          "name": "Lapras",
+          "dexNumber": 131,
+          "nature": "Calm",
+          "ability": "Water Absorb",
+          "item": "Leftovers",
+          "moves": [
+            "Hydro Pump",
+            "Blizzard",
+            "Thunderbolt",
+            "Scald"
+          ]
+        },
+        {
+          "name": "Mega Slowbro",
+          "dexNumber": 10071,
+          "nature": "Bold",
+          "ability": "Regenerator",
+          "item": "Slowbronite",
+          "moves": [
+            "Surf",
+            "Fire Blast",
+            "Psychic",
+            "Ice Beam"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Lapras",
+            "dexNumber": 131
+          },
+          {
+            "name": "Sneasel",
+            "dexNumber": 215
+          },
+          {
+            "name": "Snover",
+            "dexNumber": 459
+          }
+        ],
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Lum Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+          },
+          {
+            "name": "Yache Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Yache_Berry.png"
+          },
+          {
+            "name": "Winter Clothes Blue",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Winter Clothes GM",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Winter Clothes Grey",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Winter Clothes Pink",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Lapras Mount",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lapras_Mount.png"
+          },
+          {
+            "name": "Ice Stone",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Stone.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Nintales-Alolan",
+          "dexNumber": 10104,
+          "nature": "Timid",
+          "ability": "Snow Warning",
+          "item": "Icy Rock",
+          "moves": [
+            "Blizzard",
+            "Moonblast",
+            "Nasty Plot",
+            "Freeze-Dry"
+          ]
+        },
+        {
+          "name": "Sandslash-Alolan",
+          "dexNumber": 10102,
+          "nature": "Adamant",
+          "ability": "Slush Rush",
+          "item": "Focus Sash",
+          "moves": [
+            "Earthquake",
+            "Icicle Crash",
+            "Iron Head",
+            "Aqua Tail"
+          ]
+        },
+        {
+          "name": "Articuno",
+          "dexNumber": 144,
+          "nature": "Timid",
+          "ability": "Pressure",
+          "item": "Leftovers",
+          "moves": [
+            "Freeze-Dry",
+            "Hurriance",
+            "Toxic",
+            "Blizzard"
+          ]
+        },
+        {
+          "name": "Weavile",
+          "dexNumber": 461,
+          "nature": "Jolly",
+          "ability": "Pressure",
+          "item": "Black Glasses",
+          "moves": [
+            "Ice Shard",
+            "Knock Off",
+            "Icicle Crash",
+            "Low Kick"
+          ]
+        },
+        {
+          "name": "Lapras",
+          "dexNumber": 131,
+          "nature": "Calm",
+          "ability": "Water Absorb",
+          "item": "Leftovers",
+          "moves": [
+            "Hydro Pump",
+            "Blizzard",
+            "Thunderbolt",
+            "Scald"
+          ]
+        },
+        {
+          "name": "Mega Slowbro",
+          "dexNumber": 10071,
+          "nature": "Bold",
+          "ability": "Regenerator",
+          "item": "Slowbronite",
+          "moves": [
+            "Surf",
+            "Fire Blast",
+            "Psychic",
+            "Ice Beam"
+          ]
+        }
+      ]
+    }
+  }
+}

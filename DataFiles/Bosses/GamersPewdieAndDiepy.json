@@ -1,0 +1,140 @@
+{
+  "bossId": "gamerspewdieanddiepy",
+  "name": "Gamers Pewdie And Diepy",
+  "location": "Goldenrod City Game Corner",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/GamersLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Gamer_Pewdie.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Johto Elite 4",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "",
+            "dexNumber": 0
+          }
+        ],
+        "items": [
+          {
+            "name": "",
+            "quantity": "",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "",
+          "dexNumber": 0,
+          "nature": "",
+          "ability": "",
+          "item": "",
+          "moves": [
+            "",
+            "",
+            "",
+            ""
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "",
+            "dexNumber": 0
+          }
+        ],
+        "items": [
+          {
+            "name": "",
+            "quantity": "",
+            "tier": 1,
+            "picture": ""
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "",
+          "dexNumber": 0,
+          "nature": "",
+          "ability": "",
+          "item": "",
+          "moves": [
+            "",
+            "",
+            "",
+            ""
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "",
+            "dexNumber": 0
+          }
+        ],
+        "items": [
+          {
+            "name": "",
+            "quantity": "",
+            "tier": 1,
+            "picture": ""
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "",
+          "dexNumber": 0,
+          "nature": "",
+          "ability": "",
+          "item": "",
+          "moves": [
+            "",
+            "",
+            "",
+            ""
+          ]
+        }
+      ]
+    }
+  }
+}

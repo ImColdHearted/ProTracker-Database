@@ -1,0 +1,159 @@
+{
+  "bossId": "guardianraikou",
+  "name": "Guardian Raikou (Hard Only)",
+  "location": "Secret Base Alpha",
+  "locationPicture": "",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Raikou_Guardian.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Hoenn Elite 4",
+  "difficulties": {
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Lotad",
+            "dexNumber": 270
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309
+          },
+          {
+            "name": "Blitzle",
+            "dexNumber": 522
+          },
+          {
+            "name": "Tynamo",
+            "dexNumber": 602
+          },
+          {
+            "name": "Raikou",
+            "dexNumber": 243
+          }
+        ],
+        "items": [
+          {
+            "name": "PP Up",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "TM24 - Thunderbolt",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Electric.png"
+          },
+          {
+            "name": "TM68 - Rain Dance",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Water.png"
+          },
+          {
+            "name": "Damp Rock",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Damp_Rock.png"
+          },
+          {
+            "name": "Choice Scarf",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Scarf.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Zekrom",
+          "dexNumber": 644,
+          "nature": "Naughty",
+          "ability": "Teravolt",
+          "item": "Life Orb",
+          "moves": [
+            "Bolt Strike",
+            "Dragon Claw",
+            "Steel Wing",
+            "Focus Blast"
+          ]
+        },
+        {
+          "name": "Excadrill",
+          "dexNumber": 530,
+          "nature": "Adamant",
+          "ability": "Mold Breaker",
+          "item": "Choice Scarf",
+          "moves": [
+            "Earthquake",
+            "Iron Head",
+            "Rock Slide",
+            "X-Scissor"
+          ]
+        },
+        {
+          "name": "Raikou",
+          "dexNumber": 243,
+          "nature": "Timid",
+          "ability": "Pressure",
+          "item": "Life Orb",
+          "moves": [
+            "Thunder",
+            "Aura Sphere",
+            "Extrasensory",
+            "Calm Mind"
+          ]
+        },
+        {
+          "name": "Quagsire",
+          "dexNumber": 195,
+          "nature": "Bold",
+          "ability": "Unaware",
+          "item": "Leftovers",
+          "moves": [
+            "Scald",
+            "Ice Beam",
+            "Recover",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Elektross",
+          "dexNumber": 604,
+          "nature": "Modest",
+          "ability": "Levitate",
+          "item": "Assault Vest",
+          "moves": [
+            "Thunderbolt",
+            "Flamethrower",
+            "Giga Drain",
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Magnezone",
+          "dexNumber": 462,
+          "nature": "Timid",
+          "ability": "Sturdy",
+          "item": "Choice Scarf",
+          "moves": [
+            "Thunderbolt",
+            "Discharge",
+            "Flash Cannon",
+            "Tri Attack"
+          ]
+        }
+      ]
+    }
+  }
+}

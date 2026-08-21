@@ -1,0 +1,6 @@
+{
+  "BossID": "professorbirch",
+  "name": "Professor Birch",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Professor_Birch.png",
+  "BossCooldown": 288
+}

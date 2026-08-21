@@ -1,0 +1,6 @@
+{
+  "BossID": "sage",
+  "name": "Sage (Easy Only)",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Sage.png",
+  "BossCooldown": 288
+}

@@ -1,0 +1,461 @@
+{
+  "bossId": "koichi",
+  "name": "Koichi",
+  "location": "Saffron City Dojo",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/KoichiLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/koichi.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Kanto Elite 4",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Tyrogue",
+            "dexNumber": 236
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280
+          },
+          {
+            "name": "Pancham",
+            "dexNumber": 674
+          }
+        ],
+        "items": [
+          {
+            "name": "Chople Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Lum Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Lucario",
+          "dexNumber": 448,
+          "nature": "Modest",
+          "ability": "Steadfast",
+          "item": "None",
+          "moves": [
+            "Calm Mind",
+            "Aura Sphere",
+            "Shadow Ball",
+            "Dragon Pulse"
+          ]
+        },
+        {
+          "name": "Hitmonchan",
+          "dexNumber": 107,
+          "nature": "Adamant",
+          "ability": "Iron Fist",
+          "item": "None",
+          "moves": [
+            "Sky Uppercut",
+            "Rock Slide",
+            "Comet Punch",
+            "Counter"
+          ]
+        },
+        {
+          "name": "Hitmontop",
+          "dexNumber": 237,
+          "nature": "Impish",
+          "ability": "Technician",
+          "item": "None",
+          "moves": [
+            "Quick Attack",
+            "Triple Kick",
+            "Aerial Ace",
+            "Rolling Kick"
+          ]
+        },
+        {
+          "name": "Hitmonlee",
+          "dexNumber": 106,
+          "nature": "Jolly",
+          "ability": "Reckless",
+          "item": "None",
+          "moves": [
+            "Blaze Kick",
+            "Bulldoze",
+            "Rock Tomb",
+            "Jump Kick"
+          ]
+        },
+        {
+          "name": "Gallade",
+          "dexNumber": 475,
+          "nature": "Jolly",
+          "ability": "Justified",
+          "item": "None",
+          "moves": [
+            "Psycho Cut",
+            "Leaf Blade",
+            "Night Slash",
+            "Slash"
+          ]
+        },
+        {
+          "name": "Pangoro",
+          "dexNumber": 675,
+          "nature": "Adamant",
+          "ability": "Iron Fist",
+          "item": "None",
+          "moves": [
+            "Stomping Tantrum",
+            "Hammer Arm",
+            "Crunch",
+            "Fire Punch"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Tyrogue",
+            "dexNumber": 236
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280
+          },
+          {
+            "name": "Pancham",
+            "dexNumber": 674
+          }
+        ],
+        "items": [
+          {
+            "name": "Chople Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Lum Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Lucario",
+          "dexNumber": 448,
+          "nature": "Modest",
+          "ability": "Steadfast",
+          "item": "Life Orb",
+          "moves": [
+            "Nasty Plot",
+            "Focus Blast",
+            "Dark Pulse",
+            "Flash Cannon"
+          ]
+        },
+        {
+          "name": "Hitmonchan",
+          "dexNumber": 107,
+          "nature": "Adamant",
+          "ability": "Iron Fist",
+          "item": "Focus Sash",
+          "moves": [
+            "Counter",
+            "Close Combat",
+            "Fire Punch",
+            "Ice Punch"
+          ]
+        },
+        {
+          "name": "Hitmontop",
+          "dexNumber": 237,
+          "nature": "Impish",
+          "ability": "Technician",
+          "item": "Leftovers",
+          "moves": [
+            "Close Combat",
+            "Endeavor",
+            "Earthquake",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Hitmonlee",
+          "dexNumber": 106,
+          "nature": "Jolly",
+          "ability": "Reckless",
+          "item": "Focus Sash",
+          "moves": [
+            "Knock Off",
+            "High Jump Kick",
+            "Poison Jab",
+            "Blaze Kick"
+          ]
+        },
+        {
+          "name": "Mega Gallade",
+          "dexNumber": 10068,
+          "nature": "Jolly",
+          "ability": "Inner Focus",
+          "item": "Galladite",
+          "moves": [
+            "Close Combat",
+            "Zen Headbutt",
+            "Leaf Blade",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Pangoro",
+          "dexNumber": 675,
+          "nature": "Adamant",
+          "ability": "Iron Fist",
+          "item": "Black Glasses",
+          "moves": [
+            "Crunch",
+            "Hammer Arm",
+            "Gunk Shot",
+            "Fire Punch"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Tyrogue",
+            "dexNumber": 236
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280
+          },
+          {
+            "name": "Pancham",
+            "dexNumber": 674
+          }
+        ],
+        "items": [
+          {
+            "name": "Chople Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Lum Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Lucario",
+          "dexNumber": 448,
+          "nature": "Modest",
+          "ability": "Steadfast",
+          "item": "Life Orb",
+          "moves": [
+            "Nasty Plot",
+            "Focus Blast",
+            "Dark Pulse",
+            "Flash Cannon"
+          ]
+        },
+        {
+          "name": "Hitmonchan",
+          "dexNumber": 107,
+          "nature": "Adamant",
+          "ability": "Iron Fist",
+          "item": "Focus Sash",
+          "moves": [
+            "Counter",
+            "Close Combat",
+            "Fire Punch",
+            "Ice Punch"
+          ]
+        },
+        {
+          "name": "Hitmontop",
+          "dexNumber": 237,
+          "nature": "Impish",
+          "ability": "Technician",
+          "item": "Leftovers",
+          "moves": [
+            "Close Combat",
+            "Endeavor",
+            "Earthquake",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Hitmonlee",
+          "dexNumber": 106,
+          "nature": "Jolly",
+          "ability": "Reckless",
+          "item": "Focus Sash",
+          "moves": [
+            "Knock Off",
+            "High Jump Kick",
+            "Poison Jab",
+            "Blaze Kick"
+          ]
+        },
+        {
+          "name": "Mega Gallade",
+          "dexNumber": 10068,
+          "nature": "Jolly",
+          "ability": "Inner Focus",
+          "item": "Galladite",
+          "moves": [
+            "Close Combat",
+            "Zen Headbutt",
+            "Leaf Blade",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Pangoro",
+          "dexNumber": 675,
+          "nature": "Adamant",
+          "ability": "Iron Fist",
+          "item": "Black Glasses",
+          "moves": [
+            "Crunch",
+            "Hammer Arm",
+            "Gunk Shot",
+            "Fire Punch"
+          ]
+        }
+      ]
+    }
+  }
+}

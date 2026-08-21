@@ -1,0 +1,301 @@
+{
+  "bossId": "ashwestbrook",
+  "name": "Ash Westbrook (Easy/Hard Only)",
+  "location": "Spear Pillar",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/250px-Ash_Westbrook_boss_NPC.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Ash_Westbrook.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Sinnoh Elite 4, 250 Hours Play Time, and 80 Hours Playtime after entering Sinnoh",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Chespin",
+            "dexNumber": 650,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Emolga",
+            "dexNumber": 587,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Vullaby",
+            "dexNumber": 629,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Tympole",
+            "dexNumber": 535,
+            "winStreakRequired": 3
+          }
+        ],
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/rare_candy.png"
+          },
+          {
+            "name": "Shed Shell",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Shed_Shell.png"
+          },
+          {
+            "name": "Hyper Potion",
+            "quantity": "10-20",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hyper_Potion.png"
+          },
+          {
+            "name": "Ultra Ball",
+            "quantity": "20-30",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ultra_Ball.png"
+          },
+          {
+            "name": "Air Balloon",
+            "quantity": "3-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Air_Balloon.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "3",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Dialga",
+          "dexNumber": 483,
+          "nature": "Random",
+          "ability": "Pressure",
+          "item": "None",
+          "moves": [
+            "Draco Meteor"
+          ]
+        },
+        {
+          "name": "Reshiram",
+          "dexNumber": 643,
+          "nature": "Random",
+          "ability": "Turboblaze",
+          "item": "None",
+          "moves": [
+            "Draco Meteor"
+          ]
+        },
+        {
+          "name": "Arceus",
+          "dexNumber": 493,
+          "nature": "Random",
+          "ability": "Multitype",
+          "item": "None",
+          "moves": [
+            "Shadow Claw"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Grass Knot"
+          ]
+        },
+        {
+          "name": "Kyogre",
+          "dexNumber": 382,
+          "nature": "Random",
+          "ability": "Drizzle",
+          "item": "None",
+          "moves": [
+            "Thunder"
+          ]
+        },
+        {
+          "name": "Lugia",
+          "dexNumber": 249,
+          "nature": "Random",
+          "ability": "Multiscale",
+          "item": "None",
+          "moves": [
+            "Dragon Pulse"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 25000,
+          "maximum": 30000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Chespin",
+            "dexNumber": 650,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Emolga",
+            "dexNumber": 587,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Vullaby",
+            "dexNumber": 629,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Tympole",
+            "dexNumber": 535,
+            "winStreakRequired": 3
+          }
+        ],
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/rare_candy.png"
+          },
+          {
+            "name": "Shed Shell",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Shed_Shell.png"
+          },
+          {
+            "name": "Hyper Potion",
+            "quantity": "10-20",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hyper_Potion.png"
+          },
+          {
+            "name": "Ultra Ball",
+            "quantity": "20-30",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ultra_Ball.png"
+          },
+          {
+            "name": "Air Balloon",
+            "quantity": "3-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Air_Balloon.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "3",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Dialga",
+          "dexNumber": 483,
+          "nature": "Random",
+          "ability": "Pressure",
+          "item": "Leftovers",
+          "moves": [
+            "Draco Meteor",
+            "Roar",
+            "Fire Blast",
+            "Flash Cannon"
+          ]
+        },
+        {
+          "name": "Reshiram",
+          "dexNumber": 643,
+          "nature": "Random",
+          "ability": "Turboblaze",
+          "item": "Life Orb",
+          "moves": [
+            "Draco Meteor",
+            "Roar",
+            "Blue Flare",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Arceus",
+          "dexNumber": 493,
+          "nature": "Random",
+          "ability": "Multitype",
+          "item": "Life Orb",
+          "moves": [
+            "Extreme Speed",
+            "Shadow Claw",
+            "Earthquake",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Expert Belt",
+          "moves": [
+            "Close Combat",
+            "Fire Blast",
+            "Grass Knot",
+            "Thunder Punch"
+          ]
+        },
+        {
+          "name": "Kyogre",
+          "dexNumber": 382,
+          "nature": "Random",
+          "ability": "Drizzle",
+          "item": "Choice Specs",
+          "moves": [
+            "Surf",
+            "Earthquake",
+            "Thunder",
+            "Ice Beam"
+          ]
+        },
+        {
+          "name": "Lugia",
+          "dexNumber": 249,
+          "nature": "Random",
+          "ability": "Multiscale",
+          "item": "Leftovers",
+          "moves": [
+            "Dragon Pulse",
+            "Psyshock",
+            "Ice Beam",
+            "Aeroblast"
+          ]
+        }
+      ]
+    }
+  }
+}
