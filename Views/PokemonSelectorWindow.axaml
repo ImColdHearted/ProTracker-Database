@@ -1,0 +1,73 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.PokemonSelectorWindow"
+        x:DataType="vm:PokemonSelectorViewModel"
+        Title="Select Pokémon"
+        Width="720" Height="600"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <Grid RowDefinitions="Auto,*,Auto,Auto" Margin="16">
+
+        <TextBox Grid.Row="0" PlaceholderText="Search Pokémon…" Text="{Binding SearchText}" Margin="0,0,0,12" />
+
+        <!-- Search result cards: replaces flpPokemon FlowLayoutPanel + CreatePokemonCard/CreateRegionalPokemonCard -->
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding SearchResults}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PokemonCardItem">
+                        <Border Width="100" Height="120" Margin="8" Padding="4"
+                                BorderThickness="2" CornerRadius="4"
+                                BorderBrush="Gray" Cursor="Hand">
+                            <StackPanel>
+                                <Image Source="{Binding Sprite}" Width="80" Height="80" Stretch="Uniform"
+                                       PointerPressed="Card_PointerPressed"
+                                       DoubleTapped="Card_DoubleTapped" />
+                                <TextBlock Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap"
+                                           PointerPressed="Card_PointerPressed" DoubleTapped="Card_DoubleTapped" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Inline forms/counterparts panel: replaces the separate PokemonFormsPopup window -->
+        <Border Grid.Row="2"
+                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="0,1,0,0"
+                Margin="0,8,0,8" Padding="0,8,0,0" MaxHeight="180">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding AvailableForms}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:PokemonCardItem">
+                            <Border Width="90" Height="110" Margin="4">
+                                <StackPanel>
+                                    <Image Source="{Binding Sprite}" Width="64" Height="64" Stretch="Uniform" />
+                                    <TextBlock Text="{Binding Tag, StringFormat=[{0}]}" FontSize="10" TextAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}" FontSize="11" TextAlignment="Center" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <Grid Grid.Row="3" ColumnDefinitions="*,Auto,Auto">
+            <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Foreground="OrangeRed" VerticalAlignment="Center" />
+            <Button Grid.Column="1" Content="Select" Command="{Binding SelectCommand}" Margin="0,0,8,0" />
+            <Button Grid.Column="2" Content="Cancel" Click="CancelButton_Click" />
+        </Grid>
+    </Grid>
+</Window>

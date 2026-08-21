@@ -1,0 +1,23 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Foot_Tracker.App"
+             RequestedThemeVariant="Dark">
+
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+        <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+    </Application.Styles>
+
+    <!--
+      Placeholder theme brushes so any view can bind {DynamicResource ThemeBackgroundBrush}
+      etc. even before ThemeManager.Apply() runs. ThemeManager overwrites these at startup
+      and again whenever the user saves new Appearance settings.
+    -->
+    <Application.Resources>
+        <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="#0F185A" />
+        <SolidColorBrush x:Key="ThemeTextBrush" Color="White" />
+        <SolidColorBrush x:Key="ThemeBorderBrush" Color="White" />
+    </Application.Resources>
+
+</Application>

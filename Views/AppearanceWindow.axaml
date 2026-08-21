@@ -1,0 +1,82 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.AppearanceWindow"
+        x:DataType="vm:AppearanceViewModel"
+        Title="Appearance"
+        Width="820" Height="620"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,*,Auto" ColumnDefinitions="*">
+
+        <TextBlock Grid.Row="0" Text="Background" FontWeight="Bold" Margin="0,0,0,8" />
+
+        <!-- Six background presets: replaces BackgroundChoice1..6 PictureBoxes -->
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding BackgroundChoices}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Margin="4"
+                            Command="{Binding $parent[Window].((vm:AppearanceViewModel)DataContext).ChooseBackgroundCommand}"
+                            CommandParameter="{Binding Id}">
+                        <StackPanel>
+                            <Border Width="72" Height="72" BorderBrush="Gray" BorderThickness="1">
+                                <Image Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                            </Border>
+                            <TextBlock Text="{Binding Id}" HorizontalAlignment="Center" FontSize="11" />
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="8" Margin="0,8,0,16">
+            <Button Content="Choose Custom Image…" Click="SelectCustomImageButton_Click" />
+            <Button Content="Use Custom Color" Command="{Binding UseCustomColorBackgroundCommand}" />
+            <Button Content="Clear" Command="{Binding ClearBackgroundCommand}" />
+        </StackPanel>
+
+        <!-- Live preview: replaces PreviewPanel + PreviewPictureBox1/2 + PreviewTitleLabel.
+             Background falls back to PreviewBackgroundBrush (a solid color) whenever
+             there's no gradient/custom image to show, instead of just going blank. -->
+        <Border Grid.Row="3" BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                BorderThickness="2" CornerRadius="4"
+                Background="{Binding PreviewBackgroundBrush}">
+            <Panel>
+                <Image Source="{Binding PreviewBackgroundImage}" Stretch="UniformToFill" />
+                <TextBlock Text="{Binding PreviewTitleText}"
+                           Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                           FontSize="20" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Panel>
+        </Border>
+
+        <Grid Grid.Row="4" ColumnDefinitions="*,*,*,Auto,Auto" Margin="0,16,0,0">
+            <StackPanel Grid.Column="0" Spacing="4">
+                <TextBlock Text="Text Color" />
+                <ColorPicker Color="{Binding TextColor, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Spacing="4">
+                <TextBlock Text="Border Color" />
+                <ColorPicker Color="{Binding BorderColor, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Grid.Column="2" Spacing="4">
+                <TextBlock Text="Background Color" />
+                <ColorPicker Color="{Binding BackgroundCustomColor, Mode=TwoWay}" />
+            </StackPanel>
+            <Button Grid.Column="3" Content="Save" Command="{Binding SaveCommand}"
+                    VerticalAlignment="Bottom" Margin="8,0,0,0" />
+            <Button Grid.Column="4" Content="Cancel" Click="CancelButton_Click"
+                    VerticalAlignment="Bottom" Margin="8,0,0,0" />
+        </Grid>
+
+        <TextBlock Grid.Row="4" Text="{Binding SaveError}" Foreground="Red"
+                   TextWrapping="Wrap" IsVisible="{Binding HasSaveError}"
+                   VerticalAlignment="Top" Margin="0,90,0,0" />
+    </Grid>
+</Window>

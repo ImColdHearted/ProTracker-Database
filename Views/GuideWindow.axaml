@@ -1,0 +1,24 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.GuideWindow"
+        x:DataType="vm:GuideViewModel"
+        Title="{Binding GuideTitle}"
+        Width="420" Height="220"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!--
+      No embedded browser - see GuideViewModel.cs for why. This just opens the
+      local guide HTML in the user's default browser instead.
+    -->
+    <StackPanel Margin="20" Spacing="16" VerticalAlignment="Center">
+        <TextBlock Text="{Binding GuideTitle}" FontSize="18" FontWeight="Bold"
+                   Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+
+        <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" TextWrapping="Wrap"
+                   IsVisible="{Binding HasError}" />
+
+        <Button Content="Open Guide in Browser" Command="{Binding OpenInBrowserCommand}"
+                HorizontalAlignment="Center" IsEnabled="{Binding CanOpen}" />
+    </StackPanel>
+</Window>

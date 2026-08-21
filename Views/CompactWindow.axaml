@@ -1,0 +1,58 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.CompactWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Pro Tracker (Compact)"
+        Width="260" Height="160"
+        WindowDecorations="None"
+        CanResize="False"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1">
+
+    <!--
+      Ported from ProTrackerandDatabaseCompactMode.cs. The original duplicated all
+      of the main form's display logic (sprites, labels, timer) into a second set
+      of controls kept in sync by hand. Here the compact window just reuses
+      MainWindowViewModel as its DataContext directly - no duplication, always
+      in sync. "Pause" reuses StopCommand (also persists the session, unlike the
+      original's Pause which didn't save) - a small, deliberate improvement.
+    -->
+    <DockPanel>
+        <!-- Drag handle: replaces DragHandleCompact_MouseDown's ReleaseCapture/SendMessage hack -->
+        <Grid DockPanel.Dock="Top" Height="24" Background="Transparent" PointerPressed="DragHandle_PointerPressed">
+            <TextBlock Text="Pro Tracker" Margin="6,0" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" FontSize="11" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="4" Margin="0,0,4,0">
+                <ToggleButton Content="📌" FontSize="10" IsChecked="{Binding $parent[Window].Topmost, Mode=TwoWay}" />
+                <Button Content="✕" FontSize="10" Click="CloseButton_Click" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Margin="6" RowDefinitions="Auto,Auto,Auto">
+            <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                    <Image Source="{Binding CurrentlyHuntingSprite}" Width="36" Height="36" Stretch="Uniform" />
+                    <TextBlock Text="{Binding CurrentlyHuntedLabel}" FontSize="9" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                    <Image Source="{Binding CurrentEncounterSprite}" Width="36" Height="36" Stretch="Uniform" />
+                    <TextBlock Text="{Binding CurrentEncounteredLabel}" FontSize="9" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                    <Image Source="{Binding PreviousEncounterSprite}" Width="36" Height="36" Stretch="Uniform" />
+                    <TextBlock Text="{Binding PreviouslyEncounteredLabel}" FontSize="9" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Grid.Row="1" Text="{Binding TimeHunting}" HorizontalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" Margin="0,4" />
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="4">
+                <Button Content="▶" Command="{Binding PlayCommand}" />
+                <Button Content="■" Command="{Binding StopCommand}" />
+                <Button Content="↺" Command="{Binding ResetCommand}" />
+                <Button Content="🔍" Command="{Binding SelectTargetCommand}" />
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</Window>

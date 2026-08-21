@@ -1,0 +1,119 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<!-- Cross-platform TFM (the original was net10.0-windows). Windows-only pieces
+         (Win32 window capture, WindowCaptureService, NativeMethods, the Tracking
+         engine) are marked accordingly - see MIGRATION_GUIDE.md. -->
+		<TargetFramework>net10.0</TargetFramework>
+		<!-- Pinned so local builds only pull in Windows' native binaries (SkiaSharp,
+         HarfBuzz, Tesseract) instead of every platform's copy at once - without
+         this, a plain build has no way to know which platform to target, so it
+         copies all of them into bin\Debug (this was the actual GB-sized bloat,
+         not the sprite assets). Override at publish time for other platforms;
+         see MIGRATION_GUIDE.md for the exact publish commands. -->
+		<!-- Only a DEFAULT for local builds/F5 debugging when no RID is specified -
+         the Condition means `dotnet publish -r osx-arm64` (etc.) still overrides
+         this correctly. An earlier unconditional version of this line silently
+         forced every publish back to win-x64 regardless of -r - see
+         MIGRATION_GUIDE.md. -->
+		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win-x64</RuntimeIdentifier>
+		<!-- PublishSingleFile was tried here and reverted - confirmed incompatible with
+         TesseractOCR's native library loading. TesseractOCR.InteropDotNet.LibraryLoader
+         is a custom native-library loader (not plain DllImport resolution) that
+         manually searches for leptonica/tesseract DLLs in loose folders next to the
+         exe; bundling those into a single-file exe makes them invisible to that
+         loader, causing System.DllNotFoundException the moment OCR tries to
+         initialize. SelfContained stays on (testers don't need .NET installed
+         separately) - that part was never the problem. See MIGRATION_GUIDE.md. -->
+		<SelfContained>true</SelfContained>
+		<RootNamespace>ProTrackerDatabase</RootNamespace>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationIcon>ProTracker_Pokeball.ico</ApplicationIcon>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+		<!-- System.Drawing.Common / Win32 interop is intentionally used only inside
+         Windows-only files (guarded with [SupportedOSPlatform("windows")]). -->
+		<NoWarn>$(NoWarn);CA1416</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="12.1.1" />
+		<PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.1" />
+		<PackageReference Include="Avalonia.Controls.DataGrid" Version="12.1.2" />
+		<PackageReference Include="Avalonia.Controls.ColorPicker" Version="12.1.1" />
+		<!-- Design-time preview support (safe to keep even outside the IDE) -->
+		<PackageReference Include="Avalonia.Diagnostics" Version="11.3.20" Condition="'$(Configuration)' == 'Debug'" />
+
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="Serilog" Version="4.4.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+		<!-- Switched from the "Tesseract" package (charlesw) to this actively-maintained
+         fork: charlesw's package only ships Windows native binaries (confirmed via
+         their own open GitHub issue #503, "Linux support missing for .NET Core") -
+         OCR would throw DllNotFoundException the moment it initialized on Linux/macOS.
+         TesseractOCR (Apache 2.0, free) bundles native Tesseract 5.x binaries for
+         Windows x64, Linux x64, and macOS directly in the NuGet package. API differs
+         from the old package (Engine instead of TesseractEngine, TesseractOCR.Pix.Image
+         instead of Pix, page.Text instead of page.GetText()) - already migrated in
+         EncounterDetector.cs/CatchDetector.cs/RareEncounterDetector.cs. -->
+		<PackageReference Include="TesseractOCR" Version="5.5.2" />
+		<PackageReference Include="SkiaSharp" Version="4.151.1" />
+
+		<!-- Windows-only capture path (System.Drawing.Common no-ops on other OSes) -->
+		<PackageReference Include="System.Drawing.Common" Version="10.0.11" />
+		<PackageReference Include="Tmds.DBus.Protocol" Version="0.94.2" />
+
+		<!-- Cross-platform WebView for the boss-guide HTML panel that used WebView2.
+         Alternative if you'd rather drop the embedded browser: render the guide
+         HTML with a Markdown/HTML-to-Avalonia converter instead. -->
+		<!-- WebViewControl-Avalonia was removed: it's a CEF wrapper that needs native
+         runtime binaries bundled at build time, which crashed at runtime when
+         they weren't packaged correctly. The Mega Stones guide now opens in the
+         user's default browser instead (see GuideViewModel.cs). -->
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- ExcludeFromSingleFile below is currently a no-op, since PublishSingleFile is
+         off (see the PropertyGroup above - it turned out incompatible with
+         TesseractOCR's native library loading). Left in place harmlessly in case
+         single-file publishing is ever revisited once that's resolved properly. -->
+
+		<!-- Ships as one compressed archive instead of ~3,200 loose PNGs - see
+         Services/AssetPakService.cs, which unpacks it into SharedPokemonLibrary/Assets/
+         on first launch. Rebuild Assets.pak (see MIGRATION_GUIDE.md) whenever sprite
+         assets change; the loose SharedPokemonLibrary/Assets/ folder in source control
+         is only needed for creating that pak, not for the build output. -->
+		<Content Include="SharedPokemonLibrary\Assets.pak" Condition="Exists('SharedPokemonLibrary\Assets.pak')">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Include="SharedPokemonLibrary\Assets\**\*.*" Condition="!Exists('SharedPokemonLibrary\Assets.pak')">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Include="SharedPokemonLibrary\Data\**\*.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Include="DataFiles\**\*.*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Include="Data\**\*.*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Include="tessdata\eng.traineddata">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" Condition="Exists('Assets')" />
+	</ItemGroup>
+
+</Project>

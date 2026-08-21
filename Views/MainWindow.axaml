@@ -1,0 +1,203 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="{Binding WindowTitle}"
+        Width="900" Height="620"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <Grid RowDefinitions="Auto,Auto,*" Margin="16" ColumnDefinitions="*">
+
+        <!-- Menu bar: replaces menuStrip1's dropdown menus -->
+        <Menu Grid.Row="0" Margin="0,0,0,8">
+            <MenuItem Header="_File">
+                <MenuItem Header="Compact Mode" Click="CompactModeButton_Click" />
+                <Separator />
+                <MenuItem Header="Export Hunt Data (CSV)…" Command="{Binding ExportCsvCommand}" />
+                <MenuItem Header="Import Hunt Data (CSV)…" Command="{Binding ImportCsvCommand}" />
+                <Separator />
+                <MenuItem Header="Export Hunt Data (JSON)…" Command="{Binding ExportJsonCommand}" />
+                <MenuItem Header="Import Hunt Data (JSON)…" Command="{Binding ImportJsonCommand}" />
+                <Separator />
+                <MenuItem Header="Assign Client…" Command="{Binding AssignClientCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Bosses">
+                <MenuItem Header="Boss Database…" Click="BossDatabaseButton_Click" />
+                <MenuItem Header="Boss Cooldowns…" Click="BossCooldownsButton_Click" />
+            </MenuItem>
+            <MenuItem Header="_Counterparts">
+                <MenuItem Header="Pinkan Island" Click="CounterpartsMenuItem_Click" Tag="Pinkan" />
+                <MenuItem Header="Bidoof Day" Click="CounterpartsMenuItem_Click" Tag="Bidoof Day" />
+                <MenuItem Header="Pikachu World Quest" Click="CounterpartsMenuItem_Click" Tag="Pikachu World Quest" />
+                <MenuItem Header="Shadow" Click="CounterpartsMenuItem_Click" Tag="Shadow" />
+                <MenuItem Header="Summer" Click="CounterpartsMenuItem_Click" Tag="Summer" />
+                <MenuItem Header="Halloween" Click="CounterpartsMenuItem_Click" Tag="Halloween" />
+                <MenuItem Header="May 4th" Click="CounterpartsMenuItem_Click" Tag="May4th" />
+                <MenuItem Header="Christmas" Click="CounterpartsMenuItem_Click" Tag="Christmas" />
+                <MenuItem Header="Easter" Click="CounterpartsMenuItem_Click" Tag="Easter" />
+                <MenuItem Header="Valentine's" Click="CounterpartsMenuItem_Click" Tag="Valentines" />
+                <MenuItem Header="April Fools" Click="CounterpartsMenuItem_Click" Tag="April Fools" />
+            </MenuItem>
+            <MenuItem Header="_Maps">
+                <MenuItem Header="Kanto…" Click="KantoMapButton_Click" />
+                <MenuItem Header="Johto (coming soon)" Click="PlaceholderMenuItem_Click" Tag="Johto" />
+                <MenuItem Header="Hoenn (coming soon)" Click="PlaceholderMenuItem_Click" Tag="Hoenn" />
+                <MenuItem Header="Sinnoh (coming soon)" Click="PlaceholderMenuItem_Click" Tag="Sinnoh" />
+                <MenuItem Header="Sevii Islands 1-3 (coming soon)" Click="PlaceholderMenuItem_Click" Tag="Sevii Islands 1-3" />
+                <MenuItem Header="Sevii Islands 4-7 (coming soon)" Click="PlaceholderMenuItem_Click" Tag="Sevii Islands 4-7" />
+                <MenuItem Header="Astrella (coming soon)" Click="PlaceholderMenuItem_Click" Tag="Astrella" />
+            </MenuItem>
+            <MenuItem Header="_Guides">
+                <MenuItem Header="Mega Stones…" Click="MegaStonesGuideButton_Click" />
+                <MenuItem Header="Legendary Pokémon (coming soon)" Click="PlaceholderMenuItem_Click" Tag="Legendary Pokémon" />
+                <MenuItem Header="EV Zones (coming soon)" Click="PlaceholderMenuItem_Click" Tag="EV Zones" />
+                <MenuItem Header="Excavations (coming soon)" Click="PlaceholderMenuItem_Click" Tag="Excavations" />
+            </MenuItem>
+            <MenuItem Header="_Stats">
+                <MenuItem Header="Hunting Stats…" Click="HuntingStatsButton_Click" />
+                <MenuItem Header="PVP Stats…" Click="PvpStatsButton_Click" />
+            </MenuItem>
+            <MenuItem Header="_Appearance…" Click="AppearanceButton_Click" />
+            <MenuItem Header="Compact Mode"  Click="CompactModeButton_Click"/>
+            <MenuItem Header="Report a Problem" Click="ReportProblemButton_Click" Margin="50,0,0,0" />
+        </Menu>
+
+        <!-- Top toolbar: core hunt actions -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+            <Button Content="Set Target" Command="{Binding SelectTargetCommand}" />
+            <Button Content="▶ Start" Command="{Binding PlayCommand}" />
+            <Button Content="■ Stop" Command="{Binding StopCommand}" />
+            <Button Content="↺ Reset" Command="{Binding ResetCommand}" />
+            <TextBlock Text="{Binding StatusMessage}"
+                       Foreground="{DynamicResource ThemeTextBrush}"
+                       VerticalAlignment="Center" Margin="12,0,0,0" />
+        </StackPanel>
+
+        <!-- Main content: left = sprites + encounter table, right = vertical stats
+             panel - replaces the original's left/right split (TableLayoutPanel +
+             the underlined-label stats column on the right). -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,220">
+
+            <Grid Grid.Column="0" RowDefinitions="Auto,*" Margin="0,0,16,0">
+
+                <!-- Sprite row: replaces the three PictureBox + Label pairs (CurrentlyHunting,
+                     CurrentEncounter, PreviousEncounter) -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,*,*" Margin="0,0,0,16">
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center" Spacing="4">
+                        <TextBlock Text="Currently Hunting" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="Bold" />
+                        <Border BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Width="96" Height="96">
+                            <Image Source="{Binding CurrentlyHuntingSprite}" Stretch="Uniform" />
+                        </Border>
+                        <TextBlock Text="{Binding CurrentlyHuntedLabel}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center" Spacing="4">
+                        <TextBlock Text="Current Encounter" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="Bold" />
+                        <Border BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Width="96" Height="96">
+                            <Image Source="{Binding CurrentEncounterSprite}" Stretch="Uniform" />
+                        </Border>
+                        <TextBlock Text="{Binding CurrentEncounteredLabel}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Center" Spacing="4">
+                        <TextBlock Text="Previous Encounter" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="Bold" />
+                        <Border BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Width="96" Height="96">
+                            <Image Source="{Binding PreviousEncounterSprite}" Stretch="Uniform" />
+                        </Border>
+                        <TextBlock Text="{Binding PreviouslyEncounteredLabel}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Session encounter table: replaces SessionEncountersTableLeft/Right,
+                     which continued into a second Pokémon/Encounters/Rate block once
+                     the first column filled up. Two DataGrids side by side reproduce
+                     that same six-column layout. -->
+                <Grid Grid.Row="1" ColumnDefinitions="*,*">
+                    <DataGrid Grid.Column="0"
+                              ItemsSource="{Binding SessionEncountersLeft}"
+                              IsReadOnly="True"
+                              AutoGenerateColumns="False"
+                              GridLinesVisibility="Horizontal"
+                              Background="Transparent"
+                              Margin="0,0,4,0">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Pokémon" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate x:DataType="vm:EncounterCountRow">
+                                        <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                            <Image Source="{Binding Sprite}" Width="30" Height="30" Stretch="Uniform" />
+                                            <TextBlock Text="{Binding PokemonName}" Foreground="{DynamicResource ThemeTextBrush}" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Encounters" Foreground="{DynamicResource ThemeTextBrush}" IsReadOnly="True" Binding="{Binding Count}"  Width="110" />
+                            <DataGridTextColumn Header="Rate" Foreground="{DynamicResource ThemeTextBrush}" IsReadOnly="True" Binding="{Binding RatePercent, StringFormat={}{0:F1}%}" Width="75" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid Grid.Column="1"
+                              ItemsSource="{Binding SessionEncountersRight}"
+                              IsReadOnly="True"
+                              AutoGenerateColumns="False"
+                              GridLinesVisibility="Horizontal"
+                              Background="Transparent"
+                              Margin="4,0,0,0">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Pokémon" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate x:DataType="vm:EncounterCountRow">
+                                        <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                            <Image Source="{Binding Sprite}" Width="30" Height="30" Stretch="Uniform" />
+                                            <TextBlock Text="{Binding PokemonName}" Foreground="{DynamicResource ThemeTextBrush}" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Encounters" Foreground="{DynamicResource ThemeTextBrush}" IsReadOnly="True" Binding="{Binding Count}" Width="110" />
+                            <DataGridTextColumn Header="Rate" Foreground="{DynamicResource ThemeTextBrush}" IsReadOnly="True" Binding="{Binding RatePercent, StringFormat={}{0:F1}%}" Width="75" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+
+            <!-- Right-side stats panel: replaces the vertical stack of underlined
+                 labels + values (Time Hunting, Total Encounters, Since Shiny,
+                 Since Form, Successful Catches, Failed Catches, Catch Rate). -->
+            <Border Grid.Column="1" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1,0,0,0" Padding="16,0,0,0">
+                <StackPanel Spacing="30">
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="Time Hunting" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding TimeHunting}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="Total Encounters" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding TotalEncounters}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="Since Shiny" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding SinceShiny}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="Since Form" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding SinceForm}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="Successfully Caught" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding SuccessfulCatches}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="Pokémon Broken Free" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding FailedCatches}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="Catch Rate" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding CatchRate}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

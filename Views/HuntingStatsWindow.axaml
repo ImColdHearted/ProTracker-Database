@@ -1,0 +1,49 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.HuntingStatsWindow"
+        x:DataType="vm:HuntingStatsViewModel"
+        Title="Lifetime Hunting Stats"
+        Width="420" Height="420"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <StackPanel Margin="20" Spacing="10">
+        <TextBlock Text="Lifetime Hunting Stats" FontSize="18" FontWeight="Bold"
+                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,10" />
+
+        <StackPanel Spacing="6">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Total Time Hunting" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding TotalTimeHunting}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Total Pokémon Encountered" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding TotalPokemon}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Shiny Pokémon" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding ShinyPokemon}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Event Forms" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding EventForms}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Successful Catches" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding SuccessfulCatches}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Failed Catches" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding FailedCatches}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Catch Rate" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding CatchRate}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Shiny/Form Rate" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding ShinyFormRate}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+        </StackPanel>
+    </StackPanel>
+</Window>

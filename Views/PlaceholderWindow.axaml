@@ -1,0 +1,18 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.PlaceholderWindow"
+        Title="Coming Soon"
+        Width="500" Height="300"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!--
+      Reusable stand-in for forms that had no real content in the original WinForms
+      project either (just a sized, titled Form with a background image panel and
+      no code-behind logic) - see MIGRATION_GUIDE.md for the full list.
+    -->
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
+        <TextBlock Name="TitleText" FontSize="20" FontWeight="Bold"
+                   Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+        <TextBlock Text="Not yet implemented." Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+    </StackPanel>
+</Window>

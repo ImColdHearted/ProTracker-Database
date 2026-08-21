@@ -1,0 +1,103 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.BossDetailWindow"
+        x:DataType="vm:BossDetailViewModel"
+        Title="{Binding BossNameText}"
+        Width="700" Height="785"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <ScrollViewer>
+        <StackPanel Margin="10" Spacing="10">
+
+            <TextBlock Text="{Binding BossNameText}" FontSize="22" FontWeight="Bold"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" TextWrapping="Wrap" />
+
+            <Grid ColumnDefinitions="200,*">
+                <Border Grid.Column="0" Width="180" Height="140" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1">
+                    <Image Source="{Binding LocationImage}" Stretch="Uniform" />
+                </Border>
+                <StackPanel Grid.Column="1" Spacing="4" Margin="11,0,0,0">
+                    <TextBlock Text="{Binding LocationText}" Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" />
+                    <TextBlock Text="{Binding RequirementText}" Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding PokedollarsText}" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Text="{Binding PveCoinsText}" Foreground="{DynamicResource ThemeTextBrush}" />
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Text="Item Rewards" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            <ItemsControl ItemsSource="{Binding ItemRewards}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:RewardImageItem">
+                        <StackPanel Margin="4" Width="64">
+                            <Image Source="{Binding Image}" Width="22" Height="22" Stretch="Uniform" />
+                            <TextBlock Text="{Binding Caption}" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="Pokémon Rewards" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            <ItemsControl ItemsSource="{Binding PokemonRewards}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:RewardImageItem">
+                        <StackPanel Margin="3" Width="64">
+                            <Image Source="{Binding Image}" Width="48" Height="48" Stretch="Uniform" />
+                            <TextBlock Text="{Binding Caption}" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="Boss Team (click a Pokémon for details)" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            <ItemsControl ItemsSource="{Binding Team}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:BossTeamMemberItem">
+                        <Border Width="80" Height="90" Margin="3" Cursor="Hand"
+                                PointerPressed="TeamMember_PointerPressed">
+                            <StackPanel>
+                                <Image Source="{Binding Sprite}" Width="64" Height="64" Stretch="Uniform" />
+                                <TextBlock Text="{Binding Pokemon.Name}" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Inline detail panel: replaces the floating BossPokemonCard popup -->
+            <Border IsVisible="{Binding HasSelectedTeamMember}"
+                    BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Padding="12">
+                <StackPanel Spacing="4" DataContext="{Binding SelectedTeamMember}" x:DataType="vm:BossTeamMemberItem">
+                    <TextBlock Text="{Binding Pokemon.Name}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Foreground="{DynamicResource ThemeTextBrush}">
+                        <Run Text="Nature:" FontWeight="Bold" /> <Run Text="{Binding Pokemon.Nature}" />
+                    </TextBlock>
+                    <TextBlock Foreground="{DynamicResource ThemeTextBrush}">
+                        <Run Text="Ability:" FontWeight="Bold" /> <Run Text="{Binding Pokemon.Ability}" />
+                    </TextBlock>
+                    <TextBlock Foreground="{DynamicResource ThemeTextBrush}">
+                        <Run Text="Item:" FontWeight="Bold" /> <Run Text="{Binding Pokemon.Item}" />
+                    </TextBlock>
+                    <ItemsControl ItemsSource="{Binding Pokemon.Moves}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <TextBlock Text="{Binding}" Foreground="{DynamicResource ThemeTextBrush}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
