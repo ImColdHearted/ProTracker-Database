@@ -1,0 +1,185 @@
+[
+  {
+    "id": "route-3-land",
+    "mapId": "route-3",
+    "region": "Kanto",
+    "displayName": "Route 3",
+    "method": "Land",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Arbok",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 12,
+        "maxLevel": 14,
+        "heldItem": "Poison Barb"
+      },
+      {
+        "pokemon": "Jigglypuff",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 12,
+        "maxLevel": 14,
+        "heldItem": "Oran Berry"
+      },
+      {
+        "pokemon": "Mankey",
+        "timePeriods": [ "Night" ],
+        "minLevel": 12,
+        "maxLevel": 14,
+        "heldItem": "Sitrus Berry"
+      },
+      {
+        "pokemon": "Nidoran♀",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 12,
+        "maxLevel": 14,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Nidoran♂",
+        "timePeriods": [ "Night" ],
+        "minLevel": 12,
+        "maxLevel": 14,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Pidgey",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 12,
+        "maxLevel": 14,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Rattata",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 12,
+        "maxLevel": 14,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Sandshrew",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 12,
+        "maxLevel": 14,
+        "heldItem": "Quick Claw"
+      },
+      {
+        "pokemon": "Spearow",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 12,
+        "maxLevel": 14,
+        "heldItem": "Sharp Beak"
+      },
+      {
+        "pokemon": "Zubat",
+        "timePeriods": [ "Night" ],
+        "minLevel": 12,
+        "maxLevel": 14,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-3-land-membership",
+    "mapId": "route-3",
+    "region": "Kanto",
+    "displayName": "Route 3",
+    "method": "Land",
+    "requiresMembership": true,
+    "encounters": [
+      {
+        "pokemon": "Baltoy",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 12,
+        "maxLevel": 14,
+        "heldItem": "Light Clay"
+      }
+    ]
+  },
+  {
+    "id": "route-3-headbutt",
+    "mapId": "route-3",
+    "region": "Kanto",
+    "displayName": "Route 3",
+    "method": "Headbutt",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Kakuna",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 5,
+        "maxLevel": 12,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Ekans",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 5,
+        "maxLevel": 12,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Caterpie",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 5,
+        "maxLevel": 12,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Beedrill",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 5,
+        "maxLevel": 12,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Butterfree",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 5,
+        "maxLevel": 12,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-3-dig",
+    "mapId": "route-3",
+    "region": "Kanto",
+    "displayName": "Route 3",
+    "method": "Dig",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Geodude",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 10,
+        "maxLevel": 20,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Rhyhorn",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 10,
+        "maxLevel": 20,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-3-dig-membership",
+    "mapId": "route-3",
+    "region": "Kanto",
+    "displayName": "Route 3",
+    "method": "Dig",
+    "requiresMembership": true,
+    "encounters": [
+      {
+        "pokemon": "Aron",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 10,
+        "maxLevel": 20,
+        "heldItem": null
+      }
+    ]
+  }
+]

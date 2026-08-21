@@ -1,0 +1,19 @@
+[
+  {
+    "id": "route-5-land",
+    "mapId": "route-5",
+    "region": "Kanto",
+    "displayName": "Route 5",
+    "method": "Land",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 1,
+        "maxLevel": 1,
+        "heldItem": null
+      }
+    ]
+  }
+]

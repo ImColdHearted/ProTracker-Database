@@ -1,0 +1,123 @@
+[
+  {
+    "id": "route-1-land",
+    "mapId": "route1",
+    "region": "Kanto",
+    "displayName": "Route 1",
+    "method": "Land",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Furret",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 2,
+        "maxLevel": 3,
+        "heldItem": "Sitrus Berry"
+      },
+      {
+        "pokemon": "Hoothoot",
+        "timePeriods": [ "Night" ],
+        "minLevel": 2,
+        "maxLevel": 3,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Pidgey",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 2,
+        "maxLevel": 3,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Rattata",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 2,
+        "maxLevel": 3,
+        "heldItem": "Rattata Hair"
+      },
+      {
+        "pokemon": "Sentret",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 2,
+        "maxLevel": 3,
+        "heldItem": "Oran Berry"
+      },
+      {
+        "pokemon": "Zubat",
+        "timePeriods": [ "Night" ],
+        "minLevel": 2,
+        "maxLevel": 3,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-1-land-membership",
+    "mapId": "route-1",
+    "region": "Kanto",
+    "displayName": "Route 1",
+    "method": "Land",
+    "requiresMembership": true,
+    "encounters": [
+      {
+        "pokemon": "Shinx",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 2,
+        "maxLevel": 3,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-1-headbutt",
+    "mapId": "route-1",
+    "region": "Kanto",
+    "displayName": "Route 1",
+    "method": "Headbutt",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Rattata",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 2,
+        "maxLevel": 6,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Silcoon",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 2,
+        "maxLevel": 6,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Caterpie",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 2,
+        "maxLevel": 6,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Ekans",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 2,
+        "maxLevel": 6,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Beedrill",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 2,
+        "maxLevel": 6,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Pinsir",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 2,
+        "maxLevel": 6,
+        "heldItem": null
+      }
+    ]
+  }
+]

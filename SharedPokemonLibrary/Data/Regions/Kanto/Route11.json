@@ -1,0 +1,276 @@
+[
+  {
+    "id": "route-11-land",
+    "mapId": "route-11",
+    "region": "Kanto",
+    "displayName": "Route 11",
+    "method": "Land",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Drowzee",
+        "timePeriods": [ "Morning", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Ekans",
+        "timePeriods": [ "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Hypno",
+        "timePeriods": [ "Morning", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Magnemite",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": "Metal Coat"
+      },
+      {
+        "pokemon": "Meowth",
+        "timePeriods": [ "Day" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Pidgeotto",
+        "timePeriods": [ "Day" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Pidgey",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Rattata",
+        "timePeriods": [ "Day" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": "Oran Berry"
+      },
+      {
+        "pokemon": "Sandshrew",
+        "timePeriods": [ "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Spearow",
+        "timePeriods": [ "Morning" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": "Sharp Beak"
+      }
+    ]
+  },
+  {
+    "id": "route-11-land",
+    "mapId": "route-11",
+    "region": "Kanto",
+    "displayName": "Route 11",
+    "method": "Land",
+    "requiresMembership": true,
+    "encounters": [
+      {
+        "pokemon": "Snorlax",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-11-surf",
+    "mapId": "route-11",
+    "region": "Kanto",
+    "displayName": "Route 11",
+    "method": "Surf",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Goldeen",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Gyarados",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Horsea",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": "Dragon Scale"
+      },
+      {
+        "pokemon": "Krabby",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Magikarp",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Poliwag",
+        "timePeriods": [ "Morning" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": "King's Rock"
+      },
+      {
+        "pokemon": "Seaking",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Shellder",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Slowpoke",
+        "timePeriods": [ "Day" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": "Lagging Tail"
+      },
+      {
+        "pokemon": "Tentacool",
+        "timePeriods": [ "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-11-fish",
+    "mapId": "route-11",
+    "region": "Kanto",
+    "displayName": "Route 11",
+    "method": "Fish",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Goldeen",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Gyarados",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Horsea",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": "Dragon Scale"
+      },
+      {
+        "pokemon": "Krabby",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Magikarp",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Poliwag",
+        "timePeriods": [ "Morning" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": "King's Rock"
+      },
+      {
+        "pokemon": "Seaking",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Shellder",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Slowpoke",
+        "timePeriods": [ "Day" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": "Lagging Tail"
+      },
+      {
+        "pokemon": "Tentacool",
+        "timePeriods": [ "Night" ],
+        "minLevel": 25,
+        "maxLevel": 26,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-11-headbutt",
+    "mapId": "route-11",
+    "region": "Kanto",
+    "displayName": "Route 11",
+    "method": "Headbutt",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Caterpie",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 10,
+        "maxLevel": 20,
+        "heldItem": null
+      }
+    ]
+  }
+]
