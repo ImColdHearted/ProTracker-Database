@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.ExcludeStatsWindow"
+        x:DataType="vm:ExcludeStatsViewModel"
+        Title="Exclude Stats"
+        Width="360" Height="460"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <Grid Margin="16" RowDefinitions="Auto,*,Auto,Auto">
+
+        <TextBlock Grid.Row="0"
+                   Text="Choose which stats to hide from the main window. Hidden stats keep counting in the background - they're just not shown."
+                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,12" />
+
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Stats}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:StatToggleOption">
+                    <CheckBox Content="{Binding DisplayName}" IsChecked="{Binding IsExcluded, Mode=TwoWay}"
+                              Foreground="{DynamicResource ThemeTextBrush}" Margin="0,4,0,4" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <TextBlock Grid.Row="2" Text="{Binding SaveError}" Foreground="Red" TextWrapping="Wrap"
+                   IsVisible="{Binding HasSaveError}" Margin="0,0,0,8" />
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+            <Button Content="Save" Command="{Binding SaveCommand}" />
+            <Button Content="Cancel" Click="CancelButton_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.RemoveEventWindow"
+        x:DataType="vm:RemoveEventViewModel"
+        Title="Remove Event"
+        Width="480" Height="600" MinWidth="380" MinHeight="360"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <Grid RowDefinitions="Auto,Auto,*" Margin="16">
+
+        <TextBlock Grid.Row="0"
+                   Text="Pick an event below to remove it from the board. This can't be undone."
+                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,8" />
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" Margin="0,0,0,8">
+            <Button Content="⟳ Refresh" Command="{Binding RefreshCommand}" />
+            <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <TextBlock Text="No events posted yet." IsVisible="{Binding HasNoEvents}"
+                       Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.6"
+                       HorizontalAlignment="Center" Margin="0,24,0,0" />
+
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding Board}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:GuildEventCardItem">
+                            <Border BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                    Padding="10" Margin="0,0,0,8">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <StackPanel Grid.Column="0" Spacing="4">
+                                        <TextBlock Text="{Binding TypeLabel}" FontWeight="Bold" FontSize="11"
+                                                   Opacity="0.75" Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="14"
+                                                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <TextBlock Text="{Binding Message}" TextWrapping="Wrap"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <TextBlock Text="{Binding PostedByLine}" FontSize="11" Opacity="0.7"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <Image Source="{Binding Sprite}" IsVisible="{Binding HasPokemon}"
+                                               Width="72" Height="72" Stretch="Uniform"
+                                               HorizontalAlignment="Left" Margin="0,4,0,0" />
+                                    </StackPanel>
+
+                                    <!-- Plain Click handler + DataContext pattern-match, same as
+                                         every other "act on this specific card" spot in this app
+                                         (PokemonSelectorWindow/SwapPokemonWindow's Card_PointerPressed) -
+                                         rather than a relative-source binding up to the ItemsControl's
+                                         own DataContext. -->
+                                    <Button Grid.Column="1" Content="Delete" Click="DeleteButton_Click"
+                                            VerticalAlignment="Top" Margin="8,0,0,0" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>

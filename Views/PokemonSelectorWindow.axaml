@@ -1,0 +1,142 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.PokemonSelectorWindow"
+        x:DataType="vm:PokemonSelectorViewModel"
+        Title="Select Pokémon (up to 4)"
+        Width="720" Height="660"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <Window.Styles>
+        <!-- Bright, theme-independent highlight for selected cards - matches the
+             app's existing cyan accent color used for links elsewhere. -->
+        <Style Selector="Border.selected">
+            <Setter Property="BorderBrush" Value="#42C8FF" />
+            <Setter Property="BorderThickness" Value="3" />
+        </Style>
+
+        <!-- Opts this whole window out of the global Text Shadow reach (see the
+             Style Selector="TextBlock" in App.axaml) - a window-level style for
+             the same selector takes precedence over the Application-level one
+             for every TextBlock underneath it, including the per-card names
+             both ItemsControl templates below generate (the search results
+             grid and the inline forms/counterparts panel), not just the ones
+             declared directly in this file. Requested after seeing it in
+             practice - a card grid like this reads better without a shadow
+             blurring every name under a small sprite. Font/Font Size/Text
+             Color and everything else from Appearance still apply normally;
+             only the shadow itself is suppressed here. -->
+        <Style Selector="TextBlock">
+            <Setter Property="Effect" Value="{x:Null}" />
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" Margin="16">
+
+        <TextBox Grid.Row="0" PlaceholderText="Search Pokémon…" Text="{Binding SearchText}" Margin="0,0,0,8" />
+
+        <TextBlock Grid.Row="1" Text="Click up to 4 cards to hunt them together - click a selected card again to remove it."
+                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.7" Margin="0,0,0,8" />
+
+        <!-- Search result cards: replaces flpPokemon FlowLayoutPanel + CreatePokemonCard/CreateRegionalPokemonCard -->
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding SearchResults}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PokemonCardItem">
+                        <!-- Height bumped 120->136 to fit the new type-icon row below the name
+                             without clipping against this Border's fixed size. -->
+                        <Border Width="100" Height="136" Margin="8" Padding="4"
+                                BorderThickness="2" CornerRadius="4"
+                                BorderBrush="Gray" Cursor="Hand"
+                                Classes.selected="{Binding IsSelected}">
+                            <StackPanel>
+                                <Image Source="{Binding Sprite}" Width="80" Height="80" Stretch="Uniform"
+                                       PointerPressed="Card_PointerPressed"
+                                       DoubleTapped="Card_DoubleTapped" />
+                                <TextBlock Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap"
+                                           PointerPressed="Card_PointerPressed" DoubleTapped="Card_DoubleTapped" />
+                                <!-- Empty for alternate forms/counterparts (no type data for those -
+                                     see PokemonLibraryEntry.Types remarks); shows normally for species. -->
+                                <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Inline forms/counterparts panel: replaces the separate PokemonFormsPopup
+             window. Cards sized to match the original standalone popup (96px
+             sprites) rather than the more compact 64px this was shrunk to when
+             folded inline - at 64px, event recolors with busier art (shinies,
+             seasonal variants) were hard to make out. MaxHeight bumped to match
+             so a full row of the larger cards isn't clipped. -->
+        <Border Grid.Row="3"
+                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="0,1,0,0"
+                Margin="0,8,0,8" Padding="0,8,0,0" MaxHeight="230">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding AvailableForms}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:PokemonCardItem">
+                            <!-- Height bumped 148->164 to fit the new type-icon row without
+                                 clipping against this Border's fixed size. -->
+                            <Border Width="116" Height="164" Margin="4">
+                                <StackPanel>
+                                    <Image Source="{Binding Sprite}" Width="96" Height="96" Stretch="Uniform" />
+                                    <TextBlock Text="{Binding Tag, StringFormat=[{0}]}" FontSize="10" TextAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}" FontSize="11" TextAlignment="Center" TextWrapping="Wrap" />
+                                    <!-- Empty for regional forms/Mega/G-Max/counterparts (no type data
+                                         for those - see PokemonLibraryEntry.Types remarks); shows
+                                         normally for the "Normal" entry, which resolves via species data. -->
+                                    <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <Grid Grid.Row="4" ColumnDefinitions="Auto,*,Auto,Auto">
+            <TextBlock Grid.Column="0" Text="{Binding SelectedCards.Count, StringFormat='{}{0}/4 selected'}"
+                       Foreground="{DynamicResource ThemeTextBrush}" VerticalAlignment="Center" Margin="0,0,16,0" />
+            <TextBlock Grid.Column="1" Text="{Binding StatusMessage}" Foreground="OrangeRed" VerticalAlignment="Center" />
+            <Button Grid.Column="2" Content="Select" Command="{Binding SelectCommand}" Margin="0,0,8,0" />
+            <Button Grid.Column="3" Content="Cancel" Click="CancelButton_Click" />
+        </Grid>
+    </Grid>
+</Window>

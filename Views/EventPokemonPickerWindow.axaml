@@ -1,0 +1,49 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.EventPokemonPickerWindow"
+        x:DataType="vm:EventPokemonPickerViewModel"
+        Title="Choose Pokémon (optional)"
+        Width="600" Height="480"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="16">
+
+        <TextBox Grid.Row="0" PlaceholderText="Search Pokémon…" Text="{Binding SearchText}" Margin="0,0,0,8" />
+
+        <TextBlock Grid.Row="1" Text="Click a card to attach it to this post - it's optional, so Clear leaves the post as-is."
+                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.7" TextWrapping="Wrap" Margin="0,0,0,8" />
+
+        <!-- Single click picks and closes immediately - no Select button, no
+             multi-select, no forms panel (see EventPokemonPickerViewModel). -->
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding SearchResults}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PokemonCardItem">
+                        <Border Width="100" Height="120" Margin="8" Padding="4"
+                                BorderThickness="2" CornerRadius="4"
+                                BorderBrush="Gray" Cursor="Hand">
+                            <StackPanel>
+                                <Image Source="{Binding Sprite}" Width="80" Height="80" Stretch="Uniform"
+                                       PointerPressed="Card_PointerPressed" />
+                                <TextBlock Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap"
+                                           PointerPressed="Card_PointerPressed" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,8,0,0">
+            <Button Content="Clear" Command="{Binding ClearCommand}" />
+            <Button Content="Cancel" Click="CancelButton_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

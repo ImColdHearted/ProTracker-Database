@@ -1,0 +1,207 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.BossDetailWindow"
+        x:DataType="vm:BossDetailViewModel"
+        Title="{Binding BossNameText}"
+        Width="700" Height="785"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <Window.Styles>
+        <!-- Opts this whole window out of the global Text Shadow reach (see the
+             Style Selector="TextBlock" in App.axaml) - a window-level style for
+             the same selector takes precedence over the Application-level one
+             for every TextBlock underneath it, including the ones the
+             ItemsControl templates below generate per reward/boss-team-member,
+             not just the ones declared directly in this file. Requested after
+             seeing it in practice - a dense stat/roster page like this reads
+             better without a shadow on every heading and caption. Font/Font
+             Size/Text Color and everything else from Appearance still apply
+             normally; only the shadow itself is suppressed here. -->
+        <Style Selector="TextBlock">
+            <Setter Property="Effect" Value="{x:Null}" />
+        </Style>
+    </Window.Styles>
+
+    <ScrollViewer>
+        <StackPanel Margin="10" Spacing="10">
+
+            <TextBlock Text="{Binding BossNameText}" FontSize="22" FontWeight="Bold"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" TextWrapping="Wrap" />
+
+            <Grid ColumnDefinitions="200,*">
+                <Border Grid.Column="0" Width="180" Height="140" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1">
+                    <Image Source="{Binding LocationImage}" Stretch="Uniform" />
+                </Border>
+                <StackPanel Grid.Column="1" Spacing="4" Margin="11,0,0,0">
+                    <TextBlock Text="{Binding LocationText}" Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" />
+                    <TextBlock Text="{Binding RequirementText}" Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding PokedollarsText}" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Text="{Binding PveCoinsText}" Foreground="{DynamicResource ThemeTextBrush}" />
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Text="Item Rewards" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            <ItemsControl ItemsSource="{Binding ItemRewards}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:RewardImageItem">
+                        <StackPanel Margin="4" Width="64">
+                            <Image Source="{Binding Image}" Width="22" Height="22" Stretch="Uniform" />
+                            <TextBlock Text="{Binding Caption}" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="Pokémon Rewards" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            <ItemsControl ItemsSource="{Binding PokemonRewards}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:RewardImageItem">
+                        <StackPanel Margin="3" Width="64">
+                            <Image Source="{Binding Image}" Width="48" Height="48" Stretch="Uniform" />
+                            <TextBlock Text="{Binding Caption}" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" />
+                            <!-- Type icons: empty/no-op for Item Rewards (Caption is an item
+                                 name there, never a Pokemon name) - see RewardImageItem.Types. -->
+                            <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="{Binding StreakBonusHeading}" FontWeight="Bold"
+                       Foreground="{DynamicResource ThemeTextBrush}" IsVisible="{Binding HasStreakBonusRewards}" />
+            <ItemsControl ItemsSource="{Binding StreakBonusRewards}" IsVisible="{Binding HasStreakBonusRewards}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:RewardImageItem">
+                        <StackPanel Margin="3" Width="64">
+                            <Image Source="{Binding Image}" Width="48" Height="48" Stretch="Uniform" />
+                            <TextBlock Text="{Binding Caption}" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" />
+                            <!-- Type icons: empty/no-op for Item Rewards (Caption is an item
+                                 name there, never a Pokemon name) - see RewardImageItem.Types. -->
+                            <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="Boss Team (click a Pokémon for details)" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            <ItemsControl ItemsSource="{Binding TeamGroups}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:BossTeamGroupItem">
+                        <StackPanel Spacing="4" Margin="0,0,0,8">
+                            <TextBlock Text="{Binding NpcName}" FontWeight="Bold" FontSize="12"
+                                       Foreground="{DynamicResource ThemeTextBrush}" IsVisible="{Binding HasNpcName}" />
+                            <ItemsControl ItemsSource="{Binding Members}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:BossTeamMemberItem">
+                                        <Border Width="80" Height="90" Margin="3" Cursor="Hand"
+                                                PointerPressed="TeamMember_PointerPressed">
+                                            <StackPanel>
+                                                <Image Source="{Binding Sprite}" Width="64" Height="64" Stretch="Uniform" />
+                                                <TextBlock Text="{Binding Pokemon.Name}" FontSize="10" TextAlignment="Center" TextWrapping="Wrap" />
+                                                <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate x:DataType="x:String">
+                                                            <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Inline detail panel: replaces the floating BossPokemonCard popup -->
+            <Border IsVisible="{Binding HasSelectedTeamMember}"
+                    BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Padding="12">
+                <StackPanel Spacing="4" DataContext="{Binding SelectedTeamMember}" x:DataType="vm:BossTeamMemberItem">
+                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Pokemon.Name}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <ItemsControl ItemsSource="{Binding Types}" VerticalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="3" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <TextBlock Foreground="{DynamicResource ThemeTextBrush}">
+                        <Run Text="Nature:" FontWeight="Bold" /> <Run Text="{Binding Pokemon.Nature}" />
+                    </TextBlock>
+                    <TextBlock Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap">
+                        <Run Text="Ability:" FontWeight="Bold" /> <Run Text="{Binding AbilityDisplayText}" />
+                    </TextBlock>
+                    <TextBlock Foreground="{DynamicResource ThemeTextBrush}">
+                        <Run Text="Item:" FontWeight="Bold" /> <Run Text="{Binding Pokemon.Item}" />
+                    </TextBlock>
+                    <ItemsControl ItemsSource="{Binding MoveDisplayItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="4" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="vm:BossMoveDisplayItem">
+                                <TextBlock Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap">
+                                    <Run Text="{Binding Name}" FontWeight="Bold" /><Run Text="{Binding Detail}" />
+                                </TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

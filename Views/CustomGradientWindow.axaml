@@ -1,0 +1,85 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.CustomGradientWindow"
+        x:DataType="vm:CustomGradientViewModel"
+        Title="Create Custom Gradient"
+        Width="480" Height="460"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <Window.Styles>
+        <!-- Opts this whole window out of the global Text Shadow reach (see the
+             Style Selector="TextBlock" in App.axaml) - a window-level style for
+             the same selector takes precedence over the Application-level one
+             for every TextBlock underneath it. Requested after seeing it in
+             practice on similar small utility dialogs (see BossListWindow/
+             GuideWindow/CounterpartsWindow/BossDetailWindow/
+             PokemonSelectorWindow) - a compact settings dialog like this reads
+             better without a shadow on every label. Font/Font Size/Text Color
+             and everything else from Appearance still apply normally; only
+             the shadow itself is suppressed here. -->
+        <Style Selector="TextBlock">
+            <Setter Property="Effect" Value="{x:Null}" />
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Margin="16">
+
+        <TextBlock Grid.Row="0" Text="Pick 2 to 4 colors and a direction to build your own gradient background."
+                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.7" TextWrapping="Wrap" Margin="0,0,0,16" />
+
+        <!-- Color swatches (2-4, see CustomGradientViewModel.Colors) plus the
+             +/- buttons that add or remove one. Both the swatch row and its
+             outer container wrap rather than clip if space gets tight - a
+             WrapPanel of a WrapPanel, not a fixed-width layout, since the
+             number of swatches changes at runtime. -->
+        <WrapPanel Grid.Row="1" Margin="0,0,0,16">
+            <ItemsControl ItemsSource="{Binding Colors}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:GradientColorSlot">
+                        <StackPanel Spacing="4" Margin="0,0,12,8">
+                            <TextBlock Text="{Binding Label}" FontWeight="Bold" />
+                            <!-- Half the width of the original Start/End Color
+                                 pickers - there can be up to four of these now,
+                                 so a narrower swatch keeps the row compact. -->
+                            <ColorPicker Width="70" HorizontalAlignment="Left" Color="{Binding Color, Mode=TwoWay}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Bottom" Margin="0,0,0,8">
+                <Button Content="+" Command="{Binding AddColorCommand}"
+                        ToolTip.Tip="Add another color (up to 4)" />
+                <Button Content="-" Command="{Binding RemoveColorCommand}"
+                        ToolTip.Tip="Remove the last color (down to 2)" />
+            </StackPanel>
+        </WrapPanel>
+
+        <StackPanel Grid.Row="2" Spacing="4" Margin="0,0,0,16">
+            <TextBlock Text="Direction" FontWeight="Bold" />
+            <ComboBox Width="220" HorizontalAlignment="Left"
+                      ItemsSource="{Binding DirectionOptions}"
+                      SelectedItem="{Binding SelectedDirection, Mode=TwoWay}" />
+        </StackPanel>
+
+        <!-- Live preview - same "always show something real" role as
+             AppearanceWindow's own preview panel, just simpler (no sample
+             text/sprite, this dialog is only about the gradient itself). -->
+        <Border Grid.Row="3" BorderBrush="{DynamicResource ThemeBorderBrush}"
+                BorderThickness="2" CornerRadius="4"
+                Background="{Binding PreviewBrush}" MinHeight="80" />
+
+        <Grid Grid.Row="4" ColumnDefinitions="*,Auto,Auto" Margin="0,16,0,0">
+            <Button Grid.Column="1" Content="Apply" Command="{Binding ApplyCommand}" />
+            <Button Grid.Column="2" Content="Cancel" Click="CancelButton_Click" Margin="8,0,0,0" />
+        </Grid>
+    </Grid>
+</Window>

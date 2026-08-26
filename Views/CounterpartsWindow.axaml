@@ -1,0 +1,98 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.CounterpartsWindow"
+        x:DataType="vm:CounterpartsViewModel"
+        Title="{Binding GroupTitle}"
+        Width="820" Height="640"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <Window.Styles>
+        <!-- Opts this whole window out of the global Text Shadow reach (see the
+             Style Selector="TextBlock" in App.axaml) - a window-level style for
+             the same selector takes precedence over the Application-level one
+             for every TextBlock underneath it, including the per-card names the
+             ItemsControl template below generates, not just the ones declared
+             directly in this file. Requested after seeing it in practice - a
+             card grid like this reads better without a shadow on every single
+             name. Font/Font Size/Text Color and everything else from Appearance
+             still apply normally; only the shadow itself is suppressed here. -->
+        <Style Selector="TextBlock">
+            <Setter Property="Effect" Value="{x:Null}" />
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="12">
+        <TextBlock Grid.Row="0" Text="{Binding GroupTitle}" FontSize="18" FontWeight="Bold"
+                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,8" />
+
+        <TextBlock Grid.Row="1" Text="{Binding StatusMessage}" Foreground="OrangeRed" TextWrapping="Wrap" Margin="0,0,0,8" />
+
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding Cards}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:CounterpartCardItem">
+                        <!-- Height bumped 165->182 to fit the new type-icon row below the name
+                             without clipping against this Border's fixed size. -->
+                        <Border Width="130" Height="182" Margin="8" Cursor="Hand"
+                                PointerPressed="Card_PointerPressed">
+                            <StackPanel>
+                                <Image Source="{Binding Sprite}" Width="120" Height="120" Stretch="Uniform" />
+                                <TextBlock Text="{Binding Name}" Foreground="White" TextAlignment="Center" TextWrapping="Wrap" />
+                                <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Inline detail panel: replaces the floating CounterpartHoverForm tool window.
+             DataContext is set to SelectedCard itself (rather than binding through
+             "SelectedCard.Sprite"/"SelectedCard.Name" from the outer DataContext) so
+             Avalonia doesn't log a binding error every time it evaluates this panel
+             while nothing is selected yet (SelectedCard is null before the first click) -
+             same pattern as BossDetailWindow.axaml's team-member panel. -->
+        <Border Grid.Row="3" IsVisible="{Binding HasSelectedCard}"
+                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Padding="12" Margin="0,8,0,0">
+            <StackPanel Orientation="Horizontal" Spacing="12"
+                        DataContext="{Binding SelectedCard}" x:DataType="vm:CounterpartCardItem">
+                <Image Source="{Binding Sprite}" Width="80" Height="80" Stretch="Uniform" />
+                <StackPanel Spacing="4">
+                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <ItemsControl ItemsSource="{Binding Types}" VerticalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="3" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <TextBlock Text="{Binding $parent[Window].((vm:CounterpartsViewModel)DataContext).SpawnLocationsText}" Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding $parent[Window].((vm:CounterpartsViewModel)DataContext).NotesText}" Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

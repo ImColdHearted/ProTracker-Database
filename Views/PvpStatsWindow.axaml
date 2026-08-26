@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.PvpStatsWindow"
+        Title="Lifetime PVP"
+        Width="420" Height="420"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!--
+      Ported from Forms/Lifetime Stats/PVPStats.cs. Note: the original form never
+      actually wired these labels to a data source (no PVPStatsService exists) -
+      it only laid out category titles. This is a faithful 1:1 port of that same
+      (currently unimplemented) state; hook these up to real values once PVP
+      tracking exists on the WinForms side too.
+    -->
+    <StackPanel Margin="20" Spacing="10">
+        <TextBlock Text="Lifetime PVP" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,10" />
+
+        <StackPanel Spacing="10">
+            <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0" Text="Time Spent Choosing a Move" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="Time Spent in Battle" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0" Text="Total Wins" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="Total Losses" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0" Text="Best Pokemon" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="Worst Pokemon" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0" Text="Most Used" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="Least Used" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0" Text="Most Seen Opponent" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+        </StackPanel>
+    </StackPanel>
+</Window>

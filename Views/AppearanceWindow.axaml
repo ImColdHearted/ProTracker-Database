@@ -1,0 +1,179 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.AppearanceWindow"
+        x:DataType="vm:AppearanceViewModel"
+        Title="Appearance"
+        Width="900" Height="700"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto" ColumnDefinitions="*">
+
+        <!-- Effect="{x:Null}" here and on every other plain label in this window
+             (including each background swatch's name below) - see the Font/Font
+             Size row's comment further down for why. -->
+        <TextBlock Grid.Row="0" Text="Background" FontWeight="Bold" Margin="0,0,0,8" Effect="{x:Null}" />
+
+        <!-- Six background presets: replaces BackgroundChoice1..6 PictureBoxes -->
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding BackgroundChoices}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Margin="4"
+                            Command="{Binding $parent[Window].((vm:AppearanceViewModel)DataContext).ChooseBackgroundCommand}"
+                            CommandParameter="{Binding Id}">
+                        <StackPanel>
+                            <Border Width="72" Height="72" BorderBrush="Gray" BorderThickness="1">
+                                <Image Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                            </Border>
+                            <TextBlock Text="{Binding Id}" HorizontalAlignment="Center" FontSize="11" Effect="{x:Null}" />
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="8" Margin="0,8,0,16">
+            <Button Content="Choose Custom Image…" Click="SelectCustomImageButton_Click" />
+            <!-- Opens the CustomGradientWindow sub-dialog (see
+                 CreateGradientButton_Click) rather than binding a Command
+                 straight to the ViewModel - same reasoning as the Custom
+                 Image button to its left: showing a child Window needs a
+                 Window/TopLevel reference the ViewModel shouldn't hold
+                 directly. -->
+            <Button Content="Create Gradient…" Click="CreateGradientButton_Click" />
+            <Button Content="Use Custom Color" Command="{Binding UseCustomColorBackgroundCommand}" />
+            <Button Content="Clear" Command="{Binding ClearBackgroundCommand}" />
+        </StackPanel>
+
+        <!-- Font selection: a curated cross-platform-safe list rather than enumerating
+             installed system fonts (see AppearanceViewModel.cs). Applies globally via
+             the ThemeFontFamily/ThemeFontSize resources + the Window-level Style in
+             App.axaml, not just to this dialog. Note: font size only affects text
+             that doesn't already set its own explicit size elsewhere in the app -
+             a local value always wins over the inherited default.
+
+             Border Shadow only affects the hunting-sprite border boxes on MainWindow
+             (Currently Hunting/Current Encounter/Previous Encounter), not every
+             TextBlock in the app - see ThemeManager.BorderShadowCatalog. Text Shadow,
+             added alongside it here, DOES apply globally like Font/Font Size (any
+             TextBlock without its own explicit override) - see the
+             Style Selector="TextBlock" in App.axaml and ThemeManager.
+             TextShadowEffectKey. Same None/Small/Medium/Large dropdown shape as
+             Border Shadow (see ThemeManager.TextShadowCatalog) - defaults to
+             None. (A "Text Highlight" toggle briefly lived here too - removed
+             after trying it, since a TextBlock's Background fills its whole
+             layout box rather than hugging the glyphs, which didn't look good in
+             practice.)
+
+             Every plain label in this window (this row's four, the color row
+             below, "Background" up top, and each background swatch's name) sets
+             Effect="{x:Null}" to opt back out of that global Text Shadow reach -
+             a local value always wins over a Style setter, the same rule Font
+             Size's own local-override note above relies on. These labels also
+             never bind Foreground to the user's custom Text Color (unlike the
+             live preview text below, which does both on purpose - it's meant to
+             demonstrate the actual look). Both are deliberate: this window is
+             where Background Color/Text Color/Sprite Background/Box Shadow
+             Color/Text Shadow Color get picked, so its own labels stay at a
+             fixed, always-legible default appearance no matter what combination
+             gets chosen - including an accidental white-on-white - rather than
+             risk the controls needed to fix a bad combination becoming
+             unreadable themselves. -->
+        <WrapPanel Grid.Row="3" Margin="0,0,0,16">
+            <StackPanel Spacing="4" Margin="0,0,16,8">
+                <TextBlock Text="Font" FontWeight="Bold" Effect="{x:Null}" />
+                <ComboBox Width="220" HorizontalAlignment="Left"
+                          ItemsSource="{Binding FontFamilyOptions}"
+                          SelectedItem="{Binding SelectedFontFamily, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Spacing="4" Margin="0,0,16,8">
+                <TextBlock Text="Font Size" FontWeight="Bold" Effect="{x:Null}" />
+                <ComboBox Width="140" HorizontalAlignment="Left"
+                          ItemsSource="{Binding FontSizeOptions}"
+                          SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Spacing="4" Margin="0,0,16,8">
+                <TextBlock Text="Border Shadow" FontWeight="Bold" Effect="{x:Null}" />
+                <ComboBox Width="140" HorizontalAlignment="Left"
+                          ItemsSource="{Binding BorderShadowOptions}"
+                          SelectedItem="{Binding SelectedBorderShadow, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Spacing="4" Margin="0,0,16,8">
+                <TextBlock Text="Text Shadow" FontWeight="Bold" Effect="{x:Null}" />
+                <ComboBox Width="140" HorizontalAlignment="Left"
+                          ItemsSource="{Binding TextShadowOptions}"
+                          SelectedItem="{Binding SelectedTextShadow, Mode=TwoWay}" />
+            </StackPanel>
+        </WrapPanel>
+
+        <!-- Every color picker together on one flowing row, separate from the
+             dropdowns/checkboxes above - Sprite Background used to sit in that row
+             instead, despite being a color rather than a dropdown. Box Shadow Color/
+             Text Shadow Color are new - see ThemeManager.BuildBorderShadow/
+             BuildTextShadowEffect. Like the row above, every label here sets
+             Effect="{x:Null}" and doesn't bind Foreground to TextColor, so
+             picking a bad combination (e.g. a white Text Color with a white
+             Background Color) can't make these labels themselves unreadable -
+             see the row above's comment for the full reasoning. -->
+        <WrapPanel Grid.Row="4" Margin="0,0,0,16">
+            <StackPanel Spacing="4" Margin="0,0,16,8">
+                <TextBlock Text="Text Color" Effect="{x:Null}" />
+                <ColorPicker Width="120" HorizontalAlignment="Left" Color="{Binding TextColor, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Spacing="4" Margin="0,0,16,8">
+                <TextBlock Text="Border Color" Effect="{x:Null}" />
+                <ColorPicker Width="120" HorizontalAlignment="Left" Color="{Binding BorderColor, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Spacing="4" Margin="0,0,16,8">
+                <TextBlock Text="Background Color" Effect="{x:Null}" />
+                <ColorPicker Width="120" HorizontalAlignment="Left" Color="{Binding BackgroundCustomColor, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Spacing="4" Margin="0,0,16,8">
+                <TextBlock Text="Sprite Background" Effect="{x:Null}" />
+                <ColorPicker Width="120" HorizontalAlignment="Left" Color="{Binding SpriteBoxBackgroundColor, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Spacing="4" Margin="0,0,16,8">
+                <TextBlock Text="Box Shadow Color" Effect="{x:Null}" />
+                <ColorPicker Width="120" HorizontalAlignment="Left" Color="{Binding BoxShadowColor, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Spacing="4" Margin="0,0,16,8">
+                <TextBlock Text="Text Shadow Color" Effect="{x:Null}" />
+                <ColorPicker Width="120" HorizontalAlignment="Left" Color="{Binding TextShadowColor, Mode=TwoWay}" />
+            </StackPanel>
+        </WrapPanel>
+
+        <!-- Live preview: replaces PreviewPanel + PreviewPictureBox1/2 + PreviewTitleLabel.
+             Background falls back to PreviewBackgroundBrush (a solid color) whenever
+             there's no gradient/custom image to show, instead of just going blank.
+             Moved down here (it used to sit between the dropdowns and the color
+             pickers) so it's the last thing shown before Save/Cancel - and so it can
+             actually demonstrate Text Shadow on the sample text. -->
+        <Border Grid.Row="5" BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                BorderThickness="2" CornerRadius="4"
+                Background="{Binding PreviewBackgroundBrush}">
+            <Panel>
+                <Image Source="{Binding PreviewBackgroundImage}" Stretch="UniformToFill" />
+                <TextBlock Text="The quick brown fox jumps over the lazy dog."
+                           Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                           FontFamily="{Binding PreviewFontFamily}"
+                           FontSize="{Binding PreviewFontSize}"
+                           Effect="{Binding PreviewTextShadowEffect}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Panel>
+        </Border>
+
+        <Grid Grid.Row="6" ColumnDefinitions="*,Auto,Auto" Margin="0,16,0,0">
+            <TextBlock Grid.Column="0" Text="{Binding SaveError}" Foreground="Red"
+                       TextWrapping="Wrap" IsVisible="{Binding HasSaveError}"
+                       VerticalAlignment="Center" Margin="0,0,8,0" />
+            <Button Grid.Column="1" Content="Save" Command="{Binding SaveCommand}" />
+            <Button Grid.Column="2" Content="Cancel" Click="CancelButton_Click" Margin="8,0,0,0" />
+        </Grid>
+    </Grid>
+</Window>

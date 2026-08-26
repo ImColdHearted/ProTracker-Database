@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.ImportModeDialogWindow"
+        Title="Import Hunt Data"
+        Width="420" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        CanResize="False">
+
+    <StackPanel Margin="20" Spacing="16">
+        <TextBlock Name="MessageText" TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button Content="Add to Current" Click="AddButton_Click"
+                    ToolTip.Tip="Combine this file's encounter counts and totals into the current hunt." />
+            <Button Content="Replace Current" Click="ReplaceButton_Click"
+                    ToolTip.Tip="Wipe the current hunt and load this file's data in its place." />
+            <Button Content="Cancel" Click="CancelButton_Click" />
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.BossScraperWindow"
+        x:DataType="vm:BossScraperViewModel"
+        Title="Boss Wiki Scraper (Magma)"
+        Width="720" Height="680" MinWidth="560" MinHeight="480"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto" Margin="16" ColumnDefinitions="*">
+
+        <TextBlock Grid.Row="0"
+                   Text="Developer tool: fetches a boss page from the PRO wiki and fills in DataFiles/Bosses/{bossId}.json. Always review the preview and warnings below before saving - nothing touches disk until Save is clicked."
+                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,12" />
+
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" Margin="0,0,0,8">
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Boss:" VerticalAlignment="Center"
+                       Margin="0,0,8,6" Foreground="{DynamicResource ThemeTextBrush}" />
+            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Bosses}" SelectedItem="{Binding SelectedBoss}"
+                      HorizontalAlignment="Stretch" Margin="0,0,0,6">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:BossScraperListItem">
+                        <TextBlock Text="{Binding DisplayName}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Wiki page:" VerticalAlignment="Center"
+                       Margin="0,0,8,0" Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding WikiPageTitle}" PlaceholderText="e.g. Lorelei (boss)" />
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="8" Margin="0,0,0,8">
+            <Button Content="Fetch &amp; Preview" Command="{Binding FetchCommand}" />
+            <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+        </StackPanel>
+
+        <ItemsControl Grid.Row="3" ItemsSource="{Binding Warnings}" Margin="0,0,0,8">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" TextWrapping="Wrap" Foreground="Orange" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Border Grid.Row="4" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Margin="0,0,0,8">
+            <TextBox Text="{Binding PreviewJson, Mode=OneWay}" IsReadOnly="True" AcceptsReturn="True"
+                     TextWrapping="NoWrap" FontFamily="Consolas,Menlo,monospace"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                     Background="Transparent" BorderThickness="0" />
+        </Border>
+
+        <TextBlock Grid.Row="5"
+                   Text="This boss already has real data on disk - saving will overwrite it."
+                   Foreground="IndianRed" TextWrapping="Wrap" Margin="0,0,0,8"
+                   IsVisible="{Binding ExistingFileHadRealData}" />
+
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button Content="Save" Command="{Binding SaveCommand}" />
+            <Button Content="Close" Click="CloseButton_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

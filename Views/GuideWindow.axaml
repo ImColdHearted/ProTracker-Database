@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.GuideWindow"
+        x:DataType="vm:GuideViewModel"
+        Title="{Binding GuideTitle}"
+        Width="900" Height="700"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <Window.Styles>
+        <!-- Opts this whole window out of the global Text Shadow reach (see the
+             Style Selector="TextBlock" in App.axaml) - a window-level style for
+             the same selector takes precedence over the Application-level one
+             for every TextBlock underneath it, which importantly includes the
+             guide headings/paragraphs GuideHtmlRenderer builds into
+             GuideContentHost at runtime below, not just the two TextBlocks
+             actually declared in this file. Requested after seeing it in
+             practice on a guide's headings - heavier blur/full opacity (see
+             ThemeManager.TextShadowCatalog) read as noisy glow rather than a
+             nice accent on dense reference text like this. Font/Font Size/Text
+             Color and everything else from Appearance still apply normally;
+             only the shadow itself is suppressed here. -->
+        <Style Selector="TextBlock">
+            <Setter Property="Effect" Value="{x:Null}" />
+        </Style>
+    </Window.Styles>
+
+    <!--
+      No embedded browser - see GuideViewModel.cs / GuideHtmlRenderer.cs for why.
+      GuideContentHost is populated directly in code-behind (GuideHtmlRenderer builds
+      a real Avalonia control tree from the guide's HTML) rather than through bindings,
+      since it's UI construction, not simple data display.
+    -->
+    <Grid RowDefinitions="Auto,*,Auto">
+        <TextBlock Grid.Row="0" Text="{Binding ErrorMessage}" Foreground="Red"
+                   TextWrapping="Wrap" Margin="16,16,16,0"
+                   IsVisible="{Binding HasError}" />
+
+        <ContentControl Grid.Row="1" Name="GuideContentHost" />
+
+        <Button Grid.Row="2" Content="Open in Browser Instead" Command="{Binding OpenInBrowserCommand}"
+                IsVisible="{Binding CanOpenInBrowser}"
+                HorizontalAlignment="Right" Margin="16" />
+    </Grid>
+</Window>

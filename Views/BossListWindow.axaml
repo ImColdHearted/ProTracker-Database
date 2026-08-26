@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.BossListWindow"
+        x:DataType="vm:BossListViewModel"
+        Title="Boss Database"
+        Width="420" Height="520"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <Window.Styles>
+        <!-- Opts this whole window out of the global Text Shadow reach (see the
+             Style Selector="TextBlock" in App.axaml) - a window-level style for
+             the same selector takes precedence over the Application-level one
+             for every TextBlock underneath it, including the ListBox's
+             per-boss-name template below, not just a static element declared
+             directly in this file. Requested after seeing it in practice - a
+             plain lookup list like this reads better without a shadow on every
+             row. Font/Font Size/Text Color and everything else from Appearance
+             still apply normally; only the shadow itself is suppressed here. -->
+        <Style Selector="TextBlock">
+            <Setter Property="Effect" Value="{x:Null}" />
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="*,Auto,Auto" Margin="12">
+        <ListBox Grid.Row="0" ItemsSource="{Binding Bosses}" SelectedItem="{Binding SelectedBoss}"
+                 DoubleTapped="BossList_DoubleTapped">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:BossListItem">
+                    <TextBlock Text="{Binding DisplayName}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <ComboBox Grid.Row="1" Margin="0,8" HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding DifficultyOptions}"
+                  SelectedItem="{Binding SelectedDifficulty}" />
+
+        <Button Grid.Row="2" Content="Open Boss" Command="{Binding OpenCommand}" HorizontalAlignment="Right" />
+    </Grid>
+</Window>

@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.BossCooldownWindow"
+        x:DataType="vm:BossCooldownViewModel"
+        Title="Boss Cooldowns"
+        Width="700" Height="600"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <ScrollViewer Margin="12">
+        <ItemsControl ItemsSource="{Binding Bosses}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:BossCooldownCardItem">
+                    <Border Width="160" Height="60" Margin="4" Cursor="Hand"
+                            BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                            PointerPressed="BossCard_PointerPressed">
+                        <Grid ColumnDefinitions="42,*">
+                            <Image Grid.Column="0" Source="{Binding Sprite}" Width="28" Height="42" Stretch="Uniform" Margin="6" />
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding BossName}" FontWeight="Bold" FontSize="11"
+                                           Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding CooldownText}" FontWeight="Bold" FontSize="12"
+                                           Foreground="{DynamicResource ThemeTextBrush}" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+</Window>

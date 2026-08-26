@@ -1,0 +1,24 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.ExportFormatDialogWindow"
+        Title="Export Format"
+        Width="380" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        CanResize="False">
+
+    <StackPanel Margin="20" Spacing="16">
+        <TextBlock Text="Choose a format to export to:" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <StackPanel Orientation="Horizontal" Spacing="16">
+            <RadioButton Name="CsvRadioButton" GroupName="ExportFormat" Content="CSV" IsChecked="True" />
+            <RadioButton Name="JsonRadioButton" GroupName="ExportFormat" Content="JSON" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button Content="Export" Click="ExportButton_Click" />
+            <Button Content="Cancel" Click="CancelButton_Click" />
+        </StackPanel>
+    </StackPanel>
+</Window>
