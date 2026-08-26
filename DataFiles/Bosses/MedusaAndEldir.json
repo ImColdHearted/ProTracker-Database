@@ -1,0 +1,816 @@
+{
+  "name": "Medusa \u0026 Eldir",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Medusa.png",
+  "BossCooldown": 288,
+  "bossId": "medusaandeldir",
+  "location": "Legends Cave",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/MedusaandEldirLoc.png",
+  "requirements": "Be Sinnoh Champion, Snorlax disallowed",
+  "difficulties": {
+    "easy": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Super Repel",
+            "quantity": "",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/Super_Repel.png"
+          },
+          {
+            "name": "Ultra Ball",
+            "quantity": "20-30",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ultra_Ball.png"
+          },
+          {
+            "name": "Lum Berry",
+            "quantity": "13-18",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-7",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Mini MS Medalion",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Mini_MS_Medalion.png"
+          },
+          {
+            "name": "Blue Kimono",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Blue_Kimono.png"
+          },
+          {
+            "name": "Green Kimono",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Green_Kimono.png"
+          },
+          {
+            "name": "Peach Kimono",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Peach_Kimono.png"
+          },
+          {
+            "name": "Purple Kimono",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Purple_Kimono.png"
+          },
+          {
+            "name": "DC Clothes",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/DC_Clothes.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Alolan Vulpix",
+            "dexNumber": 10103,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Alolan Grimer",
+            "dexNumber": 10112,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "Medusa": {
+        "team": [
+          {
+            "name": "Dragonite",
+            "dexNumber": 149,
+            "nature": "Adamant",
+            "ability": "Multiscale",
+            "item": "None",
+            "moves": [
+              "Dragon Claw",
+              "Earthquake",
+              "Iron Head",
+              "Fire Punch"
+            ]
+          },
+          {
+            "name": "Conkeldurr",
+            "dexNumber": 534,
+            "nature": "Adamant",
+            "ability": "Iron Fist",
+            "item": "None",
+            "moves": [
+              "Drain Punch",
+              "Knock Off",
+              "Poison Jab",
+              "Ice Punch"
+            ]
+          },
+          {
+            "name": "Lucario",
+            "dexNumber": 448,
+            "nature": "Jolly",
+            "ability": "Inner Focus",
+            "item": "None",
+            "moves": [
+              "Close Combat",
+              "Meteor Mash",
+              "Crunch",
+              "Ice Punch"
+            ]
+          },
+          {
+            "name": "Jolteon",
+            "dexNumber": 135,
+            "nature": "Timid",
+            "ability": "Volt Absorb",
+            "item": "None",
+            "moves": [
+              "Discharge",
+              "Thunder",
+              "Signal Beam",
+              "Shadow Ball"
+            ]
+          },
+          {
+            "name": "Garchomp",
+            "dexNumber": 445,
+            "nature": "Relaxed",
+            "ability": "Rough Skin",
+            "item": "None",
+            "moves": [
+              "Dragon Tail",
+              "Earthquake",
+              "Iron Head",
+              "Fire Blast"
+            ]
+          },
+          {
+            "name": "Reshiram",
+            "dexNumber": 643,
+            "nature": "Modest",
+            "ability": "Turboblaze",
+            "item": "None",
+            "moves": [
+              "Blue Flare",
+              "Roost",
+              "Outrage",
+              "Earth Power"
+            ]
+          }
+        ],
+        "Eldir": {
+          "team": [
+            {
+              "name": "Gyarados",
+              "dexNumber": 130,
+              "nature": "Jolly",
+              "ability": "Intimidate",
+              "item": "None",
+              "moves": [
+                "Dragon Dance",
+                "Waterfall",
+                "Crunch",
+                "Earthquake"
+              ]
+            },
+            {
+              "name": "Alolan Muk",
+              "dexNumber": 10113,
+              "nature": "Adamant",
+              "ability": "Poison Touch",
+              "item": "None",
+              "moves": [
+                "Knock Off",
+                "Pursuit",
+                "Gunk Shot",
+                "Fire Punch"
+              ]
+            },
+            {
+              "name": "Alakazam",
+              "dexNumber": 65,
+              "nature": "Modest",
+              "ability": "Magic Guard",
+              "item": "None",
+              "moves": [
+                "Hidden Power (Fire)",
+                "Psyshock",
+                "Energy Ball",
+                "Dazzling Gleam"
+              ]
+            },
+            {
+              "name": "Infernape",
+              "dexNumber": 392,
+              "nature": "Naive",
+              "ability": "Blaze",
+              "item": "None",
+              "moves": [
+                "Close Combat",
+                "Poison Jab",
+                "Earthquake",
+                "Fire Blast"
+              ]
+            },
+            {
+              "name": "Slowbro",
+              "dexNumber": 80,
+              "nature": "Bold",
+              "ability": "Oblivious",
+              "item": "None",
+              "moves": [
+                "Calm Mind",
+                "Psyshock",
+                "Slack Off",
+                "Scald"
+              ]
+            },
+            {
+              "name": "Zekrom",
+              "dexNumber": 644,
+              "nature": "Adamant",
+              "ability": "Teravolt",
+              "item": "None",
+              "moves": [
+                "Bolt Strike",
+                "Dragon Claw",
+                "Outrage",
+                "Roost"
+              ]
+            }
+            ]
+          }
+        }
+      },
+      "medium": {
+        "tierChances": {},
+        "rewards": {
+          "pokedollars": {},
+          "pveCoins": 0,
+          "items": [
+            {
+              "name": "Super Repel",
+              "quantity": "",
+              "tier": 0,
+              "picture": "SharedPokemonLibrary/Assets/Items/Super_Repel.png"
+            },
+            {
+              "name": "Ultra Ball",
+              "quantity": "20-30",
+              "tier": 1,
+              "picture": "SharedPokemonLibrary/Assets/Items/Ultra_Ball.png"
+            },
+            {
+              "name": "Lum Berry",
+              "quantity": "13-18",
+              "tier": 1,
+              "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+            },
+            {
+              "name": "Rare Candy",
+              "quantity": "3-7",
+              "tier": 1,
+              "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+            },
+            {
+              "name": "Mini MS Medalion",
+              "quantity": "1",
+              "tier": 2,
+              "picture": "SharedPokemonLibrary/Assets/Items/Mini_MS_Medalion.png"
+            },
+            {
+              "name": "Blue Kimono",
+              "quantity": "1",
+              "tier": 3,
+              "picture": "SharedPokemonLibrary/Assets/Items/Blue_Kimono.png"
+            },
+            {
+              "name": "Green Kimono",
+              "quantity": "1",
+              "tier": 3,
+              "picture": "SharedPokemonLibrary/Assets/Items/Green_Kimono.png"
+            },
+            {
+              "name": "Peach Kimono",
+              "quantity": "1",
+              "tier": 3,
+              "picture": "SharedPokemonLibrary/Assets/Items/Peach_Kimono.png"
+            },
+            {
+              "name": "Purple Kimono",
+              "quantity": "1",
+              "tier": 3,
+              "picture": "SharedPokemonLibrary/Assets/Items/Purple_Kimono.png"
+            },
+            {
+              "name": "DC Clothes",
+              "quantity": "1",
+              "tier": 3,
+              "picture": "SharedPokemonLibrary/Assets/Items/DC_Clothes.png"
+            }
+          ],
+          "pokemon": [
+            {
+              "name": "Alolan Vulpix",
+              "dexNumber": 10103,
+              "picture": "",
+              "winStreakRequired": 0
+            },
+            {
+              "name": "Alolan Grimer",
+              "dexNumber": 10112,
+              "picture": "",
+              "winStreakRequired": 0
+            },
+            {
+              "name": "Eevee",
+              "dexNumber": 133,
+              "picture": "",
+              "winStreakRequired": 3
+            },
+            {
+              "name": "Alolan Vulpix",
+              "dexNumber": 10103,
+              "picture": "",
+              "winStreakRequired": 3
+            },
+            {
+              "name": "Alolan Grimer",
+              "dexNumber": 10112,
+              "picture": "",
+              "winStreakRequired": 3
+            },
+            {
+              "name": "Gligar",
+              "dexNumber": 207,
+              "picture": "",
+              "winStreakRequired": 3
+            },
+            {
+              "name": "Chimchar",
+              "dexNumber": 390,
+              "picture": "",
+              "winStreakRequired": 3
+            }
+          ]
+        },
+        "Medusa": {
+          "team": [
+            {
+              "name": "Dragonite",
+              "dexNumber": 149,
+              "nature": "Adamant",
+              "ability": "Multiscale",
+              "item": "Choice Band",
+              "moves": [
+                "Dragon Claw",
+                "Earthquake",
+                "Iron Head",
+                "Fire Punch"
+              ]
+            },
+            {
+              "name": "Conkeldurr",
+              "dexNumber": 534,
+              "nature": "Adamant",
+              "ability": "Iron Fist",
+              "item": "Assault Vest",
+              "moves": [
+                "Drain Punch",
+                "Knock Off",
+                "Poison Jab",
+                "Ice Punch"
+              ]
+            },
+            {
+              "name": "Lucario",
+              "dexNumber": 448,
+              "nature": "Jolly",
+              "ability": "Inner Focus",
+              "item": "Choice Scarf",
+              "moves": [
+                "Close Combat",
+                "Meteor Mash",
+                "Crunch",
+                "Ice Punch"
+              ]
+            },
+            {
+              "name": "Jolteon",
+              "dexNumber": 135,
+              "nature": "Timid",
+              "ability": "Volt Absorb",
+              "item": "Life Orb",
+              "moves": [
+                "Discharge",
+                "Thunder",
+                "Signal Beam",
+                "Shadow Ball"
+              ]
+            },
+            {
+              "name": "Mega Garchomp",
+              "dexNumber": 10058,
+              "nature": "Relaxed",
+              "ability": "Sand Force",
+              "item": "Garchompite",
+              "moves": [
+                "Dragon Tail",
+                "Earthquake",
+                "Iron Head",
+                "Fire Fang",
+                "Fire Blast",
+                "Stone Edge"
+              ]
+            },
+            {
+              "name": "Reshiram",
+              "dexNumber": 643,
+              "nature": "Modest",
+              "ability": "Turboblaze",
+              "item": "Life Orb",
+              "moves": [
+                "Blue Flare",
+                "Roost",
+                "Outrage",
+                "Earth Power"
+              ]
+            }
+          ],
+          "Eldir": {
+            "team": [
+              {
+                "name": "Gyarados",
+                "dexNumber": 130,
+                "nature": "Jolly",
+                "ability": "Intimidate",
+                "item": "Choice Band",
+                "moves": [
+                  "Dragon Dance",
+                  "Waterfall",
+                  "Crunch",
+                  "Earthquake"
+                ]
+              },
+              {
+                "name": "Alolan Muk",
+                "dexNumber": 10113,
+                "nature": "Adamant",
+                "ability": "Poison Touch",
+                "item": "Assault Vest",
+                "moves": [
+                  "Knock Off",
+                  "Pursuit",
+                  "Gunk Shot",
+                  "Fire Punch"
+                ]
+              },
+              {
+                "name": "Alakazam",
+                "dexNumber": 65,
+                "nature": "Modest",
+                "ability": "Magic Guard",
+                "item": "Focus Sash",
+                "moves": [
+                  "Hidden Power (Fire)",
+                  "Psyshock",
+                  "Energy Ball",
+                  "Dazzling Gleam"
+                ]
+              },
+              {
+                "name": "Infernape",
+                "dexNumber": 392,
+                "nature": "Naive",
+                "ability": "Blaze",
+                "item": "Life Orb",
+                "moves": [
+                  "Close Combat",
+                  "Poison Jab",
+                  "Earthquake",
+                  "Fire Blast"
+                ]
+              },
+              {
+                "name": "Slowbro",
+                "dexNumber": 80,
+                "nature": "Bold",
+                "ability": "Shell Armor",
+                "item": "Slowbronite",
+                "moves": [
+                  "Calm Mind",
+                  "Psyshock",
+                  "Slack Off",
+                  "Scald"
+                ]
+              },
+              {
+                "name": "Zekrom",
+                "dexNumber": 644,
+                "nature": "Adamant",
+                "ability": "Teravolt",
+                "item": "Life Orb",
+                "moves": [
+                  "Bolt Strike",
+                  "Dragon Claw",
+                  "Outrage",
+                  "Roost"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "hard": {
+        "tierChances": {},
+        "rewards": {
+          "pokedollars": {},
+          "pveCoins": 0,
+          "items": [
+            {
+              "name": "Super Repel",
+              "quantity": "",
+              "tier": 0,
+              "picture": "SharedPokemonLibrary/Assets/Items/Super_Repel.png"
+            },
+            {
+              "name": "Ultra Ball",
+              "quantity": "20-30",
+              "tier": 1,
+              "picture": "SharedPokemonLibrary/Assets/Items/Ultra_Ball.png"
+            },
+            {
+              "name": "Lum Berry",
+              "quantity": "13-18",
+              "tier": 1,
+              "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+            },
+            {
+              "name": "Rare Candy",
+              "quantity": "3-7",
+              "tier": 1,
+              "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+            },
+            {
+              "name": "Mini MS Medalion",
+              "quantity": "1",
+              "tier": 2,
+              "picture": "SharedPokemonLibrary/Assets/Items/Mini_MS_Medalion.png"
+            },
+            {
+              "name": "Blue Kimono",
+              "quantity": "1",
+              "tier": 3,
+              "picture": "SharedPokemonLibrary/Assets/Items/Blue_Kimono.png"
+            },
+            {
+              "name": "Green Kimono",
+              "quantity": "1",
+              "tier": 3,
+              "picture": "SharedPokemonLibrary/Assets/Items/Green_Kimono.png"
+            },
+            {
+              "name": "Peach Kimono",
+              "quantity": "1",
+              "tier": 3,
+              "picture": "SharedPokemonLibrary/Assets/Items/Peach_Kimono.png"
+            },
+            {
+              "name": "Purple Kimono",
+              "quantity": "1",
+              "tier": 3,
+              "picture": "SharedPokemonLibrary/Assets/Items/Purple_Kimono.png"
+            },
+            {
+              "name": "DC Clothes",
+              "quantity": "1",
+              "tier": 3,
+              "picture": "SharedPokemonLibrary/Assets/Items/DC_Clothes.png"
+            }
+          ],
+          "pokemon": [
+            {
+              "name": "Alolan Vulpix",
+              "dexNumber": 10103,
+              "picture": "",
+              "winStreakRequired": 0
+            },
+            {
+              "name": "Alolan Grimer",
+              "dexNumber": 10112,
+              "picture": "",
+              "winStreakRequired": 0
+            },
+            {
+              "name": "Eevee",
+              "dexNumber": 133,
+              "picture": "",
+              "winStreakRequired": 3
+            },
+            {
+              "name": "Alolan Vulpix",
+              "dexNumber": 10103,
+              "picture": "",
+              "winStreakRequired": 3
+            },
+            {
+              "name": "Alolan Grimer",
+              "dexNumber": 10112,
+              "picture": "",
+              "winStreakRequired": 3
+            },
+            {
+              "name": "Gligar",
+              "dexNumber": 207,
+              "picture": "",
+              "winStreakRequired": 3
+            },
+            {
+              "name": "Chimchar",
+              "dexNumber": 390,
+              "picture": "",
+              "winStreakRequired": 3
+            }
+          ]
+        },
+        "Medusa": {
+          "team": [
+            {
+              "name": "Dragonite",
+              "dexNumber": 149,
+              "nature": "Adamant",
+              "ability": "Multiscale",
+              "item": "Choice Band",
+              "moves": [
+                "Dragon Claw",
+                "Earthquake",
+                "Iron Head",
+                "Fire Punch"
+              ]
+            },
+            {
+              "name": "Conkeldurr",
+              "dexNumber": 534,
+              "nature": "Adamant",
+              "ability": "Iron Fist",
+              "item": "Assault Vest",
+              "moves": [
+                "Drain Punch",
+                "Knock Off",
+                "Poison Jab",
+                "Ice Punch"
+              ]
+            },
+            {
+              "name": "Lucario",
+              "dexNumber": 448,
+              "nature": "Jolly",
+              "ability": "Inner Focus",
+              "item": "Choice Scarf",
+              "moves": [
+                "Close Combat",
+                "Meteor Mash",
+                "Crunch",
+                "Ice Punch"
+              ]
+            },
+            {
+              "name": "Jolteon",
+              "dexNumber": 135,
+              "nature": "Timid",
+              "ability": "Volt Absorb",
+              "item": "Life Orb",
+              "moves": [
+                "Discharge",
+                "Thunder",
+                "Signal Beam",
+                "Shadow Ball"
+              ]
+            },
+            {
+              "name": "Mega Garchomp",
+              "dexNumber": 10058,
+              "nature": "Relaxed",
+              "ability": "Sand Force",
+              "item": "Garchompite",
+              "moves": [
+                "Dragon Tail",
+                "Earthquake",
+                "Iron Head",
+                "Fire Fang",
+                "Fire Blast",
+                "Stone Edge"
+              ]
+            },
+            {
+              "name": "Reshiram",
+              "dexNumber": 643,
+              "nature": "Modest",
+              "ability": "Turboblaze",
+              "item": "Life Orb",
+              "moves": [
+                "Blue Flare",
+                "Roost",
+                "Outrage",
+                "Earth Power"
+              ]
+            }
+          ],
+          "Eldir": {
+            "team": [
+              {
+                "name": "Gyarados",
+                "dexNumber": 130,
+                "nature": "Jolly",
+                "ability": "Intimidate",
+                "item": "Choice Band",
+                "moves": [
+                  "Dragon Dance",
+                  "Waterfall",
+                  "Crunch",
+                  "Earthquake"
+                ]
+              },
+              {
+                "name": "Alolan Muk",
+                "dexNumber": 10113,
+                "nature": "Adamant",
+                "ability": "Poison Touch",
+                "item": "Assault Vest",
+                "moves": [
+                  "Knock Off",
+                  "Pursuit",
+                  "Gunk Shot",
+                  "Fire Punch"
+                ]
+              },
+              {
+                "name": "Alakazam",
+                "dexNumber": 65,
+                "nature": "Modest",
+                "ability": "Magic Guard",
+                "item": "Focus Sash",
+                "moves": [
+                  "Hidden Power (Fire)",
+                  "Psyshock",
+                  "Energy Ball",
+                  "Dazzling Gleam"
+                ]
+              },
+              {
+                "name": "Infernape",
+                "dexNumber": 392,
+                "nature": "Naive",
+                "ability": "Blaze",
+                "item": "Life Orb",
+                "moves": [
+                  "Close Combat",
+                  "Poison Jab",
+                  "Earthquake",
+                  "Fire Blast"
+                ]
+              },
+              {
+                "name": "Slowbro",
+                "dexNumber": 80,
+                "nature": "Bold",
+                "ability": "Shell Armor",
+                "item": "Slowbronite",
+                "moves": [
+                  "Calm Mind",
+                  "Psyshock",
+                  "Slack Off",
+                  "Scald"
+                ]
+              },
+              {
+                "name": "Zekrom",
+                "dexNumber": 644,
+                "nature": "Adamant",
+                "ability": "Teravolt",
+                "item": "Life Orb",
+                "moves": [
+                  "Bolt Strike",
+                  "Dragon Claw",
+                  "Outrage",
+                  "Roost"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }

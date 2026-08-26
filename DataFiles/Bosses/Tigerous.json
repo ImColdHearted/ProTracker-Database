@@ -1,0 +1,449 @@
+{
+  "name": "Tigerous",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Tigerous.png",
+  "BossCooldown": 288,
+  "bossId": "tigerous",
+  "location": "Eumi Island Theme Park 2",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/TigerousLoc.png",
+  "requirements": "Must have completed the Hoenn League",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "4-6",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "15-20",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Starly",
+            "dexNumber": 396,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Klefki",
+            "dexNumber": 707,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Relicanth",
+            "dexNumber": 369,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Salamence",
+          "dexNumber": 373,
+          "nature": "Naive",
+          "ability": "Intimidate",
+          "item": "None",
+          "moves": [
+            "Dragon Dance",
+            "Dragon Claw",
+            "Fire Fang",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Keldeo",
+          "dexNumber": 647,
+          "nature": "Timid",
+          "ability": "Justified",
+          "item": "None",
+          "moves": [
+            "Surf",
+            "Secret Sword",
+            "Icy Wind",
+            "Calm Mind"
+          ]
+        },
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "None",
+          "moves": [
+            "Fire Punch",
+            "Dragon Claw",
+            "Thunder Punch",
+            "Waterfall"
+          ]
+        },
+        {
+          "name": "Jirachi",
+          "dexNumber": 385,
+          "nature": "Jolly",
+          "ability": "Serene Grace",
+          "item": "None",
+          "moves": [
+            "Iron Head",
+            "Thunder Punch",
+            "Aerial Ace",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Tyranitar",
+          "dexNumber": 248,
+          "nature": "Adamant",
+          "ability": "Sand Stream",
+          "item": "None",
+          "moves": [
+            "Rock Slide",
+            "Crunch",
+            "Superpower",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "None",
+          "moves": [
+            "Hammer Arm",
+            "Facade",
+            "Knock Off",
+            "Ice Punch"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "4-6",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "15-20",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Starly",
+            "dexNumber": 396,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Klefki",
+            "dexNumber": 707,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Relicanth",
+            "dexNumber": 369,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Relicanth",
+            "dexNumber": 369,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Klefki",
+            "dexNumber": 707,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Mega Salamence",
+          "dexNumber": 10089,
+          "nature": "Naive",
+          "ability": "Aerilate",
+          "item": "Salamencite",
+          "moves": [
+            "Dragon Dance",
+            "Outrage",
+            "Fire Blast",
+            "Iron Tail",
+            "Double-Edge"
+          ]
+        },
+        {
+          "name": "Keldeo",
+          "dexNumber": 647,
+          "nature": "Timid",
+          "ability": "Justified",
+          "item": "Choice Specs",
+          "moves": [
+            "Hydro Pump",
+            "Icy Wind",
+            "Secret Sword"
+          ]
+        },
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "Focus Sash",
+          "moves": [
+            "Dragon Dance",
+            "Dragon Claw",
+            "Extreme Speed",
+            "Waterfall"
+          ]
+        },
+        {
+          "name": "Jirachi",
+          "dexNumber": 385,
+          "nature": "Jolly",
+          "ability": "Serene Grace",
+          "item": "Choice Scarf",
+          "moves": [
+            "Iron Head",
+            "Zen Headbutt",
+            "Ice Punch",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Tyranitar",
+          "dexNumber": 248,
+          "nature": "Adamant",
+          "ability": "Unnerve",
+          "item": "Leftovers",
+          "moves": [
+            "Stone Edge",
+            "Crunch",
+            "Superpower",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "Flame Orb",
+          "moves": [
+            "Drain Punch",
+            "Facade",
+            "Knock Off",
+            "Ice Punch"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "4-6",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "15-20",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Starly",
+            "dexNumber": 396,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Klefki",
+            "dexNumber": 707,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Relicanth",
+            "dexNumber": 369,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Relicanth",
+            "dexNumber": 369,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Klefki",
+            "dexNumber": 707,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Mega Salamence",
+          "dexNumber": 10089,
+          "nature": "Naive",
+          "ability": "Aerilate",
+          "item": "Salamencite",
+          "moves": [
+            "Dragon Dance",
+            "Outrage",
+            "Fire Blast",
+            "Iron Tail",
+            "Double-Edge"
+          ]
+        },
+        {
+          "name": "Keldeo",
+          "dexNumber": 647,
+          "nature": "Timid",
+          "ability": "Justified",
+          "item": "Choice Specs",
+          "moves": [
+            "Hydro Pump",
+            "Icy Wind",
+            "Secret Sword"
+          ]
+        },
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "Focus Sash",
+          "moves": [
+            "Dragon Dance",
+            "Dragon Claw",
+            "Extreme Speed",
+            "Waterfall"
+          ]
+        },
+        {
+          "name": "Jirachi",
+          "dexNumber": 385,
+          "nature": "Jolly",
+          "ability": "Serene Grace",
+          "item": "Choice Scarf",
+          "moves": [
+            "Iron Head",
+            "Zen Headbutt",
+            "Ice Punch",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Tyranitar",
+          "dexNumber": 248,
+          "nature": "Adamant",
+          "ability": "Unnerve",
+          "item": "Leftovers",
+          "moves": [
+            "Stone Edge",
+            "Crunch",
+            "Superpower",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "Flame Orb",
+          "moves": [
+            "Drain Punch",
+            "Facade",
+            "Knock Off",
+            "Ice Punch"
+          ]
+        }
+      ]
+    }
+  }
+}

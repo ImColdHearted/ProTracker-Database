@@ -1,0 +1,593 @@
+{
+  "name": "Professor Rowan",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Professor_Rowan.png",
+  "BossCooldown": 288,
+  "bossId": "professorrowan",
+  "location": "Jubilife Trainers School",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/RowanLoc.png",
+  "requirements": "Be Sinnoh Champion, Caught data of 50 Pok\u00E9mon native to Sinnoh",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "2-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Ultra Ball",
+            "quantity": "5-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ultra_Ball.png"
+          },
+          {
+            "name": "Master Ball",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Master_Ball.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Starly",
+            "dexNumber": 396,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Bronzor",
+            "dexNumber": 436,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Buneary",
+            "dexNumber": 427,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Gligar",
+            "dexNumber": 207,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Turtwig",
+            "dexNumber": 387,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 390,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Piplup",
+            "dexNumber": 393,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Torterra",
+          "dexNumber": 389,
+          "nature": "Adamant",
+          "ability": "Overgrow",
+          "item": "None",
+          "moves": [
+            "Wood Hammer",
+            "Earthquake",
+            "Stone Edge",
+            "Seed Bomb"
+          ]
+        },
+        {
+          "name": "Empoleon",
+          "dexNumber": 395,
+          "nature": "Modest",
+          "ability": "Torrent",
+          "item": "None",
+          "moves": [
+            "Ice Beam",
+            "Hydro Pump",
+            "Grass Knot",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Naive",
+          "ability": "Blaze",
+          "item": "None",
+          "moves": [
+            "Close Combat",
+            "Flare Blitz",
+            "Gunk Shot",
+            "Grass Knot"
+          ]
+        },
+        {
+          "name": "Staraptor",
+          "dexNumber": 398,
+          "nature": "Adamant",
+          "ability": "Reckless",
+          "item": "None",
+          "moves": [
+            "Brave Bird",
+            "Double-Edge",
+            "Close Combat",
+            "Quick Attack"
+          ]
+        },
+        {
+          "name": "Gliscor",
+          "dexNumber": 472,
+          "nature": "Adamant",
+          "ability": "Poison Heal",
+          "item": "None",
+          "moves": [
+            "Earthquake",
+            "Ice Fang",
+            "Facade",
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Rotom",
+          "dexNumber": 479,
+          "nature": "Modest",
+          "ability": "Levitate",
+          "item": "None",
+          "moves": [
+            "Thunderbolt",
+            "Shadow Ball",
+            "Will-O-Wisp",
+            "Defog"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "2-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Ultra Ball",
+            "quantity": "5-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ultra_Ball.png"
+          },
+          {
+            "name": "Master Ball",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Master_Ball.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Starly",
+            "dexNumber": 396,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Bronzor",
+            "dexNumber": 436,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Buneary",
+            "dexNumber": 427,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Gligar",
+            "dexNumber": 207,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Turtwig",
+            "dexNumber": 387,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 390,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Piplup",
+            "dexNumber": 393,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Turtwig",
+            "dexNumber": 387,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 390,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Piplup",
+            "dexNumber": 393,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Torterra",
+          "dexNumber": 389,
+          "nature": "Adamant",
+          "ability": "Overgrow",
+          "item": "Choice Band",
+          "moves": [
+            "Wood Hammer",
+            "Earthquake",
+            "Stone Edge",
+            "Seed Bomb"
+          ]
+        },
+        {
+          "name": "Empoleon",
+          "dexNumber": 395,
+          "nature": "Modest",
+          "ability": "Torrent",
+          "item": "Focus Sash",
+          "moves": [
+            "Ice Beam",
+            "Hydro Pump",
+            "Grass Knot",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Naive",
+          "ability": "Blaze",
+          "item": "Life Orb",
+          "moves": [
+            "Close Combat",
+            "Flare Blitz",
+            "Gunk Shot",
+            "Grass Knot"
+          ]
+        },
+        {
+          "name": "Staraptor",
+          "dexNumber": 398,
+          "nature": "Adamant",
+          "ability": "Reckless",
+          "item": "Choice Band",
+          "moves": [
+            "Brave Bird",
+            "Double-Edge",
+            "Close Combat",
+            "Quick Attack"
+          ]
+        },
+        {
+          "name": "Gliscor",
+          "dexNumber": 472,
+          "nature": "Adamant",
+          "ability": "Poison Heal",
+          "item": "Toxic Orb",
+          "moves": [
+            "Earthquake",
+            "Ice Fang",
+            "Facade",
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Rotom",
+          "dexNumber": 479,
+          "nature": "Modest",
+          "ability": "Levitate",
+          "item": "Choice Specs",
+          "moves": [
+            "Thunderbolt",
+            "Shadow Ball",
+            "Will-O-Wisp",
+            "Defog"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "2-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Ultra Ball",
+            "quantity": "5-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ultra_Ball.png"
+          },
+          {
+            "name": "Master Ball",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Master_Ball.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Starly",
+            "dexNumber": 396,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Bronzor",
+            "dexNumber": 436,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Buneary",
+            "dexNumber": 427,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Gligar",
+            "dexNumber": 207,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Turtwig",
+            "dexNumber": 387,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 390,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Piplup",
+            "dexNumber": 393,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Turtwig",
+            "dexNumber": 387,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 390,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Piplup",
+            "dexNumber": 393,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Torterra",
+          "dexNumber": 389,
+          "nature": "Adamant",
+          "ability": "Overgrow",
+          "item": "Choice Band",
+          "moves": [
+            "Wood Hammer",
+            "Earthquake",
+            "Stone Edge",
+            "Seed Bomb"
+          ]
+        },
+        {
+          "name": "Empoleon",
+          "dexNumber": 395,
+          "nature": "Modest",
+          "ability": "Torrent",
+          "item": "Choice Scarf",
+          "moves": [
+            "Ice Beam",
+            "Hydro Pump",
+            "Grass Knot",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Naive",
+          "ability": "Blaze",
+          "item": "Life Orb",
+          "moves": [
+            "Close Combat",
+            "Flare Blitz",
+            "Gunk Shot",
+            "Grass Knot"
+          ]
+        },
+        {
+          "name": "Staraptor",
+          "dexNumber": 398,
+          "nature": "Adamant",
+          "ability": "Reckless",
+          "item": "Choice Band",
+          "moves": [
+            "Brave Bird",
+            "Double-Edge",
+            "Close Combat",
+            "Quick Attack"
+          ]
+        },
+        {
+          "name": "Gliscor",
+          "dexNumber": 472,
+          "nature": "Adamant",
+          "ability": "Poison Heal",
+          "item": "Toxic Orb",
+          "moves": [
+            "Earthquake",
+            "Ice Fang",
+            "Facade",
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Manaphy",
+          "dexNumber": 490,
+          "nature": "Modest",
+          "ability": "Hydration",
+          "item": "Choice Specs",
+          "moves": [
+            "Surf",
+            "Ice Beam",
+            "Energy Ball",
+            "Tail Glow"
+          ]
+        }
+      ]
+    }
+  }
+}

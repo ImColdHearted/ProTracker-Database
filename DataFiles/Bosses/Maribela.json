@@ -1,0 +1,310 @@
+{
+  "name": "Maribela",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Maribela.png",
+  "BossCooldown": 288,
+  "bossId": "maribela",
+  "location": "Floaroma Meadow",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/MaribelaLoc.png",
+  "requirements": "6 level 100 Pok\u00E9mons in current party, Having completed the Sinnoh League",
+  "difficulties": {
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "PP Up",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Grepa Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Grepa_Berry.png"
+          },
+          {
+            "name": "Hondew Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hondew_Berry.png"
+          },
+          {
+            "name": "Kelpsy Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Kelpsy_Berry.png"
+          },
+          {
+            "name": "Pomeg Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pomeg_Berry.png"
+          },
+          {
+            "name": "Qualot Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Qualot_Berry.png"
+          },
+          {
+            "name": "Tamato Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tamato_Berry.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Growlithe",
+            "dexNumber": 58,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Sylveon",
+          "dexNumber": 700,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Hyper Voice"
+          ]
+        },
+        {
+          "name": "Absol",
+          "dexNumber": 359,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": []
+        },
+        {
+          "name": "Jellicent",
+          "dexNumber": 593,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Leftovers",
+          "moves": [
+            "Shadow Ball",
+            "Scald"
+          ]
+        },
+        {
+          "name": "Delphox",
+          "dexNumber": 655,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Psychic"
+          ]
+        },
+        {
+          "name": "Roserade",
+          "dexNumber": 407,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": []
+        },
+        {
+          "name": "Keldeo",
+          "dexNumber": 647,
+          "nature": "Random",
+          "ability": "Justified",
+          "item": "None",
+          "moves": []
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "items": [
+          {
+            "name": "PP Up",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Grepa Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Grepa_Berry.png"
+          },
+          {
+            "name": "Hondew Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hondew_Berry.png"
+          },
+          {
+            "name": "Kelpsy Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Kelpsy_Berry.png"
+          },
+          {
+            "name": "Pomeg Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pomeg_Berry.png"
+          },
+          {
+            "name": "Qualot Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Qualot_Berry.png"
+          },
+          {
+            "name": "Tamato Berry",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tamato_Berry.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Growlithe",
+            "dexNumber": 58,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Frillish",
+            "dexNumber": 592,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Fennekin",
+            "dexNumber": 653,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Sylveon",
+          "dexNumber": 700,
+          "nature": "Random",
+          "ability": "Pixilate",
+          "item": "Choice Specs",
+          "moves": [
+            "Wish",
+            "Shadow Ball",
+            "Hyper Voice",
+            "Psyshock"
+          ]
+        },
+        {
+          "name": "Mega Gallade",
+          "dexNumber": 10068,
+          "nature": "Random",
+          "ability": "Inner Focus",
+          "item": "Galladite",
+          "moves": [
+            "Psycho Cut",
+            "Swords Dance",
+            "Close Combat",
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Random",
+          "ability": "Flame Body",
+          "item": "Choice Specs",
+          "moves": [
+            "Flamethrower",
+            "Giga Drain",
+            "Bug Buzz",
+            "Quiver Dance",
+            "Hidden Power (Ice)"
+          ]
+        },
+        {
+          "name": "Keldeo",
+          "dexNumber": 647,
+          "nature": "Random",
+          "ability": "Justified",
+          "item": "Choice Specs",
+          "moves": [
+            "Hydro Pump",
+            "Focus Blast",
+            "Calm Mind"
+          ]
+        },
+        {
+          "name": "Arcanine",
+          "dexNumber": 59,
+          "nature": "Random",
+          "ability": "Intimidate",
+          "item": "Choice Band",
+          "moves": [
+            "Flare Blitz",
+            "Wild Charge",
+            "Close Combat",
+            "Crunch"
+          ]
+        },
+        {
+          "name": "Xerneas",
+          "dexNumber": 716,
+          "nature": "",
+          "ability": "Fairy Aura",
+          "item": "Choice Scarf",
+          "moves": [
+            "Moonblast",
+            "Thunder",
+            "Focus Blast",
+            "Grass Knot"
+          ]
+        }
+      ]
+    }
+  }
+}

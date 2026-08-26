@@ -1,0 +1,548 @@
+{
+  "name": "Misty",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Misty.png",
+  "BossCooldown": 288,
+  "bossId": "misty",
+  "location": "Route 41",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/MistyLoc.png",
+  "requirements": "Having completed the Johto League",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Pearl",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pearl.png"
+          },
+          {
+            "name": "Water Gem",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Water_Gem.png"
+          },
+          {
+            "name": "TM: Scald",
+            "quantity": "1-3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Water.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Ludicolo Clothes",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ludicolo_Clothes.png"
+          },
+          {
+            "name": "Ludicolo Hat",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ludicolo_Hat.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Wailmer",
+            "dexNumber": 320,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shellder",
+            "dexNumber": 90,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shellos",
+            "dexNumber": 422,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Oshawott",
+            "dexNumber": 501,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Milotic",
+          "dexNumber": 350,
+          "nature": "Bold",
+          "ability": "Competitive",
+          "item": "None",
+          "moves": [
+            "Water Pulse",
+            "Icy Wind",
+            "Mist",
+            "Surf"
+          ]
+        },
+        {
+          "name": "Gyarados",
+          "dexNumber": 130,
+          "nature": "Jolly",
+          "ability": "Intimidate",
+          "item": "None",
+          "moves": [
+            "Twister",
+            "Surf",
+            "Earthquake",
+            "Ice Fang",
+            "Crunch"
+          ]
+        },
+        {
+          "name": "Starmie",
+          "dexNumber": 121,
+          "nature": "Timid",
+          "ability": "Analytic",
+          "item": "None",
+          "moves": [
+            "Water Pulse",
+            "Psywave",
+            "Water Gun",
+            "Waterfall"
+          ]
+        },
+        {
+          "name": "Cradily",
+          "dexNumber": 346,
+          "nature": "Sassy",
+          "ability": "Storm Drain",
+          "item": "None",
+          "moves": [
+            "Toxic",
+            "Curse",
+            "Solar Beam",
+            "Rock Tomb"
+          ]
+        },
+        {
+          "name": "Blastoise",
+          "dexNumber": 9,
+          "nature": "Bold",
+          "ability": "Torrent",
+          "item": "None",
+          "moves": [
+            "Water Gun",
+            "Aura Sphere",
+            "Dark Pulse",
+            "Waterfall"
+          ]
+        },
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Bold",
+          "ability": "Serene Grace",
+          "item": "None",
+          "moves": [
+            "Thunder Wave",
+            "Extreme Speed",
+            "Shock Wave",
+            "Air Slash"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Pearl",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pearl.png"
+          },
+          {
+            "name": "Water Gem",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Water_Gem.png"
+          },
+          {
+            "name": "TM: Scald",
+            "quantity": "1-3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Water.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Ludicolo Clothes",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ludicolo_Clothes.png"
+          },
+          {
+            "name": "Ludicolo Hat",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ludicolo_Hat.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Wailmer",
+            "dexNumber": 320,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shellder",
+            "dexNumber": 90,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shellos",
+            "dexNumber": 422,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Oshawott",
+            "dexNumber": 501,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Oshawott",
+            "dexNumber": 501,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Shellos",
+            "dexNumber": 422,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Feebas",
+            "dexNumber": 349,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Poliwag",
+            "dexNumber": 60,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Milotic",
+          "dexNumber": 350,
+          "nature": "Bold",
+          "ability": "Competitive",
+          "item": "Leftovers",
+          "moves": [
+            "Scald",
+            "Ice Beam",
+            "Recover",
+            "Dragon Tail"
+          ]
+        },
+        {
+          "name": "Mega Gyarados",
+          "dexNumber": 10041,
+          "nature": "Jolly",
+          "ability": "Mold Breaker",
+          "item": "Gyaradosite",
+          "moves": [
+            "Dragon Dance",
+            "Earthquake",
+            "Waterfall",
+            "Ice Fang",
+            "Crunch"
+          ]
+        },
+        {
+          "name": "Starmie",
+          "dexNumber": 121,
+          "nature": "Timid",
+          "ability": "Analytic",
+          "item": "Choice Specs",
+          "moves": [
+            "Surf",
+            "Psychic",
+            "Thunderbolt",
+            "Ice Beam"
+          ]
+        },
+        {
+          "name": "Cradily",
+          "dexNumber": 346,
+          "nature": "Sassy",
+          "ability": "Storm Drain",
+          "item": "Leftovers",
+          "moves": [
+            "Toxic",
+            "Curse",
+            "Seed Bomb",
+            "Ingrain"
+          ]
+        },
+        {
+          "name": "Blastoise",
+          "dexNumber": 9,
+          "nature": "Bold",
+          "ability": "Torrent",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Hydro Pump",
+            "Aura Sphere",
+            "Dark Pulse",
+            "Flash Cannon"
+          ]
+        },
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Bold",
+          "ability": "Serene Grace",
+          "item": "Leftovers",
+          "moves": [
+            "Thunder Wave",
+            "Roost",
+            "Nasty Plot",
+            "Air Slash"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "items": [
+          {
+            "name": "Pearl",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pearl.png"
+          },
+          {
+            "name": "Water Gem",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Water_Gem.png"
+          },
+          {
+            "name": "TM: Scald",
+            "quantity": "1-3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Water.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Ludicolo Clothes",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ludicolo_Clothes.png"
+          },
+          {
+            "name": "Ludicolo Hat",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ludicolo_Hat.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Wailmer",
+            "dexNumber": 320,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shellder",
+            "dexNumber": 90,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shellos",
+            "dexNumber": 422,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Oshawott",
+            "dexNumber": 501,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Oshawott",
+            "dexNumber": 501,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Shellos",
+            "dexNumber": 422,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Feebas",
+            "dexNumber": 349,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Poliwag",
+            "dexNumber": 60,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Milotic",
+          "dexNumber": 350,
+          "nature": "Bold",
+          "ability": "Competitive",
+          "item": "Leftovers",
+          "moves": [
+            "Scald",
+            "Ice Beam",
+            "Recover",
+            "Dragon Tail"
+          ]
+        },
+        {
+          "name": "Gyarados",
+          "dexNumber": 10041,
+          "nature": "Jolly",
+          "ability": "Mold Breaker",
+          "item": "Gyaradosite",
+          "moves": [
+            "Dragon Dance",
+            "Earthquake",
+            "Waterfall",
+            "Ice Fang",
+            "Crunch"
+          ]
+        },
+        {
+          "name": "Starmie",
+          "dexNumber": 121,
+          "nature": "Timid",
+          "ability": "Analytic",
+          "item": "Choice Specs",
+          "moves": [
+            "Surf",
+            "Psychic",
+            "Thunderbolt",
+            "Ice Beam"
+          ]
+        },
+        {
+          "name": "Cradily",
+          "dexNumber": 346,
+          "nature": "Sassy",
+          "ability": "Storm Drain",
+          "item": "Leftovers",
+          "moves": [
+            "Toxic",
+            "Curse",
+            "Seed Bomb",
+            "Ingrain"
+          ]
+        },
+        {
+          "name": "Blastoise",
+          "dexNumber": 9,
+          "nature": "Bold",
+          "ability": "Torrent",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Hydro Pump",
+            "Aura Sphere",
+            "Dark Pulse",
+            "Flash Cannon"
+          ]
+        },
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Bold",
+          "ability": "Serene Grace",
+          "item": "Leftovers",
+          "moves": [
+            "Thunder Wave",
+            "Roost",
+            "Nasty Plot",
+            "Air Slash"
+          ]
+        }
+      ]
+    }
+  }
+}

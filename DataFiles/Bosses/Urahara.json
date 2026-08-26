@@ -1,0 +1,500 @@
+{
+  "name": "Urahara",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Urahara.png",
+  "BossCooldown": 288,
+  "bossId": "urahara",
+  "location": "Pokemon Tower 3F",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/UraharaLoc.png",
+  "requirements": "Kanto Champion,Only level 100 Pok\u00E9mon",
+  "difficulties": {
+    "easy": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Lum Berry",
+            "quantity": "25-35",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+          },
+          {
+            "name": "Choice Band",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Band.png"
+          },
+          {
+            "name": "Choice Scarf",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Scarf.png"
+          },
+          {
+            "name": "Life Orb",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Life_Orb.png"
+          },
+          {
+            "name": "TZ Clothes",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TZ_Clothes.png"
+          },
+          {
+            "name": "Hollow Mask",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hollow_Mask.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Riolu",
+            "dexNumber": 447,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvitar",
+            "dexNumber": 246,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Lucario",
+          "dexNumber": 448,
+          "nature": "Jolly",
+          "ability": "Inner Focus",
+          "item": "None",
+          "moves": [
+            "Close Combat",
+            "Extreme Speed",
+            "Ice Punch",
+            "Meteor Mash"
+          ]
+        },
+        {
+          "name": "Ho-Oh",
+          "dexNumber": 250,
+          "nature": "Adamant",
+          "ability": "Pressure",
+          "item": "None",
+          "moves": [
+            "Sacred Fire",
+            "Brave Bird",
+            "Earthquake",
+            "Zen Headbutt"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Timid",
+          "ability": "Flame Body",
+          "item": "None",
+          "moves": [
+            "Quiver Dance",
+            "Flamethrower",
+            "Giga Drain",
+            "Bug Buzz"
+          ]
+        },
+        {
+          "name": "Raikou",
+          "dexNumber": 243,
+          "nature": "Modest",
+          "ability": "Pressure",
+          "item": "None",
+          "moves": [
+            "Thunderbolt",
+            "Shadow Ball",
+            "Hidden Power (Ice)",
+            "Extrasensory"
+          ]
+        },
+        {
+          "name": "Donphan",
+          "dexNumber": 232,
+          "nature": "Impish",
+          "ability": "Sturdy",
+          "item": "None",
+          "moves": [
+            "Earthquake",
+            "Ice Shard",
+            "Stealth Rock",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Modest",
+          "ability": "Serene Grace",
+          "item": "None",
+          "moves": [
+            "Air Slash",
+            "Fire Blast",
+            "Aura Sphere",
+            "Dazzling Gleam"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Lum Berry",
+            "quantity": "25-35",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+          },
+          {
+            "name": "Choice Band",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Band.png"
+          },
+          {
+            "name": "Choice Scarf",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Scarf.png"
+          },
+          {
+            "name": "Life Orb",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Life_Orb.png"
+          },
+          {
+            "name": "TZ Clothes",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TZ_Clothes.png"
+          },
+          {
+            "name": "Hollow Mask",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hollow_Mask.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Riolu",
+            "dexNumber": 447,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvitar",
+            "dexNumber": 246,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Larvitar",
+            "dexNumber": 246,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Lucario",
+          "dexNumber": 448,
+          "nature": "Jolly",
+          "ability": "Inner Focus",
+          "item": "Life Orb",
+          "moves": [
+            "Close Combat",
+            "Extreme Speed",
+            "Ice Punch",
+            "Meteor Mash"
+          ]
+        },
+        {
+          "name": "Ho-Oh",
+          "dexNumber": 250,
+          "nature": "Adamant",
+          "ability": "Pressure",
+          "item": "Choice Scarf",
+          "moves": [
+            "Sacred Fire",
+            "Brave Bird",
+            "Earthquake",
+            "Zen Headbutt"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Timid",
+          "ability": "Flame Body",
+          "item": "Assault Vest",
+          "moves": [
+            "Quiver Dance",
+            "Flamethrower",
+            "Giga Drain",
+            "Bug Buzz"
+          ]
+        },
+        {
+          "name": "Raikou",
+          "dexNumber": 243,
+          "nature": "Modest",
+          "ability": "Pressure",
+          "item": "Choice Specs",
+          "moves": [
+            "Thunderbolt",
+            "Shadow Ball",
+            "Hidden Power (Ice)",
+            "Extrasensory"
+          ]
+        },
+        {
+          "name": "Donphan",
+          "dexNumber": 232,
+          "nature": "Impish",
+          "ability": "Sturdy",
+          "item": "Rocky Helmet",
+          "moves": [
+            "Earthquake",
+            "Ice Shard",
+            "Stealth Rock",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Modest",
+          "ability": "Serene Grace",
+          "item": "Choice Scarf",
+          "moves": [
+            "Air Slash",
+            "Fire Blast",
+            "Aura Sphere",
+            "Dazzling Gleam"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Lum Berry",
+            "quantity": "25-35",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Lum_Berry.png"
+          },
+          {
+            "name": "Choice Band",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Band.png"
+          },
+          {
+            "name": "Choice Scarf",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Scarf.png"
+          },
+          {
+            "name": "Life Orb",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Life_Orb.png"
+          },
+          {
+            "name": "TZ Clothes",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TZ_Clothes.png"
+          },
+          {
+            "name": "Hollow Mask",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hollow_Mask.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Riolu",
+            "dexNumber": 447,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvitar",
+            "dexNumber": 246,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Larvitar",
+            "dexNumber": 246,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Lucario",
+          "dexNumber": 448,
+          "nature": "Jolly",
+          "ability": "Inner Focus",
+          "item": "Choice Band",
+          "moves": [
+            "Close Combat",
+            "Extreme Speed",
+            "Ice Punch",
+            "Meteor Mash"
+          ]
+        },
+        {
+          "name": "Ho-Oh",
+          "dexNumber": 250,
+          "nature": "Adamant",
+          "ability": "Pressure",
+          "item": "Choice Band",
+          "moves": [
+            "Sacred Fire",
+            "Brave Bird",
+            "Earthquake",
+            "Zen Headbutt"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Timid",
+          "ability": "Flame Body",
+          "item": "Focus Sash",
+          "moves": [
+            "Quiver Dance",
+            "Flamethrower",
+            "Giga Drain",
+            "Bug Buzz"
+          ]
+        },
+        {
+          "name": "Raikou",
+          "dexNumber": 243,
+          "nature": "Modest",
+          "ability": "Pressure",
+          "item": "Choice Specs",
+          "moves": [
+            "Thunderbolt",
+            "Shadow Ball",
+            "Hidden Power (Ice)",
+            "Extrasensory"
+          ]
+        },
+        {
+          "name": "Donphan",
+          "dexNumber": 232,
+          "nature": "Impish",
+          "ability": "Sturdy",
+          "item": "Leftovers",
+          "moves": [
+            "Earthquake",
+            "Ice Shard",
+            "Stealth Rock",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Modest",
+          "ability": "Serene Grace",
+          "item": "Choice Scarf",
+          "moves": [
+            "Air Slash",
+            "Fire Blast",
+            "Aura Sphere",
+            "Dazzling Gleam"
+          ]
+        }
+      ]
+    }
+  }
+}

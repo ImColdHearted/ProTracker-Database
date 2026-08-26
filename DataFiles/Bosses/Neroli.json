@@ -1,0 +1,827 @@
+{
+  "name": "Neroli",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Neroli.png",
+  "BossCooldown": 288,
+  "bossId": "neroli",
+  "location": "Ilex Forest",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/NeroliLoc.png",
+  "requirements": "Having completed the Johto League.",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Leaf Stone",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leaf_Stone.png"
+          },
+          {
+            "name": "Dusk Stone",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dusk_Stone.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Miracle Seed",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "TM: Solar Beam",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Grass.png"
+          },
+          {
+            "name": "TM: Sunny Day",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Fire.png"
+          },
+          {
+            "name": "Hibiscus Hat",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hibiscus_Hat.png"
+          },
+          {
+            "name": "Pansy Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pansy_Flower.png"
+          },
+          {
+            "name": "Orchid Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Orchid_Flower.png"
+          },
+          {
+            "name": "Anemone Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Anemone_Flower.png"
+          },
+          {
+            "name": "Jasmine Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Jasmine_Flower.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Clefairy",
+            "dexNumber": 35,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Budew",
+            "dexNumber": 406,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Vulpix",
+            "dexNumber": 37,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Phanpy",
+            "dexNumber": 231,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Chikorita",
+            "dexNumber": 152,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Sewaddle",
+            "dexNumber": 540,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Petilil",
+            "dexNumber": 548,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Litwick",
+            "dexNumber": 607,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Flabebe",
+            "dexNumber": 669,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Goomy",
+            "dexNumber": 704,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Celebi",
+          "dexNumber": 251,
+          "nature": "Timid",
+          "ability": "Natural Cure",
+          "item": "None",
+          "moves": [
+            "Earth Power",
+            "Psyshock",
+            "Giga Drain",
+            "Ancient Power"
+          ]
+        },
+        {
+          "name": "Ninetales",
+          "dexNumber": 38,
+          "nature": "Timid",
+          "ability": "Drought",
+          "item": "None",
+          "moves": [
+            "Fire Blast",
+            "Solar Beam",
+            "Psyshock",
+            "Dark Pulse"
+          ]
+        },
+        {
+          "name": "Meganium",
+          "dexNumber": 154,
+          "nature": "Calm",
+          "ability": "Leaf Guard",
+          "item": "None",
+          "moves": [
+            "Giga Drain",
+            "Dragon Tail",
+            "Ancient Power",
+            "Leech Seed"
+          ]
+        },
+        {
+          "name": "Leavanny",
+          "dexNumber": 542,
+          "nature": "Adamant",
+          "ability": "Chlorophyll",
+          "item": "None",
+          "moves": [
+            "Leaf Blade",
+            "X-Scissor",
+            "Knock Off",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Lilligant",
+          "dexNumber": 549,
+          "nature": "Timid",
+          "ability": "Chlorophyll",
+          "item": "None",
+          "moves": [
+            "Leaf Storm",
+            "Hidden Power (Fire)",
+            "Synthesis",
+            "Quiver Dance"
+          ]
+        },
+        {
+          "name": "Altaria",
+          "dexNumber": 334,
+          "nature": "Modest",
+          "ability": "Natural Cure",
+          "item": "None",
+          "moves": [
+            "Draco Meteor",
+            "Moonblast",
+            "Flamethrower",
+            "Solar Beam"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Leaf Stone",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leaf_Stone.png"
+          },
+          {
+            "name": "Dusk Stone",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dusk_Stone.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Miracle Seed",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "TM: Solar Beam",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Grass.png"
+          },
+          {
+            "name": "TM: Sunny Day",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Fire.png"
+          },
+          {
+            "name": "Hibiscus Hat",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hibiscus_Hat.png"
+          },
+          {
+            "name": "Pansy Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pansy_Flower.png"
+          },
+          {
+            "name": "Orchid Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Orchid_Flower.png"
+          },
+          {
+            "name": "Anemone Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Anemone_Flower.png"
+          },
+          {
+            "name": "Jasmine Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Jasmine_Flower.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Clefairy",
+            "dexNumber": 35,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Budew",
+            "dexNumber": 406,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Vulpix",
+            "dexNumber": 37,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Phanpy",
+            "dexNumber": 231,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Chikorita",
+            "dexNumber": 152,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Sewaddle",
+            "dexNumber": 540,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Petilil",
+            "dexNumber": 548,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Litwick",
+            "dexNumber": 607,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Flababe",
+            "dexNumber": 669,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Goomy",
+            "dexNumber": 704,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Goomy",
+            "dexNumber": 704,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Litwick",
+            "dexNumber": 607,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Flababe",
+            "dexNumber": 669,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Petilil",
+            "dexNumber": 548,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Celebi",
+          "dexNumber": 251,
+          "nature": "Timid",
+          "ability": "Natural Cure",
+          "item": "Leftovers",
+          "moves": [
+            "Earth Power",
+            "Psyshock",
+            "Giga Drain",
+            "Ancient Power"
+          ]
+        },
+        {
+          "name": "Donphan",
+          "dexNumber": 232,
+          "nature": "Adamant",
+          "ability": "Sturdy",
+          "item": "Choice Band",
+          "moves": [
+            "Earthquake",
+            "Knock Off",
+            "Ice Shard",
+            "Seed Bomb"
+          ]
+        },
+        {
+          "name": "Roserade",
+          "dexNumber": 407,
+          "nature": "Timid",
+          "ability": "Technician",
+          "item": "Choice Specs",
+          "moves": [
+            "Hidden Power (Fire)",
+            "Leaf Storm",
+            "Sludge Bomb",
+            "Dazzling Gleam"
+          ]
+        },
+        {
+          "name": "Kingdra",
+          "dexNumber": 230,
+          "nature": "Adamant",
+          "ability": "Sniper",
+          "item": "Scope Lens",
+          "moves": [
+            "Waterfall",
+            "Outrage",
+            "Iron Head",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Serperior",
+          "dexNumber": 497,
+          "nature": "Timid",
+          "ability": "Contrary",
+          "item": "Choice Specs",
+          "moves": [
+            "Leaf Storm",
+            "Hidden Power (Fire)",
+            "Dragon Pulse",
+            "Synthesis"
+          ]
+        },
+        {
+          "name": "Mega Gardevoir",
+          "dexNumber": 10051,
+          "nature": "Modest",
+          "ability": "Pixilate",
+          "item": "Gardevoirite",
+          "moves": [
+            "Moonblast",
+            "Psyshock",
+            "Shadow Ball",
+            "Focus Blast"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "items": [
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Leaf Stone",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leaf_Stone.png"
+          },
+          {
+            "name": "Dusk Stone",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dusk_Stone.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Miracle Seed",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "TM: Solar Beam",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Grass.png"
+          },
+          {
+            "name": "TM: Sunny Day",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Fire.png"
+          },
+          {
+            "name": "Hibiscus Hat",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hibiscus_Hat.png"
+          },
+          {
+            "name": "Pansy Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pansy_Flower.png"
+          },
+          {
+            "name": "Orchid Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Orchid_Flower.png"
+          },
+          {
+            "name": "Anemone Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Anemone_Flower.png"
+          },
+          {
+            "name": "Jasmine Flower",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Jasmine_Flower.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Clefairy",
+            "dexNumber": 35,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Budew",
+            "dexNumber": 406,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Vulpix",
+            "dexNumber": 37,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Phanpy",
+            "dexNumber": 231,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Chikorita",
+            "dexNumber": 152,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Sewaddle",
+            "dexNumber": 540,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Petilil",
+            "dexNumber": 548,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Litwick",
+            "dexNumber": 607,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Flababe",
+            "dexNumber": 669,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Goomy",
+            "dexNumber": 704,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Goomy",
+            "dexNumber": 704,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Litwick",
+            "dexNumber": 607,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Flababe",
+            "dexNumber": 669,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Petilil",
+            "dexNumber": 548,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Celebi",
+          "dexNumber": 251,
+          "nature": "Timid",
+          "ability": "Natural Cure",
+          "item": "Leftovers",
+          "moves": [
+            "Earth Power",
+            "Psyshock",
+            "Giga Drain",
+            "Ancient Power",
+            "Dazzling Gleam",
+            "Recover"
+          ]
+        },
+        {
+          "name": "Mega Diancie",
+          "dexNumber": 10075,
+          "nature": "Naive",
+          "ability": "Magic Bounce",
+          "item": "Diancite",
+          "moves": [
+            "Diamond Storm",
+            "Moonblast",
+            "Hidden Power (Fire)",
+            "Earth Power",
+            "Psyshock",
+            "Calm Mind"
+          ]
+        },
+        {
+          "name": "Florges",
+          "dexNumber": 671,
+          "nature": "Timid",
+          "ability": "Flower Veil",
+          "item": "Leftovers",
+          "moves": [
+            "Moonblast",
+            "Hidden Power (Fire)",
+            "Psychic",
+            "Energy Ball",
+            "Synthesis"
+          ]
+        },
+        {
+          "name": "Chandelure",
+          "dexNumber": 609,
+          "nature": "Timid",
+          "ability": "Flash Fire",
+          "item": "Choice Scarf",
+          "moves": [
+            "Shadow Ball",
+            "Energy Ball",
+            "Fire Blast",
+            "Hidden Power (Fighting)",
+            "Trick"
+          ]
+        },
+        {
+          "name": "Goodra",
+          "dexNumber": 706,
+          "nature": "Adamant",
+          "ability": "Sap Sipper",
+          "item": "Choice Band",
+          "moves": [
+            "Outrage",
+            "Iron Tail",
+            "Power Whip",
+            "Earthquake",
+            "Fire Punch",
+            "Superpower",
+            "Aqua Tail"
+          ]
+        },
+        {
+          "name": "Clefable",
+          "dexNumber": 36,
+          "nature": "Modest",
+          "ability": "Unaware",
+          "item": "Choice Specs",
+          "moves": [
+            "Moonblast",
+            "Petal Dance",
+            "Fire Blast",
+            "Psychic",
+            "Thunderbolt",
+            "Shadow Ball",
+            "Focus Blast"
+          ]
+        }
+      ]
+    }
+  }
+}

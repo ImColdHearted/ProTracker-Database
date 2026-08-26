@@ -1,0 +1,595 @@
+{
+  "name": "Thor",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Thor.png",
+  "BossCooldown": 288,
+  "bossId": "thor",
+  "location": "Whirl Islands B4F",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/ThorLoc.png",
+  "requirements": "Sinnoh Champion",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Leftovers",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "2-8",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Sitrus Berry",
+            "quantity": "12-15",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Sitrus_Berry.png"
+          },
+          {
+            "name": "Icy Rock",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Icy_Rock.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Heat Rock",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Heat_Rock.png"
+          },
+          {
+            "name": "Light Clay",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Light_Clay.png"
+          },
+          {
+            "name": "Smooth Rock",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Smooth_Rock.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Swinub",
+            "dexNumber": 220,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Clefairy",
+            "dexNumber": 35,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvitar",
+            "dexNumber": 246,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Teddiursa",
+            "dexNumber": 216,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Froakie",
+            "dexNumber": 656,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "None",
+          "moves": [
+            "Outrage",
+            "Earthquake",
+            "Iron Head",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Ursaring",
+          "dexNumber": 217,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "None",
+          "moves": [
+            "Close Combat",
+            "Crunch",
+            "Earthquake",
+            "Return"
+          ]
+        },
+        {
+          "name": "Greninja",
+          "dexNumber": 658,
+          "nature": "Naive",
+          "ability": "Protean",
+          "item": "None",
+          "moves": [
+            "Hydro Pump",
+            "Ice Beam",
+            "Low Kick",
+            "Gunk Shot"
+          ]
+        },
+        {
+          "name": "Clefable",
+          "dexNumber": 36,
+          "nature": "Modest",
+          "ability": "Unaware",
+          "item": "None",
+          "moves": [
+            "Moonblast",
+            "Flamethrower",
+            "Thunderbolt",
+            "Focus Blast"
+          ]
+        },
+        {
+          "name": "Mamoswine",
+          "dexNumber": 473,
+          "nature": "Jolly",
+          "ability": "Thick Fat",
+          "item": "None",
+          "moves": [
+            "Earthquake",
+            "Icicle Crash",
+            "Knock Off",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Lugia",
+          "dexNumber": 249,
+          "nature": "Modest",
+          "ability": "Multiscale",
+          "item": "None",
+          "moves": [
+            "Aeroblast",
+            "Thunder",
+            "Earth Power",
+            "Calm Mind"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Leftovers",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "2-8",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Sitrus Berry",
+            "quantity": "12-15",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Sitrus_Berry.png"
+          },
+          {
+            "name": "Icy Rock",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Icy_Rock.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Heat Rock",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Heat_Rock.png"
+          },
+          {
+            "name": "Light Clay",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Light_Clay.png"
+          },
+          {
+            "name": "Smooth Rock",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Smooth_Rock.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Swinub",
+            "dexNumber": 220,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Clefairy",
+            "dexNumber": 35,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvitar",
+            "dexNumber": 246,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Teddiursa",
+            "dexNumber": 216,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Froakie",
+            "dexNumber": 656,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvitar",
+            "dexNumber": 246,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Froakie",
+            "dexNumber": 656,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "Choice Band",
+          "moves": [
+            "Outrage",
+            "Earthquake",
+            "Iron Head",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Mega Tyranitar",
+          "dexNumber": 10049,
+          "nature": "Adamant",
+          "ability": "Sand Stream",
+          "item": "Choice Scarf",
+          "moves": [
+            "Stone Edge",
+            "Crunch",
+            "Ice Punch",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Greninja",
+          "dexNumber": 658,
+          "nature": "Naive",
+          "ability": "Protean",
+          "item": "Life Orb",
+          "moves": [
+            "Hydro Pump",
+            "Ice Beam",
+            "Low Kick",
+            "Gunk Shot"
+          ]
+        },
+        {
+          "name": "Clefable",
+          "dexNumber": 36,
+          "nature": "Modest",
+          "ability": "Unaware",
+          "item": "Choice Specs",
+          "moves": [
+            "Moonblast",
+            "Flamethrower",
+            "Thunderbolt",
+            "Focus Blast"
+          ]
+        },
+        {
+          "name": "Mamoswine",
+          "dexNumber": 473,
+          "nature": "Jolly",
+          "ability": "Thick Fat",
+          "item": "Focus Sash",
+          "moves": [
+            "Earthquake",
+            "Icicle Crash",
+            "Knock Off",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Lugia",
+          "dexNumber": 249,
+          "nature": "Modest",
+          "ability": "Multiscale",
+          "item": "Choice Specs",
+          "moves": [
+            "Aeroblast",
+            "Thunder",
+            "Earth Power",
+            "Calm Mind"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Leftovers",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "2-8",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Sitrus Berry",
+            "quantity": "12-15",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Sitrus_Berry.png"
+          },
+          {
+            "name": "Icy Rock",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Icy_Rock.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Heat Rock",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Heat_Rock.png"
+          },
+          {
+            "name": "Light Clay",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Light_Clay.png"
+          },
+          {
+            "name": "Smooth Rock",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Smooth_Rock.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Swinub",
+            "dexNumber": 220,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Clefairy",
+            "dexNumber": 35,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvitar",
+            "dexNumber": 246,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Teddiursa",
+            "dexNumber": 216,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Froakie",
+            "dexNumber": 656,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvitar",
+            "dexNumber": 246,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Froakie",
+            "dexNumber": 656,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "Choice Band",
+          "moves": [
+            "Outrage",
+            "Earthquake",
+            "Iron Head",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Mega Tyranitar",
+          "dexNumber": 10049,
+          "nature": "Adamant",
+          "ability": "Sand Stream",
+          "item": "Tyranitarite",
+          "moves": [
+            "Stone Edge",
+            "Crunch",
+            "Ice Punch",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Greninja",
+          "dexNumber": 658,
+          "nature": "Naive",
+          "ability": "Protean",
+          "item": "Choice Specs",
+          "moves": [
+            "Hydro Pump",
+            "Ice Beam",
+            "Low Kick",
+            "Gunk Shot",
+            "Dark Pulse",
+            "Grass Knot"
+          ]
+        },
+        {
+          "name": "Zapdos",
+          "dexNumber": 145,
+          "nature": "Modest",
+          "ability": "Static",
+          "item": "Rocky Helmet",
+          "moves": [
+            "Discharge",
+            "Heat Wave",
+            "Hidden Power (Ice)",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Mamoswine",
+          "dexNumber": 473,
+          "nature": "Jolly",
+          "ability": "Thick Fat",
+          "item": "Focus Sash",
+          "moves": [
+            "Earthquake",
+            "Icicle Crash",
+            "Knock Off",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Lugia",
+          "dexNumber": 249,
+          "nature": "Modest",
+          "ability": "Multiscale",
+          "item": "Choice Specs",
+          "moves": [
+            "Aeroblast",
+            "Thunder",
+            "Earth Power",
+            "Calm Mind"
+          ]
+        }
+      ]
+    }
+  }
+}

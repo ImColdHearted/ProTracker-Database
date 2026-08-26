@@ -1,0 +1,392 @@
+{
+  "name": "Officer Jenny",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Officer_Jenny.png",
+  "BossCooldown": 288,
+  "bossId": "officerjenny",
+  "location": "Pinkan Island (Pinkan Lighthouse 2F)",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/OfficerJennyLoc.png",
+  "requirements": "Hoenn League championship (one of the prerequisites of entering the boss\u0027 site in Pinkan Island",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Shiny Stone",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Shiny_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Pidgey",
+            "dexNumber": 16,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Growlithe",
+            "dexNumber": 58,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Arcanine",
+          "dexNumber": 59,
+          "nature": "Random",
+          "ability": "Intimidate",
+          "item": "None",
+          "moves": [
+            "Close Combat"
+          ]
+        },
+        {
+          "name": "Swanna",
+          "dexNumber": 581,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Scald",
+            "Hurricane"
+          ]
+        },
+        {
+          "name": "Stoutland",
+          "dexNumber": 508,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Return",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Manectric",
+          "dexNumber": 310,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": []
+        },
+        {
+          "name": "Jumpluff",
+          "dexNumber": 189,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": []
+        },
+        {
+          "name": "Pidgeot",
+          "dexNumber": 18,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": []
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Shiny Stone",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Shiny_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Pidgey",
+            "dexNumber": 16,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Growlithe",
+            "dexNumber": 58,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Lillipup",
+            "dexNumber": 506,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Squirtle",
+            "dexNumber": 7,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Arcanine",
+          "dexNumber": 59,
+          "nature": "Random",
+          "ability": "Intimidate",
+          "item": "None",
+          "moves": [
+            "Wild Charge"
+          ]
+        },
+        {
+          "name": "Swanna",
+          "dexNumber": 581,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Hurricane"
+          ]
+        },
+        {
+          "name": "Stoutland",
+          "dexNumber": 508,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Thunder Punch",
+            "Return",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Manectric",
+          "dexNumber": 310,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Life Orb",
+          "moves": [
+            "Thunderbolt",
+            "Overheat"
+          ]
+        },
+        {
+          "name": "Jumpluff",
+          "dexNumber": 189,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Swords Dance",
+            "Acrobatics",
+            "Seed Bomb"
+          ]
+        },
+        {
+          "name": "Pidgeot",
+          "dexNumber": 18,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "Brave Bird"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 30000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "items": [
+          {
+            "name": "Shiny Stone",
+            "quantity": "3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Shiny_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Pidgey",
+            "dexNumber": 16,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Growlithe",
+            "dexNumber": 58,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Lillipup",
+            "dexNumber": 506,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Squirtle",
+            "dexNumber": 7,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Arcanine",
+          "dexNumber": 59,
+          "nature": "Random",
+          "ability": "Intimidate",
+          "item": "Choice Band",
+          "moves": [
+            "Flare Blitz",
+            "Wild Charge",
+            "Close Combat",
+            "Crunch",
+            "Extreme Speed"
+          ]
+        },
+        {
+          "name": "Gengar",
+          "dexNumber": 94,
+          "nature": "Random",
+          "ability": "Cursed Body",
+          "item": "Choice Specs",
+          "moves": [
+            "Shadow Ball",
+            "Sludge Wave",
+            "Focus Blast",
+            "Thunderbolt"
+          ]
+        },
+        {
+          "name": "Luxray",
+          "dexNumber": 405,
+          "nature": "Random",
+          "ability": "Guts",
+          "item": "Flame Orb",
+          "moves": [
+            "Superpower",
+            "Ice Fang",
+            "Wild Charge",
+            "Facade"
+          ]
+        },
+        {
+          "name": "Manectric",
+          "dexNumber": 310,
+          "nature": "Random",
+          "ability": "Lightning Rod",
+          "item": "Choice Scarf",
+          "moves": [
+            "Overheat",
+            "Thunderbolt",
+            "Roar",
+            "Hidden Power (Ice)"
+          ]
+        },
+        {
+          "name": "Stoutland",
+          "dexNumber": 508,
+          "nature": "Random",
+          "ability": "Scrappy",
+          "item": "Choice Band",
+          "moves": [
+            "Superpower",
+            "Ice Fang",
+            "Thunder Fang",
+            "Return"
+          ]
+        },
+        {
+          "name": "Mega Blastoise",
+          "dexNumber": 10036,
+          "nature": "Random",
+          "ability": "Mega Launcher",
+          "item": "Blastoisinite",
+          "moves": [
+            "Ice Beam",
+            "Focus Blast",
+            "Hydro Pump",
+            "Aura Sphere",
+            "Dark Pulse"
+          ]
+        }
+      ]
+    }
+  }
+}

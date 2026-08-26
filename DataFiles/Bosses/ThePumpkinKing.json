@@ -1,0 +1,536 @@
+{
+  "name": "The Pumpkin King",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/The_Pumpkin_King.png",
+  "BossCooldown": 288,
+  "bossId": "thepumpking",
+  "location": "Lavender Town Graveyard",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/ThePumpkinKingLoc.png",
+  "requirements": "Be Kanto Champion",
+  "difficulties": {
+    "easy": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Chople Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+          },
+          {
+            "name": "Colbur Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Colbur_Berry.png"
+          },
+          {
+            "name": "Occa Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Occa_Berry.png"
+          },
+          {
+            "name": "Passho Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Passho_Berry.png"
+          },
+          {
+            "name": "Rindo Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rindo_Berry.png"
+          },
+          {
+            "name": "Shuca Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Shuca_Berry.png"
+          },
+          {
+            "name": "Yache Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Yache_Berry.png"
+          },
+          {
+            "name": "Shiny Stone",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Shiny_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Shuckle",
+            "dexNumber": 213,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Lotad",
+            "dexNumber": 270,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Pawniard",
+            "dexNumber": 624,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shuckle",
+            "dexNumber": 213,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Lotad",
+            "dexNumber": 270,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Pawniard",
+            "dexNumber": 624,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Bisharp",
+          "dexNumber": 625,
+          "nature": "Adamant",
+          "ability": "Defiant",
+          "item": "None",
+          "moves": [
+            "Swords Dance",
+            "Knock Off",
+            "Iron Head",
+            "Low Kick"
+          ]
+        },
+        {
+          "name": "Shuckle",
+          "dexNumber": 213,
+          "nature": "Impish",
+          "ability": "Sturdy",
+          "item": "None",
+          "moves": [
+            "Stealth Rock",
+            "Infestation",
+            "Toxic",
+            "Encore"
+          ]
+        },
+        {
+          "name": "Yanmega",
+          "dexNumber": 469,
+          "nature": "Modest",
+          "ability": "Speed Boost",
+          "item": "None",
+          "moves": [
+            "Bug Buzz",
+            "Air Slash",
+            "Protect",
+            "Giga Drain"
+          ]
+        },
+        {
+          "name": "Roserade",
+          "dexNumber": 407,
+          "nature": "Timid",
+          "ability": "Poison Point",
+          "item": "None",
+          "moves": [
+            "Giga Drain",
+            "Sludge Bomb",
+            "Spikes",
+            "Sleep Powder"
+          ]
+        },
+        {
+          "name": "Gourgeist",
+          "dexNumber": 711,
+          "nature": "Impish",
+          "ability": "Insomnia",
+          "item": "None",
+          "moves": [
+            "Seed Bomb",
+            "Will-O-Wisp",
+            "Phantom Force",
+            "Leech Seed"
+          ]
+        },
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Timid",
+          "ability": "Serene Grace",
+          "item": "None",
+          "moves": [
+            "Air Slash",
+            "Flamethrower",
+            "Dazzling Gleam",
+            "Aura Sphere"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Chople Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+          },
+          {
+            "name": "Colbur Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Colbur_Berry.png"
+          },
+          {
+            "name": "Occa Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Occa_Berry.png"
+          },
+          {
+            "name": "Passho Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Passho_Berry.png"
+          },
+          {
+            "name": "Rindo Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rindo_Berry.png"
+          },
+          {
+            "name": "Shuca Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Shuca_Berry.png"
+          },
+          {
+            "name": "Yache Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Yache_Berry.png"
+          },
+          {
+            "name": "Shiny Stone",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Shiny_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Shuckle",
+            "dexNumber": 213,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Lotad",
+            "dexNumber": 270,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Pawniard",
+            "dexNumber": 624,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shuckle",
+            "dexNumber": 213,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Lotad",
+            "dexNumber": 270,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Pawniard",
+            "dexNumber": 624,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Bisharp",
+          "dexNumber": 625,
+          "nature": "Adamant",
+          "ability": "Defiant",
+          "item": "None",
+          "moves": [
+            "Swords Dance",
+            "Knock Off",
+            "Iron Head",
+            "Low Kick"
+          ]
+        },
+        {
+          "name": "Shuckle",
+          "dexNumber": 213,
+          "nature": "Impish",
+          "ability": "Sturdy",
+          "item": "None",
+          "moves": [
+            "Stealth Rock",
+            "Infestation",
+            "Toxic",
+            "Encore"
+          ]
+        },
+        {
+          "name": "Yanmega",
+          "dexNumber": 469,
+          "nature": "Modest",
+          "ability": "Speed Boost",
+          "item": "None",
+          "moves": [
+            "Bug Buzz",
+            "Air Slash",
+            "Protect",
+            "Giga Drain"
+          ]
+        },
+        {
+          "name": "Roserade",
+          "dexNumber": 407,
+          "nature": "Timid",
+          "ability": "Poison Point",
+          "item": "None",
+          "moves": [
+            "Giga Drain",
+            "Sludge Bomb",
+            "Spikes",
+            "Sleep Powder"
+          ]
+        },
+        {
+          "name": "Gourgeist",
+          "dexNumber": 711,
+          "nature": "Impish",
+          "ability": "Insomnia",
+          "item": "None",
+          "moves": [
+            "Seed Bomb",
+            "Will-O-Wisp",
+            "Phantom Force",
+            "Leech Seed"
+          ]
+        },
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Timid",
+          "ability": "Serene Grace",
+          "item": "None",
+          "moves": [
+            "Air Slash",
+            "Flamethrower",
+            "Dazzling Gleam",
+            "Aura Sphere"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Chople Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+          },
+          {
+            "name": "Colbur Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Colbur_Berry.png"
+          },
+          {
+            "name": "Occa Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Occa_Berry.png"
+          },
+          {
+            "name": "Passho Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Passho_Berry.png"
+          },
+          {
+            "name": "Rindo Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rindo_Berry.png"
+          },
+          {
+            "name": "Shuca Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Shuca_Berry.png"
+          },
+          {
+            "name": "Yache Berry",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Yache_Berry.png"
+          },
+          {
+            "name": "Shiny Stone",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Shiny_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Shuckle",
+            "dexNumber": 213,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Lotad",
+            "dexNumber": 270,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Pawniard",
+            "dexNumber": 624,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shuckle",
+            "dexNumber": 213,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Lotad",
+            "dexNumber": 270,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Pawniard",
+            "dexNumber": 624,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Bisharp",
+          "dexNumber": 625,
+          "nature": "Adamant",
+          "ability": "Defiant",
+          "item": "None",
+          "moves": [
+            "Swords Dance",
+            "Knock Off",
+            "Iron Head",
+            "Low Kick"
+          ]
+        },
+        {
+          "name": "Shuckle",
+          "dexNumber": 213,
+          "nature": "Impish",
+          "ability": "Sturdy",
+          "item": "None",
+          "moves": [
+            "Stealth Rock",
+            "Infestation",
+            "Toxic",
+            "Encore"
+          ]
+        },
+        {
+          "name": "Yanmega",
+          "dexNumber": 469,
+          "nature": "Modest",
+          "ability": "Speed Boost",
+          "item": "None",
+          "moves": [
+            "Bug Buzz",
+            "Air Slash",
+            "Protect",
+            "Giga Drain"
+          ]
+        },
+        {
+          "name": "Roserade",
+          "dexNumber": 407,
+          "nature": "Timid",
+          "ability": "Poison Point",
+          "item": "None",
+          "moves": [
+            "Giga Drain",
+            "Sludge Bomb",
+            "Spikes",
+            "Sleep Powder"
+          ]
+        },
+        {
+          "name": "Gourgeist",
+          "dexNumber": 711,
+          "nature": "Impish",
+          "ability": "Insomnia",
+          "item": "None",
+          "moves": [
+            "Seed Bomb",
+            "Will-O-Wisp",
+            "Phantom Force",
+            "Leech Seed"
+          ]
+        },
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Timid",
+          "ability": "Serene Grace",
+          "item": "None",
+          "moves": [
+            "Air Slash",
+            "Flamethrower",
+            "Dazzling Gleam",
+            "Aura Sphere"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1073 @@
+{
+  "bossId": "gamerspewdieanddiepy",
+  "name": "Gamers Pewdie And Diepy",
+  "location": "Goldenrod City Game Corner",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/GamersLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Gamer_Pewdie.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Johto Elite 4",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Clefairy",
+            "dexNumber": 35,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Natu",
+            "dexNumber": 177,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Swirlix",
+            "dexNumber": 684,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Munna",
+            "dexNumber": 517,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Azurill",
+            "dexNumber": 298,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mime Jr.",
+            "dexNumber": 439,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Dedenne",
+            "dexNumber": 702,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Carbink",
+            "dexNumber": 703,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Dedenne",
+            "dexNumber": 702,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Carbink",
+            "dexNumber": 703,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "winStreakRequired": 3
+          }
+        ],
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Moon Stone",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Moon_Stone.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Air Balloon",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Air_Balloon.png"
+          },
+          {
+            "name": "King's Rock",
+            "quantity": "1-2",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/King's_Rock.png"
+          },
+          {
+            "name": "TM29 - Psychic",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Psychic.png"
+          },
+          {
+            "name": "Moon Stone",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Moon_Stone.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Leftovers",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leftovers.png"
+          }
+        ]
+      },
+      "Pewdie": {
+        "team": [
+          {
+            "name": "Celebi",
+            "dexNumber": 251,
+            "nature": "Timid",
+            "ability": "Natural Cure",
+            "item": "Sitrus Berry",
+            "moves": [
+              "Earth Power",
+              "Psyshock",
+              "Giga Drain",
+              "Ancient Power"
+            ]
+          },
+          {
+            "name": "Metagross",
+            "dexNumber": 376,
+            "nature": "Adamant",
+            "ability": "Clear Body",
+            "item": "Leftovers",
+            "moves": [
+              "Meteor Mash",
+              "Bullet Punch",
+              "Hammer Arm",
+              "Zen Headbutt"
+            ]
+          },
+          {
+            "name": "Espeon",
+            "dexNumber": 196,
+            "nature": "Timid",
+            "ability": "Magic Bounce",
+            "item": "Life Orb",
+            "moves": [
+              "Hidden Power (Fire)",
+              "Psyshock",
+              "Signal Beam",
+              "Protect"
+            ]
+          },
+          {
+            "name": "Xatu",
+            "dexNumber": 178,
+            "nature": "Timid",
+            "ability": "Magic Bounce",
+            "item": "Life Orb",
+            "moves": [
+              "Psyshock",
+              "Grass Knot",
+              "Heat Wave",
+              "Roost"
+            ]
+          },
+          {
+            "name": "Slowbro",
+            "dexNumber": 80,
+            "nature": "Bold",
+            "ability": "Own Tempo",
+            "item": "Leftovers",
+            "moves": [
+              "Calm Mind",
+              "Scald",
+              "Psyshock",
+              "Slack Off"
+            ]
+          },
+          {
+            "name": "Musharna",
+            "dexNumber": 518,
+            "nature": "Modest",
+            "ability": "Synchronize",
+            "item": "Leftovers",
+            "moves": [
+              "Moonlight",
+              "Psychic",
+              "Thunder Wave",
+              "Signal Beam"
+            ]
+          }
+        ],
+        "Diepy": {
+          "team": [
+            {
+              "name": "Whimsicott",
+              "dexNumber": 547,
+              "nature": "Timid",
+              "ability": "Infiltrator",
+              "item": "Choice Specs",
+              "moves": [
+                "Moonblast",
+                "Energy Ball",
+                "Psychic",
+                "Hurricane"
+              ]
+            },
+            {
+              "name": "Azumarill",
+              "dexNumber": 184,
+              "nature": "Adamant",
+              "ability": "Huge Power",
+              "item": "Choice Band",
+              "moves": [
+                "Aqua Jet",
+                "Waterfall",
+                "Play Rough",
+                "Superpower"
+              ]
+            },
+            {
+              "name": "Clefable",
+              "dexNumber": 36,
+              "nature": "Bold",
+              "ability": "Magic Guard",
+              "item": "Leftovers",
+              "moves": [
+                "Calm Mind",
+                "Moonblast",
+                "Thunderbolt",
+                "Flamethrower"
+              ]
+            },
+            {
+              "name": "Carbink",
+              "dexNumber": 703,
+              "nature": "Calm",
+              "ability": "Sturdy",
+              "item": "Leftovers",
+              "moves": [
+                "Stealth Rock",
+                "Moonblast",
+                "Rock Slide",
+                "Toxic"
+              ]
+            },
+            {
+              "name": "Dedenne",
+              "dexNumber": 702,
+              "nature": "Timid",
+              "ability": "Cheek Pouch",
+              "item": "Sitrus Berry",
+              "moves": [
+                "Thunderbolt",
+                "Hidden Power (Ice)",
+                "Toxic",
+                "Signal Beam"
+              ]
+            },
+            {
+              "name": "Sylveon",
+              "dexNumber": 700,
+              "nature": "Modest",
+              "ability": "Pixilate",
+              "item": "Life Orb",
+              "moves": [
+                "Hyper Voice",
+                "Psyshock",
+                "Hidden Power (Fire)",
+                "Shadow Ball"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Clefairy",
+            "dexNumber": 35,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Natu",
+            "dexNumber": 177,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Swirlix",
+            "dexNumber": 684,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Munna",
+            "dexNumber": 517,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Azurill",
+            "dexNumber": 298,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mime Jr.",
+            "dexNumber": 439,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Dedenne",
+            "dexNumber": 702,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Carbink",
+            "dexNumber": 703,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Dedenne",
+            "dexNumber": 702,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Carbink",
+            "dexNumber": 703,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "winStreakRequired": 3
+          }
+        ],
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Moon Stone",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Moon_Stone.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Air Balloon",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Air_Balloon.png"
+          },
+          {
+            "name": "King's Rock",
+            "quantity": "1-2",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/King's_Rock.png"
+          },
+          {
+            "name": "TM29 - Psychic",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Psychic.png"
+          },
+          {
+            "name": "Moon Stone",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Moon_Stone.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Leftovers",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leftovers.png"
+          }
+        ]
+      },
+      "Pewdie": {
+        "team": [
+          {
+            "name": "Metagross",
+            "dexNumber": 376,
+            "nature": "Adamant",
+            "ability": "Clear Body",
+            "item": "Choice Band",
+            "moves": [
+              "Meteor Mash",
+              "Bullet Punch",
+              "Hammer Arm",
+              "Zen Headbutt"
+            ]
+          },
+          {
+            "name": "Medicham",
+            "dexNumber": 308,
+            "nature": "Jolly",
+            "ability": "Pure Power",
+            "item": "Life Orb",
+            "moves": [
+              "High Jump Kick",
+              "Zen Headbutt",
+              "Thunder Punch",
+              "Bullet Punch"
+            ]
+          },
+          {
+            "name": "Mew",
+            "dexNumber": 151,
+            "nature": "Timid",
+            "ability": "Synchronize",
+            "item": "Leftovers",
+            "moves": [
+              "Nasty Plot",
+              "Psychic",
+              "Fire Blast",
+              "Aura Sphere"
+            ]
+          },
+          {
+            "name": "Gardevoir",
+            "dexNumber": 282,
+            "nature": "Timid",
+            "ability": "Trace",
+            "item": "Choice Scarf",
+            "moves": [
+              "Psyshock",
+              "Moonblast",
+              "Trick",
+              "Hidden Power (Fire)"
+            ]
+          },
+          {
+            "name": "Reuniclus",
+            "dexNumber": 579,
+            "nature": "Bold",
+            "ability": "Magic Guard",
+            "item": "Leftovers",
+            "moves": [
+              "Calm Mind",
+              "Psyshock",
+              "Focus Blast",
+              "Recover"
+            ]
+          },
+          {
+            "name": "Starmie",
+            "dexNumber": 121,
+            "nature": "Timid",
+            "ability": "Analytic",
+            "item": "Choice Specs",
+            "moves": [
+              "Surf",
+              "Psyshock",
+              "Trick",
+              "Ice Beam"
+            ]
+          }
+        ],
+        "Diepy": {
+          "team": [
+            {
+              "name": "Azumarill",
+              "dexNumber": 184,
+              "nature": "Adamant",
+              "ability": "Huge Power",
+              "item": "Choice Band",
+              "moves": [
+                "Aqua Jet",
+                "Waterfall",
+                "Play Rough",
+                "Superpower"
+              ]
+            },
+            {
+              "name": "Whimsicott",
+              "dexNumber": 547,
+              "nature": "Timid",
+              "ability": "Infiltrator",
+              "item": "Choice Specs",
+              "moves": [
+                "Moonblast",
+                "Psychic",
+                "Energy Ball",
+                "Hurricane"
+              ]
+            },
+            {
+              "name": "Slurpuff",
+              "dexNumber": 685,
+              "nature": "Jolly",
+              "ability": "Unburden",
+              "item": "Sitrus Berry",
+              "moves": [
+                "Belly Drum",
+                "Play Rough",
+                "Return",
+                "Drain Punch"
+              ]
+            },
+            {
+              "name": "Mr. Mime",
+              "dexNumber": 122,
+              "nature": "Timid",
+              "ability": "Soundproof",
+              "item": "Choice Scarf",
+              "moves": [
+                "Psyshock",
+                "Dazzling Gleam",
+                "Nasty Plot",
+                "Focus Blast"
+              ]
+            },
+            {
+              "name": "Carbink",
+              "dexNumber": 703,
+              "nature": "Calm",
+              "ability": "Sturdy",
+              "item": "Leftovers",
+              "moves": [
+                "Stealth Rock",
+                "Moonblast",
+                "Rock Slide",
+                "Toxic"
+              ]
+            },
+            {
+              "name": "Granbull",
+              "dexNumber": 210,
+              "nature": "Impish",
+              "ability": "Quick Feet",
+              "item": "Choice Scarf",
+              "moves": [
+                "Play Rough",
+                "Earthquake",
+                "Heal Bell",
+                "Thunder Wave"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Clefairy",
+            "dexNumber": 35,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Natu",
+            "dexNumber": 177,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Swirlix",
+            "dexNumber": 684,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Munna",
+            "dexNumber": 517,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Azurill",
+            "dexNumber": 298,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mime Jr.",
+            "dexNumber": 439,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Dedenne",
+            "dexNumber": 702,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Carbink",
+            "dexNumber": 703,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Dedenne",
+            "dexNumber": 702,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Carbink",
+            "dexNumber": 703,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "winStreakRequired": 3
+          }
+        ],
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Moon Stone",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Moon_Stone.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Air Balloon",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Air_Balloon.png"
+          },
+          {
+            "name": "King's Rock",
+            "quantity": "1-2",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/King's_Rock.png"
+          },
+          {
+            "name": "TM29 - Psychic",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Psychic.png"
+          },
+          {
+            "name": "Moon Stone",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Moon_Stone.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "5-8",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Leftovers",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leftovers.png"
+          }
+        ]
+      },
+      "Pewdie": {
+        "team": [
+          {
+            "name": "Starmie",
+            "dexNumber": 121,
+            "nature": "Timid",
+            "ability": "Analytic",
+            "item": "Life Orb",
+            "moves": [
+              "Hydro Pump",
+              "Psyshock",
+              "Hidden Power (Fire)",
+              "Ice Beam",
+              "Recover"
+            ]
+          },
+          {
+            "name": "Alakazam",
+            "dexNumber": 65,
+            "nature": "Timid",
+            "ability": "Magic Guard",
+            "item": "Focus Sash",
+            "moves": [
+              "Hidden Power (Ice)",
+              "Psychic",
+              "Focus Blast",
+              "Thunder Wave",
+              "Psyshock",
+              "Signal Beam"
+            ]
+          },
+          {
+            "name": "Slowking",
+            "dexNumber": 199,
+            "nature": "Modest",
+            "ability": "Own Tempo",
+            "item": "Assault Vest",
+            "moves": [
+              "Scald",
+              "Future Sight",
+              "Fire Blast",
+              "Psyshock",
+              "Dragon Tail"
+            ]
+          },
+          {
+            "name": "Jirachi",
+            "dexNumber": 385,
+            "nature": "Jolly",
+            "ability": "Serene Grace",
+            "item": "Choice Scarf",
+            "moves": [
+              "Iron Head",
+              "Fire Punch",
+              "Zen Headbutt",
+              "Ice Punch",
+              "Thunder Punch"
+            ]
+          },
+          {
+            "name": "Mega Latios",
+            "dexNumber": 10063,
+            "nature": "Modest",
+            "ability": "Levitate",
+            "item": "Latiosite",
+            "moves": [
+              "Draco Meteor",
+              "Hidden Power (Fire)",
+              "Trick",
+              "Psyshock",
+              "Surf"
+            ]
+          },
+          {
+            "name": "Mew",
+            "dexNumber": 151,
+            "nature": "Jolly",
+            "ability": "Synchronize",
+            "item": "Life Orb",
+            "moves": [
+              "Swords Dance",
+              "Drain Punch",
+              "Zen Headbutt",
+              "Sucker Punch",
+              "Soft-Boiled"
+            ]
+          }
+        ],
+        "Diepy": {
+          "team": [
+            {
+              "name": "Azumarill",
+              "dexNumber": 184,
+              "nature": "Adamant",
+              "ability": "Huge Power",
+              "item": "Choice Band",
+              "moves": [
+                "Aqua Jet",
+                "Waterfall",
+                "Play Rough",
+                "Superpower"
+              ]
+            },
+            {
+              "name": "Clefable",
+              "dexNumber": 36,
+              "nature": "Bold",
+              "ability": "Unaware",
+              "item": "Leftovers",
+              "moves": [
+                "Moonblast",
+                "Thunderbolt",
+                "Flamethrower",
+                "Focus Blast"
+              ]
+            },
+            {
+              "name": "Xerneas",
+              "dexNumber": 716,
+              "nature": "Adamant",
+              "ability": "Fairy Aura",
+              "item": "Choice Scarf",
+              "moves": [
+                "Close Combat",
+                "Outrage",
+                "Night Slash",
+                "Rock Slide",
+                "Zen Headbutt",
+                "Horn Leech",
+                "Megahorn"
+              ]
+            },
+            {
+              "name": "Sylveon",
+              "dexNumber": 700,
+              "nature": "Timid",
+              "ability": "Pixilate",
+              "item": "Choice Scarf",
+              "moves": [
+                "Hyper Voice",
+                "Psyshock",
+                "Shadow Ball",
+                "Hidden Power (Fire)"
+              ]
+            },
+            {
+              "name": "Togekiss",
+              "dexNumber": 468,
+              "nature": "Timid",
+              "ability": "Serene Grace",
+              "item": "Choice Scarf",
+              "moves": [
+                "Air Slash",
+                "Aura Sphere",
+                "Dazzling Gleam",
+                "Flamethrower",
+                "Thunder Wave"
+              ]
+            },
+            {
+              "name": "Mega Diancie",
+              "dexNumber": 10075,
+              "nature": "Sassy",
+              "ability": "Magic Bounce",
+              "item": "Diancite",
+              "moves": [
+                "Psychic",
+                "Moonblast",
+                "Diamond Storm",
+                "Earth Power",
+                "Toxic"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

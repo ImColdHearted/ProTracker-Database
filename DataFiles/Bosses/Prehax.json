@@ -1,0 +1,422 @@
+{
+  "name": "PreHax",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Prehax.png",
+  "BossCooldown": 288,
+  "bossId": "prehax",
+  "location": "Munchlax Resort House 1",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/PrehaxLoc.png",
+  "requirements": "Must have completed the Kanto League,Must have only 2 Pok\u00E9mon in team, all fighting moves banned.",
+  "difficulties": {
+    "easy": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Tamato Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tamato_Berry.png"
+          },
+          {
+            "name": "Hondew Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hondew_Berry.png"
+          },
+          {
+            "name": "Kelpsy Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Kelpsy_Berry.png"
+          },
+          {
+            "name": "Qualot Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Qualot_Berry.png"
+          },
+          {
+            "name": "Grepa Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Grepa_Berry.png"
+          },
+          {
+            "name": "Pomeg Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pomeg_Berry.png"
+          },
+          {
+            "name": "Leftovers",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Silk Scarf",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Silk_Scarf.png"
+          },
+          {
+            "name": "Choice Specs",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Specs.png"
+          },
+          {
+            "name": "Eviolite",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Eviolite.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Munchlax",
+            "dexNumber": 446,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Munchlax",
+            "dexNumber": 446,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Silk Scarf",
+          "moves": [
+            "Tackle",
+            "Double-Edge",
+            "Body Slam",
+            "Rest"
+          ]
+        },
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Silk Scarf",
+          "moves": [
+            "Stockpile",
+            "Counter",
+            "Rock Slide",
+            "Zen Headbutt"
+          ]
+        },
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Leftovers",
+          "moves": [
+            "Earthquake",
+            "Body Slam",
+            "Brick Break",
+            "Whirlwind"
+          ]
+        },
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Leftovers",
+          "moves": [
+            "Flamethrower",
+            "Ice Beam",
+            "Thunderbolt",
+            "Psychic"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Tamato Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tamato_Berry.png"
+          },
+          {
+            "name": "Hondew Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hondew_Berry.png"
+          },
+          {
+            "name": "Kelpsy Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Kelpsy_Berry.png"
+          },
+          {
+            "name": "Qualot Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Qualot_Berry.png"
+          },
+          {
+            "name": "Grepa Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Grepa_Berry.png"
+          },
+          {
+            "name": "Pomeg Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pomeg_Berry.png"
+          },
+          {
+            "name": "Leftovers",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Silk Scarf",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Silk_Scarf.png"
+          },
+          {
+            "name": "Choice Specs",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Specs.png"
+          },
+          {
+            "name": "Eviolite",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Eviolite.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Munchlax",
+            "dexNumber": 446,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Munchlax",
+            "dexNumber": 446,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Silk Scarf",
+          "moves": [
+            "Tackle",
+            "Double-Edge",
+            "Body Slam",
+            "Rest"
+          ]
+        },
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Silk Scarf",
+          "moves": [
+            "Stockpile",
+            "Counter",
+            "Rock Slide",
+            "Zen Headbutt"
+          ]
+        },
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Leftovers",
+          "moves": [
+            "Earthquake",
+            "Body Slam",
+            "Brick Break",
+            "Whirlwind"
+          ]
+        },
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Leftovers",
+          "moves": [
+            "Flamethrower",
+            "Ice Beam",
+            "Thunderbolt",
+            "Psychic"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Tamato Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tamato_Berry.png"
+          },
+          {
+            "name": "Hondew Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hondew_Berry.png"
+          },
+          {
+            "name": "Kelpsy Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Kelpsy_Berry.png"
+          },
+          {
+            "name": "Qualot Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Qualot_Berry.png"
+          },
+          {
+            "name": "Grepa Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Grepa_Berry.png"
+          },
+          {
+            "name": "Pomeg Berry",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pomeg_Berry.png"
+          },
+          {
+            "name": "Leftovers",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "Silk Scarf",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Silk_Scarf.png"
+          },
+          {
+            "name": "Choice Specs",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Choice_Specs.png"
+          },
+          {
+            "name": "Eviolite",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Eviolite.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Munchlax",
+            "dexNumber": 446,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Munchlax",
+            "dexNumber": 446,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Silk Scarf",
+          "moves": [
+            "Tackle",
+            "Double-Edge",
+            "Body Slam",
+            "Rest"
+          ]
+        },
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Silk Scarf",
+          "moves": [
+            "Stockpile",
+            "Counter",
+            "Rock Slide",
+            "Zen Headbutt"
+          ]
+        },
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Leftovers",
+          "moves": [
+            "Earthquake",
+            "Body Slam",
+            "Brick Break",
+            "Whirlwind"
+          ]
+        },
+        {
+          "name": "Munchlax",
+          "dexNumber": 446,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Leftovers",
+          "moves": [
+            "Flamethrower",
+            "Ice Beam",
+            "Thunderbolt",
+            "Psychic"
+          ]
+        }
+      ]
+    }
+  }
+}

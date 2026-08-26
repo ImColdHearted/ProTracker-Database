@@ -1,0 +1,484 @@
+{
+  "name": "Professor Birch",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Professor_Birch.png",
+  "BossCooldown": 288,
+  "bossId": "professorbirch",
+  "location": "Verdanturf Town House 2",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/BirchLoc.png",
+  "requirements": "Having defeated the Hoenn League",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Air Balloon",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Air_Balloon.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Poochyena",
+            "dexNumber": 261,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Taillow",
+            "dexNumber": 276,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Slakoth",
+            "dexNumber": 287,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mudkip",
+            "dexNumber": 258,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Torchic",
+            "dexNumber": 255,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Treecko",
+            "dexNumber": 252,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Mightyena",
+          "dexNumber": 262,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": []
+        },
+        {
+          "name": "Medicham",
+          "dexNumber": 308,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": []
+        },
+        {
+          "name": "Swellow",
+          "dexNumber": 277,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": []
+        },
+        {
+          "name": "Pelipper",
+          "dexNumber": 279,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": []
+        },
+        {
+          "name": "Flygon",
+          "dexNumber": 330,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": []
+        },
+        {
+          "name": "Mega Sceptile",
+          "dexNumber": 10065,
+          "nature": "Random",
+          "ability": "Lightning Rod",
+          "item": "None",
+          "moves": []
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Air Balloon",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Air_Balloon.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Poochyena",
+            "dexNumber": 261,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Taillow",
+            "dexNumber": 276,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Slakoth",
+            "dexNumber": 287,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mudkip",
+            "dexNumber": 258,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Torchic",
+            "dexNumber": 255,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Treecko",
+            "dexNumber": 252,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Slakoth",
+            "dexNumber": 287,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Torchic",
+            "dexNumber": 255,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Mudkip",
+            "dexNumber": 258,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Treecko",
+            "dexNumber": 252,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Medicham",
+          "dexNumber": 308,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "None",
+          "moves": [
+            "High Jump Kick"
+          ]
+        },
+        {
+          "name": "Slaking",
+          "dexNumber": 289,
+          "nature": "Random",
+          "ability": "Truant",
+          "item": "Leftovers",
+          "moves": [
+            "Rock Slide",
+            "Giga Impact"
+          ]
+        },
+        {
+          "name": "Swellow",
+          "dexNumber": 277,
+          "nature": "Random",
+          "ability": "Guts",
+          "item": "Flame Orb",
+          "moves": [
+            "Thief",
+            "Brave Bird"
+          ]
+        },
+        {
+          "name": "Pelipper",
+          "dexNumber": 279,
+          "nature": "Random",
+          "ability": "Drizzle",
+          "item": "None",
+          "moves": [
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Flygon",
+          "dexNumber": 330,
+          "nature": "Random",
+          "ability": "Levitate",
+          "item": "Life Orb",
+          "moves": [
+            "Outrage"
+          ]
+        },
+        {
+          "name": "Mega Swampert",
+          "dexNumber": 10064,
+          "nature": "Random",
+          "ability": "Swift Swim",
+          "item": "Swampertite",
+          "moves": [
+            "Earthquake",
+            "Waterfall"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 25000,
+          "maximum": 35000
+        },
+        "pveCoins": 5,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Air Balloon",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Air_Balloon.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Poochyena",
+            "dexNumber": 261,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Taillow",
+            "dexNumber": 276,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Slakoth",
+            "dexNumber": 287,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mudkip",
+            "dexNumber": 258,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Torchic",
+            "dexNumber": 255,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Treecko",
+            "dexNumber": 252,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Slakoth",
+            "dexNumber": 287,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Torchic",
+            "dexNumber": 255,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Mudkip",
+            "dexNumber": 258,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Treecko",
+            "dexNumber": 252,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Medicham",
+          "dexNumber": 308,
+          "nature": "Random",
+          "ability": "Pure Power",
+          "item": "Choice Band",
+          "moves": [
+            "Zen Headbutt",
+            "Fire Punch",
+            "High Jump Kick",
+            "Ice Punch",
+            "Poison Jab"
+          ]
+        },
+        {
+          "name": "Slaking",
+          "dexNumber": 289,
+          "nature": "Random",
+          "ability": "Truant",
+          "item": "Choice Band",
+          "moves": [
+            "Rock Slide",
+            "Fire Punch",
+            "Hammer Arm",
+            "Giga Impact"
+          ]
+        },
+        {
+          "name": "Swellow",
+          "dexNumber": 277,
+          "nature": "Random",
+          "ability": "Guts",
+          "item": "Flame Orb",
+          "moves": [
+            "Thief",
+            "Brave Bird",
+            "Return",
+            "U-turn"
+          ]
+        },
+        {
+          "name": "Torkoal",
+          "dexNumber": 324,
+          "nature": "Random",
+          "ability": "Drought",
+          "item": "Heat Rock",
+          "moves": [
+            "Lava Plume",
+            "Solar Beam",
+            "Earthquake",
+            "Explosion"
+          ]
+        },
+        {
+          "name": "Flygon",
+          "dexNumber": 330,
+          "nature": "Random",
+          "ability": "Levitate",
+          "item": "Life Orb",
+          "moves": [
+            "Outrage",
+            "Fire Blast",
+            "Earthquake",
+            "Stone Edge",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Mega Blaziken",
+          "dexNumber": 10050,
+          "nature": "Random",
+          "ability": "Speed Boost",
+          "item": "Blazikenite",
+          "moves": [
+            "Brave Bird",
+            "Flare Blitz",
+            "High Jump Kick",
+            "Earthquake"
+          ]
+        }
+      ]
+    }
+  }
+}

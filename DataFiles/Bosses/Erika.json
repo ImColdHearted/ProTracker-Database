@@ -1,0 +1,437 @@
+{
+  "bossId": "erika",
+  "name": "Erika",
+  "location": "Viridian Maze",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/ErikaLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Erika.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Kanto Elite 4",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Lotad",
+            "dexNumber": 270
+          },
+          {
+            "name": "Tangela",
+            "dexNumber": 114
+          },
+          {
+            "name": "Turtwig",
+            "dexNumber": 387
+          },
+          {
+            "name": "Ferroseed",
+            "dexNumber": 597
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636
+          }
+        ],
+        "items": [
+          {
+            "name": "Rindo Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rindo_Berry.png"
+          },
+          {
+            "name": "Sitrus Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Sitrus_Berry.png"
+          },
+          {
+            "name": "TM22 - Solar Beam",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Grass.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "8-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Ferrothorn",
+          "dexNumber": 598,
+          "nature": "Relaxed",
+          "ability": "Iron Barbs",
+          "item": "None",
+          "moves": [
+            "Iron Head",
+            "Curse",
+            "Self-Destruct",
+            "Payback"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Timid",
+          "ability": "Swarm",
+          "item": "None",
+          "moves": [
+            "Signal Beam",
+            "Heat Wave",
+            "Amnesia",
+            "Psychic"
+          ]
+        },
+        {
+          "name": "Ludicolo",
+          "dexNumber": 272,
+          "nature": "Timid",
+          "ability": "Swift Swim",
+          "item": "None",
+          "moves": [
+            "Mega Drain",
+            "Icy Wind",
+            "Surf",
+            "Solar Beam"
+          ]
+        },
+        {
+          "name": "Celebi",
+          "dexNumber": 251,
+          "nature": "Timid",
+          "ability": "Natural Cure",
+          "item": "None",
+          "moves": [
+            "Magical Leaf",
+            "Ancient Power",
+            "Perish Song",
+            "Leech Seed"
+          ]
+        },
+        {
+          "name": "Torterra",
+          "dexNumber": 389,
+          "nature": "Adamant",
+          "ability": "Overgrow",
+          "item": "None",
+          "moves": [
+            "Crunch",
+            "Razor Leaf",
+            "Stomping Tantrum",
+            "Synthesis"
+          ]
+        },
+        {
+          "name": "Tangrowth",
+          "dexNumber": 465,
+          "nature": "Sassy",
+          "ability": "Leaf Guard",
+          "item": "None",
+          "moves": [
+            "Brick Break",
+            "Knock Off",
+            "Slam",
+            "Giga Drain"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Lotad",
+            "dexNumber": 270
+          },
+          {
+            "name": "Tangela",
+            "dexNumber": 114
+          },
+          {
+            "name": "Turtwig",
+            "dexNumber": 387
+          },
+          {
+            "name": "Ferroseed",
+            "dexNumber": 597
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636
+          }
+        ],
+        "items": [
+          {
+            "name": "Rindo Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rindo_Berry.png"
+          },
+          {
+            "name": "Sitrus Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Sitrus_Berry.png"
+          },
+          {
+            "name": "TM22 - Solar Beam",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Grass.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "8-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Ferrothorn",
+          "dexNumber": 598,
+          "nature": "Relaxed",
+          "ability": "Iron Barbs",
+          "item": "Rocky Helmet",
+          "moves": [
+            "Power Whip",
+            "Gyro Ball",
+            "Bulldoze",
+            "Explosion"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Timid",
+          "ability": "Swarm",
+          "item": "Passho Berry",
+          "moves": [
+            "Bug Buzz",
+            "Flamethrower",
+            "Giga Drain",
+            "Quiver Dance"
+          ]
+        },
+        {
+          "name": "Ludicolo",
+          "dexNumber": 272,
+          "nature": "Timid",
+          "ability": "Swift Swim",
+          "item": "Life Orb",
+          "moves": [
+            "Focus Blast",
+            "Hydro Pump",
+            "Giga Drain",
+            "Ice Beam"
+          ]
+        },
+        {
+          "name": "Celebi",
+          "dexNumber": 251,
+          "nature": "Timid",
+          "ability": "Natural Cure",
+          "item": "Leftovers",
+          "moves": [
+            "Thunder Wave",
+            "Earth Power",
+            "Nasty Plot",
+            "Psychic"
+          ]
+        },
+        {
+          "name": "Torterra",
+          "dexNumber": 389,
+          "nature": "Adamant",
+          "ability": "Overgrow",
+          "item": "Focus Sash",
+          "moves": [
+            "Wood Hammer",
+            "Earthquake",
+            "Stone Edge",
+            "Synthesis"
+          ]
+        },
+        {
+          "name": "Tangrowth",
+          "dexNumber": 465,
+          "nature": "Sassy",
+          "ability": "Leaf Guard",
+          "item": "Assault Vest",
+          "moves": [
+            "Earthquake",
+            "Power Whip",
+            "Sludge Bomb",
+            "Ancient Power"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Lotad",
+            "dexNumber": 270
+          },
+          {
+            "name": "Tangela",
+            "dexNumber": 114
+          },
+          {
+            "name": "Turtwig",
+            "dexNumber": 387
+          },
+          {
+            "name": "Ferroseed",
+            "dexNumber": 597
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636
+          }
+        ],
+        "items": [
+          {
+            "name": "Rindo Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rindo_Berry.png"
+          },
+          {
+            "name": "Sitrus Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Sitrus_Berry.png"
+          },
+          {
+            "name": "TM22 - Solar Beam",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Grass.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "8-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Ferrothorn",
+          "dexNumber": 598,
+          "nature": "Relaxed",
+          "ability": "Iron Barbs",
+          "item": "Rocky Helmet",
+          "moves": [
+            "Power Whip",
+            "Gyro Ball",
+            "Bulldoze",
+            "Explosion"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Timid",
+          "ability": "Swarm",
+          "item": "Passho Berry",
+          "moves": [
+            "Bug Buzz",
+            "Flamethrower",
+            "Giga Drain",
+            "Quiver Dance"
+          ]
+        },
+        {
+          "name": "Ludicolo",
+          "dexNumber": 272,
+          "nature": "Timid",
+          "ability": "Swift Swim",
+          "item": "Life Orb",
+          "moves": [
+            "Focus Blast",
+            "Hydro Pump",
+            "Giga Drain",
+            "Ice Beam"
+          ]
+        },
+        {
+          "name": "Celebi",
+          "dexNumber": 251,
+          "nature": "Timid",
+          "ability": "Natural Cure",
+          "item": "Leftovers",
+          "moves": [
+            "Thunder Wave",
+            "Earth Power",
+            "Nasty Plot",
+            "Psychic"
+          ]
+        },
+        {
+          "name": "Torterra",
+          "dexNumber": 389,
+          "nature": "Adamant",
+          "ability": "Overgrow",
+          "item": "Focus Sash",
+          "moves": [
+            "Wood Hammer",
+            "Earthquake",
+            "Stone Edge",
+            "Synthesis"
+          ]
+        },
+        {
+          "name": "Tangrowth",
+          "dexNumber": 465,
+          "nature": "Sassy",
+          "ability": "Leaf Guard",
+          "item": "Assault Vest",
+          "moves": [
+            "Earthquake",
+            "Power Whip",
+            "Sludge Bomb",
+            "Ancient Power"
+          ]
+        }
+      ]
+    }
+  }
+}

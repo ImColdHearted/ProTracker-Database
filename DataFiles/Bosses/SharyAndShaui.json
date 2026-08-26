@@ -1,0 +1,1005 @@
+{
+  "name": "Shary \u0026 Shaui",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Shary.png",
+  "BossCooldown": 288,
+  "bossId": "sharyandshaui",
+  "location": "Love Island House 1",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/SharyandShauiLoc.png",
+  "requirements": "Be Kanto champion, Access to Love Island",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "10-15",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "TM: Dragon Claw",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Dragon.png"
+          },
+          {
+            "name": "TM: Calm Mind",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Psychic.png"
+          },
+          {
+            "name": "TM: Taunt",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Dark.png"
+          },
+          {
+            "name": "TM: Shadow Ball",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ghost.png"
+          },
+          {
+            "name": "TM: Flamethrower",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Fire.png"
+          },
+          {
+            "name": "TM: Facade",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "TM: Thief",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Dark.png"
+          },
+          {
+            "name": "TM: Shadow Claw",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ghost.png"
+          },
+          {
+            "name": "Dark Gem",
+            "quantity": "5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dark_Gem.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "5-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Goomy Hat",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Goomy_Hat.png"
+          },
+          {
+            "name": "Lunch Box",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Marill",
+            "dexNumber": 183,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Eevee-Gmax",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Deino",
+            "dexNumber": 633,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Pancham",
+            "dexNumber": 674,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Purrloin",
+            "dexNumber": 509,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Audino-Mega",
+            "dexNumber": 531,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "Shary": {
+        "team": [
+          {
+            "name": "Flareon",
+            "dexNumber": 136,
+            "nature": "Adamant",
+            "ability": "Guts",
+            "item": "None",
+            "moves": [
+              "Flare Blitz",
+              "Facade",
+              "Double Kick",
+              "Will-O-Wisp"
+            ]
+          },
+          {
+            "name": "Mienshao",
+            "dexNumber": 620,
+            "nature": "Jolly",
+            "ability": "Reckless",
+            "item": "None",
+            "moves": [
+              "Bounce",
+              "Jump Kick",
+              "Fake Out",
+              "Dual Chop"
+            ]
+          },
+          {
+            "name": "Meloetta",
+            "dexNumber": 648,
+            "nature": "Timid",
+            "ability": "Serene Grace",
+            "item": "None",
+            "moves": [
+              "Psychic",
+              "Perish Song",
+              "Shock Wave",
+              "Hyper Voice"
+            ]
+          },
+          {
+            "name": "Latias",
+            "dexNumber": 380,
+            "nature": "Timid",
+            "ability": "Levitate",
+            "item": "None",
+            "moves": [
+              "Shadow Ball",
+              "Icy Wind",
+              "Dragon Pulse",
+              "Psychic"
+            ]
+          },
+          {
+            "name": "Jolteon",
+            "dexNumber": 135,
+            "nature": "Timid",
+            "ability": "Volt Absorb",
+            "item": "None",
+            "moves": [
+              "Thunderbolt",
+              "Thunder Wave",
+              "Double Kick",
+              "Pin Missile"
+            ]
+          },
+          {
+            "name": "Togekiss",
+            "dexNumber": 468,
+            "nature": "Timid",
+            "ability": "Serene Grace",
+            "item": "None",
+            "moves": [
+              "Psychic",
+              "Air Slash",
+              "Ancient Power",
+              "Shadow Ball"
+            ]
+          }
+        ],
+        "Shaui": {
+          "team": [
+            {
+              "name": "Shaymin-Sky",
+              "dexNumber": 492,
+              "nature": "Timid",
+              "ability": "Serene Grace",
+              "item": "None",
+              "moves": [
+                "Air Slash",
+                "Energy Ball",
+                "Dazzling Gleam",
+                "Leech Seed"
+              ]
+            },
+            {
+              "name": "Conkeldurr",
+              "dexNumber": 534,
+              "nature": "Adamant",
+              "ability": "Guts",
+              "item": "None",
+              "moves": [
+                "Rock Slide",
+                "Facade",
+                "Fire Punch",
+                "Wake-Up Slap"
+              ]
+            },
+            {
+              "name": "Dragonite",
+              "dexNumber": 149,
+              "nature": "Adamant",
+              "ability": "Multiscale",
+              "item": "None",
+              "moves": [
+                "Thunder Punch",
+                "Earthquake",
+                "Dragon Dance",
+                "Dragon Claw"
+              ]
+            },
+            {
+              "name": "Alakazam",
+              "dexNumber": 65,
+              "nature": "Timid",
+              "ability": "Magic Guard",
+              "item": "None",
+              "moves": [
+                "Thunder Wave",
+                "Dazzling Gleam",
+                "Psychic",
+                "Shadow Ball"
+              ]
+            },
+            {
+              "name": "Greninja",
+              "dexNumber": 658,
+              "nature": "Naive",
+              "ability": "Protean",
+              "item": "None",
+              "moves": [
+                "Scald",
+                "Extrasensory",
+                "Dark Pulse",
+                "Grass Knot"
+              ]
+            },
+            {
+              "name": "Azelf",
+              "dexNumber": 482,
+              "nature": "Timid",
+              "ability": "Levitate",
+              "item": "None",
+              "moves": [
+                "Extrasensory",
+                "Thunderbolt",
+                "Energy Ball",
+                "Shadow Ball"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "10-15",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "TM: Dragon Claw",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Dragon.png"
+          },
+          {
+            "name": "TM: Calm Mind",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Psychic.png"
+          },
+          {
+            "name": "TM: Taunt",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Dark.png"
+          },
+          {
+            "name": "TM: Shadow Ball",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ghost.png"
+          },
+          {
+            "name": "TM: Flamethrower",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Fire.png"
+          },
+          {
+            "name": "TM: Facade",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "TM: Thief",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Dark.png"
+          },
+          {
+            "name": "TM: Shadow Claw",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ghost.png"
+          },
+          {
+            "name": "Dark Gem",
+            "quantity": "5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dark_Gem.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "5-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Goomy Hat",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Goomy_Hat.png"
+          },
+          {
+            "name": "Lunch Box",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Marill",
+            "dexNumber": 183,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Eevee-Gmax",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Deino",
+            "dexNumber": 633,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Pancham",
+            "dexNumber": 674,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Purrloin",
+            "dexNumber": 509,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Audino-Mega",
+            "dexNumber": 531,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Eevee-Gmax",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Buneary",
+            "dexNumber": 427,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Audino-Mega",
+            "dexNumber": 531,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Deino",
+            "dexNumber": 633,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "Shary": {
+        "team": [
+          {
+            "name": "Flareon",
+            "dexNumber": 136,
+            "nature": "Adamant",
+            "ability": "Guts",
+            "item": "Toxic Orb",
+            "moves": [
+              "Flare Blitz",
+              "Facade",
+              "Superpower",
+              "Iron Tail"
+            ]
+          },
+          {
+            "name": "Mienshao",
+            "dexNumber": 620,
+            "nature": "Jolly",
+            "ability": "Reckless",
+            "item": "Black Belt",
+            "moves": [
+              "Stone Edge",
+              "Poison Jab",
+              "Knock Off",
+              "High Jump Kick"
+            ]
+          },
+          {
+            "name": "Meloetta",
+            "dexNumber": 648,
+            "nature": "Timid",
+            "ability": "Serene Grace",
+            "item": "Assault Vest",
+            "moves": [
+              "Psychic",
+              "Hyper Voice",
+              "Focus Blast",
+              "Shadow Ball"
+            ]
+          },
+          {
+            "name": "Latias-Mega",
+            "dexNumber": 380,
+            "nature": "Timid",
+            "ability": "Levitate",
+            "item": "Latiasite",
+            "moves": [
+              "Draco Meteor",
+              "Psyshock",
+              "Thunderbolt",
+              "Surf"
+            ]
+          },
+          {
+            "name": "Jolteon",
+            "dexNumber": 135,
+            "nature": "Timid",
+            "ability": "Volt Absorb",
+            "item": "Choice Specs",
+            "moves": [
+              "Thunder",
+              "Signal Beam",
+              "Shadow Ball",
+              "Thunder Wave"
+            ]
+          },
+          {
+            "name": "Togekiss",
+            "dexNumber": 468,
+            "nature": "Timid",
+            "ability": "Serene Grace",
+            "item": "Choice Scarf",
+            "moves": [
+              "Air Slash",
+              "Aura Sphere",
+              "Flamethrower",
+              "Dazzling Gleam"
+            ]
+          }
+        ],
+        "Shaui": {
+          "team": [
+            {
+              "name": "Shaymin-Sky",
+              "dexNumber": 492,
+              "nature": "Timid",
+              "ability": "Serene Grace",
+              "item": "Choice Specs",
+              "moves": [
+                "Air Slash",
+                "Seed Flare",
+                "Earth Power"
+              ]
+            },
+            {
+              "name": "Conkeldurr",
+              "dexNumber": 534,
+              "nature": "Adamant",
+              "ability": "Guts",
+              "item": "Flame Orb",
+              "moves": [
+                "Drain Punch",
+                "Facade",
+                "Knock Off",
+                "Ice Punch"
+              ]
+            },
+            {
+              "name": "Dragonite",
+              "dexNumber": 149,
+              "nature": "Adamant",
+              "ability": "Multiscale",
+              "item": "Lum Berry",
+              "moves": [
+                "Dragon Dance",
+                "Outrage",
+                "Fire Punch",
+                "Extreme Speed"
+              ]
+            },
+            {
+              "name": "Alakazam",
+              "dexNumber": 65,
+              "nature": "Timid",
+              "ability": "Trace",
+              "item": "Alakazite",
+              "moves": [
+                "Focus Blast",
+                "Psychic",
+                "Shadow Ball",
+                "Dazzling Gleam"
+              ]
+            },
+            {
+              "name": "Greninja",
+              "dexNumber": 658,
+              "nature": "Naive",
+              "ability": "Protean",
+              "item": "Expert Belt",
+              "moves": [
+                "Hydro Pump",
+                "Gunk Shot",
+                "Ice Beam",
+                "Dark Pulse"
+              ]
+            },
+            {
+              "name": "Azelf",
+              "dexNumber": 482,
+              "nature": "Timid",
+              "ability": "Levitate",
+              "item": "Focus Sash",
+              "moves": [
+                "Psychic",
+                "Thunderbolt",
+                "Flamethrower",
+                "Dazzling Gleam"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "10-15",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "TM: Dragon Claw",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Dragon.png"
+          },
+          {
+            "name": "TM: Calm Mind",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Psychic.png"
+          },
+          {
+            "name": "TM: Taunt",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Dark.png"
+          },
+          {
+            "name": "TM: Shadow Ball",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ghost.png"
+          },
+          {
+            "name": "TM: Flamethrower",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Fire.png"
+          },
+          {
+            "name": "TM: Facade",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "TM: Thief",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Dark.png"
+          },
+          {
+            "name": "TM: Shadow Claw",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ghost.png"
+          },
+          {
+            "name": "Dark Gem",
+            "quantity": "5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dark_Gem.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "5-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Goomy Hat",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Goomy_Hat.png"
+          },
+          {
+            "name": "Lunch Box",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Marill",
+            "dexNumber": 183,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Eevee-Gmax",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Deino",
+            "dexNumber": 633,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Pancham",
+            "dexNumber": 674,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Purrloin",
+            "dexNumber": 509,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Audino-Mega",
+            "dexNumber": 531,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Eevee-Gmax",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Buneary",
+            "dexNumber": 427,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Audino-Mega",
+            "dexNumber": 531,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Deino",
+            "dexNumber": 633,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "Shary": {
+        "team": [
+          {
+            "name": "Flareon",
+            "dexNumber": 136,
+            "nature": "Adamant",
+            "ability": "Guts",
+            "item": "Toxic Orb",
+            "moves": [
+              "Flare Blitz",
+              "Facade",
+              "Superpower",
+              "Iron Tail"
+            ]
+          },
+          {
+            "name": "Mienshao",
+            "dexNumber": 620,
+            "nature": "Jolly",
+            "ability": "Reckless",
+            "item": "Black Belt",
+            "moves": [
+              "Stone Edge",
+              "Poison Jab",
+              "Knock Off",
+              "High Jump Kick"
+            ]
+          },
+          {
+            "name": "Meloetta",
+            "dexNumber": 648,
+            "nature": "Timid",
+            "ability": "Serene Grace",
+            "item": "Assault Vest",
+            "moves": [
+              "Psychic",
+              "Hyper Voice",
+              "Focus Blast",
+              "Shadow Ball"
+            ]
+          },
+          {
+            "name": "Latias",
+            "dexNumber": 380,
+            "nature": "Timid",
+            "ability": "Levitate",
+            "item": "Latiasite",
+            "moves": [
+              "Draco Meteor",
+              "Psyshock",
+              "Thunderbolt",
+              "Surf"
+            ]
+          },
+          {
+            "name": "Jolteon",
+            "dexNumber": 135,
+            "nature": "Timid",
+            "ability": "Volt Absorb",
+            "item": "Choice Specs",
+            "moves": [
+              "Thunder",
+              "Signal Beam",
+              "Shadow Ball",
+              "Thunder Wave"
+            ]
+          },
+          {
+            "name": "Togekiss",
+            "dexNumber": 468,
+            "nature": "Timid",
+            "ability": "Serene Grace",
+            "item": "Choice Scarf",
+            "moves": [
+              "Air Slash",
+              "Aura Sphere",
+              "Flamethrower",
+              "Dazzling Gleam"
+            ]
+          }
+        ],
+        "Shaui": {
+          "team": [
+            {
+              "name": "Shaymin-Sky",
+              "dexNumber": 492,
+              "nature": "Timid",
+              "ability": "Serene Grace",
+              "item": "Choice Specs",
+              "moves": [
+                "Air Slash",
+                "Seed Flare",
+                "Earth Power"
+              ]
+            },
+            {
+              "name": "Conkeldurr",
+              "dexNumber": 534,
+              "nature": "Adamant",
+              "ability": "Guts",
+              "item": "Flame Orb",
+              "moves": [
+                "Drain Punch",
+                "Facade",
+                "Knock Off",
+                "Ice Punch"
+              ]
+            },
+            {
+              "name": "Dragonite",
+              "dexNumber": 149,
+              "nature": "Adamant",
+              "ability": "Multiscale",
+              "item": "Lum Berry",
+              "moves": [
+                "Dragon Dance",
+                "Outrage",
+                "Fire Punch",
+                "Extreme Speed"
+              ]
+            },
+            {
+              "name": "Alakazam",
+              "dexNumber": 65,
+              "nature": "Timid",
+              "ability": "Trace",
+              "item": "Alakazite",
+              "moves": [
+                "Focus Blast",
+                "Psychic",
+                "Shadow Ball",
+                "Dazzling Gleam"
+              ]
+            },
+            {
+              "name": "Greninja",
+              "dexNumber": 658,
+              "nature": "Naive",
+              "ability": "Protean",
+              "item": "Expert Belt",
+              "moves": [
+                "Hydro Pump",
+                "Gunk Shot",
+                "Ice Beam",
+                "Dark Pulse"
+              ]
+            },
+            {
+              "name": "Azelf",
+              "dexNumber": 482,
+              "nature": "Timid",
+              "ability": "Levitate",
+              "item": "Focus Sash",
+              "moves": [
+                "Psychic",
+                "Thunderbolt",
+                "Flamethrower",
+                "Dazzling Gleam"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+  }

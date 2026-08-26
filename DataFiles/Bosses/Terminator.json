@@ -1,0 +1,645 @@
+{
+  "name": "Terminator",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Terminator.png",
+  "BossCooldown": 264,
+  "bossId": "terminator",
+  "location": "Mt. Silver Moltres Chamber",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/TerminatorLoc.png",
+  "requirements": "Sinnoh League championship",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Dubious Disc",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dubious_Disc.png"
+          },
+          {
+            "name": "Up-Grade",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Up-Grade.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "TM: Thunderbolt",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Electric.png"
+          },
+          {
+            "name": "TM: Psyshock",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Psychic.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Klink",
+            "dexNumber": 599,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Magnemite",
+            "dexNumber": 81,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Elgyem",
+            "dexNumber": 605,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Alolan Grimer",
+            "dexNumber": 10112,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Klinklang",
+          "dexNumber": 601,
+          "nature": "Adamant",
+          "ability": "Clear Body",
+          "item": "None",
+          "moves": [
+            "Wild Charge",
+            "Gear Grind",
+            "Shift Gear",
+            "Return"
+          ]
+        },
+        {
+          "name": "Beheeyem",
+          "dexNumber": 606,
+          "nature": "Modest",
+          "ability": "Analytic",
+          "item": "None",
+          "moves": [
+            "Psychic",
+            "Energy Ball",
+            "Thunderbolt",
+            "Shadow Ball"
+          ]
+        },
+        {
+          "name": "Porygon2",
+          "dexNumber": 233,
+          "nature": "Bold",
+          "ability": "Analytic",
+          "item": "None",
+          "moves": [
+            "Ice Beam",
+            "Foul Play",
+            "Recover",
+            "Thunder Wave"
+          ]
+        },
+        {
+          "name": "Sharpedo",
+          "dexNumber": 319,
+          "nature": "Adamant",
+          "ability": "Speed Boost",
+          "item": "None",
+          "moves": [
+            "Waterfall",
+            "Ice Fang",
+            "Crunch",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Garbodor",
+          "dexNumber": 569,
+          "nature": "Adamant",
+          "ability": "Aftermath",
+          "item": "None",
+          "moves": [
+            "Gunk Shot",
+            "Curse",
+            "Drain Punch",
+            "Seed Bomb"
+          ]
+        },
+        {
+          "name": "Rotom-Wash",
+          "dexNumber": 479,
+          "nature": "Modest",
+          "ability": "Levitate",
+          "item": "None",
+          "moves": [
+            "Hydro Pump",
+            "Hidden Power (Ice)",
+            "Thunderbolt",
+            "Shadow Ball"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Dubious Disc",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dubious_Disc.png"
+          },
+          {
+            "name": "Up-Grade",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Up-Grade.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "TM: Thunderbolt",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Electric.png"
+          },
+          {
+            "name": "TM: Psyshock",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Psychic.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Klink",
+            "dexNumber": 599,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Magnemite",
+            "dexNumber": 81,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Elgyem",
+            "dexNumber": 605,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Alolan Grimer",
+            "dexNumber": 10112,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Alolan Grimer",
+            "dexNumber": 10112,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Klink",
+            "dexNumber": 599,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Klinklang",
+          "dexNumber": 601,
+          "nature": "Adamant",
+          "ability": "Clear Body",
+          "item": "Life Orb",
+          "moves": [
+            "Wild Charge",
+            "Gear Grind",
+            "Shift Gear",
+            "Return"
+          ]
+        },
+        {
+          "name": "Beheeyem",
+          "dexNumber": 606,
+          "nature": "Modest",
+          "ability": "Analytic",
+          "item": "Choice Specs",
+          "moves": [
+            "Psychic",
+            "Energy Ball",
+            "Thunderbolt",
+            "Shadow Ball"
+          ]
+        },
+        {
+          "name": "Porygon2",
+          "dexNumber": 233,
+          "nature": "Bold",
+          "ability": "Analytic",
+          "item": "Eviolite",
+          "moves": [
+            "Ice Beam",
+            "Foul Play",
+            "Recover",
+            "Thunder Wave"
+          ]
+        },
+        {
+          "name": "Sharpedo",
+          "dexNumber": 319,
+          "nature": "Adamant",
+          "ability": "Speed Boost",
+          "item": "Choice Band",
+          "moves": [
+            "Waterfall",
+            "Ice Fang",
+            "Crunch",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Garbodor",
+          "dexNumber": 569,
+          "nature": "Adamant",
+          "ability": "Aftermath",
+          "item": "Assault Vest",
+          "moves": [
+            "Gunk Shot",
+            "Curse",
+            "Drain Punch",
+            "Seed Bomb"
+          ]
+        },
+        {
+          "name": "Rotom-Wash",
+          "dexNumber": 479,
+          "nature": "Modest",
+          "ability": "Levitate",
+          "item": "Choice Specs",
+          "moves": [
+            "Hydro Pump",
+            "Hidden Power (Ice)",
+            "Thunderbolt",
+            "Shadow Ball"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Dubious Disc",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dubious_Disc.png"
+          },
+          {
+            "name": "Up-Grade",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Up-Grade.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "TM: Thunderbolt",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Electric.png"
+          },
+          {
+            "name": "TM: Psyshock",
+            "quantity": "3-5",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Psychic.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Klink",
+            "dexNumber": 599,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Magnemite",
+            "dexNumber": 81,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Elgyem",
+            "dexNumber": 605,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Alolan Grimer",
+            "dexNumber": 10112,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Alolan Grimer",
+            "dexNumber": 10112,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Klink",
+            "dexNumber": 599,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Magnezone",
+          "dexNumber": 462,
+          "nature": "Modest",
+          "ability": "Analytic",
+          "item": "Choice Specs",
+          "moves": [
+            "Signal Beam",
+            "Thunderbolt",
+            "Hidden Power (Ice)",
+            "Magnet Rise",
+            "Flash Cannon"
+          ]
+        },
+        {
+          "name": "Reuniclus",
+          "dexNumber": 579,
+          "nature": "Modest",
+          "ability": "Magic Guard",
+          "item": "Choice Specs",
+          "moves": [
+            "Thunder",
+            "Recover",
+            "Energy Ball",
+            "Shadow Ball",
+            "Psyshock",
+            "Focus Blast"
+          ]
+        },
+        {
+          "name": "Porygon-Z",
+          "dexNumber": 474,
+          "nature": "Timid",
+          "ability": "Analytic",
+          "item": "Choice Specs",
+          "moves": [
+            "Signal Beam",
+            "Thunderbolt",
+            "Toxic",
+            "Ice Beam",
+            "Tri Attack"
+          ]
+        },
+        {
+          "name": "Alolan Muk",
+          "dexNumber": 10113,
+          "nature": "Adamant",
+          "ability": "Poison Touch",
+          "item": "Choice Band",
+          "moves": [
+            "Fire Punch",
+            "Ice Punch",
+            "Gunk Shot",
+            "Knock Off",
+            "Thunder Punch",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Mega Latios",
+          "dexNumber": 10063,
+          "nature": "Timid",
+          "ability": "Levitate",
+          "item": "Latiosite",
+          "moves": [
+            "Energy Ball",
+            "Calm Mind",
+            "Dragon Pulse",
+            "Psyshock",
+            "Thunderbolt",
+            "Shadow Ball"
+          ]
+        },
+        {
+          "name": "Genesect",
+          "dexNumber": 649,
+          "nature": "Naughty",
+          "ability": "Download",
+          "item": "Choice Band",
+          "moves": [
+            "X-Scissor",
+            "Thunderbolt",
+            "Zen Headbutt",
+            "Iron Head",
+            "Ice Beam",
+            "Flamethrower"
+          ]
+        }
+      ]
+    }
+  }
+}

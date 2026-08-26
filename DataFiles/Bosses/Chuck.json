@@ -1,0 +1,461 @@
+{
+  "bossId": "chuck",
+  "name": "Chuck",
+  "location": "Saffron City",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/ChuckLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Chuck.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Johto Elite 4",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Shroomish",
+            "dexNumber": 285
+          },
+          {
+            "name": "Timburr",
+            "dexNumber": 532
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 390
+          },
+          {
+            "name": "Mienfoo",
+            "dexNumber": 619
+          }
+        ],
+        "items": [
+          {
+            "name": "Chople Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "6",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Black Belt",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Black_Belt.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Machamp",
+          "dexNumber": 68,
+          "nature": "Adamant",
+          "ability": "No Guard",
+          "item": "None",
+          "moves": [
+            "Cross Chop",
+            "Submission",
+            "Revenge",
+            "Brick Break"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Timid",
+          "ability": "Blaze",
+          "item": "None",
+          "moves": [
+            "Overheat",
+            "Heat Wave",
+            "Vacuum Wave",
+            "Focus Blast"
+          ]
+        },
+        {
+          "name": "Mienshao",
+          "dexNumber": 620,
+          "nature": "Jolly",
+          "ability": "Regenerator",
+          "item": "None",
+          "moves": [
+            "Jump Kick",
+            "Bounce",
+            "Brick Break",
+            "Aerial Ace"
+          ]
+        },
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Adamant",
+          "ability": "Iron Fist",
+          "item": "None",
+          "moves": [
+            "Wake-Up Slap",
+            "Rock Slide",
+            "Brick Break",
+            "Bulldoze"
+          ]
+        },
+        {
+          "name": "Poliwrath",
+          "dexNumber": 62,
+          "nature": "Modest",
+          "ability": "Water Absorb",
+          "item": "None",
+          "moves": [
+            "Surf",
+            "Icy Wind",
+            "Hyper Beam",
+            "Psychic"
+          ]
+        },
+        {
+          "name": "Breloom",
+          "dexNumber": 286,
+          "nature": "Jolly",
+          "ability": "Poison Heal",
+          "item": "None",
+          "moves": [
+            "Force Palm",
+            "Leech Seed",
+            "Sky Uppercut",
+            "Bullet Seed"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Shroomish",
+            "dexNumber": 285
+          },
+          {
+            "name": "Timburr",
+            "dexNumber": 532
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 390
+          },
+          {
+            "name": "Mienfoo",
+            "dexNumber": 619
+          }
+        ],
+        "items": [
+          {
+            "name": "Chople Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "6",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Black Belt",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Black_Belt.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Machamp",
+          "dexNumber": 68,
+          "nature": "Adamant",
+          "ability": "No Guard",
+          "item": "Assault Vest",
+          "moves": [
+            "Dynamic Punch",
+            "Stone Edge",
+            "Heavy Slam",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Timid",
+          "ability": "Blaze",
+          "item": "Life Orb",
+          "moves": [
+            "Fire Blast",
+            "Focus Blast",
+            "Vacuum Wave",
+            "Grass Knot"
+          ]
+        },
+        {
+          "name": "Mienshao",
+          "dexNumber": 620,
+          "nature": "Jolly",
+          "ability": "Regenerator",
+          "item": "Focus Sash",
+          "moves": [
+            "Poison Jab",
+            "Rock Slide",
+            "Knock Off",
+            "High Jump Kick"
+          ]
+        },
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Adamant",
+          "ability": "Iron Fist",
+          "item": "Leftovers",
+          "moves": [
+            "Drain Punch",
+            "Ice Punch",
+            "Thunder Punch",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Poliwrath",
+          "dexNumber": 62,
+          "nature": "Modest",
+          "ability": "Water Absorb",
+          "item": "Mystic Water",
+          "moves": [
+            "Hydro Pump",
+            "Ice Beam",
+            "Focus Blast",
+            "Hypnosis"
+          ]
+        },
+        {
+          "name": "Breloom",
+          "dexNumber": 286,
+          "nature": "Jolly",
+          "ability": "Poison Heal",
+          "item": "Toxic Orb",
+          "moves": [
+            "Seed Bomb",
+            "Facade",
+            "Drain Punch",
+            "Spore"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Shroomish",
+            "dexNumber": 285
+          },
+          {
+            "name": "Timburr",
+            "dexNumber": 532
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 390
+          },
+          {
+            "name": "Mienfoo",
+            "dexNumber": 619
+          }
+        ],
+        "items": [
+          {
+            "name": "Chople Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "6",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Black Belt",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Black_Belt.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Machamp",
+          "dexNumber": 68,
+          "nature": "Adamant",
+          "ability": "No Guard",
+          "item": "Assault Vest",
+          "moves": [
+            "Dynamic Punch",
+            "Stone Edge",
+            "Heavy Slam",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Timid",
+          "ability": "Blaze",
+          "item": "Life Orb",
+          "moves": [
+            "Fire Blast",
+            "Focus Blast",
+            "Vacuum Wave",
+            "Grass Knot"
+          ]
+        },
+        {
+          "name": "Mienshao",
+          "dexNumber": 620,
+          "nature": "Jolly",
+          "ability": "Regenerator",
+          "item": "Focus Sash",
+          "moves": [
+            "Poison Jab",
+            "Rock Slide",
+            "Knock Off",
+            "High Jump Kick"
+          ]
+        },
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Adamant",
+          "ability": "Iron Fist",
+          "item": "Leftovers",
+          "moves": [
+            "Drain Punch",
+            "Ice Punch",
+            "Thunder Punch",
+            "Fire Punch"
+          ]
+        },
+        {
+          "name": "Poliwrath",
+          "dexNumber": 62,
+          "nature": "Modest",
+          "ability": "Water Absorb",
+          "item": "Mystic Water",
+          "moves": [
+            "Hydro Pump",
+            "Ice Beam",
+            "Focus Blast",
+            "Hypnosis"
+          ]
+        },
+        {
+          "name": "Breloom",
+          "dexNumber": 286,
+          "nature": "Jolly",
+          "ability": "Poison Heal",
+          "item": "Toxic Orb",
+          "moves": [
+            "Seed Bomb",
+            "Facade",
+            "Drain Punch",
+            "Spore"
+          ]
+        }
+      ]
+    }
+  }
+}

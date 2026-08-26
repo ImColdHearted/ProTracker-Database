@@ -1,0 +1,459 @@
+{
+  "name": "Toothless",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Sprites/0.png",
+  "BossCooldown": 288,
+  "bossId": "toothless",
+  "location": "Abandoned Ship B1F (Room 1)",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/ToothlessLoc.png",
+  "requirements": "Having completed the Hoenn League",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "PP Max",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "TM: Scald",
+            "quantity": "1",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Water.png"
+          },
+          {
+            "name": "TM: Shadow Ball",
+            "quantity": "1",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ghost.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Wooper",
+            "dexNumber": 194,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Staryu",
+            "dexNumber": 120,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Garchomp",
+          "dexNumber": 445,
+          "nature": "Random",
+          "ability": "Rough Skin",
+          "item": "None",
+          "moves": [
+            "Outrage",
+            "Earthquake",
+            "Swords Dance",
+            "Fire Fang"
+          ]
+        },
+        {
+          "name": "Miltank",
+          "dexNumber": 241,
+          "nature": "Random",
+          "ability": "Scrappy",
+          "item": "None",
+          "moves": [
+            "Seismic Toss",
+            "Toxic",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Quagsire",
+          "dexNumber": 195,
+          "nature": "Random",
+          "ability": "Unaware",
+          "item": "None",
+          "moves": [
+            "Scald",
+            "Earthquake",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Metagross",
+          "dexNumber": 376,
+          "nature": "Random",
+          "ability": "Clear Body",
+          "item": "None",
+          "moves": [
+            "Ice Punch",
+            "Meteor Mash",
+            "Thunder Punch",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Starmie",
+          "dexNumber": 121,
+          "nature": "Random",
+          "ability": "Analytic",
+          "item": "None",
+          "moves": [
+            "Thunderbolt",
+            "Hydro Pump",
+            "Ice Beam",
+            "Psyshock"
+          ]
+        },
+        {
+          "name": "Diancie",
+          "dexNumber": 719,
+          "nature": "Random",
+          "ability": "Clear Body",
+          "item": "None",
+          "moves": [
+            "Moonblast",
+            "Earth Power",
+            "Diamond Storm",
+            "Calm Mind"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "PP Max",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "TM: Scald",
+            "quantity": "1",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Water.png"
+          },
+          {
+            "name": "TM: Shadow Ball",
+            "quantity": "1",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ghost.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Wooper",
+            "dexNumber": 194,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Staryu",
+            "dexNumber": 120,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Gible",
+            "dexNumber": 443,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Staryu",
+            "dexNumber": 120,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Miltank",
+            "dexNumber": 241,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Garchomp",
+          "dexNumber": 445,
+          "nature": "Random",
+          "ability": "Rough Skin",
+          "item": "Choice Band",
+          "moves": [
+            "Outrage",
+            "Earthquake",
+            "Swords Dance",
+            "Fire Fang"
+          ]
+        },
+        {
+          "name": "Miltank",
+          "dexNumber": 241,
+          "nature": "Random",
+          "ability": "Thick Fat",
+          "item": "Rocky Helmet",
+          "moves": [
+            "Seismic Toss",
+            "Toxic",
+            "Earthquake",
+            "Double-Edge"
+          ]
+        },
+        {
+          "name": "Quagsire",
+          "dexNumber": 195,
+          "nature": "Random",
+          "ability": "Unaware",
+          "item": "Leftovers",
+          "moves": [
+            "Scald",
+            "Earthquake",
+            "Toxic",
+            "Stockpile"
+          ]
+        },
+        {
+          "name": "Mega Metagross",
+          "dexNumber": 10076,
+          "nature": "Random",
+          "ability": "Tough Claws",
+          "item": "Metagrossite",
+          "moves": [
+            "Ice Punch",
+            "Meteor Mash",
+            "Thunder Punch",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Starmie",
+          "dexNumber": 121,
+          "nature": "Random",
+          "ability": "Analytic",
+          "item": "Focus Sash",
+          "moves": [
+            "Thunderbolt",
+            "Hydro Pump",
+            "Ice Beam",
+            "Psyshock"
+          ]
+        },
+        {
+          "name": "Diancie",
+          "dexNumber": 719,
+          "nature": "Random",
+          "ability": "Clear Body",
+          "item": "Life Orb",
+          "moves": [
+            "Moonblast",
+            "Earth Power",
+            "Diamond Storm",
+            "Calm Mind"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "PP Max",
+            "quantity": "1-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/MissingIcon.png"
+          },
+          {
+            "name": "TM: Scald",
+            "quantity": "1",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Water.png"
+          },
+          {
+            "name": "TM: Shadow Ball",
+            "quantity": "1",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ghost.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Wooper",
+            "dexNumber": 194,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Staryu",
+            "dexNumber": 120,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Gible",
+            "dexNumber": 443,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Staryu",
+            "dexNumber": 120,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Miltank",
+            "dexNumber": 241,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Garchomp",
+          "dexNumber": 445,
+          "nature": "Random",
+          "ability": "Rough Skin",
+          "item": "Choice Band",
+          "moves": [
+            "Outrage",
+            "Earthquake",
+            "Swords Dance",
+            "Fire Fang"
+          ]
+        },
+        {
+          "name": "Miltank",
+          "dexNumber": 241,
+          "nature": "Random",
+          "ability": "Thick Fat",
+          "item": "Rocky Helmet",
+          "moves": [
+            "Seismic Toss",
+            "Toxic",
+            "Earthquake",
+            "Double-Edge"
+          ]
+        },
+        {
+          "name": "Quagsire",
+          "dexNumber": 195,
+          "nature": "Random",
+          "ability": "Unaware",
+          "item": "Leftovers",
+          "moves": [
+            "Scald",
+            "Earthquake",
+            "Toxic",
+            "Stockpile"
+          ]
+        },
+        {
+          "name": "Mega Metagross",
+          "dexNumber": 10076,
+          "nature": "Random",
+          "ability": "Tough Claws",
+          "item": "Metagrossite",
+          "moves": [
+            "Ice Punch",
+            "Meteor Mash",
+            "Thunder Punch",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Starmie",
+          "dexNumber": 121,
+          "nature": "Random",
+          "ability": "Analytic",
+          "item": "Focus Sash",
+          "moves": [
+            "Thunderbolt",
+            "Hydro Pump",
+            "Ice Beam",
+            "Psyshock"
+          ]
+        },
+        {
+          "name": "Diancie",
+          "dexNumber": 719,
+          "nature": "Random",
+          "ability": "Clear Body",
+          "item": "Life Orb",
+          "moves": [
+            "Moonblast",
+            "Earth Power",
+            "Diamond Storm",
+            "Calm Mind"
+          ]
+        }
+      ]
+    }
+  }
+}

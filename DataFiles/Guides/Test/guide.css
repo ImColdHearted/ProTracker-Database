@@ -1,0 +1,47 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    padding: 18px;
+}
+
+.guide {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+h1,
+h2,
+h3{
+    color: #ff008c;
+}
+
+section {
+    margin-bottom: 24px;
+    padding: 14px;
+    background: #101010;
+    border: 1px solid #555;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin: 12px auto;
+}
+
+li {
+    margin-bottom: 7px;
+}
+
+a {
+    color: #42c8ff;
+}
+html {
+    scroll-behavior: smooth;
+}

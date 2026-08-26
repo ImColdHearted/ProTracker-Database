@@ -1,0 +1,392 @@
+{
+  "name": "Sage",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Sage.png",
+  "BossCooldown": 288,
+  "bossId": "sage",
+  "location": "Sprout Tower",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/SageLoc.png",
+  "requirements": "Johto Champion",
+  "difficulties": {
+    "easy": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Fire Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Stone.png"
+          },
+          {
+            "name": "Water Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Water_Stone.png"
+          },
+          {
+            "name": "Thunder Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Thunder_Stone.png"
+          },
+          {
+            "name": "Leaf Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leaf_Stone.png"
+          },
+          {
+            "name": "Dusk Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dusk_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+       ]
+      },
+      "team": [
+        {
+          "name": "Glaceon",
+          "dexNumber": 471,
+          "nature": "Modest",
+          "ability": "Snow Cloak",
+          "item": "None",
+          "moves": [
+            "Blizzard",
+            "Shadow Ball",
+            "Ice Beam",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Flareon",
+          "dexNumber": 136,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "None",
+          "moves": [
+            "Flare Blitz",
+            "Iron Tail",
+            "Facade",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Vaporeon",
+          "dexNumber": 134,
+          "nature": "Bold",
+          "ability": "Water Absorb",
+          "item": "None",
+          "moves": [
+            "Scald",
+            "Ice Beam",
+            "Wish",
+            "Protect"
+          ]
+        },
+        {
+          "name": "Jolteon",
+          "dexNumber": 135,
+          "nature": "Timid",
+          "ability": "Volt Absorb",
+          "item": "None",
+          "moves": [
+            "Thunderbolt",
+            "Shadow Ball",
+            "Signal Beam",
+            "Volt Switch"
+          ]
+        },
+        {
+          "name": "Sylveon",
+          "dexNumber": 700,
+          "nature": "Calm",
+          "ability": "Pixilate",
+          "item": "None",
+          "moves": [
+            "Hyper Voice",
+            "Shadow Ball",
+            "Psyshock",
+            "Wish"
+          ]
+        },
+        {
+          "name": "Espeon",
+          "dexNumber": 196,
+          "nature": "Timid",
+          "ability": "Magic Bounce",
+          "item": "None",
+          "moves": [
+            "Calm Mind",
+            "Psyshock",
+            "Dazzling Gleam",
+            "Morning Sun"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Fire Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Stone.png"
+          },
+          {
+            "name": "Water Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Water_Stone.png"
+          },
+          {
+            "name": "Thunder Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Thunder_Stone.png"
+          },
+          {
+            "name": "Leaf Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leaf_Stone.png"
+          },
+          {
+            "name": "Dusk Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dusk_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Glaceon",
+          "dexNumber": 471,
+          "nature": "Modest",
+          "ability": "Snow Cloak",
+          "item": "None",
+          "moves": [
+            "Blizzard",
+            "Shadow Ball",
+            "Ice Beam",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Flareon",
+          "dexNumber": 136,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "None",
+          "moves": [
+            "Flare Blitz",
+            "Iron Tail",
+            "Facade",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Vaporeon",
+          "dexNumber": 134,
+          "nature": "Bold",
+          "ability": "Water Absorb",
+          "item": "None",
+          "moves": [
+            "Scald",
+            "Ice Beam",
+            "Wish",
+            "Protect"
+          ]
+        },
+        {
+          "name": "Jolteon",
+          "dexNumber": 135,
+          "nature": "Timid",
+          "ability": "Volt Absorb",
+          "item": "None",
+          "moves": [
+            "Thunderbolt",
+            "Shadow Ball",
+            "Signal Beam",
+            "Volt Switch"
+          ]
+        },
+        {
+          "name": "Sylveon",
+          "dexNumber": 700,
+          "nature": "Calm",
+          "ability": "Pixilate",
+          "item": "None",
+          "moves": [
+            "Hyper Voice",
+            "Shadow Ball",
+            "Psyshock",
+            "Wish"
+          ]
+        },
+        {
+          "name": "Espeon",
+          "dexNumber": 196,
+          "nature": "Timid",
+          "ability": "Magic Bounce",
+          "item": "None",
+          "moves": [
+            "Calm Mind",
+            "Psyshock",
+            "Dazzling Gleam",
+            "Morning Sun"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Fire Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Stone.png"
+          },
+          {
+            "name": "Water Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Water_Stone.png"
+          },
+          {
+            "name": "Thunder Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Thunder_Stone.png"
+          },
+          {
+            "name": "Leaf Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leaf_Stone.png"
+          },
+          {
+            "name": "Dusk Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dusk_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Glaceon",
+          "dexNumber": 471,
+          "nature": "Modest",
+          "ability": "Snow Cloak",
+          "item": "None",
+          "moves": [
+            "Blizzard",
+            "Shadow Ball",
+            "Ice Beam",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Flareon",
+          "dexNumber": 136,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "None",
+          "moves": [
+            "Flare Blitz",
+            "Iron Tail",
+            "Facade",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Vaporeon",
+          "dexNumber": 134,
+          "nature": "Bold",
+          "ability": "Water Absorb",
+          "item": "None",
+          "moves": [
+            "Scald",
+            "Ice Beam",
+            "Wish",
+            "Protect"
+          ]
+        },
+        {
+          "name": "Jolteon",
+          "dexNumber": 135,
+          "nature": "Timid",
+          "ability": "Volt Absorb",
+          "item": "None",
+          "moves": [
+            "Thunderbolt",
+            "Shadow Ball",
+            "Signal Beam",
+            "Volt Switch"
+          ]
+        },
+        {
+          "name": "Sylveon",
+          "dexNumber": 700,
+          "nature": "Calm",
+          "ability": "Pixilate",
+          "item": "None",
+          "moves": [
+            "Hyper Voice",
+            "Shadow Ball",
+            "Psyshock",
+            "Wish"
+          ]
+        },
+        {
+          "name": "Espeon",
+          "dexNumber": 196,
+          "nature": "Timid",
+          "ability": "Magic Bounce",
+          "item": "None",
+          "moves": [
+            "Calm Mind",
+            "Psyshock",
+            "Dazzling Gleam",
+            "Morning Sun"
+          ]
+        }
+      ]
+    }
+  }
+}

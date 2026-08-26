@@ -1,0 +1,419 @@
+{
+  "bossId": "lance",
+  "name": "Lance",
+  "location": "Dragons Shrine",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/LanceLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Lance.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Johto Elite 4, 150 Evolved Dex Data in Pokedex",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Swablu",
+            "dexNumber": 333
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147
+          },
+          {
+            "name": "Bagon",
+            "dexNumber": 371
+          },
+          {
+            "name": "Axew",
+            "dexNumber": 610
+          },
+          {
+            "name": "Skrelp",
+            "dexNumber": 690
+          }
+        ],
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Salamence",
+          "dexNumber": 373,
+          "nature": "Naive",
+          "ability": "Intimidate",
+          "item": "None",
+          "moves": [
+            "Draco Meteor",
+            "Fly",
+            "Earthquake",
+            "Fire Blast"
+          ]
+        },
+        {
+          "name": "Dialga",
+          "dexNumber": 483,
+          "nature": "Modest",
+          "ability": "Pressure",
+          "item": "None",
+          "moves": [
+            "Draco Meteor",
+            "Flash Cannon",
+            "Earth Power",
+            "Thunderbolt"
+          ]
+        },
+        {
+          "name": "Latios",
+          "dexNumber": 381,
+          "nature": "Timid",
+          "ability": "Levitate",
+          "item": "None",
+          "moves": [
+            "Draco Meteor",
+            "Luster Purge",
+            "Surf",
+            "Recover"
+          ]
+        },
+        {
+          "name": "Garchomp",
+          "dexNumber": 445,
+          "nature": "Jolly",
+          "ability": "Rough Skin",
+          "item": "None",
+          "moves": [
+            "Dragon Claw",
+            "Earthquake",
+            "Rock Slide",
+            "Fire Fang"
+          ]
+        },
+        {
+          "name": "Gyarados",
+          "dexNumber": 130,
+          "nature": "Jolly",
+          "ability": "Intimidate",
+          "item": "None",
+          "moves": [
+            "Waterfall",
+            "Bounce",
+            "Crunch",
+            "Ice Fang"
+          ]
+        },
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "None",
+          "moves": [
+            "Dragon Claw",
+            "Extreme Speed",
+            "Fire Punch",
+            "Thunder Punch"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Swablu",
+            "dexNumber": 333
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147
+          },
+          {
+            "name": "Bagon",
+            "dexNumber": 371
+          },
+          {
+            "name": "Axew",
+            "dexNumber": 610
+          },
+          {
+            "name": "Skrelp",
+            "dexNumber": 690
+          }
+        ],
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Salamence",
+          "dexNumber": 373,
+          "nature": "Naive",
+          "ability": "Intimidate",
+          "item": "Life Orb",
+          "moves": [
+            "Outrage",
+            "Fire Blast",
+            "Earthquake",
+            "Iron Tail"
+          ]
+        },
+        {
+          "name": "Dialga",
+          "dexNumber": 483,
+          "nature": "Modest",
+          "ability": "Pressure",
+          "item": "Choice Scarf",
+          "moves": [
+            "Aura Sphere",
+            "Flash Cannon",
+            "Fire Blast",
+            "Thunder"
+          ]
+        },
+        {
+          "name": "Latios",
+          "dexNumber": 381,
+          "nature": "Timid",
+          "ability": "Levitate",
+          "item": "Choice Specs",
+          "moves": [
+            "Draco Meteor",
+            "Psychic",
+            "Thunderbolt",
+            "Surf"
+          ]
+        },
+        {
+          "name": "Garchomp",
+          "dexNumber": 10058,
+          "nature": "Jolly",
+          "ability": "Sand Force",
+          "item": "Garchompite",
+          "moves": [
+            "Swords Dance",
+            "Earthquake",
+            "Outrage",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Gyarados",
+          "dexNumber": 130,
+          "nature": "Jolly",
+          "ability": "Intimidate",
+          "item": "Lum Berry",
+          "moves": [
+            "Dragon Dance",
+            "Waterfall",
+            "Earthquake",
+            "Ice Fang"
+          ]
+        },
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "Weakness Policy",
+          "moves": [
+            "Dragon Dance",
+            "Outrage",
+            "Extreme Speed",
+            "Earthquake"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Swablu",
+            "dexNumber": 333
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147
+          },
+          {
+            "name": "Bagon",
+            "dexNumber": 371
+          },
+          {
+            "name": "Axew",
+            "dexNumber": 610
+          },
+          {
+            "name": "Skrelp",
+            "dexNumber": 690
+          }
+        ],
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Salamence",
+          "dexNumber": 373,
+          "nature": "Naive",
+          "ability": "Intimidate",
+          "item": "Life Orb",
+          "moves": [
+            "Outrage",
+            "Fire Blast",
+            "Earthquake",
+            "Iron Tail"
+          ]
+        },
+        {
+          "name": "Dialga",
+          "dexNumber": 483,
+          "nature": "Modest",
+          "ability": "Pressure",
+          "item": "Choice Scarf",
+          "moves": [
+            "Aura Sphere",
+            "Flash Cannon",
+            "Fire Blast",
+            "Thunder"
+          ]
+        },
+        {
+          "name": "Latios",
+          "dexNumber": 381,
+          "nature": "Timid",
+          "ability": "Levitate",
+          "item": "Choice Specs",
+          "moves": [
+            "Draco Meteor",
+            "Psychic",
+            "Thunderbolt",
+            "Surf"
+          ]
+        },
+        {
+          "name": "Garchomp",
+          "dexNumber": 10058,
+          "nature": "Jolly",
+          "ability": "Sand Force",
+          "item": "Garchompite",
+          "moves": [
+            "Swords Dance",
+            "Earthquake",
+            "Outrage",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Gyarados",
+          "dexNumber": 130,
+          "nature": "Jolly",
+          "ability": "Intimidate",
+          "item": "Lum Berry",
+          "moves": [
+            "Dragon Dance",
+            "Waterfall",
+            "Earthquake",
+            "Ice Fang"
+          ]
+        },
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "Weakness Policy",
+          "moves": [
+            "Dragon Dance",
+            "Outrage",
+            "Extreme Speed",
+            "Earthquake"
+          ]
+        }
+      ]
+    }
+  }
+}

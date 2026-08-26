@@ -1,0 +1,695 @@
+{
+  "name": "Team Rocket",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Jessie.png",
+  "BossCooldown": 288,
+  "bossId": "jessieandjames",
+  "location": "Celadon City",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/TeamRocketLoc.png",
+  "requirements": "Must have a Pikachu on-hand,Kanto championship",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 35000
+        },
+        "pveCoins": 3,
+        "items": [],
+        "pokemon": [
+          {
+            "name": "Inkay",
+            "dexNumber": 686,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Frillish",
+            "dexNumber": 592,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Foongus",
+            "dexNumber": 590,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Inkay",
+            "dexNumber": 686,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Frillish",
+            "dexNumber": 592,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Foongus",
+            "dexNumber": 590,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "Jessie": {
+        "team": [
+          {
+            "name": "Porygon-Z",
+            "dexNumber": 474,
+            "nature": "Modest",
+            "ability": "Adaptability",
+            "item": "Choice Specs",
+            "moves": [
+              "Tri Attack",
+              "Ice Beam",
+              "Thunderbolt",
+              "Shadow Ball"
+            ]
+          },
+          {
+            "name": "Arbok",
+            "dexNumber": 24,
+            "nature": "Adamant",
+            "ability": "Intimidate",
+            "item": "Black Sludge",
+            "moves": [
+              "Gunk Shot",
+              "Coil",
+              "Earthquake",
+              "Ice Fang"
+            ]
+          },
+          {
+            "name": "Gourgeist-Small",
+            "dexNumber": 711,
+            "nature": "Timid",
+            "ability": "Insomnia",
+            "item": "Leftovers",
+            "moves": [
+              "Seed Bomb",
+              "Phantom Force",
+              "Will-O-Wisp",
+              "Leech Seed"
+            ]
+          },
+          {
+            "name": "Yanmega",
+            "dexNumber": 469,
+            "nature": "Modest",
+            "ability": "Tinted Lens",
+            "item": "Choice Specs",
+            "moves": [
+              "Bug Buzz",
+              "Air Slash",
+              "Ancient Power",
+              "Giga Drain"
+            ]
+          },
+          {
+            "name": "Jellicent",
+            "dexNumber": 593,
+            "nature": "Bold",
+            "ability": "Cursed Body",
+            "item": "Leftovers",
+            "moves": [
+              "Scald",
+              "Shadow Ball",
+              "Ice Beam",
+              "Energy Ball"
+            ]
+          },
+          {
+            "name": "Seviper",
+            "dexNumber": 336,
+            "nature": "Quiet",
+            "ability": "Shed Skin",
+            "item": "Assault Vest",
+            "moves": [
+              "Sludge Bomb",
+              "Flamethrower",
+              "Giga Drain",
+              "Sucker Punch"
+            ]
+          }
+        ],
+        "James": {
+          "team": [
+            {
+              "name": "Malamar-Mega",
+              "dexNumber": 687,
+              "nature": "Careful",
+              "ability": "Contrary",
+              "item": "Leftovers",
+              "moves": [
+                "Superpower",
+                "Knock Off",
+                "Psycho Cut"
+              ]
+            },
+            {
+              "name": "Weezing-Galarian",
+              "dexNumber": 110,
+              "nature": "Modest",
+              "ability": "Levitate",
+              "item": "Black Sludge",
+              "moves": [
+                "Sludge Bomb",
+                "Fire Blast",
+                "Thunderbolt",
+                "Shadow Ball"
+              ]
+            },
+            {
+              "name": "Arcanine-Hisui",
+              "dexNumber": 59,
+              "nature": "Adamant",
+              "ability": "Intimidate",
+              "item": "Choice Band",
+              "moves": [
+                "Flare Blitz",
+                "Wild Charge",
+                "Close Combat",
+                "Extreme Speed"
+              ]
+            },
+            {
+              "name": "Gyarados-Mega",
+              "dexNumber": 130,
+              "nature": "Jolly",
+              "ability": "Moxie",
+              "item": "Sitrus Berry",
+              "moves": [
+                "Dragon Dance",
+                "Waterfall",
+                "Earthquake",
+                "Ice Fang"
+              ]
+            },
+            {
+              "name": "Amoonguss",
+              "dexNumber": 591,
+              "nature": "Calm",
+              "ability": "Effect Spore",
+              "item": "Black Sludge",
+              "moves": [
+                "Giga Drain",
+                "Clear Smog",
+                "Spore",
+                "Foul Play"
+              ]
+            },
+            {
+              "name": "Cofagrigus",
+              "dexNumber": 563,
+              "nature": "Quiet",
+              "ability": "Mummy",
+              "item": "Leftovers",
+              "moves": [
+                "Nasty Plot",
+                "Shadow Ball",
+                "Trick Room",
+                "Energy Ball"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 35000
+        },
+        "pveCoins": 3,
+        "items": [],
+        "pokemon": [
+          {
+            "name": "Inkay",
+            "dexNumber": 686,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Frillish",
+            "dexNumber": 592,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Foongus",
+            "dexNumber": 590,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Inkay",
+            "dexNumber": 686,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Frillish",
+            "dexNumber": 592,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Foongus",
+            "dexNumber": 590,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "Jessie": {
+        "team": [
+          {
+            "name": "Porygon-Z",
+            "dexNumber": 474,
+            "nature": "Modest",
+            "ability": "Adaptability",
+            "item": "Choice Specs",
+            "moves": [
+              "Tri Attack",
+              "Ice Beam",
+              "Thunderbolt",
+              "Shadow Ball"
+            ]
+          },
+          {
+            "name": "Arbok",
+            "dexNumber": 24,
+            "nature": "Adamant",
+            "ability": "Intimidate",
+            "item": "Black Sludge",
+            "moves": [
+              "Gunk Shot",
+              "Coil",
+              "Earthquake",
+              "Ice Fang"
+            ]
+          },
+          {
+            "name": "Gourgeist-Small",
+            "dexNumber": 711,
+            "nature": "Timid",
+            "ability": "Insomnia",
+            "item": "Leftovers",
+            "moves": [
+              "Seed Bomb",
+              "Phantom Force",
+              "Will-O-Wisp",
+              "Leech Seed"
+            ]
+          },
+          {
+            "name": "Yanmega",
+            "dexNumber": 469,
+            "nature": "Modest",
+            "ability": "Tinted Lens",
+            "item": "Choice Specs",
+            "moves": [
+              "Bug Buzz",
+              "Air Slash",
+              "Ancient Power",
+              "Giga Drain"
+            ]
+          },
+          {
+            "name": "Jellicent",
+            "dexNumber": 593,
+            "nature": "Bold",
+            "ability": "Cursed Body",
+            "item": "Leftovers",
+            "moves": [
+              "Scald",
+              "Shadow Ball",
+              "Ice Beam",
+              "Energy Ball"
+            ]
+          },
+          {
+            "name": "Seviper",
+            "dexNumber": 336,
+            "nature": "Quiet",
+            "ability": "Shed Skin",
+            "item": "Assault Vest",
+            "moves": [
+              "Sludge Bomb",
+              "Flamethrower",
+              "Giga Drain",
+              "Sucker Punch"
+            ]
+          }
+        ],
+        "James": {
+          "team": [
+            {
+              "name": "Malamar-Mega",
+              "dexNumber": 687,
+              "nature": "Careful",
+              "ability": "Contrary",
+              "item": "Leftovers",
+              "moves": [
+                "Superpower",
+                "Knock Off",
+                "Psycho Cut"
+              ]
+            },
+            {
+              "name": "Weezing-Galarian",
+              "dexNumber": 110,
+              "nature": "Modest",
+              "ability": "Levitate",
+              "item": "Black Sludge",
+              "moves": [
+                "Sludge Bomb",
+                "Fire Blast",
+                "Thunderbolt",
+                "Shadow Ball"
+              ]
+            },
+            {
+              "name": "Arcanine-Hisui",
+              "dexNumber": 59,
+              "nature": "Adamant",
+              "ability": "Intimidate",
+              "item": "Choice Band",
+              "moves": [
+                "Flare Blitz",
+                "Wild Charge",
+                "Close Combat",
+                "Extreme Speed"
+              ]
+            },
+            {
+              "name": "Gyarados-Mega",
+              "dexNumber": 130,
+              "nature": "Jolly",
+              "ability": "Moxie",
+              "item": "Sitrus Berry",
+              "moves": [
+                "Dragon Dance",
+                "Waterfall",
+                "Earthquake",
+                "Ice Fang"
+              ]
+            },
+            {
+              "name": "Amoonguss",
+              "dexNumber": 591,
+              "nature": "Calm",
+              "ability": "Effect Spore",
+              "item": "Black Sludge",
+              "moves": [
+                "Giga Drain",
+                "Clear Smog",
+                "Spore",
+                "Foul Play"
+              ]
+            },
+            {
+              "name": "Cofagrigus",
+              "dexNumber": 563,
+              "nature": "Quiet",
+              "ability": "Mummy",
+              "item": "Leftovers",
+              "moves": [
+                "Nasty Plot",
+                "Shadow Ball",
+                "Trick Room",
+                "Energy Ball"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 35000
+        },
+        "pveCoins": 3,
+        "items": [],
+        "pokemon": [
+          {
+            "name": "Inkay",
+            "dexNumber": 686,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Frillish",
+            "dexNumber": 592,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Foongus",
+            "dexNumber": 590,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Inkay",
+            "dexNumber": 686,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Frillish",
+            "dexNumber": 592,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Foongus",
+            "dexNumber": 590,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "Jessie": {
+        "team": [
+          {
+            "name": "Porygon-Z",
+            "dexNumber": 474,
+            "nature": "Modest",
+            "ability": "Adaptability",
+            "item": "Choice Specs",
+            "moves": [
+              "Tri Attack",
+              "Ice Beam",
+              "Thunderbolt",
+              "Shadow Ball"
+            ]
+          },
+          {
+            "name": "Arbok",
+            "dexNumber": 24,
+            "nature": "Adamant",
+            "ability": "Intimidate",
+            "item": "Black Sludge",
+            "moves": [
+              "Gunk Shot",
+              "Coil",
+              "Earthquake",
+              "Ice Fang"
+            ]
+          },
+          {
+            "name": "Gourgeist-Small",
+            "dexNumber": 711,
+            "nature": "Timid",
+            "ability": "Insomnia",
+            "item": "Leftovers",
+            "moves": [
+              "Seed Bomb",
+              "Phantom Force",
+              "Will-O-Wisp",
+              "Leech Seed"
+            ]
+          },
+          {
+            "name": "Yanmega",
+            "dexNumber": 469,
+            "nature": "Modest",
+            "ability": "Tinted Lens",
+            "item": "Choice Specs",
+            "moves": [
+              "Bug Buzz",
+              "Air Slash",
+              "Ancient Power",
+              "Giga Drain"
+            ]
+          },
+          {
+            "name": "Jellicent",
+            "dexNumber": 593,
+            "nature": "Bold",
+            "ability": "Cursed Body",
+            "item": "Leftovers",
+            "moves": [
+              "Scald",
+              "Shadow Ball",
+              "Ice Beam",
+              "Energy Ball"
+            ]
+          },
+          {
+            "name": "Seviper",
+            "dexNumber": 336,
+            "nature": "Quiet",
+            "ability": "Shed Skin",
+            "item": "Assault Vest",
+            "moves": [
+              "Sludge Bomb",
+              "Flamethrower",
+              "Giga Drain",
+              "Sucker Punch"
+            ]
+          }
+        ],
+        "James": {
+          "team": [
+            {
+              "name": "Malamar-Mega",
+              "dexNumber": 687,
+              "nature": "Careful",
+              "ability": "Contrary",
+              "item": "Leftovers",
+              "moves": [
+                "Superpower",
+                "Knock Off",
+                "Psycho Cut"
+              ]
+            },
+            {
+              "name": "Weezing-Galarian",
+              "dexNumber": 110,
+              "nature": "Modest",
+              "ability": "Levitate",
+              "item": "Black Sludge",
+              "moves": [
+                "Sludge Bomb",
+                "Fire Blast",
+                "Thunderbolt",
+                "Shadow Ball"
+              ]
+            },
+            {
+              "name": "Arcanine-Hisui",
+              "dexNumber": 59,
+              "nature": "Adamant",
+              "ability": "Intimidate",
+              "item": "Choice Band",
+              "moves": [
+                "Flare Blitz",
+                "Wild Charge",
+                "Close Combat",
+                "Extreme Speed"
+              ]
+            },
+            {
+              "name": "Gyarados-Mega",
+              "dexNumber": 130,
+              "nature": "Jolly",
+              "ability": "Moxie",
+              "item": "Sitrus Berry",
+              "moves": [
+                "Dragon Dance",
+                "Waterfall",
+                "Earthquake",
+                "Ice Fang"
+              ]
+            },
+            {
+              "name": "Amoonguss",
+              "dexNumber": 591,
+              "nature": "Calm",
+              "ability": "Effect Spore",
+              "item": "Black Sludge",
+              "moves": [
+                "Giga Drain",
+                "Clear Smog",
+                "Spore",
+                "Foul Play"
+              ]
+            },
+            {
+              "name": "Cofagrigus",
+              "dexNumber": 563,
+              "nature": "Quiet",
+              "ability": "Mummy",
+              "item": "Leftovers",
+              "moves": [
+                "Nasty Plot",
+                "Shadow Ball",
+                "Trick Room",
+                "Energy Ball"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

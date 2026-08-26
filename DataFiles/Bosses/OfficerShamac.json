@@ -1,0 +1,503 @@
+{
+  "name": "Shamac",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Officer_Shamac.png",
+  "BossCooldown": 288,
+  "bossId": "officershamac",
+  "location": "Pewter Jail",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/OfficerShamacLoc.png",
+  "requirements": "Be Kanto champion",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "Dubious Disc",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dubious_Disc.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Lapras",
+            "dexNumber": 131,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mudkip",
+            "dexNumber": 258,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Minccino",
+            "dexNumber": 572,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Goomy",
+            "dexNumber": 704,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Swampert",
+          "dexNumber": 260,
+          "nature": "Relaxed",
+          "ability": "Torrent",
+          "item": "None",
+          "moves": [
+            "Ice Punch",
+            "Scald",
+            "Bulldoze",
+            "Rock Slide"
+          ]
+        },
+        {
+          "name": "Swellow",
+          "dexNumber": 277,
+          "nature": "Timid",
+          "ability": "Guts",
+          "item": "None",
+          "moves": [
+            "Air Slash",
+            "Heat Wave",
+            "Echoed Voice",
+            "Whirlwind"
+          ]
+        },
+        {
+          "name": "Goodra",
+          "dexNumber": 706,
+          "nature": "Modest",
+          "ability": "Sap Sipper",
+          "item": "None",
+          "moves": [
+            "Sludge Bomb",
+            "Dragon Pulse",
+            "Thunderbolt",
+            "Muddy Water"
+          ]
+        },
+        {
+          "name": "Lapras",
+          "dexNumber": 131,
+          "nature": "Modest",
+          "ability": "Water Absorb",
+          "item": "None",
+          "moves": [
+            "Surf",
+            "Ice Beam",
+            "Confuse Ray",
+            "Sing"
+          ]
+        },
+        {
+          "name": "Cinccino",
+          "dexNumber": 573,
+          "nature": "Jolly",
+          "ability": "Skill Link",
+          "item": "None",
+          "moves": [
+            "Bullet Seed",
+            "Wake-Up Slap",
+            "Slam",
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Latias",
+          "dexNumber": 380,
+          "nature": "Timid",
+          "ability": "Levitate",
+          "item": "None",
+          "moves": [
+            "Psychic",
+            "Shadow Ball",
+            "Dragon Pulse",
+            "Recover"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "Dubious Disc",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dubious_Disc.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Lapras",
+            "dexNumber": 131,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mudkip",
+            "dexNumber": 258,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Minccino",
+            "dexNumber": 572,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Goomy",
+            "dexNumber": 704,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Lapras",
+            "dexNumber": 131,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Mudkip",
+            "dexNumber": 258,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Minccino",
+            "dexNumber": 572,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Goomy",
+            "dexNumber": 704,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Mega Swampert",
+          "dexNumber": 10064,
+          "nature": "Relaxed",
+          "ability": "Swift Swim",
+          "item": "Swampertite",
+          "moves": [
+            "Stone Edge",
+            "Earthquake",
+            "Waterfall",
+            "Ice Beam",
+            "Toxic",
+            "Superpower",
+            "Ice Punch"
+          ]
+        },
+        {
+          "name": "Swellow",
+          "dexNumber": 277,
+          "nature": "Timid",
+          "ability": "Guts",
+          "item": "Choice Specs",
+          "moves": [
+            "Hurricane",
+            "Boomburst",
+            "Heat Wave",
+            "Ominous Wind"
+          ]
+        },
+        {
+          "name": "Goodra",
+          "dexNumber": 706,
+          "nature": "Modest",
+          "ability": "Sap Sipper",
+          "item": "Assault Vest",
+          "moves": [
+            "Fire Blast",
+            "Draco Meteor",
+            "Thunder",
+            "Sludge Wave"
+          ]
+        },
+        {
+          "name": "Lapras",
+          "dexNumber": 131,
+          "nature": "Modest",
+          "ability": "Water Absorb",
+          "item": "Mystic Water",
+          "moves": [
+            "Hydro Pump",
+            "Blizzard",
+            "Sheer Cold",
+            "Sing"
+          ]
+        },
+        {
+          "name": "Cinccino",
+          "dexNumber": 573,
+          "nature": "Jolly",
+          "ability": "Skill Link",
+          "item": "Choice Band",
+          "moves": [
+            "Tail Slap",
+            "Rock Blast",
+            "Bullet Seed",
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Latias",
+          "dexNumber": 380,
+          "nature": "Timid",
+          "ability": "Levitate",
+          "item": "Life Orb",
+          "moves": [
+            "Draco Meteor",
+            "Psyshock",
+            "Thunderbolt",
+            "Surf"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Weakness Policy",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Weakness_Policy.png"
+          },
+          {
+            "name": "Dubious Disc",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dubious_Disc.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Lapras",
+            "dexNumber": 131,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mudkip",
+            "dexNumber": 258,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Minccino",
+            "dexNumber": 572,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Goomy",
+            "dexNumber": 704,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Lapras",
+            "dexNumber": 131,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Mudkip",
+            "dexNumber": 258,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Minccino",
+            "dexNumber": 572,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Goomy",
+            "dexNumber": 704,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Mega Swampert",
+          "dexNumber": 10064,
+          "nature": "Relaxed",
+          "ability": "Swift Swim",
+          "item": "Swampertite",
+          "moves": [
+            "Stone Edge",
+            "Earthquake",
+            "Waterfall",
+            "Ice Beam",
+            "Toxic",
+            "Superpower",
+            "Ice Punch"
+          ]
+        },
+        {
+          "name": "Swellow",
+          "dexNumber": 277,
+          "nature": "Timid",
+          "ability": "Guts",
+          "item": "Choice Specs",
+          "moves": [
+            "Hurricane",
+            "Boomburst",
+            "Heat Wave",
+            "Ominous Wind"
+          ]
+        },
+        {
+          "name": "Goodra",
+          "dexNumber": 706,
+          "nature": "Modest",
+          "ability": "Sap Sipper",
+          "item": "Assault Vest",
+          "moves": [
+            "Fire Blast",
+            "Draco Meteor",
+            "Thunder",
+            "Sludge Wave"
+          ]
+        },
+        {
+          "name": "Lapras",
+          "dexNumber": 131,
+          "nature": "Modest",
+          "ability": "Water Absorb",
+          "item": "Mystic Water",
+          "moves": [
+            "Hydro Pump",
+            "Blizzard",
+            "Sheer Cold",
+            "Sing"
+          ]
+        },
+        {
+          "name": "Cinccino",
+          "dexNumber": 573,
+          "nature": "Jolly",
+          "ability": "Skill Link",
+          "item": "Choice Band",
+          "moves": [
+            "Tail Slap",
+            "Rock Blast",
+            "Bullet Seed",
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Latias",
+          "dexNumber": 380,
+          "nature": "Timid",
+          "ability": "Levitate",
+          "item": "Life Orb",
+          "moves": [
+            "Draco Meteor",
+            "Psyshock",
+            "Thunderbolt",
+            "Surf"
+          ]
+        }
+      ]
+    }
+  }
+}
