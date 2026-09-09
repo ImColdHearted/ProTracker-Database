@@ -1,0 +1,6916 @@
+{
+  "Absorb": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 20,
+    "accuracy": 100,
+    "pp": 25,
+    "effects": [ "Drain" ]
+  },
+
+  "Accelerock": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 20,
+    "priority": 1
+  },
+
+  "Acid": {
+    "type": "Poison",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 30,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Acid Armor": {
+    "type": "Poison",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Acid Spray": {
+    "type": "Poison",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Aerial Ace": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 60,
+    "pp": 20
+  },
+
+  "Aeroblast": {
+    "type": "Flying",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 95,
+    "pp": 5,
+    "critStage": 1
+  },
+
+  "Agility": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 30,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Air Cutter": {
+    "type": "Flying",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 95,
+    "pp": 25,
+    "critStage": 1
+  },
+
+  "Air Slash": {
+    "type": "Flying",
+    "category": "Special",
+    "power": 75,
+    "accuracy": 95,
+    "pp": 15,
+    "flinchChance": 0.3
+  },
+
+  "Amnesia": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "AncientPower": {
+    "type": "Rock",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 5,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Apple Acid": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Aqua Cutter": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 20,
+    "critStage": 1
+  },
+
+  "Aqua Jet": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 20,
+    "priority": 1
+  },
+
+  "Aqua Step": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Aqua Tail": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 90,
+    "pp": 10,
+    "priority": 0
+  },
+
+  "Arm Thrust": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 15,
+    "accuracy": 100,
+    "pp": 15,
+    "minHits": 2,
+    "maxHits": 5
+  },
+
+  "Armor Cannon": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5,
+
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Aromatic Mist": {
+    "type": "Fairy",
+    "category": "Status",
+    "pp": 20,
+
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Astonish": {
+    "type": "Ghost",
+    "category": "Physical",
+    "power": 30,
+    "accuracy": 100,
+    "pp": 15,
+    "secondaryChance": 0.3,
+    "flinchChance": 0.3
+  },
+
+  "Astral Barrage": {
+    "type": "Ghost",
+    "category": "Special",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5,
+    "priority": 0
+  },
+
+  "Attack Order": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15,
+    "critStage": 1
+  },
+
+  "Aurora Beam": {
+    "type": "Ice",
+    "category": "Special",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 10,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Aura Sphere": {
+    "type": "Fighting",
+    "category": "Special",
+    "power": 80,
+    "pp": 20
+  },
+
+  "Baby-Doll Eyes": {
+    "type": "Fairy",
+    "category": "Status",
+    "pp": 30,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Behemoth Bash": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Behemoth Blade": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Bite": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 25,
+    "flinchChance": 0.3
+  },
+
+  "Bitter Blade": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "Drain" ]
+  },
+
+  "Bitter Malice": {
+    "type": "Ghost",
+    "category": "Special",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Blaze Kick": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 85,
+    "accuracy": 90,
+    "pp": 10,
+    "critStage": 1,
+    "statusChance": 0.1,
+    "inflictStatus": "Burn"
+  },
+
+  "Blazing Torque": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "statusChance": 0.3,
+    "inflictStatus": "Burn"
+  },
+
+  "Blizzard": {
+    "type": "Ice",
+    "category": "Special",
+    "power": 110,
+    "accuracy": 70,
+    "pp": 5,
+    "statusChance": 0.1,
+    "inflictStatus": "Freeze"
+  },
+
+  "Blue Flare": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 130,
+    "accuracy": 85,
+    "pp": 5,
+    "statusChance": 0.2,
+    "inflictStatus": "Burn"
+  },
+
+  "Body Slam": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 85,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 0.3,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Bolt Strike": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 130,
+    "accuracy": 85,
+    "pp": 5,
+    "statusChance": 0.2,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Bone Rush": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 25,
+    "accuracy": 90,
+    "pp": 10,
+    "minHits": 2,
+    "maxHits": 5
+  },
+
+  "Boomburst": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 140,
+    "accuracy": 100,
+    "pp": 10,
+    "priority": 0
+  },
+
+  "Branch Poke": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 40,
+    "priority": 0
+  },
+
+  "Breaking Swipe": {
+    "type": "Dragon",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Brutal Swing": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 60,
+    "pp": 20
+  },
+
+  "Bubble Beam": {
+    "type": "Water",
+    "category": "Special",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 20,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Bug Buzz": {
+    "type": "Bug",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Bulk Up": {
+    "type": "Fighting",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Bulldoze": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Bullet Punch": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 30,
+    "priority": 1
+  },
+
+  "Bullet Seed": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 25,
+    "accuracy": 100,
+    "pp": 30,
+    "minHits": 2,
+    "maxHits": 5
+  },
+
+  "Calm Mind": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Charge Beam": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 50,
+    "accuracy": 90,
+    "pp": 10,
+    "secondaryChance": 0.7,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Charm": {
+    "type": "Fairy",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Chilling Water": {
+    "type": "Water",
+    "category": "Special",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Clanging Scales": {
+    "type": "Dragon",
+    "category": "Special",
+    "power": 110,
+    "accuracy": 100,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Close Combat": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Coil": {
+    "type": "Poison",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Accuracy",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Combat Torque": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 10,
+    "statusChance": 0.3,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Confide": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Cosmic Power": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Cotton Guard": {
+    "type": "Grass",
+    "category": "Status",
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 3,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Cotton Spore": {
+    "type": "Grass",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 40,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Crabhammer": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 90,
+    "pp": 10,
+    "critStage": 1
+  },
+
+  "Cross Chop": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 80,
+    "pp": 5,
+    "critStage": 1
+  },
+
+  "Cross Poison": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 20,
+    "critStage": 1,
+    "statusChance": 0.1,
+    "inflictStatus": "Poison"
+  },
+
+  "Crunch": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "secondaryChance": 0.2,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Crush Claw": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 95,
+    "pp": 10,
+    "secondaryChance": 0.5,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Cut": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 95,
+    "pp": 30
+  },
+
+  "Dark Pulse": {
+    "type": "Dark",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "flinchChance": 0.2
+  },
+
+  "Dark Void": {
+    "type": "Dark",
+    "category": "Status",
+    "accuracy": 50,
+    "pp": 15,
+    "inflictStatus": "Sleep"
+  },
+
+  "Dazzling Gleam": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Decorate": {
+    "type": "Fairy",
+    "category": "Status",
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 2,
+        "target": "opponent"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": 2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Defend Order": {
+    "type": "Bug",
+    "category": "Status",
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Defense Curl": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 40,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Defog": {
+    "type": "Flying",
+    "category": "Status",
+    "pp": 15,
+    "effects": [ "Defog" ]
+  },
+
+  "Detect": {
+    "type": "Fighting",
+    "category": "Status",
+    "pp": 5,
+    "priority": 4,
+    "effects": [ "Protect" ]
+  },
+
+  "Diamond Storm": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 95,
+    "pp": 5,
+    "secondaryChance": 0.5,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Dig": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "TwoTurn" ]
+  },
+
+  "Dire Claw": {
+    "type": "Poison",
+    "category": "Physical",
+    "power": 80,
+    "pp": 15,
+    "accuracy": 100,
+    "secondaryChance": 0.5,
+    "randomStatus": [ "Poison", "Paralysis", "Sleep" ]
+  },
+
+  "Discharge": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 0.3,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Dive": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "TwoTurn" ]
+  },
+
+  "Double Hit": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 35,
+    "accuracy": 90,
+    "pp": 10,
+    "minHits": 2,
+    "maxHits": 2
+  },
+
+  "Double Kick": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 30,
+    "accuracy": 100,
+    "pp": 30,
+    "minHits": 2,
+    "maxHits": 2
+  },
+
+  "Double Team": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Evasion",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Draco Meteor": {
+    "type": "Dragon",
+    "category": "Special",
+    "power": 130,
+    "accuracy": 90,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Drain Punch": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "Drain" ]
+  },
+
+  "Dragon Ascent": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Dragon Breath": {
+    "type": "Dragon",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 20,
+    "statusChance": 0.3,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Dragon Claw": {
+    "type": "Dragon",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Dragon Dance": {
+    "type": "Dragon",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Dragon Darts": {
+    "type": "Dragon",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 10,
+    "minHits": 2,
+    "maxHits": 2
+  },
+
+  "Dragon Hammer": {
+    "type": "Dragon",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Dragon Pulse": {
+    "type": "Dragon",
+    "category": "Special",
+    "power": 85,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Dragon Rush": {
+    "type": "Dragon",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 75,
+    "pp": 10,
+    "flinchChance": 0.2
+  },
+
+  "Drill Peck": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Drill Run": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 95,
+    "pp": 10,
+    "critStage": 1
+  },
+
+  "Drum Beating": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Dual Wingbeat": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 90,
+    "pp": 10,
+    "minHits": 2,
+    "maxHits": 2
+  },
+
+  "Dynamax Cannon": {
+    "type": "Dragon",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Earth Power": {
+    "type": "Ground",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Earthquake": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Eerie Impulse": {
+    "type": "Electric",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Electric Terrain": {
+    "type": "Electric",
+    "category": "Status",
+    "pp": 10,
+    "setTerrain": "Electric"
+  },
+
+  "Esper Wing": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "critStage": 1,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Extrasensory": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 20,
+    "flinchChance": 0.1
+  },
+
+  "Extreme Speed": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 5,
+    "priority": 2
+  },
+
+  "Fairy Wind": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 30
+  },
+
+  "Fake Tears": {
+    "type": "Dark",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Feather Dance": {
+    "type": "Flying",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Fiery Dance": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "secondaryChance": 0.5,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Fiery Wrath": {
+    "type": "Dark",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "flinchChance": 0.2
+  },
+
+  "Fire Fang": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 65,
+    "accuracy": 95,
+    "pp": 15,
+    "flinchChance": 0.1,
+    "statusChance": 0.1,
+    "inflictStatus": "Burn"
+
+  },
+
+  "Fire Lash": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Flame Charge": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Flamethrower": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 0.1,
+    "inflictStatus": "Burn"
+  },
+
+  "Flash Cannon": {
+    "type": "Steel",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Fleur Cannon": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 130,
+    "accuracy": 90,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Floral Healing": {
+    "type": "Fairy",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "Heal" ]
+  },
+
+  "Fly": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 95,
+    "pp": 15,
+    "effects": [ "TwoTurn" ]
+  },
+
+  "Focus Blast": {
+    "type": "Fighting",
+    "category": "Special",
+    "power": 120,
+    "accuracy": 70,
+    "pp": 5,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Force Palm": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 10,
+    "statusChance": 0.3,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Freezing Glare": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "statusChance": 0.1,
+    "inflictStatus": "Freeze"
+  },
+
+  "Giga Drain": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "Drain" ]
+  },
+
+  "Glacial Lance": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Glaciate": {
+    "type": "Ice",
+    "category": "Special",
+    "power": 65,
+    "accuracy": 95,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Growl": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 40,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Hammer Arm": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 90,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Harden": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 30,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Headbutt": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 15,
+    "flinchChance": 0.3
+  },
+
+  "Headlong Rush": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Heal Pulse": {
+    "type": "Fairy",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "Heal" ],
+    "target": "opponent"
+  },
+
+  "Hone Claws": {
+    "type": "Dark",
+    "category": "Status",
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Accuracy",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Horn Leech": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "Drain" ]
+  },
+
+  "Howl": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 40,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Ice Beam": {
+    "type": "Ice",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 0.1,
+    "inflictStatus": "Freeze"
+  },
+
+  "Ice Fang": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 65,
+    "accuracy": 95,
+    "pp": 15,
+    "flinchChance": 0.1,
+    "statusChance": 0.1,
+    "inflictStatus": "Freeze"
+  },
+
+  "Ice Hammer": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 90,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Ice Shard": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 30,
+    "priority": 1
+  },
+
+  "Icicle Crash": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 85,
+    "accuracy": 90,
+    "pp": 10,
+    "flinchChance": 0.3
+  },
+
+  "Icicle Spear": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 25,
+    "accuracy": 100,
+    "pp": 30,
+    "minHits": 2,
+    "maxHits": 5
+  },
+
+  "Ice Wind": {
+    "type": "Ice",
+    "category": "Special",
+    "power": 55,
+    "accuracy": 95,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Iron Defense": {
+    "type": "Steel",
+    "category": "Status",
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Iron Head": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "flinchChance": 0.3
+  },
+
+  "Iron Tail": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 75,
+    "pp": 15,
+    "secondaryChance": 0.3,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Jet Punch": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15,
+    "priority": 1
+  },
+
+  "Leaf Blade": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15,
+    "critStage": 1
+  },
+
+  "Leaf Storm": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 130,
+    "accuracy": 90,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Leech Life": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "Drain" ]
+  },
+
+  "Leer": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 30,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Liquidation": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 85,
+    "accuracy": 100,
+    "pp": 10,
+    "secondaryChance": 0.2,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Low Sweep": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Lumina Crash": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Lunge": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Luster Purge": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 95,
+    "accuracy": 100,
+    "pp": 5,
+    "secondaryChance": 0.5,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Mach Punch": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 30,
+    "priority": 1
+  },
+
+  "Make It Rain": {
+    "type": "Steel",
+    "category": "Special",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Mega Drain": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "Drain" ]
+  },
+
+  "Metal Claw": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 95,
+    "pp": 35,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Metal Sound": {
+    "type": "Steel",
+    "category": "Status",
+    "accuracy": 85,
+    "pp": 40,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Meteor Mash": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 90,
+    "pp": 10,
+    "secondaryChance": 0.2,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Milk Drink": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "Heal" ]
+  },
+
+  "Minimize": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Evasion",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Mist Ball": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 95,
+    "accuracy": 100,
+    "pp": 5,
+    "secondaryChance": 0.5,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Moon Blast": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 95,
+    "accuracy": 100,
+    "pp": 15,
+    "secondaryChance": 0.3,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Mountain Gale": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 85,
+    "pp": 10,
+    "flinchChance": 0.3
+  },
+
+  "Mud Shot": {
+    "type": "Ground",
+    "category": "Special",
+    "power": 55,
+    "accuracy": 95,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Mud Slap": {
+    "type": "Ground",
+    "category": "Special",
+    "power": 20,
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Accuracy",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Muddy Water": {
+    "type": "Water",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 85,
+    "pp": 10,
+    "secondaryChance": 0.3,
+    "statChanges": [
+      {
+        "stat": "Accuracy",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Mystical Fire": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Mystical Power": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 70,
+    "accuracy": 90,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Nasty Plot": {
+    "type": "Dark",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Night Daze": {
+    "type": "Dark",
+    "category": "Special",
+    "power": 85,
+    "accuracy": 95,
+    "pp": 10,
+    "secondaryChance": 0.4,
+    "statChanges": [
+      {
+        "stat": "Accuracy",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Night Slash": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 80,
+    "pp": 15,
+    "critStage": 1
+  },
+
+  "Noble Roar": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 30,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Overheat": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 130,
+    "accuracy": 90,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Parabolic Charge": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "Drain" ]
+  },
+
+  "Parting Shot": {
+    "type": "Dark",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ],
+    "effects": [ "SwitchAfter" ]
+  },
+
+  "Pin Missle": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 25,
+    "accuracy": 95,
+    "pp": 20,
+    "minHits": 2,
+    "maxHits": 5
+  },
+
+  "Play Nice": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Play Rough": {
+    "type": "Fairy",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 90,
+    "pp": 10,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Poison Tail": {
+    "type": "Poison",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 25,
+    "critStage": 1,
+    "statusChance": 0.1,
+    "inflictStatus": "Poison"
+  },
+
+  "Pounce": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Protect": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "priority": 4,
+    "effects": [ "Protect" ]
+  },
+
+  "Psychic": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 20,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Psycho Boost": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 140,
+    "accuracy": 90,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Psycho Cut": {
+    "type": "Psychic",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 20,
+    "critStage": 1
+  },
+
+  "Psyshield Bash": {
+    "type": "Psychic",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 90,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Quick Attack": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 30,
+    "priority": 1
+  },
+
+  "Quiver Dance": {
+    "type": "Bug",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Rain Dance": {
+    "type": "Water",
+    "category": "Status",
+    "pp": 5,
+    "setWeather": "Rain"
+  },
+
+  "Rapid Spin": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 50,
+    "pp": 40,
+    "effects": [ "RapidSpin" ]
+  },
+
+  "Razor Leaf": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 55,
+    "accuracy": 95,
+    "pp": 25,
+    "critStage": 1
+  },
+
+  "Razor Shell": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 95,
+    "pp": 10,
+    "secondaryChance": 0.5,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Recover": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "Heal" ]
+  },
+
+  "Rock Blast": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 25,
+    "accuracy": 90,
+    "pp": 10,
+    "minHits": 2,
+    "maxHits": 5
+  },
+
+  "Rock Polish": {
+    "type": "Rock",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Rock Slide": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 90,
+    "pp": 10,
+    "flinchChance": 0.3
+  },
+
+  "Rock Smash": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 15,
+    "secondaryChance": 0.5,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Rock Tomb": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 95,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Sand Attack": {
+    "type": "Ground",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Accuracy",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Sandstorm": {
+    "type": "Rock",
+    "category": "Status",
+    "pp": 5,
+    "setWeather": "Sandstorm"
+  },
+
+  "Scary Face": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Screech": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 85,
+    "pp": 40,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Seed Flare": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 120,
+    "accuracy": 85,
+    "pp": 5,
+    "secondaryChance": 0.4,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Shadow Ball": {
+    "type": "Ghost",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "secondaryChance": 0.2,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Shadow Claw": {
+    "type": "Ghost",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 15,
+    "critStage": 1
+  },
+
+  "Shadow Sneak": {
+    "type": "Ghost",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 30,
+    "priority": 1
+  },
+
+  "Shell Smash": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "self"
+      },
+      {
+        "stat": "Attack",
+        "stages": 2,
+        "target": "self"
+      },
+      {
+        "stat": "Speed",
+        "stages": 2,
+        "target": "self"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Shelter": {
+    "type": "Steel",
+    "category": "Status",
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Shift Gear": {
+    "type": "Steel",
+    "category": "Status",
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": 2,
+        "target": "self"
+      },
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Skitter Smack": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 90,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Sky Attack": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 140,
+    "accuracy": 90,
+    "pp": 5,
+    "critStage": 1,
+    "flinchChance": 0.3,
+    "effects": [ "TwoTurn" ]
+  },
+
+  "Slack Off": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "Heal" ]
+  },
+
+  "Slash": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 20,
+    "critStage": 1
+  },
+
+  "Smokescreen": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Accuracy",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Snarl": {
+    "type": "Dark",
+    "category": "Special",
+    "power": 55,
+    "accuracy": 95,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Snipe Shot": {
+    "type": "Water",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "critStage": 1
+  },
+
+  "Spacial Rend": {
+    "type": "Dragon",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 95,
+    "pp": 5,
+    "critStage": 1
+  },
+
+  "Soft-Boiled": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "Heal" ]
+  },
+
+  "Spicy Extract": {
+    "type": "Grass",
+    "category": "Status",
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 2,
+        "target": "self"
+      },
+      {
+        "stat": "Defense",
+        "stages": -2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Spikes": {
+    "type": "Ground",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "Spikes" ]
+  },
+
+  "Spin Out": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Spirit Break": {
+    "type": "Fairy",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Springtide Storm": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 80,
+    "pp": 5,
+    "secondaryChance": 0.3,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Stealth Rock": {
+    "type": "Rock",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "StealthRock" ]
+  },
+
+  "Steel Wing": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 90,
+    "pp": 25,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Stomp": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 20,
+    "flinchChance": 0.3
+  },
+
+  "Stone Axe": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 65,
+    "accuracy": 90,
+    "pp": 15,
+    "effects": [ "StealthRock" ]
+  },
+
+  "Stone Edge": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 80,
+    "pp": 5,
+    "critStage": 1
+  },
+
+  "Strength": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "String Shot": {
+    "type": "Bug",
+    "category": "Status",
+    "accuracy": 95,
+    "pp": 40,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Struggle Bug": {
+    "type": "Bug",
+    "category": "Special",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Substitute": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "Substitute" ]
+  },
+
+  "Sunny Day": {
+    "type": "Fire",
+    "category": "Status",
+    "pp": 5,
+    "setWeather": "Sun"
+  },
+
+  "Superpower": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "self"
+      },
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Sweet Scent": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Evasion",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Swords Dance": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Tackle": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 35
+  },
+
+  "Tail Glow": {
+    "type": "Bug",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": 3,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Tail Slap": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 25,
+    "accuracy": 85,
+    "pp": 10,
+    "minHits": 2,
+    "maxHits": 5
+  },
+
+  "Tail Whip": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 30,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Tearful Look": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Toxic Spikes": {
+    "type": "Poison",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "ToxicSpikes" ]
+  },
+
+  "Thunder Fang": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 65,
+    "accuracy": 95,
+    "pp": 15,
+    "flinchChance": 0.1,
+    "statusChance": 0.1,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Thunder Punch": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 0.1,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Thunder Shock": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 30,
+    "statusChance": 0.1,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Thunder Wave": {
+    "type": "Electric",
+    "category": "Status",
+    "accuracy": 90,
+    "pp": 20,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Thunderbolt": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 0.1,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Thunderous Kick": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Tickle": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      },
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Torch Song": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Toxic Thread": {
+    "type": "Poison",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "inflictStatus": "Poison",
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Trailblaze": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Tri Attack": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 80,
+    "pp": 10,
+    "accuracy": 100,
+    "secondaryChance": 0.2,
+    "randomStatus": [ "Burn", "Freeze", "Paralysis" ]
+  },
+
+  "Triple Arrows": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "critStage": 1,
+    "flinchChance": 0.3,
+    "secondaryChance": 0.5,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Triple Dive": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 30,
+    "accuracy": 95,
+    "pp": 10,
+    "minHits": 3,
+    "maxHits": 3
+  },
+
+  "Trop Kick": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Twin Beam": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 10,
+    "minHits": 2,
+    "maxHits": 2
+  },
+
+  "Twister": {
+    "type": "Dragon",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 20,
+    "flinchChance": 0.2
+  },
+
+  "U-Turn": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "SwitchAfter" ]
+  },
+
+  "V-create": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 180,
+    "accuracy": 95,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "self"
+      },
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Vacuum Wave": {
+    "type": "Fighting",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 30,
+    "priority": 1
+  },
+
+  "Vice Grip": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 55,
+    "accuracy": 100,
+    "pp": 30
+  },
+
+  "Victory Dance": {
+    "type": "Fighting",
+    "category": "Status",
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Vine Whip": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 45,
+    "accuracy": 100,
+    "pp": 25
+  },
+
+  "Volt Switch": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "SwitchAfter" ]
+  },
+
+  "Water Gun": {
+    "type": "Water",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 25
+  },
+
+  "Water Shuriken": {
+    "type": "Water",
+    "category": "Special",
+    "power": 20,
+    "accuracy": 100,
+    "pp": 15,
+    "priority": 1,
+    "minHits": 2,
+    "maxHits": 5
+  },
+
+  "Waterfall": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "flinchChance": 0.2
+  },
+
+  "Wicked Torque": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "statusChance": 0.1,
+    "inflictStatus": "Sleep"
+  },
+
+  "Wildbolt Storm": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "statusChance": 0.2,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Will-O-Wisp": {
+    "type": "Fire",
+    "category": "Status",
+    "accuracy": 85,
+    "pp": 15,
+    "inflictStatus": "Burn"
+  },
+
+  "Wing Attack": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 35
+  },
+
+  "Withdraw": {
+    "type": "Water",
+    "category": "Status",
+    "pp": 40,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Work Up": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 30,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "X-Scissor": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Zap Cannon": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 120,
+    "accuracy": 50,
+    "pp": 5,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Zen Headbutt": {
+    "type": "Psychic",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 90,
+    "pp": 15,
+    "flinchChance": 0.2
+  },
+
+  "Zing Zap": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "flinchChance": 0.3
+  },
+
+  "Acrobatics": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 110,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Ancient Power": {
+    "type": "Rock",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Assurance": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Avalanche": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 10,
+    "priority": -4
+  },
+
+  "Bounce": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 85,
+    "accuracy": 85,
+    "pp": 5,
+    "statusChance": 0.3,
+    "inflictStatus": "Paralysis",
+    "effects": [ "TwoTurn" ]
+  },
+
+  "Brave Bird": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "Recoil33" ]
+  },
+
+  "Brick Break": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "ScreenBreak" ]
+  },
+
+  "Bug Bite": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Clear Smog": {
+    "type": "Poison",
+    "category": "Special",
+    "power": 50,
+    "accuracy": 0,
+    "pp": 15
+  },
+
+  "Comet Punch": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 18,
+    "accuracy": 85,
+    "pp": 15,
+    "minHits": 2,
+    "maxHits": 5
+  },
+
+  "Double-Edge": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "Recoil33" ]
+  },
+
+  "Dragon Tail": {
+    "type": "Dragon",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 90,
+    "pp": 10,
+    "priority": -6
+  },
+
+  "Dual Chop": {
+    "type": "Dragon",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 90,
+    "pp": 15,
+    "minHits": 2,
+    "maxHits": 2
+  },
+
+  "Dynamic Punch": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 50,
+    "pp": 5,
+    "effects": [ "Confuse100" ]
+  },
+
+  "Echoed Voice": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Energy Ball": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Eruption": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Explosion": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 250,
+    "accuracy": 100,
+    "pp": 5,
+    "effects": [ "SelfFaint" ]
+  },
+
+  "Facade": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "FacadeBoost" ]
+  },
+
+  "Fake Out": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 10,
+    "priority": 3,
+    "flinchChance": 1,
+    "effects": ["FirstTurnOnly"]
+  },
+
+  "Fire Blast": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 110,
+    "accuracy": 85,
+    "pp": 5,
+    "statusChance": 0.1,
+    "inflictStatus": "Burn"
+  },
+
+  "Fire Punch": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 0.1,
+    "inflictStatus": "Burn"
+  },
+
+  "Flare Blitz": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 0.1,
+    "inflictStatus": "Burn",
+    "effects": [ "Recoil33" ]
+  },
+
+  "Focus Punch": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 150,
+    "accuracy": 100,
+    "pp": 20,
+    "priority": -3
+  },
+
+  "Foul Play": {
+    "usesTargetAttack": true,
+    "type": "Dark",
+    "category": "Physical",
+    "power": 95,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Freeze-Dry": {
+    "type": "Ice",
+    "category": "Special",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 20,
+    "statusChance": 0.1,
+    "inflictStatus": "Freeze"
+  },
+
+  "Fury Cutter": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 95,
+    "pp": 20
+  },
+
+  "Future Sight": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Gear Grind": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 85,
+    "pp": 15,
+    "minHits": 2,
+    "maxHits": 2
+  },
+
+  "Giga Impact": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 150,
+    "accuracy": 90,
+    "pp": 5
+  },
+
+  "Glare": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 30,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Grass Knot": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Gunk Shot": {
+    "type": "Poison",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 80,
+    "pp": 5,
+    "statusChance": 0.3,
+    "inflictStatus": "Poison"
+  },
+
+  "Gyro Ball": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Hail": {
+    "type": "Ice",
+    "category": "Status",
+    "pp": 10,
+    "setWeather": "Hail"
+  },
+
+  "Head Smash": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 150,
+    "accuracy": 80,
+    "pp": 5,
+    "effects": [ "Recoil50" ]
+  },
+
+  "Heat Wave": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 95,
+    "accuracy": 90,
+    "pp": 10,
+    "statusChance": 0.1,
+    "inflictStatus": "Burn"
+  },
+
+  "Heavy Slam": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Hex": {
+    "type": "Ghost",
+    "category": "Special",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "HexBoost" ]
+  },
+
+  "Hidden Power": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Hidden Power (Fighting)": {
+    "type": "Fighting",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Hidden Power (Fire)": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Hidden Power (Ice)": {
+    "type": "Ice",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "High Jump Kick": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 130,
+    "accuracy": 90,
+    "pp": 10
+  },
+
+  "Hurricane": {
+    "type": "Flying",
+    "category": "Special",
+    "power": 110,
+    "accuracy": 70,
+    "pp": 10,
+    "effects": [ "Confuse30" ]
+  },
+
+  "Hydro Pump": {
+    "type": "Water",
+    "category": "Special",
+    "power": 110,
+    "accuracy": 80,
+    "pp": 5
+  },
+
+  "Hyper Beam": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 150,
+    "accuracy": 90,
+    "pp": 5
+  },
+
+  "Hyper Voice": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Hypnosis": {
+    "type": "Psychic",
+    "category": "Status",
+    "accuracy": 60,
+    "pp": 20,
+    "inflictStatus": "Sleep"
+  },
+
+  "Ice Punch": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 0.1,
+    "inflictStatus": "Freeze"
+  },
+
+  "Icy Wind": {
+    "type": "Ice",
+    "category": "Special",
+    "power": 55,
+    "accuracy": 95,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Infestation": {
+    "type": "Bug",
+    "category": "Special",
+    "power": 20,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "BindTrap" ]
+  },
+
+  "Jump Kick": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 95,
+    "pp": 10
+  },
+
+  "Knock Off": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "KnockOff", "KnockOffRemove" ]
+  },
+
+  "Lava Plume": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 0.3,
+    "inflictStatus": "Burn"
+  },
+
+  "Low Kick": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Magical Leaf": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 0,
+    "pp": 20
+  },
+
+  "Magma Storm": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 75,
+    "pp": 5,
+    "effects": [ "BindTrap" ]
+  },
+
+  "Mean Look": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "TrapNoDamage" ]
+  },
+
+  "Megahorn": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 85,
+    "pp": 10
+  },
+
+  "Moonblast": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 95,
+    "accuracy": 100,
+    "pp": 15,
+    "secondaryChance": 0.3,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Moonlight": {
+    "type": "Fairy",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "Heal" ]
+  },
+
+  "Morning Sun": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "Heal" ]
+  },
+
+  "Ominous Wind": {
+    "type": "Ghost",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Outrage": {
+    "type": "Dragon",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Payback": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Petal Blizzard": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Petal Dance": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Phantom Force": {
+    "type": "Ghost",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "TwoTurn" ]
+  },
+
+  "Pin Missile": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 25,
+    "accuracy": 95,
+    "pp": 20,
+    "minHits": 2,
+    "maxHits": 5
+  },
+
+  "Poison Jab": {
+    "type": "Poison",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 20,
+    "statusChance": 0.3,
+    "inflictStatus": "Poison"
+  },
+
+  "Poison Powder": {
+    "type": "Poison",
+    "category": "Status",
+    "accuracy": 75,
+    "pp": 35,
+    "inflictStatus": "Poison"
+  },
+
+  "Power Gem": {
+    "type": "Rock",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Power Whip": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 85,
+    "pp": 10
+  },
+
+  "Psyshock": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "usesTargetDefense": true
+  },
+
+  "Psystrike": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 10,
+    "usesTargetDefense": true
+  },
+
+  "Pursuit": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Return": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 102,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Revenge": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 10,
+    "priority": -4
+  },
+
+  "Reversal": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Rock Climb": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 85,
+    "pp": 20
+  },
+
+  "Rolling Kick": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 85,
+    "pp": 15,
+    "flinchChance": 0.3
+  },
+
+  "Roost": {
+    "type": "Flying",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "Heal" ]
+  },
+
+  "Round": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Sacred Fire": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 95,
+    "pp": 5,
+    "statusChance": 0.5,
+    "inflictStatus": "Burn"
+  },
+
+  "Sacred Sword": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Scald": {
+    "type": "Water",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 0.3,
+    "inflictStatus": "Burn"
+  },
+
+  "Secret Sword": {
+    "type": "Fighting",
+    "category": "Special",
+    "power": 85,
+    "accuracy": 100,
+    "pp": 10,
+    "usesTargetDefense": true
+  },
+
+  "Seed Bomb": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Seismic Toss": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 1,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "LevelDamage" ]
+  },
+
+  "Self-Destruct": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 200,
+    "accuracy": 100,
+    "pp": 5,
+    "effects": [ "SelfFaint" ]
+  },
+
+  "Shadow Punch": {
+    "type": "Ghost",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 0,
+    "pp": 20
+  },
+
+  "Shock Wave": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 0,
+    "pp": 20
+  },
+
+  "Signal Beam": {
+    "type": "Bug",
+    "category": "Special",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "Confuse10" ]
+  },
+
+  "Sing": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 55,
+    "pp": 15,
+    "inflictStatus": "Sleep"
+  },
+
+  "Sky Uppercut": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 85,
+    "accuracy": 90,
+    "pp": 15
+  },
+
+  "Slam": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 75,
+    "pp": 20
+  },
+
+  "Sleep Powder": {
+    "type": "Grass",
+    "category": "Status",
+    "accuracy": 75,
+    "pp": 15,
+    "inflictStatus": "Sleep"
+  },
+
+  "Sludge Bomb": {
+    "type": "Poison",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "statusChance": 0.3,
+    "inflictStatus": "Poison"
+  },
+
+  "Sludge Wave": {
+    "type": "Poison",
+    "category": "Special",
+    "power": 95,
+    "accuracy": 100,
+    "pp": 10,
+    "statusChance": 0.1,
+    "inflictStatus": "Poison"
+  },
+
+  "Smack Down": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Solar Beam": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "TwoTurn" ]
+  },
+
+  "Spore": {
+    "type": "Grass",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 15,
+    "inflictStatus": "Sleep"
+  },
+
+  "Stomping Tantrum": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Submission": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 80,
+    "pp": 20,
+    "effects": [ "Recoil25" ]
+  },
+
+  "Sucker Punch": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 5,
+    "priority": 1
+  },
+
+  "Surf": {
+    "type": "Water",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Swift": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 0,
+    "pp": 20
+  },
+
+  "Synthesis": {
+    "type": "Grass",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "Heal" ]
+  },
+
+  "Take Down": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 85,
+    "pp": 20,
+    "effects": [ "Recoil25" ]
+  },
+
+  "Thief": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 25,
+    "effects": [ "StealItem" ]
+  },
+
+  "Thunder": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 110,
+    "accuracy": 70,
+    "pp": 10,
+    "statusChance": 0.3,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Toxic": {
+    "type": "Poison",
+    "category": "Status",
+    "accuracy": 90,
+    "pp": 10,
+    "inflictStatus": "Toxic"
+  },
+
+  "Triple Kick": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 20,
+    "accuracy": 90,
+    "pp": 10,
+    "minHits": 3,
+    "maxHits": 3
+  },
+
+  "Wake-Up Slap": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Water Pulse": {
+    "type": "Water",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "Confuse20" ]
+  },
+
+  "Wild Charge": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "Recoil33" ]
+  },
+
+  "Wish": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "Heal" ]
+  },
+
+  "Wood Hammer": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "Recoil33" ]
+  },
+
+  "After You": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 15,
+    "effects": [ "FailNoAlly" ]
+  },
+
+  "Alluring Voice": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Ally Switch": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 15,
+    "priority": 2,
+    "effects": [ "FailNoAlly" ]
+  },
+
+  "Aqua Ring": {
+    "type": "Water",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "AquaRing" ]
+  },
+
+  "Attract": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "FailNotSimulated" ]
+  },
+
+  "Baton Pass": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 40,
+    "effects": [ "BatonPass" ]
+  },
+
+  "Belly Drum": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "BellyDrum" ]
+  },
+
+  "Bide": {
+    "type": "Normal",
+    "category": "Physical",
+    "pp": 10,
+    "effects": [ "FailNotSimulated" ]
+  },
+
+  "Blast Burn": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 150,
+    "accuracy": 90,
+    "pp": 5
+  },
+
+  "Block": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "TrapNoDamage" ]
+  },
+
+  "Body Press": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "usesDefenseAsOffense": true
+  },
+
+  "Brine": {
+    "type": "Water",
+    "category": "Special",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "BrineBoost" ]
+  },
+
+  "Burning Jealousy": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Captivate": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "FailNotSimulated" ]
+  },
+
+  "Celebrate": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 40,
+    "effects": [ "Noop" ]
+  },
+
+  "Charge": {
+    "type": "Electric",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "SpDefense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Coaching": {
+    "type": "Fighting",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "FailNoAlly" ]
+  },
+
+  "Confuse Ray": {
+    "type": "Ghost",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "InflictConfusion" ]
+  },
+
+  "Confusion": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 25,
+    "effects": [ "Confuse10" ]
+  },
+
+  "Copycat": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "FailNotSimulated" ]
+  },
+
+  "Counter": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 1,
+    "accuracy": 100,
+    "pp": 20,
+    "priority": -5,
+    "effects": [ "Counter" ]
+  },
+
+  "Court Change": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "CourtChange" ]
+  },
+
+  "Curse": {
+    "type": "Ghost",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "Curse" ]
+  },
+
+  "Destiny Bond": {
+    "type": "Ghost",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "DestinyBond" ]
+  },
+
+  "Disable": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "Disable" ]
+  },
+
+  "Disarming Voice": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 40,
+    "pp": 15
+  },
+
+  "Dragon Cheer": {
+    "type": "Dragon",
+    "category": "Status",
+    "pp": 15,
+    "effects": [ "FailNoAlly" ]
+  },
+
+  "Draining Kiss": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "Drain" ]
+  },
+
+  "Dream Eater": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "DreamEaterGate", "Drain" ]
+  },
+
+  "Electro Ball": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "ElectroBallPower" ]
+  },
+
+  "Electroweb": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 55,
+    "accuracy": 95,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Ember": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 25,
+    "secondaryChance": 0.1,
+    "inflictStatus": "Burn"
+  },
+
+  "Encore": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 5,
+    "effects": [ "Encore" ]
+  },
+
+  "Endeavor": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 1,
+    "accuracy": 100,
+    "pp": 5,
+    "effects": [ "Endeavor" ]
+  },
+
+  "Endure": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "priority": 4,
+    "effects": [ "Endure" ]
+  },
+
+  "Expanding Force": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "ExpandingForceBoost" ]
+  },
+
+  "False Swipe": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 40,
+    "effects": [ "FalseSwipe" ]
+  },
+
+  "Feint": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 30,
+    "accuracy": 100,
+    "pp": 10,
+    "priority": 2,
+    "effects": [ "Feint" ]
+  },
+
+  "Fire Pledge": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Fire Spin": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 35,
+    "accuracy": 85,
+    "pp": 15,
+    "effects": [ "BindTrap" ]
+  },
+
+  "Fissure": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 1,
+    "accuracy": 30,
+    "pp": 5,
+    "effects": [ "Ohko" ]
+  },
+
+  "Flail": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "FlailPower" ]
+  },
+
+  "Flash": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Accuracy",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Flatter": {
+    "type": "Dark",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "opponent"
+      }
+    ],
+    "effects": [ "InflictConfusion" ]
+  },
+
+  "Fling": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 30,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "FlingItem", "FlingThrow" ]
+  },
+
+  "Flip Turn": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "SwitchAfter" ]
+  },
+
+  "Follow Me": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "priority": 2,
+    "effects": [ "FailNoAlly" ]
+  },
+
+  "Frenzy Plant": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 150,
+    "accuracy": 90,
+    "pp": 5
+  },
+
+  "Frustration": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 102,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Fury Attack": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 15,
+    "accuracy": 85,
+    "pp": 20,
+    "minHits": 2,
+    "maxHits": 5
+  },
+
+  "Grass Pledge": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Grassy Glide": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 55,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "GrassyGlidePriority" ]
+  },
+
+  "Grassy Terrain": {
+    "type": "Grass",
+    "category": "Status",
+    "pp": 10,
+    "setTerrain": "Grassy"
+  },
+
+  "Gravity": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "Gravity" ]
+  },
+
+  "Growth": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Gust": {
+    "type": "Flying",
+    "category": "Special",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 35
+  },
+
+  "Hard Press": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "TargetHpPower" ]
+  },
+
+  "Haze": {
+    "type": "Ice",
+    "category": "Status",
+    "pp": 30,
+    "effects": [ "Haze" ]
+  },
+
+  "Heal Bell": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "HealBell" ]
+  },
+
+  "Healing Wish": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "HealingWish" ]
+  },
+
+  "Heat Crash": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Helping Hand": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "priority": 5,
+    "effects": [ "FailNoAlly" ]
+  },
+
+  "High Horsepower": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 95,
+    "accuracy": 95,
+    "pp": 10
+  },
+
+  "Horn Attack": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 25
+  },
+
+  "Hydro Cannon": {
+    "type": "Water",
+    "category": "Special",
+    "power": 150,
+    "accuracy": 90,
+    "pp": 5
+  },
+
+  "Ice Spinner": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "TerrainClear" ]
+  },
+
+  "Imprison": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "Imprison" ]
+  },
+
+  "Incinerate": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Inferno": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 50,
+    "pp": 5,
+    "statusChance": 1,
+    "inflictStatus": "Burn"
+  },
+
+  "Ingrain": {
+    "type": "Grass",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "Ingrain" ]
+  },
+
+  "King's Shield": {
+    "type": "Steel",
+    "category": "Status",
+    "pp": 10,
+    "priority": 4,
+    "effects": [ "KingsShield" ]
+  },
+
+  "Baneful Bunker": {
+    "type": "Poison",
+    "category": "Status",
+    "pp": 10,
+    "priority": 4,
+    "effects": [ "BanefulBunker" ]
+  },
+
+  "Lash Out": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Last Resort": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 140,
+    "accuracy": 100,
+    "pp": 5,
+    "effects": [ "LastResort" ]
+  },
+
+  "Leech Seed": {
+    "type": "Grass",
+    "category": "Status",
+    "accuracy": 90,
+    "pp": 10,
+    "effects": [ "LeechSeed" ]
+  },
+
+  "Life Dew": {
+    "type": "Water",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "HealQuarter" ]
+  },
+
+  "Light Screen": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 30,
+    "effects": [ "LightScreen" ]
+  },
+
+  "Lock-On": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "LockOn" ]
+  },
+
+  "Magic Powder": {
+    "type": "Psychic",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "MagicPowderPsychic" ]
+  },
+
+  "Magnet Rise": {
+    "type": "Electric",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "MagnetRise" ]
+  },
+
+  "Memento": {
+    "type": "Dark",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": -2,
+        "target": "opponent"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": -2,
+        "target": "opponent"
+      }
+    ],
+    "effects": [ "SelfFaint" ]
+  },
+
+  "Metal Burst": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 1,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "MetalBurst" ]
+  },
+
+  "Meteor Beam": {
+    "type": "Rock",
+    "category": "Special",
+    "power": 120,
+    "accuracy": 90,
+    "pp": 10,
+    "effects": [ "MeteorCharge", "TwoTurn" ]
+  },
+
+  "Metronome": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "FailNotSimulated" ]
+  },
+
+  "Mimic": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "FailNotSimulated" ]
+  },
+
+  "Mirror Coat": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 1,
+    "accuracy": 100,
+    "pp": 20,
+    "priority": -5,
+    "effects": [ "MirrorCoat" ]
+  },
+
+  "Mist": {
+    "type": "Ice",
+    "category": "Status",
+    "pp": 30,
+    "effects": [ "Mist" ]
+  },
+
+  "Misty Explosion": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5,
+    "effects": [ "SelfFaint" ]
+  },
+
+  "Misty Terrain": {
+    "type": "Fairy",
+    "category": "Status",
+    "pp": 10,
+    "setTerrain": "Misty"
+  },
+
+  "Mortal Spin": {
+    "type": "Poison",
+    "category": "Physical",
+    "power": 30,
+    "accuracy": 100,
+    "pp": 15,
+    "statusChance": 1,
+    "inflictStatus": "Poison",
+    "effects": [ "ClearOwnHazards" ]
+  },
+
+  "Mud-Slap": {
+    "type": "Ground",
+    "category": "Special",
+    "power": 20,
+    "accuracy": 100,
+    "pp": 10,
+    "statChanges": [
+      {
+        "stat": "Accuracy",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Night Shade": {
+    "type": "Ghost",
+    "category": "Special",
+    "power": 1,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "LevelDamage" ]
+  },
+
+  "Nuzzle": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 20,
+    "accuracy": 100,
+    "pp": 20,
+    "statusChance": 1,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Order Up": {
+    "type": "Dragon",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Pain Split": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "PainSplit" ]
+  },
+
+  "Peck": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 35,
+    "accuracy": 100,
+    "pp": 35
+  },
+
+  "Perish Song": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "PerishSong" ]
+  },
+
+  "Pluck": {
+    "type": "Flying",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Poison Sting": {
+    "type": "Poison",
+    "category": "Physical",
+    "power": 15,
+    "accuracy": 100,
+    "pp": 35,
+    "secondaryChance": 0.3,
+    "inflictStatus": "Poison"
+  },
+
+  "Pollen Puff": {
+    "type": "Bug",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Poltergeist": {
+    "type": "Ghost",
+    "category": "Physical",
+    "power": 110,
+    "accuracy": 90,
+    "pp": 5,
+    "effects": [ "PoltergeistGate" ]
+  },
+
+  "Pound": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 35
+  },
+
+  "Power Trip": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 20,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "StoredPower" ]
+  },
+
+  "Present": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 90,
+    "pp": 15
+  },
+
+  "Psybeam": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "Confuse10" ]
+  },
+
+  "Psych Up": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "PsychUp" ]
+  },
+
+  "Psychic Fangs": {
+    "type": "Psychic",
+    "category": "Physical",
+    "power": 85,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "ScreenBreak" ]
+  },
+
+  "Psychic Noise": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Psychic Terrain": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 10,
+    "setTerrain": "Psychic"
+  },
+
+  "Psywave": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 1,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "Psywave" ]
+  },
+
+  "Pyro Ball": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 90,
+    "pp": 5,
+    "secondaryChance": 0.1,
+    "inflictStatus": "Burn"
+  },
+
+  "Quash": {
+    "type": "Dark",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "FailNotSimulated" ]
+  },
+
+  "Quick Guard": {
+    "type": "Fighting",
+    "category": "Status",
+    "pp": 15,
+    "priority": 3,
+    "effects": [ "QuickGuard" ]
+  },
+
+  "Rage": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 20,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Rage Powder": {
+    "type": "Bug",
+    "category": "Status",
+    "pp": 20,
+    "priority": 2,
+    "effects": [ "FailNoAlly" ]
+  },
+
+  "Razor Wind": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "critStage": 1,
+    "effects": [ "TwoTurn" ]
+  },
+
+  "Reflect": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "Reflect" ]
+  },
+
+  "Rest": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "Rest" ]
+  },
+
+  "Roar": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "priority": -6,
+    "effects": [ "ForcedSwitch" ]
+  },
+
+  "Rock Throw": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 90,
+    "pp": 15
+  },
+
+  "Rollout": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 30,
+    "accuracy": 90,
+    "pp": 20
+  },
+
+  "Safeguard": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 25,
+    "effects": [ "Safeguard" ]
+  },
+
+  "Salt Cure": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "SaltCure" ]
+  },
+
+  "Sand Tomb": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 35,
+    "accuracy": 85,
+    "pp": 15,
+    "effects": [ "BindTrap" ]
+  },
+
+  "Scale Shot": {
+    "type": "Dragon",
+    "category": "Physical",
+    "power": 25,
+    "accuracy": 90,
+    "pp": 20,
+    "minHits": 2,
+    "maxHits": 5,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Scorching Sands": {
+    "type": "Ground",
+    "category": "Special",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 10,
+    "secondaryChance": 0.3,
+    "inflictStatus": "Burn"
+  },
+
+  "Scratch": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 35
+  },
+
+  "Secret Power": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 20,
+    "secondaryChance": 0.3,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Sheer Cold": {
+    "type": "Ice",
+    "category": "Special",
+    "power": 1,
+    "accuracy": 30,
+    "pp": 5,
+    "effects": [ "Ohko" ]
+  },
+
+  "Silver Wind": {
+    "type": "Bug",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 5,
+    "secondaryChance": 0.1,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Skill Swap": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "SkillSwap" ]
+  },
+
+  "Sleep Talk": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "SleepTalk" ]
+  },
+
+  "Smart Strike": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 70,
+    "pp": 10
+  },
+
+  "Snore": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 15,
+    "flinchChance": 0.3,
+    "effects": [ "SnoreOnlyAsleep" ]
+  },
+
+  "Snowscape": {
+    "type": "Ice",
+    "category": "Status",
+    "pp": 10,
+    "setWeather": "Hail"
+  },
+
+  "Soak": {
+    "type": "Water",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "SoakWater" ]
+  },
+
+  "Solar Blade": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 125,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "TwoTurn" ]
+  },
+
+  "Spark": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 20,
+    "secondaryChance": 0.3,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Spiky Shield": {
+    "type": "Grass",
+    "category": "Status",
+    "pp": 10,
+    "priority": 4,
+    "effects": [ "Protect" ]
+  },
+
+  "Spite": {
+    "type": "Ghost",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "SpitePp" ]
+  },
+
+  "Splash": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 40,
+    "effects": [ "Noop" ]
+  },
+
+  "Steel Beam": {
+    "type": "Steel",
+    "category": "Special",
+    "power": 140,
+    "accuracy": 95,
+    "pp": 5,
+    "effects": [ "HalfHpCost" ]
+  },
+
+  "Stockpile": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "Stockpile" ]
+  },
+
+  "Stored Power": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 20,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "StoredPower" ]
+  },
+
+  "Stun Spore": {
+    "type": "Grass",
+    "category": "Status",
+    "accuracy": 75,
+    "pp": 30,
+    "inflictStatus": "Paralysis"
+  },
+
+  "Super Fang": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 1,
+    "accuracy": 90,
+    "pp": 10,
+    "effects": [ "SuperFang" ]
+  },
+
+  "Supercell Slam": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 95,
+    "pp": 15
+  },
+
+  "Supersonic": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 55,
+    "pp": 20,
+    "effects": [ "InflictConfusion" ]
+  },
+
+  "Swagger": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 85,
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 2,
+        "target": "opponent"
+      }
+    ],
+    "effects": [ "InflictConfusion" ]
+  },
+
+  "Sweet Kiss": {
+    "type": "Fairy",
+    "category": "Status",
+    "accuracy": 75,
+    "pp": 10,
+    "effects": [ "InflictConfusion" ]
+  },
+
+  "Tachyon Cutter": {
+    "type": "Steel",
+    "category": "Special",
+    "power": 50,
+    "pp": 10,
+    "minHits": 2,
+    "maxHits": 2
+  },
+
+  "Tailwind": {
+    "type": "Flying",
+    "category": "Status",
+    "pp": 15,
+    "effects": [ "Tailwind" ]
+  },
+
+  "Taunt": {
+    "type": "Dark",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "Taunt" ]
+  },
+
+  "Teleport": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "Noop" ]
+  },
+
+  "Temper Flare": {
+    "type": "Fire",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Tera Blast": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "usesHigherOffense": true
+  },
+
+  "Thrash": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Throat Chop": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Torment": {
+    "type": "Dark",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "Torment" ]
+  },
+
+  "Trick": {
+    "type": "Psychic",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "TrickItem" ]
+  },
+
+  "Trick Room": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 5,
+    "priority": -7,
+    "effects": [ "TrickRoom" ]
+  },
+
+  "Upper Hand": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 15,
+    "priority": 3
+  },
+
+  "Uproar": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Venoshock": {
+    "type": "Poison",
+    "category": "Special",
+    "power": 65,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "VenoshockBoost" ]
+  },
+
+  "Volt Tackle": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 15,
+    "secondaryChance": 0.1,
+    "inflictStatus": "Paralysis",
+    "effects": [ "Recoil33" ]
+  },
+
+  "Water Pledge": {
+    "type": "Water",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Water Spout": {
+    "type": "Water",
+    "category": "Special",
+    "power": 150,
+    "accuracy": 100,
+    "pp": 5,
+    "effects": [ "UserHpPower" ]
+  },
+
+  "Wave Crash": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "Recoil33" ]
+  },
+
+  "Weather Ball": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "WeatherBall" ]
+  },
+
+  "Whirlpool": {
+    "type": "Water",
+    "category": "Special",
+    "power": 35,
+    "accuracy": 85,
+    "pp": 15,
+    "effects": [ "BindTrap" ]
+  },
+
+  "Whirlwind": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "priority": -6,
+    "effects": [ "ForcedSwitch" ]
+  },
+
+  "Wide Guard": {
+    "type": "Rock",
+    "category": "Status",
+    "pp": 10,
+    "priority": 3,
+    "effects": [ "WideGuard" ]
+  },
+
+  "Worry Seed": {
+    "type": "Grass",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "WorrySeed" ]
+  },
+
+  "Wrap": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 15,
+    "accuracy": 90,
+    "pp": 20,
+    "effects": [ "BindTrap" ]
+  },
+
+  "Yawn": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "Yawn" ]
+  },
+
+  "Anchor Shot": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 20,
+    "effects": [ "TrapNoDamage" ]
+  },
+
+  "Aromatherapy": {
+    "type": "Grass",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "HealBell" ]
+  },
+
+  "Aurora Veil": {
+    "type": "Ice",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "AuroraVeil" ]
+  },
+
+  "Autotomize": {
+    "type": "Steel",
+    "category": "Status",
+    "pp": 15,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Barb Barrage": {
+    "type": "Poison",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 10,
+    "statusChance": 0.5,
+    "inflictStatus": "Poison"
+  },
+
+  "Beat Up": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 25,
+    "accuracy": 100,
+    "pp": 10,
+    "minHits": 2,
+    "maxHits": 6
+  },
+
+  "Bleakwind Storm": {
+    "type": "Flying",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 80,
+    "pp": 10,
+    "secondaryChance": 0.3,
+    "statChanges": [
+      {
+        "stat": "Speed",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Blood Moon": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 140,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Bolt Beak": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 85,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Bonemerang": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 90,
+    "pp": 10,
+    "minHits": 2,
+    "maxHits": 2
+  },
+
+  "Burning Bulwark": {
+    "type": "Fire",
+    "category": "Status",
+    "pp": 10,
+    "priority": 4,
+    "effects": [ "Protect" ]
+  },
+
+  "Ceaseless Edge": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 65,
+    "accuracy": 90,
+    "pp": 15,
+    "effects": [ "Spikes" ]
+  },
+
+  "Chilly Reception": {
+    "type": "Ice",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "ChillyReception" ]
+  },
+
+  "Clangorous Soul": {
+    "type": "Dragon",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "HalfHpCost" ],
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Defense",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Conversion": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 30,
+    "effects": [ "FailNotSimulated" ]
+  },
+
+  "Corrosive Gas": {
+    "type": "Poison",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 40,
+    "effects": [ "KnockOffRemove" ]
+  },
+
+  "Darkest Lariat": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 85,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Double Iron Bash": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 5,
+    "minHits": 2,
+    "maxHits": 2,
+    "flinchChance": 0.3
+  },
+
+  "Double Shock": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Dragon Energy": {
+    "type": "Dragon",
+    "category": "Special",
+    "power": 150,
+    "accuracy": 100,
+    "pp": 5,
+    "effects": [ "UserHpPower" ]
+  },
+
+  "Entrainment": {
+    "type": "Normal",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 15,
+    "effects": [ "WorrySeed" ]
+  },
+
+  "Fickle Beam": {
+    "type": "Dragon",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Final Gambit": {
+    "type": "Fighting",
+    "category": "Special",
+    "power": 1,
+    "accuracy": 100,
+    "pp": 5,
+    "effects": [ "FinalGambit" ]
+  },
+
+  "First Impression": {
+    "type": "Bug",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "priority": 2,
+    "effects": [ "FirstImpression" ]
+  },
+
+  "Fishious Rend": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 85,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Flower Trick": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 70,
+    "pp": 10,
+    "critStage": 3
+  },
+
+  "Focus Energy": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 30,
+    "effects": [ "Noop" ]
+  },
+
+  "Foresight": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 40,
+    "effects": [ "Noop" ]
+  },
+
+  "Freeze Shock": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 140,
+    "accuracy": 90,
+    "pp": 5,
+    "statusChance": 0.3,
+    "inflictStatus": "Paralysis",
+    "effects": [ "TwoTurn" ]
+  },
+
+  "Fusion Bolt": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Fusion Flare": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Geomancy": {
+    "type": "Fairy",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "TwoTurn" ],
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": 2,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": 2,
+        "target": "self"
+      },
+      {
+        "stat": "Speed",
+        "stages": 2,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Gigaton Hammer": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 160,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Glaive Rush": {
+    "type": "Dragon",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Heart Swap": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "HeartSwap" ]
+  },
+
+  "Hidden Power Electric": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Hidden Power Fighting": {
+    "type": "Fighting",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Hidden Power Fire": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Hidden Power Grass": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Hidden Power Ground": {
+    "type": "Ground",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Hidden Power Ice": {
+    "type": "Ice",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Hidden Power Psychic": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Hold Hands": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 40,
+    "effects": [ "FailNoAlly" ]
+  },
+
+  "Hydro Steam": {
+    "type": "Water",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Hyperspace Fury": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 100,
+    "pp": 5,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Ivy Cudgel": {
+    "type": "Grass",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 10,
+    "critStage": 1
+  },
+
+  "Jaw Lock": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "TrapNoDamage" ]
+  },
+
+  "Jungle Healing": {
+    "type": "Grass",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "HealQuarter", "RefreshCure" ]
+  },
+
+  "Kowtow Cleave": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 85,
+    "pp": 10
+  },
+
+  "Lunar Blessing": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "HealQuarter", "RefreshCure" ]
+  },
+
+  "Lunar Dance": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "HealingWish" ]
+  },
+
+  "Magic Coat": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 15,
+    "priority": 4,
+    "effects": [ "FailNotSimulated" ]
+  },
+
+  "Malignant Chain": {
+    "type": "Poison",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5,
+    "statusChance": 0.5,
+    "inflictStatus": "Toxic"
+  },
+
+  "Matcha Gotcha": {
+    "type": "Grass",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 90,
+    "pp": 15,
+    "statusChance": 0.2,
+    "inflictStatus": "Burn",
+    "effects": [ "Drain" ]
+  },
+
+  "Mega Kick": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 75,
+    "pp": 5
+  },
+
+  "Mighty Cleave": {
+    "type": "Rock",
+    "category": "Physical",
+    "power": 95,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Mind Blown": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 150,
+    "accuracy": 100,
+    "pp": 5,
+    "effects": [ "HalfHpCost" ]
+  },
+
+  "Moongeist Beam": {
+    "type": "Ghost",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Nature Power": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "FailNotSimulated" ]
+  },
+
+  "Nature's Madness": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 1,
+    "accuracy": 90,
+    "pp": 10,
+    "effects": [ "SuperFang" ]
+  },
+
+  "Oblivion Wing": {
+    "type": "Flying",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "Drain75" ]
+  },
+
+  "Origin Pulse": {
+    "type": "Water",
+    "category": "Special",
+    "power": 110,
+    "accuracy": 85,
+    "pp": 10
+  },
+
+  "Overdrive": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Photon Geyser": {
+    "type": "Psychic",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5,
+    "usesHigherOffense": true
+  },
+
+  "Plasma Fists": {
+    "type": "Electric",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Population Bomb": {
+    "type": "Normal",
+    "category": "Physical",
+    "power": 20,
+    "accuracy": 90,
+    "pp": 10,
+    "minHits": 10,
+    "maxHits": 10
+  },
+
+  "Power-Up Punch": {
+    "type": "Fighting",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 100,
+    "pp": 20,
+    "secondaryChance": 1.0,
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Precipice Blades": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 120,
+    "accuracy": 85,
+    "pp": 10
+  },
+
+  "Psyblade": {
+    "type": "Psychic",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Punishment": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 60,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Rage Fist": {
+    "type": "Ghost",
+    "category": "Physical",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Recycle": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 5,
+    "effects": [ "FailNoItems" ]
+  },
+
+  "Refresh": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "RefreshCure" ]
+  },
+
+  "Revelation Dance": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 15
+  },
+
+  "Revival Blessing": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 1,
+    "effects": [ "Heal" ]
+  },
+
+  "Rising Voltage": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 20
+  },
+
+  "Ruination": {
+    "type": "Dark",
+    "category": "Special",
+    "power": 1,
+    "accuracy": 90,
+    "pp": 10,
+    "effects": [ "SuperFang" ]
+  },
+
+  "Searing Shot": {
+    "type": "Fire",
+    "category": "Special",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5,
+    "statusChance": 0.3,
+    "inflictStatus": "Burn"
+  },
+
+  "Shadow Bone": {
+    "type": "Ghost",
+    "category": "Physical",
+    "power": 85,
+    "accuracy": 100,
+    "pp": 10,
+    "secondaryChance": 0.2,
+    "statChanges": [
+      {
+        "stat": "Defense",
+        "stages": -1,
+        "target": "opponent"
+      }
+    ]
+  },
+
+  "Shed Tail": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "ShedTail" ]
+  },
+
+  "Shell Side Arm": {
+    "type": "Poison",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "usesHigherOffense": true
+  },
+
+  "Shore Up": {
+    "type": "Ground",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "Heal" ]
+  },
+
+  "Sparkling Aria": {
+    "type": "Water",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Spectral Thief": {
+    "type": "Ghost",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Spirit Shackle": {
+    "type": "Ghost",
+    "category": "Physical",
+    "power": 80,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "TrapNoDamage" ]
+  },
+
+  "Steam Eruption": {
+    "type": "Water",
+    "category": "Special",
+    "power": 110,
+    "accuracy": 95,
+    "pp": 5,
+    "statusChance": 0.3,
+    "inflictStatus": "Burn"
+  },
+
+  "Sticky Web": {
+    "type": "Bug",
+    "category": "Status",
+    "pp": 20,
+    "effects": [ "StickyWeb" ]
+  },
+
+  "Strange Steam": {
+    "type": "Fairy",
+    "category": "Special",
+    "power": 90,
+    "accuracy": 95,
+    "pp": 10,
+    "effects": [ "Confuse20" ]
+  },
+
+  "Strength Sap": {
+    "type": "Grass",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "StrengthSap" ]
+  },
+
+  "Sunsteel Strike": {
+    "type": "Steel",
+    "category": "Physical",
+    "power": 100,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Surging Strikes": {
+    "type": "Water",
+    "category": "Physical",
+    "power": 25,
+    "accuracy": 100,
+    "pp": 5,
+    "critStage": 3,
+    "minHits": 3,
+    "maxHits": 3
+  },
+
+  "Switcheroo": {
+    "type": "Dark",
+    "category": "Status",
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "TrickItem" ]
+  },
+
+  "Take Heart": {
+    "type": "Psychic",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "RefreshCure" ],
+    "statChanges": [
+      {
+        "stat": "SpAttack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "SpDefense",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Tera Starstorm": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5
+  },
+
+  "Terrain Pulse": {
+    "type": "Normal",
+    "category": "Special",
+    "power": 50,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Thousand Arrows": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10
+  },
+
+  "Thousand Waves": {
+    "type": "Ground",
+    "category": "Physical",
+    "power": 90,
+    "accuracy": 100,
+    "pp": 10,
+    "effects": [ "TrapNoDamage" ]
+  },
+
+  "Thunderclap": {
+    "type": "Electric",
+    "category": "Special",
+    "power": 70,
+    "accuracy": 100,
+    "pp": 5,
+    "priority": 1
+  },
+
+  "Tidy Up": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "ClearOwnHazards" ],
+    "statChanges": [
+      {
+        "stat": "Attack",
+        "stages": 1,
+        "target": "self"
+      },
+      {
+        "stat": "Speed",
+        "stages": 1,
+        "target": "self"
+      }
+    ]
+  },
+
+  "Transform": {
+    "type": "Normal",
+    "category": "Status",
+    "pp": 10,
+    "effects": [ "FailNotSimulated" ]
+  },
+
+  "Triple Axel": {
+    "type": "Ice",
+    "category": "Physical",
+    "power": 40,
+    "accuracy": 90,
+    "pp": 10,
+    "minHits": 3,
+    "maxHits": 3
+  },
+
+  "Wicked Blow": {
+    "type": "Dark",
+    "category": "Physical",
+    "power": 75,
+    "accuracy": 100,
+    "pp": 5,
+    "critStage": 3
+  }
+}

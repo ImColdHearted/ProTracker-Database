@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.CreateAuctionPostWindow"
+        x:DataType="vm:CreateAuctionPostViewModel"
+        Title="Add Auction"
+        Width="520" Height="220"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <!-- §188: content on a themedPanel. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid Margin="14" RowDefinitions="Auto,Auto,Auto,*,Auto">
+
+        <TextBlock Grid.Row="0" Text="Add Auction" FontSize="16" FontWeight="Bold"
+                   />
+
+        <TextBlock Grid.Row="1" TextWrapping="Wrap" FontSize="11" Opacity="0.75" Margin="0,2,0,10"
+                  
+                   Text="Paste the address of your listing on the Trade Zone. Everything else - the title, the server, the current and previous bids - is read off the listing itself." />
+
+        <TextBox Grid.Row="2" FontSize="12" Text="{Binding LinkText}"
+                 IsEnabled="{Binding !Busy}"
+                 Watermark="https://pokemonrevolution.net/forum/trade/9557/" />
+
+        <TextBlock Grid.Row="3" Text="{Binding StatusMessage}" TextWrapping="Wrap" FontSize="11"
+                   VerticalAlignment="Center" Margin="0,8,0,0"
+                   />
+
+        <Grid Grid.Row="4" ColumnDefinitions="*,Auto,Auto" Margin="0,10,0,0">
+            <Button Grid.Column="1" Content="Add" FontWeight="Bold"
+                    IsEnabled="{Binding !Busy}" Click="AddButton_Click" />
+            <Button Grid.Column="2" Content="Cancel" Margin="8,0,0,0" Click="CancelButton_Click" />
+        </Grid>
+    </Grid>
+    </Border>
+</Window>

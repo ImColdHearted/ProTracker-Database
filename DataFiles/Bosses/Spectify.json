@@ -1,0 +1,547 @@
+{
+  "name": "Spectify",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Spectify.png",
+  "BossCooldown": 288,
+  "bossId": "spectify",
+  "location": "Sandgem Town House",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/SpectifyLoc.png",
+  "requirements": "Having completed the Sinnoh League",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "2-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Nugget",
+            "quantity": "3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Nugget.png"
+          },
+          {
+            "name": "Ultra Ball",
+            "quantity": "25",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ultra_Ball.png"
+          },
+          {
+            "name": "Big Pearl",
+            "quantity": "3",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Big_Pearl.png"
+          },
+          {
+            "name": "Master Ball",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Master_Ball.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Chikorita",
+            "dexNumber": 152,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Cyndaquil",
+            "dexNumber": 155,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Totodile",
+            "dexNumber": 158,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Bagon",
+            "dexNumber": 371,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Salamence",
+          "dexNumber": 373,
+          "nature": "Random",
+          "ability": "Moxie",
+          "item": "None",
+          "moves": [
+            "Outrage",
+            "Fire Blast",
+            "Dragon Dance",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Meganium",
+          "dexNumber": 154,
+          "nature": "Random",
+          "ability": "Overgrow",
+          "item": "None",
+          "moves": [
+            "Seed Bomb",
+            "Dragon Tail",
+            "Earthquake",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Feraligatr",
+          "dexNumber": 160,
+          "nature": "Random",
+          "ability": "Sheer Force",
+          "item": "None",
+          "moves": [
+            "Waterfall",
+            "Ice Punch",
+            "Low Kick",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Typhlosion",
+          "dexNumber": 157,
+          "nature": "Random",
+          "ability": "Blaze",
+          "item": "None",
+          "moves": [
+            "Solar Beam",
+            "Fire Blast",
+            "Focus Blast",
+            "Thunder Punch"
+          ]
+        },
+        {
+          "name": "Umbreon",
+          "dexNumber": 197,
+          "nature": "Random",
+          "ability": "Synchronize",
+          "item": "None",
+          "moves": [
+            "Foul Play",
+            "Toxic",
+            "Mean Look",
+            "Heal Bell"
+          ]
+        },
+        {
+          "name": "Espeon",
+          "dexNumber": 196,
+          "nature": "Random",
+          "ability": "Magic Bounce",
+          "item": "None",
+          "moves": [
+            "Shadow Ball",
+            "Calm Mind",
+            "Psychic",
+            "Dazzling Gleam"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "2-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Nugget",
+            "quantity": "3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Nugget.png"
+          },
+          {
+            "name": "Ultra Ball",
+            "quantity": "25",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ultra_Ball.png"
+          },
+          {
+            "name": "Big Pearl",
+            "quantity": "3",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Big_Pearl.png"
+          },
+          {
+            "name": "Master Ball",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Master_Ball.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Chikorita",
+            "dexNumber": 152,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Cyndaquil",
+            "dexNumber": 155,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Totodile",
+            "dexNumber": 158,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Bagon",
+            "dexNumber": 371,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Totodile",
+            "dexNumber": 158,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Cyndaquil",
+            "dexNumber": 155,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Chikorita",
+            "dexNumber": 152,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Bagon",
+            "dexNumber": 371,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Mega Salamence",
+          "dexNumber": 10089,
+          "nature": "Random",
+          "ability": "Aerilate",
+          "item": "Salamencite",
+          "moves": [
+            "Outrage",
+            "Fire Blast",
+            "Dragon Dance",
+            "Earthquake",
+            "Double-Edge"
+          ]
+        },
+        {
+          "name": "Meganium",
+          "dexNumber": 154,
+          "nature": "Random",
+          "ability": "Overgrow",
+          "item": "Choice Band",
+          "moves": [
+            "Seed Bomb",
+            "Dragon Tail",
+            "Earthquake",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Feraligatr",
+          "dexNumber": 160,
+          "nature": "Random",
+          "ability": "Torrent",
+          "item": "Choice Band",
+          "moves": [
+            "Waterfall",
+            "Ice Punch",
+            "Low Kick",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Typhlosion",
+          "dexNumber": 157,
+          "nature": "Random",
+          "ability": "Blaze",
+          "item": "Choice Specs",
+          "moves": [
+            "Solar Beam",
+            "Fire Blast",
+            "Focus Blast",
+            "Thunder Punch"
+          ]
+        },
+        {
+          "name": "Umbreon",
+          "dexNumber": 197,
+          "nature": "Random",
+          "ability": "Synchronize",
+          "item": "Leftovers",
+          "moves": [
+            "Foul Play",
+            "Toxic",
+            "Mean Look",
+            "Heal Bell"
+          ]
+        },
+        {
+          "name": "Espeon",
+          "dexNumber": 196,
+          "nature": "Random",
+          "ability": "Magic Bounce",
+          "item": "Choice Specs",
+          "moves": [
+            "Shadow Ball",
+            "Calm Mind",
+            "Psychic",
+            "Dazzling Gleam"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Rare Candy",
+            "quantity": "2-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Nugget",
+            "quantity": "3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Nugget.png"
+          },
+          {
+            "name": "Ultra Ball",
+            "quantity": "25",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ultra_Ball.png"
+          },
+          {
+            "name": "Big Pearl",
+            "quantity": "3",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Big_Pearl.png"
+          },
+          {
+            "name": "Master Ball",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Master_Ball.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Chikorita",
+            "dexNumber": 152,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Cyndaquil",
+            "dexNumber": 155,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Totodile",
+            "dexNumber": 158,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Bagon",
+            "dexNumber": 371,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Totodile",
+            "dexNumber": 158,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Cyndaquil",
+            "dexNumber": 155,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Chikorita",
+            "dexNumber": 152,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Bagon",
+            "dexNumber": 371,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Mega Salamence",
+          "dexNumber": 10089,
+          "nature": "Random",
+          "ability": "Aerilate",
+          "item": "Salamencite",
+          "moves": [
+            "Outrage",
+            "Fire Blast",
+            "Dragon Dance",
+            "Earthquake",
+            "Double-Edge"
+          ]
+        },
+        {
+          "name": "Meganium",
+          "dexNumber": 154,
+          "nature": "Random",
+          "ability": "Overgrow",
+          "item": "Choice Band",
+          "moves": [
+            "Seed Bomb",
+            "Dragon Tail",
+            "Earthquake",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Feraligatr",
+          "dexNumber": 160,
+          "nature": "Random",
+          "ability": "Torrent",
+          "item": "Choice Band",
+          "moves": [
+            "Waterfall",
+            "Ice Punch",
+            "Low Kick",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Typhlosion",
+          "dexNumber": 157,
+          "nature": "Random",
+          "ability": "Blaze",
+          "item": "Choice Specs",
+          "moves": [
+            "Solar Beam",
+            "Fire Blast",
+            "Focus Blast",
+            "Thunder Punch"
+          ]
+        },
+        {
+          "name": "Umbreon",
+          "dexNumber": 197,
+          "nature": "Random",
+          "ability": "Synchronize",
+          "item": "Leftovers",
+          "moves": [
+            "Foul Play",
+            "Toxic",
+            "Mean Look",
+            "Heal Bell"
+          ]
+        },
+        {
+          "name": "Espeon",
+          "dexNumber": 196,
+          "nature": "Random",
+          "ability": "Magic Bounce",
+          "item": "Choice Specs",
+          "moves": [
+            "Shadow Ball",
+            "Calm Mind",
+            "Psychic",
+            "Dazzling Gleam"
+          ]
+        }
+      ]
+    }
+  }
+}

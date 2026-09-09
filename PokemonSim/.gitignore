@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/obj
+/bin/Debug/net10.0
+/.vs/pokemonsim/DesignTimeBuild
+/.vs/pokemonsim/FileContentIndex

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "route-2-land",
+    "mapId": "route-2",
+    "region": "Kanto",
+    "displayName": "Route 2",
+    "method": "Land",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Pidgey",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 1,
+        "maxLevel": 1,
+        "heldItem": null
+      }
+    ]
+  }
+]

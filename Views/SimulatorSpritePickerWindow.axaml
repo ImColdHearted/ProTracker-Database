@@ -1,0 +1,78 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.SimulatorSpritePickerWindow"
+        x:DataType="vm:SimulatorSpritePickerViewModel"
+        Title="Choose a Sprite"
+        Width="560" Height="560"
+        MinWidth="380" MinHeight="320"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <!-- §199: the counterpart skins, as pictures. A counterpart is not
+         reachable by species name - a Pinkan Gyarados IS a Gyarados to the
+         engine - so a custom opponent that wants one has to name the file,
+         and this is how that file gets named without typing a path. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set. Its
+         child is deliberately not re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid Margin="12" RowDefinitions="Auto,Auto,*,Auto">
+
+        <TextBox Grid.Row="0" Text="{Binding SearchText}" Margin="0,0,0,6" FontSize="12"
+                 PlaceholderText="Search by name or event - Pinkan, Gyarados, Shadow..." />
+
+        <TextBlock Grid.Row="1" Text="{Binding StatusText}" Margin="0,0,0,6" FontSize="11"
+                   Opacity="0.8" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding Results}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SpriteChoiceItem">
+                        <!-- §196: a card is a dark tile on the background,
+                             with its own outline - the same shape the
+                             counterparts grid and the storage picker use. -->
+                        <Button Width="104" Height="132" Margin="4" Padding="4" Cursor="Hand"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                CornerRadius="4"
+                                Command="{Binding $parent[ItemsControl].((vm:SimulatorSpritePickerViewModel)DataContext).PickCommand}"
+                                CommandParameter="{Binding}"
+                                ToolTip.Tip="{Binding FilePath}">
+                            <StackPanel Spacing="2">
+                                <Panel Height="72">
+                                    <TextBlock Text="?" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.4"
+                                               IsVisible="{Binding Sprite, Converter={x:Static ObjectConverters.IsNull}}" />
+                                    <Image Source="{Binding Sprite}" Stretch="Uniform"
+                                           RenderOptions.BitmapInterpolationMode="None" />
+                                </Panel>
+                                <TextBlock Text="{Binding DisplayName}" TextAlignment="Center" TextWrapping="Wrap"
+                                           FontSize="11" Foreground="{DynamicResource ThemeTextBrush}" />
+                                <TextBlock Text="{Binding EventName}" TextAlignment="Center" TextWrapping="Wrap"
+                                           FontSize="10" Opacity="0.7"
+                                           Foreground="{DynamicResource ThemeTextBrush}" />
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="6" Margin="0,8,0,0">
+            <Button Content="Cancel" FontSize="12" Click="Cancel_Click" />
+            <TextBlock FontSize="11" Opacity="0.7" VerticalAlignment="Center" TextWrapping="Wrap"
+                       Foreground="{DynamicResource ThemeTextBrush}"
+                       Text="These are sprite skins only - the battle still uses the species you typed in the slot." />
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>

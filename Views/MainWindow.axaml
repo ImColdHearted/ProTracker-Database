@@ -1,0 +1,656 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="{Binding WindowTitle}"
+        Icon="/Assets/AppIcon.png"
+        Width="875" Height="600"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <Grid RowDefinitions="Auto,Auto,*" Margin="16" ColumnDefinitions="*">
+
+        <!-- Menu bar: replaces menuStrip1's dropdown menus. §141: wrapped in a
+             ThemeVariantScope whose variant ThemeManager chooses from the
+             background behind the menu - light background, Fluent's light
+             palette (dark text, dark hover highlight, light dropdowns); dark
+             background, the dark palette the rest of the app wears - so the
+             menu text stays readable over any Appearance. The menu never used
+             the Appearance text colour; its white came from the app's dark
+             theme default, which vanished on a pale background. -->
+        <ThemeVariantScope Grid.Row="0" RequestedThemeVariant="{DynamicResource ThemeMenuVariant}">
+            <Menu Margin="0,0,0,8">
+                <MenuItem Header="_File">
+                    <MenuItem Header="Compact Mode" Click="CompactModeButton_Click" />
+                    <!-- See SinceFormSound/SinceShinySound's declaration comment in
+                         MainWindowViewModel.cs. Started as one shared on/off
+                         checkbox here (see MIGRATION_GUIDE.md #65), then a pair of
+                         CheckBox-style submenus (#71) - both replaced by this one
+                         item, which opens a small dialog with two dropdowns
+                         instead (#72), so both choices sit in one obviously-a-
+                         dropdown place and adding a future sound needs no XAML
+                         changes here at all (see SoundSettingsViewModel.SoundOptions). -->
+                    <MenuItem Header="Sound Settings…" Click="SoundSettingsButton_Click" />
+                    <Separator />
+                    <MenuItem Header="Export Hunt Data (CSV)…" Command="{Binding ExportCsvCommand}" />
+                    <MenuItem Header="Import Hunt Data (CSV)…" Command="{Binding ImportCsvCommand}" />
+                    <Separator />
+                    <MenuItem Header="Export Hunt Data (JSON)…" Command="{Binding ExportJsonCommand}" />
+                    <MenuItem Header="Import Hunt Data (JSON)…" Command="{Binding ImportJsonCommand}" />
+                    <Separator />
+                    <MenuItem Header="Assign Client" Command="{Binding AssignClientCommand}" />
+                    <Separator />
+                    <MenuItem Header="Admin Login" Click="AdminLoginButton_Click" />
+                </MenuItem>
+                 <!-- §103: one professional home for everything that is reference
+                     information ABOUT the game rather than this tracker's own
+                     data - absorbing the old top-level Bosses (database half),
+                     Counterparts, Guides (renamed Game Guides), Announcements and
+                     Calculators menus. Every child keeps its original handler and
+                     window; only the position moved. -->
+                <MenuItem Header="_Game Information">
+                    <MenuItem Header="Boss Database" Click="BossDatabaseButton_Click" />
+                    <MenuItem Header="Counterparts">
+                        <MenuItem Header="Clone" Click="CounterpartsMenuItem_Click" Tag="Clone" />
+                        <MenuItem Header="Pinkan Island" Click="CounterpartsMenuItem_Click" Tag="Pinkan" />
+                        <MenuItem Header="Bidoof Day" Click="CounterpartsMenuItem_Click" Tag="Bidoof Day" />
+                        <MenuItem Header="Pikachu World Quest" Click="CounterpartsMenuItem_Click" Tag="Pikachu World Quest" />
+                        <MenuItem Header="Shadow" Click="CounterpartsMenuItem_Click" Tag="Shadow" />
+                        <MenuItem Header="Summer" Click="CounterpartsMenuItem_Click" Tag="Summer" />
+                        <MenuItem Header="Halloween" Click="CounterpartsMenuItem_Click" Tag="Halloween" />
+                        <MenuItem Header="May 4th" Click="CounterpartsMenuItem_Click" Tag="May4th" />
+                        <MenuItem Header="Christmas" Click="CounterpartsMenuItem_Click" Tag="Christmas" />
+                        <MenuItem Header="Easter" Click="CounterpartsMenuItem_Click" Tag="Easter" />
+                        <MenuItem Header="Valentine's" Click="CounterpartsMenuItem_Click" Tag="Valentines" />
+                        <MenuItem Header="April Fools" Click="CounterpartsMenuItem_Click" Tag="April Fools" />
+                        <MenuItem Header="FIFA World Cup" Click="CounterpartsMenuItem_Click" Tag="FIFA World Cup"/>
+                    </MenuItem>
+                    <MenuItem Header="Game Guides">
+                        <MenuItem Header="Mega Stones" Click="MegaStonesGuideButton_Click" />
+                        <MenuItem Header="Legendary Pokémon (coming soon)" Click="PlaceholderMenuItem_Click" Tag="Legendary Pokémon" />
+                        <MenuItem Header="EV Zones (coming soon)" Click="PlaceholderMenuItem_Click" Tag="EV Zones" />
+                        <MenuItem Header="Excavations (coming soon)" Click="PlaceholderMenuItem_Click" Tag="Excavations" />
+                    </MenuItem>
+                                    <MenuItem Header="Calculators">
+                        <MenuItem Header="Damage" Click="DamageCalculatorButton_Click" />
+                        <MenuItem Header="World Quest" Click="WorldQuestCalculatorButton_Click" />
+                        <MenuItem Header="IV" Click="IvCalculatorButton_Click" />
+                    </MenuItem>
+                </MenuItem>
+                   <!-- §103: "Stats" became "Statistics", gaining Boss Cooldowns (from
+                     the old Bosses menu) and Previously Battled Players (from the
+                     old PVP menu). The parent item deliberately has NO Click
+                     handler anymore: MenuItem.Click is a routed event, so the old
+                     parent handler re-fired on every CHILD click too - that one
+                     wiring is why Lifetime Stats used to open twice and Exclude
+                     Stats dragged a Lifetime Stats window along with it. -->
+                <MenuItem Header="_Statistics">
+                <MenuItem Header="Boss Cooldowns" Click="BossCooldownsButton_Click" />
+                <MenuItem Header="Lifetime Stats" Click="HuntingStatsButton_Click" />
+                <MenuItem Header="Previously Battled Players" Click="PreviouslyBattledUsersButton_Click" />
+                    <!-- Three small standalone tools - species data from the
+                         cleaned PokemonSim pokedex (calc-pokedex.json), moves from
+                         the same moves.json the boss panel reads, math in
+                         PokemonBattleMath - see MIGRATION_GUIDE.md §89. -->
+                </MenuItem>
+                <MenuItem Header="_Appearance" Click="AppearanceButton_Click" />
+                <MenuItem Header="_Events" Click="EventsButton_Click" />
+                <!-- §233: the live World Quest tracker. Top level rather than
+                     beside the World Quest Calculator under Game Information ->
+                     Calculators, because the two are different things: the
+                     calculator is a scratchpad the player types into, this one
+                     fetches the running quest and watches the client for
+                     catches. Its progress never leaves this machine - see
+                     Services/WorldQuestService.cs. -->
+                <MenuItem Header="_World Quest" Click="WorldQuestButton_Click" />
+                <!-- §236: tracks the player's own Trade Zone auctions. It reads
+                     public listing pages and remembers what they said; it never
+                     posts, bids or ends anything, all of which need a logged-in
+                     session. What it remembers stays on this machine - see
+                     Services/AuctionTrackerService.cs. -->
+                <MenuItem Header="_Auctions" Click="AuctionTrackerButton_Click" />
+                <!-- §154: the offline battle simulator (PokemonSim library +
+                     SimulatorWindow). Deliberately NOT behind Admin Login -
+                     it is a toy for anyone, touches no hunting data, and one
+                     window per click policy comes from WindowRegistry. -->
+                <MenuItem Header="_Simulator" Click="SimulatorButton_Click" />
+                            <MenuItem Header="Catch Logs" Click="HuntingLogButton_Click" />
+                                <!-- Reads PRO's real update history straight from the Update
+                         Logs forum topic - see AnnouncementsService and
+                         MIGRATION_GUIDE.md §83/§84. -->
+                    <MenuItem Header="Announcements" Click="AnnouncementsButton_Click" />
+                <!-- §127/§136. Report a Problem normally lives at the foot of
+                     the stats panel, beside the swap arrow. This menu copy is its
+                     fallback for when that panel is hidden and takes the button
+                     with it - the Margin is the original spacing that held it
+                     away from Announcements, kept so the fallback looks like it
+                     always did rather than like a new item crowding the menu.
+                 
+                     Exactly one of the two is ever visible: this one is bound to
+                     the negation of the flag the other one's container follows. -->
+                <MenuItem Header="_Report a Problem" Click="ReportProblemButton_Click"
+                          Margin="55,0,0,0" IsVisible="{Binding !ShowStatsPanel}" />
+            </Menu>
+        </ThemeVariantScope>
+
+        <!-- Top toolbar: Set Target/Start/Stop/Reset/pin/Exclude Stats/Set
+             Screen Boundaries in the first (Auto) column, sized to exactly
+             what they need, with StatusMessage taking every pixel that is
+             left. §136: this row used to be a DockPanel that reserved a
+             220px slot on the stats side for the swap arrow and Report a
+             Problem (§127), which capped the status line at whatever was
+             left between the buttons and that slot; both buttons now live at
+             the foot of the stats panel, so the slot is gone and the line
+             runs to the window's edge. The buttons start at the left edge on
+             both stats sides now (they used to start at the slot's inner
+             edge when the panel was docked left). TextWrapping keeps a long
+             message from overflowing the window. -->
+        <Grid Grid.Row="1" Margin="0,0,0,10" ColumnDefinitions="Auto,*">
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="5">
+                <Button Content="Set Target" Command="{Binding SelectTargetCommand}" />
+                <Button Content="▶ Start" Command="{Binding PlayCommand}" />
+                <Button Content="■ Stop" Command="{Binding StopCommand}" />
+                <Button Content="↺ Reset" Command="{Binding ResetCommand}" />
+                <!-- §103: icon-only and beside Reset (was "📌 Always on
+                     Top" with a 40px gap). Still a separate control - not
+                     merged into Reset - so a mis-click can't reset
+                     anything; the checked state shows via the
+                     ToggleButton.themedButton:checked border style in
+                     App.axaml, not color alone. -->
+                <ToggleButton Classes="themedButton" Padding="8,4" FontSize="12" Content="📌"
+                              IsChecked="{Binding $parent[Window].Topmost, Mode=TwoWay}"
+                              ToolTip.Tip="Always on top"
+                              AutomationProperties.Name="Always on top" />
+                <!-- §126: was a MenuItem under Statistics. It now
+                     controls the encounter table's columns as well as the
+                     stats panel, so it is no longer a Statistics-only
+                     setting - and it is reached often enough while
+                     arranging a layout that two clicks into a menu was
+                     the wrong place for it. -->
+                <Button Content="Exclude Stats" Click="ExcludeStatsButton_Click"
+                        ToolTip.Tip="Choose which stats and which table columns are shown" />
+                <!-- §135: a last resort, and the button says so twice - in
+                     this tooltip and in the warning it opens with (which a
+                     checkbox can silence). Auto-detection stays in charge;
+                     a saved box is used only when it finds nothing. -->
+                <Button Content="Set Screen Boundaries" Click="SetScreenBoundariesButton_Click"
+                        ToolTip.Tip="Set screen boundaries as a last resort if auto detection fails, and no errors occur."/>
+            </StackPanel>
+            <TextBlock Grid.Column="1" Text="{Binding StatusMessage}"
+                       Foreground="{DynamicResource ThemeTextBrush}"
+                       VerticalAlignment="Center" Margin="12,0,0,0" TextWrapping="Wrap" />
+        </Grid>
+
+        <!-- Main content: sprites + encounter table on one side, vertical stats
+             panel on the other - replaces the original's left/right split
+             (TableLayoutPanel + the underlined-label stats column on the
+             right). A DockPanel (rather than a fixed two-column Grid) lets the
+             stats Border dock to either side via StatsPanelDock, swapped with
+             the toolbar button above. Margin="16,0,16,0" on the content Grid
+             keeps an even gap from the stats panel regardless of which side
+             it's docked to. -->
+        <DockPanel Grid.Row="2" LastChildFill="True">
+
+            <!-- Right-side (or left-side, once swapped) stats panel: replaces
+                 the vertical stack of underlined labels + values (Time Hunting,
+                 Total Encounters, Since Shiny, Since Form, Successful Catches,
+                 Failed Catches, Catch Rate). Each block below is individually
+                 hideable via the Exclude Stats window (Stats menu) - hidden
+                 stats keep counting in huntSession, they're just not shown.
+                 IsVisible hides this whole Border as one unit (a separate,
+                 coarser master toggle - see ExcludeStatsWindow/
+                 MainWindowViewModel.ShowStatsPanel) - the Report a Problem /
+                 swap-arrow row at the foot (§136) goes with it even though
+                 it is not individually excludable, and the Since Form pause
+                 icon goes with the Since Form stat it belongs to. Background
+                 is the new Stats
+                 Background color from the Appearance window - transparent by
+                 default, same as before that option existed. -->
+            <Border DockPanel.Dock="{Binding StatsPanelDock}" Width="220"
+                    IsVisible="{Binding ShowStatsPanel}"
+                    Background="{DynamicResource ThemeStatsBackgroundBrush}"
+                    BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Padding="10">
+                <!-- §136: a two-row Grid rather than one StackPanel, so the
+                     Report a Problem / swap-arrow row is pinned to the foot
+                     of the panel whatever the stats above it add up to. -->
+                <Grid RowDefinitions="*,Auto">
+                <StackPanel Grid.Row="0" Spacing="20">
+                    <StackPanel Spacing="2" Margin="0,7,0,0" IsVisible="{Binding ShowTimeHunting}">
+                        <TextBlock Text="Time Hunting" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding TimeHunting}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2" IsVisible="{Binding ShowTotalEncounters}">
+                        <TextBlock Text="Total Encounters" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding TotalEncounters}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2" IsVisible="{Binding ShowTargetedEncountersFound}">
+                        <TextBlock Text="Targeted Encounters Found" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+                        <TextBlock Text="{Binding TargetedEncountersFound}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2" IsVisible="{Binding ShowSinceShiny}">
+                        <TextBlock Text="Since Shiny" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding SinceShiny}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2" IsVisible="{Binding ShowSinceForm}">
+                        <!-- §136: the Pause Since Form control is this small
+                             icon beside the label - two bars while counting
+                             (press to pause), a triangle while paused (press to
+                             resume), drawn as a Path like the swap arrow so it
+                             is the same on every OS. The old text button below
+                             the stats is gone. The state still survives Reset()
+                             (see HuntSession.SinceFormPaused) and the tooltip /
+                             accessible name still say Pause or Resume in words.
+                             Hiding the Since Form stat in Exclude Stats hides
+                             this with it now - the control belongs to the number
+                             it pauses. -->
+                        <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Center">
+                            <TextBlock Text="Since Form" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" VerticalAlignment="Center" />
+                            <Button Margin="0,0,-7,0" Padding="6,3" VerticalAlignment="Center"
+                                    Command="{Binding ToggleSinceFormPausedCommand}"
+                                    ToolTip.Tip="{Binding SinceFormPauseButtonText}"
+                                    AutomationProperties.Name="{Binding SinceFormPauseButtonText}">
+                                <Path Data="{Binding SinceFormPauseGlyph}"
+                                      Fill="{DynamicResource ThemeTextBrush}"
+                                      Width="7" Height="9" Stretch="Uniform" />
+                            </Button>
+                        </StackPanel>
+                        <TextBlock Text="{Binding SinceForm}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2" IsVisible="{Binding ShowSuccessfulCatches}">
+                        <TextBlock Text="Successful Catches" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding SuccessfulCatches}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2" IsVisible="{Binding ShowPokemonBrokenFree}">
+                        <TextBlock Text="Pokémon Broken Free" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding FailedCatches}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2" IsVisible="{Binding ShowCatchRate}">
+                        <TextBlock Text="Catch Rate" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding CatchRate}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <!-- §137: the Current Event label and dropdown that used to
+                         end this list are gone - the selector never did more
+                         than persist a name, and the counterpart-sprite
+                         follow-up it was waiting for is served by the Events
+                         board now. -->
+                </StackPanel>
+
+                <!-- §136: the swap arrow and Report a Problem, moved here from
+                     the toolbar row (§127) so the status line up there can
+                     have the whole row. Same docking as before: both dock to
+                     StatsPanelDock inside a DockPanel with LastChildFill off,
+                     so they stack outward-in - the arrow hugs the panel's
+                     outer edge, pointing where the panel will MOVE, and
+                     Report a Problem sits inboard of it - and the pair flips
+                     with the panel. Hiding the panel takes them with it and
+                     the File-menu copy of Report a Problem comes back. -->
+                <DockPanel Grid.Row="1" LastChildFill="False" Margin="0,12,0,0">
+                    <Button DockPanel.Dock="{Binding StatsPanelDock}"
+                            VerticalAlignment="Center" Margin="6,0,0,0" Padding="12,6"
+                            Command="{Binding ToggleStatsPanelSideCommand}"
+                            ToolTip.Tip="{Binding SwapStatsTooltip}"
+                            AutomationProperties.Name="{Binding SwapStatsTooltip}">
+                        <Path Data="{Binding SwapStatsArrowGeometry}"
+                              Fill="{DynamicResource ThemeTextBrush}"
+                              Width="16" Height="18" Stretch="Uniform" />
+                    </Button>
+                    <Button DockPanel.Dock="{Binding StatsPanelDock}"
+                            VerticalAlignment="Center" Margin="6,0,6,0" Padding="10,6"
+                            Content="Report a Problem"
+                            Click="ReportProblemButton_Click"
+                            ToolTip.Tip="Save a report with the current log, a screenshot and a tracking check" />
+                </DockPanel>
+                </Grid>
+            </Border>
+
+            <Grid RowDefinitions="Auto,*" Margin="16,0,16,0">
+
+                <!-- Sprite row: replaces the three PictureBox + Label pairs (CurrentlyHunting,
+                     CurrentEncounter, PreviousEncounter) -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,*,*" Margin="0,0,0,16">
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center" Spacing="4">
+                        <TextBlock Text="Currently Hunting" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="Bold" />
+                        <!-- Up to 4 targets side by side - TargetSpriteSize (in the
+                             ViewModel) shrinks once there are more than 2, so 3-4
+                             targets still fit comfortably in the same area. -->
+                        <ItemsControl ItemsSource="{Binding CurrentTargets}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel HorizontalAlignment="Center"
+                                               MaxWidth="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).TargetsPanelMaxWidth}" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:TargetDisplayItem">
+                                    <!-- Fixed Width (not just the label's MaxWidth) so every item occupies
+                                         an identical slot regardless of its own name's text length -
+                                         otherwise a WrapPanel packs items based on each one's actual
+                                         content width, and row 2 ends up misaligned with row 1's columns
+                                         (e.g. "Chimchar" is narrower than "Charmander", shifting things
+                                         left) instead of lining up cleanly underneath. -->
+                                    <StackPanel Spacing="2" Margin="5,2,5,2"
+                                                Width="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).TargetLabelMaxWidth}">
+                                        <Border Classes="huntingSprite" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                                Width="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).TargetSpriteSize}"
+                                                Height="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).TargetSpriteSize}"
+                                                HorizontalAlignment="Center"
+                                                PointerPressed="TargetSprite_PointerPressed">
+                                            <Image Source="{Binding Sprite}" Stretch="Uniform" />
+                                        </Border>
+                                        <TextBlock Text="{Binding Name}" Foreground="{DynamicResource ThemeTextBrush}"
+                                                   HorizontalAlignment="Center" FontSize="11" TextWrapping="Wrap"
+                                                   TextAlignment="Center" />
+                                        <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="x:String">
+                                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center" Spacing="4">
+                        <TextBlock Text="Current Encounter" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="Bold" />
+                        <Border Classes="huntingSprite" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Width="96" Height="96">
+                            <Image Source="{Binding CurrentEncounterSprite}" Stretch="Uniform" />
+                        </Border>
+                        <TextBlock Text="{Binding CurrentEncounteredLabel}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                        <ItemsControl ItemsSource="{Binding CurrentEncounterTypes}" HorizontalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Center" Spacing="4">
+                        <TextBlock Text="Previous Encounter" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="Bold" />
+                        <Border Classes="huntingSprite" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Width="96" Height="96">
+                            <Image Source="{Binding PreviousEncounterSprite}" Stretch="Uniform" />
+                        </Border>
+                        <TextBlock Text="{Binding PreviouslyEncounteredLabel}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                        <ItemsControl ItemsSource="{Binding PreviousEncounterTypes}" HorizontalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Grid>
+
+                <!-- §125. One encounter table, one page at a time.
+                     
+                     This replaced two DataGrids bound to SessionEncountersLeft
+                     and SessionEncountersRight, a layout inherited from the
+                     WinForms original where the table filled a left panel and
+                     continued into a right one. Fifty species was a hard
+                     ceiling with nothing on screen admitting it, and reading
+                     down one column then back up to continue is a poor way to
+                     read a ranked list.
+                     
+                     Built from a header Grid plus a ListBox of matching row
+                     Grids rather than a DataGrid, deliberately. §126 gives
+                     every column bar the name an on/off switch, and
+                     DataGridColumn is not part of the visual tree - binding
+                     its IsVisible is unreliable in Avalonia and there was no
+                     existing instance of it in this project to copy. Every
+                     cell here is an ordinary control whose IsVisible binds
+                     like any other. The header and the rows share identical
+                     ColumnDefinitions, which is what keeps them aligned.
+                     
+                     The name cell keeps EncounterRow_PointerPressed - click a
+                     Pokemon to open its own encounter history (§99). -->
+                <!-- §189: one shared-size scope for the header and every row.
+                     The column widths live on the HEADER's definitions as
+                     pixel values; each row's definitions carry the same
+                     SharedSizeGroup names with Width="Auto", which in
+                     Avalonia's shared-size rules never overrides a pixel
+                     member. So the header is the single source of truth for
+                     how wide a column is, the rows follow it exactly, and
+                     dragging a splitter in the header moves the whole
+                     table. -->
+                <Grid Grid.Row="1" RowDefinitions="Auto,*,Auto" Grid.IsSharedSizeScope="True">
+
+                    <!-- Header. Column widths repeated verbatim in the row
+                         template below; the two must stay in step.
+                         
+                         §132: each label is its own black chip with white
+                         text, and none of the three brushes here is a
+                         DynamicResource. That is the point of the change -
+                         the header used to take its background and its text
+                         colour from Appearance, so a light theme, or a
+                         custom gradient close to the text colour, could
+                         leave the column names unreadable while every other
+                         part of the window still looked deliberate. Fixed
+                         colours mean the header reads the same under every
+                         theme the user can pick.
+                         
+                         The row backing is Transparent rather than themed so
+                         the chips sit directly on whatever the table is,
+                         which is what makes each one read as a separate
+                         block instead of a word on a bar. -->
+                    <Border Grid.Row="0"
+                            Background="Transparent"
+                            BorderBrush="{DynamicResource ThemeBorderBrush}"
+                            BorderThickness="0,0,0,1"
+                            Margin="0,0,0,2">
+                    <Grid>
+                        <!-- §189: the Pokemon column is a width now, not a star.
+                             As a star it swallowed every pixel a wide window
+                             had, so full screen gave it about a thousand of
+                             them and left the numbers crammed against the far
+                             edge with no way to change it. A width plus the
+                             trailing star filler means the table is the size
+                             it needs to be and the empty space is empty
+                             space, and the splitters between the chips let
+                             any of it be dragged. Each splitter moves the
+                             column on either side of it, so the table's total
+                             width never runs off the window and no horizontal
+                             scrollbar is needed. -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="EncounterName" Width="155" MinWidth="155" MaxWidth="225" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition SharedSizeGroup="EncounterCount" Width="75" MinWidth="65" MaxWidth="100" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition SharedSizeGroup="EncounterCaught" Width="75" MinWidth="55" MaxWidth="120" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition SharedSizeGroup="EncounterFled" Width="75" MinWidth="55" MaxWidth="120" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition SharedSizeGroup="EncounterLast" Width="130" MinWidth="75" MaxWidth="120" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition SharedSizeGroup="EncounterRate" Width="70" MinWidth="55" MaxWidth="100" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="{DynamicResource ThemeTableHeaderBrush}"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                BorderThickness="1" Margin="0,0,0,2">
+                            <TextBlock Text="Pokémon" Margin="6,5" TextAlignment="Center"
+                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                        </Border>
+                        <Border Grid.Column="2" Background="{DynamicResource ThemeTableHeaderBrush}"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                BorderThickness="1" Margin="0,0,0,2"
+                                IsVisible="{Binding ShowEncountersColumn}">
+                            <TextBlock Text="Encounters" Margin="6,5" TextAlignment="Center"
+                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                        </Border>
+                        <Border Grid.Column="4" Background="{DynamicResource ThemeTableHeaderBrush}"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                BorderThickness="1" Margin="0,0,0,2"
+                                IsVisible="{Binding ShowCaughtColumn}">
+                            <TextBlock Text="Caught" Margin="6,5" TextAlignment="Center"
+                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                        </Border>
+                        <Border Grid.Column="6" Background="{DynamicResource ThemeTableHeaderBrush}"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                BorderThickness="1" Margin="0,0,0,2"
+                                IsVisible="{Binding ShowRanFromColumn}">
+                            <TextBlock Text="Fled" Margin="6,5" TextAlignment="Center"
+                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                        </Border>
+                        <Border Grid.Column="8" Background="{DynamicResource ThemeTableHeaderBrush}"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                BorderThickness="1" Margin="0,0,0,2"
+                                IsVisible="{Binding ShowLastEncounteredColumn}">
+                            <TextBlock Text="Last Encountered" Margin="6,5" TextAlignment="Center"
+                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                        </Border>
+                        <Border Grid.Column="10" Background="{DynamicResource ThemeTableHeaderBrush}"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                BorderThickness="1" Margin="0,0,0,2"
+                                IsVisible="{Binding ShowRateColumn}">
+                            <TextBlock Text="Rate" Margin="6,5" TextAlignment="Center"
+                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                        </Border>
+
+                        <!-- §189: the grips. They sit in the gutters between the
+                             chips, are transparent so the header still reads as
+                             separate blocks, and take the resize cursor so the
+                             handle is findable without a visible seam. Only the
+                             header carries them - a splitter per row would be a
+                             thousand of them for one job. -->
+                        <GridSplitter Grid.Column="1" ResizeDirection="Columns"
+                                      Background="Transparent" Cursor="SizeWestEast" Margin="0,0,0,2"
+                                      ToolTip.Tip="Drag to resize the Pokémon and Encounters columns" />
+                        <GridSplitter Grid.Column="3" ResizeDirection="Columns"
+                                      Background="Transparent" Cursor="SizeWestEast" Margin="0,0,0,2"
+                                      ToolTip.Tip="Drag to resize the Encounters and Caught columns" />
+                        <GridSplitter Grid.Column="5" ResizeDirection="Columns"
+                                      Background="Transparent" Cursor="SizeWestEast" Margin="0,0,0,2"
+                                      ToolTip.Tip="Drag to resize the Caught and Fled columns" />
+                        <GridSplitter Grid.Column="7" ResizeDirection="Columns"
+                                      Background="Transparent" Cursor="SizeWestEast" Margin="0,0,0,2"
+                                      ToolTip.Tip="Drag to resize the Fled and Last Encountered columns" />
+                        <GridSplitter Grid.Column="9" ResizeDirection="Columns"
+                                      Background="Transparent" Cursor="SizeWestEast" Margin="0,0,0,2"
+                                      ToolTip.Tip="Drag to resize the Last Encountered and Rate columns" />
+                    </Grid>
+                    </Border>
+
+                    <ListBox Grid.Row="1"
+                             ItemsSource="{Binding SessionEncountersPage}"
+                             Background="{DynamicResource ThemeEncountersBackgroundBrush}"
+                             BorderThickness="0"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.Styles>
+                            <!-- The Fluent theme pads a ListBoxItem generously,
+                                 which at a hundred rows wastes most of the
+                                 table. Trimmed to a row height that reads. -->
+                            <Style Selector="ListBox ListBoxItem">
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="MinHeight" Value="0" />
+                            </Style>
+                        </ListBox.Styles>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="vm:EncounterCountRow">
+                                <!-- The DataGrid this replaced drew horizontal
+                                     grid lines; a hundred unseparated rows is
+                                     harder to read than fifty were. -->
+                                <Border BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                        BorderThickness="0,0,0,1">
+                                <Grid>
+                                    <!-- §189: the same six groups as the header,
+                                         all Auto. An Auto member never overrides
+                                         a pixel one in a shared-size group, so
+                                         these take whatever width the header's
+                                         definitions currently hold and follow a
+                                         splitter drag with no binding between
+                                         them at all. The four gutters and the
+                                         trailing filler are here so the cells
+                                         land under the chips they belong to. -->
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="EncounterName" Width="Auto" />
+                                        <ColumnDefinition Width="4" />
+                                        <ColumnDefinition SharedSizeGroup="EncounterCount" Width="Auto" />
+                                        <ColumnDefinition Width="4" />
+                                        <ColumnDefinition SharedSizeGroup="EncounterCaught" Width="Auto" />
+                                        <ColumnDefinition Width="4" />
+                                        <ColumnDefinition SharedSizeGroup="EncounterFled" Width="Auto" />
+                                        <ColumnDefinition Width="4" />
+                                        <ColumnDefinition SharedSizeGroup="EncounterLast" Width="Auto" />
+                                        <ColumnDefinition Width="4" />
+                                        <ColumnDefinition SharedSizeGroup="EncounterRate" Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6"
+                                                VerticalAlignment="Center" Margin="8,3"
+                                                Cursor="Hand" PointerPressed="EncounterRow_PointerPressed"
+                                                ToolTip.Tip="Click to see every encounter of this Pokémon from the current hunt">
+                                        <Image Source="{Binding Sprite}" Width="34" Height="34" Stretch="Uniform" />
+                                        <TextBlock Text="{Binding PokemonName}" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <ItemsControl ItemsSource="{Binding Types}" VerticalAlignment="Center">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="2" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="x:String">
+                                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}"
+                                                           Width="20" Height="20" Stretch="Uniform" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+
+                                    <!-- Each cell's visibility comes from the
+                                         WINDOW's view model, not the row's -
+                                         a row knows its own numbers, not which
+                                         columns the user wants. -->
+                                    <TextBlock Grid.Column="2" Text="{Binding Count}" TextAlignment="Center"
+                                               Margin="4,3" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}"
+                                               IsVisible="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ShowEncountersColumn}" />
+                                    <TextBlock Grid.Column="4" Text="{Binding CaughtCount}" TextAlignment="Center"
+                                               Margin="4,3" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}"
+                                               IsVisible="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ShowCaughtColumn}" />
+                                    <TextBlock Grid.Column="6" Text="{Binding RanFromCount}" TextAlignment="Center"
+                                               Margin="4,3" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}"
+                                               IsVisible="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ShowRanFromColumn}" />
+                                    <TextBlock Grid.Column="8" Text="{Binding LastEncounteredDisplay}" TextAlignment="Center"
+                                               Margin="4,3" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}"
+                                               IsVisible="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ShowLastEncounteredColumn}" />
+                                    <TextBlock Grid.Column="10" Text="{Binding RatePercent, Mode=OneWay, StringFormat={}{0:F1}%}" TextAlignment="Center"
+                                               Margin="4,3" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}"
+                                               IsVisible="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ShowRateColumn}" />
+                                </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

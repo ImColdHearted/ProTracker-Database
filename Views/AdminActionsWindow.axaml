@@ -1,0 +1,57 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.AdminActionsWindow"
+        Title="Admin Actions"
+        Width="320" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        CanResize="False">
+
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <StackPanel Margin="20" Spacing="12">
+        <TextBlock Text="What would you like to do?" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <Button Content="Create Event…" Click="CreateEventButton_Click" HorizontalAlignment="Stretch" />
+        <Button Content="Remove Event…" Click="RemoveEventButton_Click" HorizontalAlignment="Stretch" />
+
+        <Separator Margin="0,4" />
+
+        <!-- §101: the Admin Client override and the Admin Console. The
+             toggle button's text follows AdminModeService's current state -
+             see AdminActionsWindow.axaml.cs. -->
+        <Button Name="AdminClientButton" Content="Enter Admin Client"
+                Click="AdminClientButton_Click" HorizontalAlignment="Stretch"
+                ToolTip.Tip="Switches tracking into an isolated in-memory diagnostic session. Your normal hunting data is not read or written while it is active." />
+        <Button Content="Open Admin Console…" Click="AdminConsoleButton_Click" HorizontalAlignment="Stretch" />
+
+        <Separator Margin="0,4" />
+
+        <!-- §194: the two scrapers. The boss one has existed and worked since
+             the wiki scraper went in and NOTHING opened it - it was built,
+             finished, and unreachable from anywhere in the app. The forum one
+             is new. Both are developer tools that write into DataFiles, both
+             show a preview and touch nothing until Save, and both belong
+             behind the same Admin Login as everything else on this window. -->
+        <Button Content="Boss Wiki Scraper…" Click="BossScraperButton_Click" HorizontalAlignment="Stretch"
+                ToolTip.Tip="Fills in DataFiles/Bosses/{boss}.json from the PRO wiki. Preview first; nothing is written until Save." />
+        <Button Content="Forum Guide Scraper…" Click="GuideScraperButton_Click" HorizontalAlignment="Stretch"
+                ToolTip.Tip="Drafts a guide page from the first post of a PRO forum topic. Text only - images and tables are left out." />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,8,0,0">
+            <!-- §103: ends the process's authenticated admin session on the
+                 spot (Admin Login is needed again afterwards). Does not touch
+                 Admin Client mode - that is a data-context choice, not an
+                 access right; see AdminModeService.ClearAuthentication. -->
+            <Button Content="Log Out" Click="LogOutButton_Click"
+                    ToolTip.Tip="End the admin session now. Admin windows lock until the next Admin Login; Admin Client mode (if active) stays active." />
+            <Button Content="Close" Click="CloseButton_Click" />
+        </StackPanel>
+    </StackPanel>
+    </Border>
+</Window>

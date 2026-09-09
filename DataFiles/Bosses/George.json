@@ -1,0 +1,419 @@
+{
+  "BossID": "george",
+  "name": "George",
+  "location": "Pewter City Jail",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/GeorgeLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/George.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Kanto Elite 4, Completed Legendary Event Move Quest",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Houndour",
+            "dexNumber": 228
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309
+          },
+          {
+            "name": "Lillipup",
+            "dexNumber": 506
+          },
+          {
+            "name": "Furfrou",
+            "dexNumber": 676
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447
+          }
+        ],
+        "items": [
+          {
+            "name": "Flame Orb",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Flame_Orb.png"
+          },
+          {
+            "name": "Toxic Orb",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Toxic_Orb.png"
+          },
+          {
+            "name": "Black Sludge",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Black_Sludge.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Arcanine",
+          "dexNumber": 59,
+          "nature": "Adamant",
+          "ability": "Intimidate",
+          "item": "None",
+          "moves": [
+            "Double-Edge",
+            "Flare Blitz",
+            "Bite",
+            "Roar"
+          ]
+        },
+        {
+          "name": "Stoutland",
+          "dexNumber": 508,
+          "nature": "Adamant",
+          "ability": "Scrappy",
+          "item": "None",
+          "moves": [
+            "Superpower",
+            "Yawn",
+            "Wild Charge",
+            "Facade"
+          ]
+        },
+        {
+          "name": "Granbull",
+          "dexNumber": 210,
+          "nature": "Impish",
+          "ability": "Intimidate",
+          "item": "None",
+          "moves": [
+            "Play Rough",
+            "Thunder Wave",
+            "Fire Fang",
+            "Ice Fang"
+          ]
+        },
+        {
+          "name": "Houndoom",
+          "dexNumber": 229,
+          "nature": "Timid",
+          "ability": "Flash Fire",
+          "item": "None",
+          "moves": [
+            "Dark Pulse",
+            "Flamethrower",
+            "Sunny Day",
+            "Shadow Ball"
+          ]
+        },
+        {
+          "name": "Manectric",
+          "dexNumber": 310,
+          "nature": "Timid",
+          "ability": "Minus",
+          "item": "None",
+          "moves": [
+            "Thunderbolt",
+            "Thunder Wave",
+            "Double Team",
+            "Snarl"
+          ]
+        },
+        {
+          "name": "Lucario",
+          "dexNumber": 448,
+          "nature": "Adamant",
+          "ability": "Steadfast",
+          "item": "None",
+          "moves": [
+            "Close Combat",
+            "Bullet Punch",
+            "Blaze Kick",
+            "Dual Chop"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Houndour",
+            "dexNumber": 228
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309
+          },
+          {
+            "name": "Lillipup",
+            "dexNumber": 506
+          },
+          {
+            "name": "Furfrou",
+            "dexNumber": 676
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447
+          }
+        ],
+        "items": [
+          {
+            "name": "Flame Orb",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Flame_Orb.png"
+          },
+          {
+            "name": "Toxic Orb",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Toxic_Orb.png"
+          },
+          {
+            "name": "Black Sludge",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Black_Sludge.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Arcanine",
+          "dexNumber": 59,
+          "nature": "Adamant",
+          "ability": "Intimidate",
+          "item": "Leftovers",
+          "moves": [
+            "Flare Blitz",
+            "Will-O-Wisp",
+            "Close Combat",
+            "Extreme Speed"
+          ]
+        },
+        {
+          "name": "Stoutland",
+          "dexNumber": 508,
+          "nature": "Adamant",
+          "ability": "Scrappy",
+          "item": "Choice Band",
+          "moves": [
+            "Return",
+            "Crunch",
+            "Superpower",
+            "Play Rough"
+          ]
+        },
+        {
+          "name": "Granbull",
+          "dexNumber": 210,
+          "nature": "Impish",
+          "ability": "Intimidate",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Play Rough",
+            "Thunder Wave",
+            "Earthquake",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Houndoom",
+          "dexNumber": 229,
+          "nature": "Timid",
+          "ability": "Flash Fire",
+          "item": "Life Orb",
+          "moves": [
+            "Nasty Plot",
+            "Fire Blast",
+            "Dark Pulse",
+            "Sludge Bomb"
+          ]
+        },
+        {
+          "name": "Manectric",
+          "dexNumber": 310,
+          "nature": "Timid",
+          "ability": "Minus",
+          "item": "Life Orb",
+          "moves": [
+            "Thunder",
+            "Flamethrower",
+            "Thunder Wave",
+            "Roar"
+          ]
+        },
+        {
+          "name": "Mega Lucario",
+          "dexNumber": 10059,
+          "nature": "Adamant",
+          "ability": "Adaptability",
+          "item": "Lucarionite",
+          "moves": [
+            "Close Combat",
+            "Meteor Mash",
+            "Crunch",
+            "Ice Punch"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Houndour",
+            "dexNumber": 228
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309
+          },
+          {
+            "name": "Lillipup",
+            "dexNumber": 506
+          },
+          {
+            "name": "Furfrou",
+            "dexNumber": 676
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447
+          }
+        ],
+        "items": [
+          {
+            "name": "Flame Orb",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Flame_Orb.png"
+          },
+          {
+            "name": "Toxic Orb",
+            "quantity": "2",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Toxic_Orb.png"
+          },
+          {
+            "name": "Black Sludge",
+            "quantity": "1",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Black_Sludge.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Arcanine",
+          "dexNumber": 59,
+          "nature": "Adamant",
+          "ability": "Intimidate",
+          "item": "Leftovers",
+          "moves": [
+            "Flare Blitz",
+            "Will-O-Wisp",
+            "Close Combat",
+            "Extreme Speed"
+          ]
+        },
+        {
+          "name": "Stoutland",
+          "dexNumber": 508,
+          "nature": "Adamant",
+          "ability": "Scrappy",
+          "item": "Choice Band",
+          "moves": [
+            "Return",
+            "Crunch",
+            "Superpower",
+            "Play Rough"
+          ]
+        },
+        {
+          "name": "Granbull",
+          "dexNumber": 210,
+          "nature": "Impish",
+          "ability": "Intimidate",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Play Rough",
+            "Thunder Wave",
+            "Earthquake",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Houndoom",
+          "dexNumber": 229,
+          "nature": "Timid",
+          "ability": "Flash Fire",
+          "item": "Life Orb",
+          "moves": [
+            "Nasty Plot",
+            "Fire Blast",
+            "Dark Pulse",
+            "Sludge Bomb"
+          ]
+        },
+        {
+          "name": "Manectric",
+          "dexNumber": 310,
+          "nature": "Timid",
+          "ability": "Minus",
+          "item": "Life Orb",
+          "moves": [
+            "Thunder",
+            "Flamethrower",
+            "Thunder Wave",
+            "Roar"
+          ]
+        },
+        {
+          "name": "Mega Lucario",
+          "dexNumber": 10059,
+          "nature": "Adamant",
+          "ability": "Adaptability",
+          "item": "Lucarionite",
+          "moves": [
+            "Close Combat",
+            "Meteor Mash",
+            "Crunch",
+            "Ice Punch"
+          ]
+        }
+      ]
+    }
+  }
+}

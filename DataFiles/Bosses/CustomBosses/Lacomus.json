@@ -1,0 +1,67 @@
+{
+  "name": "Lacomus",
+  "notes": "",
+  "level": 100,
+  "team": [
+    {
+      "species": "Pikachu",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/10083.png",
+      "nature": "Hasty",
+      "ability": "Static",
+      "item": "Light Ball",
+      "moves": [ "Fake Out", "Nuzzle", "Rain Dance", "Protect" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 252, 252, 252, 252, 252 ]
+    },
+    {
+      "species": "Pikachu",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/10099.png",
+      "nature": "Timid",
+      "ability": "Static",
+      "item": "Light Ball",
+      "moves": [ "Hidden Power (Ice)", "Thunder", "Surf", "Protect" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 252, 252, 252, 252, 252 ]
+    },
+    {
+      "species": "Pikachu",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/10082.png",
+      "nature": "Jolly",
+      "ability": "Static",
+      "item": "Light Ball",
+      "moves": [ "Fake Out", "Wild Charge", "Endeavor", "Nuzzle" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 252, 252, 252, 252, 252 ]
+    },
+    {
+      "species": "Pikachu",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/10099.png",
+      "nature": "Naive",
+      "ability": "Static",
+      "item": "Light Ball",
+      "moves": [ "Fake Out", "Surf", "Quick Attack", "Protect" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 252, 252, 252, 252, 252 ]
+    },
+    {
+      "species": "Pikachu",
+      "sprite": "SharedPokemonLibrary/Assets/Counterparts/PikachuWQ/Pikachu6.png",
+      "nature": "Adamant",
+      "ability": "Static",
+      "item": "Light Ball",
+      "moves": [ "Fake Out", "Quick Attack", "Wild Charge", "Brick Break" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 252, 252, 252, 252, 252 ]
+    },
+    {
+      "species": "Pikachu",
+      "sprite": "SharedPokemonLibrary/Assets/Counterparts/PikachuWQ/Pikachu7.png",
+      "nature": "Modest",
+      "ability": "Static",
+      "item": "Light Ball",
+      "moves": [ "Surf", "Thunder", "Hidden Power (Ice)", "Grass Knot" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 252, 252, 252, 252, 252 ]
+    }
+  ]
+}

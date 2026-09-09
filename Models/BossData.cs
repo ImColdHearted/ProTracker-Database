@@ -1,0 +1,259 @@
+﻿using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace Foot_Tracker.Models
+{
+    public class BossData
+    {
+        [JsonPropertyName("bossId")]
+        public string BossId { get; set; } = string.Empty;
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("location")]
+        public string Location { get; set; } = string.Empty;
+
+        [JsonPropertyName("locationPicture")]
+        public string LocationPicture { get; set; } = string.Empty;
+
+        [JsonPropertyName("locationImage")]
+        public string LocationImage { get; set; } = string.Empty;
+
+        // The boss's own portrait (as opposed to the location photo above) -
+        // e.g. "SharedPokemonLibrary/Assets/Bosses/Brock.png". Present in every
+        // boss file since the wiki scrape, but unmapped here until the boss
+        // detail redesign needed it (MIGRATION_GUIDE.md §92). The JSON key
+        // really is PascalCase-with-acronym, unlike this file's other keys.
+        [JsonPropertyName("NPCPicture")]
+        public string NpcPicture { get; set; } = string.Empty;
+
+        // Optional, dual-boss files only (§92): each named combatant's own
+        // portrait, keyed by the same NPC names the difficulty sections nest
+        // their per-combatant teams under (see BossDifficultyData.GetNpcTeams).
+        // Backs the paired-boss switch button in BossDetailWindow. Files
+        // without it (every single-NPC boss) keep loading exactly as before -
+        // an empty dictionary just means "fall back to NPCPicture".
+        [JsonPropertyName("npcPictures")]
+        public Dictionary<string, string> NpcPictures { get; set; } = new();
+
+        [JsonPropertyName("cooldown")]
+        public string Cooldown { get; set; } = string.Empty;
+
+        [JsonPropertyName("requirement")]
+        public string Requirement { get; set; } = string.Empty;
+
+        [JsonPropertyName("requirements")]
+        public string Requirements { get; set; } = string.Empty;
+
+        [JsonPropertyName("difficulties")]
+        public Dictionary<string, BossDifficultyData> Difficulties { get; set; }
+            = new();
+    }
+
+    public class BossDifficultyData
+    {
+        [JsonPropertyName("rewards")]
+        public BossRewards Rewards { get; set; } = new();
+
+        [JsonPropertyName("team")]
+        public List<BossPokemonData> Team { get; set; } = new();
+
+        /// <summary>
+        /// Optional. Set this instead of "rewards"/"team" when PRO simply
+        /// doesn't have this difficulty for this boss - see Maribela.json's
+        /// "easy" entry, which only exists at Medium/Hard. BossDetailViewModel
+        /// shows this text in place of the normal reward/team sections rather
+        /// than rendering them empty, so the message is exactly what you
+        /// write here instead of a generic "not found" fallback.
+        /// </summary>
+        [JsonPropertyName("unavailableMessage")]
+        public string? UnavailableMessage { get; set; }
+
+        // Catches any key this class doesn't declare a property for. In
+        // practice that's "tierChances" (parsed here but not currently used
+        // anywhere else in the app) or a named NPC's own sub-team object for
+        // boss files manually split into per-combatant teams for dual-boss
+        // fights - see GetNpcTeams and BossNpcTeamData's remarks for the
+        // GamersPewdieAndDiepy.json shape that motivated this.
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement>? ExtensionData { get; set; }
+
+        private static readonly JsonSerializerOptions NpcNodeOptions =
+            new() { PropertyNameCaseInsensitive = true };
+
+        /// <summary>
+        /// Returns each combatant's team as a separate (name, team) entry for
+        /// boss files manually split into named NPC sub-teams - e.g.
+        /// GamersPewdieAndDiepy.json nests "Diepy"'s team inside "Pewdie"'s
+        /// own object rather than listing both NPCs as siblings:
+        ///   "Pewdie": { "team": [...], "Diepy": { "team": [...] } }
+        /// so this walks the extension data recursively to whatever depth it
+        /// actually goes, rather than only supporting one fixed level of
+        /// nesting (see BossNpcTeamData). Boss files that still use a single
+        /// flat "team" array - every boss file except the handful of
+        /// manually-split dual bosses, as of this writing - return exactly
+        /// one entry with a null NpcName, so BossDetailViewModel can keep
+        /// rendering those exactly as before; only the manually-split files
+        /// trigger the new per-NPC display.
+        /// </summary>
+        public List<(string? NpcName, List<BossPokemonData> Team)> GetNpcTeams()
+        {
+            var result = new List<(string? NpcName, List<BossPokemonData> Team)>();
+
+            // A direct flat "team" alongside named NPC sub-teams isn't how any
+            // current boss file is built, but nothing rules it out for a
+            // future dual-boss file that only restructures ONE combatant into
+            // a named sub-key - keep the first combatant's flat team rather
+            // than silently dropping it in that case.
+            if (Team.Count > 0)
+                result.Add((null, Team));
+
+            CollectNpcTeams(ExtensionData, result);
+
+            if (result.Count == 0)
+            {
+                // Neither a flat team nor any named NPC sub-teams - the
+                // ordinary empty/stub boss file. Return the (empty) flat team
+                // so BossDetailViewModel renders exactly as before.
+                result.Add((null, Team));
+            }
+
+            return result;
+        }
+
+        private static void CollectNpcTeams(
+            Dictionary<string, JsonElement>? extensionData,
+            List<(string? NpcName, List<BossPokemonData> Team)> result)
+        {
+            if (extensionData == null)
+                return;
+
+            foreach (KeyValuePair<string, JsonElement> entry in extensionData)
+            {
+                if (entry.Value.ValueKind != JsonValueKind.Object)
+                    continue;
+
+                BossNpcTeamData? npcNode;
+                try
+                {
+                    npcNode = entry.Value.Deserialize<BossNpcTeamData>(NpcNodeOptions);
+                }
+                catch (JsonException)
+                {
+                    // Not actually an NPC-team-shaped object - skip rather
+                    // than letting one odd key blow up the whole boss read.
+                    continue;
+                }
+
+                if (npcNode == null)
+                    continue;
+
+                if (npcNode.Team.Count > 0)
+                    result.Add((entry.Key, npcNode.Team));
+
+                // A named NPC's own object can nest a further named combatant
+                // the exact same way Diepy nests inside Pewdie - recurse so a
+                // 3-way fight would work too, not just today's 2-way ones.
+                CollectNpcTeams(npcNode.ExtensionData, result);
+            }
+        }
+    }
+
+    /// <summary>
+    /// One combatant's team within a dual/multi-NPC boss fight, keyed by the
+    /// NPC's name directly in the boss JSON rather than a fixed property -
+    /// see BossDifficultyData.ExtensionData and GetNpcTeams. Mirrors the shape
+    /// hand-built in GamersPewdieAndDiepy.json: e.g.
+    ///   "Pewdie": { "team": [...], "Diepy": { "team": [...] } }
+    /// "Pewdie" and "Diepy" are both BossNpcTeamData nodes - Diepy just
+    /// happens to be nested a level deeper (inside Pewdie's own object)
+    /// instead of sitting beside it, which is why ExtensionData here recurses
+    /// the same way BossDifficultyData's does, rather than only supporting
+    /// one fixed level of nesting.
+    /// </summary>
+    public class BossNpcTeamData
+    {
+        [JsonPropertyName("team")]
+        public List<BossPokemonData> Team { get; set; } = new();
+
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement>? ExtensionData { get; set; }
+    }
+
+    public class BossRewards
+    {
+        [JsonPropertyName("pokedollars")]
+        public PokedollarReward Pokedollars { get; set; } = new();
+
+        [JsonPropertyName("pveCoins")]
+        public int PveCoins { get; set; }
+
+        [JsonPropertyName("items")]
+        public List<BossItemReward> Items { get; set; } = new();
+
+        [JsonPropertyName("pokemon")]
+        public List<BossPokemonReward> Pokemon { get; set; } = new();
+    }
+
+    public class PokedollarReward
+    {
+        [JsonPropertyName("minimum")]
+        public int Minimum { get; set; }
+
+        [JsonPropertyName("maximum")]
+        public int Maximum { get; set; }
+    }
+
+    public class BossPokemonData
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("dexNumber")]
+        public int DexNumber { get; set; }
+
+        [JsonPropertyName("nature")]
+        public string Nature { get; set; } = string.Empty;
+
+        [JsonPropertyName("ability")]
+        public string Ability { get; set; } = string.Empty;
+
+        [JsonPropertyName("item")]
+        public string Item { get; set; } = string.Empty;
+
+        [JsonPropertyName("moves")]
+        public List<string> Moves { get; set; } = new();
+    }
+
+    public class BossItemReward
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("quantity")]
+        public string Quantity { get; set; } = string.Empty;
+
+        [JsonPropertyName("tier")]
+        public int Tier { get; set; }
+
+        [JsonPropertyName("picture")]
+        public string Picture { get; set; } = string.Empty;
+    }
+
+    public class BossPokemonReward
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("dexNumber")]
+        public int DexNumber { get; set; }
+
+        [JsonPropertyName("picture")]
+        public string Picture { get; set; } = string.Empty;
+
+        [JsonPropertyName("winStreakRequired")]
+        public int WinStreakRequired { get; set; }
+    }
+}

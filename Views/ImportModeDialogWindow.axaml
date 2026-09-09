@@ -1,0 +1,27 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.ImportModeDialogWindow"
+        Title="Import Hunt Data"
+        Width="420" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        CanResize="False">
+
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <StackPanel Margin="20" Spacing="16">
+        <TextBlock Name="MessageText" TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button Content="Add to Current" Click="AddButton_Click"
+                    ToolTip.Tip="Combine this file's encounter counts and totals into the current hunt." />
+            <Button Content="Replace Current" Click="ReplaceButton_Click"
+                    ToolTip.Tip="Wipe the current hunt and load this file's data in its place." />
+            <Button Content="Cancel" Click="CancelButton_Click" />
+        </StackPanel>
+    </StackPanel>
+    </Border>
+</Window>

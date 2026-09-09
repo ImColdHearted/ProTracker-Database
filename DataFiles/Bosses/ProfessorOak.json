@@ -1,0 +1,551 @@
+{
+  "name": "Professor Oak",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Professor_Oak.png",
+  "BossCooldown": 288,
+  "bossId": "professoroak",
+  "location": "Cinnabar Lab Room 2",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/OakLoc.png",
+  "requirements": "Be Kanto Champion",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Haban Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Haban_Berry.png"
+          },
+          {
+            "name": "Occa Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Occa_Berry.png"
+          },
+          {
+            "name": "Passho Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Passho_Berry.png"
+          },
+          {
+            "name": "Rindo Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rindo_Berry.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Bulbasaur",
+            "dexNumber": 1,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Charmander",
+            "dexNumber": 4,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Squirtle",
+            "dexNumber": 7,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Rotom-Wash",
+          "dexNumber": 10009,
+          "nature": "Bold",
+          "ability": "Levitate",
+          "item": "None",
+          "moves": [
+            "Shock Wave",
+            "Ominous Wind",
+            "Signal Beam",
+            "Will-O-Wisp"
+          ]
+        },
+        {
+          "name": "Venusaur",
+          "dexNumber": 3,
+          "nature": "Modest",
+          "ability": "Overgrow",
+          "item": "None",
+          "moves": [
+            "Giga Drain",
+            "Sludge Bomb",
+            "Sleep Powder",
+            "Poison Powder"
+          ]
+        },
+        {
+          "name": "Charizard",
+          "dexNumber": 6,
+          "nature": "Timid",
+          "ability": "Blaze",
+          "item": "None",
+          "moves": [
+            "Flamethrower",
+            "Dragon Pulse",
+            "Air Slash",
+            "SmokeScreen"
+          ]
+        },
+        {
+          "name": "Blastoise",
+          "dexNumber": 9,
+          "nature": "Modest",
+          "ability": "Torrent",
+          "item": "None",
+          "moves": [
+            "Dark Pulse",
+            "Aura Sphere",
+            "Scald",
+            "Toxic"
+          ]
+        },
+        {
+          "name": "Tauros",
+          "dexNumber": 128,
+          "nature": "Jolly",
+          "ability": "Sheer Force",
+          "item": "None",
+          "moves": [
+            "Take Down",
+            "Pursuit",
+            "Rock Slide",
+            "Zen Headbutt"
+          ]
+        },
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "None",
+          "moves": [
+            "Wing Attack",
+            "Thunder Punch",
+            "Dragon Claw",
+            "Slam"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Haban Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Haban_Berry.png"
+          },
+          {
+            "name": "Occa Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Occa_Berry.png"
+          },
+          {
+            "name": "Passho Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Passho_Berry.png"
+          },
+          {
+            "name": "Rindo Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rindo_Berry.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Bulbasaur",
+            "dexNumber": 1,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Charmander",
+            "dexNumber": 4,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Squirtle",
+            "dexNumber": 7,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Rotom-Heat",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Bulbasaur",
+            "dexNumber": 1,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Charmander",
+            "dexNumber": 4,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Squirtle",
+            "dexNumber": 7,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Rotom-Wash",
+          "dexNumber": 10009,
+          "nature": "Bold",
+          "ability": "Levitate",
+          "item": "Leftovers",
+          "moves": [
+            "Defog",
+            "Thunderbolt",
+            "Hydro Pump",
+            "Reflect"
+          ]
+        },
+        {
+          "name": "Venusaur",
+          "dexNumber": 3,
+          "nature": "Modest",
+          "ability": "Overgrow",
+          "item": "Black Sludge",
+          "moves": [
+            "Petal Dance",
+            "Sleep Powder",
+            "Sludge Bomb",
+            "Leech Seed"
+          ]
+        },
+        {
+          "name": "Mega Charizard-X",
+          "dexNumber": 10034,
+          "nature": "Random",
+          "ability": "Tough Claws",
+          "item": "Charizardite X",
+          "moves": [
+            "Flare Blitz",
+            "Dragon Dance",
+            "Dragon Claw",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Blastoise",
+          "dexNumber": 9,
+          "nature": "Modest",
+          "ability": "Torrent",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Hydro Pump",
+            "Dark Pulse",
+            "Toxic",
+            "Ice Beam"
+          ]
+        },
+        {
+          "name": "Tauros",
+          "dexNumber": 128,
+          "nature": "Jolly",
+          "ability": "Sheer Force",
+          "item": "Life Orb",
+          "moves": [
+            "Rock Climb",
+            "Earthquake",
+            "Rock Slide",
+            "Iron Tail"
+          ]
+        },
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "Lum Berry",
+          "moves": [
+            "Outrage",
+            "Dragon Dance",
+            "Fire Punch",
+            "Extreme Speed"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Haban Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Haban_Berry.png"
+          },
+          {
+            "name": "Occa Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Occa_Berry.png"
+          },
+          {
+            "name": "Passho Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Passho_Berry.png"
+          },
+          {
+            "name": "Rindo Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rindo_Berry.png"
+          },
+          {
+            "name": "PP Up",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/PP_Up.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-8",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Bulbasaur",
+            "dexNumber": 1,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Charmander",
+            "dexNumber": 4,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Squirtle",
+            "dexNumber": 7,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Rotom-Heat",
+            "dexNumber": 479,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Bulbasaur",
+            "dexNumber": 1,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Charmander",
+            "dexNumber": 4,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Squirtle",
+            "dexNumber": 7,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Rotom-Wash",
+          "dexNumber": 10009,
+          "nature": "Bold",
+          "ability": "Levitate",
+          "item": "Leftovers",
+          "moves": [
+            "Defog",
+            "Thunderbolt",
+            "Hydro Pump",
+            "Reflect"
+          ]
+        },
+        {
+          "name": "Venusaur",
+          "dexNumber": 3,
+          "nature": "Modest",
+          "ability": "Overgrow",
+          "item": "Black Sludge",
+          "moves": [
+            "Petal Dance",
+            "Sleep Powder",
+            "Sludge Bomb",
+            "Leech Seed"
+          ]
+        },
+        {
+          "name": "Mega Charizard-X",
+          "dexNumber": 10034,
+          "nature": "Random",
+          "ability": "Tough Claws",
+          "item": "Charizardite X",
+          "moves": [
+            "Flare Blitz",
+            "Dragon Dance",
+            "Dragon Claw",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Blastoise",
+          "dexNumber": 9,
+          "nature": "Modest",
+          "ability": "Torrent",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Hydro Pump",
+            "Dark Pulse",
+            "Toxic",
+            "Ice Beam"
+          ]
+        },
+        {
+          "name": "Tauros",
+          "dexNumber": 128,
+          "nature": "Jolly",
+          "ability": "Sheer Force",
+          "item": "Life Orb",
+          "moves": [
+            "Rock Climb",
+            "Earthquake",
+            "Rock Slide",
+            "Iron Tail"
+          ]
+        },
+        {
+          "name": "Dragonite",
+          "dexNumber": 149,
+          "nature": "Adamant",
+          "ability": "Multiscale",
+          "item": "Lum Berry",
+          "moves": [
+            "Outrage",
+            "Dragon Dance",
+            "Fire Punch",
+            "Extreme Speed"
+          ]
+        }
+      ]
+    }
+  }
+}

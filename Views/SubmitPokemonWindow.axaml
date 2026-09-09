@@ -1,0 +1,79 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.SubmitPokemonWindow"
+        x:DataType="vm:SubmitPokemonViewModel"
+        Title="Submit Pokémon"
+        Width="440" Height="600" MinWidth="400" MinHeight="520"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §106: one player's entry into an Events post - name, Pokémon, and a
+         screenshot as proof. Same compose-form shapes as CreateEventWindow
+         (label column, Choose…/Clear pair, status line above the buttons) so
+         the two read as one feature. The screenshot row has both ways in
+         today: any saved image, or a live capture of the bound PRO client;
+         the planned auto-detect capture button lands in the same row. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" Margin="16">
+
+        <TextBlock Grid.Row="0" Text="{Binding EventTitle}" FontWeight="Bold" FontSize="15"
+                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" Margin="0,10,0,0">
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Your name:" VerticalAlignment="Center"
+                       Margin="0,0,8,8" Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Username}"
+                     PlaceholderText="e.g. User Name" Margin="0,0,0,8" />
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Pokémon:" VerticalAlignment="Center"
+                       Margin="0,0,8,8" Foreground="{DynamicResource ThemeTextBrush}" />
+            <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="Auto,*,Auto,Auto" Margin="0,0,0,8">
+                <Image Grid.Column="0" Source="{Binding PokemonSprite}" Width="32" Height="32" Stretch="Uniform"
+                       IsVisible="{Binding PokemonName, Converter={x:Static conv:StringNotEmptyConverter.Instance}}"
+                       Margin="0,0,8,0" />
+                <TextBlock Grid.Column="1" Text="{Binding PokemonName}" VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis" Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.85" />
+                <Button Grid.Column="2" Content="Choose…" Command="{Binding ChoosePokemonCommand}" Margin="0,0,4,0" />
+                <Button Grid.Column="3" Content="Clear" Command="{Binding ClearPokemonCommand}"
+                        IsVisible="{Binding PokemonName, Converter={x:Static conv:StringNotEmptyConverter.Instance}}" />
+            </Grid>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Screenshot:" VerticalAlignment="Center"
+                       Margin="0,0,8,8" Foreground="{DynamicResource ThemeTextBrush}" />
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Spacing="4" Margin="0,0,0,8">
+                <Button Content="Choose image…" Command="{Binding ChooseImageCommand}" />
+                <Button Content="Capture PRO client" Command="{Binding CaptureProCommand}"
+                        ToolTip.Tip="Takes a picture of the PRO client this tracker is bound to, right now - no cropping needed on your side." />
+                <Button Content="Clear" Command="{Binding ClearScreenshotCommand}"
+                        IsVisible="{Binding HasScreenshot}" />
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="2" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                Margin="0,4,0,0" Padding="6" MinHeight="140">
+            <Panel>
+                <TextBlock Text="No screenshot attached yet." IsVisible="{Binding !HasScreenshot}"
+                           Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.6"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Image Source="{Binding ScreenshotPreview}" IsVisible="{Binding HasScreenshot}"
+                       Stretch="Uniform" StretchDirection="DownOnly" />
+            </Panel>
+        </Border>
+
+        <TextBlock Grid.Row="3" Text="{Binding StatusMessage}" TextWrapping="Wrap" FontSize="12"
+                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.8" Margin="0,8,0,8" />
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+            <Button Content="Close" Click="CloseButton_Click" />
+            <Button Content="Submit" Command="{Binding SubmitCommand}" />
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>

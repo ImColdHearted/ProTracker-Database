@@ -1,0 +1,53 @@
+# §242. What never goes to GitHub.
+
+# ---- the admin credential -------------------------------------------------
+# It lives in %LOCALAPPDATA%\ProTracker\Database\, not here. This entry is
+# insurance in case a copy is ever dropped into the tree by hand.
+admin-credential.json
+**/admin-credential.json
+
+# ---- build output ---------------------------------------------------------
+# Regenerated on every build, and enormous. Nobody clones these.
+[Bb]in/
+[Oo]bj/
+/publish/
+.vs/
+*.user
+*.suo
+*.userprefs
+
+# ---- local machine state --------------------------------------------------
+# The tracker writes these beside itself when it runs from the source folder.
+*.db-shm
+*.db-wal
+events-admin-login.bin
+
+# ---- notes that are mine, not the project's -------------------------------
+# §247. MIGRATION_GUIDE.md is the engineering log - 246 sections describing the
+# admin gate, the Worker's routes, how the credential is derived and every
+# security tradeoff and its reasoning. None of it is a live secret, but it is a
+# map of where to push, and the repository is public. It stays on disk. If it
+# should be backed up and versioned, it wants a private repository of its own,
+# not this one.
+MIGRATION_GUIDE.md
+
+# Removed from GitHub by hand. Without these lines the next "git add -A" puts
+# them straight back.
+Claude outputs/
+sync-back-sprites.ps1
+
+# Visual Studio writes this per machine.
+settings.VisualStudio.json
+
+# ---- local convenience ----------------------------------------------------
+# The "Set Version" shortcuts that tools\version-shortcuts.ps1 scatters through
+# the tree. Per-machine, and anyone who clones can make their own.
+*.lnk
+
+# ---- editors and operating systems ----------------------------------------
+.idea/
+.vscode/
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store

@@ -1,0 +1,4 @@
+{
+  "baseUrl": "https://protracker-events.micblue14.workers.dev",
+  "_help": "Section 143. baseUrl is the tracker's events server - the Cloudflare Worker in Backend/EventsWorker (https, no trailing slash; see the README there). Leave it empty and the Events board stays local to each machine. A file of the same name in %LOCALAPPDATA%\\ProTracker\\Database overrides this one for testing."
+}

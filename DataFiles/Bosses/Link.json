@@ -1,0 +1,625 @@
+{
+  "bossId": "link",
+  "name": "Link",
+  "location": "Twinleaf Town House 2 (Top Right Corner)",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/LinkLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Sprites/0.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Sinnoh Elite 4",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Voltorb",
+            "dexNumber": 100
+          },
+          {
+            "name": "Ponyta",
+            "dexNumber": 77
+          },
+          {
+            "name": "Bronzor",
+            "dexNumber": 436
+          },
+          {
+            "name": "Hitmontop",
+            "dexNumber": 237
+          },
+          {
+            "name": "Phanpy",
+            "dexNumber": 231
+          },
+          {
+            "name": "Skarmory",
+            "dexNumber": 227
+          },
+          {
+            "name": "Absol",
+            "dexNumber": 359
+          },
+          {
+            "name": "Tepig",
+            "dexNumber": 498
+          },
+          {
+            "name": "Honedge",
+            "dexNumber": 679
+          }
+        ],
+        "items": [
+          {
+            "name": "TM-13 Ice Beam",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ice.png"
+          },
+          {
+            "name": "TN75 - Swords Dance",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "TM-67 Protect",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "Dusk Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dusk_Stone.png"
+          },
+          {
+            "name": "Metal Coat",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Metal_Coat.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Tingle Clothes",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tingle_Clothes.png"
+          },
+          {
+            "name": "Tingle Headgear",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tingle_Headgear.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Electrode",
+          "dexNumber": 101,
+          "nature": "Timid",
+          "ability": "Static",
+          "item": "None",
+          "moves": [
+            "Explosion",
+            "Protect",
+            "Signal Beam",
+            "Taunt"
+          ]
+        },
+        {
+          "name": "Rapidash",
+          "dexNumber": 78,
+          "nature": "Jolly",
+          "ability": "Run Away",
+          "item": "None",
+          "moves": [
+            "Megahorn",
+            "Flamethrower",
+            "Poison Jab",
+            "Bounce"
+          ]
+        },
+        {
+          "name": "Aegislash",
+          "dexNumber": 681,
+          "nature": "Adamant",
+          "ability": "Stance Change",
+          "item": "None",
+          "moves": [
+            "Shadow Sneak",
+            "Brick Break",
+            "Iron Head",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Bronzong",
+          "dexNumber": 437,
+          "nature": "Impish",
+          "ability": "Levitate",
+          "item": "None",
+          "moves": [
+            "Payback",
+            "Earthquake",
+            "Flash Cannon",
+            "Psychic"
+          ]
+        },
+        {
+          "name": "Hitmontop",
+          "dexNumber": 237,
+          "nature": "Adamant",
+          "ability": "Intimidate",
+          "item": "None",
+          "moves": [
+            "Close Combat",
+            "Rock Slide",
+            "Aerial Ace",
+            "Bulk Up"
+          ]
+        },
+        {
+          "name": "Absol",
+          "dexNumber": 359,
+          "nature": "Adamant",
+          "ability": "Super Luck",
+          "item": "None",
+          "moves": [
+            "Shadow Ball",
+            "Ice Beam",
+            "Psycho Cut",
+            "Night Slash"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Voltorb",
+            "dexNumber": 100
+          },
+          {
+            "name": "Ponyta",
+            "dexNumber": 77
+          },
+          {
+            "name": "Bronzor",
+            "dexNumber": 436
+          },
+          {
+            "name": "Hitmontop",
+            "dexNumber": 237
+          },
+          {
+            "name": "Phanpy",
+            "dexNumber": 231
+          },
+          {
+            "name": "Skarmory",
+            "dexNumber": 227
+          },
+          {
+            "name": "Absol",
+            "dexNumber": 359
+          },
+          {
+            "name": "Tepig",
+            "dexNumber": 498
+          },
+          {
+            "name": "Honedge",
+            "dexNumber": 679
+          }
+        ],
+        "items": [
+          {
+            "name": "TM-13 Ice Beam",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ice.png"
+          },
+          {
+            "name": "TN75 - Swords Dance",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "TM-67 Protect",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "Dusk Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dusk_Stone.png"
+          },
+          {
+            "name": "Metal Coat",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Metal_Coat.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Tingle Clothes",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tingle_Clothes.png"
+          },
+          {
+            "name": "Tingle Headgear",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tingle_Headgear.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Electrode",
+          "dexNumber": 101,
+          "nature": "Timid",
+          "ability": "Static",
+          "item": "Life Orb",
+          "moves": [
+            "Explosion",
+            "Protect",
+            "Signal Beam",
+            "Taunt"
+          ]
+        },
+        {
+          "name": "Rapidash",
+          "dexNumber": 78,
+          "nature": "Jolly",
+          "ability": "Run Away",
+          "item": "Choice Band",
+          "moves": [
+            "Megahorn",
+            "Flamethrower",
+            "Poison Jab",
+            "Bounce"
+          ]
+        },
+        {
+          "name": "Aegislash",
+          "dexNumber": 681,
+          "nature": "Adamant",
+          "ability": "Stance Change",
+          "item": "Assault Vest",
+          "moves": [
+            "Shadow Sneak",
+            "Brick Break",
+            "Iron Head",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Bronzong",
+          "dexNumber": 437,
+          "nature": "Impish",
+          "ability": "Levitate",
+          "item": "Leftovers",
+          "moves": [
+            "Payback",
+            "Earthquake",
+            "Flash Cannon",
+            "Psychic"
+          ]
+        },
+        {
+          "name": "Hitmontop",
+          "dexNumber": 237,
+          "nature": "Adamant",
+          "ability": "Intimidate",
+          "item": "Choice Scarf",
+          "moves": [
+            "Close Combat",
+            "Rock Slide",
+            "Aerial Ace",
+            "Bulk Up"
+          ]
+        },
+        {
+          "name": "Absol",
+          "dexNumber": 359,
+          "nature": "Adamant",
+          "ability": "Super Luck",
+          "item": "Life Orb",
+          "moves": [
+            "Shadow Ball",
+            "Ice Beam",
+            "Psycho Cut",
+            "Night Slash"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Voltorb",
+            "dexNumber": 100
+          },
+          {
+            "name": "Ponyta",
+            "dexNumber": 77
+          },
+          {
+            "name": "Bronzor",
+            "dexNumber": 436
+          },
+          {
+            "name": "Hitmontop",
+            "dexNumber": 237
+          },
+          {
+            "name": "Phanpy",
+            "dexNumber": 231
+          },
+          {
+            "name": "Skarmory",
+            "dexNumber": 227
+          },
+          {
+            "name": "Absol",
+            "dexNumber": 359
+          },
+          {
+            "name": "Tepig",
+            "dexNumber": 498
+          },
+          {
+            "name": "Honedge",
+            "dexNumber": 679
+          }
+        ],
+        "items": [
+          {
+            "name": "TM-13 Ice Beam",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ice.png"
+          },
+          {
+            "name": "TN75 - Swords Dance",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "TM-67 Protect",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          },
+          {
+            "name": "Dusk Stone",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Dusk_Stone.png"
+          },
+          {
+            "name": "Metal Coat",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Metal_Coat.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Energy Root",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Energy_Root.png"
+          },
+          {
+            "name": "Tingle Clothes",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tingle_Clothes.png"
+          },
+          {
+            "name": "Tingle Headgear",
+            "quantity": "1",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tingle_Headgear.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Hippowdon",
+          "dexNumber": 450,
+          "nature": "Impish",
+          "ability": "Sand Stream",
+          "item": "Leftovers",
+          "moves": [
+            "Iron Head",
+            "Ice Fang",
+            "Earthquake",
+            "Stone Edge",
+            "Fire Fang",
+            "Slack Off"
+          ]
+        },
+        {
+          "name": "Aegislash",
+          "dexNumber": 681,
+          "nature": "Adamant",
+          "ability": "Stance Change",
+          "item": "Choice Band",
+          "moves": [
+            "Pursuit",
+            "Swords Dance",
+            "Iron Head",
+            "Sacred Sword",
+            "King's Shield",
+            "Flash Cannon",
+            "Shadow Ball"
+          ]
+        },
+        {
+          "name": "Heatran",
+          "dexNumber": 485,
+          "nature": "Timid",
+          "ability": "Flash Fire",
+          "item": "Choice Scarf",
+          "moves": [
+            "Dragon Pulse",
+            "Earth Power",
+            "Lava Plume",
+            "Flash Cannon",
+            "Stone Edge",
+            "Hidden Power"
+          ]
+        },
+        {
+          "name": "Donphan",
+          "dexNumber": 232,
+          "nature": "Adamant",
+          "ability": "Sturdy",
+          "item": "Choice Band",
+          "moves": [
+            "Fire Fang",
+            "Thunder Fang",
+            "Heavy Slam",
+            "Earthquake",
+            "Seed Bomb",
+            "Gunk Shot",
+            "Knock Off"
+          ]
+        },
+        {
+          "name": "Skarmory",
+          "dexNumber": 227,
+          "nature": "Careful",
+          "ability": "Sturdy",
+          "item": "Leftovers",
+          "moves": [
+            "Roost",
+            "Brave Bird",
+            "Iron Head",
+            "Whirlwind"
+          ]
+        },
+        {
+          "name": "Emboar",
+          "dexNumber": 500,
+          "nature": "Adamant",
+          "ability": "Reckless",
+          "item": "Choice Scarf",
+          "moves": [
+            "Earthquake",
+            "Stone Edge",
+            "Sucker Punch",
+            "Zen Headbutt",
+            "Flare Blitz",
+            "Wild Charge",
+            "Head Smash",
+            "Superpower"
+          ]
+        }
+      ]
+    }
+  }
+}

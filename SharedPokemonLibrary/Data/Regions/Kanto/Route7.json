@@ -1,0 +1,144 @@
+[
+  {
+    "id": "route-7-land",
+    "mapId": "route-7",
+    "region": "Kanto",
+    "displayName": "Route 7",
+    "method": "Land",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Abra",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 20,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Growlithe",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 20,
+        "heldItem": "Rawst Berry"
+      },
+      {
+        "pokemon": "Meowth",
+        "timePeriods": [ "Day" ],
+        "minLevel": 16,
+        "maxLevel": 20,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Murkrow",
+        "timePeriods": [ "Day" ],
+        "minLevel": 16,
+        "maxLevel": 20,
+        "heldItem": "Dusk Stone"
+      },
+      {
+        "pokemon": "Perian",
+        "timePeriods": [ "Day" ],
+        "minLevel": 16,
+        "maxLevel": 20,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Pidgey",
+        "timePeriods": [ "Morning", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 20,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Raticate",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 20,
+        "heldItem": "Oran Berry"
+      },
+      {
+        "pokemon": "Spearow",
+        "timePeriods": [ "Morning", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 20,
+        "heldItem": "Sharp Beak"
+      },
+      {
+        "pokemon": "Vulpix",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 20,
+        "heldItem": "Rawst Berry"
+      }
+    ]
+  },
+  {
+    "id": "route-7-land",
+    "mapId": "route-7",
+    "region": "Kanto",
+    "displayName": "Route 7",
+    "method": "Land",
+    "requiresMembership": true,
+    "encounters": [
+      {
+        "pokemon": "Houndour",
+        "timePeriods": [ "Morning", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 26,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-7-headbutt",
+    "mapId": "route-7",
+    "region": "Kanto",
+    "displayName": "Route 7",
+    "method": "Headbutt",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Kakuna",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 22,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Rattata",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 22,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Caterpie",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 22,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Gastly",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 22,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Beedrill",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 22,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Pineco",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 16,
+        "maxLevel": 22,
+        "heldItem": null
+      }
+    ]
+  }
+]

@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.SoundSettingsWindow"
+        x:DataType="vm:SoundSettingsViewModel"
+        Title="Sound Settings"
+        Width="400" Height="440"
+        MinWidth="340" MinHeight="360"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto">
+
+        <TextBlock Grid.Row="0"
+                   Text="Choose a sound to play when Since Form or Since Shiny resets, or None to turn it off, and how loud it plays. Test plays it at the slider's volume."
+                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,12" />
+
+        <!-- §146: a Test button beside each choice plays it through the same
+             path a real alert uses, so "is the sound off or is it broken" is
+             one click instead of a wait for the next rare encounter. -->
+        <StackPanel Grid.Row="1" Spacing="4" Margin="0,0,0,12">
+            <TextBlock Text="Since Form Sound" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <ComboBox Width="160" HorizontalAlignment="Left"
+                          ItemsSource="{Binding SoundOptions}"
+                          SelectedItem="{Binding SelectedSinceFormSound, Mode=TwoWay}" />
+                <Button Content="Test" Command="{Binding TestFormSoundCommand}" VerticalAlignment="Center" />
+            </StackPanel>
+            <!-- §152: volume, 0-100 in steps of 5; the label beside it is
+                 the number the Test button plays at. -->
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="Volume" Width="48" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                <Slider Width="160" Minimum="0" Maximum="100" TickFrequency="5" IsSnapToTickEnabled="True"
+                        Value="{Binding SinceFormVolume, Mode=TwoWay}" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding SinceFormVolumeText}" Width="40"
+                           VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Spacing="4">
+            <TextBlock Text="Since Shiny Sound" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <ComboBox Width="160" HorizontalAlignment="Left"
+                          ItemsSource="{Binding SoundOptions}"
+                          SelectedItem="{Binding SelectedSinceShinySound, Mode=TwoWay}" />
+                <Button Content="Test" Command="{Binding TestShinySoundCommand}" VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="Volume" Width="48" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                <Slider Width="160" Minimum="0" Maximum="100" TickFrequency="5" IsSnapToTickEnabled="True"
+                        Value="{Binding SinceShinyVolume, Mode=TwoWay}" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding SinceShinyVolumeText}" Width="40"
+                           VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Spacing="4" Margin="0,12,0,0">
+            <TextBlock Text="{Binding TestNote}" TextWrapping="Wrap" FontSize="11"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBlock Text="{Binding ClientNote}" TextWrapping="Wrap" FontSize="11" Opacity="0.75"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="5" Text="{Binding SaveError}" Foreground="{DynamicResource ThemeErrorBrush}" TextWrapping="Wrap"
+                   IsVisible="{Binding HasSaveError}" Margin="0,0,0,8" />
+
+        <StackPanel Grid.Row="6" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+            <Button Content="Save" Command="{Binding SaveCommand}" />
+            <Button Content="Cancel" Click="CancelButton_Click" />
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>

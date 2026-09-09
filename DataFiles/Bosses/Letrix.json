@@ -1,0 +1,457 @@
+{
+  "bossId": "letrix",
+  "name": "Letrix",
+  "location": "Valley Windworks (Back Area)",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/LetrixLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Letrix.png",
+  "BossCooldown": 288,
+  "requirements": "Completed Sinnoh Elite 4",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Magikarp",
+            "dexNumber": 129
+          },
+          {
+            "name": "Wailmer",
+            "dexNumber": 320
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577
+          },
+          {
+            "name": "Drilbur",
+            "dexNumber": 529
+          }
+        ],
+        "items": [
+          {
+            "name": "Max Repel",
+            "quantity": "7-20",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Max_Repel.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "2-8",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Chople Berry",
+            "quantity": "4-13",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+          },
+          {
+            "name": "TM62 - Taunt",
+            "quantity": "2-3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Modest",
+          "ability": "Serene Grace",
+          "item": "None",
+          "moves": [
+            "Air Slash",
+            "Flamethrower",
+            "Aura Sphere",
+            "Dazzling Gleam"
+          ]
+        },
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "None",
+          "moves": [
+            "Drain Punch",
+            "Knock Off",
+            "Ice Punch",
+            "Facade"
+          ]
+        },
+        {
+          "name": "Tyranitar",
+          "dexNumber": 248,
+          "nature": "Naive",
+          "ability": "Sand Stream",
+          "item": "None",
+          "moves": [
+            "Pursuit",
+            "Stone Edge",
+            "Fire Blast",
+            "Ice Beam"
+          ]
+        },
+        {
+          "name": "Excadrill",
+          "dexNumber": 530,
+          "nature": "Adamant",
+          "ability": "Mold Breaker",
+          "item": "None",
+          "moves": [
+            "Earthquake",
+            "Iron Head",
+            "Rock Slide",
+            "Rapid Spin"
+          ]
+        },
+        {
+          "name": "Nidoking",
+          "dexNumber": 34,
+          "nature": "Naive",
+          "ability": "Sheer Force",
+          "item": "None",
+          "moves": [
+            "Sludge Wave",
+            "Ice Beam",
+            "Earth Power",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Kyogre",
+          "dexNumber": 382,
+          "nature": "Modest",
+          "ability": "Drizzle",
+          "item": "None",
+          "moves": [
+            "Hydro Pump",
+            "Ice Beam",
+            "Thunder",
+            "Calm Mind"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Magikarp",
+            "dexNumber": 129
+          },
+          {
+            "name": "Wailmer",
+            "dexNumber": 320
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577
+          },
+          {
+            "name": "Drilbur",
+            "dexNumber": 529
+          }
+        ],
+        "items": [
+          {
+            "name": "Max Repel",
+            "quantity": "7-20",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Max_Repel.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "2-8",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Chople Berry",
+            "quantity": "4-13",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+          },
+          {
+            "name": "TM62 - Taunt",
+            "quantity": "2-3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Modest",
+          "ability": "Serene Grace",
+          "item": "Choice Scarf",
+          "moves": [
+            "Air Slash",
+            "Flamethrower",
+            "Aura Sphere",
+            "Dazzling Gleam"
+          ]
+        },
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "Flame Orb",
+          "moves": [
+            "Drain Punch",
+            "Knock Off",
+            "Ice Punch",
+            "Facade"
+          ]
+        },
+        {
+          "name": "Mega Tyranitar",
+          "dexNumber": 10049,
+          "nature": "Naive",
+          "ability": "Sand Stream",
+          "item": "Tyranitarite",
+          "moves": [
+            "Pursuit",
+            "Stone Edge",
+            "Fire Blast",
+            "Ice Beam"
+          ]
+        },
+        {
+          "name": "Excadrill",
+          "dexNumber": 530,
+          "nature": "Adamant",
+          "ability": "Mold Breaker",
+          "item": "Focus Sash",
+          "moves": [
+            "Earthquake",
+            "Iron Head",
+            "Rock Slide",
+            "Rapid Spin"
+          ]
+        },
+        {
+          "name": "Hydreigon",
+          "dexNumber": 34,
+          "nature": "Naive",
+          "ability": "Levitate",
+          "item": "Life Orb",
+          "moves": [
+            "Dark Pulse",
+            "Flash Cannon",
+            "Draco Meteor",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Kyogre",
+          "dexNumber": 382,
+          "nature": "Modest",
+          "ability": "Drizzle",
+          "item": "Choice Specs",
+          "moves": [
+            "Hydro Pump",
+            "Ice Beam",
+            "Thunder",
+            "Calm Mind"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Magikarp",
+            "dexNumber": 129
+          },
+          {
+            "name": "Wailmer",
+            "dexNumber": 320
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577
+          },
+          {
+            "name": "Drilbur",
+            "dexNumber": 529
+          }
+        ],
+        "items": [
+          {
+              "name": "Max Repel",
+              "quantity": "7-20",
+              "tier": 1,
+              "picture": "SharedPokemonLibrary/Assets/Items/Max_Repel.png"
+            },
+            {
+              "name": "Rare Candy",
+              "quantity": "2-8",
+              "tier": 1,
+              "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+            },
+            {
+              "name": "Focus Sash",
+              "quantity": "3-10",
+              "tier": 1,
+              "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+            },
+            {
+              "name": "Chople Berry",
+              "quantity": "4-13",
+              "tier": 2,
+              "picture": "SharedPokemonLibrary/Assets/Items/Chople_Berry.png"
+            },
+            {
+              "name": "TM62 - Taunt",
+              "quantity": "2-3",
+              "tier": 2,
+              "picture": "SharedPokemonLibrary/Assets/Items/TM-Normal.png"
+            }
+        ]
+      },
+      "team": [
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Modest",
+          "ability": "Serene Grace",
+          "item": "Choice Scarf",
+          "moves": [
+            "Air Slash",
+            "Flamethrower",
+            "Aura Sphere",
+            "Dazzling Gleam"
+          ]
+        },
+        {
+          "name": "Conkeldurr",
+          "dexNumber": 534,
+          "nature": "Adamant",
+          "ability": "Guts",
+          "item": "Flame Orb",
+          "moves": [
+            "Drain Punch",
+            "Knock Off",
+            "Ice Punch",
+            "Facade"
+          ]
+        },
+        {
+          "name": "Mega Tyranitar",
+          "dexNumber": 10049,
+          "nature": "Naive",
+          "ability": "Sand Stream",
+          "item": "Tyranitarite",
+          "moves": [
+            "Pursuit",
+            "Stone Edge",
+            "Fire Punch",
+            "Fire Blast",
+            "Ice Beam",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Excadrill",
+          "dexNumber": 530,
+          "nature": "Adamant",
+          "ability": "Mold Breaker",
+          "item": "Focus Sash",
+          "moves": [
+            "Earthquake",
+            "Iron Head",
+            "Rock Slide",
+            "Rapid Spin"
+          ]
+        },
+        {
+          "name": "Hydreigon",
+          "dexNumber": 34,
+          "nature": "Naive",
+          "ability": "Levitate",
+          "item": "Life Orb",
+          "moves": [
+            "Dark Pulse",
+            "Flash Cannon",
+            "Draco Meteor",
+            "Superpower"
+          ]
+        },
+        {
+          "name": "Kyogre",
+          "dexNumber": 382,
+          "nature": "Modest",
+          "ability": "Drizzle",
+          "item": "Choice Specs",
+          "moves": [
+            "Hydro Pump",
+            "Ice Beam",
+            "Thunder",
+            "Calm Mind"
+          ]
+        }
+      ]
+    }
+  }
+}

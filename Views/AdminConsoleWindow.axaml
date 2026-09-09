@@ -1,0 +1,584 @@
+<!-- The §101 Admin Console, recut to the §103 reference mockups and switched
+     to §104's plain word BUTTONS: the six sections are buttons in the main
+     window's own Set Target style rather than TabControl tabs (which is what
+     the mockups' six top boxes were asking for), each showing one section
+     panel below. Content is otherwise unchanged - Recovery scrollable at the
+     smaller size, a Force client control on Status, and the OCR Inspector's
+     §103 toolbar (live client capture, tracker capture, one Upload picker).
+     Still opened only from Admin Actions behind Admin Login; still shows the
+     locked notice instead of content when this process has not authenticated
+     (and locks LIVE on Admin Logout - see AdminConsoleViewModel). Status text
+     always names the state in words - color is reinforcement, never the only
+     signal, and the active section carries a doubled border rather than a
+     color change alone. -->
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.AdminConsoleWindow"
+        x:DataType="vm:AdminConsoleViewModel"
+        Title="Admin Console"
+        Width="560" Height="440"
+        MinWidth="525" MinHeight="380"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <Window.Styles>
+        <!-- §104: the active section button. Avalonia's conditional class
+             syntax (Classes.active="{Binding ...}") drives it straight off the
+             view model's per-section flag, so there is no selection state kept
+             in the view. Every section button carries the same 2px border so
+             the strip never reflows on a click; the active one gets the theme
+             text color plus bold - two signals, not a color change alone,
+             matching the rest of this window. -->
+        <Style Selector="Button.section">
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+        <Style Selector="Button.section.active">
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeTextBrush}" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Window.Styles>
+
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Panel Margin="10">
+        <TextBlock Text="{Binding LockedMessage}" IsVisible="{Binding !IsUnlocked}"
+                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}"
+                   VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="460" />
+
+        <Grid IsVisible="{Binding IsUnlocked}" RowDefinitions="Auto,*">
+
+            <WrapPanel Grid.Row="0" Margin="0,0,0,8">
+                <Button Classes="section" Classes.active="{Binding IsStatusSection}" Content="Status"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Status" />
+                <Button Classes="section" Classes.active="{Binding IsRecoverySection}" Content="Recovery"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Recovery" />
+                <Button Classes="section" Classes.active="{Binding IsInspectorSection}" Content="OCR Inspector"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="OCR Inspector" />
+                <Button Classes="section" Classes.active="{Binding IsDiagnosticsSection}" Content="Diagnostics"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Diagnostics" />
+                <Button Classes="section" Classes.active="{Binding IsDataHealthSection}" Content="Data Health"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Data Health" />
+                <Button Classes="section" Classes.active="{Binding IsSupportBundleSection}" Content="Support Bundle"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Support Bundle" />
+                <Button Classes="section" Classes.active="{Binding IsEventLoginsSection}" Content="Event Logins"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Event Logins" />
+                <Button Classes="section" Classes.active="{Binding IsActiveEventsSection}" Content="Active Events"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Active Events" />
+                <Button Classes="section" Classes.active="{Binding IsWorldQuestSection}" Content="World Quest"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="World Quest" />
+                <Button Classes="section" Classes.active="{Binding IsSpriteScraperSection}" Content="Sprite Scraper"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Sprite Scraper" />
+                <Button Classes="section" Classes.active="{Binding IsBattleLabSection}" Content="Battle Lab"
+                        Margin="0,0,0,4" Command="{Binding ShowSectionCommand}" CommandParameter="Battle Lab" />
+            </WrapPanel>
+
+            <Panel Grid.Row="1">
+
+            <Panel IsVisible="{Binding IsStatusSection}">
+                <ScrollViewer>
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" Margin="6">
+                        <TextBlock Grid.Row="0" Text="{Binding HealthSummary}" FontWeight="Bold" FontSize="14"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Grid.Row="1" Text="{Binding DataContextText}" FontWeight="Bold" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,2,0,8" />
+
+                        <Grid Grid.Row="2" ColumnDefinitions="150,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Tracker state" Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" FontSize="12" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TrackerState}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="12" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Bound game frame" Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" FontSize="12" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding BoundWindowText}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="12" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Scan heartbeat" Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" FontSize="12" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding HeartbeatText}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="12" />
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Last captured frame" Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" FontSize="12" />
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding LastFrameText}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="12" TextWrapping="Wrap" />
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Last OCR attempt" Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" FontSize="12" />
+                            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding LastOcrText}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="12" />
+                            <TextBlock Grid.Row="5" Grid.Column="0" Text="Last encounter" Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" FontSize="12" />
+                            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding LastEncounterText}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="12" />
+                            <TextBlock Grid.Row="6" Grid.Column="0" Text="Last accepted" Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" FontSize="12" />
+                            <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding LastAcceptedText}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="12" TextWrapping="Wrap" />
+                            <!-- §150: the events server's count of trackers with a hunt
+                                 running, read on demand behind the admin token; §151 adds
+                                 the week's peak, average and busiest hours underneath. -->
+                            <TextBlock Grid.Row="7" Grid.Column="0" Text="Active trackers" Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" FontSize="12" VerticalAlignment="Top" Margin="0,4,0,0" />
+                            <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" Spacing="6" Margin="0,2,0,0">
+                                <Button Content="Refresh" FontSize="11" Padding="6,1" VerticalAlignment="Top" Command="{Binding RefreshActiveTrackersCommand}"
+                                        ToolTip.Tip="Asks the events server how many trackers sent a hunting heartbeat in the last 10 minutes, and for the week's peak, average and busiest hours. Needs the admin token once per run." />
+                                <TextBlock Text="{Binding ActiveTrackersText}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="12" VerticalAlignment="Top" TextWrapping="Wrap" MaxWidth="320" />
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Grid.Row="3" Margin="0,8,0,0" Spacing="2">
+                            <TextBlock Text="Recent errors" FontWeight="Bold" FontSize="12"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <TextBlock Text="{Binding RecentErrorsText}" TextWrapping="Wrap" FontSize="11"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                        </StackPanel>
+
+                        <!-- §103 per the Status mockup: deliberately re-bind the
+                             tracker to a chosen client number. Changes the CAPTURE
+                             TARGET only - Admin Client isolation (the data
+                             context) is untouched either way. -->
+                        <StackPanel Grid.Row="4" Orientation="Horizontal" Spacing="6"
+                                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,10,0,0">
+                            <TextBlock Text="{Binding ForceClientStatus}" FontSize="11" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" MaxWidth="230" />
+                            <TextBox Text="{Binding ForceClientNumberText}" Width="42" FontSize="12"
+                                     VerticalAlignment="Center"
+                                     ToolTip.Tip="Client number (1-9)" />
+                            <Button Content="Force client #" FontWeight="Bold" Command="{Binding ForceClientCommand}"
+                                    ToolTip.Tip="Bind the tracker to this PRO client number now. Capture target only - Admin Client data isolation is not changed by this." />
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </Panel>
+
+            <Panel IsVisible="{Binding IsRecoverySection}">
+                <!-- §103 mockup: "Same buttons, but be able to scroll". -->
+                <ScrollViewer>
+                    <StackPanel Spacing="8" Margin="6">
+                        <TextBlock Text="Safe recovery - none of these touch hunting statistics."
+                                   Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" FontSize="12" />
+
+                        <Button Content="Reacquire Game Window" Command="{Binding ReacquireWindowCommand}" IsEnabled="{Binding !IsBusy}" HorizontalAlignment="Stretch" />
+                        <Button Content="Restart Tracking Pipeline" Command="{Binding RestartTrackingCommand}" IsEnabled="{Binding !IsBusy}" HorizontalAlignment="Stretch" />
+                        <Button Content="Restart OCR Services" Command="{Binding RestartOcrCommand}" IsEnabled="{Binding !IsBusy}" HorizontalAlignment="Stretch" />
+                        <Button Content="Reload Location Dictionary" Command="{Binding ReloadLocationDictionaryCommand}" IsEnabled="{Binding !IsBusy}" HorizontalAlignment="Stretch" />
+                        <Button Content="Reload Pokémon Data" Command="{Binding ReloadPokemonDataCommand}" IsEnabled="{Binding !IsBusy}" HorizontalAlignment="Stretch" />
+                        <Button Content="Clear Diagnostic Cache" Command="{Binding ClearDiagnosticCacheCommand}" IsEnabled="{Binding !IsBusy}" HorizontalAlignment="Stretch" />
+                        <Button Content="Open Log Folder" Command="{Binding OpenLogFolderCommand}" HorizontalAlignment="Stretch" />
+                        <Button Content="Copy Diagnostic Summary" Click="CopySummaryButton_Click" HorizontalAlignment="Stretch" />
+
+                        <TextBlock Text="{Binding RecoveryStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Panel>
+
+            <Panel IsVisible="{Binding IsInspectorSection}">
+                <Grid RowDefinitions="Auto,Auto,Auto,*" Margin="6">
+                    <!-- §103 toolbar per the mockup: live capture of the bound
+                         client, a capture of the tracker's own window, the
+                         overlay toggle, and one Upload picker for saved files. -->
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+                        <Button Grid.Column="0" Content="Screenshot client" FontWeight="Bold"
+                                Command="{Binding ScreenshotClientCommand}" IsEnabled="{Binding !IsBusy}"
+                                ToolTip.Tip="Capture the bound PRO client RIGHT NOW and run the production detectors on that frame." />
+                        <Button Grid.Column="2" Content="Screenshot Tracker" FontWeight="Bold"
+                                Command="{Binding ScreenshotTrackerCommand}"
+                                ToolTip.Tip="Save a picture of this tracker's own main window to the Diagnostics folder - visual reference only, no OCR." />
+                    </Grid>
+
+                    <Grid Grid.Row="1" ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                        <CheckBox Grid.Column="0" Content="Show region overlay" IsChecked="{Binding ShowRegionOverlay}"
+                                  ToolTip.Tip="Renders the same region boxes Report a Problem draws, on a COPY of the inspected frame - never on the live game or inside real captures." />
+                        <Button Grid.Column="1" Content="Upload" FontWeight="Bold" MinWidth="110"
+                                Command="{Binding UploadCommand}" IsEnabled="{Binding !IsBusy}"
+                                ToolTip.Tip="Pick one or more saved PNG screenshots to run through the production detectors." />
+                    </Grid>
+
+                    <TextBlock Grid.Row="2" Margin="0,8,0,6" TextWrapping="Wrap" FontSize="12"
+                               Foreground="{DynamicResource ThemeTextBrush}"
+                               Text="Runs the real production detectors (window locator, name, level, gender, location) against saved screenshots. Nothing here records encounters or touches data on clients." />
+
+                    <Grid Grid.Row="3" ColumnDefinitions="170,*">
+                        <ListBox Grid.Column="0" ItemsSource="{Binding ReplayResults}"
+                                 SelectedItem="{Binding SelectedReplay}"
+                                 Background="Transparent">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="vm:AdminReplayItem">
+                                    <TextBlock Text="{Binding Title}" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" TextTrimming="CharacterEllipsis" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <ScrollViewer Grid.Column="1" Margin="6,0,0,0">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="{Binding SelectedReplay.Details}" TextWrapping="Wrap"
+                                           FontFamily="Consolas,Menlo,monospace" FontSize="11"
+                                           Foreground="{DynamicResource ThemeTextBrush}" />
+                                <Image Source="{Binding SelectedReplay.Overlay}" Stretch="Uniform"
+                                       StretchDirection="DownOnly" HorizontalAlignment="Left" />
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+            </Panel>
+
+            <Panel IsVisible="{Binding IsDiagnosticsSection}">
+                <StackPanel Spacing="8" Margin="6">
+                    <CheckBox Content="Diagnostic recording (opt-in)" IsChecked="{Binding RecordingEnabled}"
+                              ToolTip.Tip="Retains small OCR crops, raw text and timings in a bounded 120-entry ring. Never full screenshots, never credentials." />
+                    <TextBlock Text="{Binding RecordingStatus}" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="Save Recording to Diagnostics Folder" Command="{Binding SaveRecordingCommand}" />
+                        <Button Content="Clear" Command="{Binding ClearRecordingCommand}" />
+                    </StackPanel>
+                    <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                               Text="Recording only ever captures what the OCR pipeline itself reads: the level detector's small prepared crops and each detector's raw text on change. Writes happen off the UI thread; the ring is memory-only until saved." />
+                </StackPanel>
+            </Panel>
+
+            <Panel IsVisible="{Binding IsDataHealthSection}">
+                <Grid RowDefinitions="Auto,*" Margin="6">
+                    <Button Grid.Row="0" Content="Refresh (read-only checks)" Command="{Binding RefreshDataHealthCommand}" IsEnabled="{Binding !IsBusy}" />
+                    <ScrollViewer Grid.Row="1" Margin="0,8,0,0">
+                        <TextBlock Text="{Binding DataHealthReport}" TextWrapping="Wrap"
+                                   FontFamily="Consolas,Menlo,monospace" FontSize="11"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </ScrollViewer>
+                </Grid>
+            </Panel>
+
+            <Panel IsVisible="{Binding IsSupportBundleSection}">
+                <ScrollViewer>
+                    <StackPanel Spacing="7" Margin="6">
+                        <TextBlock Text="Categories included in the zip:" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding BundleCategories}" TextWrapping="Wrap" FontSize="11"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <CheckBox Content="Environment and versions" FontSize="12" IsChecked="{Binding BundleEnvironment}" />
+                        <CheckBox Content="Recent logs (tail-capped)" FontSize="12" IsChecked="{Binding BundleLogs}" />
+                        <CheckBox Content="Diagnostic recording (crops + raw OCR text)" FontSize="12" IsChecked="{Binding BundleDiagnostics}" />
+                        <CheckBox Content="Data health report" FontSize="12" IsChecked="{Binding BundleDataHealth}" />
+                        <CheckBox Content="Settings (no credentials exist in any settings file)" FontSize="12" IsChecked="{Binding BundleSettings}" />
+                        <CheckBox Content="Hunting data (personal progress - off unless you choose it)" FontSize="12" IsChecked="{Binding BundleHuntingData}" />
+
+                        <Button Content="Create Support Bundle in Downloads" Command="{Binding CreateBundleCommand}" IsEnabled="{Binding !IsBusy}" />
+                        <TextBlock Text="{Binding BundleStatus}" TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Panel>
+
+            <!-- §153: delegated sign-ins for the shared Events board. The
+                 list, the create/reset row and Revoke all need the MASTER
+                 token server-side; the logins this tab creates then need
+                 only their own username + password in the sign-in window. -->
+            <Panel IsVisible="{Binding IsEventLoginsSection}">
+                <ScrollViewer>
+                    <StackPanel Spacing="8" Margin="6">
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Separate admin sign-ins for the shared Events board. Each has its own username and password, can post and remove events without the master token, and can be revoked here at any time. Only the master admin token can manage this list." />
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Button Content="Refresh List" FontSize="12" Command="{Binding RefreshAdminLoginsCommand}" />
+                            <Button Content="Revoke Selected" FontSize="12" Command="{Binding RevokeSelectedAdminLoginCommand}" />
+                            <Button Content="Sign In Differently..." FontSize="12" Command="{Binding SwitchAdminSignInCommand}"
+                                    ToolTip.Tip="Drops the credential this run holds (a remembered login included) and asks again - the way back to the master token." />
+                        </StackPanel>
+
+                        <ListBox ItemsSource="{Binding AdminLogins}" SelectedItem="{Binding SelectedAdminLogin, Mode=TwoWay}"
+                                 Height="108" FontSize="12">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="vm:AdminLoginListItem">
+                                    <TextBlock Text="{Binding Text}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <TextBlock Text="Create a login - or reset one by using its name again:" FontWeight="Bold" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBox Text="{Binding NewLoginUsername}" Width="140" PlaceholderText="Username" FontSize="12" />
+                            <TextBox Text="{Binding NewLoginPassword}" Width="140" PlaceholderText="Password" PasswordChar="&#8226;" FontSize="12" />
+                            <Button Content="Create / Reset" FontSize="12" Command="{Binding SaveAdminLoginCommand}" />
+                        </StackPanel>
+                        <CheckBox Content="May also read the Status tab's tracker counts" FontSize="12"
+                                  IsChecked="{Binding NewLoginCanViewStatus}" />
+
+                        <TextBlock Text="{Binding AdminLoginsStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Panel>
+
+            <!-- §207: which counterpart events the game is running. Read by
+                 every tracker from the same server on the heartbeat it
+                 already sends, so an event starting tonight needs one person
+                 to set it here and no build at all. Publishing takes an
+                 ordinary admin login, not the master token. -->
+            <Panel IsVisible="{Binding IsActiveEventsSection}">
+                <ScrollViewer>
+                    <StackPanel Spacing="8" Margin="6">
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Tells every tracker which counterpart events are running, so a form encounter is matched against those skins instead of all eleven. Up to six. Leave a slot blank to use fewer." />
+
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Anything NOT listed here stops being identifiable while the list stands. Pinkan and Shadow are permanent rather than seasonal, so if you want those identified, keep one in a slot. Clear the list to go back to considering every skin." />
+
+                        <TextBlock Text="Running now:" FontWeight="Bold" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <ComboBox Width="220" HorizontalAlignment="Left" FontSize="12"
+                                  ItemsSource="{Binding EventChoices}"
+                                  SelectedItem="{Binding ActiveEventSlot1, Mode=TwoWay}" />
+                        <ComboBox Width="220" HorizontalAlignment="Left" FontSize="12"
+                                  ItemsSource="{Binding EventChoices}"
+                                  SelectedItem="{Binding ActiveEventSlot2, Mode=TwoWay}" />
+                        <ComboBox Width="220" HorizontalAlignment="Left" FontSize="12"
+                                  ItemsSource="{Binding EventChoices}"
+                                  SelectedItem="{Binding ActiveEventSlot3, Mode=TwoWay}" />
+                        <!-- §219: three more. The list is short enough that six
+                             fits without scrolling and long enough to cover a
+                             seasonal event running alongside the permanent ones. -->
+                        <ComboBox Width="220" HorizontalAlignment="Left" FontSize="12"
+                                  ItemsSource="{Binding EventChoices}"
+                                  SelectedItem="{Binding ActiveEventSlot4, Mode=TwoWay}" />
+                        <ComboBox Width="220" HorizontalAlignment="Left" FontSize="12"
+                                  ItemsSource="{Binding EventChoices}"
+                                  SelectedItem="{Binding ActiveEventSlot5, Mode=TwoWay}" />
+                        <ComboBox Width="220" HorizontalAlignment="Left" FontSize="12"
+                                  ItemsSource="{Binding EventChoices}"
+                                  SelectedItem="{Binding ActiveEventSlot6, Mode=TwoWay}" />
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Button Content="Read Published" FontSize="12" Command="{Binding ReadActiveEventsCommand}"
+                                    ToolTip.Tip="Reads what the server currently holds. No sign-in needed - this is the same route every tracker reads." />
+                            <Button Content="Publish" FontSize="12" Command="{Binding PublishActiveEventsCommand}" />
+                            <Button Content="Clear" FontSize="12" Command="{Binding ClearActiveEventsCommand}"
+                                    ToolTip.Tip="Publishes an empty list, which puts every tracker back to considering every event skin." />
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding ActiveEventsPublished}" TextWrapping="Wrap" FontSize="12" FontWeight="Bold"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding ActiveEventsStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Panel>
+
+            <!-- §234: a World Quest of your own, so the World Quest window can
+                 be exercised on a day PRO is not running one. It is stored
+                 exactly where a real quest goes, so this tests the real path
+                 rather than a stand-in - the tracker cannot tell the
+                 difference, and neither can the preview detector. -->
+            <Panel IsVisible="{Binding IsWorldQuestSection}">
+                <ScrollViewer>
+                    <StackPanel Spacing="8" Margin="6">
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Starts a World Quest of your own for testing. It goes in the same place a real quest does, so Menu &gt; World Quest, the countdown and the catch preview reader all behave exactly as they will on the real thing." />
+
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="A real quest runs 24 hours from the moment it starts, or ends early once the community goal is met - so a small goal is the quick way to test the reward tiers. Nothing is posted to Discord." />
+
+                        <TextBlock Text="Pokémon" FontWeight="Bold" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBox Width="220" HorizontalAlignment="Left" FontSize="12"
+                                 Watermark="Rattata" Text="{Binding TestQuestPokemon}" />
+
+                        <TextBlock Text="Total IV's (the community goal)" FontWeight="Bold" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBox Width="220" HorizontalAlignment="Left" FontSize="12"
+                                 Watermark="2000" Text="{Binding TestQuestTotalIvsText}" />
+
+                        <TextBlock Text="{Binding TestQuestTiers}" TextWrapping="Wrap" FontSize="11"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Button Content="Start test quest" FontSize="12" FontWeight="Bold"
+                                    Command="{Binding StartTestQuestCommand}"
+                                    ToolTip.Tip="Creates the quest on the events server. Needs an admin sign-in, the same as publishing an event." />
+                            <Button Content="Clear test quests" FontSize="12"
+                                    Command="{Binding ClearTestQuestsCommand}"
+                                    ToolTip.Tip="Removes every quest started from here. A quest PRO announced can never match, so this cannot delete a real one." />
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding TestQuestStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Panel>
+
+            <!-- §211: cuts the Pokemon out of the game's own Pokedex panel,
+                 dropping the blue backdrop and the platform, so the counterpart
+                 library can be grown from the game rather than hunted for. The
+                 result is always shown before anything is written. -->
+            <Panel IsVisible="{Binding IsSpriteScraperSection}">
+                <ScrollViewer>
+                    <StackPanel Spacing="8" Margin="6">
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Open the Pokedex in game with a Pokemon selected, then press Grab. The backdrop and the platform are removed and the sprite is placed on a 120x120 canvas, the same shape the counterpart library already uses." />
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Button Content="Grab from client" FontSize="12"
+                                    Command="{Binding GrabSpriteCommand}" IsEnabled="{Binding !IsBusy}"
+                                    ToolTip.Tip="Captures the bound PRO window and cuts the sprite out of it. Nothing is saved yet." />
+                            <Button Content="Save to library" FontSize="12"
+                                    Command="{Binding SaveScrapedSpriteCommand}" IsEnabled="{Binding HasScrapedSprite}"
+                                    ToolTip.Tip="Writes the canvas into SharedPokemonLibrary/Assets/Counterparts. An existing file of the same name is never overwritten." />
+                        </StackPanel>
+
+                        <Border BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                Width="132" Height="132" HorizontalAlignment="Left"
+                                IsVisible="{Binding HasScrapedSprite}">
+                            <Image Source="{Binding ScrapedSprite}" Width="120" Height="120" Stretch="None" />
+                        </Border>
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <ComboBox Width="150" FontSize="12" ItemsSource="{Binding ScrapeEventOptions}"
+                                      SelectedItem="{Binding ScrapeEventName, Mode=TwoWay}" />
+                            <TextBox Width="150" FontSize="12" PlaceholderText="Pokemon name"
+                                     Text="{Binding ScrapePokemonName, Mode=TwoWay}" />
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding ScraperStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Panel>
+
+            <!-- §168: the Battle Lab - the bulk observation runner. Both of
+                 the Simulator's AIs battle fresh random teams headlessly,
+                 every battle recorded by the §156 observer; meant to churn
+                 for hours while the machine is otherwise idle. -->
+            <Panel IsVisible="{Binding IsBattleLabSection}">
+                <ScrollViewer>
+                    <StackPanel Spacing="8" Margin="6">
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Runs headless Simulator battles in bulk and records every one as observation data for the learning experiment. Half the battles play the Monte Carlo (boss) brain against the baseline AI, half the baseline against itself - fresh random teams every battle, both sides of every decision recorded. Battles use all CPU cores; start a run before stepping away." />
+
+                        <!-- §171: who the trained network faces. Left on
+                             Observe only it plays nobody and simply watches
+                             the other two, which is the §168 behaviour. -->
+                        <TextBlock Text="Deep learning model" FontWeight="Bold" FontSize="12" Margin="0,4,0,0"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <RadioButton GroupName="LabMatchup" Content="Observe only" FontSize="12"
+                                         IsChecked="{Binding LabObserveOnly, Mode=TwoWay}"
+                                         IsEnabled="{Binding !LabRunning}"
+                                         ToolTip.Tip="The Monte Carlo brain and the baseline AI battle; the model only watches and scores." />
+                            <RadioButton GroupName="LabMatchup" Content="Battle Monte Carlo" FontSize="12"
+                                         IsChecked="{Binding LabVersusMonteCarlo, Mode=TwoWay}"
+                                         IsEnabled="{Binding !LabRunning}"
+                                         ToolTip.Tip="The model plays every battle against the boss brain." />
+                            <RadioButton GroupName="LabMatchup" Content="Battle Baseline" FontSize="12"
+                                         IsChecked="{Binding LabVersusBaseline, Mode=TwoWay}"
+                                         IsEnabled="{Binding !LabRunning}"
+                                         ToolTip.Tip="The model plays every battle against the baseline AI." />
+                            <RadioButton GroupName="LabMatchup" Content="Taught by brain" FontSize="12"
+                                         IsChecked="{Binding LabTaught, Mode=TwoWay}"
+                                         IsEnabled="{Binding !LabRunning}"
+                                         ToolTip.Tip="The model plays and the Monte Carlo brain marks every decision - the corpus to train the next model on." />
+                        </StackPanel>
+
+                        <!-- §182: which teacher is being recorded. Observe only
+                             cycles the whole dial one battle at a time, so a
+                             single long run covers every difficulty; the other
+                             matchups hold it still because their student is one
+                             shared instance and varying it would be a race. -->
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Risk (0-1):" FontSize="12" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <TextBox Text="{Binding LabRiskText}" Width="60" FontSize="12"
+                                     IsEnabled="{Binding !LabRunning}" />
+                            <TextBlock TextWrapping="Wrap" FontSize="11" Opacity="0.85" MaxWidth="520"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}"
+                                       Text="0 ranks a move by its average outcome; 1 ranks it by how good it is when it goes well, which takes the gamble knowingly. Observe only ignores this and walks 0, 0.25, 0.5, 0.75, 1 across its battles." />
+                        </StackPanel>
+
+                        <!-- §180: the two model matchups measure a trained model;
+                             they do not collect usable training data, because the
+                             Monte Carlo brain never plays and so nothing recorded
+                             carries a ranking. The note appears only while one of
+                             them is chosen, beside the radios rather than in the
+                             run status, which the running line would overwrite. -->
+                        <Border IsVisible="{Binding LabMatchupNoteVisible}"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                CornerRadius="3" Padding="6,4">
+                            <TextBlock Text="{Binding LabMatchupNote}" TextWrapping="Wrap" FontSize="11"
+                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                        </Border>
+
+                        <TextBlock Text="{Binding LabModelStatus}" TextWrapping="Wrap" FontSize="11" Opacity="0.85"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Battles (100-100000):" FontSize="12" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <TextBox Text="{Binding LabBattleCountText}" Width="80" FontSize="12"
+                                     IsEnabled="{Binding !LabRunning}" />
+                            <Button Content="Run Battles" FontSize="12" Command="{Binding RunLabCommand}"
+                                    IsEnabled="{Binding !LabRunning}" />
+                            <Button Content="Cancel" FontSize="12" Command="{Binding CancelLabCommand}"
+                                    IsEnabled="{Binding LabRunning}" />
+                        </StackPanel>
+
+                        <!-- §181: the ceiling went to 100,000 so one run can
+                             cover a night. The cost of that is disk, not time,
+                             and it is worth reading before typing the number:
+                             a battle writes roughly 110 to 140 KB. Cancel is
+                             safe at any point - every finished battle is
+                             already its own complete file. This label is read
+                             back against LabBattleRunner's constants by the
+                             181-check battery, because a label raised on its
+                             own promises a range the validator refuses. -->
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Opacity="0.85"
+                                   Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="About 120 KB of observation data per battle: 10,000 battles is a little over a gigabyte, 100,000 is eleven to fourteen. Cancelling is safe at any point - each finished battle is already a complete file, and Clear Observation Data below removes them all in one go." />
+
+                        <TextBlock Text="{Binding LabProgress}" FontWeight="Bold" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding LabStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding LabStoredText}" FontSize="11" Opacity="0.85"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <!-- §183: the opponent's book on how battles against
+                             you have gone. Two species names, an action and
+                             two counts per matchup - no teams, no times, no
+                             hunt or session history. It never reaches the
+                             observation corpus, and the Battle Lab never
+                             builds one, because a teacher that could read it
+                             would be labelling states with an answer the
+                             model has no feature for. -->
+                        <TextBlock Text="{Binding OpponentMemoryText}" TextWrapping="Wrap" FontSize="11"
+                                   Opacity="0.85" Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <!-- §169: the training corpus in and out as one
+                             file, plus installing a freshly trained model
+                             on this machine to try before it is published. -->
+                        <TextBlock Text="Training data" FontWeight="Bold" FontSize="12" Margin="0,6,0,0"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Export bundles every recorded battle into one zip - keep it, move it between machines, or feed it to the ai-lab trainer. Import merges a bundle back in without duplicating what is already here. What a published build actually carries is the trained model, not this data." />
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Button Content="Export All Data..." FontSize="12" Command="{Binding ExportLabDataCommand}"
+                                    IsEnabled="{Binding !LabRunning}" />
+                            <Button Content="Import Data..." FontSize="12" Command="{Binding ImportLabDataCommand}"
+                                    IsEnabled="{Binding !LabRunning}" />
+                            <Button Content="Install Trained Model..." FontSize="12" Command="{Binding InstallTrainedModelCommand}"
+                                    ToolTip.Tip="Copies a pokemon_ai.onnx into this machine's observation folder, where the shadow evaluator prefers it over the shipped copy." />
+                            <!-- §179: clearing the corpus from here instead
+                                 of from Explorer. Deletes only obs-*.jsonl,
+                                 so the installed model and the settings
+                                 survive, and nothing goes to the recycle
+                                 bin. Two clicks to confirm. -->
+                            <Button Content="{Binding ClearLabDataLabel}" FontSize="12"
+                                    Command="{Binding ClearLabDataCommand}"
+                                    IsEnabled="{Binding !LabRunning}"
+                                    ToolTip.Tip="Deletes every recorded battle file from this machine's observation folder. Your installed pokemon_ai.onnx and your settings are left alone, and nothing goes to the recycle bin. Export first if you want to keep the corpus." />
+                            <!-- §183: separate from the corpus button on
+                                 purpose. That one throws away training
+                                 data; this one makes the Simulator
+                                 opponent forget how it has played you. -->
+                            <Button Content="{Binding ClearMemoryLabel}" FontSize="12"
+                                    Command="{Binding ClearMemoryCommand}"
+                                    ToolTip.Tip="Makes the Simulator opponent forget every matchup it has learned, so it plays you like the first time again. Does not touch the observation corpus or the trained model." />
+                        </StackPanel>
+                        <TextBlock Text="{Binding LabArchiveStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Panel>
+            </Panel>
+        </Grid>
+    </Panel>
+    </Border>
+</Window>

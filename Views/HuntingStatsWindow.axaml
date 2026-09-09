@@ -1,0 +1,87 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.HuntingStatsWindow"
+        x:DataType="vm:HuntingStatsViewModel"
+        Title="Lifetime Stats"
+        Width="330" SizeToContent="Height" MaxHeight="640" CanResize="False"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §103: compacted per the reference screenshot - same statistics, same
+         order, no removals; SizeToContent="Height" (with a MaxHeight +
+         ScrollViewer safety net) instead of a fixed 560px means the window
+         hugs its content on every OS's font metrics rather than clipping on
+         one and floating in empty space on another. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="16,12,16,14" Spacing="8">
+        <TextBlock Text="Lifetime Stats" FontSize="17" FontWeight="Bold"
+                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,6" />
+
+        <StackPanel Spacing="5">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Total Time Hunting" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding TotalTimeHunting}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Total Pokémon Encountered" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding TotalPokemon}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Shiny Pokémon" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding ShinyPokemon}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Event Forms" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding EventForms}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Pokémon Caught" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding SuccessfulCatches}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Pokémon Broken Free" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding FailedCatches}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="My Form Rate" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding FormFormRate}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="My Shiny Rate" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding ShinyFormRate}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+             <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Bosses Fought" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding BossesFought}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+             <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Losses to Bosses" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding LossesToBosses}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Boss Victories" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding BossVictories}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+             <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="PVP Matches" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding PVPMatches}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="PVP Losses" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding PVPLosses}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+               <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="PVP Victories" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding PVPWins}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            </Grid>
+        </StackPanel>
+    </StackPanel>
+    </ScrollViewer>
+    </Border>
+</Window>

@@ -1,0 +1,211 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.CreateEventWindow"
+        x:DataType="vm:CreateEventViewModel"
+        Title="Create Event"
+        Width="440" Height="700" MinWidth="400" MinHeight="560"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §107 circular event-button markers. Self-templated rather than a
+         restyled CheckBox or RadioButton: Avalonia's CheckBox marker is a
+         square, and a RadioButton cannot be turned back OFF by clicking it -
+         which is precisely what these two have to do. A ToggleButton carrying
+         its own template is the one control that is both round and freely
+         clearable. The template is built from Borders with a CornerRadius
+         (a 20px box at radius 10 is a circle) rather than Ellipse shapes, so
+         it adds no control type this project does not already use, and every
+         brush is a DynamicResource so the markers follow the same theme as
+         the rest of the form (§104). -->
+    <Window.Styles>
+        <Style Selector="ToggleButton.marker">
+            <Setter Property="Width" Value="20" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="ToggleButton">
+                    <!-- Background on the Grid, not just the ring, so the
+                         whole 20x20 square is clickable instead of only the
+                         2px stroke. -->
+                    <Grid Background="Transparent">
+                        <Border Width="20" Height="20" CornerRadius="10"
+                                BorderBrush="{DynamicResource ThemeTextBrush}" BorderThickness="2"
+                                Background="Transparent"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Border Name="MarkerDot" Width="10" Height="10" CornerRadius="5"
+                                Background="{DynamicResource ThemeTextBrush}" Opacity="0"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+
+        <!-- Filled centre = that button will be on the card. -->
+        <Style Selector="ToggleButton.marker:checked /template/ Border#MarkerDot">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <!-- A ghost of the dot under the pointer, so an empty marker still
+             reads as something you can click. The :checked:pointerover rule
+             comes LAST on purpose: in Avalonia the later matching style wins,
+             so hovering a marker that is already on must not fade it. -->
+        <Style Selector="ToggleButton.marker:pointerover /template/ Border#MarkerDot">
+            <Setter Property="Opacity" Value="0.35" />
+        </Style>
+        <Style Selector="ToggleButton.marker:checked:pointerover /template/ Border#MarkerDot">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </Window.Styles>
+
+    <!-- Row 1 is star-sized and scrolls (§107): the form grew by the markers
+         band, and a scrolling middle means Post and Close can never be pushed
+         off the bottom of a short window or a large system font. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid RowDefinitions="Auto,*,Auto,Auto" Margin="16">
+
+        <TextBlock Grid.Row="0"
+                   Text="Post a giveaway, meetup, or announcement to the Events board."
+                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,12" />
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Type:" VerticalAlignment="Center"
+                           Margin="0,0,8,8" Foreground="{DynamicResource ThemeTextBrush}" />
+                <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding EventTypes}"
+                          SelectedItem="{Binding EventType}" Margin="0,0,0,8" HorizontalAlignment="Stretch">
+                    <!-- No x:DataType here on purpose - GuildEventType is an enum, not a
+                         class, so this one small template uses classic (non-compiled)
+                         binding instead of the compiled bindings used everywhere else in
+                         this window. {Binding} with no path means "the item itself",
+                         which EnumDisplayNameConverter then turns into a spaced label.
+                         Covers both the open dropdown and the closed selection box, since
+                         Avalonia's ComboBox uses ItemTemplate for both. -->
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={x:Static conv:EnumDisplayNameConverter.Instance}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Your name:" VerticalAlignment="Center"
+                           Margin="0,0,8,8" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PostedByName}"
+                         PlaceholderText="e.g. User Name" Margin="0,0,0,8" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Title:" VerticalAlignment="Center"
+                           Margin="0,0,8,8" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Title}"
+                         PlaceholderText="e.g. Shiny giveaway tonight!" Margin="0,0,0,8" />
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Pokémon:" VerticalAlignment="Center"
+                           Margin="0,0,8,8" Foreground="{DynamicResource ThemeTextBrush}" />
+                <Grid Grid.Row="3" Grid.Column="1" ColumnDefinitions="Auto,*,Auto,Auto" Margin="0,0,0,8">
+                    <Image Grid.Column="0" Source="{Binding PokemonSprite}" Width="32" Height="32" Stretch="Uniform"
+                           IsVisible="{Binding PokemonName, Converter={x:Static conv:StringNotEmptyConverter.Instance}}"
+                           Margin="0,0,8,0" />
+                    <TextBlock Grid.Column="1" Text="{Binding PokemonName}" VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis" Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.85" />
+                    <Button Grid.Column="2" Content="Choose…" Command="{Binding ChoosePokemonCommand}" Margin="0,0,4,0" />
+                    <Button Grid.Column="3" Content="Clear" Command="{Binding ClearPokemonCommand}"
+                            IsVisible="{Binding PokemonName, Converter={x:Static conv:StringNotEmptyConverter.Instance}}" />
+                </Grid>
+
+                <!-- §103 rewards, per the CreateEvent reference design. The item
+                     reward is a text box rather than the mockup's Choose... button
+                     because no item catalog exists anywhere in this app to pick
+                     from - free text is the working equivalent. -->
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Item Reward:" VerticalAlignment="Center"
+                           FontWeight="Bold" Margin="0,0,8,8" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ItemReward}"
+                         PlaceholderText="e.g. Rare Candy x5 (optional)" Margin="0,0,0,8" />
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Pokémon Reward:" VerticalAlignment="Center"
+                           FontWeight="Bold" Margin="0,0,8,8" Foreground="{DynamicResource ThemeTextBrush}" />
+                <Grid Grid.Row="5" Grid.Column="1" ColumnDefinitions="Auto,*,Auto,Auto" Margin="0,0,0,8">
+                    <Image Grid.Column="0" Source="{Binding PokemonRewardSprite}" Width="32" Height="32" Stretch="Uniform"
+                           IsVisible="{Binding PokemonRewardName, Converter={x:Static conv:StringNotEmptyConverter.Instance}}"
+                           Margin="0,0,8,0" />
+                    <TextBlock Grid.Column="1" Text="{Binding PokemonRewardName}" VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis" Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.85" />
+                    <Button Grid.Column="2" Content="Choose…" Command="{Binding ChoosePokemonRewardCommand}" Margin="0,0,4,0" />
+                    <Button Grid.Column="3" Content="Clear" Command="{Binding ClearPokemonRewardCommand}"
+                            IsVisible="{Binding PokemonRewardName, Converter={x:Static conv:StringNotEmptyConverter.Instance}}" />
+                </Grid>
+
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Poke Dollars:" VerticalAlignment="Center"
+                           Margin="0,0,8,8" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding PokeDollarsText}" Width="160" HorizontalAlignment="Center"
+                         PlaceholderText="e.g. 500000 (optional)" Margin="0,0,0,8" />
+
+                <!-- §107: the two circular markers, in their own band between the
+                     rewards and the message, exactly where the annotation puts
+                     them. One row per button an event's card can carry; both
+                     markers sit in the same grid column so the two circles line
+                     up. The band spans both columns of the form so the long
+                     "Pokémon Submissions" label cannot widen the label column and
+                     squeeze every text box above it. -->
+                <Border Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2"
+                        BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                        Padding="8,6" Margin="0,0,0,8">
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto,*">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                                   Text="Event buttons" FontWeight="Bold" FontSize="13"
+                                   TextDecorations="Underline"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                                   Text="A marker left empty keeps that button off this event's card."
+                                   FontSize="11" TextWrapping="Wrap" Opacity="0.75" Margin="0,2,0,6"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Pokémon Submissions"
+                                   VerticalAlignment="Center" Margin="0,0,0,4"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <ToggleButton Grid.Row="2" Grid.Column="1" Classes="marker"
+                                      IsChecked="{Binding AllowPokemonSubmissions}"
+                                      VerticalAlignment="Center" Margin="12,0,0,4"
+                                      ToolTip.Tip="Show the Submit Pokémon button on this event's card." />
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="View Entries"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <ToggleButton Grid.Row="3" Grid.Column="1" Classes="marker"
+                                      IsChecked="{Binding AllowViewEntries}"
+                                      VerticalAlignment="Center" Margin="12,0,0,0"
+                                      ToolTip.Tip="Show the View Entries button on this event's card." />
+                    </Grid>
+                </Border>
+
+                <TextBlock Grid.Row="8" Grid.Column="0" Text="Message:" Margin="0,0,8,8"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+                <!-- MaxLength matches the board card's "max 75 characters" box
+                     (§103) - the service enforces the same cap on save. -->
+                <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Message}"
+                         PlaceholderText="Details here - 75 characters at most."
+                         AcceptsReturn="True" Height="110" MaxLength="75"
+                         TextWrapping="Wrap" Margin="0,0,0,8" />
+            </Grid>
+        </ScrollViewer>
+
+        <TextBlock Grid.Row="2" Text="{Binding StatusMessage}" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.8" Margin="0,0,0,8" />
+
+        <Grid Grid.Row="3" ColumnDefinitions="*,Auto,Auto">
+            <TextBlock Grid.Column="0" Text="Posts show up on the Events tab right away." FontWeight="Bold"
+                       FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+            <Button Grid.Column="1" Content="Close" Click="CloseButton_Click" Margin="0,0,8,0" />
+            <Button Grid.Column="2" Content="Post" Command="{Binding PostCommand}" />
+        </Grid>
+    </Grid>
+    </Border>
+</Window>

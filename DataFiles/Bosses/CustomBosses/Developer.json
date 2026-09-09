@@ -1,0 +1,67 @@
+{
+  "name": "Developer",
+  "notes": "",
+  "level": 100,
+  "team": [
+    {
+      "species": "Ferrothorn",
+      "sprite": "SharedPokemonLibrary/Assets/Counterparts/Summer/Ferrothorn.png",
+      "nature": "Sassy",
+      "ability": "Iron Barbs",
+      "item": "Rocky Helmet",
+      "moves": [ "Knock Off", "Protect", "Leech Seed", "Stealth Rock" ],
+      "ivs": [ 8, 2, 6, 9, 9, 1 ],
+      "evs": [ 0, 6, 0, 0, 252, 252 ]
+    },
+    {
+      "species": "Mimikyu",
+      "sprite": "SharedPokemonLibrary/Assets/Counterparts/Halloween/Mimikyu2.png",
+      "nature": "Jolly",
+      "ability": "Disguise",
+      "item": "Life Orb",
+      "moves": [ "Shadow Sneak", "Shadow Claw", "Play Rough", "Swords Dance" ],
+      "ivs": [ 8, 2, 4, 6, 6, 2 ],
+      "evs": [ 252, 0, 252, 0, 0, 6 ]
+    },
+    {
+      "species": "Toxapex",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/748.png",
+      "nature": "Sassy",
+      "ability": "Regenerator",
+      "item": "Black Sludge",
+      "moves": [ "Infestation", "Toxic", "Baneful Bunker", "Recover" ],
+      "ivs": [ 5, 9, 2, 6, 1, 1 ],
+      "evs": [ 0, 6, 0, 0, 252, 252 ]
+    },
+    {
+      "species": "Chandelure",
+      "sprite": "SharedPokemonLibrary/Assets/Counterparts/Valentines/Chandelure.png",
+      "nature": "Modest",
+      "ability": "Flame Body",
+      "item": "Choice Scarf",
+      "moves": [ "Flamethrower", "Shadow Ball", "Energy Ball", "Trick" ],
+      "ivs": [ 7, 9, 2, 5, 5, 2 ],
+      "evs": [ 0, 0, 252, 252, 0, 6 ]
+    },
+    {
+      "species": "Quagsire",
+      "sprite": "SharedPokemonLibrary/Assets/Counterparts/Easter/Quagsire.png",
+      "nature": "Relaxed",
+      "ability": "Unaware",
+      "item": "Leftovers",
+      "moves": [ "Scald", "Earthquake", "Recover", "Toxic" ],
+      "ivs": [ 5, 3, 8, 5, 3, 2 ],
+      "evs": [ 0, 252, 0, 0, 6, 252 ]
+    },
+    {
+      "species": "Snorlax",
+      "sprite": "SharedPokemonLibrary/Assets/Counterparts/Christmas/Snorlax.png",
+      "nature": "Adamant",
+      "ability": "Gluttony",
+      "item": "Choice Band",
+      "moves": [ "Body Slam", "Outrage", "Earthquake", "Double-Edge" ],
+      "ivs": [ 3, 3, 8, 8, 3, 1 ],
+      "evs": [ 252, 0, 0, 0, 6, 252 ]
+    }
+  ]
+}

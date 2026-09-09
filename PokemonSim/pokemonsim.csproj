@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Section 154: this became the battle-engine CLASS LIBRARY the tracker
+       references. It was OutputType Exe with no Program.cs (the entry point
+       did not survive the copy into the repo), which cannot build; the dev
+       harness lives in PokemonSim.DevConsole now, the tests in
+       PokemonSim.Tests. The Microsoft.ML.OnnxRuntime reference is parked
+       below for the deep-learning observer phase - nothing in this library
+       uses it yet, and carrying the native onnx runtime into every tracker
+       publish would cost ~100 MB for nothing. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- Section 177: the test project may see this library's internals.
+       Sections 175 and 176 added tests that call ObserverEncoder's
+       internal helpers directly (SlotMoves, WriteActive) - which is the
+       right way to pin a pure function without widening the engine's
+       public surface, but only compiles with this. Without it
+       PokemonSim.Tests failed to build at all, which is why bin\Release
+       held no test assembly. -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="PokemonSim.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ai-lab\**" />
+    <Compile Remove="venv\**" />
+    <EmbeddedResource Remove="ai-lab\**" />
+    <EmbeddedResource Remove="venv\**" />
+    <None Remove="ai-lab\**" />
+    <None Remove="venv\**" />
+  </ItemGroup>
+
+  <!-- The engine's data, copied into any referencing project's output under
+       PokemonSimData/ (a name the tracker's own DataFiles content cannot
+       collide with). SimDataFiles resolves it there first. -->
+  <ItemGroup>
+    <Content Include="DataFiles\*.json" TargetPath="PokemonSimData\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <!-- Section 156: the author's trained-export policy network (see
+         ai-lab/), shipped so the observer's shadow evaluator can find it
+         without any setup. Eight kilobytes. -->
+    <Content Include="DataFiles\pokemon_ai.onnx" TargetPath="PokemonSimData\pokemon_ai.onnx" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- Parked for the deep-learning observer phase (see MIGRATION_GUIDE.md
+       section 154):
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.24.3" />
+  </ItemGroup>
+  -->
+
+</Project>

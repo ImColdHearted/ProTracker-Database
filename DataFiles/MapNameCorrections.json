@@ -1,0 +1,4 @@
+{
+  "_comment": "Route/location name OCR corrections - see Services/MapNameCorrectionService.cs. Add an entry as \"wrong text\": \"correct text\" whenever RouteDetector misreads a location name in the game's corner HUD. The wrong text is matched case-insensitively as a SUBSTRING anywhere in the OCR'd route name and replaced, so one entry fixes every map name sharing that misread word (e.g. \"Yulcan\" below fixes \"Yulcan Cove\", \"Yulcan Island Shore\", and \"Yulcan Forest\" all at once). Keys starting with an underscore (like this one) are ignored - they're just notes, since plain JSON has no comment syntax of its own.",
+  "Yulcan": "Vulcan"
+}

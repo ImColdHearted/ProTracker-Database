@@ -1,0 +1,506 @@
+{
+  "bossId": "klohver",
+  "name": "Klohver",
+  "location": "Pinkan Island Meadow",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/KlohverLoc.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Klohver.png",
+  "BossCooldown": 288,
+  "requirements": "Access to Pinkan Island Meadow",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "pokemon": [
+          {
+            "name": "Oddish",
+            "dexNumber": 43
+          },
+          {
+            "name": "Petilil",
+            "dexNumber": 548
+          },
+          {
+            "name": "Skiddo",
+            "dexNumber": 672
+          },
+          {
+            "name": "Chikorita",
+            "dexNumber": 152
+          },
+          {
+            "name": "Bulbasaur",
+            "dexNumber": 1
+          }
+        ],
+        "items": [
+          {
+            "name": "Tamato Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tamato_Berry.png"
+          },
+          {
+            "name": "Hondew Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hondew_Berry.png"
+          },
+          {
+            "name": "Kelpsy Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Kelpsy_Berry.png"
+          },
+          {
+            "name": "Qualot Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Qualot_Berry.png"
+          },
+          {
+            "name": "Grepa Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Grepa_Berry.png"
+          },
+          {
+            "name": "Pomeg Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pomeg_Berry.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Xerneas",
+          "dexNumber": 716,
+          "nature": "Mild",
+          "ability": "Fairy Aura",
+          "item": "None",
+          "moves": [
+            "Dazzling Gleam",
+            "Megahorn",
+            "Rock Slide",
+            "Outrage"
+          ]
+        },
+        {
+          "name": "Shaymin-Sky",
+          "dexNumber": 10006,
+          "nature": "Modest",
+          "ability": "Serene Grace",
+          "item": "None",
+          "moves": [
+            "Air Slash"
+          ]
+        },
+        {
+          "name": "Meganium",
+          "dexNumber": 154,
+          "nature": "Impish",
+          "ability": "Overgrow",
+          "item": "None",
+          "moves": [
+            "Petal Blizzard",
+            "Dragon Tail",
+            "Earthquake",
+            "Synthesis"
+          ]
+        },
+        {
+          "name": "Lilligant",
+          "dexNumber": 549,
+          "nature": "Modest",
+          "ability": "Own Tempo",
+          "item": "None",
+          "moves": [
+            "Quiver Dance",
+            "Petal Dance",
+            "Sleep Powder",
+            "Giga Drain"
+          ]
+        },
+        {
+          "name": "Gogoat",
+          "dexNumber": 673,
+          "nature": "Adamant",
+          "ability": "Sap Sipper",
+          "item": "None",
+          "moves": [
+            "Bulk Up",
+            "Take Down",
+            "Earthquake",
+            "Seed Bomb"
+          ]
+        },
+        {
+          "name": "Vileplume",
+          "dexNumber": 45,
+          "nature": "Modest",
+          "ability": "Chlorophyll",
+          "item": "None",
+          "moves": [
+            "Energy Ball",
+            "Sludge Bomb",
+            "Sunny Day",
+            "Moonblast"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 3,
+        "pokemon": [
+          {
+            "name": "Oddish",
+            "dexNumber": 43
+          },
+          {
+            "name": "Petilil",
+            "dexNumber": 548
+          },
+          {
+            "name": "Skiddo",
+            "dexNumber": 672
+          },
+          {
+            "name": "Chikorita",
+            "dexNumber": 152
+          },
+          {
+            "name": "Bulbasaur",
+            "dexNumber": 1
+          }
+        ],
+        "items": [
+          {
+            "name": "Tamato Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tamato_Berry.png"
+          },
+          {
+            "name": "Hondew Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hondew_Berry.png"
+          },
+          {
+            "name": "Kelpsy Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Kelpsy_Berry.png"
+          },
+          {
+            "name": "Qualot Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Qualot_Berry.png"
+          },
+          {
+            "name": "Grepa Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Grepa_Berry.png"
+          },
+          {
+            "name": "Pomeg Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pomeg_Berry.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Xerneas",
+          "dexNumber": 716,
+          "nature": "Mild",
+          "ability": "Fairy Aura",
+          "item": "Choice Scarf",
+          "moves": [
+            "Thunder",
+            "Moonblast",
+            "Close Combat",
+            "Rock Slide"
+          ]
+        },
+        {
+          "name": "Shaymin-Sky",
+          "dexNumber": 10006,
+          "nature": "Modest",
+          "ability": "Serene Grace",
+          "item": "Leftovers",
+          "moves": [
+            "Seed Flare",
+            "Air Slash",
+            "Earth Power",
+            "Leech Seed"
+          ]
+        },
+        {
+          "name": "Meganium",
+          "dexNumber": 154,
+          "nature": "Impish",
+          "ability": "Overgrow",
+          "item": "Leftovers",
+          "moves": [
+            "Petal Blizzard",
+            "Dragon Tail",
+            "Earthquake",
+            "Synthesis"
+          ]
+        },
+        {
+          "name": "Lilligant",
+          "dexNumber": 549,
+          "nature": "Modest",
+          "ability": "Own Tempo",
+          "item": "Leftovers",
+          "moves": [
+            "Quiver Dance",
+            "Petal Dance",
+            "Sleep Powder",
+            "Giga Drain"
+          ]
+        },
+        {
+          "name": "Gogoat",
+          "dexNumber": 673,
+          "nature": "Adamant",
+          "ability": "Sap Sipper",
+          "item": "Life Orb",
+          "moves": [
+            "Horn Leech",
+            "Rock Slide",
+            "Return",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Vileplume",
+          "dexNumber": 45,
+          "nature": "Modest",
+          "ability": "Chlorophyll",
+          "item": "Leftovers",
+          "moves": [
+            "Energy Ball",
+            "Sludge Bomb",
+            "Sunny Day",
+            "Moonblast"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 5,
+        "pokemon": [
+          {
+            "name": "Oddish",
+            "dexNumber": 43
+          },
+          {
+            "name": "Petilil",
+            "dexNumber": 548
+          },
+          {
+            "name": "Skiddo",
+            "dexNumber": 672
+          },
+          {
+            "name": "Chikorita",
+            "dexNumber": 152
+          },
+          {
+            "name": "Bulbasaur",
+            "dexNumber": 1
+          }
+        ],
+        "items": [
+          {
+            "name": "Tamato Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Tamato_Berry.png"
+          },
+          {
+            "name": "Hondew Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Hondew_Berry.png"
+          },
+          {
+            "name": "Kelpsy Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Kelpsy_Berry.png"
+          },
+          {
+            "name": "Qualot Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Qualot_Berry.png"
+          },
+          {
+            "name": "Grepa Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Grepa_Berry.png"
+          },
+          {
+            "name": "Pomeg Berry",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Pomeg_Berry.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Xerneas",
+          "dexNumber": 716,
+          "nature": "Mild",
+          "ability": "Fairy Aura",
+          "item": "Choice Scarf",
+          "moves": [
+            "Thunder",
+            "Moonblast",
+            "Close Combat",
+            "Rock Slide"
+          ]
+        },
+        {
+          "name": "Shaymin-Sky",
+          "dexNumber": 10006,
+          "nature": "Modest",
+          "ability": "Serene Grace",
+          "item": "Leftovers",
+          "moves": [
+            "Seed Flare",
+            "Air Slash",
+            "Earth Power",
+            "Leech Seed"
+          ]
+        },
+        {
+          "name": "Meganium",
+          "dexNumber": 154,
+          "nature": "Impish",
+          "ability": "Overgrow",
+          "item": "Leftovers",
+          "moves": [
+            "Petal Blizzard",
+            "Dragon Tail",
+            "Earthquake",
+            "Synthesis"
+          ]
+        },
+        {
+          "name": "Lilligant",
+          "dexNumber": 549,
+          "nature": "Modest",
+          "ability": "Own Tempo",
+          "item": "Leftovers",
+          "moves": [
+            "Quiver Dance",
+            "Petal Dance",
+            "Sleep Powder",
+            "Giga Drain"
+          ]
+        },
+        {
+          "name": "Gogoat",
+          "dexNumber": 673,
+          "nature": "Adamant",
+          "ability": "Sap Sipper",
+          "item": "Life Orb",
+          "moves": [
+            "Horn Leech",
+            "Rock Slide",
+            "Return",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Vileplume",
+          "dexNumber": 45,
+          "nature": "Modest",
+          "ability": "Chlorophyll",
+          "item": "Leftovers",
+          "moves": [
+            "Energy Ball",
+            "Sludge Bomb",
+            "Sunny Day",
+            "Moonblast"
+          ]
+        }
+      ]
+    }
+  }
+}

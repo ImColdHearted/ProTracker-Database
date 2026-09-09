@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.AdminLoginWindow"
+        Title="Admin Login"
+        Width="340" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        CanResize="False">
+
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <StackPanel Margin="20" Spacing="12">
+        <TextBlock Text="This area is for Admins only." TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <StackPanel Spacing="4">
+            <TextBlock Text="Username" Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBox Name="UsernameBox" />
+        </StackPanel>
+
+        <StackPanel Spacing="4">
+            <TextBlock Text="Password" Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBox Name="PasswordBox" PasswordChar="•" />
+        </StackPanel>
+
+        <TextBlock Name="ErrorText" Text="Incorrect username or password."
+                   Foreground="{DynamicResource ThemeErrorBrush}" TextWrapping="Wrap" IsVisible="False" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button Content="Login" Click="LoginButton_Click" IsDefault="True" />
+            <Button Content="Cancel" Click="CancelButton_Click" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+    </Border>
+</Window>

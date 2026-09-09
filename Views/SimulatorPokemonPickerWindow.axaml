@@ -1,0 +1,71 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.SimulatorPokemonPickerWindow"
+        x:DataType="vm:SimulatorPokemonPickerViewModel"
+        Title="Choose a Pokémon"
+        Width="460" Height="520"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §158: the Simulator's compact picker. Single-select, species and
+         regional forms only - no forms panel, no counterpart/event cards
+         (those are sprite skins; the battle engine cares about species). -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="12">
+
+        <TextBox Grid.Row="0" PlaceholderText="Search Pokémon..." Text="{Binding SearchText}" Margin="0,0,0,6" />
+
+        <TextBlock Grid.Row="1" Text="Click a Pokémon to put it in the team slot."
+                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.7" Margin="0,0,0,6" />
+
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding SearchResults}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PokemonCardItem">
+                        <Border Width="96" Height="130" Margin="4" Padding="4"
+                                BorderThickness="2" CornerRadius="4"
+                                BorderBrush="Gray" Cursor="Hand"
+                                PointerPressed="Card_PointerPressed">
+                            <StackPanel>
+                                <Image Source="{Binding Sprite}" Width="72" Height="72" Stretch="Uniform" />
+                                <TextBlock Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap" FontSize="11" />
+                                <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="18" Height="18" Stretch="Uniform" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Grid Grid.Row="3" ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+            <TextBlock Grid.Column="0" Text="Regional forms (Alolan, Galarian, Hisuian) count as their own Pokémon."
+                       Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.55" FontSize="11"
+                       VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,8,0" />
+            <Button Grid.Column="1" Content="Cancel" Click="CancelButton_Click" />
+        </Grid>
+    </Grid>
+    </Border>
+</Window>

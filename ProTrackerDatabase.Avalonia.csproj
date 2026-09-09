@@ -1,0 +1,269 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<!-- Cross-platform TFM (the original was net10.0-windows). Windows-only pieces
+         (Win32 window capture, WindowCaptureService, NativeMethods, the Tracking
+         engine) are marked accordingly - see MIGRATION_GUIDE.md. -->
+		<TargetFramework>net10.0</TargetFramework>
+		<!-- Pinned so local builds only pull in Windows' native binaries (SkiaSharp,
+         HarfBuzz, Tesseract) instead of every platform's copy at once - without
+         this, a plain build has no way to know which platform to target, so it
+         copies all of them into bin\Debug (this was the actual GB-sized bloat,
+         not the sprite assets). Override at publish time for other platforms;
+         see MIGRATION_GUIDE.md for the exact publish commands. -->
+		<!-- Only a DEFAULT for local builds/F5 debugging when no RID is specified -
+         the Condition means `dotnet publish -r osx-arm64` (etc.) still overrides
+         this correctly. An earlier unconditional version of this line silently
+         forced every publish back to win-x64 regardless of -r - see
+         MIGRATION_GUIDE.md. -->
+		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win-x64</RuntimeIdentifier>
+		<!-- PublishSingleFile is deliberately not set here (the cross-platform
+         default is a plain multi-file publish), but single-file IS fine on
+         Windows: §10's OCR-breaking single-file failure turned out to be
+         caused by the IncludeNativeLibrariesForSelfExtract=true half of that
+         experiment - it swept the loose x64/x86 tesseract/leptonica DLLs
+         into the bundled exe, where TesseractOCR's folder-scanning loader
+         (InteropDotNet.LibraryLoader, not plain DllImport resolution) can't
+         see them - not by PublishSingleFile itself. The Windows publish
+         profile (Properties/PublishProfiles/FolderProfile.pubxml) sets
+         PublishSingleFile=true WITHOUT that extract flag, so every native
+         library and content folder stays loose next to the exe, and that
+         combination is confirmed working in real published Windows builds,
+         OCR included. Do NOT add IncludeNativeLibrariesForSelfExtract - that
+         is the specific switch that recreates §10's bug. See
+         MIGRATION_GUIDE.md §10/§88. SelfContained stays on (testers don't
+         need .NET installed separately). -->
+		<SelfContained>true</SelfContained>
+		<!-- §231. Set this, and nothing else, when cutting a release. Until
+		     now it was never set at all, so every build the project has ever
+		     produced reported the SDK default of 1.0.0.0 - which is why
+		     weeks of bug reports all claimed to come from the same build,
+		     and why "who is on what" was unanswerable. One number, one
+		     place; Version drives AssemblyVersion, FileVersion and
+		     InformationalVersion together, and Services/AppVersion.cs is
+		     what reads it back at runtime. -->
+		<Version>1.0.2</Version>
+		<RootNamespace>ProTrackerDatabase</RootNamespace>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationIcon>ProTracker_Icon.ico</ApplicationIcon>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+		<!-- System.Drawing.Common / Win32 interop is intentionally used only inside
+         Windows-only files (guarded with [SupportedOSPlatform("windows")]). -->
+		<NoWarn>$(NoWarn);CA1416</NoWarn>
+		<PackageIcon>icon_preview.png</PackageIcon>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="12.1.1" />
+		<PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.1" />
+		<PackageReference Include="Avalonia.Controls.DataGrid" Version="12.1.2" />
+		<PackageReference Include="Avalonia.Controls.ColorPicker" Version="12.1.1" />
+		<!-- Design-time preview support (safe to keep even outside the IDE) -->
+		<PackageReference Include="Avalonia.Diagnostics" Version="11.3.20" Condition="'$(Configuration)' == 'Debug'" />
+
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="Serilog" Version="4.4.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+		<!-- Sends Report a Problem's screenshots/log by email (Services/BugReportEmailService.cs) -
+         not System.Net.Mail.SmtpClient, which Microsoft's own docs recommend against for
+         new code in favor of a maintained library. MailKit ships a net10.0 target
+         already, needs nothing beyond Gmail's plain SMTP+STARTTLS+App Password support
+         (no OAuth app registration required), and pulls in nothing heavier than MimeKit
+         plus BouncyCastle (used by MimeKit for S/MIME, not for this feature's TLS
+         transport, which is plain SslStream). See MIGRATION_GUIDE.md §73. -->
+		<PackageReference Include="MailKit" Version="4.17.0" />
+		<!-- Switched from the "Tesseract" package (charlesw) to this actively-maintained
+         fork: charlesw's package only ships Windows native binaries (confirmed via
+         their own open GitHub issue #503, "Linux support missing for .NET Core") -
+         OCR would throw DllNotFoundException the moment it initialized on Linux/macOS.
+         TesseractOCR (Apache 2.0, free) bundles native Tesseract 5.x binaries for
+         Windows x64, Linux x64, and macOS directly in the NuGet package. API differs
+         from the old package (Engine instead of TesseractEngine, TesseractOCR.Pix.Image
+         instead of Pix, page.Text instead of page.GetText()) - already migrated in
+         EncounterDetector.cs/CatchDetector.cs/RareEncounterDetector.cs. -->
+		<PackageReference Include="TesseractOCR" Version="5.5.2" />
+		<!-- Version bumped from the original 2.88.9 pin - the actual crash showed the
+         app expects native library version [151.0, 152.0), which doesn't match
+         2.88.x at all. Avalonia's own dependencies were quietly pulling in a newer
+         SkiaSharp (the 3.119.x line matches that version range) regardless of what
+         was pinned here, and since no NativeAssets.Linux/macOS package was ever
+         referenced, no valid native library got bundled for either platform -
+         Linux fell through to an unrelated ancient system-installed libSkiaSharp.so
+         (reported as version 116) instead of failing cleanly. Confirmed via
+         SkiaSharp's own docs that these native-assets packages are required
+         separately per-platform, not bundled automatically. See MIGRATION_GUIDE.md. -->
+		<PackageReference Include="SkiaSharp" Version="4.151.1" />
+		<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="4.151.1" />
+		<PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="4.151.1" />
+
+		<!-- §112 permanent encounter log. Microsoft.Data.Sqlite brings its own
+         native e_sqlite3 through SQLitePCLRaw, and lands the same way SkiaSharp
+         and Tesseract already do under this project's deliberate publish setup:
+         SelfContained with PublishSingleFile and WITHOUT
+         IncludeNativeLibrariesForSelfExtract, so the native library sits beside
+         the executable rather than being extracted at runtime. Do not add that
+         flag for this either - see the PublishSingleFile note at the top of this
+         file and MIGRATION_GUIDE.md §10/§88.
+
+         The version is FLOATING on purpose, and is the one thing here that could
+         not be verified before shipping: nuget.org was unreachable from the
+         machine this was written on, so rather than guess an exact patch number
+         and risk an NU1102 restore failure, 10.0.* resolves to whatever 10.0.x
+         actually exists for the .NET 10 train. Pin it to the resolved version
+         once the first restore reports one - every other package here is
+         pinned, and this should be too. -->
+		<PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.11" />
+
+		<!-- Windows-only capture path (System.Drawing.Common no-ops on other OSes) -->
+		<PackageReference Include="System.Drawing.Common" Version="10.0.11" />
+
+		<!-- Transitive dependency (pulled in via Avalonia's Linux D-Bus desktop
+         integration - file pickers, notifications, etc.) - pinned directly here to
+         override an older, vulnerable version NuGet was otherwise resolving.
+         GHSA-xrw6-gwf8-vvr9 (high severity): fixed in 0.21.3 (backported fix) or
+         0.92.0. Using the minimal 0.21.3 backport rather than jumping to 0.92.0,
+         to avoid risking unrelated breaking changes from a larger version bump. -->
+		<PackageReference Include="Tmds.DBus.Protocol" Version="0.95.0" />
+
+		<!-- Guide HTML rendering (Mega Stones etc.) uses a hand-written renderer -
+         see Views/GuideRendering/ - not an embedded browser, so no WebView-related
+         package is needed at all. See MIGRATION_GUIDE.md. -->
+	</ItemGroup>
+
+	<!-- §154: the PokemonSim battle engine and its test/console projects
+	     live in subfolders of this project's directory, so the SDK's default
+	     **/*.cs glob would compile them straight into the tracker (duplicate
+	     types, a second entry point, xunit references). They are their own
+	     projects; the tracker consumes the engine through the ProjectReference
+	     below, and the engine's DataFiles arrive in the output under
+	     PokemonSimData/ via that reference's content items. -->
+	<ItemGroup>
+		<Compile Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**" />
+		<Compile Remove="SharedPokemonLibrary\Assets\Counterparts\World Cup\**" />
+		<None Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**" />
+		<None Remove="SharedPokemonLibrary\Assets\Counterparts\World Cup\**" />
+		<Content Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**" />
+		<AvaloniaXaml Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**" />
+		<AvaloniaXaml Remove="SharedPokemonLibrary\Assets\Counterparts\World Cup\**" />
+		<EmbeddedResource Remove="SharedPokemonLibrary\Assets\Counterparts\World Cup\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="PokemonSim\pokemonsim.csproj" />
+		<!-- Section 156: the ONNX shadow evaluator for the Simulator's
+		     observer. Remove this one line (and the observer falls back
+		     to observation-only) if the onnx runtime's native payload is
+		     ever unwanted in a publish. -->
+		<ProjectReference Include="PokemonSim.Shadow\PokemonSim.Shadow.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- ExcludeFromSingleFile below matters for the Windows publish profile,
+         which does publish single-file (see the PropertyGroup comment above and
+         MIGRATION_GUIDE.md §88) - it keeps these data/content files loose next
+         to the exe where the app's own Path.Combine(AppContext.BaseDirectory,
+         ...) reads expect them. The single-file bundler leaves plain content
+         files loose anyway, so this is belt-and-suspenders - but that is
+         exactly the kind of assumption worth pinning down explicitly. -->
+
+		<!-- Ships as one compressed archive instead of ~3,200 loose PNGs - see
+         Services/AssetPakService.cs, which unpacks it into SharedPokemonLibrary/Assets/
+         on first launch. Rebuild Assets.pak (see MIGRATION_GUIDE.md) whenever sprite
+         assets change; the loose SharedPokemonLibrary/Assets/ folder in source control
+         is only needed for creating that pak, not for the build output. -->
+		<Content Include="ProTracker_Icon.ico" />
+		<Content Include="SharedPokemonLibrary\Assets.pak" Condition="Exists('SharedPokemonLibrary\Assets.pak')">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Include="SharedPokemonLibrary\Assets\**\*.*" Condition="!Exists('SharedPokemonLibrary\Assets.pak')">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Include="SharedPokemonLibrary\Data\**\*.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Include="SharedPokemonLibrary\Typings\**\*.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<!-- SharedPokemonLibrary\Sounds is a sibling of SharedPokemonLibrary\Assets,
+         not nested under it - a separate, unconditional entry, since none of the
+         globs above reach it and it has nothing to do with Assets.pak's sprite
+         packing. See Services/SoundNotificationService.cs (the provisional
+         play-a-sound-on-a-rare-encounter test feature) and MIGRATION_GUIDE.md. -->
+		<Content Include="SharedPokemonLibrary\Sounds\**\*.*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Include="DataFiles\**\*.*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Include="Data\**\*.*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<Content Include="tessdata\eng.traineddata">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<!-- Only included in Linux publishes - required one-time step for testers,
+		     see README-Linux-and-macOS-Setup.txt and MIGRATION_GUIDE.md. Not
+		     needed on Windows/macOS, so it's RID-conditioned rather than always
+		     shipped everywhere. -->
+		<Content Include="linux-fix-tesseract-ocr.sh" Condition="$(RuntimeIdentifier.StartsWith('linux'))">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<!-- One-command tester setup (installs wmctrl/imagemagick/tesseract's system
+		     packages, then runs linux-fix-tesseract-ocr.sh above against this same
+		     publish folder) - shipped alongside it for the same reason, see
+		     README-Linux-and-macOS-Setup.txt and MIGRATION_GUIDE.md §21. Also
+		     useful straight from a source checkout (it builds one if it doesn't
+		     find a publish folder already), so it isn't only useful post-publish -
+		     it's included here mainly so a zipped publish folder handed to a
+		     tester always has it right next to the exe without a separate step. -->
+		<Content Include="linux-setup.sh" Condition="$(RuntimeIdentifier.StartsWith('linux'))">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+		<!-- The macOS counterpart to the two Linux scripts above: restores the
+		     execute permission a Windows-made zip can't carry, clears macOS's
+		     download-quarantine flag (Gatekeeper refuses non-notarized apps
+		     otherwise - the app appears to simply not open at all), links
+		     Homebrew's tesseract/leptonica under the names TesseractOCR's
+		     loader searches, and launches the app. Only included in macOS
+		     publishes, same reasoning as the linux-*.sh entries above. See
+		     README-Linux-and-macOS-Setup.txt and MIGRATION_GUIDE.md §86. -->
+		<Content Include="macos-start.sh" Condition="$(RuntimeIdentifier.StartsWith('osx'))">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" Condition="Exists('Assets')" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="SharedPokemonLibrary\Assets\Counterparts\World Cup\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="SharedPokemonLibrary\Data\Counterparts\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\..\Downloads\icon_preview.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+
+</Project>

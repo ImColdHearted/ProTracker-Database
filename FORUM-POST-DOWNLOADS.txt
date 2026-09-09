@@ -1,0 +1,64 @@
+DOWNLOAD - macOS
+
+Apple Silicon Macs (M1/M2/M3/M4): [https://www.mediafire.com/file/0bnvo0dwnp71jqg/ProTrackerDatabase-osx-arm64.zip/file]
+
+Intel Macs: [https://www.mediafire.com/file/ji1j2b0iqkob44f/ProTrackerDatabase-osx-x64.zip/file]
+
+(Not sure which you have? Apple menu > About This Mac - if it says
+"Apple M1/M2/M3/M4" use the first link, if it says "Intel" use the second.)
+
+How to start it (first time - about a minute):
+1. Unzip the download (double-click it).
+2. Open Terminal (Cmd+Space, type "terminal", press Enter).
+3. Type: cd followed by a space, then drag the unzipped folder into the
+   Terminal window, and press Enter.
+4. Run this command:
+
+   bash macos-start.sh
+
+That's it - the script does the one-time setup (macOS blocks unsigned
+downloaded apps by default, and the encounter detection needs a couple of
+libraries) and then starts the tracker. Every time after that, the same
+command starts it again and skips what's already done.
+
+If macOS pops up "cannot verify the developer": go to System Settings >
+Privacy & Security, click "Open Anyway", then run the command again.
+
+When the app asks for Automation and Screen Recording permissions, allow
+both - that's how it reads the PRO window. No permissions = no tracking.
+
+If it doesn't start: send me whatever the Terminal printed, plus the
+newest file from ~/Library/Application Support/ProTracker/Logs/ (if that
+folder exists). Between those two, I can see exactly what happened.
+
+=======================================================================
+ 
+DOWNLOAD - Linux
+ 
+Regular PCs (64-bit Intel/AMD - this is almost everyone): [https://www.mediafire.com/file/r2nbesphqeycwnb/ProTrackerDatabase-LinuxX64.zip/file]
+
+ARM devices (Raspberry Pi 5 and similar): [https://www.mediafire.com/file/60fnbtw4hxtivy1/ProTrackerDatabase-LinuxArm64.zip/file]
+
+(Not sure? Run: uname -m in a terminal - "x86_64" means the first link,
+"aarch64" means the second.)
+ 
+How to start it (first time - a few minutes, it installs what it needs):
+1. Extract the zip.
+2. Open a terminal in the extracted folder.
+3. Run this command:
+ 
+   bash linux-start.sh
+ 
+That one command installs the few system packages the tracker needs
+(wmctrl, imagemagick, the OCR libraries), fixes file permissions the zip
+loses, and starts the app. It works on Ubuntu/Mint, Fedora, Arch,
+openSUSE and their relatives, and it tells you exactly what to do by hand
+if it can't do something itself. Every time after that, the same command
+starts it again and skips what's already done.
+ 
+Heads up: window capture works on X11/XWayland sessions (which is most
+setups). If tracking can't find your PRO window, run
+echo $XDG_SESSION_TYPE in a terminal and tell me what it says.
+ 
+If it doesn't start: send me whatever the terminal printed, plus the
+newest file from ~/.local/share/ProTracker/Logs/ (if that folder exists).

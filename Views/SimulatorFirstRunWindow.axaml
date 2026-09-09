@@ -1,0 +1,44 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.SimulatorFirstRunWindow"
+        Title="Before you start"
+        Width="500" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1"
+        CanResize="False">
+
+    <!-- §221: shown once per machine, in front of the Simulator, and never
+         again - see FirstRunNoticeService. It sits in FRONT of the window
+         rather than inside it because the thing it explains is the one thing
+         six empty team slots invite you to guess wrong about: where the
+         Pokemon come from. Same shape as §135's BoundariesWarningWindow,
+         with no "don't show again" box, because a notice that only ever
+         appears once has nothing to silence. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <StackPanel Margin="20" Spacing="14">
+        <TextBlock Text="The Simulator builds teams from your own game."
+                   FontWeight="Bold" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="There is no roster to pick from. Every Pokémon comes in through Import Pokemon from Game, which reads the PRO client directly - so PRO needs to be running, with that Pokémon's summary card open on screen." />
+
+        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="The card is found and read for you. If the client is partly covered, sitting behind another window, or hanging off the edge of the screen, move it and capture again. If a scan still misses, drag a box around the card yourself and press Scan." />
+
+        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="Every import is a live capture of your own client, so there is nothing to load from a file." />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Got it" IsDefault="True" Click="GotItButton_Click" />
+        </StackPanel>
+    </StackPanel>
+    </Border>
+</Window>

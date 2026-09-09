@@ -1,0 +1,51 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.EventEntryDetailWindow"
+        x:DataType="vm:EventEntryDetailViewModel"
+        Title="Entry"
+        Width="620" Height="560" MinWidth="420" MinHeight="360"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §106: one submission. The screenshot is the point of this window; the
+         header is just enough to know whose entry it is. Laid out to grow -
+         more fields are meant to sit under the image later, so the content is
+         a scrolling stack rather than a fixed split. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid RowDefinitions="Auto,*" Margin="16">
+
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Margin="0,0,0,10">
+            <Image Grid.Column="0" Source="{Binding Sprite}" Width="56" Height="56" Stretch="Uniform"
+                   Margin="0,0,10,0" VerticalAlignment="Top" />
+            <StackPanel Grid.Column="1" Spacing="2">
+                <TextBlock Text="{Binding Username}" FontSize="17" FontWeight="Bold"
+                           TextDecorations="Underline" TextWrapping="Wrap"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Text="{Binding PokemonName}" FontWeight="Bold" FontSize="13"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Text="{Binding SubmittedText}" FontSize="12" Opacity="0.75"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="1" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Padding="6">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <Panel>
+                    <TextBlock Text="{Binding ScreenshotNote}" IsVisible="{Binding !HasScreenshot}"
+                               TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}"
+                               Opacity="0.6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Image Source="{Binding Screenshot}" IsVisible="{Binding HasScreenshot}"
+                           Stretch="Uniform" StretchDirection="DownOnly"
+                           HorizontalAlignment="Center" VerticalAlignment="Top" />
+                </Panel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,243 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.AppearanceWindow"
+        x:DataType="vm:AppearanceViewModel"
+        Title="Appearance"
+        Width="780" Height="560" MinWidth="640" MinHeight="480"
+        WindowStartupLocation="CenterOwner">
+
+    <!-- §103 layout, §104 contents: the six preset backgrounds and the whole
+         "Backgrounds, shadows and outlines" expander are gone - with Border
+         Shadow, Box Shadow Color, Text Shadow, Text Shadow Color, Text Stroke
+         and Text Stroke Color removed from the program, the only thing left
+         inside that expander was the preset picker it also held, so the
+         expander went with them. What remains is one row of background
+         actions, the live preview (a miniature of the main window, so every
+         color demonstrates itself on the surface it actually paints), the
+         eight colors/fonts that survived, and Save/Load/Cancel.
+
+         The labels no longer need Effect="{x:Null}" - that opted them out of
+         the global Text Shadow style in App.axaml, which no longer exists.
+         They still don't bind Foreground to the user's Text Color, for the
+         original reason: this is where a bad color combination gets fixed, so
+         its own labels must stay legible no matter what is picked. -->
+    <Grid Margin="14" RowDefinitions="Auto,*,Auto,Auto" ColumnDefinitions="*">
+
+        <!-- Background actions -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto" Margin="0,0,0,10">
+            <Button Grid.Column="0" Content="Custom Image…" Click="SelectCustomImageButton_Click" Margin="0,0,8,0" />
+            <Button Grid.Column="1" Content="Create Gradient…" Click="CreateGradientButton_Click" Margin="0,0,12,0" />
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4" Margin="0,0,4,0">
+                <TextBlock Text="Background color" VerticalAlignment="Center" />
+                <ColorPicker Width="72" Color="{Binding BackgroundCustomColor, Mode=TwoWay}" />
+            </StackPanel>
+            <Button Grid.Column="3" Content="Use" Command="{Binding UseCustomColorBackgroundCommand}"
+                    Margin="0,0,8,0"
+                    ToolTip.Tip="Switch the background to this flat color." />
+            <!-- Was inside the removed expander (§104) - the only way back to
+                 the built-in background that doesn't also reset every color. -->
+            <!-- §209: Load used to mean "re-read what I saved", and now means
+                 "open a theme file somebody sent me". That left the revert with
+                 no button, so it sits here beside Reset - the two are the same
+                 family, one going back to your saved look and the other to the
+                 application defaults. -->
+            <StackPanel Grid.Column="6" Orientation="Horizontal" Spacing="8">
+                <Button Content="Revert" Command="{Binding LoadSavedCommand}"
+                        ToolTip.Tip="Go back to the appearance you last applied, discarding edits made since." />
+                <Button Content="Reset" Click="ResetButton_Click"
+                        ToolTip.Tip="Put every option back to the application defaults. Nothing changes on disk until Apply." />
+            </StackPanel>
+        </Grid>
+
+        <!-- Live preview: a miniature of the real main window. -->
+        <Border Grid.Row="1"
+                BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                BorderThickness="2" CornerRadius="4"
+                Background="{Binding PreviewBackgroundBrush}">
+            <Panel>
+                <Image Source="{Binding PreviewBackgroundImage}" Stretch="UniformToFill" />
+
+                <Grid Margin="12" RowDefinitions="Auto,Auto,*" ColumnDefinitions="*,120">
+
+                    <!-- Menu strip + toolbar mock -->
+                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="6">
+                        <Border Width="34" Height="12" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                        <Border Width="46" Height="12" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                        <Border Width="40" Height="12" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                        <Border Width="52" Height="12" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                        <Button Content="▶ Start" FontSize="10" Padding="6,2" Margin="18,0,0,0"
+                                Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                    </StackPanel>
+
+                    <!-- Sprite boxes -->
+                    <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Spacing="18" Margin="4,10,0,10"
+                                HorizontalAlignment="Center">
+                        <StackPanel Spacing="3">
+                            <Border Width="56" Height="56"
+                                    BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                    BorderThickness="1"
+                                    Background="{Binding SpriteBoxBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                            <TextBlock Text="Hunting" HorizontalAlignment="Center" FontSize="11"
+                                       FontFamily="{Binding PreviewFontFamily}"
+                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                        </StackPanel>
+                        <StackPanel Spacing="3" Margin="80,0,80,0">
+                            <Border Width="56" Height="56"
+                                    BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                    BorderThickness="1"
+                                    Background="{Binding SpriteBoxBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                            <TextBlock Text="Current" HorizontalAlignment="Center" FontSize="11"
+                                       FontFamily="{Binding PreviewFontFamily}"
+                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                        </StackPanel>
+                        <StackPanel Spacing="3">
+                            <Border Width="56" Height="56"
+                                    BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                    BorderThickness="1"
+                                    Background="{Binding SpriteBoxBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                            <TextBlock Text="Previous" HorizontalAlignment="Center" FontSize="11"
+                                       FontFamily="{Binding PreviewFontFamily}"
+                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Encounter tables -->
+                    <Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="*,*" Margin="0,0,8,0">
+                        <Border Grid.Column="0" Margin="0,0,4,0" MinHeight="70"
+                                BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                BorderThickness="1"
+                                Background="{Binding EncountersBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                            <TextBlock Text="Pokémon · Encounters · Rate" HorizontalAlignment="Center"
+                                       VerticalAlignment="Top" Margin="0,4,0,0" FontSize="10"
+                                       FontFamily="{Binding PreviewFontFamily}"
+                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                        </Border>
+                        <Border Grid.Column="1" Margin="4,0,0,0" MinHeight="70"
+                                BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                BorderThickness="1"
+                                Background="{Binding EncountersBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                    </Grid>
+
+                    <!-- Stats column -->
+                    <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1"
+                            BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                            BorderThickness="1" Padding="6" Margin="0,10,0,0"
+                            Background="{Binding StatsBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                        <StackPanel Spacing="4" HorizontalAlignment="Center">
+                            <TextBlock Text="Time Hunting" HorizontalAlignment="Center" FontSize="11"
+                                       FontFamily="{Binding PreviewFontFamily}"
+                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                            <TextBlock Text="1:23:45" HorizontalAlignment="Center" FontSize="11"
+                                       FontFamily="{Binding PreviewFontFamily}"
+                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                            <TextBlock Text="Total Encounters" HorizontalAlignment="Center" FontSize="11"
+                                       FontFamily="{Binding PreviewFontFamily}"
+                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                            <TextBlock Text="5379" HorizontalAlignment="Center" FontSize="11"
+                                       FontFamily="{Binding PreviewFontFamily}"
+                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Panel>
+        </Border>
+
+        <!-- The options that survived §104 -->
+        <Grid Grid.Row="2" Margin="0,10,0,0">
+            <WrapPanel>
+                <StackPanel Spacing="2" Margin="0,0,14,6">
+                    <TextBlock Text="Font Color" FontWeight="Bold" FontSize="12" />
+                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding TextColor, Mode=TwoWay}" />
+                </StackPanel>
+                <StackPanel Spacing="2" Margin="0,0,14,6">
+                    <TextBlock Text="Picture Background" FontWeight="Bold" FontSize="12" />
+                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding SpriteBoxBackgroundColor, Mode=TwoWay}" />
+                </StackPanel>
+                <StackPanel Spacing="2" Margin="0,0,14,6">
+                    <TextBlock Text="Table Background" FontWeight="Bold" FontSize="12" />
+                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding EncountersBackgroundColor, Mode=TwoWay}" />
+                </StackPanel>
+                <!-- §209: the encounter table's heading band, which §208 gave
+                     its own brush. Leaving this transparent does not mean "no
+                     header" - it means the header follows Table Background,
+                     and failing that a band derived from the window
+                     background. So an untouched install is unchanged. -->
+                <StackPanel Spacing="2" Margin="0,0,14,6">
+                    <TextBlock Text="Header Background" FontWeight="Bold" FontSize="12"
+                               ToolTip.Tip="Fills the encounter table's column headings. Leave it clear to follow Table Background instead." />
+                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding HeaderBackgroundColor, Mode=TwoWay}"
+                                 ToolTip.Tip="Fills the encounter table's column headings. Leave it clear to follow Table Background instead." />
+                </StackPanel>
+                <!-- §188: this one swatch fills the main window's stats panel
+                     AND the panel every other window now puts its content on,
+                     so the label says so. Transparent still means no panel
+                     anywhere, which is what a fresh install looks like. -->
+                <StackPanel Spacing="2" Margin="0,0,14,6">
+                    <TextBlock Text="Stats &amp; Panels" FontWeight="Bold" FontSize="12"
+                               ToolTip.Tip="Fills the stats panel here and the content panel in every other window" />
+                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding StatsBackgroundColor, Mode=TwoWay}"
+                                 ToolTip.Tip="Fills the stats panel here and the content panel in every other window" />
+                </StackPanel>
+                <StackPanel Spacing="2" Margin="0,0,14,6">
+                    <TextBlock Text="Border Color" FontWeight="Bold" FontSize="12" />
+                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding BorderColor, Mode=TwoWay}" />
+                </StackPanel>
+                <StackPanel Spacing="2" Margin="0,0,14,6">
+                    <TextBlock Text="Button Color" FontWeight="Bold" FontSize="12" />
+                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding ButtonColor, Mode=TwoWay}" />
+                </StackPanel>
+                <StackPanel Spacing="2" Margin="0,0,14,6">
+                    <TextBlock Text="Font" FontWeight="Bold" FontSize="12" />
+                    <ComboBox Width="130" HorizontalAlignment="Left"
+                              ItemsSource="{Binding FontFamilyOptions}"
+                              SelectedItem="{Binding SelectedFontFamily, Mode=TwoWay}" />
+                </StackPanel>
+                <StackPanel Spacing="2" Margin="0,0,0,6">
+                    <TextBlock Text="Font Size" FontWeight="Bold" FontSize="12" />
+                    <ComboBox Width="100" HorizontalAlignment="Left"
+                              ItemsSource="{Binding FontSizeOptions}"
+                              SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}" />
+                </StackPanel>
+            </WrapPanel>
+
+        </Grid>
+
+        <!-- §209: the action row moved out of the swatch grid's right-hand
+             column and onto the foot of the window, with Apply in front.
+             Apply writes this client's appearance and repaints the app
+             without closing, which is what makes it an Apply; Save and Load
+             are about theme FILES now, not about this client's own settings.
+             Cancel just closes - by the time it is pressed, Apply has either
+             been used or nothing was meant to be kept. -->
+        <Grid Grid.Row="3" ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+            <StackPanel Grid.Column="0" Spacing="4" VerticalAlignment="Bottom">
+                <!-- §140: which client's file Apply writes - with no client
+                     detected it is Client 1's, and applying is allowed. -->
+                <TextBlock Text="{Binding ClientNote}" FontSize="11" Opacity="0.75" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding StatusText}" FontSize="11" TextWrapping="Wrap"
+                           IsVisible="{Binding HasStatus}" />
+                <TextBlock Text="{Binding SaveError}" Foreground="{DynamicResource ThemeErrorBrush}"
+                           TextWrapping="Wrap" IsVisible="{Binding HasSaveError}" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8"
+                        VerticalAlignment="Bottom" Margin="14,0,0,0">
+                <Button Content="Apply" MinWidth="86" HorizontalContentAlignment="Center"
+                        Command="{Binding ApplyCommand}"
+                        ToolTip.Tip="Save these settings for this client and repaint the app now. The window stays open." />
+                <Button Content="Save" MinWidth="86" HorizontalContentAlignment="Center"
+                        Command="{Binding SaveThemeFileCommand}"
+                        ToolTip.Tip="Write these colours, gradient and font to a file you can send somebody. The picture background is not included." />
+                <Button Content="Load" MinWidth="86" HorizontalContentAlignment="Center"
+                        Command="{Binding LoadThemeFileCommand}"
+                        ToolTip.Tip="Open a theme file somebody sent you. It fills these settings in so you can look at it - nothing is kept until you press Apply." />
+                <Button Content="Cancel" MinWidth="86" HorizontalContentAlignment="Center"
+                        Click="CancelButton_Click" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

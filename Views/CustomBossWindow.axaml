@@ -1,0 +1,192 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.CustomBossWindow"
+        x:DataType="vm:CustomBossViewModel"
+        Title="Custom Opponent"
+        Width="760" Height="640"
+        MinWidth="620" MinHeight="460"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <!-- §173: the custom opponent editor. Six hand-typed slots; the only
+         two spread decisions are the six IVs and which stats carry 252
+         EVs, which is how a PRO team is actually described. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid Margin="10" RowDefinitions="Auto,Auto,*,Auto,Auto">
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="6" Margin="0,0,0,6">
+            <TextBlock Text="Name:" FontSize="12" VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBox Text="{Binding Name}" Width="220" FontSize="12" PlaceholderText="Rival Team" />
+            <TextBlock Text="Level:" FontSize="12" VerticalAlignment="Center" Margin="8,0,0,0"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBox Text="{Binding LevelText}" Width="56" FontSize="12" />
+            <TextBlock Text="Notes:" FontSize="12" VerticalAlignment="Center" Margin="8,0,0,0"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBox Text="{Binding Notes}" Width="200" FontSize="12" PlaceholderText="optional" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="1" FontSize="11" Opacity="0.8" TextWrapping="Wrap" Margin="0,0,0,6"
+                   Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="Leave a slot's species blank to skip it. Moves, ability and item are optional. EVs take any value per stat (252 is the games' cap; PRO's own hard bosses use more), and blank counts as none." />
+
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding Slots}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:CustomBossSlotViewModel">
+                        <Border BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                CornerRadius="4" Padding="8" Margin="0,0,0,6">
+                            <StackPanel Spacing="5">
+                                <TextBlock Text="{Binding SlotLabel}" FontWeight="Bold" FontSize="12"
+                                           Foreground="{DynamicResource ThemeTextBrush}" />
+
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="Species" FontSize="11" VerticalAlignment="Center" Width="52"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding Species}" Width="150" FontSize="12" PlaceholderText="Toxapex" />
+                                    <TextBlock Text="Nature" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <ComboBox ItemsSource="{Binding NatureNames}" SelectedItem="{Binding NatureName}"
+                                              Width="110" FontSize="12" />
+                                    <TextBlock Text="Ability" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding Ability}" Width="130" FontSize="12" PlaceholderText="Regenerator" />
+                                    <TextBlock Text="Item" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding Item}" Width="120" FontSize="12" PlaceholderText="none" />
+                                </StackPanel>
+
+                                <!-- §199: the sprite this slot battles with. A
+                                     counterpart is a sprite skin - a Pinkan
+                                     Gyarados IS a Gyarados to the engine - so no
+                                     species name reaches its artwork and the slot
+                                     has to name the file. Choose lists the skins
+                                     the library has; Browse takes anything else.
+                                     Blank is the ordinary artwork, which is what
+                                     every roster written before this said. -->
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="Sprite" FontSize="11" VerticalAlignment="Center" Width="52"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <Border Width="44" Height="44" VerticalAlignment="Center"
+                                            BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                            CornerRadius="4" IsVisible="{Binding HasSprite}">
+                                        <Panel>
+                                            <TextBlock Text="?" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                       Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.4"
+                                                       IsVisible="{Binding SpritePreview, Converter={x:Static ObjectConverters.IsNull}}" />
+                                            <Image Source="{Binding SpritePreview}" Stretch="Uniform" Margin="2"
+                                                   RenderOptions.BitmapInterpolationMode="None" />
+                                        </Panel>
+                                    </Border>
+                                    <!-- §200: the exact form, by the id the
+                                         sprite library names its files with.
+                                         A NAME cannot tell a Hisuian
+                                         Typhlosion from a Johto one; a number
+                                         can. -->
+                                    <TextBlock Text="Dex" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding DexNumberText}" Width="62" FontSize="11"
+                                             VerticalAlignment="Center" PlaceholderText="157"
+                                             ToolTip.Tip="National dex id of the exact form - 157 Typhlosion, 10233 Hisuian Typhlosion. Blank works it out from the species name." />
+                                    <TextBox Text="{Binding SpritePath}" Width="240" FontSize="11"
+                                             VerticalAlignment="Center"
+                                             PlaceholderText="or an exact file - blank uses the dex or the name" />
+                                    <Button Content="Choose..." FontSize="11" VerticalAlignment="Center"
+                                            ToolTip.Tip="Pick one of the counterpart skins in the library."
+                                            Command="{Binding ChooseSpriteCommand}" CommandParameter="library" />
+                                    <Button Content="Browse..." FontSize="11" VerticalAlignment="Center"
+                                            ToolTip.Tip="Point at any image file on this computer."
+                                            Command="{Binding ChooseSpriteCommand}" CommandParameter="browse" />
+                                    <Button Content="Clear" FontSize="11" VerticalAlignment="Center"
+                                            Command="{Binding ClearSpriteCommand}" />
+                                </StackPanel>
+
+                                <TextBlock Text="{Binding SpriteNote}" FontSize="11" TextWrapping="Wrap"
+                                           Margin="58,0,0,0" Opacity="0.9"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           IsVisible="{Binding HasSpriteNote}" />
+
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock Text="Moves" FontSize="11" VerticalAlignment="Center" Width="52"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding Move1}" Width="130" FontSize="12" />
+                                    <TextBox Text="{Binding Move2}" Width="130" FontSize="12" />
+                                    <TextBox Text="{Binding Move3}" Width="130" FontSize="12" />
+                                    <TextBox Text="{Binding Move4}" Width="130" FontSize="12" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <TextBlock Text="IVs" FontSize="11" VerticalAlignment="Center" Width="52"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBlock Text="HP" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding IvHp}" Width="40" FontSize="12" />
+                                    <TextBlock Text="Atk" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding IvAttack}" Width="40" FontSize="12" />
+                                    <TextBlock Text="Def" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding IvDefense}" Width="40" FontSize="12" />
+                                    <TextBlock Text="SpA" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding IvSpAttack}" Width="40" FontSize="12" />
+                                    <TextBlock Text="SpD" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding IvSpDefense}" Width="40" FontSize="12" />
+                                    <TextBlock Text="Spe" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding IvSpeed}" Width="40" FontSize="12" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <TextBlock Text="EVs" FontSize="11" VerticalAlignment="Center" Width="52"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBlock Text="HP" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding EvHp}" Width="46" FontSize="12" />
+                                    <TextBlock Text="Atk" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding EvAttack}" Width="46" FontSize="12" />
+                                    <TextBlock Text="Def" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding EvDefense}" Width="46" FontSize="12" />
+                                    <TextBlock Text="SpA" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding EvSpAttack}" Width="46" FontSize="12" />
+                                    <TextBlock Text="SpD" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding EvSpDefense}" Width="46" FontSize="12" />
+                                    <TextBlock Text="Spe" FontSize="11" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBox Text="{Binding EvSpeed}" Width="46" FontSize="12" />
+                                    <TextBlock Text="{Binding EvTotal}" FontSize="11" VerticalAlignment="Center"
+                                               Opacity="0.8" Margin="6,0,0,0"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <TextBlock Grid.Row="3" Text="{Binding Status}" TextWrapping="Wrap" FontSize="12" Margin="0,6,0,0"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Spacing="6" Margin="0,6,0,0">
+            <Button Content="Save" FontWeight="Bold" FontSize="12" Command="{Binding SaveCommand}" />
+            <Button Content="Cancel" FontSize="12" Click="Cancel_Click" />
+            <TextBlock Text="{Binding FileHint}" FontSize="11" Opacity="0.75" VerticalAlignment="Center"
+                       TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>

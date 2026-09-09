@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.GuideWindow"
+        x:DataType="vm:GuideViewModel"
+        Title="{Binding GuideTitle}"
+        Width="900" Height="700"
+        MinWidth="560" MinHeight="440"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!--
+      No embedded browser - see GuideViewModel.cs / GuideHtmlRenderer.cs for why.
+      GuideContentHost is populated directly in code-behind (GuideHtmlRenderer builds
+      a real Avalonia control tree from the guide's HTML) rather than through bindings,
+      since it's UI construction, not simple data display.
+    -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <TextBlock Grid.Row="0" Text="{Binding ErrorMessage}" Foreground="{DynamicResource ThemeErrorBrush}"
+                   TextWrapping="Wrap" Margin="16,16,16,0"
+                   IsVisible="{Binding HasError}" />
+
+        <ContentControl Grid.Row="1" Name="GuideContentHost" />
+
+        <Button Grid.Row="2" Content="Open in Browser Instead" Command="{Binding OpenInBrowserCommand}"
+                IsVisible="{Binding CanOpenInBrowser}"
+                HorizontalAlignment="Right" Margin="16" />
+    </Grid>
+    </Border>
+</Window>

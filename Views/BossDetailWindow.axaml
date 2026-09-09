@@ -1,0 +1,380 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.BossDetailWindow"
+        x:DataType="vm:BossDetailViewModel"
+        Title="{Binding WindowTitle}"
+        Width="880" Height="720"
+        MinWidth="620" MinHeight="460"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §108: the trainer strip is a ListBox so its selection chrome marks
+         the combatant being viewed - the same reason the team column is one.
+         The theme's list-item padding is sized for text rows though, and left
+         alone it would push two 44px portraits far apart, so this trims the
+         container back to the portrait plus a hair. -->
+    <Window.Styles>
+        <Style Selector="ListBox.npcStrip ListBoxItem">
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="MinHeight" Value="0" />
+        </Style>
+    </Window.Styles>
+
+    <!-- §189: the panels are on the five boxes that carry information -
+         the header, the selected Pokemon's summary, and the description and
+         moves boxes below it (which are also what the two reward modes swap
+         into). The team strip down the left side and the page itself stay on
+         the window background, so the boxes read as boxes. -->
+    <Grid Margin="12" RowDefinitions="Auto,Auto,*">
+
+        <!-- ==================== Header ==================== -->
+        <Border Grid.Row="0" Classes="themedPanel"
+                BorderBrush="{DynamicResource ThemeBorderBrush}"
+                BorderThickness="1" CornerRadius="4" Padding="10">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+
+                <!-- §108: the location picture, and only ever the location
+                     picture. No border and 190x130 (was a bordered 170x110),
+                     and nothing on this window trades it out any more - the
+                     trainer portraits moved to their own strip beside the
+                     name. The view model still falls back to the boss
+                     portrait for files that carry no location picture, so
+                     the box is never blank. -->
+                <Image Grid.Column="0" Width="190" Height="130" Stretch="Uniform"
+                       VerticalAlignment="Center"
+                       Source="{Binding HeaderImage}" IsVisible="{Binding HasHeaderImage}" />
+
+                <!-- Name, difficulty, and the mode controls -->
+                <StackPanel Grid.Column="1" Margin="14,0" VerticalAlignment="Center" Spacing="4">
+                    <TextBlock Text="{Binding HeaderNameText}" FontSize="24" FontWeight="Bold"
+                               Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Text="{Binding HeaderDifficultyText}" FontSize="13" Opacity="0.75"
+                               Foreground="{DynamicResource ThemeTextBrush}" />
+
+                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,6,0,0">
+                        <!-- §108 trainer strip: one portrait per combatant, so a
+                             dual-NPC boss file (Medusa &amp; Eldir, Team Rocket,
+                             the Gamers, Shary &amp; Shaui - and any future file
+                             authored the same way) shows BOTH trainers at once
+                             and clicking either picks whose team you are
+                             looking at, with the strip's selection chrome
+                             marking the active one. IsHitTestVisible is what
+                             makes that clickable only where there is something
+                             to switch between: a single-NPC boss shows its one
+                             portrait as a plain picture. A portrait file that
+                             does not resolve falls back to the trainer's name
+                             as text, same as the button it replaces. -->
+                        <ListBox Classes="npcStrip"
+                                 IsVisible="{Binding HasNpcPortraits}"
+                                 IsHitTestVisible="{Binding CanSwitchNpc}"
+                                 ItemsSource="{Binding NpcPortraits}"
+                                 SelectedItem="{Binding SelectedNpcPortrait, Mode=TwoWay}"
+                                 VerticalAlignment="Center"
+                                 Background="Transparent" BorderThickness="0" Padding="0"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="vm:BossNpcPortraitItem">
+                                    <Panel Width="44" Height="44">
+                                        <Image Source="{Binding Portrait}" Stretch="Uniform"
+                                               IsVisible="{Binding HasPortrait}"
+                                               ToolTip.Tip="{Binding Name}"
+                                               AutomationProperties.Name="{Binding Name}" />
+                                        <TextBlock Text="{Binding Name}" FontSize="9"
+                                                   TextWrapping="Wrap" TextAlignment="Center"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   IsVisible="{Binding !HasPortrait}"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                    </Panel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <ToggleButton Content="Show Rewards"
+                                      IsChecked="{Binding ShowRewardsMode, Mode=TwoWay}"
+                                      ToolTip.Tip="Swap the panels below to this boss's item and Pokémon rewards. Click again to return to the team view." />
+                        <ToggleButton Content="Show 3-Time Rewards"
+                                      IsChecked="{Binding ShowStreakMode, Mode=TwoWay}"
+                                      IsEnabled="{Binding HasStreakBonusRewards}"
+                                      ToolTip.Tip="Swap the panels below to the win-streak bonus rewards. Disabled when this boss has none." />
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Requirements + location -->
+                <StackPanel Grid.Column="2" Width="240" Spacing="8" VerticalAlignment="Center">
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="Requirements" FontWeight="Bold" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding RequirementText}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="Location" FontWeight="Bold" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding LocationText}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <TextBlock Grid.Row="1" Text="{Binding ErrorMessage}" Foreground="{DynamicResource ThemeErrorBrush}"
+                   TextWrapping="Wrap" IsVisible="{Binding HasError}" Margin="0,8,0,0" />
+
+        <!-- ==================== Body ==================== -->
+        <Grid Grid.Row="2" ColumnDefinitions="Auto,*" Margin="0,10,0,0">
+
+            <!-- Team column: one selectable sprite per member. A ListBox so
+                 hover/selected chrome comes from the app theme, and so the
+                 column keeps its own scrollbar (rather than the content
+                 panels') if a short window ever needs one. -->
+            <ListBox Grid.Column="0" Width="86" VerticalAlignment="Top"
+                     IsVisible="{Binding HasTeamMembers}"
+                     ItemsSource="{Binding TeamMembers}"
+                     SelectedItem="{Binding SelectedTeamMember, Mode=TwoWay}"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     Background="Transparent" BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:BossTeamMemberItem">
+                        <Image Source="{Binding Sprite}" Width="56" Height="56" Stretch="Uniform"
+                               Margin="2"
+                               ToolTip.Tip="{Binding Pokemon.Name}"
+                               AutomationProperties.Name="{Binding Pokemon.Name}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Grid Grid.Column="1" Margin="10,0,0,0" RowDefinitions="Auto,*">
+
+                <!-- Selected team member summary - stays visible in every mode,
+                     and switching modes never touches the selection. -->
+                <Border Grid.Row="0" Classes="themedPanel"
+                        IsVisible="{Binding HasSelectedTeamMember}"
+                        BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                        CornerRadius="4" Padding="10" Margin="0,0,0,10">
+                    <Grid ColumnDefinitions="Auto,*" DataContext="{Binding SelectedTeamMember}"
+                          x:DataType="vm:BossTeamMemberItem">
+                        <!-- §189: no box around the sprite any more. The summary
+                             it sits in is a panel now, and a bordered square
+                             inside a bordered panel is two frames around one
+                             Pokemon. -->
+                        <Image Grid.Column="0" Width="96" Height="96"
+                               Source="{Binding Sprite}" Stretch="Uniform" Margin="2" />
+                        <StackPanel Grid.Column="1" Margin="12,0,0,0" Spacing="4" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Pokemon.Name}" FontSize="16" FontWeight="Bold"
+                                           Foreground="{DynamicResource ThemeTextBrush}" />
+                                <ItemsControl ItemsSource="{Binding Types}" VerticalAlignment="Center">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="3" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}"
+                                                   Width="20" Height="20" Stretch="Uniform" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                            <TextBlock Foreground="{DynamicResource ThemeTextBrush}">
+                                <Run Text="Nature:" FontWeight="Bold" /> <Run Text="{Binding NatureDisplayText}" />
+                            </TextBlock>
+                            <TextBlock Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap">
+                                <Run Text="Ability:" FontWeight="Bold" /> <Run Text="{Binding AbilityDisplayText}" />
+                            </TextBlock>
+                            <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                <TextBlock Text="Item:" FontWeight="Bold"
+                                           Foreground="{DynamicResource ThemeTextBrush}" />
+                                <Image Source="{Binding ItemIcon}" Width="20" Height="20" Stretch="Uniform"
+                                       IsVisible="{Binding HasItemIcon}" />
+                                <TextBlock Text="{Binding ItemDisplayText}"
+                                           Foreground="{DynamicResource ThemeTextBrush}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- The two info panels. One ScrollViewer around both (the page
+                     itself no longer scrolls, so nothing nests); each panel
+                     swaps its content by mode instead of the page rebuilding. -->
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel Spacing="10">
+
+                        <!-- Upper panel: description / item rewards / 3-time explanation -->
+                        <Border Classes="themedPanel"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                CornerRadius="4" Padding="10">
+                            <StackPanel>
+                                <StackPanel Spacing="4" IsVisible="{Binding IsTeamMode}">
+                                    <TextBlock Text="Description" FontWeight="Bold"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <!-- Newest-game Pokédex text via PokemonDescriptionService
+                                         (§93); the service-missing case falls back to the same
+                                         clean placeholder line this panel launched with. -->
+                                    <TextBlock Text="{Binding SelectedTeamMember.DescriptionDisplayText}"
+                                               FontSize="12" TextWrapping="Wrap"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                </StackPanel>
+
+                                <StackPanel Spacing="4" IsVisible="{Binding ShowRewardsMode}">
+                                    <TextBlock Text="Item Rewards" FontWeight="Bold"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBlock Text="{Binding PokedollarsText}" FontSize="12"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBlock Text="{Binding PveCoinsText}" FontSize="12"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <ItemsControl ItemsSource="{Binding ItemRewards}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="vm:RewardImageItem">
+                                                <StackPanel Margin="4" Width="64">
+                                                    <Image Source="{Binding Image}" Width="22" Height="22" Stretch="Uniform" />
+                                                    <TextBlock Text="{Binding Caption}" FontSize="10" TextAlignment="Center"
+                                                               TextWrapping="Wrap"
+                                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+
+                                <StackPanel Spacing="4" IsVisible="{Binding ShowStreakMode}">
+                                    <TextBlock Text="{Binding StreakBonusHeading}" FontWeight="Bold"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBlock Text="{Binding StreakExplanationText}" FontSize="12" Opacity="0.7"
+                                               TextWrapping="Wrap"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Lower panel: moves / Pokémon rewards / 3-time Pokémon -->
+                        <Border Classes="themedPanel"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                CornerRadius="4" Padding="10">
+                            <StackPanel>
+                                <StackPanel Spacing="4" IsVisible="{Binding IsTeamMode}">
+                                    <TextBlock Text="Moves" FontWeight="Bold"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <!-- §108: one height for the moves box whatever the
+                                         Pokemon knows, so the panel stops growing and
+                                         shrinking as you click down the team. 246 is six
+                                         rows - the Lt. Surge shape the sizing was asked
+                                         for - and it is a MinHeight rather than a fixed
+                                         Height so the twelve boss Pokemon in the files
+                                         that carry seven or eight moves still show all of
+                                         them instead of being clipped. Every other boss
+                                         Pokemon in the data has six or fewer, so in
+                                         practice the box is one size. -->
+                                    <ItemsControl MinHeight="246"
+                                                  ItemsSource="{Binding SelectedTeamMember.MoveDisplayItems}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Spacing="6" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="vm:BossMoveDisplayItem">
+                                                <Grid ColumnDefinitions="44,*">
+                                                    <Image Grid.Column="0"
+                                                           Source="{Binding TypeName, Converter={x:Static conv:TypeIconConverter.Instance}}"
+                                                           Width="36" Height="36" Stretch="Uniform" VerticalAlignment="Top"
+                                                           IsVisible="{Binding HasTypeIcon}"
+                                                           ToolTip.Tip="{Binding TypeName}" />
+                                                    <StackPanel Grid.Column="1" Spacing="1">
+                                                        <TextBlock Text="{Binding Name}" FontWeight="Bold"
+                                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                                        <TextBlock Text="{Binding Detail}" FontSize="12" Opacity="0.85"
+                                                                   TextWrapping="Wrap" IsVisible="{Binding HasDetail}"
+                                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+
+                                <StackPanel Spacing="4" IsVisible="{Binding ShowRewardsMode}">
+                                    <TextBlock Text="Pokémon Rewards" FontWeight="Bold"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <ItemsControl ItemsSource="{Binding PokemonRewards}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="vm:RewardImageItem">
+                                                <StackPanel Margin="3" Width="64">
+                                                    <Image Source="{Binding Image}" Width="48" Height="48" Stretch="Uniform" />
+                                                    <TextBlock Text="{Binding Caption}" FontSize="10" TextAlignment="Center"
+                                                               TextWrapping="Wrap"
+                                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                                    <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate x:DataType="x:String">
+                                                                <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}"
+                                                                       Width="20" Height="20" Stretch="Uniform" />
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+
+                                <StackPanel Spacing="4" IsVisible="{Binding ShowStreakMode}">
+                                    <TextBlock Text="3-Time Reward Pokémon" FontWeight="Bold"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <ItemsControl ItemsSource="{Binding StreakBonusRewards}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="vm:RewardImageItem">
+                                                <StackPanel Margin="3" Width="64">
+                                                    <Image Source="{Binding Image}" Width="48" Height="48" Stretch="Uniform" />
+                                                    <TextBlock Text="{Binding Caption}" FontSize="10" TextAlignment="Center"
+                                                               TextWrapping="Wrap"
+                                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                                    <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate x:DataType="x:String">
+                                                                <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}"
+                                                                       Width="20" Height="20" Stretch="Uniform" />
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

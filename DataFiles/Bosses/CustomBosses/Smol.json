@@ -1,0 +1,67 @@
+{
+  "name": "Smol",
+  "notes": "",
+  "level": 100,
+  "team": [
+    {
+      "species": "Spheal",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/363.png",
+      "nature": "Jolly",
+      "ability": "Thick Fat",
+      "item": "Eviolite",
+      "moves": [ "Belly Drum", "Body Slam", "Ice Ball", "Rest", "Sleep Talk" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 600, 600, 600, 600, 600, 600 ]
+    },
+    {
+      "species": "Spheal",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/363.png",
+      "nature": "Adamant",
+      "ability": "Thick Fat",
+      "item": "Eviolite",
+      "moves": [ "Belly Drum", "Body Slam", "Ice Ball", "Rest", "Sleep Talk" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 600, 600, 600, 600, 600, 600 ]
+    },
+    {
+      "species": "Spheal",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/363.png",
+      "nature": "Jolly",
+      "ability": "Thick Fat",
+      "item": "Eviolite",
+      "moves": [ "Belly Drum", "Body Slam", "Ice Ball", "Rest", "Sleep Talk" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 600, 600, 600, 600, 600, 600 ]
+    },
+    {
+      "species": "Spheal",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/363.png",
+      "nature": "Adamant",
+      "ability": "Thick Fat",
+      "item": "Eviolite",
+      "moves": [ "Belly Drum", "Body Slam", "Ice Ball", "Rest", "Sleep Talk" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 600, 600, 600, 600, 600, 600 ]
+    },
+    {
+      "species": "Spheal",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/363.png",
+      "nature": "Jolly",
+      "ability": "Thick Fat",
+      "item": "Eviolite",
+      "moves": [ "Belly Drum", "Body Slam", "Ice Ball", "Rest", "Sleep Talk" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 600, 600, 600, 600, 600, 600 ]
+    },
+    {
+      "species": "Spheal",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/363.png",
+      "nature": "Adamant",
+      "ability": "Thick Fat",
+      "item": "Eviolite",
+      "moves": [ "Belly Drum", "Body Slam", "Ice Ball", "Rest", "Sleep Talk" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 600, 600, 600, 600, 600, 600 ]
+    }
+  ]
+}

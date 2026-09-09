@@ -1,0 +1,16 @@
+{
+  "name": "Caprifame",
+  "notes": "",
+  "level": 100,
+  "team": [
+    {
+      "species": "",
+      "nature": "",
+      "ability": "",
+      "item": "",
+      "moves": [ "", "", "", "" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 0, 0, 0, 0, 0 ]
+    }
+  ]
+}

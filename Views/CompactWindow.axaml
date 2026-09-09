@@ -1,0 +1,67 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.CompactWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Pro Tracker (Compact)"
+        Width="330" Height="230"
+        WindowDecorations="None"
+        CanResize="False"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1">
+
+    <!--
+      Ported from ProTrackerandDatabaseCompactMode.cs. The original duplicated all
+      of the main form's display logic (sprites, labels, timer) into a second set
+      of controls kept in sync by hand. Here the compact window just reuses
+      MainWindowViewModel as its DataContext directly - no duplication, always
+      in sync. "Pause" reuses StopCommand (also persists the session, unlike the
+      original's Pause which didn't save) - a small, deliberate improvement.
+    -->
+    <DockPanel>
+        <!-- Drag handle doubles as the toolbar now (§103, per the CompactMode
+             reference image): Play/Stop/Reset/Set Target on the left, pin and
+             close on the right, sprites and the timer get the room below.
+             Dragging still works from any empty spot on the bar - buttons
+             swallow their own presses, the bar's background takes the rest
+             (replaces DragHandleCompact_MouseDown's ReleaseCapture hack). -->
+        <Grid DockPanel.Dock="Top" Height="30" Background="Transparent" PointerPressed="DragHandle_PointerPressed">
+            <StackPanel Orientation="Horizontal" Spacing="4" Margin="4,0,0,0" VerticalAlignment="Center">
+                <Button Content="▶" FontSize="11" Padding="7,3" Command="{Binding PlayCommand}" ToolTip.Tip="Start" />
+                <Button Content="■" FontSize="11" Padding="7,3" Command="{Binding StopCommand}" ToolTip.Tip="Stop" />
+                <Button Content="↺" FontSize="11" Padding="7,3" Command="{Binding ResetCommand}" ToolTip.Tip="Reset" />
+                <Button Content="🔍" FontSize="11" Padding="7,3" Command="{Binding SelectTargetCommand}" ToolTip.Tip="Set Target" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="4" Margin="0,0,4,0" VerticalAlignment="Center">
+                <ToggleButton Classes="themedButton" Content="📌" FontSize="10" Padding="7,3"
+                              IsChecked="{Binding $parent[Window].Topmost, Mode=TwoWay}"
+                              ToolTip.Tip="Always on top" AutomationProperties.Name="Always on top" />
+                <Button Content="✕" FontSize="10" Padding="7,3" Click="CloseButton_Click" ToolTip.Tip="Back to the full window" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Margin="8" RowDefinitions="*,Auto">
+            <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="3">
+                    <Image Source="{Binding PrimaryTargetSprite}" Width="52" Height="52" Stretch="Uniform" />
+                    <TextBlock Text="{Binding PrimaryTargetLabel}" FontSize="10" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="3">
+                    <Image Source="{Binding CurrentEncounterSprite}" Width="52" Height="52" Stretch="Uniform" />
+                    <!-- §139: "Wingull (special form)" and "Summer Wingull" need a second
+                         line at this width; wrapping keeps the label inside its column. -->
+                    <TextBlock Text="{Binding CurrentEncounteredLabel}" FontSize="10" Foreground="{DynamicResource ThemeTextBrush}"
+                               HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="3">
+                    <Image Source="{Binding PreviousEncounterSprite}" Width="52" Height="52" Stretch="Uniform" />
+                    <TextBlock Text="{Binding PreviouslyEncounteredLabel}" FontSize="10" Foreground="{DynamicResource ThemeTextBrush}"
+                               HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Grid.Row="1" Text="{Binding TimeHunting}" HorizontalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" FontSize="15" Margin="0,4,0,2" />
+        </Grid>
+    </DockPanel>
+</Window>

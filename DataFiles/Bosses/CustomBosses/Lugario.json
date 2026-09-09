@@ -1,0 +1,67 @@
+{
+  "name": "Lugario",
+  "notes": "",
+  "level": 100,
+  "team": [
+    {
+      "species": "Mega Lucario Z",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/10310.png",
+      "nature": "Timid",
+      "ability": "Adaptability",
+      "item": "Lucarionite Z",
+      "moves": [ "Nasty Plot", "Flash Cannon", "Aura Sphere", "Vacuum Wave" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 0, 252, 252, 0, 6 ]
+    },
+    {
+      "species": "Rayquaza",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/384.png",
+      "nature": "Adamant",
+      "ability": "Air Lock",
+      "item": "Life Orb",
+      "moves": [ "Dragon Dance", "Dragon Ascent", "Earthquake", "Extreme Speed" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 0, 252, 0, 0, 6 ]
+    },
+    {
+      "species": "Greninja",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/658.png",
+      "nature": "Timid",
+      "ability": "Protean",
+      "item": "Waterium Z",
+      "moves": [ "Water Shuriken", "Surf", "Dark Pulse", "Ice Beam" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 0, 252, 252, 0, 6 ]
+    },
+    {
+      "species": "Meowscarada",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/908.png",
+      "nature": "Jolly",
+      "ability": "Protean",
+      "item": "Choice Scarf",
+      "moves": [ "Knock Off", "U-turn", "Triple Axel", "Flower Trick" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 0, 252, 0, 0, 6 ]
+    },
+    {
+      "species": "Lilligant-Hisuian",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/10237.png",
+      "nature": "Adamant",
+      "ability": "Chlorophyll",
+      "item": "Life Orb",
+      "moves": [ "Close Combat", "Solar Blade", "Triple Axel", "Victory Dance" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 0, 252, 0, 0, 6 ]
+    },
+    {
+      "species": "Armarouge",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/936.png",
+      "nature": "Modest",
+      "ability": "Weak Armor",
+      "item": "Weakness Policy",
+      "moves": [ "Aura Sphere", "Expanding Force", "Flamethrower", "Armor Cannon" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 0, 252, 252, 0, 6 ]
+    }
+  ]
+}

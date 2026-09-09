@@ -1,0 +1,244 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Foot_Tracker.App"
+             RequestedThemeVariant="Dark">
+
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+        <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+
+        <!-- FontFamily/FontSize are inherited properties in Avalonia, so setting them
+             once here cascades down to every control in every window automatically -
+             no need to set them on individual TextBlocks/Buttons/etc. Note FontSize
+             only affects text that doesn't already set its own explicit size
+             elsewhere - a local value always wins over an inherited Style default. -->
+        <Style Selector="Window">
+            <Setter Property="FontFamily" Value="{DynamicResource ThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{DynamicResource ThemeFontSize}" />
+        </Style>
+
+        <!-- Sprite Background ("Picture BG" in the Appearance window) - unlike
+             FontFamily/FontSize above, Background isn't an inherited property in
+             Avalonia, so this is scoped with an explicit style class rather than
+             a blanket Window-level selector: only the hunting-sprite border boxes
+             in MainWindow.axaml carry Classes="huntingSprite", so only those pick
+             up the fill - everything else in the app (DataGrid text, dialogs,
+             menus) is unaffected. Defaults to transparent, so with nothing
+             changed from default this is a no-op visually. (A BoxShadow setter
+             for the "Border Shadow" option sat here until §104 removed that
+             option, along with Box Shadow Color, Text Shadow, Text Shadow Color,
+             Text Stroke and Text Stroke Color.) -->
+        <Style Selector="Border.huntingSprite">
+            <Setter Property="Background" Value="{DynamicResource ThemeSpriteBoxBackgroundBrush}" />
+        </Style>
+
+        <!-- Button Color (Appearance window) - like Border.huntingSprite above,
+             Background isn't an inherited property, so this needs its own
+             selector too. Plain Button is targeted everywhere in the app now
+             (Appearance/Exclude Stats/every other dialog included) - same
+             reach as the Window-level FontFamily/FontSize style above, which
+             already applies everywhere rather than to a tagged subset. Originally scoped to
+             just MainWindow's own action buttons via a Classes="themedButton"
+             style class, widened on request.
+             ToggleButton is deliberately NOT included in that same blanket
+             way: Avalonia's CheckBox and RadioButton both inherit from
+             ToggleButton, so a bare "ToggleButton" selector would also catch
+             every checkbox in the app (Exclude Stats' per-stat list and its
+             new master checkbox included), which is a different control with
+             a different visual role, not what "button colors" means. Real
+             toggle buttons (currently just MainWindow's Always on Top) still
+             opt in individually via Classes="themedButton" - narrower than
+             Button's blanket reach, but avoids the CheckBox/RadioButton
+             mismatch a wider ToggleButton selector would risk. BorderBrush
+             reuses the existing Border Color setting (the same brush every
+             other bordered element in the app already uses) rather than
+             introducing a second new color just for this - only the fill
+             itself (ThemeButtonBrush) is new. Defaults to a plain dark gray
+             approximating FluentTheme's own default button fill - see
+             AppearanceSettings.ButtonColorArgb. -->
+        <Style Selector="Button, ToggleButton.themedButton">
+            <Setter Property="Background" Value="{DynamicResource ThemeButtonBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+        </Style>
+
+        <!-- §188: the panel every window OTHER than the main one puts its
+             content on, so that a user who has set a custom background image
+             reads their data off a surface instead of off the picture. It is
+             the same shape as MainWindow's stats panel - the fill, the border
+             colour, a 1px outline and a gap to the window edge - because that
+             panel is what the users who asked for this pointed at.
+
+             The fill is ThemeStatsBackgroundBrush deliberately, not a colour
+             of its own: one swatch in the Appearance window drives the stats
+             panel and every other window together, so they cannot drift apart
+             and there is no second thing to keep in step. That swatch is
+             labelled "Stats and Panels" now for the same reason.
+
+             The outline and the margin are resources rather than literals
+             because the fill's default is Transparent, and a panel with no
+             fill has to take no space and draw no line - see ThemeManager's
+             PanelBorderThicknessKey for why a fixed 1 and a fixed 10 would
+             change every window in the app for people who chose nothing.
+
+             Scoped by style class like Border.huntingSprite above, not by a
+             blanket Border selector: this app is full of Borders that are
+             dividers, chips and sprite boxes, and none of them is a panel. -->
+        <Style Selector="Border.themedPanel">
+            <Setter Property="Background" Value="{DynamicResource ThemeStatsBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="BorderThickness" Value="{DynamicResource ThemePanelBorderThickness}" />
+            <Setter Property="Margin" Value="{DynamicResource ThemePanelMargin}" />
+        </Style>
+
+        <!-- §208: text inside a themed panel takes the user's Font Color.
+
+             The panels introduced in §188 follow the "Stats and Panels"
+             colour, but the text drawn on them mostly set no Foreground at
+             all and so inherited FluentTheme's own - white, because the app
+             runs the Dark variant. That is invisible the moment somebody
+             picks a pale panel colour, and thirteen TextBlocks across the
+             Simulator, the storage list, the Admin Console and the two card
+             pickers were in exactly that state. CounterpartsWindow was worse
+             still: it set Foreground="White" outright on a card that follows
+             the panel colour, so every counterpart name vanished on a light
+             panel no matter what Font Color said.
+
+             A descendant selector fixes the whole class in one place rather
+             than thirteen, and keeps fixing it for panels added later. A
+             local Foreground still wins over a style setter, so the places
+             that deliberately paint their own colour - the Simulator's HP
+             plates over the battle art, every error and warning line - are
+             untouched. -->
+        <Style Selector="Border.themedPanel TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+        </Style>
+
+        <!-- §103: the blanket Background setter above outlasts FluentTheme's
+             own :checked visual (app styles are applied after theme styles
+             for the same property), so a themed ToggleButton - the Always on
+             Top pin - showed no visible on/off difference. A doubled border
+             marks the checked state instead: visible over any user-chosen
+             Button Color, and not a color-only signal. -->
+        <Style Selector="ToggleButton.themedButton:checked">
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeTextBrush}" />
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+
+        <!-- §208: every scrollbar in the app is invisible and takes no space,
+             while every way of scrolling still works.
+
+             Scrolling does not live in the scrollbar. ScrollViewer handles the
+             wheel, the trackpad, PageUp/PageDown, Home/End, arrow keys, drag
+             past the edge of a selection and touch panning itself; the bar is
+             only a drag handle and a position readout. So a bar that measures
+             at zero and paints nothing costs the app nothing except those two
+             things, and the gutter it used to reserve comes back as content
+             width in every list, grid, dropdown and multi-line box.
+
+             Width/Height AND their Min/Max are all pinned, because the Fluent
+             ScrollBar theme sets its own thickness in more than one place and
+             a single setter leaves a sliver. IsHitTestVisible="False" is what
+             stops an invisible 0-width strip from still swallowing a click at
+             the edge of a list.
+
+             Style setters beat ControlTheme setters in Avalonia, and these are
+             app-level Styles, so this reaches the bars inside ListBox, DataGrid,
+             ComboBox dropdowns, TextBox and every ScrollViewer in the views -
+             including the ones whose ScrollBarVisibility is "Disabled", which
+             is deliberately left alone everywhere: on a ScrollViewer that value
+             does not mean "no bar", it means "do not scroll on this axis, and
+             measure the content to the viewport", which is what makes text wrap
+             instead of running off the side. Changing those to "Hidden" would
+             have hidden the bars and silently broken wrapping in five places. -->
+        <Style Selector="ScrollBar">
+            <Setter Property="Opacity" Value="0" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+
+        <Style Selector="ScrollBar:vertical">
+            <Setter Property="Width" Value="0" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="MaxWidth" Value="0" />
+        </Style>
+
+        <Style Selector="ScrollBar:horizontal">
+            <Setter Property="Height" Value="0" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="MaxHeight" Value="0" />
+        </Style>
+
+        <!-- §208: a button's hover, pressed and disabled fills, from the same
+             Button Color as its resting one - see ThemeManager.ButtonHoverBrushKey
+             for why they have to be stated here at all.
+
+             Each state is set twice, on purpose. The first setter changes the
+             button's own Background, which its template pushes down to the
+             content presenter; the second targets that presenter directly,
+             which is where FluentTheme puts its own state visuals. Whichever
+             of the two wins in a given Avalonia build, the answer is the same
+             colour, and if the presenter is ever renamed the first setter still
+             carries it. Foreground is set alongside because Fluent's state
+             styles change that too, and a hover that swaps the user's Font
+             Color for a stock one is the same bug wearing a different hat. -->
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="{DynamicResource ThemeButtonHoverBrush}" />
+        </Style>
+
+        <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ThemeButtonHoverBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+        </Style>
+
+        <Style Selector="Button:pressed">
+            <Setter Property="Background" Value="{DynamicResource ThemeButtonPressedBrush}" />
+        </Style>
+
+        <Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ThemeButtonPressedBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+        </Style>
+
+        <Style Selector="Button:disabled">
+            <Setter Property="Background" Value="{DynamicResource ThemeButtonDisabledBrush}" />
+        </Style>
+
+        <Style Selector="Button:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ThemeButtonDisabledBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+        </Style>
+
+    </Application.Styles>
+
+    <!--
+      Placeholder theme brushes so any view can bind {DynamicResource ThemeBackgroundBrush}
+      etc. even before ThemeManager.Apply() runs. ThemeManager overwrites these at startup
+      and again whenever the user saves new Appearance settings.
+    -->
+    <Application.Resources>
+        <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="#0F185A" />
+        <SolidColorBrush x:Key="ThemeTextBrush" Color="White" />
+        <SolidColorBrush x:Key="ThemeBorderBrush" Color="White" />
+
+        <!-- §208: the button states and the two status colours need placeholders
+             for the same reason the three above do - a window can be built
+             before ThemeManager.Apply has run, and a DynamicResource that
+             resolves to nothing paints nothing. ThemeManager overwrites the
+             three button brushes from the user's Button Color at startup; the
+             error and warning pair it rewrites with these same two values,
+             which are not user-settable. -->
+        <SolidColorBrush x:Key="ThemeButtonHoverBrush" Color="#4A4A4A" />
+        <SolidColorBrush x:Key="ThemeButtonPressedBrush" Color="#5C5C5C" />
+        <SolidColorBrush x:Key="ThemeButtonDisabledBrush" Color="#2A2F55" />
+        <SolidColorBrush x:Key="ThemeErrorBrush" Color="#E05252" />
+        <SolidColorBrush x:Key="ThemeWarningBrush" Color="#E0A030" />
+
+        <!-- §208: the default background (#0F185A) mixed 12% toward the
+             default text colour (White), which is what ThemeManager computes
+             for an untouched install. -->
+        <SolidColorBrush x:Key="ThemeTableHeaderBrush" Color="#2C346E" />
+    </Application.Resources>
+
+</Application>

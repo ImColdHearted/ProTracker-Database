@@ -1,0 +1,611 @@
+{
+  "name": "Steven",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Steven.png",
+  "BossCooldown": 288,
+  "bossId": "steven",
+  "location": "Valley Of Steel Underground",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/StevenLoc.png",
+  "requirements": "Must have completed the Hoenn League,2 Steel type pokemon in team, 1 Pok\u00E9mon with the move Iron Defense, Must have completed Steven\u0027s Quest in Valley Of Steel Eastern Peak",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Passho Berry",
+            "quantity": "7-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Passho_Berry.png"
+          },
+          {
+            "name": "Electric Gem",
+            "quantity": "2-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Electric_Gem.png"
+          },
+          {
+            "name": "Ice Stone",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Aron",
+            "dexNumber": 304,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Skarmory",
+            "dexNumber": 227,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shieldon",
+            "dexNumber": 410,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Pawniard",
+            "dexNumber": 624,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mawile",
+            "dexNumber": 303,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Drilbur",
+            "dexNumber": 529,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Klefki",
+            "dexNumber": 707,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Metagross",
+          "dexNumber": 376,
+          "nature": "Adamant",
+          "ability": "Clear Body",
+          "item": "None",
+          "moves": [
+            "Thunder Punch",
+            "Meteor Mash",
+            "Ice Punch",
+            "Zen Headbutt"
+          ]
+        },
+        {
+          "name": "Excadrill",
+          "dexNumber": 530,
+          "nature": "Adamant",
+          "ability": "Mold Breaker",
+          "item": "None",
+          "moves": [
+            "Earthquake",
+            "Iron Head",
+            "Rock Slide",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Empoleon",
+          "dexNumber": 395,
+          "nature": "Calm",
+          "ability": "Torrent",
+          "item": "None",
+          "moves": [
+            "Scald",
+            "Ice Beam",
+            "Roar",
+            "Grass Knot"
+          ]
+        },
+        {
+          "name": "Lucario",
+          "dexNumber": 448,
+          "nature": "Adamant",
+          "ability": "Justified",
+          "item": "None",
+          "moves": [
+            "Meteor Mash",
+            "Close Combat",
+            "Extreme Speed",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Ferrothorn",
+          "dexNumber": 598,
+          "nature": "Sassy",
+          "ability": "Iron Barbs",
+          "item": "None",
+          "moves": [
+            "Leech Seed",
+            "Power Whip",
+            "Knock Off",
+            "Gyro Ball"
+          ]
+        },
+        {
+          "name": "Heatran",
+          "dexNumber": 485,
+          "nature": "Modest",
+          "ability": "Flash Fire",
+          "item": "None",
+          "moves": [
+            "Magma Storm",
+            "Earth Power",
+            "Solar Beam",
+            "Ancient Power"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Passho Berry",
+            "quantity": "7-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Passho_Berry.png"
+          },
+          {
+            "name": "Electric Gem",
+            "quantity": "2-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Electric_Gem.png"
+          },
+          {
+            "name": "Ice Stone",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Aron",
+            "dexNumber": 304,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Skarmory",
+            "dexNumber": 227,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shieldon",
+            "dexNumber": 410,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Pawniard",
+            "dexNumber": 624,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mawile",
+            "dexNumber": 303,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Drilbur",
+            "dexNumber": 529,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Klefki",
+            "dexNumber": 707,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Klefki",
+            "dexNumber": 707,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Drilbur",
+            "dexNumber": 529,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Mega Metagross",
+          "dexNumber": 10076,
+          "nature": "Adamant",
+          "ability": "Tough Claws",
+          "item": "Metagrossite",
+          "moves": [
+            "Thunder Punch",
+            "Meteor Mash",
+            "Ice Punch",
+            "Zen Headbutt"
+          ]
+        },
+        {
+          "name": "Excadrill",
+          "dexNumber": 530,
+          "nature": "Adamant",
+          "ability": "Mold Breaker",
+          "item": "Focus Sash",
+          "moves": [
+            "Earthquake",
+            "Iron Head",
+            "Rock Slide",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Magnezone",
+          "dexNumber": 462,
+          "nature": "Modest",
+          "ability": "Magnet Pull",
+          "item": "Choice Specs",
+          "moves": [
+            "Hidden Power (Fire)",
+            "Thunderbolt",
+            "Flash Cannon",
+            "Sunny Day"
+          ]
+        },
+        {
+          "name": "Lucario",
+          "dexNumber": 448,
+          "nature": "Adamant",
+          "ability": "Justified",
+          "item": "Choice Band",
+          "moves": [
+            "Meteor Mash",
+            "Close Combat",
+            "Extreme Speed",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Ferrothorn",
+          "dexNumber": 598,
+          "nature": "Sassy",
+          "ability": "Iron Barbs",
+          "item": "Leftovers",
+          "moves": [
+            "Leech Seed",
+            "Power Whip",
+            "Knock Off",
+            "Gyro Ball"
+          ]
+        },
+        {
+          "name": "Heatran",
+          "dexNumber": 485,
+          "nature": "Modest",
+          "ability": "Flash Fire",
+          "item": "Choice Scarf",
+          "moves": [
+            "Magma Storm",
+            "Earth Power",
+            "Solar Beam",
+            "Ancient Power"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Passho Berry",
+            "quantity": "7-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Passho_Berry.png"
+          },
+          {
+            "name": "Electric Gem",
+            "quantity": "2-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Electric_Gem.png"
+          },
+          {
+            "name": "Ice Stone",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Aron",
+            "dexNumber": 304,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Skarmory",
+            "dexNumber": 227,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Shieldon",
+            "dexNumber": 410,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Pawniard",
+            "dexNumber": 624,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mawile",
+            "dexNumber": 303,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Drilbur",
+            "dexNumber": 529,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Klefki",
+            "dexNumber": 707,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Klefki",
+            "dexNumber": 707,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Drilbur",
+            "dexNumber": 529,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Beldum",
+            "dexNumber": 374,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Mega Metagross",
+          "dexNumber": 10076,
+          "nature": "Adamant",
+          "ability": "Tough Claws",
+          "item": "Metagrossite",
+          "moves": [
+            "Thunder Punch",
+            "Meteor Mash",
+            "Ice Punch",
+            "Zen Headbutt"
+          ]
+        },
+        {
+          "name": "Excadrill",
+          "dexNumber": 530,
+          "nature": "Adamant",
+          "ability": "Mold Breaker",
+          "item": "Choice Scarf",
+          "moves": [
+            "Earthquake",
+            "Iron Head",
+            "Rock Slide",
+            "Swords Dance"
+          ]
+        },
+        {
+          "name": "Magnezone",
+          "dexNumber": 462,
+          "nature": "Modest",
+          "ability": "Magnet Pull",
+          "item": "Choice Specs",
+          "moves": [
+            "Hidden Power (Fire)",
+            "Thunderbolt",
+            "Flash Cannon",
+            "Sunny Day"
+          ]
+        },
+        {
+          "name": "Jirachi",
+          "dexNumber": 385,
+          "nature": "Adamant",
+          "ability": "Serene Grace",
+          "item": "Choice Scarf",
+          "moves": [
+            "Iron Head",
+            "Ice Punch",
+            "Fire Punch",
+            "Zen Headbutt"
+          ]
+        },
+        {
+          "name": "Ferrothorn",
+          "dexNumber": 598,
+          "nature": "Sassy",
+          "ability": "Iron Barbs",
+          "item": "Rocky Helmet",
+          "moves": [
+            "Leech Seed",
+            "Power Whip",
+            "Knock Off",
+            "Gyro Ball"
+          ]
+        },
+        {
+          "name": "Heatran",
+          "dexNumber": 485,
+          "nature": "Modest",
+          "ability": "Flash Fire",
+          "item": "Choice Specs",
+          "moves": [
+            "Magma Storm",
+            "Earth Power",
+            "Solar Beam",
+            "Ancient Power"
+          ]
+        }
+      ]
+    }
+  }
+}

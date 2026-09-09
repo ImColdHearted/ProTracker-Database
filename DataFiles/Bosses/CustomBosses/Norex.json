@@ -1,0 +1,67 @@
+{
+  "name": "Norex",
+  "notes": "",
+  "level": 100,
+  "team": [
+    {
+      "species": "Sableye",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/302.png",
+      "nature": "Impish",
+      "ability": "Prankster",
+      "item": "Leftovers",
+      "moves": [ "Encore", "Will-O-Wisp", "Knock Off", "Recover" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 252, 0, 0, 4, 252 ]
+    },
+    {
+      "species": "Heracross",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/214.png",
+      "nature": "Jolly",
+      "ability": "Moxie",
+      "item": "Heracronite",
+      "moves": [ "Close Combat", "Earthquake", "Rock Blast", "Swords Dance" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 0, 252, 0, 4, 0 ]
+    },
+    {
+      "species": "Arcanine",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/59.png",
+      "nature": "Jolly",
+      "ability": "Intimidate",
+      "item": "Choice Band",
+      "moves": [ "Flare Blitz", "Close Combat", "Extreme Speed", "Raging Fury" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 0, 252, 0, 4, 0 ]
+    },
+    {
+      "species": "Lugia",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/249.png",
+      "nature": "Timid",
+      "ability": "Multiscale",
+      "item": "Heavy-Duty Boots",
+      "moves": [ "Calm Mind", "Air Slash", "Whirlwind", "Recover" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 0, 252, 252, 4, 0 ]
+    },
+    {
+      "species": "Latios",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/381.png",
+      "nature": "Timid",
+      "ability": "Levitate",
+      "item": "Soul Dew",
+      "moves": [ "Psyshock", "Ice Beam", "Thunderbolt", "Flip Turn" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 4, 252, 252, 0, 0 ]
+    },
+    {
+      "species": "Clefable",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/36.png",
+      "nature": "Bold",
+      "ability": "Magic Guard",
+      "item": "Leftovers",
+      "moves": [ "Moonblast", "Flamethrower", "Ice Beam", "Thunderbolt" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 132, 0, 60, 64, 252 ]
+    }
+  ]
+}

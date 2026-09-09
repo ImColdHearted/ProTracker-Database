@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Section 156: the ONNX-backed shadow evaluator, in its own little
+       library so the battle engine itself never references the onnx
+       runtime (PokemonSim stays as light as section 154 left it, and the
+       dev console and any engine-only consumer pull no native payload).
+       The tracker references THIS project for the Simulator's observer;
+       the author's original PackageReference (parked in a comment in
+       pokemonsim.csproj since section 154) comes back to life here, same
+       version. Nothing in the app depends on the model actually loading -
+       a missing or incompatible pokemon_ai.onnx just reports itself and
+       the observer keeps collecting data. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.24.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PokemonSim\pokemonsim.csproj" />
+  </ItemGroup>
+
+</Project>

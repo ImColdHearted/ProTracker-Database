@@ -1,0 +1,588 @@
+{
+"name": "Xylos",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Xylos.png",
+  "BossCooldown": 288,
+  "bossId": "xylos",
+  "location": "Pokemon Club (Vermilion City)",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/XylosLoc.png",
+  "requirements": "Caught Data of all eeveelutions, Kanto Champion",
+  "difficulties": {
+    "easy": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Thunder Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Thunder_Stone.png"
+          },
+          {
+            "name": "Fire Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Stone.png"
+          },
+          {
+            "name": "Water Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Water_Stone.png"
+          },
+          {
+            "name": "Leaf Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leaf_Stone.png"
+          },
+          {
+            "name": "Electric Gem",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Electric_Gem.png"
+          },
+          {
+            "name": "Fire Gem",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Gem.png"
+          },
+          {
+            "name": "Ice Gem",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Gem.png"
+          },
+          {
+            "name": "Ice Stone",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Jolteon",
+            "dexNumber": 135,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Flareon",
+            "dexNumber": 136,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Vaporeon",
+            "dexNumber": 134,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Leafeon",
+            "dexNumber": 470,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Glaceon",
+            "dexNumber": 471,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Umbreon",
+            "dexNumber": 197,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Sylveon",
+            "dexNumber": 700,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Victini",
+          "dexNumber": 494,
+          "nature": "Naive",
+          "ability": "Victory Star",
+          "item": "None",
+          "moves": [
+            "Bolt Strike",
+            "V-create",
+            "Brick Break",
+            "Hidden Power (Ice)"
+          ]
+        },
+        {
+          "name": "Druddigon",
+          "dexNumber": 621,
+          "nature": "Adamant",
+          "ability": "Sheer Force",
+          "item": "None",
+          "moves": [
+            "Dragon Tail",
+            "Stealth Rock",
+            "Glare",
+            "Iron Head"
+          ]
+        },
+        {
+          "name": "Skarmory",
+          "dexNumber": 227,
+          "nature": "Impish",
+          "ability": "Sturdy",
+          "item": "None",
+          "moves": [
+            "Iron Head",
+            "Spikes",
+            "Roost",
+            "Whirlwind"
+          ]
+        },
+        {
+          "name": "Jolteon",
+          "dexNumber": 135,
+          "nature": "Modest",
+          "ability": "Volt Absorb",
+          "item": "None",
+          "moves": [
+            "Hidden Power (Ice)",
+            "Shadow Ball",
+            "Thunder",
+            "Discharge"
+          ]
+        },
+        {
+          "name": "Flareon",
+          "dexNumber": 136,
+          "nature": "Naughty",
+          "ability": "Guts",
+          "item": "None",
+          "moves": [
+            "Superpower",
+            "Facade",
+            "Flare Blitz",
+            "Lava Plume"
+          ]
+        },
+        {
+          "name": "Mewtwo",
+          "dexNumber": 150,
+          "nature": "Naive",
+          "ability": "Pressure",
+          "item": "None",
+          "moves": [
+            "Flamethrower",
+            "Drain Punch",
+            "Psystrike",
+            "Recover"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Thunder Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Thunder_Stone.png"
+          },
+          {
+            "name": "Fire Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Stone.png"
+          },
+          {
+            "name": "Water Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Water_Stone.png"
+          },
+          {
+            "name": "Leaf Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leaf_Stone.png"
+          },
+          {
+            "name": "Electric Gem",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Electric_Gem.png"
+          },
+          {
+            "name": "Fire Gem",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Gem.png"
+          },
+          {
+            "name": "Ice Gem",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Gem.png"
+          },
+          {
+            "name": "Ice Stone",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Jolteon",
+            "dexNumber": 135,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Flareon",
+            "dexNumber": 136,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Vaporeon",
+            "dexNumber": 134,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Leafeon",
+            "dexNumber": 470,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Glaceon",
+            "dexNumber": 471,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Umbreon",
+            "dexNumber": 197,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Sylveon",
+            "dexNumber": 700,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Victini",
+          "dexNumber": 494,
+          "nature": "Naive",
+          "ability": "Victory Star",
+          "item": "Choice Band",
+          "moves": [
+            "Bolt Strike",
+            "V-create",
+            "Brick Break",
+            "Hidden Power (Ice)"
+          ]
+        },
+        {
+          "name": "Druddigon",
+          "dexNumber": 621,
+          "nature": "Adamant",
+          "ability": "Sheer Force",
+          "item": "Assault Vest",
+          "moves": [
+            "Dragon Tail",
+            "Stealth Rock",
+            "Glare",
+            "Iron Head"
+          ]
+        },
+        {
+          "name": "Skarmory",
+          "dexNumber": 227,
+          "nature": "Impish",
+          "ability": "Sturdy",
+          "item": "Leftovers",
+          "moves": [
+            "Iron Head",
+            "Spikes",
+            "Roost",
+            "Whirlwind"
+          ]
+        },
+        {
+          "name": "Jolteon",
+          "dexNumber": 135,
+          "nature": "Modest",
+          "ability": "Volt Absorb",
+          "item": "Choice Specs",
+          "moves": [
+            "Hidden Power (Ice)",
+            "Shadow Ball",
+            "Thunder",
+            "Discharge"
+          ]
+        },
+        {
+          "name": "Flareon",
+          "dexNumber": 136,
+          "nature": "Naughty",
+          "ability": "Guts",
+          "item": "Toxic Orb",
+          "moves": [
+            "Superpower",
+            "Facade",
+            "Flare Blitz",
+            "Lava Plume"
+          ]
+        },
+        {
+          "name": "Mega Mewtwo-Y",
+          "dexNumber": 10044,
+          "nature": "Naive",
+          "ability": "Pressure",
+          "item": "Mewtwonite Y",
+          "moves": [
+            "Flamethrower",
+            "Drain Punch",
+            "Psystrike",
+            "Ice Beam",
+            "Fire Blast",
+            "Recover"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {},
+      "rewards": {
+        "pokedollars": {},
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Thunder Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Thunder_Stone.png"
+          },
+          {
+            "name": "Fire Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Stone.png"
+          },
+          {
+            "name": "Water Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Water_Stone.png"
+          },
+          {
+            "name": "Leaf Stone",
+            "quantity": "2-3",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Leaf_Stone.png"
+          },
+          {
+            "name": "Electric Gem",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Electric_Gem.png"
+          },
+          {
+            "name": "Fire Gem",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Gem.png"
+          },
+          {
+            "name": "Ice Gem",
+            "quantity": "3-5",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Gem.png"
+          },
+          {
+            "name": "Ice Stone",
+            "quantity": "1",
+            "tier": 3,
+            "picture": "SharedPokemonLibrary/Assets/Items/Ice_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Jolteon",
+            "dexNumber": 135,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Flareon",
+            "dexNumber": 136,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Vaporeon",
+            "dexNumber": 134,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Leafeon",
+            "dexNumber": 470,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Glaceon",
+            "dexNumber": 471,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Umbreon",
+            "dexNumber": 197,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Sylveon",
+            "dexNumber": 700,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Eevee",
+            "dexNumber": 133,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Victini",
+          "dexNumber": 494,
+          "nature": "Naive",
+          "ability": "Victory Star",
+          "item": "Choice Band",
+          "moves": [
+            "Bolt Strike",
+            "V-create",
+            "Brick Break",
+            "Hidden Power (Ice)"
+          ]
+        },
+        {
+          "name": "Druddigon",
+          "dexNumber": 621,
+          "nature": "Adamant",
+          "ability": "Sheer Force",
+          "item": "Assault Vest",
+          "moves": [
+            "Dragon Tail",
+            "Stealth Rock",
+            "Glare",
+            "Iron Head"
+          ]
+        },
+        {
+          "name": "Skarmory",
+          "dexNumber": 227,
+          "nature": "Impish",
+          "ability": "Sturdy",
+          "item": "Leftovers",
+          "moves": [
+            "Iron Head",
+            "Spikes",
+            "Roost",
+            "Whirlwind"
+          ]
+        },
+        {
+          "name": "Jolteon",
+          "dexNumber": 135,
+          "nature": "Modest",
+          "ability": "Volt Absorb",
+          "item": "Choice Specs",
+          "moves": [
+            "Hidden Power (Ice)",
+            "Shadow Ball",
+            "Thunder",
+            "Discharge"
+          ]
+        },
+        {
+          "name": "Flareon",
+          "dexNumber": 136,
+          "nature": "Naughty",
+          "ability": "Guts",
+          "item": "Toxic Orb",
+          "moves": [
+            "Superpower",
+            "Facade",
+            "Flare Blitz",
+            "Lava Plume"
+          ]
+        },
+        {
+          "name": "Mega Mewtwo-Y",
+          "dexNumber": 10044,
+          "nature": "Naive",
+          "ability": "Pressure",
+          "item": "Mewtwonite Y",
+          "moves": [
+            "Flamethrower",
+            "Drain Punch",
+            "Psystrike",
+            "Ice Beam",
+            "Fire Blast",
+            "Recover"
+          ]
+        }
+      ]
+    }
+  }
+}

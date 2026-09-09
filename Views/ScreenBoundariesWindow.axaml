@@ -1,0 +1,66 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.ScreenBoundariesWindow"
+        Title="Set Screen Boundaries"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1"
+        CanResize="False">
+
+    <!-- §135. The PRO window exactly as the tracker captures it, with the
+         battle window drawn on by hand. Everything about the picture is
+         literal: it is the same CaptureSelectedWindowPng call the trackers
+         make, scaled to fit the screen and nothing else, so a black frame,
+         a wrong window or a partly off-screen game shows up here as itself.
+         The green box is what automatic detection found on this frame (if
+         anything), the orange dashed box is the box already saved for this
+         client, and the yellow box is the one being drawn. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <StackPanel Margin="16" Spacing="10">
+
+        <TextBlock Name="InstructionText" TextWrapping="Wrap" MaxWidth="1000"
+                   Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="This is the PRO window exactly as the tracker captures it. Open a wild battle, click Refresh capture, then drag a box from the top-left corner of the battle window's dark title bar to its right edge - the height is set automatically." />
+
+        <Border Name="FrameHost" HorizontalAlignment="Left"
+                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1">
+            <Grid Name="FrameGrid" Background="Black" Width="640" Height="120">
+                <Image Name="FrameImage" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Canvas Name="Overlay" Background="Transparent" Cursor="Cross"
+                        PointerPressed="Overlay_PointerPressed"
+                        PointerMoved="Overlay_PointerMoved"
+                        PointerReleased="Overlay_PointerReleased">
+                    <Rectangle Name="AutoRect" Stroke="LimeGreen" StrokeThickness="2"
+                               IsVisible="False" IsHitTestVisible="False" />
+                    <Rectangle Name="SavedRect" Stroke="Orange" StrokeThickness="2" StrokeDashArray="4,2"
+                               IsVisible="False" IsHitTestVisible="False" />
+                    <Rectangle Name="SelectionRect" Stroke="Yellow" StrokeThickness="2" Fill="#33FFFF00"
+                               IsVisible="False" IsHitTestVisible="False" />
+                </Canvas>
+            </Grid>
+        </Border>
+
+        <TextBlock Name="ResultText" TextWrapping="Wrap" MaxWidth="1000" MinHeight="60"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Name="RefreshButton" Content="Refresh capture" Click="RefreshButton_Click"
+                    ToolTip.Tip="Capture the PRO window again - do this after opening a wild battle" />
+            <Button Name="UseAutoButton" Content="Use auto-detected box" Click="UseAutoButton_Click" IsEnabled="False"
+                    ToolTip.Tip="Copy the green box automatic detection found on this frame" />
+            <Button Name="SaveButton" Content="Save" Click="SaveButton_Click" IsEnabled="False"
+                    ToolTip.Tip="Keep the yellow box for this client - used only when automatic detection finds nothing" />
+            <Button Name="ClearButton" Content="Clear saved boundaries" Click="ClearButton_Click"
+                    ToolTip.Tip="Go back to automatic detection only" />
+            <Button Content="Close" Click="CloseButton_Click" />
+        </StackPanel>
+    </StackPanel>
+    </Border>
+</Window>

@@ -1,0 +1,258 @@
+[
+  {
+    "id": "route-6-land",
+    "mapId": "route-6",
+    "region": "Kanto",
+    "displayName": "Route 6",
+    "method": "Land",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Abra",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Bellsprout",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Drowzee",
+        "timePeriods": [ "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Jigglypuff",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": "Oran Berry"
+      },
+      {
+        "pokemon": "Magnemite",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": "Metal Coat"
+      },
+      {
+        "pokemon": "Meowth",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": "Quick Claw"
+      },
+      {
+        "pokemon": "Oddish",
+        "timePeriods": [ "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Pidgeotto",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Pidgey",
+        "timePeriods": [ "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Rattata",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Snubull",
+        "timePeriods": [ "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-6-land",
+    "mapId": "route-6",
+    "region": "Kanto",
+    "displayName": "Route 6",
+    "method": "Land",
+    "requiresMembership": true,
+    "encounters": [
+      {
+        "pokemon": "Pineco",
+        "timePeriods": [ "Day" ],
+        "minLevel": 5,
+        "maxLevel": 5,
+        "heldItem": "Custap Berry"
+      }
+    ]
+  },
+  {
+    "id": "route-6-surf",
+    "mapId": "route-6",
+    "region": "Kanto",
+    "displayName": "Route 6",
+    "method": "Surfing",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Goldeen",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Golduck",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Magikarp",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Poliwag",
+        "timePeriods": [ "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Psyduck",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Shellder",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Slowpoke",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-6-surf",
+    "mapId": "route-6",
+    "region": "Kanto",
+    "displayName": "Route 6",
+    "method": "Surfing",
+    "requiresMembership": true,
+    "encounters": [
+      {
+        "pokemon": "Buizel",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": "Wacan Berry"
+      }
+    ]
+  },
+  {
+    "id": "route-6-fish",
+    "mapId": "route-6",
+    "region": "Kanto",
+    "displayName": "Route 6",
+    "method": "Fishing",
+    "requiresMembership": false,
+    "encounters": [
+      {
+        "pokemon": "Goldeen",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Golduck",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Magikarp",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Poliwag",
+        "timePeriods": [ "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Psyduck",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Shellder",
+        "timePeriods": [ "Morning", "Day" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      },
+      {
+        "pokemon": "Slowpoke",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": null
+      }
+    ]
+  },
+  {
+    "id": "route-6-fish",
+    "mapId": "route-6",
+    "region": "Kanto",
+    "displayName": "Route 6",
+    "method": "Fishing",
+    "requiresMembership": true,
+    "encounters": [
+      {
+        "pokemon": "Buizel",
+        "timePeriods": [ "Morning", "Day", "Night" ],
+        "minLevel": 22,
+        "maxLevel": 24,
+        "heldItem": "Wacan Berry"
+      }
+    ]
+  }
+]

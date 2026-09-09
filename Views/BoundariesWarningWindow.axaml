@@ -1,0 +1,44 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.BoundariesWarningWindow"
+        Title="Set Screen Boundaries"
+        Width="460" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1"
+        CanResize="False">
+
+    <!-- §135: shown before the Set Screen Boundaries window unless the
+         player has ticked the checkbox below (persisted per client in
+         UiPreferences.SuppressBoundariesWarning). The point of the text is
+         the AND: manual boundaries are for the case where nothing counts and
+         nothing errors. If the status line shows an error, that error is the
+         problem, and a box drawn by hand cannot fix it. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <StackPanel Margin="20" Spacing="14">
+        <TextBlock Text="You normally do not need this."
+                   FontWeight="Bold" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="The tracker finds the battle window on its own. Set boundaries by hand only if encounters are not being counted AND the status line shows no error. If it shows an error, that error is the problem - fix that first." />
+
+        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="A box you save is used only when automatic detection finds nothing, and it is tied to the game window as it is now: redo it after changing the game's resolution or GUI scale." />
+
+        <CheckBox Name="DontShowAgainCheckBox" Content="Don't show this again"
+                  Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button Content="Continue" Click="ContinueButton_Click" />
+            <Button Content="Cancel" Click="CancelButton_Click" />
+        </StackPanel>
+    </StackPanel>
+    </Border>
+</Window>

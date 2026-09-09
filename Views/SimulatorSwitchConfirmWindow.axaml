@@ -1,0 +1,52 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.SimulatorSwitchConfirmWindow"
+        x:DataType="vm:SimulatorSwitchConfirmViewModel"
+        Title="Switch Pokémon"
+        Width="300" SizeToContent="Height"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §160: the team-row click asks before switching - an accidental
+         click must not throw the turn away. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <StackPanel Margin="14" Spacing="8">
+
+        <Image Source="{Binding Slot.Sprite}" Width="96" Height="96" Stretch="Uniform"
+               HorizontalAlignment="Center"
+               RenderOptions.BitmapInterpolationMode="None" />
+
+        <TextBlock Text="{Binding Slot.Species}" FontWeight="Bold" FontSize="15"
+                   HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <TextBlock Text="{Binding Slot.HpTip}" FontSize="12" TextWrapping="Wrap"
+                   HorizontalAlignment="Center" TextAlignment="Center"
+                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.85" />
+
+        <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center"
+                    IsVisible="{Binding Slot.ItemSprite, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <Image Source="{Binding Slot.ItemSprite}" Width="22" Height="22" Stretch="Uniform"
+                   RenderOptions.BitmapInterpolationMode="None" />
+            <TextBlock Text="{Binding Slot.ItemText}" FontSize="12" VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.85" />
+        </StackPanel>
+
+        <TextBlock Text="{Binding Prompt}" FontSize="13" HorizontalAlignment="Center"
+                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,4,0,0" />
+
+        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" Margin="0,4,0,0">
+            <Button Content="{Binding ActionLabel}" MinWidth="100"
+                    HorizontalContentAlignment="Center" Click="Confirm_Click" />
+            <Button Content="Cancel" MinWidth="80"
+                    HorizontalContentAlignment="Center" Click="Cancel_Click" />
+        </StackPanel>
+    </StackPanel>
+    </Border>
+</Window>

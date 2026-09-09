@@ -1,0 +1,5578 @@
+[
+  {
+    "pokemonId": 10001,
+    "dexNumber": 386,
+    "name": "Deoxys-Attack",
+    "speciesName": "Deoxys",
+    "identifier": "deoxys-attack",
+    "formIdentifier": "deoxys-attack",
+    "isDefaultForm": false,
+    "sprite": "10001.png",
+    "ocrAliases": [
+      "Deoxys",
+      "Deoxys Attack",
+      "Deoxys-Attack",
+      "deoxys attack",
+      "deoxys-attack"
+    ]
+  },
+  {
+    "pokemonId": 10002,
+    "dexNumber": 386,
+    "name": "Deoxys-Defense",
+    "speciesName": "Deoxys",
+    "identifier": "deoxys-defense",
+    "formIdentifier": "deoxys-defense",
+    "isDefaultForm": false,
+    "sprite": "10002.png",
+    "ocrAliases": [
+      "Deoxys",
+      "Deoxys Defense",
+      "Deoxys-Defense",
+      "deoxys defense",
+      "deoxys-defense"
+    ]
+  },
+  {
+    "pokemonId": 10003,
+    "dexNumber": 386,
+    "name": "Deoxys-Speed",
+    "speciesName": "Deoxys",
+    "identifier": "deoxys-speed",
+    "formIdentifier": "deoxys-speed",
+    "isDefaultForm": false,
+    "sprite": "10003.png",
+    "ocrAliases": [
+      "Deoxys",
+      "Deoxys Speed",
+      "Deoxys-Speed",
+      "deoxys speed",
+      "deoxys-speed"
+    ]
+  },
+  {
+    "pokemonId": 10004,
+    "dexNumber": 413,
+    "name": "Wormadam-Sandy",
+    "speciesName": "Wormadam",
+    "identifier": "wormadam-sandy",
+    "formIdentifier": "wormadam-sandy",
+    "isDefaultForm": false,
+    "sprite": "10004.png",
+    "ocrAliases": [
+      "Wormadam",
+      "Wormadam Sandy",
+      "Wormadam-Sandy",
+      "wormadam sandy",
+      "wormadam-sandy"
+    ]
+  },
+  {
+    "pokemonId": 10005,
+    "dexNumber": 413,
+    "name": "Wormadam-Trash",
+    "speciesName": "Wormadam",
+    "identifier": "wormadam-trash",
+    "formIdentifier": "wormadam-trash",
+    "isDefaultForm": false,
+    "sprite": "10005.png",
+    "ocrAliases": [
+      "Wormadam",
+      "Wormadam Trash",
+      "Wormadam-Trash",
+      "wormadam trash",
+      "wormadam-trash"
+    ]
+  },
+  {
+    "pokemonId": 10006,
+    "dexNumber": 492,
+    "name": "Shaymin-Sky",
+    "speciesName": "Shaymin",
+    "identifier": "shaymin-sky",
+    "formIdentifier": "shaymin-sky",
+    "isDefaultForm": false,
+    "sprite": "10006.png",
+    "ocrAliases": [
+      "Shaymin",
+      "Shaymin Sky",
+      "Shaymin-Sky",
+      "shaymin sky",
+      "shaymin-sky"
+    ]
+  },
+  {
+    "pokemonId": 10007,
+    "dexNumber": 487,
+    "name": "Giratina-Origin",
+    "speciesName": "Giratina",
+    "identifier": "giratina-origin",
+    "formIdentifier": "giratina-origin",
+    "isDefaultForm": false,
+    "sprite": "10007.png",
+    "ocrAliases": [
+      "Giratina",
+      "Giratina Origin",
+      "Giratina-Origin",
+      "giratina origin",
+      "giratina-origin"
+    ]
+  },
+  {
+    "pokemonId": 10008,
+    "dexNumber": 479,
+    "name": "Rotom-Heat",
+    "speciesName": "Rotom",
+    "identifier": "rotom-heat",
+    "formIdentifier": "rotom-heat",
+    "isDefaultForm": false,
+    "sprite": "10008.png",
+    "ocrAliases": [
+      "Rotom",
+      "Rotom Heat",
+      "Rotom-Heat",
+      "rotom heat",
+      "rotom-heat"
+    ]
+  },
+  {
+    "pokemonId": 10009,
+    "dexNumber": 479,
+    "name": "Rotom-Wash",
+    "speciesName": "Rotom",
+    "identifier": "rotom-wash",
+    "formIdentifier": "rotom-wash",
+    "isDefaultForm": false,
+    "sprite": "10009.png",
+    "ocrAliases": [
+      "Rotom",
+      "Rotom Wash",
+      "Rotom-Wash",
+      "rotom wash",
+      "rotom-wash"
+    ]
+  },
+  {
+    "pokemonId": 10010,
+    "dexNumber": 479,
+    "name": "Rotom-Frost",
+    "speciesName": "Rotom",
+    "identifier": "rotom-frost",
+    "formIdentifier": "rotom-frost",
+    "isDefaultForm": false,
+    "sprite": "10010.png",
+    "ocrAliases": [
+      "Rotom",
+      "Rotom Frost",
+      "Rotom-Frost",
+      "rotom frost",
+      "rotom-frost"
+    ]
+  },
+  {
+    "pokemonId": 10011,
+    "dexNumber": 479,
+    "name": "Rotom-Fan",
+    "speciesName": "Rotom",
+    "identifier": "rotom-fan",
+    "formIdentifier": "rotom-fan",
+    "isDefaultForm": false,
+    "sprite": "10011.png",
+    "ocrAliases": [
+      "Rotom",
+      "Rotom Fan",
+      "Rotom-Fan",
+      "rotom fan",
+      "rotom-fan"
+    ]
+  },
+  {
+    "pokemonId": 10012,
+    "dexNumber": 479,
+    "name": "Rotom-Mow",
+    "speciesName": "Rotom",
+    "identifier": "rotom-mow",
+    "formIdentifier": "rotom-mow",
+    "isDefaultForm": false,
+    "sprite": "10012.png",
+    "ocrAliases": [
+      "Rotom",
+      "Rotom Mow",
+      "Rotom-Mow",
+      "rotom mow",
+      "rotom-mow"
+    ]
+  },
+  {
+    "pokemonId": 10013,
+    "dexNumber": 351,
+    "name": "Castform-Sunny",
+    "speciesName": "Castform",
+    "identifier": "castform-sunny",
+    "formIdentifier": "castform-sunny",
+    "isDefaultForm": false,
+    "sprite": "10013.png",
+    "ocrAliases": [
+      "Castform",
+      "Castform Sunny",
+      "Castform-Sunny",
+      "castform sunny",
+      "castform-sunny"
+    ]
+  },
+  {
+    "pokemonId": 10014,
+    "dexNumber": 351,
+    "name": "Castform-Rainy",
+    "speciesName": "Castform",
+    "identifier": "castform-rainy",
+    "formIdentifier": "castform-rainy",
+    "isDefaultForm": false,
+    "sprite": "10014.png",
+    "ocrAliases": [
+      "Castform",
+      "Castform Rainy",
+      "Castform-Rainy",
+      "castform rainy",
+      "castform-rainy"
+    ]
+  },
+  {
+    "pokemonId": 10015,
+    "dexNumber": 351,
+    "name": "Castform-Snowy",
+    "speciesName": "Castform",
+    "identifier": "castform-snowy",
+    "formIdentifier": "castform-snowy",
+    "isDefaultForm": false,
+    "sprite": "10015.png",
+    "ocrAliases": [
+      "Castform",
+      "Castform Snowy",
+      "Castform-Snowy",
+      "castform snowy",
+      "castform-snowy"
+    ]
+  },
+  {
+    "pokemonId": 10016,
+    "dexNumber": 550,
+    "name": "Basculin-Blue-Striped",
+    "speciesName": "Basculin",
+    "identifier": "basculin-blue-striped",
+    "formIdentifier": "basculin-blue-striped",
+    "isDefaultForm": false,
+    "sprite": "10016.png",
+    "ocrAliases": [
+      "Basculin",
+      "Basculin Blue Striped",
+      "Basculin-Blue-Striped",
+      "basculin blue striped",
+      "basculin-blue-striped"
+    ]
+  },
+  {
+    "pokemonId": 10017,
+    "dexNumber": 555,
+    "name": "Darmanitan-Zen",
+    "speciesName": "Darmanitan",
+    "identifier": "darmanitan-zen",
+    "formIdentifier": "darmanitan-zen",
+    "isDefaultForm": false,
+    "sprite": "10017.png",
+    "ocrAliases": [
+      "Darmanitan",
+      "Darmanitan Zen",
+      "Darmanitan-Zen",
+      "darmanitan zen",
+      "darmanitan-zen"
+    ]
+  },
+  {
+    "pokemonId": 10018,
+    "dexNumber": 648,
+    "name": "Meloetta-Pirouette",
+    "speciesName": "Meloetta",
+    "identifier": "meloetta-pirouette",
+    "formIdentifier": "meloetta-pirouette",
+    "isDefaultForm": false,
+    "sprite": "10018.png",
+    "ocrAliases": [
+      "Meloetta",
+      "Meloetta Pirouette",
+      "Meloetta-Pirouette",
+      "meloetta pirouette",
+      "meloetta-pirouette"
+    ]
+  },
+  {
+    "pokemonId": 10019,
+    "dexNumber": 641,
+    "name": "Tornadus-Therian",
+    "speciesName": "Tornadus",
+    "identifier": "tornadus-therian",
+    "formIdentifier": "tornadus-therian",
+    "isDefaultForm": false,
+    "sprite": "10019.png",
+    "ocrAliases": [
+      "Tornadus",
+      "Tornadus Therian",
+      "Tornadus-Therian",
+      "tornadus therian",
+      "tornadus-therian"
+    ]
+  },
+  {
+    "pokemonId": 10020,
+    "dexNumber": 642,
+    "name": "Thundurus-Therian",
+    "speciesName": "Thundurus",
+    "identifier": "thundurus-therian",
+    "formIdentifier": "thundurus-therian",
+    "isDefaultForm": false,
+    "sprite": "10020.png",
+    "ocrAliases": [
+      "Thundurus",
+      "Thundurus Therian",
+      "Thundurus-Therian",
+      "thundurus therian",
+      "thundurus-therian"
+    ]
+  },
+  {
+    "pokemonId": 10021,
+    "dexNumber": 645,
+    "name": "Landorus-Therian",
+    "speciesName": "Landorus",
+    "identifier": "landorus-therian",
+    "formIdentifier": "landorus-therian",
+    "isDefaultForm": false,
+    "sprite": "10021.png",
+    "ocrAliases": [
+      "Landorus",
+      "Landorus Therian",
+      "Landorus-Therian",
+      "landorus therian",
+      "landorus-therian"
+    ]
+  },
+  {
+    "pokemonId": 10022,
+    "dexNumber": 646,
+    "name": "Kyurem-Black",
+    "speciesName": "Kyurem",
+    "identifier": "kyurem-black",
+    "formIdentifier": "kyurem-black",
+    "isDefaultForm": false,
+    "sprite": "10022.png",
+    "ocrAliases": [
+      "Kyurem",
+      "Kyurem Black",
+      "Kyurem-Black",
+      "kyurem black",
+      "kyurem-black"
+    ]
+  },
+  {
+    "pokemonId": 10023,
+    "dexNumber": 646,
+    "name": "Kyurem-White",
+    "speciesName": "Kyurem",
+    "identifier": "kyurem-white",
+    "formIdentifier": "kyurem-white",
+    "isDefaultForm": false,
+    "sprite": "10023.png",
+    "ocrAliases": [
+      "Kyurem",
+      "Kyurem White",
+      "Kyurem-White",
+      "kyurem white",
+      "kyurem-white"
+    ]
+  },
+  {
+    "pokemonId": 10024,
+    "dexNumber": 647,
+    "name": "Keldeo-Resolute",
+    "speciesName": "Keldeo",
+    "identifier": "keldeo-resolute",
+    "formIdentifier": "keldeo-resolute",
+    "isDefaultForm": false,
+    "sprite": "10024.png",
+    "ocrAliases": [
+      "Keldeo",
+      "Keldeo Resolute",
+      "Keldeo-Resolute",
+      "keldeo resolute",
+      "keldeo-resolute"
+    ]
+  },
+  {
+    "pokemonId": 10025,
+    "dexNumber": 678,
+    "name": "Meowstic-Female",
+    "speciesName": "Meowstic",
+    "identifier": "meowstic-female",
+    "formIdentifier": "meowstic-female",
+    "isDefaultForm": false,
+    "sprite": "10025.png",
+    "ocrAliases": [
+      "Meowstic",
+      "Meowstic Female",
+      "Meowstic-Female",
+      "meowstic female",
+      "meowstic-female"
+    ]
+  },
+  {
+    "pokemonId": 10026,
+    "dexNumber": 681,
+    "name": "Aegislash-Blade",
+    "speciesName": "Aegislash",
+    "identifier": "aegislash-blade",
+    "formIdentifier": "aegislash-blade",
+    "isDefaultForm": false,
+    "sprite": "10026.png",
+    "ocrAliases": [
+      "Aegislash",
+      "Aegislash Blade",
+      "Aegislash-Blade",
+      "aegislash blade",
+      "aegislash-blade"
+    ]
+  },
+  {
+    "pokemonId": 10027,
+    "dexNumber": 710,
+    "name": "Pumpkaboo-Small",
+    "speciesName": "Pumpkaboo",
+    "identifier": "pumpkaboo-small",
+    "formIdentifier": "pumpkaboo-small",
+    "isDefaultForm": false,
+    "sprite": "10027.png",
+    "ocrAliases": [
+      "Pumpkaboo",
+      "Pumpkaboo Small",
+      "Pumpkaboo-Small",
+      "pumpkaboo small",
+      "pumpkaboo-small"
+    ]
+  },
+  {
+    "pokemonId": 10028,
+    "dexNumber": 710,
+    "name": "Pumpkaboo-Large",
+    "speciesName": "Pumpkaboo",
+    "identifier": "pumpkaboo-large",
+    "formIdentifier": "pumpkaboo-large",
+    "isDefaultForm": false,
+    "sprite": "10028.png",
+    "ocrAliases": [
+      "Pumpkaboo",
+      "Pumpkaboo Large",
+      "Pumpkaboo-Large",
+      "pumpkaboo large",
+      "pumpkaboo-large"
+    ]
+  },
+  {
+    "pokemonId": 10029,
+    "dexNumber": 710,
+    "name": "Pumpkaboo-Super",
+    "speciesName": "Pumpkaboo",
+    "identifier": "pumpkaboo-super",
+    "formIdentifier": "pumpkaboo-super",
+    "isDefaultForm": false,
+    "sprite": "10029.png",
+    "ocrAliases": [
+      "Pumpkaboo",
+      "Pumpkaboo Super",
+      "Pumpkaboo-Super",
+      "pumpkaboo super",
+      "pumpkaboo-super"
+    ]
+  },
+  {
+    "pokemonId": 10030,
+    "dexNumber": 711,
+    "name": "Gourgeist-Small",
+    "speciesName": "Gourgeist",
+    "identifier": "gourgeist-small",
+    "formIdentifier": "gourgeist-small",
+    "isDefaultForm": false,
+    "sprite": "10030.png",
+    "ocrAliases": [
+      "Gourgeist",
+      "Gourgeist Small",
+      "Gourgeist-Small",
+      "gourgeist small",
+      "gourgeist-small"
+    ]
+  },
+  {
+    "pokemonId": 10031,
+    "dexNumber": 711,
+    "name": "Gourgeist-Large",
+    "speciesName": "Gourgeist",
+    "identifier": "gourgeist-large",
+    "formIdentifier": "gourgeist-large",
+    "isDefaultForm": false,
+    "sprite": "10031.png",
+    "ocrAliases": [
+      "Gourgeist",
+      "Gourgeist Large",
+      "Gourgeist-Large",
+      "gourgeist large",
+      "gourgeist-large"
+    ]
+  },
+  {
+    "pokemonId": 10032,
+    "dexNumber": 711,
+    "name": "Gourgeist-Super",
+    "speciesName": "Gourgeist",
+    "identifier": "gourgeist-super",
+    "formIdentifier": "gourgeist-super",
+    "isDefaultForm": false,
+    "sprite": "10032.png",
+    "ocrAliases": [
+      "Gourgeist",
+      "Gourgeist Super",
+      "Gourgeist-Super",
+      "gourgeist super",
+      "gourgeist-super"
+    ]
+  },
+  {
+    "pokemonId": 10033,
+    "dexNumber": 3,
+    "name": "Venusaur-Mega",
+    "speciesName": "Venusaur",
+    "identifier": "venusaur-mega",
+    "formIdentifier": "venusaur-mega",
+    "isDefaultForm": false,
+    "sprite": "10033.png",
+    "ocrAliases": [
+      "Venusaur",
+      "Venusaur Mega",
+      "Venusaur-Mega",
+      "venusaur mega",
+      "venusaur-mega"
+    ]
+  },
+  {
+    "pokemonId": 10034,
+    "dexNumber": 6,
+    "name": "Charizard-Mega-X",
+    "speciesName": "Charizard",
+    "identifier": "charizard-mega-x",
+    "formIdentifier": "charizard-mega-x",
+    "isDefaultForm": false,
+    "sprite": "10034.png",
+    "ocrAliases": [
+      "Charizard",
+      "Charizard Mega X",
+      "Charizard-Mega-X",
+      "charizard mega x",
+      "charizard-mega-x"
+    ]
+  },
+  {
+    "pokemonId": 10035,
+    "dexNumber": 6,
+    "name": "Charizard-Mega-Y",
+    "speciesName": "Charizard",
+    "identifier": "charizard-mega-y",
+    "formIdentifier": "charizard-mega-y",
+    "isDefaultForm": false,
+    "sprite": "10035.png",
+    "ocrAliases": [
+      "Charizard",
+      "Charizard Mega Y",
+      "Charizard-Mega-Y",
+      "charizard mega y",
+      "charizard-mega-y"
+    ]
+  },
+  {
+    "pokemonId": 10036,
+    "dexNumber": 9,
+    "name": "Blastoise-Mega",
+    "speciesName": "Blastoise",
+    "identifier": "blastoise-mega",
+    "formIdentifier": "blastoise-mega",
+    "isDefaultForm": false,
+    "sprite": "10036.png",
+    "ocrAliases": [
+      "Blastoise",
+      "Blastoise Mega",
+      "Blastoise-Mega",
+      "blastoise mega",
+      "blastoise-mega"
+    ]
+  },
+  {
+    "pokemonId": 10037,
+    "dexNumber": 65,
+    "name": "Alakazam-Mega",
+    "speciesName": "Alakazam",
+    "identifier": "alakazam-mega",
+    "formIdentifier": "alakazam-mega",
+    "isDefaultForm": false,
+    "sprite": "10037.png",
+    "ocrAliases": [
+      "Alakazam",
+      "Alakazam Mega",
+      "Alakazam-Mega",
+      "alakazam mega",
+      "alakazam-mega"
+    ]
+  },
+  {
+    "pokemonId": 10038,
+    "dexNumber": 94,
+    "name": "Gengar-Mega",
+    "speciesName": "Gengar",
+    "identifier": "gengar-mega",
+    "formIdentifier": "gengar-mega",
+    "isDefaultForm": false,
+    "sprite": "10038.png",
+    "ocrAliases": [
+      "Gengar",
+      "Gengar Mega",
+      "Gengar-Mega",
+      "gengar mega",
+      "gengar-mega"
+    ]
+  },
+  {
+    "pokemonId": 10039,
+    "dexNumber": 115,
+    "name": "Kangaskhan-Mega",
+    "speciesName": "Kangaskhan",
+    "identifier": "kangaskhan-mega",
+    "formIdentifier": "kangaskhan-mega",
+    "isDefaultForm": false,
+    "sprite": "10039.png",
+    "ocrAliases": [
+      "Kangaskhan",
+      "Kangaskhan Mega",
+      "Kangaskhan-Mega",
+      "kangaskhan mega",
+      "kangaskhan-mega"
+    ]
+  },
+  {
+    "pokemonId": 10040,
+    "dexNumber": 127,
+    "name": "Pinsir-Mega",
+    "speciesName": "Pinsir",
+    "identifier": "pinsir-mega",
+    "formIdentifier": "pinsir-mega",
+    "isDefaultForm": false,
+    "sprite": "10040.png",
+    "ocrAliases": [
+      "Pinsir",
+      "Pinsir Mega",
+      "Pinsir-Mega",
+      "pinsir mega",
+      "pinsir-mega"
+    ]
+  },
+  {
+    "pokemonId": 10041,
+    "dexNumber": 130,
+    "name": "Gyarados-Mega",
+    "speciesName": "Gyarados",
+    "identifier": "gyarados-mega",
+    "formIdentifier": "gyarados-mega",
+    "isDefaultForm": false,
+    "sprite": "10041.png",
+    "ocrAliases": [
+      "Gyarados",
+      "Gyarados Mega",
+      "Gyarados-Mega",
+      "gyarados mega",
+      "gyarados-mega"
+    ]
+  },
+  {
+    "pokemonId": 10042,
+    "dexNumber": 142,
+    "name": "Aerodactyl-Mega",
+    "speciesName": "Aerodactyl",
+    "identifier": "aerodactyl-mega",
+    "formIdentifier": "aerodactyl-mega",
+    "isDefaultForm": false,
+    "sprite": "10042.png",
+    "ocrAliases": [
+      "Aerodactyl",
+      "Aerodactyl Mega",
+      "Aerodactyl-Mega",
+      "aerodactyl mega",
+      "aerodactyl-mega"
+    ]
+  },
+  {
+    "pokemonId": 10043,
+    "dexNumber": 150,
+    "name": "Mewtwo-Mega-X",
+    "speciesName": "Mewtwo",
+    "identifier": "mewtwo-mega-x",
+    "formIdentifier": "mewtwo-mega-x",
+    "isDefaultForm": false,
+    "sprite": "10043.png",
+    "ocrAliases": [
+      "Mewtwo",
+      "Mewtwo Mega X",
+      "Mewtwo-Mega-X",
+      "mewtwo mega x",
+      "mewtwo-mega-x"
+    ]
+  },
+  {
+    "pokemonId": 10044,
+    "dexNumber": 150,
+    "name": "Mewtwo-Mega-Y",
+    "speciesName": "Mewtwo",
+    "identifier": "mewtwo-mega-y",
+    "formIdentifier": "mewtwo-mega-y",
+    "isDefaultForm": false,
+    "sprite": "10044.png",
+    "ocrAliases": [
+      "Mewtwo",
+      "Mewtwo Mega Y",
+      "Mewtwo-Mega-Y",
+      "mewtwo mega y",
+      "mewtwo-mega-y"
+    ]
+  },
+  {
+    "pokemonId": 10045,
+    "dexNumber": 181,
+    "name": "Ampharos-Mega",
+    "speciesName": "Ampharos",
+    "identifier": "ampharos-mega",
+    "formIdentifier": "ampharos-mega",
+    "isDefaultForm": false,
+    "sprite": "10045.png",
+    "ocrAliases": [
+      "Ampharos",
+      "Ampharos Mega",
+      "Ampharos-Mega",
+      "ampharos mega",
+      "ampharos-mega"
+    ]
+  },
+  {
+    "pokemonId": 10046,
+    "dexNumber": 212,
+    "name": "Scizor-Mega",
+    "speciesName": "Scizor",
+    "identifier": "scizor-mega",
+    "formIdentifier": "scizor-mega",
+    "isDefaultForm": false,
+    "sprite": "10046.png",
+    "ocrAliases": [
+      "Scizor",
+      "Scizor Mega",
+      "Scizor-Mega",
+      "scizor mega",
+      "scizor-mega"
+    ]
+  },
+  {
+    "pokemonId": 10047,
+    "dexNumber": 214,
+    "name": "Heracross-Mega",
+    "speciesName": "Heracross",
+    "identifier": "heracross-mega",
+    "formIdentifier": "heracross-mega",
+    "isDefaultForm": false,
+    "sprite": "10047.png",
+    "ocrAliases": [
+      "Heracross",
+      "Heracross Mega",
+      "Heracross-Mega",
+      "heracross mega",
+      "heracross-mega"
+    ]
+  },
+  {
+    "pokemonId": 10048,
+    "dexNumber": 229,
+    "name": "Houndoom-Mega",
+    "speciesName": "Houndoom",
+    "identifier": "houndoom-mega",
+    "formIdentifier": "houndoom-mega",
+    "isDefaultForm": false,
+    "sprite": "10048.png",
+    "ocrAliases": [
+      "Houndoom",
+      "Houndoom Mega",
+      "Houndoom-Mega",
+      "houndoom mega",
+      "houndoom-mega"
+    ]
+  },
+  {
+    "pokemonId": 10049,
+    "dexNumber": 248,
+    "name": "Tyranitar-Mega",
+    "speciesName": "Tyranitar",
+    "identifier": "tyranitar-mega",
+    "formIdentifier": "tyranitar-mega",
+    "isDefaultForm": false,
+    "sprite": "10049.png",
+    "ocrAliases": [
+      "Tyranitar",
+      "Tyranitar Mega",
+      "Tyranitar-Mega",
+      "tyranitar mega",
+      "tyranitar-mega"
+    ]
+  },
+  {
+    "pokemonId": 10050,
+    "dexNumber": 257,
+    "name": "Blaziken-Mega",
+    "speciesName": "Blaziken",
+    "identifier": "blaziken-mega",
+    "formIdentifier": "blaziken-mega",
+    "isDefaultForm": false,
+    "sprite": "10050.png",
+    "ocrAliases": [
+      "Blaziken",
+      "Blaziken Mega",
+      "Blaziken-Mega",
+      "blaziken mega",
+      "blaziken-mega"
+    ]
+  },
+  {
+    "pokemonId": 10051,
+    "dexNumber": 282,
+    "name": "Gardevoir-Mega",
+    "speciesName": "Gardevoir",
+    "identifier": "gardevoir-mega",
+    "formIdentifier": "gardevoir-mega",
+    "isDefaultForm": false,
+    "sprite": "10051.png",
+    "ocrAliases": [
+      "Gardevoir",
+      "Gardevoir Mega",
+      "Gardevoir-Mega",
+      "gardevoir mega",
+      "gardevoir-mega"
+    ]
+  },
+  {
+    "pokemonId": 10052,
+    "dexNumber": 303,
+    "name": "Mawile-Mega",
+    "speciesName": "Mawile",
+    "identifier": "mawile-mega",
+    "formIdentifier": "mawile-mega",
+    "isDefaultForm": false,
+    "sprite": "10052.png",
+    "ocrAliases": [
+      "Mawile",
+      "Mawile Mega",
+      "Mawile-Mega",
+      "mawile mega",
+      "mawile-mega"
+    ]
+  },
+  {
+    "pokemonId": 10053,
+    "dexNumber": 306,
+    "name": "Aggron-Mega",
+    "speciesName": "Aggron",
+    "identifier": "aggron-mega",
+    "formIdentifier": "aggron-mega",
+    "isDefaultForm": false,
+    "sprite": "10053.png",
+    "ocrAliases": [
+      "Aggron",
+      "Aggron Mega",
+      "Aggron-Mega",
+      "aggron mega",
+      "aggron-mega"
+    ]
+  },
+  {
+    "pokemonId": 10054,
+    "dexNumber": 308,
+    "name": "Medicham-Mega",
+    "speciesName": "Medicham",
+    "identifier": "medicham-mega",
+    "formIdentifier": "medicham-mega",
+    "isDefaultForm": false,
+    "sprite": "10054.png",
+    "ocrAliases": [
+      "Medicham",
+      "Medicham Mega",
+      "Medicham-Mega",
+      "medicham mega",
+      "medicham-mega"
+    ]
+  },
+  {
+    "pokemonId": 10055,
+    "dexNumber": 310,
+    "name": "Manectric-Mega",
+    "speciesName": "Manectric",
+    "identifier": "manectric-mega",
+    "formIdentifier": "manectric-mega",
+    "isDefaultForm": false,
+    "sprite": "10055.png",
+    "ocrAliases": [
+      "Manectric",
+      "Manectric Mega",
+      "Manectric-Mega",
+      "manectric mega",
+      "manectric-mega"
+    ]
+  },
+  {
+    "pokemonId": 10056,
+    "dexNumber": 354,
+    "name": "Banette-Mega",
+    "speciesName": "Banette",
+    "identifier": "banette-mega",
+    "formIdentifier": "banette-mega",
+    "isDefaultForm": false,
+    "sprite": "10056.png",
+    "ocrAliases": [
+      "Banette",
+      "Banette Mega",
+      "Banette-Mega",
+      "banette mega",
+      "banette-mega"
+    ]
+  },
+  {
+    "pokemonId": 10057,
+    "dexNumber": 359,
+    "name": "Absol-Mega",
+    "speciesName": "Absol",
+    "identifier": "absol-mega",
+    "formIdentifier": "absol-mega",
+    "isDefaultForm": false,
+    "sprite": "10057.png",
+    "ocrAliases": [
+      "Absol",
+      "Absol Mega",
+      "Absol-Mega",
+      "absol mega",
+      "absol-mega"
+    ]
+  },
+  {
+    "pokemonId": 10058,
+    "dexNumber": 445,
+    "name": "Garchomp-Mega",
+    "speciesName": "Garchomp",
+    "identifier": "garchomp-mega",
+    "formIdentifier": "garchomp-mega",
+    "isDefaultForm": false,
+    "sprite": "10058.png",
+    "ocrAliases": [
+      "Garchomp",
+      "Garchomp Mega",
+      "Garchomp-Mega",
+      "garchomp mega",
+      "garchomp-mega"
+    ]
+  },
+  {
+    "pokemonId": 10059,
+    "dexNumber": 448,
+    "name": "Lucario-Mega",
+    "speciesName": "Lucario",
+    "identifier": "lucario-mega",
+    "formIdentifier": "lucario-mega",
+    "isDefaultForm": false,
+    "sprite": "10059.png",
+    "ocrAliases": [
+      "Lucario",
+      "Lucario Mega",
+      "Lucario-Mega",
+      "lucario mega",
+      "lucario-mega"
+    ]
+  },
+  {
+    "pokemonId": 10060,
+    "dexNumber": 460,
+    "name": "Abomasnow-Mega",
+    "speciesName": "Abomasnow",
+    "identifier": "abomasnow-mega",
+    "formIdentifier": "abomasnow-mega",
+    "isDefaultForm": false,
+    "sprite": "10060.png",
+    "ocrAliases": [
+      "Abomasnow",
+      "Abomasnow Mega",
+      "Abomasnow-Mega",
+      "abomasnow mega",
+      "abomasnow-mega"
+    ]
+  },
+  {
+    "pokemonId": 10061,
+    "dexNumber": 670,
+    "name": "Floette-Eternal",
+    "speciesName": "Floette",
+    "identifier": "floette-eternal",
+    "formIdentifier": "floette-eternal",
+    "isDefaultForm": false,
+    "sprite": "10061.png",
+    "ocrAliases": [
+      "Floette",
+      "Floette Eternal",
+      "Floette-Eternal",
+      "floette eternal",
+      "floette-eternal"
+    ]
+  },
+  {
+    "pokemonId": 10062,
+    "dexNumber": 380,
+    "name": "Latias-Mega",
+    "speciesName": "Latias",
+    "identifier": "latias-mega",
+    "formIdentifier": "latias-mega",
+    "isDefaultForm": false,
+    "sprite": "10062.png",
+    "ocrAliases": [
+      "Latias",
+      "Latias Mega",
+      "Latias-Mega",
+      "latias mega",
+      "latias-mega"
+    ]
+  },
+  {
+    "pokemonId": 10063,
+    "dexNumber": 381,
+    "name": "Latios-Mega",
+    "speciesName": "Latios",
+    "identifier": "latios-mega",
+    "formIdentifier": "latios-mega",
+    "isDefaultForm": false,
+    "sprite": "10063.png",
+    "ocrAliases": [
+      "Latios",
+      "Latios Mega",
+      "Latios-Mega",
+      "latios mega",
+      "latios-mega"
+    ]
+  },
+  {
+    "pokemonId": 10064,
+    "dexNumber": 260,
+    "name": "Swampert-Mega",
+    "speciesName": "Swampert",
+    "identifier": "swampert-mega",
+    "formIdentifier": "swampert-mega",
+    "isDefaultForm": false,
+    "sprite": "10064.png",
+    "ocrAliases": [
+      "Swampert",
+      "Swampert Mega",
+      "Swampert-Mega",
+      "swampert mega",
+      "swampert-mega"
+    ]
+  },
+  {
+    "pokemonId": 10065,
+    "dexNumber": 254,
+    "name": "Sceptile-Mega",
+    "speciesName": "Sceptile",
+    "identifier": "sceptile-mega",
+    "formIdentifier": "sceptile-mega",
+    "isDefaultForm": false,
+    "sprite": "10065.png",
+    "ocrAliases": [
+      "Sceptile",
+      "Sceptile Mega",
+      "Sceptile-Mega",
+      "sceptile mega",
+      "sceptile-mega"
+    ]
+  },
+  {
+    "pokemonId": 10066,
+    "dexNumber": 302,
+    "name": "Sableye-Mega",
+    "speciesName": "Sableye",
+    "identifier": "sableye-mega",
+    "formIdentifier": "sableye-mega",
+    "isDefaultForm": false,
+    "sprite": "10066.png",
+    "ocrAliases": [
+      "Sableye",
+      "Sableye Mega",
+      "Sableye-Mega",
+      "sableye mega",
+      "sableye-mega"
+    ]
+  },
+  {
+    "pokemonId": 10067,
+    "dexNumber": 334,
+    "name": "Altaria-Mega",
+    "speciesName": "Altaria",
+    "identifier": "altaria-mega",
+    "formIdentifier": "altaria-mega",
+    "isDefaultForm": false,
+    "sprite": "10067.png",
+    "ocrAliases": [
+      "Altaria",
+      "Altaria Mega",
+      "Altaria-Mega",
+      "altaria mega",
+      "altaria-mega"
+    ]
+  },
+  {
+    "pokemonId": 10068,
+    "dexNumber": 475,
+    "name": "Gallade-Mega",
+    "speciesName": "Gallade",
+    "identifier": "gallade-mega",
+    "formIdentifier": "gallade-mega",
+    "isDefaultForm": false,
+    "sprite": "10068.png",
+    "ocrAliases": [
+      "Gallade",
+      "Gallade Mega",
+      "Gallade-Mega",
+      "gallade mega",
+      "gallade-mega"
+    ]
+  },
+  {
+    "pokemonId": 10069,
+    "dexNumber": 531,
+    "name": "Audino-Mega",
+    "speciesName": "Audino",
+    "identifier": "audino-mega",
+    "formIdentifier": "audino-mega",
+    "isDefaultForm": false,
+    "sprite": "10069.png",
+    "ocrAliases": [
+      "Audino",
+      "Audino Mega",
+      "Audino-Mega",
+      "audino mega",
+      "audino-mega"
+    ]
+  },
+  {
+    "pokemonId": 10070,
+    "dexNumber": 319,
+    "name": "Sharpedo-Mega",
+    "speciesName": "Sharpedo",
+    "identifier": "sharpedo-mega",
+    "formIdentifier": "sharpedo-mega",
+    "isDefaultForm": false,
+    "sprite": "10070.png",
+    "ocrAliases": [
+      "Sharpedo",
+      "Sharpedo Mega",
+      "Sharpedo-Mega",
+      "sharpedo mega",
+      "sharpedo-mega"
+    ]
+  },
+  {
+    "pokemonId": 10071,
+    "dexNumber": 80,
+    "name": "Slowbro-Mega",
+    "speciesName": "Slowbro",
+    "identifier": "slowbro-mega",
+    "formIdentifier": "slowbro-mega",
+    "isDefaultForm": false,
+    "sprite": "10071.png",
+    "ocrAliases": [
+      "Slowbro",
+      "Slowbro Mega",
+      "Slowbro-Mega",
+      "slowbro mega",
+      "slowbro-mega"
+    ]
+  },
+  {
+    "pokemonId": 10072,
+    "dexNumber": 208,
+    "name": "Steelix-Mega",
+    "speciesName": "Steelix",
+    "identifier": "steelix-mega",
+    "formIdentifier": "steelix-mega",
+    "isDefaultForm": false,
+    "sprite": "10072.png",
+    "ocrAliases": [
+      "Steelix",
+      "Steelix Mega",
+      "Steelix-Mega",
+      "steelix mega",
+      "steelix-mega"
+    ]
+  },
+  {
+    "pokemonId": 10073,
+    "dexNumber": 18,
+    "name": "Pidgeot-Mega",
+    "speciesName": "Pidgeot",
+    "identifier": "pidgeot-mega",
+    "formIdentifier": "pidgeot-mega",
+    "isDefaultForm": false,
+    "sprite": "10073.png",
+    "ocrAliases": [
+      "Pidgeot",
+      "Pidgeot Mega",
+      "Pidgeot-Mega",
+      "pidgeot mega",
+      "pidgeot-mega"
+    ]
+  },
+  {
+    "pokemonId": 10074,
+    "dexNumber": 362,
+    "name": "Glalie-Mega",
+    "speciesName": "Glalie",
+    "identifier": "glalie-mega",
+    "formIdentifier": "glalie-mega",
+    "isDefaultForm": false,
+    "sprite": "10074.png",
+    "ocrAliases": [
+      "Glalie",
+      "Glalie Mega",
+      "Glalie-Mega",
+      "glalie mega",
+      "glalie-mega"
+    ]
+  },
+  {
+    "pokemonId": 10075,
+    "dexNumber": 719,
+    "name": "Diancie-Mega",
+    "speciesName": "Diancie",
+    "identifier": "diancie-mega",
+    "formIdentifier": "diancie-mega",
+    "isDefaultForm": false,
+    "sprite": "10075.png",
+    "ocrAliases": [
+      "Diancie",
+      "Diancie Mega",
+      "Diancie-Mega",
+      "diancie mega",
+      "diancie-mega"
+    ]
+  },
+  {
+    "pokemonId": 10076,
+    "dexNumber": 376,
+    "name": "Metagross-Mega",
+    "speciesName": "Metagross",
+    "identifier": "metagross-mega",
+    "formIdentifier": "metagross-mega",
+    "isDefaultForm": false,
+    "sprite": "10076.png",
+    "ocrAliases": [
+      "Metagross",
+      "Metagross Mega",
+      "Metagross-Mega",
+      "metagross mega",
+      "metagross-mega"
+    ]
+  },
+  {
+    "pokemonId": 10077,
+    "dexNumber": 382,
+    "name": "Kyogre-Primal",
+    "speciesName": "Kyogre",
+    "identifier": "kyogre-primal",
+    "formIdentifier": "kyogre-primal",
+    "isDefaultForm": false,
+    "sprite": "10077.png",
+    "ocrAliases": [
+      "Kyogre",
+      "Kyogre Primal",
+      "Kyogre-Primal",
+      "kyogre primal",
+      "kyogre-primal"
+    ]
+  },
+  {
+    "pokemonId": 10078,
+    "dexNumber": 383,
+    "name": "Groudon-Primal",
+    "speciesName": "Groudon",
+    "identifier": "groudon-primal",
+    "formIdentifier": "groudon-primal",
+    "isDefaultForm": false,
+    "sprite": "10078.png",
+    "ocrAliases": [
+      "Groudon",
+      "Groudon Primal",
+      "Groudon-Primal",
+      "groudon primal",
+      "groudon-primal"
+    ]
+  },
+  {
+    "pokemonId": 10079,
+    "dexNumber": 384,
+    "name": "Rayquaza-Mega",
+    "speciesName": "Rayquaza",
+    "identifier": "rayquaza-mega",
+    "formIdentifier": "rayquaza-mega",
+    "isDefaultForm": false,
+    "sprite": "10079.png",
+    "ocrAliases": [
+      "Rayquaza",
+      "Rayquaza Mega",
+      "Rayquaza-Mega",
+      "rayquaza mega",
+      "rayquaza-mega"
+    ]
+  },
+  {
+    "pokemonId": 10080,
+    "dexNumber": 25,
+    "name": "Pikachu-Rock-Star",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-rock-star",
+    "formIdentifier": "pikachu-rock-star",
+    "isDefaultForm": false,
+    "sprite": "10080.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Rock Star",
+      "Pikachu-Rock-Star",
+      "pikachu rock star",
+      "pikachu-rock-star"
+    ]
+  },
+  {
+    "pokemonId": 10081,
+    "dexNumber": 25,
+    "name": "Pikachu-Belle",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-belle",
+    "formIdentifier": "pikachu-belle",
+    "isDefaultForm": false,
+    "sprite": "10081.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Belle",
+      "Pikachu-Belle",
+      "pikachu belle",
+      "pikachu-belle"
+    ]
+  },
+  {
+    "pokemonId": 10082,
+    "dexNumber": 25,
+    "name": "Pikachu-Pop-Star",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-pop-star",
+    "formIdentifier": "pikachu-pop-star",
+    "isDefaultForm": false,
+    "sprite": "10082.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Pop Star",
+      "Pikachu-Pop-Star",
+      "pikachu pop star",
+      "pikachu-pop-star"
+    ]
+  },
+  {
+    "pokemonId": 10083,
+    "dexNumber": 25,
+    "name": "Pikachu-Phd",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-phd",
+    "formIdentifier": "pikachu-phd",
+    "isDefaultForm": false,
+    "sprite": "10083.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Phd",
+      "Pikachu-Phd",
+      "pikachu phd",
+      "pikachu-phd"
+    ]
+  },
+  {
+    "pokemonId": 10084,
+    "dexNumber": 25,
+    "name": "Pikachu-Libre",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-libre",
+    "formIdentifier": "pikachu-libre",
+    "isDefaultForm": false,
+    "sprite": "10084.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Libre",
+      "Pikachu-Libre",
+      "pikachu libre",
+      "pikachu-libre"
+    ]
+  },
+  {
+    "pokemonId": 10085,
+    "dexNumber": 25,
+    "name": "Pikachu-Cosplay",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-cosplay",
+    "formIdentifier": "pikachu-cosplay",
+    "isDefaultForm": false,
+    "sprite": "10085.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Cosplay",
+      "Pikachu-Cosplay",
+      "pikachu cosplay",
+      "pikachu-cosplay"
+    ]
+  },
+  {
+    "pokemonId": 10086,
+    "dexNumber": 720,
+    "name": "Hoopa-Unbound",
+    "speciesName": "Hoopa",
+    "identifier": "hoopa-unbound",
+    "formIdentifier": "hoopa-unbound",
+    "isDefaultForm": false,
+    "sprite": "10086.png",
+    "ocrAliases": [
+      "Hoopa",
+      "Hoopa Unbound",
+      "Hoopa-Unbound",
+      "hoopa unbound",
+      "hoopa-unbound"
+    ]
+  },
+  {
+    "pokemonId": 10087,
+    "dexNumber": 323,
+    "name": "Camerupt-Mega",
+    "speciesName": "Camerupt",
+    "identifier": "camerupt-mega",
+    "formIdentifier": "camerupt-mega",
+    "isDefaultForm": false,
+    "sprite": "10087.png",
+    "ocrAliases": [
+      "Camerupt",
+      "Camerupt Mega",
+      "Camerupt-Mega",
+      "camerupt mega",
+      "camerupt-mega"
+    ]
+  },
+  {
+    "pokemonId": 10088,
+    "dexNumber": 428,
+    "name": "Lopunny-Mega",
+    "speciesName": "Lopunny",
+    "identifier": "lopunny-mega",
+    "formIdentifier": "lopunny-mega",
+    "isDefaultForm": false,
+    "sprite": "10088.png",
+    "ocrAliases": [
+      "Lopunny",
+      "Lopunny Mega",
+      "Lopunny-Mega",
+      "lopunny mega",
+      "lopunny-mega"
+    ]
+  },
+  {
+    "pokemonId": 10089,
+    "dexNumber": 373,
+    "name": "Salamence-Mega",
+    "speciesName": "Salamence",
+    "identifier": "salamence-mega",
+    "formIdentifier": "salamence-mega",
+    "isDefaultForm": false,
+    "sprite": "10089.png",
+    "ocrAliases": [
+      "Salamence",
+      "Salamence Mega",
+      "Salamence-Mega",
+      "salamence mega",
+      "salamence-mega"
+    ]
+  },
+  {
+    "pokemonId": 10090,
+    "dexNumber": 15,
+    "name": "Beedrill-Mega",
+    "speciesName": "Beedrill",
+    "identifier": "beedrill-mega",
+    "formIdentifier": "beedrill-mega",
+    "isDefaultForm": false,
+    "sprite": "10090.png",
+    "ocrAliases": [
+      "Beedrill",
+      "Beedrill Mega",
+      "Beedrill-Mega",
+      "beedrill mega",
+      "beedrill-mega"
+    ]
+  },
+  {
+    "pokemonId": 10091,
+    "dexNumber": 19,
+    "name": "Rattata-Alolan",
+    "speciesName": "Rattata",
+    "identifier": "rattata-alolan",
+    "formIdentifier": "rattata-alolan",
+    "isDefaultForm": false,
+    "sprite": "10091.png",
+    "ocrAliases": [
+      "Rattata",
+      "Rattata Alolan",
+      "Rattata-Alolan",
+      "Rattata Alolan",
+      "rattata-alolan",
+      "rattata alolan",
+      "Rattata Alola",
+      "Rattata-Alola",
+      "rattata alola",
+      "rattata-alola"
+    ]
+  },
+  {
+    "pokemonId": 10092,
+    "dexNumber": 20,
+    "name": "Raticate-Alolan",
+    "speciesName": "Raticate",
+    "identifier": "raticate-alolan",
+    "formIdentifier": "raticate-alolan",
+    "isDefaultForm": false,
+    "sprite": "10092.png",
+    "ocrAliases": [
+      "Raticate",
+      "Raticate Alolan",
+      "Raticate-Alolan",
+      "raticate alolan",
+      "raticate-alolan",
+      "Raticate Alola",
+      "Raticate-Alola",
+      "raticate alola",
+      "raticate-alola"
+    ]
+  },
+  {
+    "pokemonId": 10093,
+    "dexNumber": 20,
+    "name": "Raticate-Totem-Alolan",
+    "speciesName": "Raticate",
+    "identifier": "raticate-totem-alolan",
+    "formIdentifier": "raticate-totem-alolan",
+    "isDefaultForm": false,
+    "sprite": "10093.png",
+    "ocrAliases": [
+      "Raticate",
+      "Raticate Totem Alola",
+      "Raticate-Totem-Alola",
+      "raticate totem alola",
+      "raticate-totem-alola"
+    ]
+  },
+  {
+    "pokemonId": 10094,
+    "dexNumber": 25,
+    "name": "Pikachu-Original-Cap",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-original-cap",
+    "formIdentifier": "pikachu-original-cap",
+    "isDefaultForm": false,
+    "sprite": "10094.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Original Cap",
+      "Pikachu-Original-Cap",
+      "pikachu original cap",
+      "pikachu-original-cap"
+    ]
+  },
+  {
+    "pokemonId": 10095,
+    "dexNumber": 25,
+    "name": "Pikachu-Hoenn-Cap",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-hoenn-cap",
+    "formIdentifier": "pikachu-hoenn-cap",
+    "isDefaultForm": false,
+    "sprite": "10095.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Hoenn Cap",
+      "Pikachu-Hoenn-Cap",
+      "pikachu hoenn cap",
+      "pikachu-hoenn-cap"
+    ]
+  },
+  {
+    "pokemonId": 10096,
+    "dexNumber": 25,
+    "name": "Pikachu-Sinnoh-Cap",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-sinnoh-cap",
+    "formIdentifier": "pikachu-sinnoh-cap",
+    "isDefaultForm": false,
+    "sprite": "10096.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Sinnoh Cap",
+      "Pikachu-Sinnoh-Cap",
+      "pikachu sinnoh cap",
+      "pikachu-sinnoh-cap"
+    ]
+  },
+  {
+    "pokemonId": 10097,
+    "dexNumber": 25,
+    "name": "Pikachu-Unova-Cap",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-unova-cap",
+    "formIdentifier": "pikachu-unova-cap",
+    "isDefaultForm": false,
+    "sprite": "10097.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Unova Cap",
+      "Pikachu-Unova-Cap",
+      "pikachu unova cap",
+      "pikachu-unova-cap"
+    ]
+  },
+  {
+    "pokemonId": 10098,
+    "dexNumber": 25,
+    "name": "Pikachu-Kalos-Cap",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-kalos-cap",
+    "formIdentifier": "pikachu-kalos-cap",
+    "isDefaultForm": false,
+    "sprite": "10098.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Kalos Cap",
+      "Pikachu-Kalos-Cap",
+      "pikachu kalos cap",
+      "pikachu-kalos-cap"
+    ]
+  },
+  {
+    "pokemonId": 10099,
+    "dexNumber": 25,
+    "name": "Pikachu-Alolan-Cap",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-alolan-cap",
+    "formIdentifier": "pikachu-alolan-cap",
+    "isDefaultForm": false,
+    "sprite": "10099.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Alola Cap",
+      "Pikachu-Alola-Cap",
+      "pikachu alola cap",
+      "pikachu-alola-cap"
+    ]
+  },
+  {
+    "pokemonId": 10100,
+    "dexNumber": 26,
+    "name": "Raichu-Alolan",
+    "speciesName": "Raichu",
+    "identifier": "raichu-alolan",
+    "formIdentifier": "raichu-alolan",
+    "isDefaultForm": false,
+    "sprite": "10100.png",
+    "ocrAliases": [
+      "Raichu",
+      "Raichu Alolan",
+      "Raichu-Alolan",
+      "raichu alolan",
+      "raichu-alolan",
+      "Raichu Alola",
+      "Raichu-Alola",
+      "raichu alola",
+      "raichu-alola"
+    ]
+  },
+  {
+    "pokemonId": 10101,
+    "dexNumber": 27,
+    "name": "Sandshrew-Alolan",
+    "speciesName": "Sandshrew",
+    "identifier": "sandshrew-alolan",
+    "formIdentifier": "sandshrew-alolan",
+    "isDefaultForm": false,
+    "sprite": "10101.png",
+    "ocrAliases": [
+      "Sandshrew",
+      "Sandshrew Alolan",
+      "Sandshrew-Alolan",
+      "sandshrew alolan",
+      "sandshrew-alolan",
+      "Sandshrew Alola",
+      "Sandshrew-Alola",
+      "sandshrew alola",
+      "sandshrew-alola"
+    ]
+  },
+  {
+    "pokemonId": 10102,
+    "dexNumber": 28,
+    "name": "Sandslash-Alolan",
+    "speciesName": "Sandslash",
+    "identifier": "sandslash-alolan",
+    "formIdentifier": "sandslash-alolan",
+    "isDefaultForm": false,
+    "sprite": "10102.png",
+    "ocrAliases": [
+      "Sandslash",
+      "Sandslash Alolan",
+      "Sandslash-Alolan",
+      "sandslash alolan",
+      "sandslash-alolan",
+      "Sandslash Alola",
+      "Sandslash-Alola",
+      "sandslash alola",
+      "sandslash-alola"
+    ]
+  },
+  {
+    "pokemonId": 10103,
+    "dexNumber": 37,
+    "name": "Vulpix-Alolan",
+    "speciesName": "Vulpix",
+    "identifier": "vulpix-alolan",
+    "formIdentifier": "vulpix-alolan",
+    "isDefaultForm": false,
+    "sprite": "10103.png",
+    "ocrAliases": [
+      "Vulpix",
+      "Vulpix Alolan",
+      "Vulpix-Alolan",
+      "vulpix alolan",
+      "vulpix-alolan",
+      "Vulpix Alola",
+      "Vulpix-Alola",
+      "vulpix alola",
+      "vulpix-alola"
+    ]
+  },
+  {
+    "pokemonId": 10104,
+    "dexNumber": 38,
+    "name": "Ninetales-Alolan",
+    "speciesName": "Ninetales",
+    "identifier": "ninetales-alolan",
+    "formIdentifier": "ninetales-alolan",
+    "isDefaultForm": false,
+    "sprite": "10104.png",
+    "ocrAliases": [
+      "Ninetales",
+      "Ninetales Alolan",
+      "Ninetales-Alolan",
+      "ninetales alolan",
+      "ninetales-alolan",
+      "Ninetales Alola",
+      "Ninetales-Alola",
+      "ninetales alola",
+      "ninetales-alola"
+    ]
+  },
+  {
+    "pokemonId": 10105,
+    "dexNumber": 50,
+    "name": "Diglett-Alolan",
+    "speciesName": "Diglett",
+    "identifier": "diglett-alolan",
+    "formIdentifier": "diglett-alolan",
+    "isDefaultForm": false,
+    "sprite": "10105.png",
+    "ocrAliases": [
+      "Diglett",
+      "Diglett Alolan",
+      "Diglett-Alolan",
+      "diglett alolan",
+      "diglett-alolan",
+      "Diglett Alola",
+      "Diglett-Alola",
+      "diglett alola",
+      "diglett-alola"
+    ]
+  },
+  {
+    "pokemonId": 10106,
+    "dexNumber": 51,
+    "name": "Dugtrio-Alolan",
+    "speciesName": "Dugtrio",
+    "identifier": "dugtrio-alolan",
+    "formIdentifier": "dugtrio-alolan",
+    "isDefaultForm": false,
+    "sprite": "10106.png",
+    "ocrAliases": [
+      "Dugtrio",
+      "Dugtrio Alolan",
+      "Dugtrio-Alolan",
+      "dugtrio alolan",
+      "dugtrio-alolan",
+      "Dugtrio Alola",
+      "Dugtrio-Alola",
+      "dugtrio alola",
+      "dugtrio-alola"
+    ]
+  },
+  {
+    "pokemonId": 10107,
+    "dexNumber": 52,
+    "name": "Meowth-Alolan",
+    "speciesName": "Meowth",
+    "identifier": "meowth-alolan",
+    "formIdentifier": "meowth-alolan",
+    "isDefaultForm": false,
+    "sprite": "10107.png",
+    "ocrAliases": [
+      "Meowth",
+      "Meowth Alolan",
+      "Meowth-Alolan",
+      "meowth alolan",
+      "meowth-alolan",
+      "Meowth Alola",
+      "Meowth-Alola",
+      "meowth alola",
+      "meowth-alola"
+    ]
+  },
+  {
+    "pokemonId": 10108,
+    "dexNumber": 53,
+    "name": "Persian-Alolan",
+    "speciesName": "Persian",
+    "identifier": "persian-alolan",
+    "formIdentifier": "persian-alolan",
+    "isDefaultForm": false,
+    "sprite": "10108.png",
+    "ocrAliases": [
+      "Persian",
+      "Persian Alolan",
+      "Persian-Alolan",
+      "persian alolan",
+      "persian-alolan",
+      "Persian Alola",
+      "Persian-Alola",
+      "persian alola",
+      "persian-alola"
+    ]
+  },
+  {
+    "pokemonId": 10109,
+    "dexNumber": 74,
+    "name": "Geodude-Alolan",
+    "speciesName": "Geodude",
+    "identifier": "geodude-alolan",
+    "formIdentifier": "geodude-alolan",
+    "isDefaultForm": false,
+    "sprite": "10109.png",
+    "ocrAliases": [
+      "Geodude",
+      "Geodude Alolan",
+      "Geodude-Alolan",
+      "geodude alolan",
+      "geodude-alolan",
+      "Geodude Alola",
+      "Geodude-Alola",
+      "geodude alola",
+      "geodude-alola"
+    ]
+  },
+  {
+    "pokemonId": 10110,
+    "dexNumber": 75,
+    "name": "Graveler-Alolan",
+    "speciesName": "Graveler",
+    "identifier": "graveler-alolan",
+    "formIdentifier": "graveler-alolan",
+    "isDefaultForm": false,
+    "sprite": "10110.png",
+    "ocrAliases": [
+      "Graveler",
+      "Graveler Alolan",
+      "Graveler-Alolan",
+      "graveler alolan",
+      "graveler-alolan",
+      "Graveler Alola",
+      "Graveler-Alola",
+      "graveler alola",
+      "graveler-alola"
+    ]
+  },
+  {
+    "pokemonId": 10111,
+    "dexNumber": 76,
+    "name": "Golem-Alolan",
+    "speciesName": "Golem",
+    "identifier": "golem-alolan",
+    "formIdentifier": "golem-alolan",
+    "isDefaultForm": false,
+    "sprite": "10111.png",
+    "ocrAliases": [
+      "Golem",
+      "Golem Alolan",
+      "Golem-Alolan",
+      "golem alolan",
+      "golem-alolan",
+      "Golem Alola",
+      "Golem-Alola",
+      "golem alola",
+      "golem-alola"
+    ]
+  },
+  {
+    "pokemonId": 10112,
+    "dexNumber": 88,
+    "name": "Grimer-Alolan",
+    "speciesName": "Grimer",
+    "identifier": "grimer-alolan",
+    "formIdentifier": "grimer-alolan",
+    "isDefaultForm": false,
+    "sprite": "10112.png",
+    "ocrAliases": [
+      "Grimer",
+      "Grimer Alolan",
+      "Grimer-Alolan",
+      "grimer alolan",
+      "grimer-alolan",
+      "Grimer Alola",
+      "Grimer-Alola",
+      "grimer alola",
+      "grimer-alola"
+    ]
+  },
+  {
+    "pokemonId": 10113,
+    "dexNumber": 89,
+    "name": "Muk-Alolan",
+    "speciesName": "Muk",
+    "identifier": "muk-alolan",
+    "formIdentifier": "muk-alolan",
+    "isDefaultForm": false,
+    "sprite": "10113.png",
+    "ocrAliases": [
+      "Muk",
+      "Muk Alolan",
+      "Muk-Alolan",
+      "muk alolan",
+      "muk-alolan",
+      "Muk Alola",
+      "Muk-Alola",
+      "muk alola",
+      "muk-alola"
+    ]
+  },
+  {
+    "pokemonId": 10114,
+    "dexNumber": 103,
+    "name": "Exeggutor-Alolan",
+    "speciesName": "Exeggutor",
+    "identifier": "exeggutor-alolan",
+    "formIdentifier": "exeggutor-alolan",
+    "isDefaultForm": false,
+    "sprite": "10114.png",
+    "ocrAliases": [
+      "Exeggutor",
+      "Exeggutor Alolan",
+      "Exeggutor-Alolan",
+      "exeggutor alolan",
+      "exeggutor-alolan",
+      "Exeggutor Alola",
+      "Exeggutor-Alola",
+      "exeggutor alola",
+      "exeggutor-alola"
+    ]
+  },
+  {
+    "pokemonId": 10115,
+    "dexNumber": 105,
+    "name": "Marowak-Alolan",
+    "speciesName": "Marowak",
+    "identifier": "marowak-alolan",
+    "formIdentifier": "marowak-alolan",
+    "isDefaultForm": false,
+    "sprite": "10115.png",
+    "ocrAliases": [
+      "Marowak",
+      "Marowak Alolan",
+      "Marowak-Alolan",
+      "marowak alolan",
+      "marowak-alolan",
+      "Marowak Alola",
+      "Marowak-Alola",
+      "marowak alola",
+      "marowak-alola"
+    ]
+  },
+  {
+    "pokemonId": 10116,
+    "dexNumber": 658,
+    "name": "Greninja-Battle-Bond",
+    "speciesName": "Greninja",
+    "identifier": "greninja-battle-bond",
+    "formIdentifier": "greninja-battle-bond",
+    "isDefaultForm": false,
+    "sprite": "10116.png",
+    "ocrAliases": [
+      "Greninja",
+      "Greninja Battle Bond",
+      "Greninja-Battle-Bond",
+      "greninja battle bond",
+      "greninja-battle-bond"
+    ]
+  },
+  {
+    "pokemonId": 10117,
+    "dexNumber": 658,
+    "name": "Greninja-Ash",
+    "speciesName": "Greninja",
+    "identifier": "greninja-ash",
+    "formIdentifier": "greninja-ash",
+    "isDefaultForm": false,
+    "sprite": "10117.png",
+    "ocrAliases": [
+      "Greninja",
+      "Greninja Ash",
+      "Greninja-Ash",
+      "greninja ash",
+      "greninja-ash"
+    ]
+  },
+  {
+    "pokemonId": 10118,
+    "dexNumber": 718,
+    "name": "Zygarde-10-Power-Construct",
+    "speciesName": "Zygarde",
+    "identifier": "zygarde-10-power-construct",
+    "formIdentifier": "zygarde-10-power-construct",
+    "isDefaultForm": false,
+    "sprite": "10118.png",
+    "ocrAliases": [
+      "Zygarde",
+      "Zygarde 10 Power Construct",
+      "Zygarde-10-Power-Construct",
+      "zygarde 10 power construct",
+      "zygarde-10-power-construct"
+    ]
+  },
+  {
+    "pokemonId": 10119,
+    "dexNumber": 718,
+    "name": "Zygarde-50-Power-Construct",
+    "speciesName": "Zygarde",
+    "identifier": "zygarde-50-power-construct",
+    "formIdentifier": "zygarde-50-power-construct",
+    "isDefaultForm": false,
+    "sprite": "10119.png",
+    "ocrAliases": [
+      "Zygarde",
+      "Zygarde 50 Power Construct",
+      "Zygarde-50-Power-Construct",
+      "zygarde 50 power construct",
+      "zygarde-50-power-construct"
+    ]
+  },
+  {
+    "pokemonId": 10120,
+    "dexNumber": 718,
+    "name": "Zygarde-Complete",
+    "speciesName": "Zygarde",
+    "identifier": "zygarde-complete",
+    "formIdentifier": "zygarde-complete",
+    "isDefaultForm": false,
+    "sprite": "10120.png",
+    "ocrAliases": [
+      "Zygarde",
+      "Zygarde Complete",
+      "Zygarde-Complete",
+      "zygarde complete",
+      "zygarde-complete"
+    ]
+  },
+  {
+    "pokemonId": 10121,
+    "dexNumber": 735,
+    "name": "Gumshoos-Totem",
+    "speciesName": "Gumshoos",
+    "identifier": "gumshoos-totem",
+    "formIdentifier": "gumshoos-totem",
+    "isDefaultForm": false,
+    "sprite": "10121.png",
+    "ocrAliases": [
+      "Gumshoos",
+      "Gumshoos Totem",
+      "Gumshoos-Totem",
+      "gumshoos totem",
+      "gumshoos-totem"
+    ]
+  },
+  {
+    "pokemonId": 10122,
+    "dexNumber": 738,
+    "name": "Vikavolt-Totem",
+    "speciesName": "Vikavolt",
+    "identifier": "vikavolt-totem",
+    "formIdentifier": "vikavolt-totem",
+    "isDefaultForm": false,
+    "sprite": "10122.png",
+    "ocrAliases": [
+      "Vikavolt",
+      "Vikavolt Totem",
+      "Vikavolt-Totem",
+      "vikavolt totem",
+      "vikavolt-totem"
+    ]
+  },
+  {
+    "pokemonId": 10123,
+    "dexNumber": 741,
+    "name": "Oricorio-Pom-Pom",
+    "speciesName": "Oricorio",
+    "identifier": "oricorio-pom-pom",
+    "formIdentifier": "oricorio-pom-pom",
+    "isDefaultForm": false,
+    "sprite": "10123.png",
+    "ocrAliases": [
+      "Oricorio",
+      "Oricorio Pom Pom",
+      "Oricorio-Pom-Pom",
+      "oricorio pom pom",
+      "oricorio-pom-pom"
+    ]
+  },
+  {
+    "pokemonId": 10124,
+    "dexNumber": 741,
+    "name": "Oricorio-Pau",
+    "speciesName": "Oricorio",
+    "identifier": "oricorio-pau",
+    "formIdentifier": "oricorio-pau",
+    "isDefaultForm": false,
+    "sprite": "10124.png",
+    "ocrAliases": [
+      "Oricorio",
+      "Oricorio Pau",
+      "Oricorio-Pau",
+      "oricorio pau",
+      "oricorio-pau"
+    ]
+  },
+  {
+    "pokemonId": 10125,
+    "dexNumber": 741,
+    "name": "Oricorio-Sensu",
+    "speciesName": "Oricorio",
+    "identifier": "oricorio-sensu",
+    "formIdentifier": "oricorio-sensu",
+    "isDefaultForm": false,
+    "sprite": "10125.png",
+    "ocrAliases": [
+      "Oricorio",
+      "Oricorio Sensu",
+      "Oricorio-Sensu",
+      "oricorio sensu",
+      "oricorio-sensu"
+    ]
+  },
+  {
+    "pokemonId": 10126,
+    "dexNumber": 745,
+    "name": "Lycanroc-Midnight",
+    "speciesName": "Lycanroc",
+    "identifier": "lycanroc-midnight",
+    "formIdentifier": "lycanroc-midnight",
+    "isDefaultForm": false,
+    "sprite": "10126.png",
+    "ocrAliases": [
+      "Lycanroc",
+      "Lycanroc Midnight",
+      "Lycanroc-Midnight",
+      "lycanroc midnight",
+      "lycanroc-midnight"
+    ]
+  },
+  {
+    "pokemonId": 10127,
+    "dexNumber": 746,
+    "name": "Wishiwashi-School",
+    "speciesName": "Wishiwashi",
+    "identifier": "wishiwashi-school",
+    "formIdentifier": "wishiwashi-school",
+    "isDefaultForm": false,
+    "sprite": "10127.png",
+    "ocrAliases": [
+      "Wishiwashi",
+      "Wishiwashi School",
+      "Wishiwashi-School",
+      "wishiwashi school",
+      "wishiwashi-school"
+    ]
+  },
+  {
+    "pokemonId": 10128,
+    "dexNumber": 754,
+    "name": "Lurantis-Totem",
+    "speciesName": "Lurantis",
+    "identifier": "lurantis-totem",
+    "formIdentifier": "lurantis-totem",
+    "isDefaultForm": false,
+    "sprite": "10128.png",
+    "ocrAliases": [
+      "Lurantis",
+      "Lurantis Totem",
+      "Lurantis-Totem",
+      "lurantis totem",
+      "lurantis-totem"
+    ]
+  },
+  {
+    "pokemonId": 10129,
+    "dexNumber": 758,
+    "name": "Salazzle-Totem",
+    "speciesName": "Salazzle",
+    "identifier": "salazzle-totem",
+    "formIdentifier": "salazzle-totem",
+    "isDefaultForm": false,
+    "sprite": "10129.png",
+    "ocrAliases": [
+      "Salazzle",
+      "Salazzle Totem",
+      "Salazzle-Totem",
+      "salazzle totem",
+      "salazzle-totem"
+    ]
+  },
+  {
+    "pokemonId": 10130,
+    "dexNumber": 774,
+    "name": "Minior-Orange-Meteor",
+    "speciesName": "Minior",
+    "identifier": "minior-orange-meteor",
+    "formIdentifier": "minior-orange-meteor",
+    "isDefaultForm": false,
+    "sprite": "10130.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Orange Meteor",
+      "Minior-Orange-Meteor",
+      "minior orange meteor",
+      "minior-orange-meteor"
+    ]
+  },
+  {
+    "pokemonId": 10131,
+    "dexNumber": 774,
+    "name": "Minior-Yellow-Meteor",
+    "speciesName": "Minior",
+    "identifier": "minior-yellow-meteor",
+    "formIdentifier": "minior-yellow-meteor",
+    "isDefaultForm": false,
+    "sprite": "10131.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Yellow Meteor",
+      "Minior-Yellow-Meteor",
+      "minior yellow meteor",
+      "minior-yellow-meteor"
+    ]
+  },
+  {
+    "pokemonId": 10132,
+    "dexNumber": 774,
+    "name": "Minior-Green-Meteor",
+    "speciesName": "Minior",
+    "identifier": "minior-green-meteor",
+    "formIdentifier": "minior-green-meteor",
+    "isDefaultForm": false,
+    "sprite": "10132.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Green Meteor",
+      "Minior-Green-Meteor",
+      "minior green meteor",
+      "minior-green-meteor"
+    ]
+  },
+  {
+    "pokemonId": 10133,
+    "dexNumber": 774,
+    "name": "Minior-Blue-Meteor",
+    "speciesName": "Minior",
+    "identifier": "minior-blue-meteor",
+    "formIdentifier": "minior-blue-meteor",
+    "isDefaultForm": false,
+    "sprite": "10133.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Blue Meteor",
+      "Minior-Blue-Meteor",
+      "minior blue meteor",
+      "minior-blue-meteor"
+    ]
+  },
+  {
+    "pokemonId": 10134,
+    "dexNumber": 774,
+    "name": "Minior-Indigo-Meteor",
+    "speciesName": "Minior",
+    "identifier": "minior-indigo-meteor",
+    "formIdentifier": "minior-indigo-meteor",
+    "isDefaultForm": false,
+    "sprite": "10134.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Indigo Meteor",
+      "Minior-Indigo-Meteor",
+      "minior indigo meteor",
+      "minior-indigo-meteor"
+    ]
+  },
+  {
+    "pokemonId": 10135,
+    "dexNumber": 774,
+    "name": "Minior-Violet-Meteor",
+    "speciesName": "Minior",
+    "identifier": "minior-violet-meteor",
+    "formIdentifier": "minior-violet-meteor",
+    "isDefaultForm": false,
+    "sprite": "10135.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Violet Meteor",
+      "Minior-Violet-Meteor",
+      "minior violet meteor",
+      "minior-violet-meteor"
+    ]
+  },
+  {
+    "pokemonId": 10136,
+    "dexNumber": 774,
+    "name": "Minior-Red",
+    "speciesName": "Minior",
+    "identifier": "minior-red",
+    "formIdentifier": "minior-red",
+    "isDefaultForm": false,
+    "sprite": "10136.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Red",
+      "Minior-Red",
+      "minior red",
+      "minior-red"
+    ]
+  },
+  {
+    "pokemonId": 10137,
+    "dexNumber": 774,
+    "name": "Minior-Orange",
+    "speciesName": "Minior",
+    "identifier": "minior-orange",
+    "formIdentifier": "minior-orange",
+    "isDefaultForm": false,
+    "sprite": "10137.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Orange",
+      "Minior-Orange",
+      "minior orange",
+      "minior-orange"
+    ]
+  },
+  {
+    "pokemonId": 10138,
+    "dexNumber": 774,
+    "name": "Minior-Yellow",
+    "speciesName": "Minior",
+    "identifier": "minior-yellow",
+    "formIdentifier": "minior-yellow",
+    "isDefaultForm": false,
+    "sprite": "10138.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Yellow",
+      "Minior-Yellow",
+      "minior yellow",
+      "minior-yellow"
+    ]
+  },
+  {
+    "pokemonId": 10139,
+    "dexNumber": 774,
+    "name": "Minior-Green",
+    "speciesName": "Minior",
+    "identifier": "minior-green",
+    "formIdentifier": "minior-green",
+    "isDefaultForm": false,
+    "sprite": "10139.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Green",
+      "Minior-Green",
+      "minior green",
+      "minior-green"
+    ]
+  },
+  {
+    "pokemonId": 10140,
+    "dexNumber": 774,
+    "name": "Minior-Blue",
+    "speciesName": "Minior",
+    "identifier": "minior-blue",
+    "formIdentifier": "minior-blue",
+    "isDefaultForm": false,
+    "sprite": "10140.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Blue",
+      "Minior-Blue",
+      "minior blue",
+      "minior-blue"
+    ]
+  },
+  {
+    "pokemonId": 10141,
+    "dexNumber": 774,
+    "name": "Minior-Indigo",
+    "speciesName": "Minior",
+    "identifier": "minior-indigo",
+    "formIdentifier": "minior-indigo",
+    "isDefaultForm": false,
+    "sprite": "10141.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Indigo",
+      "Minior-Indigo",
+      "minior indigo",
+      "minior-indigo"
+    ]
+  },
+  {
+    "pokemonId": 10142,
+    "dexNumber": 774,
+    "name": "Minior-Violet",
+    "speciesName": "Minior",
+    "identifier": "minior-violet",
+    "formIdentifier": "minior-violet",
+    "isDefaultForm": false,
+    "sprite": "10142.png",
+    "ocrAliases": [
+      "Minior",
+      "Minior Violet",
+      "Minior-Violet",
+      "minior violet",
+      "minior-violet"
+    ]
+  },
+  {
+    "pokemonId": 10143,
+    "dexNumber": 778,
+    "name": "Mimikyu-Busted",
+    "speciesName": "Mimikyu",
+    "identifier": "mimikyu-busted",
+    "formIdentifier": "mimikyu-busted",
+    "isDefaultForm": false,
+    "sprite": "10143.png",
+    "ocrAliases": [
+      "Mimikyu",
+      "Mimikyu Busted",
+      "Mimikyu-Busted",
+      "mimikyu busted",
+      "mimikyu-busted"
+    ]
+  },
+  {
+    "pokemonId": 10144,
+    "dexNumber": 778,
+    "name": "Mimikyu-Totem-Disguised",
+    "speciesName": "Mimikyu",
+    "identifier": "mimikyu-totem-disguised",
+    "formIdentifier": "mimikyu-totem-disguised",
+    "isDefaultForm": false,
+    "sprite": "10144.png",
+    "ocrAliases": [
+      "Mimikyu",
+      "Mimikyu Totem Disguised",
+      "Mimikyu-Totem-Disguised",
+      "mimikyu totem disguised",
+      "mimikyu-totem-disguised"
+    ]
+  },
+  {
+    "pokemonId": 10145,
+    "dexNumber": 778,
+    "name": "Mimikyu-Totem-Busted",
+    "speciesName": "Mimikyu",
+    "identifier": "mimikyu-totem-busted",
+    "formIdentifier": "mimikyu-totem-busted",
+    "isDefaultForm": false,
+    "sprite": "10145.png",
+    "ocrAliases": [
+      "Mimikyu",
+      "Mimikyu Totem Busted",
+      "Mimikyu-Totem-Busted",
+      "mimikyu totem busted",
+      "mimikyu-totem-busted"
+    ]
+  },
+  {
+    "pokemonId": 10146,
+    "dexNumber": 784,
+    "name": "Kommo-O-Totem",
+    "speciesName": "Kommo-o",
+    "identifier": "kommo-o-totem",
+    "formIdentifier": "kommo-o-totem",
+    "isDefaultForm": false,
+    "sprite": "10146.png",
+    "ocrAliases": [
+      "Kommo O Totem",
+      "Kommo-O-Totem",
+      "Kommo-o",
+      "kommo o totem",
+      "kommo-o-totem"
+    ]
+  },
+  {
+    "pokemonId": 10147,
+    "dexNumber": 801,
+    "name": "Magearna-Original",
+    "speciesName": "Magearna",
+    "identifier": "magearna-original",
+    "formIdentifier": "magearna-original",
+    "isDefaultForm": false,
+    "sprite": "10147.png",
+    "ocrAliases": [
+      "Magearna",
+      "Magearna Original",
+      "Magearna-Original",
+      "magearna original",
+      "magearna-original"
+    ]
+  },
+  {
+    "pokemonId": 10148,
+    "dexNumber": 25,
+    "name": "Pikachu-Partner-Cap",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-partner-cap",
+    "formIdentifier": "pikachu-partner-cap",
+    "isDefaultForm": false,
+    "sprite": "10148.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Partner Cap",
+      "Pikachu-Partner-Cap",
+      "pikachu partner cap",
+      "pikachu-partner-cap"
+    ]
+  },
+  {
+    "pokemonId": 10149,
+    "dexNumber": 105,
+    "name": "Marowak-Totem",
+    "speciesName": "Marowak",
+    "identifier": "marowak-totem",
+    "formIdentifier": "marowak-totem",
+    "isDefaultForm": false,
+    "sprite": "10149.png",
+    "ocrAliases": [
+      "Marowak",
+      "Marowak Totem",
+      "Marowak-Totem",
+      "marowak totem",
+      "marowak-totem"
+    ]
+  },
+  {
+    "pokemonId": 10150,
+    "dexNumber": 743,
+    "name": "Ribombee-Totem",
+    "speciesName": "Ribombee",
+    "identifier": "ribombee-totem",
+    "formIdentifier": "ribombee-totem",
+    "isDefaultForm": false,
+    "sprite": "10150.png",
+    "ocrAliases": [
+      "Ribombee",
+      "Ribombee Totem",
+      "Ribombee-Totem",
+      "ribombee totem",
+      "ribombee-totem"
+    ]
+  },
+  {
+    "pokemonId": 10151,
+    "dexNumber": 744,
+    "name": "Rockruff-Own-Tempo",
+    "speciesName": "Rockruff",
+    "identifier": "rockruff-own-tempo",
+    "formIdentifier": "rockruff-own-tempo",
+    "isDefaultForm": false,
+    "sprite": "10151.png",
+    "ocrAliases": [
+      "Rockruff",
+      "Rockruff Own Tempo",
+      "Rockruff-Own-Tempo",
+      "rockruff own tempo",
+      "rockruff-own-tempo"
+    ]
+  },
+  {
+    "pokemonId": 10152,
+    "dexNumber": 745,
+    "name": "Lycanroc-Dusk",
+    "speciesName": "Lycanroc",
+    "identifier": "lycanroc-dusk",
+    "formIdentifier": "lycanroc-dusk",
+    "isDefaultForm": false,
+    "sprite": "10152.png",
+    "ocrAliases": [
+      "Lycanroc",
+      "Lycanroc Dusk",
+      "Lycanroc-Dusk",
+      "lycanroc dusk",
+      "lycanroc-dusk"
+    ]
+  },
+  {
+    "pokemonId": 10153,
+    "dexNumber": 752,
+    "name": "Araquanid-Totem",
+    "speciesName": "Araquanid",
+    "identifier": "araquanid-totem",
+    "formIdentifier": "araquanid-totem",
+    "isDefaultForm": false,
+    "sprite": "10153.png",
+    "ocrAliases": [
+      "Araquanid",
+      "Araquanid Totem",
+      "Araquanid-Totem",
+      "araquanid totem",
+      "araquanid-totem"
+    ]
+  },
+  {
+    "pokemonId": 10154,
+    "dexNumber": 777,
+    "name": "Togedemaru-Totem",
+    "speciesName": "Togedemaru",
+    "identifier": "togedemaru-totem",
+    "formIdentifier": "togedemaru-totem",
+    "isDefaultForm": false,
+    "sprite": "10154.png",
+    "ocrAliases": [
+      "Togedemaru",
+      "Togedemaru Totem",
+      "Togedemaru-Totem",
+      "togedemaru totem",
+      "togedemaru-totem"
+    ]
+  },
+  {
+    "pokemonId": 10155,
+    "dexNumber": 800,
+    "name": "Necrozma-Dusk",
+    "speciesName": "Necrozma",
+    "identifier": "necrozma-dusk",
+    "formIdentifier": "necrozma-dusk",
+    "isDefaultForm": false,
+    "sprite": "10155.png",
+    "ocrAliases": [
+      "Necrozma",
+      "Necrozma Dusk",
+      "Necrozma-Dusk",
+      "necrozma dusk",
+      "necrozma-dusk"
+    ]
+  },
+  {
+    "pokemonId": 10156,
+    "dexNumber": 800,
+    "name": "Necrozma-Dawn",
+    "speciesName": "Necrozma",
+    "identifier": "necrozma-dawn",
+    "formIdentifier": "necrozma-dawn",
+    "isDefaultForm": false,
+    "sprite": "10156.png",
+    "ocrAliases": [
+      "Necrozma",
+      "Necrozma Dawn",
+      "Necrozma-Dawn",
+      "necrozma dawn",
+      "necrozma-dawn"
+    ]
+  },
+  {
+    "pokemonId": 10157,
+    "dexNumber": 800,
+    "name": "Necrozma-Ultra",
+    "speciesName": "Necrozma",
+    "identifier": "necrozma-ultra",
+    "formIdentifier": "necrozma-ultra",
+    "isDefaultForm": false,
+    "sprite": "10157.png",
+    "ocrAliases": [
+      "Necrozma",
+      "Necrozma Ultra",
+      "Necrozma-Ultra",
+      "necrozma ultra",
+      "necrozma-ultra"
+    ]
+  },
+  {
+    "pokemonId": 10160,
+    "dexNumber": 25,
+    "name": "Pikachu-World-Cap",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-world-cap",
+    "formIdentifier": "pikachu-world-cap",
+    "isDefaultForm": false,
+    "sprite": "10160.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu World Cap",
+      "Pikachu-World-Cap",
+      "pikachu world cap",
+      "pikachu-world-cap"
+    ]
+  },
+  {
+    "pokemonId": 10161,
+    "dexNumber": 52,
+    "name": "Meowth-Galarian",
+    "speciesName": "Meowth",
+    "identifier": "meowth-galarian",
+    "formIdentifier": "meowth-galarian",
+    "isDefaultForm": false,
+    "sprite": "10161.png",
+    "ocrAliases": [
+      "Meowth",
+      "Meowth Galarian",
+      "Meowth-Galarian",
+      "meowth galarian",
+      "meowth-galarian",
+      "Meowth Galar",
+      "Meowth-Galar",
+      "meowth galar",
+      "meowth-galar"
+    ]
+  },
+  {
+    "pokemonId": 10162,
+    "dexNumber": 77,
+    "name": "Ponyta-Galarian",
+    "speciesName": "Ponyta",
+    "identifier": "ponyta-galarian",
+    "formIdentifier": "ponyta-galarian",
+    "isDefaultForm": false,
+    "sprite": "10162.png",
+    "ocrAliases": [
+      "Ponyta",
+      "Ponyta Galarian",
+      "Ponyta-Galarian",
+      "ponyta galarian",
+      "ponyta-galarian",
+      "Ponyta Galar",
+      "Ponyta-Galar",
+      "ponyta galar",
+      "ponyta-galar"
+    ]
+  },
+  {
+    "pokemonId": 10163,
+    "dexNumber": 78,
+    "name": "Rapidash-Galarian",
+    "speciesName": "Rapidash",
+    "identifier": "rapidash-galarian",
+    "formIdentifier": "rapidash-galarian",
+    "isDefaultForm": false,
+    "sprite": "10163.png",
+    "ocrAliases": [
+      "Rapidash",
+      "Rapidash Galarian",
+      "Rapidash-Galarian",
+      "rapidash galarian",
+      "rapidash-galarian",
+      "Rapidash Galar",
+      "Rapidash-Galar",
+      "rapidash galar",
+      "rapidash-galar"
+    ]
+  },
+  {
+    "pokemonId": 10164,
+    "dexNumber": 79,
+    "name": "Slowpoke-Galarian",
+    "speciesName": "Slowpoke",
+    "identifier": "slowpoke-galarian",
+    "formIdentifier": "slowpoke-galarian",
+    "isDefaultForm": false,
+    "sprite": "10164.png",
+    "ocrAliases": [
+      "Slowpoke",
+      "Slowpoke Galarian",
+      "Slowpoke-Galarian",
+      "slowpoke galarian",
+      "slowpoke-galarian",
+      "Slowpoke Galar",
+      "Slowpoke-Galar",
+      "slowpoke galar",
+      "slowpoke-galar"
+    ]
+  },
+  {
+    "pokemonId": 10165,
+    "dexNumber": 80,
+    "name": "Slowbro-Galarian",
+    "speciesName": "Slowbro",
+    "identifier": "slowbro-galarian",
+    "formIdentifier": "slowbro-galarian",
+    "isDefaultForm": false,
+    "sprite": "10165.png",
+    "ocrAliases": [
+      "Slowbro",
+      "Slowbro Galarian",
+      "Slowbro-Galarian",
+      "slowbro galarian",
+      "slowbro-galarian",
+      "Slowbro Galar",
+      "Slowbro-Galar",
+      "slowbro galar",
+      "slowbro-galar"
+    ]
+  },
+  {
+    "pokemonId": 10166,
+    "dexNumber": 83,
+    "name": "Farfetchd-Galarian",
+    "speciesName": "Farfetchd-Galarian",
+    "identifier": "farfetchd-galarian",
+    "formIdentifier": "farfetchd-galarian",
+    "isDefaultForm": false,
+    "sprite": "10166.png",
+    "ocrAliases": [
+      "Farfetchd Galarian",
+      "Farfetchd-Galarian",
+      "farfetchd galarian",
+      "farfetchd-galarian",
+      "Farfetchd Galar",
+      "Farfetchd-Galar",
+      "farfetchd galar",
+      "farfetchd-galar"
+    ]
+  },
+  {
+    "pokemonId": 10167,
+    "dexNumber": 110,
+    "name": "Weezing-Galarian",
+    "speciesName": "Weezing",
+    "identifier": "weezing-galarian",
+    "formIdentifier": "weezing-galarian",
+    "isDefaultForm": false,
+    "sprite": "10167.png",
+    "ocrAliases": [
+      "Weezing",
+      "Weezing Galarian",
+      "Weezing-Galarian",
+      "weezing galarian",
+      "weezing-galarian",
+      "Weezing Galar",
+      "Weezing-Galar",
+      "weezing galar",
+      "weezing-galar"
+    ]
+  },
+  {
+    "pokemonId": 10168,
+    "dexNumber": 122,
+    "name": "Mr-Mime-Galarian",
+    "speciesName": "Mr. Mime",
+    "identifier": "mr-mime-galarian",
+    "formIdentifier": "mr-mime-galarian",
+    "isDefaultForm": false,
+    "sprite": "10168.png",
+    "ocrAliases": [
+      "Mr Mime",
+      "Mr Mime Galarian",
+      "Mr-Mime-Galarian",
+      "Mr. Mime-Galarian",
+      "mr mime galarian",
+      "mr-mime-galarian",
+      "mr-mime galarian",
+      "mr.mime-galarian",
+      "mr.mime galarian",
+      "Mr Mime Galar",
+      "Mr-Mime-Galar",
+      "Mr. Mime",
+      "mr mime galar",
+      "mr-mime-galar"
+    ]
+  },
+  {
+    "pokemonId": 10169,
+    "dexNumber": 144,
+    "name": "Articuno-Galarian",
+    "speciesName": "Articuno",
+    "identifier": "articuno-galarian",
+    "formIdentifier": "articuno-galarian",
+    "isDefaultForm": false,
+    "sprite": "10169.png",
+    "ocrAliases": [
+      "Articuno",
+      "Articuno Galarian",
+      "Articuno-Galarian",
+      "articuno galarian",
+      "articuno-galarian",
+      "Articuno Galar",
+      "Articuno-Galar",
+      "articuno galar",
+      "articuno-galar"
+    ]
+  },
+  {
+    "pokemonId": 10170,
+    "dexNumber": 145,
+    "name": "Zapdos-Galarian",
+    "speciesName": "Zapdos",
+    "identifier": "zapdos-galarian",
+    "formIdentifier": "zapdos-galarian",
+    "isDefaultForm": false,
+    "sprite": "10170.png",
+    "ocrAliases": [
+      "Zapdos",
+      "Zapdos Galarian",
+      "Zapdos-Galarian",
+      "zapdos galarian",
+      "zapdos-galarian",
+      "Zapdos Galar",
+      "Zapdos-Galar",
+      "zapdos galar",
+      "zapdos-galar"
+    ]
+  },
+  {
+    "pokemonId": 10171,
+    "dexNumber": 146,
+    "name": "Moltres-Galarian",
+    "speciesName": "Moltres",
+    "identifier": "moltres-galarian",
+    "formIdentifier": "moltres-galarian",
+    "isDefaultForm": false,
+    "sprite": "10171.png",
+    "ocrAliases": [
+      "Moltres",
+      "Moltres Galarian",
+      "Moltres-Galarian",
+      "moltres galarian",
+      "moltres-galarian",
+      "Moltres Galar",
+      "Moltres-Galar",
+      "moltres galar",
+      "moltres-galar"
+    ]
+  },
+  {
+    "pokemonId": 10172,
+    "dexNumber": 199,
+    "name": "Slowking-Galarian",
+    "speciesName": "Slowking",
+    "identifier": "slowking-galarian",
+    "formIdentifier": "slowking-galarian",
+    "isDefaultForm": false,
+    "sprite": "10172.png",
+    "ocrAliases": [
+      "Slowking",
+      "Slowking Galarian",
+      "Slowking-Galarian",
+      "slowking galarian",
+      "slowking-galarian",
+      "Slowking Galar",
+      "Slowking-Galar",
+      "slowking galar",
+      "slowking-galar"
+    ]
+  },
+  {
+    "pokemonId": 10173,
+    "dexNumber": 222,
+    "name": "Corsola-Galarian",
+    "speciesName": "Corsola",
+    "identifier": "corsola-galarian",
+    "formIdentifier": "corsola-galarian",
+    "isDefaultForm": false,
+    "sprite": "10173.png",
+    "ocrAliases": [
+      "Corsola",
+      "Corsola Galarian",
+      "Corsola-Galarian",
+      "corsola galarian",
+      "corsola-galarian",
+      "Corsola Galar",
+      "Corsola-Galar",
+      "corsola galar",
+      "corsola-galar"
+    ]
+  },
+  {
+    "pokemonId": 10174,
+    "dexNumber": 263,
+    "name": "Zigzagoon-Galarian",
+    "speciesName": "Zigzagoon",
+    "identifier": "zigzagoon-galarian",
+    "formIdentifier": "zigzagoon-galarian",
+    "isDefaultForm": false,
+    "sprite": "10174.png",
+    "ocrAliases": [
+      "Zigzagoon",
+      "Zigzagoon Galarian",
+      "Zigzagoon-Galarian",
+      "zigzagoon galarian",
+      "zigzagoon-galarian",
+      "Zigzagoon Galar",
+      "Zigzagoon-Galar",
+      "zigzagoon galar",
+      "zigzagoon-galar"
+    ]
+  },
+  {
+    "pokemonId": 10175,
+    "dexNumber": 264,
+    "name": "Linoone-Galarian",
+    "speciesName": "Linoone",
+    "identifier": "linoone-galarian",
+    "formIdentifier": "linoone-galarian",
+    "isDefaultForm": false,
+    "sprite": "10175.png",
+    "ocrAliases": [
+      "Linoone",
+      "Linoone Galarian",
+      "Linoone-Galarian",
+      "linoone galarian",
+      "linoone-galarian",
+      "Linoone Galar",
+      "Linoone-Galar",
+      "linoone galar",
+      "linoone-galar"
+    ]
+  },
+  {
+    "pokemonId": 10176,
+    "dexNumber": 554,
+    "name": "Darumaka-Galarian",
+    "speciesName": "Darumaka",
+    "identifier": "darumaka-galarian",
+    "formIdentifier": "darumaka-galarian",
+    "isDefaultForm": false,
+    "sprite": "10176.png",
+    "ocrAliases": [
+      "Darumaka",
+      "Darumaka Galarian",
+      "Darumaka-Galarian",
+      "darumaka galarian",
+      "darumaka-galarian",
+      "Darumaka Galar",
+      "Darumaka-Galar",
+      "darumaka galar",
+      "darumaka-galar"
+    ]
+  },
+  {
+    "pokemonId": 10177,
+    "dexNumber": 555,
+    "name": "Darmanitan-Galarian-Standard",
+    "speciesName": "Darmanitan",
+    "identifier": "darmanitan-galarian-standard",
+    "formIdentifier": "darmanitan-galarian-standard",
+    "isDefaultForm": false,
+    "sprite": "10177.png",
+    "ocrAliases": [
+      "Darmanitan",
+      "Darmanitan Galarian Standard",
+      "Darmanitan-Galarian-Standard",
+      "darmanitan galarian standard",
+      "darmanitan-galarian-standard",
+      "Darmanitan Galar Standard",
+      "Darmanitan-Galar-Standard",
+      "darmanitan galar standard",
+      "darmanitan-galar-standard"
+    ]
+  },
+  {
+    "pokemonId": 10178,
+    "dexNumber": 555,
+    "name": "Darmanitan-Galarian-Zen",
+    "speciesName": "Darmanitan",
+    "identifier": "darmanitan-galarian-zen",
+    "formIdentifier": "darmanitan-galarian-zen",
+    "isDefaultForm": false,
+    "sprite": "10178.png",
+    "ocrAliases": [
+      "Darmanitan",
+      "Darmanitan Galarian Zen",
+      "Darmanitan-Galarian-Zen",
+      "darmanitan galarian zen",
+      "darmanitan-galarian-zen",
+      "Darmanitan Galar Zen",
+      "Darmanitan-Galar-Zen",
+      "darmanitan galar zen",
+      "darmanitan-galar-zen"
+    ]
+  },
+  {
+    "pokemonId": 10179,
+    "dexNumber": 562,
+    "name": "Yamask-Galarian",
+    "speciesName": "Yamask",
+    "identifier": "yamask-galarian",
+    "formIdentifier": "yamask-galarian",
+    "isDefaultForm": false,
+    "sprite": "10179.png",
+    "ocrAliases": [
+      "Yamask",
+      "Yamask Galarian",
+      "Yamask-Galarian",
+      "yamask galarian",
+      "yamask-galarian",
+      "Yamask Galar",
+      "Yamask-Galar",
+      "yamask galar",
+      "yamask-galar"
+    ]
+  },
+  {
+    "pokemonId": 10180,
+    "dexNumber": 618,
+    "name": "Stunfisk-Galarian",
+    "speciesName": "Stunfisk",
+    "identifier": "stunfisk-galarian",
+    "formIdentifier": "stunfisk-galarian",
+    "isDefaultForm": false,
+    "sprite": "10180.png",
+    "ocrAliases": [
+      "Stunfisk",
+      "Stunfisk Galarian",
+      "Stunfisk-Galarian",
+      "stunfisk galarian",
+      "stunfisk-galarian",
+      "Stunfisk Galar",
+      "Stunfisk-Galar",
+      "stunfisk galar",
+      "stunfisk-galar"
+    ]
+  },
+  {
+    "pokemonId": 10181,
+    "dexNumber": 718,
+    "name": "Zygarde-10",
+    "speciesName": "Zygarde",
+    "identifier": "zygarde-10",
+    "formIdentifier": "zygarde-10",
+    "isDefaultForm": false,
+    "sprite": "10181.png",
+    "ocrAliases": [
+      "Zygarde",
+      "Zygarde 10",
+      "Zygarde-10",
+      "zygarde 10",
+      "zygarde-10"
+    ]
+  },
+  {
+    "pokemonId": 10182,
+    "dexNumber": 845,
+    "name": "Cramorant-Gulping",
+    "speciesName": "Cramorant",
+    "identifier": "cramorant-gulping",
+    "formIdentifier": "cramorant-gulping",
+    "isDefaultForm": false,
+    "sprite": "10182.png",
+    "ocrAliases": [
+      "Cramorant",
+      "Cramorant Gulping",
+      "Cramorant-Gulping",
+      "cramorant gulping",
+      "cramorant-gulping"
+    ]
+  },
+  {
+    "pokemonId": 10183,
+    "dexNumber": 845,
+    "name": "Cramorant-Gorging",
+    "speciesName": "Cramorant",
+    "identifier": "cramorant-gorging",
+    "formIdentifier": "cramorant-gorging",
+    "isDefaultForm": false,
+    "sprite": "10183.png",
+    "ocrAliases": [
+      "Cramorant",
+      "Cramorant Gorging",
+      "Cramorant-Gorging",
+      "cramorant gorging",
+      "cramorant-gorging"
+    ]
+  },
+  {
+    "pokemonId": 10184,
+    "dexNumber": 849,
+    "name": "Toxtricity-Low-Key",
+    "speciesName": "Toxtricity",
+    "identifier": "toxtricity-low-key",
+    "formIdentifier": "toxtricity-low-key",
+    "isDefaultForm": false,
+    "sprite": "10184.png",
+    "ocrAliases": [
+      "Toxtricity",
+      "Toxtricity Low Key",
+      "Toxtricity-Low-Key",
+      "toxtricity low key",
+      "toxtricity-low-key"
+    ]
+  },
+  {
+    "pokemonId": 10185,
+    "dexNumber": 875,
+    "name": "Eiscue-Noice",
+    "speciesName": "Eiscue",
+    "identifier": "eiscue-noice",
+    "formIdentifier": "eiscue-noice",
+    "isDefaultForm": false,
+    "sprite": "10185.png",
+    "ocrAliases": [
+      "Eiscue",
+      "Eiscue Noice",
+      "Eiscue-Noice",
+      "eiscue noice",
+      "eiscue-noice"
+    ]
+  },
+  {
+    "pokemonId": 10186,
+    "dexNumber": 876,
+    "name": "Indeedee-Female",
+    "speciesName": "Indeedee",
+    "identifier": "indeedee-female",
+    "formIdentifier": "indeedee-female",
+    "isDefaultForm": false,
+    "sprite": "10186.png",
+    "ocrAliases": [
+      "Indeedee",
+      "Indeedee Female",
+      "Indeedee-Female",
+      "indeedee female",
+      "indeedee-female"
+    ]
+  },
+  {
+    "pokemonId": 10187,
+    "dexNumber": 877,
+    "name": "Morpeko-Hangry",
+    "speciesName": "Morpeko",
+    "identifier": "morpeko-hangry",
+    "formIdentifier": "morpeko-hangry",
+    "isDefaultForm": false,
+    "sprite": "10187.png",
+    "ocrAliases": [
+      "Morpeko",
+      "Morpeko Hangry",
+      "Morpeko-Hangry",
+      "morpeko hangry",
+      "morpeko-hangry"
+    ]
+  },
+  {
+    "pokemonId": 10188,
+    "dexNumber": 888,
+    "name": "Zacian-Crowned",
+    "speciesName": "Zacian",
+    "identifier": "zacian-crowned",
+    "formIdentifier": "zacian-crowned",
+    "isDefaultForm": false,
+    "sprite": "10188.png",
+    "ocrAliases": [
+      "Zacian",
+      "Zacian Crowned",
+      "Zacian-Crowned",
+      "zacian crowned",
+      "zacian-crowned"
+    ]
+  },
+  {
+    "pokemonId": 10189,
+    "dexNumber": 889,
+    "name": "Zamazenta-Crowned",
+    "speciesName": "Zamazenta",
+    "identifier": "zamazenta-crowned",
+    "formIdentifier": "zamazenta-crowned",
+    "isDefaultForm": false,
+    "sprite": "10189.png",
+    "ocrAliases": [
+      "Zamazenta",
+      "Zamazenta Crowned",
+      "Zamazenta-Crowned",
+      "zamazenta crowned",
+      "zamazenta-crowned"
+    ]
+  },
+  {
+    "pokemonId": 10190,
+    "dexNumber": 890,
+    "name": "Eternatus-Eternamax",
+    "speciesName": "Eternatus",
+    "identifier": "eternatus-eternamax",
+    "formIdentifier": "eternatus-eternamax",
+    "isDefaultForm": false,
+    "sprite": "10190.png",
+    "ocrAliases": [
+      "Eternatus",
+      "Eternatus Eternamax",
+      "Eternatus-Eternamax",
+      "eternatus eternamax",
+      "eternatus-eternamax"
+    ]
+  },
+  {
+    "pokemonId": 10191,
+    "dexNumber": 892,
+    "name": "Urshifu-Rapid-Strike",
+    "speciesName": "Urshifu",
+    "identifier": "urshifu-rapid-strike",
+    "formIdentifier": "urshifu-rapid-strike",
+    "isDefaultForm": false,
+    "sprite": "10191.png",
+    "ocrAliases": [
+      "Urshifu",
+      "Urshifu Rapid Strike",
+      "Urshifu-Rapid-Strike",
+      "urshifu rapid strike",
+      "urshifu-rapid-strike"
+    ]
+  },
+  {
+    "pokemonId": 10192,
+    "dexNumber": 893,
+    "name": "Zarude-Dada",
+    "speciesName": "Zarude",
+    "identifier": "zarude-dada",
+    "formIdentifier": "zarude-dada",
+    "isDefaultForm": false,
+    "sprite": "10192.png",
+    "ocrAliases": [
+      "Zarude",
+      "Zarude Dada",
+      "Zarude-Dada",
+      "zarude dada",
+      "zarude-dada"
+    ]
+  },
+  {
+    "pokemonId": 10193,
+    "dexNumber": 898,
+    "name": "Calyrex-Ice",
+    "speciesName": "Calyrex",
+    "identifier": "calyrex-ice",
+    "formIdentifier": "calyrex-ice",
+    "isDefaultForm": false,
+    "sprite": "10193.png",
+    "ocrAliases": [
+      "Calyrex",
+      "Calyrex Ice",
+      "Calyrex-Ice",
+      "calyrex ice",
+      "calyrex-ice"
+    ]
+  },
+  {
+    "pokemonId": 10194,
+    "dexNumber": 898,
+    "name": "Calyrex-Shadow",
+    "speciesName": "Calyrex",
+    "identifier": "calyrex-shadow",
+    "formIdentifier": "calyrex-shadow",
+    "isDefaultForm": false,
+    "sprite": "10194.png",
+    "ocrAliases": [
+      "Calyrex",
+      "Calyrex Shadow",
+      "Calyrex-Shadow",
+      "calyrex shadow",
+      "calyrex-shadow"
+    ]
+  },
+  {
+    "pokemonId": 10195,
+    "dexNumber": 3,
+    "name": "Venusaur-Gmax",
+    "speciesName": "Venusaur",
+    "identifier": "venusaur-gmax",
+    "formIdentifier": "venusaur-gmax",
+    "isDefaultForm": false,
+    "sprite": "10195.png",
+    "ocrAliases": [
+      "Venusaur",
+      "Venusaur Gmax",
+      "Venusaur-Gmax",
+      "venusaur gmax",
+      "venusaur-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10196,
+    "dexNumber": 6,
+    "name": "Charizard-Gmax",
+    "speciesName": "Charizard",
+    "identifier": "charizard-gmax",
+    "formIdentifier": "charizard-gmax",
+    "isDefaultForm": false,
+    "sprite": "10196.png",
+    "ocrAliases": [
+      "Charizard",
+      "Charizard Gmax",
+      "Charizard-Gmax",
+      "charizard gmax",
+      "charizard-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10197,
+    "dexNumber": 9,
+    "name": "Blastoise-Gmax",
+    "speciesName": "Blastoise",
+    "identifier": "blastoise-gmax",
+    "formIdentifier": "blastoise-gmax",
+    "isDefaultForm": false,
+    "sprite": "10197.png",
+    "ocrAliases": [
+      "Blastoise",
+      "Blastoise Gmax",
+      "Blastoise-Gmax",
+      "blastoise gmax",
+      "blastoise-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10198,
+    "dexNumber": 12,
+    "name": "Butterfree-Gmax",
+    "speciesName": "Butterfree",
+    "identifier": "butterfree-gmax",
+    "formIdentifier": "butterfree-gmax",
+    "isDefaultForm": false,
+    "sprite": "10198.png",
+    "ocrAliases": [
+      "Butterfree",
+      "Butterfree Gmax",
+      "Butterfree-Gmax",
+      "butterfree gmax",
+      "butterfree-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10199,
+    "dexNumber": 25,
+    "name": "Pikachu-Gmax",
+    "speciesName": "Pikachu",
+    "identifier": "pikachu-gmax",
+    "formIdentifier": "pikachu-gmax",
+    "isDefaultForm": false,
+    "sprite": "10199.png",
+    "ocrAliases": [
+      "Pikachu",
+      "Pikachu Gmax",
+      "Pikachu-Gmax",
+      "pikachu gmax",
+      "pikachu-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10200,
+    "dexNumber": 52,
+    "name": "Meowth-Gmax",
+    "speciesName": "Meowth",
+    "identifier": "meowth-gmax",
+    "formIdentifier": "meowth-gmax",
+    "isDefaultForm": false,
+    "sprite": "10200.png",
+    "ocrAliases": [
+      "Meowth",
+      "Meowth Gmax",
+      "Meowth-Gmax",
+      "meowth gmax",
+      "meowth-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10201,
+    "dexNumber": 68,
+    "name": "Machamp-Gmax",
+    "speciesName": "Machamp",
+    "identifier": "machamp-gmax",
+    "formIdentifier": "machamp-gmax",
+    "isDefaultForm": false,
+    "sprite": "10201.png",
+    "ocrAliases": [
+      "Machamp",
+      "Machamp Gmax",
+      "Machamp-Gmax",
+      "machamp gmax",
+      "machamp-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10202,
+    "dexNumber": 94,
+    "name": "Gengar-Gmax",
+    "speciesName": "Gengar",
+    "identifier": "gengar-gmax",
+    "formIdentifier": "gengar-gmax",
+    "isDefaultForm": false,
+    "sprite": "10202.png",
+    "ocrAliases": [
+      "Gengar",
+      "Gengar Gmax",
+      "Gengar-Gmax",
+      "gengar gmax",
+      "gengar-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10203,
+    "dexNumber": 99,
+    "name": "Kingler-Gmax",
+    "speciesName": "Kingler",
+    "identifier": "kingler-gmax",
+    "formIdentifier": "kingler-gmax",
+    "isDefaultForm": false,
+    "sprite": "10203.png",
+    "ocrAliases": [
+      "Kingler",
+      "Kingler Gmax",
+      "Kingler-Gmax",
+      "kingler gmax",
+      "kingler-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10204,
+    "dexNumber": 131,
+    "name": "Lapras-Gmax",
+    "speciesName": "Lapras",
+    "identifier": "lapras-gmax",
+    "formIdentifier": "lapras-gmax",
+    "isDefaultForm": false,
+    "sprite": "10204.png",
+    "ocrAliases": [
+      "Lapras",
+      "Lapras Gmax",
+      "Lapras-Gmax",
+      "lapras gmax",
+      "lapras-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10205,
+    "dexNumber": 133,
+    "name": "Eevee-Gmax",
+    "speciesName": "Eevee",
+    "identifier": "eevee-gmax",
+    "formIdentifier": "eevee-gmax",
+    "isDefaultForm": false,
+    "sprite": "10205.png",
+    "ocrAliases": [
+      "Eevee",
+      "Eevee Gmax",
+      "Eevee-Gmax",
+      "eevee gmax",
+      "eevee-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10206,
+    "dexNumber": 143,
+    "name": "Snorlax-Gmax",
+    "speciesName": "Snorlax",
+    "identifier": "snorlax-gmax",
+    "formIdentifier": "snorlax-gmax",
+    "isDefaultForm": false,
+    "sprite": "10206.png",
+    "ocrAliases": [
+      "Snorlax",
+      "Snorlax Gmax",
+      "Snorlax-Gmax",
+      "snorlax gmax",
+      "snorlax-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10207,
+    "dexNumber": 569,
+    "name": "Garbodor-Gmax",
+    "speciesName": "Garbodor",
+    "identifier": "garbodor-gmax",
+    "formIdentifier": "garbodor-gmax",
+    "isDefaultForm": false,
+    "sprite": "10207.png",
+    "ocrAliases": [
+      "Garbodor",
+      "Garbodor Gmax",
+      "Garbodor-Gmax",
+      "garbodor gmax",
+      "garbodor-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10208,
+    "dexNumber": 809,
+    "name": "Melmetal-Gmax",
+    "speciesName": "Melmetal",
+    "identifier": "melmetal-gmax",
+    "formIdentifier": "melmetal-gmax",
+    "isDefaultForm": false,
+    "sprite": "10208.png",
+    "ocrAliases": [
+      "Melmetal",
+      "Melmetal Gmax",
+      "Melmetal-Gmax",
+      "melmetal gmax",
+      "melmetal-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10209,
+    "dexNumber": 812,
+    "name": "Rillaboom-Gmax",
+    "speciesName": "Rillaboom",
+    "identifier": "rillaboom-gmax",
+    "formIdentifier": "rillaboom-gmax",
+    "isDefaultForm": false,
+    "sprite": "10209.png",
+    "ocrAliases": [
+      "Rillaboom",
+      "Rillaboom Gmax",
+      "Rillaboom-Gmax",
+      "rillaboom gmax",
+      "rillaboom-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10210,
+    "dexNumber": 815,
+    "name": "Cinderace-Gmax",
+    "speciesName": "Cinderace",
+    "identifier": "cinderace-gmax",
+    "formIdentifier": "cinderace-gmax",
+    "isDefaultForm": false,
+    "sprite": "10210.png",
+    "ocrAliases": [
+      "Cinderace",
+      "Cinderace Gmax",
+      "Cinderace-Gmax",
+      "cinderace gmax",
+      "cinderace-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10211,
+    "dexNumber": 818,
+    "name": "Inteleon-Gmax",
+    "speciesName": "Inteleon",
+    "identifier": "inteleon-gmax",
+    "formIdentifier": "inteleon-gmax",
+    "isDefaultForm": false,
+    "sprite": "10211.png",
+    "ocrAliases": [
+      "Inteleon",
+      "Inteleon Gmax",
+      "Inteleon-Gmax",
+      "inteleon gmax",
+      "inteleon-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10212,
+    "dexNumber": 823,
+    "name": "Corviknight-Gmax",
+    "speciesName": "Corviknight",
+    "identifier": "corviknight-gmax",
+    "formIdentifier": "corviknight-gmax",
+    "isDefaultForm": false,
+    "sprite": "10212.png",
+    "ocrAliases": [
+      "Corviknight",
+      "Corviknight Gmax",
+      "Corviknight-Gmax",
+      "corviknight gmax",
+      "corviknight-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10213,
+    "dexNumber": 826,
+    "name": "Orbeetle-Gmax",
+    "speciesName": "Orbeetle",
+    "identifier": "orbeetle-gmax",
+    "formIdentifier": "orbeetle-gmax",
+    "isDefaultForm": false,
+    "sprite": "10213.png",
+    "ocrAliases": [
+      "Orbeetle",
+      "Orbeetle Gmax",
+      "Orbeetle-Gmax",
+      "orbeetle gmax",
+      "orbeetle-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10214,
+    "dexNumber": 834,
+    "name": "Drednaw-Gmax",
+    "speciesName": "Drednaw",
+    "identifier": "drednaw-gmax",
+    "formIdentifier": "drednaw-gmax",
+    "isDefaultForm": false,
+    "sprite": "10214.png",
+    "ocrAliases": [
+      "Drednaw",
+      "Drednaw Gmax",
+      "Drednaw-Gmax",
+      "drednaw gmax",
+      "drednaw-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10215,
+    "dexNumber": 839,
+    "name": "Coalossal-Gmax",
+    "speciesName": "Coalossal",
+    "identifier": "coalossal-gmax",
+    "formIdentifier": "coalossal-gmax",
+    "isDefaultForm": false,
+    "sprite": "10215.png",
+    "ocrAliases": [
+      "Coalossal",
+      "Coalossal Gmax",
+      "Coalossal-Gmax",
+      "coalossal gmax",
+      "coalossal-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10216,
+    "dexNumber": 841,
+    "name": "Flapple-Gmax",
+    "speciesName": "Flapple",
+    "identifier": "flapple-gmax",
+    "formIdentifier": "flapple-gmax",
+    "isDefaultForm": false,
+    "sprite": "10216.png",
+    "ocrAliases": [
+      "Flapple",
+      "Flapple Gmax",
+      "Flapple-Gmax",
+      "flapple gmax",
+      "flapple-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10217,
+    "dexNumber": 842,
+    "name": "Appletun-Gmax",
+    "speciesName": "Appletun",
+    "identifier": "appletun-gmax",
+    "formIdentifier": "appletun-gmax",
+    "isDefaultForm": false,
+    "sprite": "10217.png",
+    "ocrAliases": [
+      "Appletun",
+      "Appletun Gmax",
+      "Appletun-Gmax",
+      "appletun gmax",
+      "appletun-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10218,
+    "dexNumber": 844,
+    "name": "Sandaconda-Gmax",
+    "speciesName": "Sandaconda",
+    "identifier": "sandaconda-gmax",
+    "formIdentifier": "sandaconda-gmax",
+    "isDefaultForm": false,
+    "sprite": "10218.png",
+    "ocrAliases": [
+      "Sandaconda",
+      "Sandaconda Gmax",
+      "Sandaconda-Gmax",
+      "sandaconda gmax",
+      "sandaconda-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10219,
+    "dexNumber": 849,
+    "name": "Toxtricity-Amped-Gmax",
+    "speciesName": "Toxtricity",
+    "identifier": "toxtricity-amped-gmax",
+    "formIdentifier": "toxtricity-amped-gmax",
+    "isDefaultForm": false,
+    "sprite": "10219.png",
+    "ocrAliases": [
+      "Toxtricity",
+      "Toxtricity Amped Gmax",
+      "Toxtricity-Amped-Gmax",
+      "toxtricity amped gmax",
+      "toxtricity-amped-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10220,
+    "dexNumber": 851,
+    "name": "Centiskorch-Gmax",
+    "speciesName": "Centiskorch",
+    "identifier": "centiskorch-gmax",
+    "formIdentifier": "centiskorch-gmax",
+    "isDefaultForm": false,
+    "sprite": "10220.png",
+    "ocrAliases": [
+      "Centiskorch",
+      "Centiskorch Gmax",
+      "Centiskorch-Gmax",
+      "centiskorch gmax",
+      "centiskorch-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10221,
+    "dexNumber": 858,
+    "name": "Hatterene-Gmax",
+    "speciesName": "Hatterene",
+    "identifier": "hatterene-gmax",
+    "formIdentifier": "hatterene-gmax",
+    "isDefaultForm": false,
+    "sprite": "10221.png",
+    "ocrAliases": [
+      "Hatterene",
+      "Hatterene Gmax",
+      "Hatterene-Gmax",
+      "hatterene gmax",
+      "hatterene-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10222,
+    "dexNumber": 861,
+    "name": "Grimmsnarl-Gmax",
+    "speciesName": "Grimmsnarl",
+    "identifier": "grimmsnarl-gmax",
+    "formIdentifier": "grimmsnarl-gmax",
+    "isDefaultForm": false,
+    "sprite": "10222.png",
+    "ocrAliases": [
+      "Grimmsnarl",
+      "Grimmsnarl Gmax",
+      "Grimmsnarl-Gmax",
+      "grimmsnarl gmax",
+      "grimmsnarl-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10223,
+    "dexNumber": 869,
+    "name": "Alcremie-Gmax",
+    "speciesName": "Alcremie",
+    "identifier": "alcremie-gmax",
+    "formIdentifier": "alcremie-gmax",
+    "isDefaultForm": false,
+    "sprite": "10223.png",
+    "ocrAliases": [
+      "Alcremie",
+      "Alcremie Gmax",
+      "Alcremie-Gmax",
+      "alcremie gmax",
+      "alcremie-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10224,
+    "dexNumber": 879,
+    "name": "Copperajah-Gmax",
+    "speciesName": "Copperajah",
+    "identifier": "copperajah-gmax",
+    "formIdentifier": "copperajah-gmax",
+    "isDefaultForm": false,
+    "sprite": "10224.png",
+    "ocrAliases": [
+      "Copperajah",
+      "Copperajah Gmax",
+      "Copperajah-Gmax",
+      "copperajah gmax",
+      "copperajah-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10225,
+    "dexNumber": 884,
+    "name": "Duraludon-Gmax",
+    "speciesName": "Duraludon",
+    "identifier": "duraludon-gmax",
+    "formIdentifier": "duraludon-gmax",
+    "isDefaultForm": false,
+    "sprite": "10225.png",
+    "ocrAliases": [
+      "Duraludon",
+      "Duraludon Gmax",
+      "Duraludon-Gmax",
+      "duraludon gmax",
+      "duraludon-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10226,
+    "dexNumber": 892,
+    "name": "Urshifu-Single-Strike-Gmax",
+    "speciesName": "Urshifu",
+    "identifier": "urshifu-single-strike-gmax",
+    "formIdentifier": "urshifu-single-strike-gmax",
+    "isDefaultForm": false,
+    "sprite": "10226.png",
+    "ocrAliases": [
+      "Urshifu",
+      "Urshifu Single Strike Gmax",
+      "Urshifu-Single-Strike-Gmax",
+      "urshifu single strike gmax",
+      "urshifu-single-strike-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10227,
+    "dexNumber": 892,
+    "name": "Urshifu-Rapid-Strike-Gmax",
+    "speciesName": "Urshifu",
+    "identifier": "urshifu-rapid-strike-gmax",
+    "formIdentifier": "urshifu-rapid-strike-gmax",
+    "isDefaultForm": false,
+    "sprite": "10227.png",
+    "ocrAliases": [
+      "Urshifu",
+      "Urshifu Rapid Strike Gmax",
+      "Urshifu-Rapid-Strike-Gmax",
+      "urshifu rapid strike gmax",
+      "urshifu-rapid-strike-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10228,
+    "dexNumber": 849,
+    "name": "Toxtricity-Low-Key-Gmax",
+    "speciesName": "Toxtricity",
+    "identifier": "toxtricity-low-key-gmax",
+    "formIdentifier": "toxtricity-low-key-gmax",
+    "isDefaultForm": false,
+    "sprite": "10228.png",
+    "ocrAliases": [
+      "Toxtricity",
+      "Toxtricity Low Key Gmax",
+      "Toxtricity-Low-Key-Gmax",
+      "toxtricity low key gmax",
+      "toxtricity-low-key-gmax"
+    ]
+  },
+  {
+    "pokemonId": 10229,
+    "dexNumber": 58,
+    "name": "Growlithe-Hisui",
+    "speciesName": "Growlithe",
+    "identifier": "growlithe-hisui",
+    "formIdentifier": "growlithe-hisui",
+    "isDefaultForm": false,
+    "sprite": "10229.png",
+    "ocrAliases": [
+      "Growlithe",
+      "Growlithe Hisui",
+      "Growlithe-Hisui",
+      "growlithe Hisui",
+      "growlithe-Hisui",
+      "Growlithe Hisui",
+      "Growlithe-Hisui",
+      "growlithe hisui",
+      "growlithe-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10230,
+    "dexNumber": 59,
+    "name": "Arcanine-Hisui",
+    "speciesName": "Arcanine",
+    "identifier": "arcanine-Hisui",
+    "formIdentifier": "arcanine-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10230.png",
+    "ocrAliases": [
+      "Arcanine",
+      "Arcanine Hisui",
+      "Arcanine-Hisui",
+      "arcanine Hisui",
+      "arcanine-Hisui",
+      "Arcanine Hisui",
+      "Arcanine-Hisui",
+      "arcanine hisui",
+      "arcanine-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10231,
+    "dexNumber": 100,
+    "name": "Voltorb-Hisui",
+    "speciesName": "Voltorb",
+    "identifier": "voltorb-Hisui",
+    "formIdentifier": "voltorb-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10231.png",
+    "ocrAliases": [
+      "Voltorb",
+      "Voltorb Hisui",
+      "Voltorb-Hisui",
+      "voltorb Hisui",
+      "voltorb-Hisui",
+      "Voltorb Hisui",
+      "Voltorb-Hisui",
+      "voltorb hisui",
+      "voltorb-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10232,
+    "dexNumber": 101,
+    "name": "Electrode-Hisui",
+    "speciesName": "Electrode",
+    "identifier": "electrode-Hisui",
+    "formIdentifier": "electrode-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10232.png",
+    "ocrAliases": [
+      "Electrode",
+      "Electrode Hisui",
+      "Electrode-Hisui",
+      "electrode Hisui",
+      "electrode-Hisui",
+      "Electrode Hisui",
+      "Electrode-Hisui",
+      "electrode hisui",
+      "electrode-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10233,
+    "dexNumber": 157,
+    "name": "Typhlosion-Hisui",
+    "speciesName": "Typhlosion",
+    "identifier": "typhlosion-Hisui",
+    "formIdentifier": "typhlosion-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10233.png",
+    "ocrAliases": [
+      "Typhlosion",
+      "Typhlosion Hisui",
+      "Typhlosion-Hisui",
+      "typhlosion Hisui",
+      "typhlosion-Hisui",
+      "Typhlosion Hisui",
+      "Typhlosion-Hisui",
+      "typhlosion hisui",
+      "typhlosion-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10234,
+    "dexNumber": 211,
+    "name": "Qwilfish-Hisui",
+    "speciesName": "Qwilfish",
+    "identifier": "qwilfish-Hisui",
+    "formIdentifier": "qwilfish-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10234.png",
+    "ocrAliases": [
+      "Qwilfish",
+      "Qwilfish Hisui",
+      "Qwilfish-Hisui",
+      "qwilfish Hisui",
+      "qwilfish-Hisui",
+      "Qwilfish Hisui",
+      "Qwilfish-Hisui",
+      "qwilfish hisui",
+      "qwilfish-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10235,
+    "dexNumber": 215,
+    "name": "Sneasel-Hisui",
+    "speciesName": "Sneasel",
+    "identifier": "sneasel-Hisui",
+    "formIdentifier": "sneasel-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10235.png",
+    "ocrAliases": [
+      "Sneasel",
+      "Sneasel Hisui",
+      "Sneasel-Hisui",
+      "sneasel Hisui",
+      "sneasel-Hisui",
+      "Sneasel Hisui",
+      "Sneasel-Hisui",
+      "sneasel hisui",
+      "sneasel-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10236,
+    "dexNumber": 503,
+    "name": "Samurott-Hisui",
+    "speciesName": "Samurott",
+    "identifier": "samurott-Hisui",
+    "formIdentifier": "samurott-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10236.png",
+    "ocrAliases": [
+      "Samurott",
+      "Samurott Hisui",
+      "Samurott-Hisui",
+      "samurott Hisui",
+      "samurott-Hisui",
+      "Samurott Hisui",
+      "Samurott-Hisui",
+      "samurott hisui",
+      "samurott-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10237,
+    "dexNumber": 549,
+    "name": "Lilligant-Hisui",
+    "speciesName": "Lilligant",
+    "identifier": "lilligant-Hisui",
+    "formIdentifier": "lilligant-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10237.png",
+    "ocrAliases": [
+      "Lilligant",
+      "Lilligant Hisui",
+      "Lilligant-Hisui",
+      "lilligant Hisui",
+      "lilligant-Hisui",
+      "Lilligant Hisui",
+      "Lilligant-Hisui",
+      "lilligant hisui",
+      "lilligant-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10238,
+    "dexNumber": 570,
+    "name": "Zorua-Hisui",
+    "speciesName": "Zorua",
+    "identifier": "zorua-Hisui",
+    "formIdentifier": "zorua-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10238.png",
+    "ocrAliases": [
+      "Zorua",
+      "Zorua Hisui",
+      "Zorua-Hisui",
+      "zorua Hisui",
+      "zorua-Hisui",
+      "Zorua Hisui",
+      "Zorua-Hisui",
+      "zorua hisui",
+      "zorua-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10239,
+    "dexNumber": 571,
+    "name": "Zoroark-Hisui",
+    "speciesName": "Zoroark",
+    "identifier": "zoroark-Hisui",
+    "formIdentifier": "zoroark-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10239.png",
+    "ocrAliases": [
+      "Zoroark",
+      "Zoroark Hisui",
+      "Zoroark-Hisui",
+      "zoroark Hisui",
+      "zoroark-Hisui",
+      "Zoroark Hisui",
+      "Zoroark-Hisui",
+      "zoroark hisui",
+      "zoroark-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10240,
+    "dexNumber": 628,
+    "name": "Braviary-Hisui",
+    "speciesName": "Braviary",
+    "identifier": "braviary-Hisui",
+    "formIdentifier": "braviary-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10240.png",
+    "ocrAliases": [
+      "Braviary",
+      "Braviary Hisui",
+      "Braviary-Hisui",
+      "braviary Hisui",
+      "braviary-Hisui",
+      "Braviary Hisui",
+      "Braviary-Hisui",
+      "braviary hisui",
+      "braviary-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10241,
+    "dexNumber": 705,
+    "name": "Sliggoo-Hisui",
+    "speciesName": "Sliggoo",
+    "identifier": "sliggoo-Hisui",
+    "formIdentifier": "sliggoo-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10241.png",
+    "ocrAliases": [
+      "Sliggoo",
+      "Sliggoo Hisui",
+      "Sliggoo-Hisui",
+      "sliggoo Hisui",
+      "sliggoo-Hisui",
+      "Sliggoo Hisui",
+      "Sliggoo-Hisui",
+      "sliggoo hisui",
+      "sliggoo-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10242,
+    "dexNumber": 706,
+    "name": "Goodra-Hisui",
+    "speciesName": "Goodra",
+    "identifier": "goodra-Hisui",
+    "formIdentifier": "goodra-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10242.png",
+    "ocrAliases": [
+      "Goodra",
+      "Goodra Hisui",
+      "Goodra-Hisui",
+      "goodra Hisui",
+      "goodra-Hisui",
+      "Goodra Hisui",
+      "Goodra-Hisui",
+      "goodra hisui",
+      "goodra-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10243,
+    "dexNumber": 713,
+    "name": "Avalugg-Hisui",
+    "speciesName": "Avalugg",
+    "identifier": "avalugg-Hisui",
+    "formIdentifier": "avalugg-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10243.png",
+    "ocrAliases": [
+      "Avalugg",
+      "Avalugg Hisui",
+      "Avalugg-Hisui",
+      "avalugg Hisui",
+      "avalugg-Hisui",
+      "Avalugg Hisui",
+      "Avalugg-Hisui",
+      "avalugg hisui",
+      "avalugg-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10244,
+    "dexNumber": 724,
+    "name": "Decidueye-Hisui",
+    "speciesName": "Decidueye",
+    "identifier": "decidueye-Hisui",
+    "formIdentifier": "decidueye-Hisui",
+    "isDefaultForm": false,
+    "sprite": "10244.png",
+    "ocrAliases": [
+      "Decidueye",
+      "Decidueye Hisui",
+      "Decidueye-Hisui",
+      "decidueye Hisui",
+      "decidueye-Hisui",
+      "Decidueye Hisui",
+      "Decidueye-Hisui",
+      "decidueye hisui",
+      "decidueye-hisui"
+    ]
+  },
+  {
+    "pokemonId": 10245,
+    "dexNumber": 483,
+    "name": "Dialga-Origin",
+    "speciesName": "Dialga",
+    "identifier": "dialga-origin",
+    "formIdentifier": "dialga-origin",
+    "isDefaultForm": false,
+    "sprite": "10245.png",
+    "ocrAliases": [
+      "Dialga",
+      "Dialga Origin",
+      "Dialga-Origin",
+      "dialga origin",
+      "dialga-origin"
+    ]
+  },
+  {
+    "pokemonId": 10246,
+    "dexNumber": 484,
+    "name": "Palkia-Origin",
+    "speciesName": "Palkia",
+    "identifier": "palkia-origin",
+    "formIdentifier": "palkia-origin",
+    "isDefaultForm": false,
+    "sprite": "10246.png",
+    "ocrAliases": [
+      "Palkia",
+      "Palkia Origin",
+      "Palkia-Origin",
+      "palkia origin",
+      "palkia-origin"
+    ]
+  },
+  {
+    "pokemonId": 10247,
+    "dexNumber": 550,
+    "name": "Basculin-White-Striped",
+    "speciesName": "Basculin",
+    "identifier": "basculin-white-striped",
+    "formIdentifier": "basculin-white-striped",
+    "isDefaultForm": false,
+    "sprite": "10247.png",
+    "ocrAliases": [
+      "Basculin",
+      "Basculin White Striped",
+      "Basculin-White-Striped",
+      "basculin white striped",
+      "basculin-white-striped"
+    ]
+  },
+  {
+    "pokemonId": 10248,
+    "dexNumber": 902,
+    "name": "Basculegion-Female",
+    "speciesName": "Basculegion",
+    "identifier": "basculegion-female",
+    "formIdentifier": "basculegion-female",
+    "isDefaultForm": false,
+    "sprite": "10248.png",
+    "ocrAliases": [
+      "Basculegion",
+      "Basculegion Female",
+      "Basculegion-Female",
+      "basculegion female",
+      "basculegion-female"
+    ]
+  },
+  {
+    "pokemonId": 10249,
+    "dexNumber": 905,
+    "name": "Enamorus-Therian",
+    "speciesName": "Enamorus",
+    "identifier": "enamorus-therian",
+    "formIdentifier": "enamorus-therian",
+    "isDefaultForm": false,
+    "sprite": "10249.png",
+    "ocrAliases": [
+      "Enamorus",
+      "Enamorus Therian",
+      "Enamorus-Therian",
+      "enamorus therian",
+      "enamorus-therian"
+    ]
+  },
+  {
+    "pokemonId": 10250,
+    "dexNumber": 128,
+    "name": "Tauros-Paldea-Combat-Breed",
+    "speciesName": "Tauros",
+    "identifier": "tauros-paldea-combat-breed",
+    "formIdentifier": "tauros-paldea-combat-breed",
+    "isDefaultForm": false,
+    "sprite": "10250.png",
+    "ocrAliases": [
+      "Tauros",
+      "Tauros Paldea Combat Breed",
+      "Tauros-Paldea-Combat-Breed",
+      "tauros paldea combat breed",
+      "tauros-paldea-combat-breed"
+    ]
+  },
+  {
+    "pokemonId": 10251,
+    "dexNumber": 128,
+    "name": "Tauros-Paldea-Blaze-Breed",
+    "speciesName": "Tauros",
+    "identifier": "tauros-paldea-blaze-breed",
+    "formIdentifier": "tauros-paldea-blaze-breed",
+    "isDefaultForm": false,
+    "sprite": "10251.png",
+    "ocrAliases": [
+      "Tauros",
+      "Tauros Paldea Blaze Breed",
+      "Tauros-Paldea-Blaze-Breed",
+      "tauros paldea blaze breed",
+      "tauros-paldea-blaze-breed"
+    ]
+  },
+  {
+    "pokemonId": 10252,
+    "dexNumber": 128,
+    "name": "Tauros-Paldea-Aqua-Breed",
+    "speciesName": "Tauros",
+    "identifier": "tauros-paldea-aqua-breed",
+    "formIdentifier": "tauros-paldea-aqua-breed",
+    "isDefaultForm": false,
+    "sprite": "10252.png",
+    "ocrAliases": [
+      "Tauros",
+      "Tauros Paldea Aqua Breed",
+      "Tauros-Paldea-Aqua-Breed",
+      "tauros paldea aqua breed",
+      "tauros-paldea-aqua-breed"
+    ]
+  },
+  {
+    "pokemonId": 10253,
+    "dexNumber": 194,
+    "name": "Wooper-Paldea",
+    "speciesName": "Wooper",
+    "identifier": "wooper-paldea",
+    "formIdentifier": "wooper-paldea",
+    "isDefaultForm": false,
+    "sprite": "10253.png",
+    "ocrAliases": [
+      "Wooper",
+      "Wooper Paldea",
+      "Wooper-Paldea",
+      "wooper paldea",
+      "wooper-paldea"
+    ]
+  },
+  {
+    "pokemonId": 10254,
+    "dexNumber": 916,
+    "name": "Oinkologne-Female",
+    "speciesName": "Oinkologne",
+    "identifier": "oinkologne-female",
+    "formIdentifier": "oinkologne-female",
+    "isDefaultForm": false,
+    "sprite": "10254.png",
+    "ocrAliases": [
+      "Oinkologne",
+      "Oinkologne Female",
+      "Oinkologne-Female",
+      "oinkologne female",
+      "oinkologne-female"
+    ]
+  },
+  {
+    "pokemonId": 10255,
+    "dexNumber": 982,
+    "name": "Dudunsparce-Three-Segment",
+    "speciesName": "Dudunsparce",
+    "identifier": "dudunsparce-three-segment",
+    "formIdentifier": "dudunsparce-three-segment",
+    "isDefaultForm": false,
+    "sprite": "10255.png",
+    "ocrAliases": [
+      "Dudunsparce",
+      "Dudunsparce Three Segment",
+      "Dudunsparce-Three-Segment",
+      "dudunsparce three segment",
+      "dudunsparce-three-segment"
+    ]
+  },
+  {
+    "pokemonId": 10256,
+    "dexNumber": 964,
+    "name": "Palafin-Hero",
+    "speciesName": "Palafin",
+    "identifier": "palafin-hero",
+    "formIdentifier": "palafin-hero",
+    "isDefaultForm": false,
+    "sprite": "10256.png",
+    "ocrAliases": [
+      "Palafin",
+      "Palafin Hero",
+      "Palafin-Hero",
+      "palafin hero",
+      "palafin-hero"
+    ]
+  },
+  {
+    "pokemonId": 10257,
+    "dexNumber": 925,
+    "name": "Maushold-Family-Of-Three",
+    "speciesName": "Maushold",
+    "identifier": "maushold-family-of-three",
+    "formIdentifier": "maushold-family-of-three",
+    "isDefaultForm": false,
+    "sprite": "10257.png",
+    "ocrAliases": [
+      "Maushold",
+      "Maushold Family Of Three",
+      "Maushold-Family-Of-Three",
+      "maushold family of three",
+      "maushold-family-of-three"
+    ]
+  },
+  {
+    "pokemonId": 10258,
+    "dexNumber": 978,
+    "name": "Tatsugiri-Droopy",
+    "speciesName": "Tatsugiri",
+    "identifier": "tatsugiri-droopy",
+    "formIdentifier": "tatsugiri-droopy",
+    "isDefaultForm": false,
+    "sprite": "10258.png",
+    "ocrAliases": [
+      "Tatsugiri",
+      "Tatsugiri Droopy",
+      "Tatsugiri-Droopy",
+      "tatsugiri droopy",
+      "tatsugiri-droopy"
+    ]
+  },
+  {
+    "pokemonId": 10259,
+    "dexNumber": 978,
+    "name": "Tatsugiri-Stretchy",
+    "speciesName": "Tatsugiri",
+    "identifier": "tatsugiri-stretchy",
+    "formIdentifier": "tatsugiri-stretchy",
+    "isDefaultForm": false,
+    "sprite": "10259.png",
+    "ocrAliases": [
+      "Tatsugiri",
+      "Tatsugiri Stretchy",
+      "Tatsugiri-Stretchy",
+      "tatsugiri stretchy",
+      "tatsugiri-stretchy"
+    ]
+  },
+  {
+    "pokemonId": 10260,
+    "dexNumber": 931,
+    "name": "Squawkabilly-Blue-Plumage",
+    "speciesName": "Squawkabilly",
+    "identifier": "squawkabilly-blue-plumage",
+    "formIdentifier": "squawkabilly-blue-plumage",
+    "isDefaultForm": false,
+    "sprite": "10260.png",
+    "ocrAliases": [
+      "Squawkabilly",
+      "Squawkabilly Blue Plumage",
+      "Squawkabilly-Blue-Plumage",
+      "squawkabilly blue plumage",
+      "squawkabilly-blue-plumage"
+    ]
+  },
+  {
+    "pokemonId": 10261,
+    "dexNumber": 931,
+    "name": "Squawkabilly-Yellow-Plumage",
+    "speciesName": "Squawkabilly",
+    "identifier": "squawkabilly-yellow-plumage",
+    "formIdentifier": "squawkabilly-yellow-plumage",
+    "isDefaultForm": false,
+    "sprite": "10261.png",
+    "ocrAliases": [
+      "Squawkabilly",
+      "Squawkabilly Yellow Plumage",
+      "Squawkabilly-Yellow-Plumage",
+      "squawkabilly yellow plumage",
+      "squawkabilly-yellow-plumage"
+    ]
+  },
+  {
+    "pokemonId": 10262,
+    "dexNumber": 931,
+    "name": "Squawkabilly-White-Plumage",
+    "speciesName": "Squawkabilly",
+    "identifier": "squawkabilly-white-plumage",
+    "formIdentifier": "squawkabilly-white-plumage",
+    "isDefaultForm": false,
+    "sprite": "10262.png",
+    "ocrAliases": [
+      "Squawkabilly",
+      "Squawkabilly White Plumage",
+      "Squawkabilly-White-Plumage",
+      "squawkabilly white plumage",
+      "squawkabilly-white-plumage"
+    ]
+  },
+  {
+    "pokemonId": 10263,
+    "dexNumber": 999,
+    "name": "Gimmighoul-Roaming",
+    "speciesName": "Gimmighoul",
+    "identifier": "gimmighoul-roaming",
+    "formIdentifier": "gimmighoul-roaming",
+    "isDefaultForm": false,
+    "sprite": "10263.png",
+    "ocrAliases": [
+      "Gimmighoul",
+      "Gimmighoul Roaming",
+      "Gimmighoul-Roaming",
+      "gimmighoul roaming",
+      "gimmighoul-roaming"
+    ]
+  },
+  {
+    "pokemonId": 10272,
+    "dexNumber": 901,
+    "name": "Ursaluna-Bloodmoon",
+    "speciesName": "Ursaluna",
+    "identifier": "ursaluna-bloodmoon",
+    "formIdentifier": "ursaluna-bloodmoon",
+    "isDefaultForm": false,
+    "sprite": "10272.png",
+    "ocrAliases": [
+      "Ursaluna",
+      "Ursaluna Bloodmoon",
+      "Ursaluna-Bloodmoon",
+      "ursaluna bloodmoon",
+      "ursaluna-bloodmoon"
+    ]
+  },
+  {
+    "pokemonId": 10273,
+    "dexNumber": 1017,
+    "name": "Ogerpon-Wellspring-Mask",
+    "speciesName": "Ogerpon",
+    "identifier": "ogerpon-wellspring-mask",
+    "formIdentifier": "ogerpon-wellspring-mask",
+    "isDefaultForm": false,
+    "sprite": "10273.png",
+    "ocrAliases": [
+      "Ogerpon",
+      "Ogerpon Wellspring Mask",
+      "Ogerpon-Wellspring-Mask",
+      "ogerpon wellspring mask",
+      "ogerpon-wellspring-mask"
+    ]
+  },
+  {
+    "pokemonId": 10274,
+    "dexNumber": 1017,
+    "name": "Ogerpon-Hearthflame-Mask",
+    "speciesName": "Ogerpon",
+    "identifier": "ogerpon-hearthflame-mask",
+    "formIdentifier": "ogerpon-hearthflame-mask",
+    "isDefaultForm": false,
+    "sprite": "10274.png",
+    "ocrAliases": [
+      "Ogerpon",
+      "Ogerpon Hearthflame Mask",
+      "Ogerpon-Hearthflame-Mask",
+      "ogerpon hearthflame mask",
+      "ogerpon-hearthflame-mask"
+    ]
+  },
+  {
+    "pokemonId": 10275,
+    "dexNumber": 1017,
+    "name": "Ogerpon-Cornerstone-Mask",
+    "speciesName": "Ogerpon",
+    "identifier": "ogerpon-cornerstone-mask",
+    "formIdentifier": "ogerpon-cornerstone-mask",
+    "isDefaultForm": false,
+    "sprite": "10275.png",
+    "ocrAliases": [
+      "Ogerpon",
+      "Ogerpon Cornerstone Mask",
+      "Ogerpon-Cornerstone-Mask",
+      "ogerpon cornerstone mask",
+      "ogerpon-cornerstone-mask"
+    ]
+  },
+  {
+    "pokemonId": 10276,
+    "dexNumber": 1024,
+    "name": "Terapagos-Terastal",
+    "speciesName": "Terapagos",
+    "identifier": "terapagos-terastal",
+    "formIdentifier": "terapagos-terastal",
+    "isDefaultForm": false,
+    "sprite": "10276.png",
+    "ocrAliases": [
+      "Terapagos",
+      "Terapagos Terastal",
+      "Terapagos-Terastal",
+      "terapagos terastal",
+      "terapagos-terastal"
+    ]
+  },
+  {
+    "pokemonId": 10277,
+    "dexNumber": 1024,
+    "name": "Terapagos-Stellar",
+    "speciesName": "Terapagos",
+    "identifier": "terapagos-stellar",
+    "formIdentifier": "terapagos-stellar",
+    "isDefaultForm": false,
+    "sprite": "10277.png",
+    "ocrAliases": [
+      "Terapagos",
+      "Terapagos Stellar",
+      "Terapagos-Stellar",
+      "terapagos stellar",
+      "terapagos-stellar"
+    ]
+  },
+  {
+    "pokemonId": 10278,
+    "dexNumber": 36,
+    "name": "Clefable-Mega",
+    "speciesName": "Clefable",
+    "identifier": "clefable-mega",
+    "formIdentifier": "clefable-mega",
+    "isDefaultForm": false,
+    "sprite": "10278.png",
+    "ocrAliases": [
+      "Clefable",
+      "Clefable Mega",
+      "Clefable-Mega",
+      "clefable mega",
+      "clefable-mega"
+    ]
+  },
+  {
+    "pokemonId": 10279,
+    "dexNumber": 71,
+    "name": "Victreebel-Mega",
+    "speciesName": "Victreebel",
+    "identifier": "victreebel-mega",
+    "formIdentifier": "victreebel-mega",
+    "isDefaultForm": false,
+    "sprite": "10279.png",
+    "ocrAliases": [
+      "Victreebel",
+      "Victreebel Mega",
+      "Victreebel-Mega",
+      "victreebel mega",
+      "victreebel-mega"
+    ]
+  },
+  {
+    "pokemonId": 10280,
+    "dexNumber": 121,
+    "name": "Starmie-Mega",
+    "speciesName": "Starmie",
+    "identifier": "starmie-mega",
+    "formIdentifier": "starmie-mega",
+    "isDefaultForm": false,
+    "sprite": "10280.png",
+    "ocrAliases": [
+      "Starmie",
+      "Starmie Mega",
+      "Starmie-Mega",
+      "starmie mega",
+      "starmie-mega"
+    ]
+  },
+  {
+    "pokemonId": 10281,
+    "dexNumber": 149,
+    "name": "Dragonite-Mega",
+    "speciesName": "Dragonite",
+    "identifier": "dragonite-mega",
+    "formIdentifier": "dragonite-mega",
+    "isDefaultForm": false,
+    "sprite": "10281.png",
+    "ocrAliases": [
+      "Dragonite",
+      "Dragonite Mega",
+      "Dragonite-Mega",
+      "dragonite mega",
+      "dragonite-mega"
+    ]
+  },
+  {
+    "pokemonId": 10282,
+    "dexNumber": 154,
+    "name": "Meganium-Mega",
+    "speciesName": "Meganium",
+    "identifier": "meganium-mega",
+    "formIdentifier": "meganium-mega",
+    "isDefaultForm": false,
+    "sprite": "10282.png",
+    "ocrAliases": [
+      "Meganium",
+      "Meganium Mega",
+      "Meganium-Mega",
+      "meganium mega",
+      "meganium-mega"
+    ]
+  },
+  {
+    "pokemonId": 10283,
+    "dexNumber": 160,
+    "name": "Feraligatr-Mega",
+    "speciesName": "Feraligatr",
+    "identifier": "feraligatr-mega",
+    "formIdentifier": "feraligatr-mega",
+    "isDefaultForm": false,
+    "sprite": "10283.png",
+    "ocrAliases": [
+      "Feraligatr",
+      "Feraligatr Mega",
+      "Feraligatr-Mega",
+      "feraligatr mega",
+      "feraligatr-mega"
+    ]
+  },
+  {
+    "pokemonId": 10284,
+    "dexNumber": 227,
+    "name": "Skarmory-Mega",
+    "speciesName": "Skarmory",
+    "identifier": "skarmory-mega",
+    "formIdentifier": "skarmory-mega",
+    "isDefaultForm": false,
+    "sprite": "10284.png",
+    "ocrAliases": [
+      "Skarmory",
+      "Skarmory Mega",
+      "Skarmory-Mega",
+      "skarmory mega",
+      "skarmory-mega"
+    ]
+  },
+  {
+    "pokemonId": 10285,
+    "dexNumber": 478,
+    "name": "Froslass-Mega",
+    "speciesName": "Froslass",
+    "identifier": "froslass-mega",
+    "formIdentifier": "froslass-mega",
+    "isDefaultForm": false,
+    "sprite": "10285.png",
+    "ocrAliases": [
+      "Froslass",
+      "Froslass Mega",
+      "Froslass-Mega",
+      "froslass mega",
+      "froslass-mega"
+    ]
+  },
+  {
+    "pokemonId": 10286,
+    "dexNumber": 500,
+    "name": "Emboar-Mega",
+    "speciesName": "Emboar",
+    "identifier": "emboar-mega",
+    "formIdentifier": "emboar-mega",
+    "isDefaultForm": false,
+    "sprite": "10286.png",
+    "ocrAliases": [
+      "Emboar",
+      "Emboar Mega",
+      "Emboar-Mega",
+      "emboar mega",
+      "emboar-mega"
+    ]
+  },
+  {
+    "pokemonId": 10287,
+    "dexNumber": 530,
+    "name": "Excadrill-Mega",
+    "speciesName": "Excadrill",
+    "identifier": "excadrill-mega",
+    "formIdentifier": "excadrill-mega",
+    "isDefaultForm": false,
+    "sprite": "10287.png",
+    "ocrAliases": [
+      "Excadrill",
+      "Excadrill Mega",
+      "Excadrill-Mega",
+      "excadrill mega",
+      "excadrill-mega"
+    ]
+  },
+  {
+    "pokemonId": 10288,
+    "dexNumber": 545,
+    "name": "Scolipede-Mega",
+    "speciesName": "Scolipede",
+    "identifier": "scolipede-mega",
+    "formIdentifier": "scolipede-mega",
+    "isDefaultForm": false,
+    "sprite": "10288.png",
+    "ocrAliases": [
+      "Scolipede",
+      "Scolipede Mega",
+      "Scolipede-Mega",
+      "scolipede mega",
+      "scolipede-mega"
+    ]
+  },
+  {
+    "pokemonId": 10289,
+    "dexNumber": 560,
+    "name": "Scrafty-Mega",
+    "speciesName": "Scrafty",
+    "identifier": "scrafty-mega",
+    "formIdentifier": "scrafty-mega",
+    "isDefaultForm": false,
+    "sprite": "10289.png",
+    "ocrAliases": [
+      "Scrafty",
+      "Scrafty Mega",
+      "Scrafty-Mega",
+      "scrafty mega",
+      "scrafty-mega"
+    ]
+  },
+  {
+    "pokemonId": 10290,
+    "dexNumber": 604,
+    "name": "Eelektross-Mega",
+    "speciesName": "Eelektross",
+    "identifier": "eelektross-mega",
+    "formIdentifier": "eelektross-mega",
+    "isDefaultForm": false,
+    "sprite": "10290.png",
+    "ocrAliases": [
+      "Eelektross",
+      "Eelektross Mega",
+      "Eelektross-Mega",
+      "eelektross mega",
+      "eelektross-mega"
+    ]
+  },
+  {
+    "pokemonId": 10291,
+    "dexNumber": 609,
+    "name": "Chandelure-Mega",
+    "speciesName": "Chandelure",
+    "identifier": "chandelure-mega",
+    "formIdentifier": "chandelure-mega",
+    "isDefaultForm": false,
+    "sprite": "10291.png",
+    "ocrAliases": [
+      "Chandelure",
+      "Chandelure Mega",
+      "Chandelure-Mega",
+      "chandelure mega",
+      "chandelure-mega"
+    ]
+  },
+  {
+    "pokemonId": 10292,
+    "dexNumber": 652,
+    "name": "Chesnaught-Mega",
+    "speciesName": "Chesnaught",
+    "identifier": "chesnaught-mega",
+    "formIdentifier": "chesnaught-mega",
+    "isDefaultForm": false,
+    "sprite": "10292.png",
+    "ocrAliases": [
+      "Chesnaught",
+      "Chesnaught Mega",
+      "Chesnaught-Mega",
+      "chesnaught mega",
+      "chesnaught-mega"
+    ]
+  },
+  {
+    "pokemonId": 10293,
+    "dexNumber": 655,
+    "name": "Delphox-Mega",
+    "speciesName": "Delphox",
+    "identifier": "delphox-mega",
+    "formIdentifier": "delphox-mega",
+    "isDefaultForm": false,
+    "sprite": "10293.png",
+    "ocrAliases": [
+      "Delphox",
+      "Delphox Mega",
+      "Delphox-Mega",
+      "delphox mega",
+      "delphox-mega"
+    ]
+  },
+  {
+    "pokemonId": 10294,
+    "dexNumber": 658,
+    "name": "Greninja-Mega",
+    "speciesName": "Greninja",
+    "identifier": "greninja-mega",
+    "formIdentifier": "greninja-mega",
+    "isDefaultForm": false,
+    "sprite": "10294.png",
+    "ocrAliases": [
+      "Greninja",
+      "Greninja Mega",
+      "Greninja-Mega",
+      "greninja mega",
+      "greninja-mega"
+    ]
+  },
+  {
+    "pokemonId": 10295,
+    "dexNumber": 668,
+    "name": "Pyroar-Mega",
+    "speciesName": "Pyroar",
+    "identifier": "pyroar-mega",
+    "formIdentifier": "pyroar-mega",
+    "isDefaultForm": false,
+    "sprite": "10295.png",
+    "ocrAliases": [
+      "Pyroar",
+      "Pyroar Mega",
+      "Pyroar-Mega",
+      "pyroar mega",
+      "pyroar-mega"
+    ]
+  },
+  {
+    "pokemonId": 10296,
+    "dexNumber": 670,
+    "name": "Floette-Mega",
+    "speciesName": "Floette",
+    "identifier": "floette-mega",
+    "formIdentifier": "floette-mega",
+    "isDefaultForm": false,
+    "sprite": "10296.png",
+    "ocrAliases": [
+      "Floette",
+      "Floette Mega",
+      "Floette-Mega",
+      "floette mega",
+      "floette-mega"
+    ]
+  },
+  {
+    "pokemonId": 10297,
+    "dexNumber": 687,
+    "name": "Malamar-Mega",
+    "speciesName": "Malamar",
+    "identifier": "malamar-mega",
+    "formIdentifier": "malamar-mega",
+    "isDefaultForm": false,
+    "sprite": "10297.png",
+    "ocrAliases": [
+      "Malamar",
+      "Malamar Mega",
+      "Malamar-Mega",
+      "malamar mega",
+      "malamar-mega"
+    ]
+  },
+  {
+    "pokemonId": 10298,
+    "dexNumber": 689,
+    "name": "Barbaracle-Mega",
+    "speciesName": "Barbaracle",
+    "identifier": "barbaracle-mega",
+    "formIdentifier": "barbaracle-mega",
+    "isDefaultForm": false,
+    "sprite": "10298.png",
+    "ocrAliases": [
+      "Barbaracle",
+      "Barbaracle Mega",
+      "Barbaracle-Mega",
+      "barbaracle mega",
+      "barbaracle-mega"
+    ]
+  },
+  {
+    "pokemonId": 10299,
+    "dexNumber": 691,
+    "name": "Dragalge-Mega",
+    "speciesName": "Dragalge",
+    "identifier": "dragalge-mega",
+    "formIdentifier": "dragalge-mega",
+    "isDefaultForm": false,
+    "sprite": "10299.png",
+    "ocrAliases": [
+      "Dragalge",
+      "Dragalge Mega",
+      "Dragalge-Mega",
+      "dragalge mega",
+      "dragalge-mega"
+    ]
+  },
+  {
+    "pokemonId": 10300,
+    "dexNumber": 701,
+    "name": "Hawlucha-Mega",
+    "speciesName": "Hawlucha",
+    "identifier": "hawlucha-mega",
+    "formIdentifier": "hawlucha-mega",
+    "isDefaultForm": false,
+    "sprite": "10300.png",
+    "ocrAliases": [
+      "Hawlucha",
+      "Hawlucha Mega",
+      "Hawlucha-Mega",
+      "hawlucha mega",
+      "hawlucha-mega"
+    ]
+  },
+  {
+    "pokemonId": 10302,
+    "dexNumber": 780,
+    "name": "Drampa-Mega",
+    "speciesName": "Drampa",
+    "identifier": "drampa-mega",
+    "formIdentifier": "drampa-mega",
+    "isDefaultForm": false,
+    "sprite": "10302.png",
+    "ocrAliases": [
+      "Drampa",
+      "Drampa Mega",
+      "Drampa-Mega",
+      "drampa mega",
+      "drampa-mega"
+    ]
+  },
+  {
+    "pokemonId": 10303,
+    "dexNumber": 870,
+    "name": "Falinks-Mega",
+    "speciesName": "Falinks",
+    "identifier": "falinks-mega",
+    "formIdentifier": "falinks-mega",
+    "isDefaultForm": false,
+    "sprite": "10303.png",
+    "ocrAliases": [
+      "Falinks",
+      "Falinks Mega",
+      "Falinks-Mega",
+      "falinks mega",
+      "falinks-mega"
+    ]
+  },
+  {
+    "pokemonId": 10304,
+    "dexNumber": 26,
+    "name": "Raichu-Mega-X",
+    "speciesName": "Raichu",
+    "identifier": "raichu-mega-x",
+    "formIdentifier": "raichu-mega-x",
+    "isDefaultForm": false,
+    "sprite": "10304.png",
+    "ocrAliases": [
+      "Raichu",
+      "Raichu Mega X",
+      "Raichu-Mega-X",
+      "raichu mega x",
+      "raichu-mega-x"
+    ]
+  },
+  {
+    "pokemonId": 10305,
+    "dexNumber": 26,
+    "name": "Raichu-Mega-Y",
+    "speciesName": "Raichu",
+    "identifier": "raichu-mega-y",
+    "formIdentifier": "raichu-mega-y",
+    "isDefaultForm": false,
+    "sprite": "10305.png",
+    "ocrAliases": [
+      "Raichu",
+      "Raichu Mega Y",
+      "Raichu-Mega-Y",
+      "raichu mega y",
+      "raichu-mega-y"
+    ]
+  },
+  {
+    "pokemonId": 10306,
+    "dexNumber": 358,
+    "name": "Chimecho-Mega",
+    "speciesName": "Chimecho",
+    "identifier": "chimecho-mega",
+    "formIdentifier": "chimecho-mega",
+    "isDefaultForm": false,
+    "sprite": "10306.png",
+    "ocrAliases": [
+      "Chimecho",
+      "Chimecho Mega",
+      "Chimecho-Mega",
+      "chimecho mega",
+      "chimecho-mega"
+    ]
+  },
+  {
+    "pokemonId": 10307,
+    "dexNumber": 359,
+    "name": "Absol-Mega-Z",
+    "speciesName": "Absol",
+    "identifier": "absol-mega-z",
+    "formIdentifier": "absol-mega-z",
+    "isDefaultForm": false,
+    "sprite": "10307.png",
+    "ocrAliases": [
+      "Absol",
+      "Absol Mega Z",
+      "Absol-Mega-Z",
+      "absol mega z",
+      "absol-mega-z"
+    ]
+  },
+  {
+    "pokemonId": 10308,
+    "dexNumber": 398,
+    "name": "Staraptor-Mega",
+    "speciesName": "Staraptor",
+    "identifier": "staraptor-mega",
+    "formIdentifier": "staraptor-mega",
+    "isDefaultForm": false,
+    "sprite": "10308.png",
+    "ocrAliases": [
+      "Staraptor",
+      "Staraptor Mega",
+      "Staraptor-Mega",
+      "staraptor mega",
+      "staraptor-mega"
+    ]
+  },
+  {
+    "pokemonId": 10309,
+    "dexNumber": 445,
+    "name": "Garchomp-Mega-Z",
+    "speciesName": "Garchomp",
+    "identifier": "garchomp-mega-z",
+    "formIdentifier": "garchomp-mega-z",
+    "isDefaultForm": false,
+    "sprite": "10309.png",
+    "ocrAliases": [
+      "Garchomp",
+      "Garchomp Mega Z",
+      "Garchomp-Mega-Z",
+      "garchomp mega z",
+      "garchomp-mega-z"
+    ]
+  },
+  {
+    "pokemonId": 10310,
+    "dexNumber": 448,
+    "name": "Lucario-Mega-Z",
+    "speciesName": "Lucario",
+    "identifier": "lucario-mega-z",
+    "formIdentifier": "lucario-mega-z",
+    "isDefaultForm": false,
+    "sprite": "10310.png",
+    "ocrAliases": [
+      "Lucario",
+      "Lucario Mega Z",
+      "Lucario-Mega-Z",
+      "lucario mega z",
+      "lucario-mega-z"
+    ]
+  },
+  {
+    "pokemonId": 10311,
+    "dexNumber": 485,
+    "name": "Heatran-Mega",
+    "speciesName": "Heatran",
+    "identifier": "heatran-mega",
+    "formIdentifier": "heatran-mega",
+    "isDefaultForm": false,
+    "sprite": "10311.png",
+    "ocrAliases": [
+      "Heatran",
+      "Heatran Mega",
+      "Heatran-Mega",
+      "heatran mega",
+      "heatran-mega"
+    ]
+  },
+  {
+    "pokemonId": 10312,
+    "dexNumber": 491,
+    "name": "Darkrai-Mega",
+    "speciesName": "Darkrai",
+    "identifier": "darkrai-mega",
+    "formIdentifier": "darkrai-mega",
+    "isDefaultForm": false,
+    "sprite": "10312.png",
+    "ocrAliases": [
+      "Darkrai",
+      "Darkrai Mega",
+      "Darkrai-Mega",
+      "darkrai mega",
+      "darkrai-mega"
+    ]
+  },
+  {
+    "pokemonId": 10313,
+    "dexNumber": 623,
+    "name": "Golurk-Mega",
+    "speciesName": "Golurk",
+    "identifier": "golurk-mega",
+    "formIdentifier": "golurk-mega",
+    "isDefaultForm": false,
+    "sprite": "10313.png",
+    "ocrAliases": [
+      "Golurk",
+      "Golurk Mega",
+      "Golurk-Mega",
+      "golurk mega",
+      "golurk-mega"
+    ]
+  },
+  {
+    "pokemonId": 10314,
+    "dexNumber": 678,
+    "name": "Meowstic-Male-Mega",
+    "speciesName": "Meowstic",
+    "identifier": "meowstic-male-mega",
+    "formIdentifier": "meowstic-male-mega",
+    "isDefaultForm": false,
+    "sprite": "10314.png",
+    "ocrAliases": [
+      "Meowstic",
+      "Meowstic Male Mega",
+      "Meowstic-Male-Mega",
+      "meowstic male mega",
+      "meowstic-male-mega"
+    ]
+  },
+  {
+    "pokemonId": 10315,
+    "dexNumber": 740,
+    "name": "Crabominable-Mega",
+    "speciesName": "Crabominable",
+    "identifier": "crabominable-mega",
+    "formIdentifier": "crabominable-mega",
+    "isDefaultForm": false,
+    "sprite": "10315.png",
+    "ocrAliases": [
+      "Crabominable",
+      "Crabominable Mega",
+      "Crabominable-Mega",
+      "crabominable mega",
+      "crabominable-mega"
+    ]
+  },
+  {
+    "pokemonId": 10316,
+    "dexNumber": 768,
+    "name": "Golisopod-Mega",
+    "speciesName": "Golisopod",
+    "identifier": "golisopod-mega",
+    "formIdentifier": "golisopod-mega",
+    "isDefaultForm": false,
+    "sprite": "10316.png",
+    "ocrAliases": [
+      "Golisopod",
+      "Golisopod Mega",
+      "Golisopod-Mega",
+      "golisopod mega",
+      "golisopod-mega"
+    ]
+  },
+  {
+    "pokemonId": 10317,
+    "dexNumber": 801,
+    "name": "Magearna-Mega",
+    "speciesName": "Magearna",
+    "identifier": "magearna-mega",
+    "formIdentifier": "magearna-mega",
+    "isDefaultForm": false,
+    "sprite": "10317.png",
+    "ocrAliases": [
+      "Magearna",
+      "Magearna Mega",
+      "Magearna-Mega",
+      "magearna mega",
+      "magearna-mega"
+    ]
+  },
+  {
+    "pokemonId": 10318,
+    "dexNumber": 801,
+    "name": "Magearna-Original-Mega",
+    "speciesName": "Magearna",
+    "identifier": "magearna-original-mega",
+    "formIdentifier": "magearna-original-mega",
+    "isDefaultForm": false,
+    "sprite": "10318.png",
+    "ocrAliases": [
+      "Magearna",
+      "Magearna Original Mega",
+      "Magearna-Original-Mega",
+      "magearna original mega",
+      "magearna-original-mega"
+    ]
+  },
+  {
+    "pokemonId": 10319,
+    "dexNumber": 807,
+    "name": "Zeraora-Mega",
+    "speciesName": "Zeraora",
+    "identifier": "zeraora-mega",
+    "formIdentifier": "zeraora-mega",
+    "isDefaultForm": false,
+    "sprite": "10319.png",
+    "ocrAliases": [
+      "Zeraora",
+      "Zeraora Mega",
+      "Zeraora-Mega",
+      "zeraora mega",
+      "zeraora-mega"
+    ]
+  },
+  {
+    "pokemonId": 10320,
+    "dexNumber": 952,
+    "name": "Scovillain-Mega",
+    "speciesName": "Scovillain",
+    "identifier": "scovillain-mega",
+    "formIdentifier": "scovillain-mega",
+    "isDefaultForm": false,
+    "sprite": "10320.png",
+    "ocrAliases": [
+      "Scovillain",
+      "Scovillain Mega",
+      "Scovillain-Mega",
+      "scovillain mega",
+      "scovillain-mega"
+    ]
+  },
+  {
+    "pokemonId": 10321,
+    "dexNumber": 970,
+    "name": "Glimmora-Mega",
+    "speciesName": "Glimmora",
+    "identifier": "glimmora-mega",
+    "formIdentifier": "glimmora-mega",
+    "isDefaultForm": false,
+    "sprite": "10321.png",
+    "ocrAliases": [
+      "Glimmora",
+      "Glimmora Mega",
+      "Glimmora-Mega",
+      "glimmora mega",
+      "glimmora-mega"
+    ]
+  },
+  {
+    "pokemonId": 10322,
+    "dexNumber": 978,
+    "name": "Tatsugiri-Curly-Mega",
+    "speciesName": "Tatsugiri",
+    "identifier": "tatsugiri-curly-mega",
+    "formIdentifier": "tatsugiri-curly-mega",
+    "isDefaultForm": false,
+    "sprite": "10322.png",
+    "ocrAliases": [
+      "Tatsugiri",
+      "Tatsugiri Curly Mega",
+      "Tatsugiri-Curly-Mega",
+      "tatsugiri curly mega",
+      "tatsugiri-curly-mega"
+    ]
+  },
+  {
+    "pokemonId": 10323,
+    "dexNumber": 978,
+    "name": "Tatsugiri-Droopy-Mega",
+    "speciesName": "Tatsugiri",
+    "identifier": "tatsugiri-droopy-mega",
+    "formIdentifier": "tatsugiri-droopy-mega",
+    "isDefaultForm": false,
+    "sprite": "10323.png",
+    "ocrAliases": [
+      "Tatsugiri",
+      "Tatsugiri Droopy Mega",
+      "Tatsugiri-Droopy-Mega",
+      "tatsugiri droopy mega",
+      "tatsugiri-droopy-mega"
+    ]
+  },
+  {
+    "pokemonId": 10324,
+    "dexNumber": 978,
+    "name": "Tatsugiri-Stretchy-Mega",
+    "speciesName": "Tatsugiri",
+    "identifier": "tatsugiri-stretchy-mega",
+    "formIdentifier": "tatsugiri-stretchy-mega",
+    "isDefaultForm": false,
+    "sprite": "10324.png",
+    "ocrAliases": [
+      "Tatsugiri",
+      "Tatsugiri Stretchy Mega",
+      "Tatsugiri-Stretchy-Mega",
+      "tatsugiri stretchy mega",
+      "tatsugiri-stretchy-mega"
+    ]
+  },
+  {
+    "pokemonId": 10325,
+    "dexNumber": 998,
+    "name": "Baxcalibur-Mega",
+    "speciesName": "Baxcalibur",
+    "identifier": "baxcalibur-mega",
+    "formIdentifier": "baxcalibur-mega",
+    "isDefaultForm": false,
+    "sprite": "10325.png",
+    "ocrAliases": [
+      "Baxcalibur",
+      "Baxcalibur Mega",
+      "Baxcalibur-Mega",
+      "baxcalibur mega",
+      "baxcalibur-mega"
+    ]
+  },
+  {
+    "pokemonId": 10326,
+    "dexNumber": 678,
+    "name": "Meowstic-Female-Mega",
+    "speciesName": "Meowstic",
+    "identifier": "meowstic-female-mega",
+    "formIdentifier": "meowstic-female-mega",
+    "isDefaultForm": false,
+    "sprite": "10326.png",
+    "ocrAliases": [
+      "Meowstic",
+      "Meowstic Female Mega",
+      "Meowstic-Female-Mega",
+      "meowstic female mega",
+      "meowstic-female-mega"
+    ]
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "name": "Godredeye",
+  "notes": "=_=",
+  "level": 100,
+  "team": [
+    {
+      "species": "Mamoswine",
+      "nature": "Jolly",
+      "ability": "Oblivious",
+      "item": "Focus Sash",
+      "moves": [ "Stealth Rock", "Earthquake", "Endeavor", "Ice Shard" ],
+      "ivs": [ 31, 0, 31, 0, 0, 0 ],
+      "evs": [ 252, 0, 252, 0, 0, 0 ]
+    },
+    {
+      "species": "Smeargle",
+      "nature": "Jolly",
+      "ability": "Own Tempo",
+      "item": "Wide Lens",
+      "moves": [ "Population Bomb", "Shell Smash", "Spore", "Power Trip" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 0, 252, 0, 0, 4 ]
+    },
+    {
+      "species": "Shedinja",
+      "nature": "Jolly",
+      "ability": "Wonder Guard",
+      "item": "Focus Sash",
+      "moves": [ "Poltergeist", "X-Scissor", "Shadow Sneak", "Swords Dance" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 0, 252, 0, 4, 0 ]
+    },
+    {
+      "species": "Bisharp",
+      "nature": "Adamant",
+      "ability": "Defiant",
+      "item": "Eviolite",
+      "moves": [ "Swords Dance", "Knock Off", "Sucker Punch", "Iron Head" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 252, 0, 252, 0, 0, 4 ]
+    },
+    {
+      "species": "Alakazam",
+      "nature": "Timid",
+      "ability": "Magic Guard",
+      "item": "Alakazite",
+      "moves": [ "Psychic", "Focus Blast", "Shadow Ball", "Nasty Plot" ],
+      "ivs": [ 31, 0, 31, 31, 31, 31 ],
+      "evs": [ 0, 0, 252, 252, 0, 4 ]
+    },
+    {
+      "species": "Keldeo",
+      "nature": "Timid",
+      "ability": "Justified",
+      "item": "Waterium Z",
+      "moves": [ "Hydro Pump", "Secret Sword", "Icy Wind", "Calm Mind" ],
+      "ivs": [ 31, 0, 31, 252, 0, 252 ],
+      "evs": [ 0, 0, 252, 252, 4, 0 ]
+    }
+  ]
+}

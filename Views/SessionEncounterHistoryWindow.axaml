@@ -1,0 +1,238 @@
+<!-- Per-Pokemon encounter history - every detected encounter of one species,
+     most recent first. Opened by clicking that Pokemon's row in either Session
+     Encounters table (see MainWindow.axaml.cs's EncounterRow_PointerPressed,
+     which also keeps at most one of these open per Pokemon). Deliberately
+     styled after PreviouslyBattledUsersWindow's lightweight text list rather
+     than the Catch Logs DataGrid: plain aligned TextBlocks, no sprites/type
+     icons/gender icons, no Remove/Clear buttons, just Close. The Catch Logs
+     drilldown with per-catch detail is the separate
+     HuntLogSpeciesDetailWindow ("Catch History").
+
+     Two lists, one visible at a time (§112). Session is the current hunt and
+     is the live collection the service owns. All time is the permanent SQLite
+     log - a query result, loaded a page at a time, with the date of each
+     encounter, which is the column the session list has no way to show.
+
+     Both are ListBoxes (not the ItemsControl the PVP window uses) because a
+     ListBox virtualizes by default - a hunted species can accumulate
+     thousands of session encounters and, all time, far more than that, and
+     only the visible rows should ever exist as controls. Each row is one Grid
+     of fixed proportions - HorizontalContentAlignment=Stretch below is what
+     makes every row's Grid span the full list width so the columns align down
+     the list regardless of name/location length, window size, or platform
+     font metrics. -->
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:models="using:Foot_Tracker.Models"
+        xmlns:svc="using:Foot_Tracker.Services"
+        x:Class="Foot_Tracker.Views.SessionEncounterHistoryWindow"
+        x:DataType="vm:SessionEncounterHistoryViewModel"
+        Title="{Binding Title}"
+        Width="620" Height="560"
+        MinWidth="520" MinHeight="260"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <!-- §220: the same header chip the Session Encounters table on the main
+         window uses - themed fill, one pixel of border, bold centred text.
+         Written once as a style rather than eleven times as markup, because
+         eleven copies is how the two tables below drifted apart in the first
+         place. See MainWindow.axaml's header row for the original. -->
+    <Window.Styles>
+        <Style Selector="Border.tableHeader">
+            <Setter Property="Background" Value="{DynamicResource ThemeTableHeaderBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Margin" Value="0,0,0,2" />
+        </Style>
+        <Style Selector="Border.tableHeader > TextBlock">
+            <Setter Property="Margin" Value="6,5" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+        </Style>
+    </Window.Styles>
+
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,*,Auto">
+
+        <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="18" FontWeight="Bold"
+                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,6" />
+
+        <!-- §112: one toggle rather than a Session/All time pair, because one
+             bool needs one two-way binding and no inverted one. Off is the
+             current hunt, which is what this window has always shown. -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" Margin="0,0,0,8">
+            <ToggleButton Content="All time"
+                          IsChecked="{Binding ShowAllTime, Mode=TwoWay}"
+                          ToolTip.Tip="Show every encounter of this Pokémon ever recorded on this client profile, instead of just the current hunt." />
+        </StackPanel>
+
+        <TextBlock Grid.Row="2" Text="{Binding ModeDescription}"
+                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,12" />
+
+        <Grid Grid.Row="3">
+
+            <!-- ==================== Session ==================== -->
+            <TextBlock Text="No encounters logged for this Pokémon during the current hunt."
+                       TextWrapping="Wrap"
+                       Foreground="{DynamicResource ThemeTextBrush}"
+                       IsVisible="{Binding ShowSessionEmptyState}"
+                       Margin="0,8,0,0" VerticalAlignment="Top" />
+
+            <!-- §128: bound to one PAGE of Records rather than all of
+                 them. A single species reached 2,640 encounters in a real
+                 hunt; scrolling was never going to be the answer. The header
+                 repeats the row template's ColumnDefinitions verbatim - the
+                 two have to stay in step by hand. -->
+            <DockPanel IsVisible="{Binding !ShowAllTime}" LastChildFill="True">
+                <Grid DockPanel.Dock="Top" ColumnDefinitions="*,70,1.1*,130,50,88"
+                      Margin="0,0,0,4">
+                    <Border Grid.Column="0" Classes="tableHeader"><TextBlock Text="Pokémon" /></Border>
+                    <Border Grid.Column="1" Classes="tableHeader"><TextBlock Text="Level" /></Border>
+                    <Border Grid.Column="2" Classes="tableHeader"><TextBlock Text="Map" /></Border>
+                    <Border Grid.Column="3" Classes="tableHeader"><TextBlock Text="Timestamp" /></Border>
+                    <Border Grid.Column="4" Classes="tableHeader"><TextBlock><Run Text="♀" Foreground="#D9145E" /><Run Text="/" Foreground="{DynamicResource ThemeTextBrush}" /><Run Text="♂" Foreground="#08A3F4" /></TextBlock></Border>
+                    <Border Grid.Column="5" Classes="tableHeader"><TextBlock Text="Shiny/Form" /></Border>
+                </Grid>
+
+                <ListBox ItemsSource="{Binding SessionPage}"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         Padding="0">
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem">
+                            <Setter Property="Padding" Value="0,4" />
+                            <Setter Property="MinHeight" Value="0" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListBox.Styles>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:SessionEncounterRecord">
+                            <Grid ColumnDefinitions="*,70,1.1*,130,50,88">
+                                <TextBlock Grid.Column="0" Text="{Binding PokemonName}"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           VerticalAlignment="Center" Margin="8,3"
+                                           TextTrimming="CharacterEllipsis"
+                                           ToolTip.Tip="{Binding PokemonName}" />
+                                <TextBlock Grid.Column="1" Text="{Binding LevelDisplay}"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           VerticalAlignment="Center" Margin="4,3" TextAlignment="Center" />
+                                <TextBlock Grid.Column="2" Text="{Binding LocationDisplay}"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           VerticalAlignment="Center" Margin="4,3" TextAlignment="Center"
+                                           TextTrimming="CharacterEllipsis"
+                                           ToolTip.Tip="{Binding LocationDisplay}" />
+                                <TextBlock Grid.Column="3" Text="{Binding WhenDisplay}"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           VerticalAlignment="Center" Margin="4,3" TextAlignment="Center"
+                                           Opacity="0.8" />
+                                <TextBlock Grid.Column="4" Text="{Binding GenderDisplay}"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           VerticalAlignment="Center" Margin="4,3" TextAlignment="Center" />
+                                <TextBlock Grid.Column="5" Text="{Binding RareDisplay}"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           VerticalAlignment="Center" Margin="4,3" TextAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+
+            <!-- ==================== All time ==================== -->
+            <TextBlock Text="{Binding AllTimeSummary}"
+                       TextWrapping="Wrap"
+                       Foreground="{DynamicResource ThemeTextBrush}"
+                       IsVisible="{Binding ShowAllTimeEmptyState}"
+                       Margin="0,8,0,0" VerticalAlignment="Top" />
+
+            <DockPanel IsVisible="{Binding HasAllTimeEntries}" LastChildFill="True">
+                <!-- No Pokemon column: every row here is the same species,
+                     which is what the window title already says. -->
+                <!-- §220: the gender header carried no Grid.Column, so it
+                     defaulted to 0 and rendered on top of Level while the F
+                     and M values sat unlabelled under Shiny/Form. -->
+                <Grid DockPanel.Dock="Top" ColumnDefinitions="70,1.1*,130,50,88"
+                      Margin="0,0,0,4">
+                    <Border Grid.Column="0" Classes="tableHeader"><TextBlock Text="Level" /></Border>
+                    <Border Grid.Column="1" Classes="tableHeader"><TextBlock Text="Map" /></Border>
+                    <Border Grid.Column="2" Classes="tableHeader"><TextBlock Text="Timestamp" /></Border>
+                    <Border Grid.Column="3" Classes="tableHeader"><TextBlock><Run Text="♀" Foreground="#D9145E" /><Run Text="/" Foreground="{DynamicResource ThemeTextBrush}" /><Run Text="♂" Foreground="#08A3F4" /></TextBlock></Border>
+                    <Border Grid.Column="4" Classes="tableHeader"><TextBlock Text="Shiny/Form" /></Border>
+                </Grid>
+
+                <ListBox ItemsSource="{Binding AllTimeRecords}"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         Padding="0">
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem">
+                            <Setter Property="Padding" Value="0,4" />
+                            <Setter Property="MinHeight" Value="0" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListBox.Styles>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="svc:EncounterLogRow">
+                            <Grid ColumnDefinitions="70,1.1*,130,50,88">
+                                <TextBlock Grid.Column="0" Text="{Binding LevelDisplay}"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           VerticalAlignment="Center" Margin="4,3" TextAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="{Binding Location}"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           VerticalAlignment="Center" Margin="4,3" TextAlignment="Center"
+                                           TextTrimming="CharacterEllipsis"
+                                           ToolTip.Tip="{Binding Location}" />
+                                <TextBlock Grid.Column="2" Text="{Binding WhenDisplay}"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           VerticalAlignment="Center" Margin="4,3" TextAlignment="Center"
+                                           Opacity="0.8" />
+                                <TextBlock Grid.Column="3" Text="{Binding GenderDisplay}"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           VerticalAlignment="Center" Margin="4,3" TextAlignment="Center" />
+                                <TextBlock Grid.Column="4" Text="{Binding RareDisplay}"
+                                           Foreground="{DynamicResource ThemeTextBrush}"
+                                           VerticalAlignment="Center" Margin="4,3" TextAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Grid>
+
+        <Grid Grid.Row="4" ColumnDefinitions="*,Auto,Auto" Margin="0,12,0,0">
+            <TextBlock Grid.Column="0" Text="{Binding AllTimeSummary}"
+                       IsVisible="{Binding HasAllTimeEntries}"
+                       TextWrapping="Wrap" FontSize="12" Opacity="0.8"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <!-- §128: one pager, serving whichever list is showing. The
+                 window said "Page 1 of ??" because the Load more button that
+                 used to sit here could not know the total - it appended a
+                 chunk and stopped when one came back short. The count query
+                 the page loader already makes is what fills the ?? in. -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8"
+                        Margin="8,0,8,0" VerticalAlignment="Center"
+                        IsVisible="{Binding ShowPager}">
+                <Button Content="Previous&lt;&lt;"
+                        Command="{Binding PageBackCommand}"
+                        IsEnabled="{Binding CanPageBack}" />
+                <TextBlock Text="{Binding PageLabel}" VerticalAlignment="Center"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+                <Button Content="&gt;&gt;Next"
+                        Command="{Binding PageForwardCommand}"
+                        IsEnabled="{Binding CanPageForward}" />
+            </StackPanel>
+            <Button Grid.Column="2" Content="Close" Click="CloseButton_Click" />
+        </Grid>
+    </Grid>
+    </Border>
+</Window>

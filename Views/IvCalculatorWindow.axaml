@@ -1,0 +1,124 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.IvCalculatorWindow"
+        x:DataType="vm:IvCalculatorViewModel"
+        Title="IV Calculator"
+        Width="660" Height="680"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid Margin="16" RowDefinitions="Auto,*,Auto">
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,8">
+            <TextBlock Text="IV Calculator" FontSize="18" FontWeight="Bold"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBlock Text="Pick a Pokémon, set its level, nature, IVs and EVs, and Calculate shows the real stats that spread reaches - plus the Hidden Power type those IVs roll."
+                       TextWrapping="Wrap" FontSize="11" Opacity="0.7"
+                       Foreground="{DynamicResource ThemeTextBrush}" Margin="0,2,0,0" />
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Spacing="8">
+
+                <Grid ColumnDefinitions="*,130">
+                    <StackPanel Grid.Column="0" Spacing="6">
+                        <TextBox Text="{Binding SearchText}" PlaceholderText="Search Pokémon..." />
+                        <ListBox Height="150" ItemsSource="{Binding SpeciesNames}"
+                                 SelectedItem="{Binding SelectedSpeciesName, Mode=TwoWay}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Spacing="6" Margin="10,0,0,0">
+                        <!-- Same sprite source the Currently Hunting boxes use - forms
+                             without a sprite in the pack simply show nothing here. -->
+                        <Border Width="96" Height="96" HorizontalAlignment="Center"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                CornerRadius="4">
+                            <Image Source="{Binding SpriteImage}" Stretch="Uniform" Margin="4" />
+                        </Border>
+                        <TextBlock Text="{Binding TypesLine}" FontSize="11" Opacity="0.7"
+                                   TextWrapping="Wrap" HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Text="{Binding BaseStatsLine}" FontSize="11" Opacity="0.7" TextWrapping="Wrap"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+
+                <StackPanel Orientation="Horizontal" Spacing="16">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Level" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBox Width="64" MinWidth="0" Text="{Binding LevelText}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Nature" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <ComboBox Width="140" ItemsSource="{Binding NatureOptions}"
+                                  SelectedItem="{Binding SelectedNature, Mode=TwoWay}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Six IVs over six EVs, one thin column per stat - same layout
+                     as the Damage window's spread editors. -->
+                <Grid ColumnDefinitions="26,*,*,*,*,*,*" RowDefinitions="Auto,Auto,Auto">
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="HP" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Atk" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Def" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Grid.Row="0" Grid.Column="4" Text="SpA" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Grid.Row="0" Grid.Column="5" Text="SpD" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Grid.Row="0" Grid.Column="6" Text="Spe" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="IV" FontSize="11" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" MinWidth="0" Margin="1" Text="{Binding IvHpText}" />
+                    <TextBox Grid.Row="1" Grid.Column="2" MinWidth="0" Margin="1" Text="{Binding IvAttackText}" />
+                    <TextBox Grid.Row="1" Grid.Column="3" MinWidth="0" Margin="1" Text="{Binding IvDefenseText}" />
+                    <TextBox Grid.Row="1" Grid.Column="4" MinWidth="0" Margin="1" Text="{Binding IvSpAttackText}" />
+                    <TextBox Grid.Row="1" Grid.Column="5" MinWidth="0" Margin="1" Text="{Binding IvSpDefenseText}" />
+                    <TextBox Grid.Row="1" Grid.Column="6" MinWidth="0" Margin="1" Text="{Binding IvSpeedText}" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="EV" FontSize="11" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBox Grid.Row="2" Grid.Column="1" MinWidth="0" Margin="1" Text="{Binding EvHpText}" />
+                    <TextBox Grid.Row="2" Grid.Column="2" MinWidth="0" Margin="1" Text="{Binding EvAttackText}" />
+                    <TextBox Grid.Row="2" Grid.Column="3" MinWidth="0" Margin="1" Text="{Binding EvDefenseText}" />
+                    <TextBox Grid.Row="2" Grid.Column="4" MinWidth="0" Margin="1" Text="{Binding EvSpAttackText}" />
+                    <TextBox Grid.Row="2" Grid.Column="5" MinWidth="0" Margin="1" Text="{Binding EvSpDefenseText}" />
+                    <TextBox Grid.Row="2" Grid.Column="6" MinWidth="0" Margin="1" Text="{Binding EvSpeedText}" />
+                </Grid>
+
+                <Button Content="Calculate" Command="{Binding CalculateCommand}"
+                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                        FontWeight="Bold" />
+
+                <Border BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                        CornerRadius="4" Padding="10">
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="{Binding HpLine}" FontWeight="Bold"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding AttackLine}" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding DefenseLine}" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding SpAttackLine}" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding SpDefenseLine}" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding SpeedLine}" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding HiddenPowerLine}" FontWeight="Bold" Margin="0,4,0,0"
+                                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="0,10,0,0">
+            <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Foreground="{DynamicResource ThemeErrorBrush}"
+                       TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,8,0" />
+            <Button Grid.Column="1" Content="Close" Click="CloseButton_Click" />
+        </Grid>
+    </Grid>
+    </Border>
+</Window>

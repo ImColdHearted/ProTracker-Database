@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.BossCooldownWindow"
+        x:DataType="vm:BossCooldownViewModel"
+        Title="Boss Cooldowns"
+        Width="700" Height="600"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §189: the panel is on each card rather than around the whole
+         window - a wall of cards on one surface reads as one block, and
+         what the user is picking out is the card. The card's own Margin,
+         BorderBrush and BorderThickness are local values, so they beat the
+         style's and the cards keep the outline and spacing they have always
+         had; only the fill comes from the Stats Background colour. -->
+    <ScrollViewer Margin="12">
+        <ItemsControl ItemsSource="{Binding Bosses}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:BossCooldownCardItem">
+                    <Border Classes="themedPanel"
+                            Width="160" Height="60" Margin="4" Cursor="Hand"
+                            BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                            PointerPressed="BossCard_PointerPressed">
+                        <Grid ColumnDefinitions="42,*">
+                            <Image Grid.Column="0" Source="{Binding Sprite}" Width="28" Height="42" Stretch="Uniform" Margin="6" />
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding BossName}" FontWeight="Bold" FontSize="11"
+                                           Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding CooldownText}" FontWeight="Bold" FontSize="12"
+                                           Foreground="{DynamicResource ThemeTextBrush}" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+</Window>

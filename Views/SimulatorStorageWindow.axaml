@@ -1,0 +1,94 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.SimulatorStorageWindow"
+        x:DataType="vm:SimulatorStorageViewModel"
+        Title="Pokemon Storage"
+        Width="560" Height="540"
+        MinWidth="460" MinHeight="380"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <!-- §162: every Pokemon imported from the game, ready to re-join a
+         team without another scan. -->
+    <!-- §195: the panels are on the boxes that hold something, not around
+         the whole window - the same correction sections 189 made to Boss
+         Cooldowns, Events and the boss template. One panel over everything
+         turned this window into a single flat sheet with its own boxes
+         invisible inside it. Every Border below that already set its own
+         outline and padding keeps them: those are local values and a local
+         value beats a style setter, so only the fill arrives from the Stats
+         Background colour. -->
+    <Grid Margin="10" RowDefinitions="Auto,*,Auto">
+
+        <TextBlock Grid.Row="0" Text="{Binding StatusText}" FontSize="12" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,8" />
+
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding Cards}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SimulatorStorageCard">
+                        <!-- §203: a picked card keeps its place and says so
+                             rather than vanishing, so a mis-click is visible
+                             and clicking it again takes it back off. -->
+                        <Border Classes="themedPanel"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                CornerRadius="4" Padding="6" Margin="0,0,4,6">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Button Grid.Column="0" Width="56" Height="56" Padding="0" Margin="0,0,8,0"
+                                        ToolTip.Tip="Add this Pokemon to the team"
+                                        Command="{Binding $parent[ItemsControl].((vm:SimulatorStorageViewModel)DataContext).PickCardCommand}"
+                                        CommandParameter="{Binding}">
+                                    <Panel Width="52" Height="52">
+                                        <TextBlock Text="?" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.4"
+                                                   IsVisible="{Binding Sprite, Converter={x:Static ObjectConverters.IsNull}}" />
+                                        <Image Source="{Binding Sprite}" Stretch="Uniform" Margin="2"
+                                               RenderOptions.BitmapInterpolationMode="None" />
+                                    </Panel>
+                                </Button>
+
+                                <Button Grid.Column="1" Padding="6" HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{Binding $parent[ItemsControl].((vm:SimulatorStorageViewModel)DataContext).PickCardCommand}"
+                                        CommandParameter="{Binding}">
+                                    <StackPanel Spacing="2">
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock Text="&#x2713;" FontWeight="Bold" FontSize="13"
+                                                       VerticalAlignment="Center"
+                                                       IsVisible="{Binding IsPicked}" />
+                                            <TextBlock Text="{Binding Headline}" FontWeight="Bold" FontSize="12" TextWrapping="Wrap" />
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Detail}" FontSize="11" Opacity="0.8" TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Grid.Column="2" Content="Delete" FontSize="11" VerticalAlignment="Center" Margin="6,0,0,0"
+                                        ToolTip.Tip="Remove this Pokemon from storage"
+                                        Command="{Binding $parent[ItemsControl].((vm:SimulatorStorageViewModel)DataContext).DeleteCardCommand}"
+                                        CommandParameter="{Binding}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- §203: the pager and the way out. Done is what closes this now -
+             a click on a Pokemon banks it and the window waits. -->
+        <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto,Auto,*,Auto" Margin="0,8,0,0">
+            <Button Grid.Column="0" Content="&#x2190; Back" FontSize="12"
+                    IsVisible="{Binding HasPages}" IsEnabled="{Binding CanGoBack}"
+                    Command="{Binding PreviousPageCommand}" />
+            <TextBlock Grid.Column="1" Text="{Binding PageText}" FontSize="12" VerticalAlignment="Center"
+                       Margin="8,0,8,0" IsVisible="{Binding HasPages}"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <Button Grid.Column="2" Content="Next &#x2192;" FontSize="12"
+                    IsVisible="{Binding HasPages}" IsEnabled="{Binding CanGoForward}"
+                    Command="{Binding NextPageCommand}" />
+            <Button Grid.Column="4" Content="Done" FontSize="12" FontWeight="Bold" Click="Done_Click" />
+        </Grid>
+    </Grid>
+</Window>

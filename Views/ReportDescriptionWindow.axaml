@@ -1,0 +1,58 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.ReportDescriptionWindow"
+        Title="What went wrong?"
+        Width="520" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1"
+        CanResize="False">
+
+    <!-- §228: the step between capturing a report and sending it. §226 gave
+         the button somewhere to deliver to, which turned out to mean a
+         steady supply of screenshots and logs with nothing saying what the
+         player had been doing or what they expected instead. A log can show
+         what the app did; only the person watching can say what looked
+         wrong about it.
+
+         The list of files is spelled out rather than summarised, because
+         this is the moment a player agrees to send a picture of their own
+         screen somewhere. They should be able to read what that means
+         before they press the button, not after. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <StackPanel Margin="20" Spacing="12">
+        <TextBlock Text="Tell me what happened."
+                   FontWeight="Bold" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="What were you doing, what did the tracker show, and what did you expect it to show instead? Even one line makes the difference between a report I can act on and a folder of files I have to guess at." />
+
+        <!-- MaxLength leaves room for the note about anything that could not
+             be captured, which is appended before sending. The server caps
+             the whole thing at 500. -->
+        <TextBox x:Name="DescriptionBox"
+                 AcceptsReturn="True" Height="120" MaxLength="400"
+                 TextWrapping="Wrap"
+                 TextChanged="DescriptionBox_TextChanged"
+                 PlaceholderText="For example: the level read as 2 for a level 82 Blaziken, on the water route east of Vulcan Cove." />
+
+        <TextBlock x:Name="CountText" FontSize="11" Opacity="0.7"
+                   Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="0 of 400" />
+
+        <TextBlock x:Name="FilesText" TextWrapping="Wrap" FontSize="11" Opacity="0.8"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button Content="Just save locally" Click="CancelButton_Click" />
+            <Button x:Name="SendButton" Content="Send report" IsDefault="True"
+                    IsEnabled="False" Click="SendButton_Click" />
+        </StackPanel>
+    </StackPanel>
+    </Border>
+</Window>

@@ -1,0 +1,61 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.AdminTokenWindow"
+        Title="Events Server Sign-In"
+        Width="420" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        CanResize="False">
+
+    <!-- §143/§153: changing the shared Events board needs an admin
+         credential. §153 made this a sign-in with two modes: a delegated
+         admin login (username + password - the slow key derivation runs on
+         this machine and only the derived verifier ever leaves it), or the
+         Worker's master ADMIN_TOKEN as before. Credentials live in memory
+         for the run (EventsSyncService); the one exception is the opt-in
+         remembered login, kept by AdminLoginStore encrypted to this Windows
+         account. The master token is never stored anywhere. -->
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <StackPanel Margin="20" Spacing="12">
+        <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="This action asks the events server for admin rights, so it needs a sign-in." />
+
+        <StackPanel Name="LoginPanel" Spacing="8">
+            <StackPanel Spacing="4">
+                <TextBlock Text="Username" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Name="UsernameBox" />
+            </StackPanel>
+            <StackPanel Spacing="4">
+                <TextBlock Text="Password" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Name="PasswordBox" PasswordChar="&#8226;" />
+            </StackPanel>
+            <CheckBox Name="RememberCheck" Content="Remember on this PC (encrypted to this Windows account)" />
+            <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.75" FontSize="11"
+                       Text="The password itself is never sent or saved - a key derived from it on this machine is what signs in. Ten wrong tries lock the login for fifteen minutes." />
+        </StackPanel>
+
+        <StackPanel Name="TokenPanel" Spacing="4" IsVisible="False">
+            <TextBlock Text="Master admin token" Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBox Name="TokenBox" PasswordChar="&#8226;" />
+            <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.75" FontSize="11"
+                       Text="The ADMIN_TOKEN secret from the Cloudflare Worker. Kept in memory until this tracker closes - never saved on this machine." />
+        </StackPanel>
+
+        <Button Name="ModeButton" Content="Use the master admin token instead..." Click="ModeButton_Click"
+                Padding="0" Background="Transparent" BorderThickness="0"
+                Foreground="{DynamicResource ThemeTextBrush}" FontSize="11" HorizontalAlignment="Left" />
+
+        <TextBlock Name="ErrorText" Text="" Foreground="{DynamicResource ThemeErrorBrush}" TextWrapping="Wrap" IsVisible="False" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button Name="ContinueButton" Content="Sign In" Click="ContinueButton_Click" IsDefault="True" />
+            <Button Content="Cancel" Click="CancelButton_Click" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+    </Border>
+</Window>

@@ -1,0 +1,57 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.RegionMapWindow"
+        x:DataType="vm:RegionMapViewModel"
+        Title="Region Map"
+        Width="900" Height="650"
+        MinWidth="560" MinHeight="440"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. The panel follows the Stats
+         Background colour and is invisible until that colour is set - no
+         fill, no outline, no inset. Its child is deliberately not
+         re-indented. See App.axaml. -->
+    <Border Classes="themedPanel">
+    <Grid ColumnDefinitions="220,*" Margin="12">
+
+        <!-- Route list: replaces ListedRoutesFlowPanel -->
+        <ScrollViewer Grid.Column="0">
+            <ItemsControl ItemsSource="{Binding Routes}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:RouteButtonItem">
+                        <Button Content="{Binding DisplayName}" HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left" Margin="0,2"
+                                Click="RouteButton_Click" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Location detail + encounter grid: replaces LocationNameLabel/LocationTypeLabel/
+             LocationDescriptionLabel + the 15 LocationPokemonN PictureBoxes -->
+        <StackPanel Grid.Column="1" Margin="16,0,0,0" Spacing="8">
+            <TextBlock Text="{Binding LocationName}" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBlock Text="{Binding LocationType}" Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBlock Text="{Binding LocationDescription}" Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" />
+            <TextBlock Text="{Binding StatusMessage}" Foreground="{DynamicResource ThemeErrorBrush}" TextWrapping="Wrap" />
+
+            <ItemsControl ItemsSource="{Binding Encounters}" Margin="0,12,0,0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:EncounterSlotItem">
+                        <StackPanel Width="80" Margin="4">
+                            <Image Source="{Binding Sprite}" Width="64" Height="64" Stretch="Uniform" />
+                            <TextBlock Text="{Binding PokemonName}" FontSize="11" TextAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>

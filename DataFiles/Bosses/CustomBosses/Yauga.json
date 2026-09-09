@@ -1,0 +1,67 @@
+{
+  "name": "Yauga",
+  "notes": "",
+  "level": 100,
+  "team": [
+    {
+      "species": "Toxapex",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/748.png",
+      "nature": "Sassy",
+      "ability": "Regenerator",
+      "item": "Black Sludge",
+      "moves": [ "Infestation", "Toxic", "Recover", "Protect" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 56, 0, 0, 200, 252 ]
+    },
+    {
+      "species": "Umbreon",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/197.png",
+      "nature": "Sassy",
+      "ability": "Synchronize",
+      "item": "Leftovers",
+      "moves": [ "Toxic", "Moonlight", "Foul Play", "Protect" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 56, 0, 0, 200, 252 ]
+    },
+    {
+      "species": "Chansey",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/113.png",
+      "nature": "Bold",
+      "ability": "Natural Cure",
+      "item": "Leftovers",
+      "moves": [ "Seismic Toss", "Soft-Boiled", "Thunder Wave", "Aromatherapy" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 252, 0, 0, 6, 252 ]
+    },
+    {
+      "species": "Corviknight",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/823.png",
+      "nature": "Impish",
+      "ability": "Pressure",
+      "item": "Rocky Helmet",
+      "moves": [ "Body Press", "Iron Defense", "U-Turn", "Roost" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 252, 0, 0, 18, 240 ]
+    },
+    {
+      "species": "Clefable",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/36.png",
+      "nature": "Modest",
+      "ability": "Unaware",
+      "item": "Life Orb",
+      "moves": [ "Flamethrower", "Thunderbolt", "Moonblast", "Psyshock" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 0, 0, 252, 6, 252 ]
+    },
+    {
+      "species": "Deoxys-Defense",
+      "sprite": "SharedPokemonLibrary/Assets/Sprites/shiny/10002.png",
+      "nature": "Impish",
+      "ability": "Pressure",
+      "item": "Rocky Helmet",
+      "moves": [ "Recover", "Spikes", "Taunt", "Knock Off" ],
+      "ivs": [ 31, 31, 31, 31, 31, 31 ],
+      "evs": [ 0, 252, 0, 0, 6, 252 ]
+    }
+  ]
+}

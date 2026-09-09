@@ -1,0 +1,560 @@
+{
+  "name": "Naero",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Naero.png",
+  "BossCooldown": 288,
+  "bossId": "naero",
+  "location": "Cerulean Cave B1F",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/NaeroLoc.png",
+  "requirements": "Cerulean Cave access,Have completed the Johto League",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [],
+        "pokemon": [
+          {
+            "name": "Pichu",
+            "dexNumber": 172,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Cleffa",
+            "dexNumber": 173,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Igglybuff",
+            "dexNumber": 174,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Tyrogue",
+            "dexNumber": 236,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Bonsly",
+            "dexNumber": 438,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mime Jr.",
+            "dexNumber": 439,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Munchlax",
+            "dexNumber": 446,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Smoochum",
+            "dexNumber": 238,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Elekid",
+            "dexNumber": 239,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Magby",
+            "dexNumber": 240,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Timid",
+          "ability": "Serene Grace",
+          "item": "None",
+          "moves": [
+            "Air Slash",
+            "Shadow Ball",
+            "Extreme Speed",
+            "Psychic"
+          ]
+        },
+        {
+          "name": "Snorlax",
+          "dexNumber": 143,
+          "nature": "Adamant",
+          "ability": "Thick Fat",
+          "item": "None",
+          "moves": [
+            "Crunch",
+            "Body Slam",
+            "Rest",
+            "Sleep Talk"
+          ]
+        },
+        {
+          "name": "Mr. Mime",
+          "dexNumber": 122,
+          "nature": "Modest",
+          "ability": "Filter",
+          "item": "None",
+          "moves": [
+            "Shadow Ball",
+            "Confuse Ray",
+            "Icy Wind",
+            "Psychic"
+          ]
+        },
+        {
+          "name": "Blissey",
+          "dexNumber": 242,
+          "nature": "Bold",
+          "ability": "Natural Cure",
+          "item": "None",
+          "moves": [
+            "Seismic Toss",
+            "Flamethrower",
+            "Soft-Boiled",
+            "Thunder Wave"
+          ]
+        },
+        {
+          "name": "Electivire",
+          "dexNumber": 466,
+          "nature": "Adamant",
+          "ability": "Vital Spirit",
+          "item": "None",
+          "moves": [
+            "Thunder Punch",
+            "Flamethrower",
+            "Cross Chop",
+            "Ice Punch"
+          ]
+        },
+        {
+          "name": "Magmortar",
+          "dexNumber": 467,
+          "nature": "Rash",
+          "ability": "Flame Body",
+          "item": "None",
+          "moves": [
+            "Focus Blast",
+            "Lava Plume",
+            "Earthquake",
+            "Thunderbolt"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [],
+        "pokemon": [
+          {
+            "name": "Pichu",
+            "dexNumber": 172,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Cleffa",
+            "dexNumber": 173,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Igglybuff",
+            "dexNumber": 174,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Tyrogue",
+            "dexNumber": 236,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Bonsly",
+            "dexNumber": 438,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mime Jr.",
+            "dexNumber": 439,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Munchlax",
+            "dexNumber": 446,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Smoochum",
+            "dexNumber": 238,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Elekid",
+            "dexNumber": 239,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Magby",
+            "dexNumber": 240,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Smoochum",
+            "dexNumber": 238,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Elekid",
+            "dexNumber": 239,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Magby",
+            "dexNumber": 240,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Munchlax",
+            "dexNumber": 446,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Timid",
+          "ability": "Serene Grace",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Air Slash",
+            "Flamethrower",
+            "Aura Sphere",
+            "Dazzling Gleam"
+          ]
+        },
+        {
+          "name": "Snorlax",
+          "dexNumber": 143,
+          "nature": "Adamant",
+          "ability": "Thick Fat",
+          "item": "Leftovers",
+          "moves": [
+            "Crunch",
+            "Body Slam",
+            "Fire Punch",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Mr. Mime",
+          "dexNumber": 122,
+          "nature": "Modest",
+          "ability": "Filter",
+          "item": "Focus Sash",
+          "moves": [
+            "Psychic",
+            "Focus Blast",
+            "Dazzling Gleam",
+            "Shadow Ball"
+          ]
+        },
+        {
+          "name": "Blissey",
+          "dexNumber": 242,
+          "nature": "Bold",
+          "ability": "Natural Cure",
+          "item": "Leftovers",
+          "moves": [
+            "Toxic",
+            "Soft-Boiled",
+            "Seismic Toss",
+            "Wish"
+          ]
+        },
+        {
+          "name": "Electivire",
+          "dexNumber": 466,
+          "nature": "Adamant",
+          "ability": "Vital Spirit",
+          "item": "Life Orb",
+          "moves": [
+            "Wild Charge",
+            "Fire Punch",
+            "Cross Chop",
+            "Ice Punch"
+          ]
+        },
+        {
+          "name": "Magmortar",
+          "dexNumber": 467,
+          "nature": "Rash",
+          "ability": "Flame Body",
+          "item": "Life Orb",
+          "moves": [
+            "Fire Blast",
+            "Earthquake",
+            "Thunderbolt",
+            "Focus Blast"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [],
+        "pokemon": [
+          {
+            "name": "Pichu",
+            "dexNumber": 172,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Cleffa",
+            "dexNumber": 173,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Igglybuff",
+            "dexNumber": 174,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Tyrogue",
+            "dexNumber": 236,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Bonsly",
+            "dexNumber": 438,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Mime Jr.",
+            "dexNumber": 439,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Munchlax",
+            "dexNumber": 446,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Smoochum",
+            "dexNumber": 238,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Elekid",
+            "dexNumber": 239,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Magby",
+            "dexNumber": 240,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Smoochum",
+            "dexNumber": 238,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Elekid",
+            "dexNumber": 239,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Magby",
+            "dexNumber": 240,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Munchlax",
+            "dexNumber": 446,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Timid",
+          "ability": "Serene Grace",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Air Slash",
+            "Flamethrower",
+            "Aura Sphere",
+            "Dazzling Gleam"
+          ]
+        },
+        {
+          "name": "Snorlax",
+          "dexNumber": 143,
+          "nature": "Adamant",
+          "ability": "Thick Fat",
+          "item": "Leftovers",
+          "moves": [
+            "Crunch",
+            "Body Slam",
+            "Fire Punch",
+            "Earthquake"
+          ]
+        },
+        {
+          "name": "Mr. Mime",
+          "dexNumber": 122,
+          "nature": "Modest",
+          "ability": "Filter",
+          "item": "Focus Sash",
+          "moves": [
+            "Psychic",
+            "Focus Blast",
+            "Dazzling Gleam",
+            "Shadow Ball"
+          ]
+        },
+        {
+          "name": "Blissey",
+          "dexNumber": 242,
+          "nature": "Bold",
+          "ability": "Natural Cure",
+          "item": "Leftovers",
+          "moves": [
+            "Toxic",
+            "Soft-Boiled",
+            "Seismic Toss",
+            "Wish"
+          ]
+        },
+        {
+          "name": "Electivire",
+          "dexNumber": 466,
+          "nature": "Adamant",
+          "ability": "Vital Spirit",
+          "item": "Life Orb",
+          "moves": [
+            "Wild Charge",
+            "Fire Punch",
+            "Cross Chop",
+            "Ice Punch"
+          ]
+        },
+        {
+          "name": "Magmortar",
+          "dexNumber": 467,
+          "nature": "Rash",
+          "ability": "Flame Body",
+          "item": "Life Orb",
+          "moves": [
+            "Fire Blast",
+            "Earthquake",
+            "Thunderbolt",
+            "Focus Blast"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,503 @@
+{
+  "name": "Naruto Fanboy",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Naruto_Fanboy.png",
+  "BossCooldown": 288,
+  "bossId": "narutofanboy",
+  "location": "Desert Ruins which is a cave in Route 111 Desert",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/NarutoFanboyLoc.png",
+  "requirements": "Be Hoenn champion",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Oran Berry",
+            "quantity": "3-8",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Oran_Berry.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Prism Scale",
+            "quantity": "1",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/Prism_Scale.png"
+          },
+          {
+            "name": "TM: Earthquake",
+            "quantity": "3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ground.png"
+          },
+          {
+            "name": "Big Pearl",
+            "quantity": "2-3",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/Big_Pearl.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Cacnea",
+            "dexNumber": 331,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Heliolisk",
+          "dexNumber": 695,
+          "nature": "Random",
+          "ability": "Dry Skin",
+          "item": "None",
+          "moves": [
+            "Hyper Voice",
+            "Thunderbolt",
+            "Focus Blast",
+            "Grass Knot"
+          ]
+        },
+        {
+          "name": "Diggersby",
+          "dexNumber": 660,
+          "nature": "Random",
+          "ability": "Huge Power",
+          "item": "None",
+          "moves": [
+            "Hammer Arm",
+            "Earthquake",
+            "Return"
+          ]
+        },
+        {
+          "name": "Drifblim",
+          "dexNumber": 426,
+          "nature": "Random",
+          "ability": "Flare Boost",
+          "item": "Flame Orb",
+          "moves": [
+            "Thunderbolt",
+            "Shadow Ball"
+          ]
+        },
+        {
+          "name": "Golurk",
+          "dexNumber": 623,
+          "nature": "Random",
+          "ability": "No Guard",
+          "item": "None",
+          "moves": [
+            "Dynamic Punch",
+            "Earthquake",
+            "Fire Punch",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Wobbuffet",
+          "dexNumber": 202,
+          "nature": "Random",
+          "ability": "Shadow Tag",
+          "item": "None",
+          "moves": [
+            "Destiny Bond",
+            "Counter"
+          ]
+        },
+        {
+          "name": "Regigigas",
+          "dexNumber": 486,
+          "nature": "Random",
+          "ability": "Slow Start",
+          "item": "None",
+          "moves": [
+            "Giga Impact",
+            "Fire Punch",
+            "Zen Headbutt",
+            "Heavy Slam"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Oran Berry",
+            "quantity": "3-8",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Oran_Berry.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Prism Scale",
+            "quantity": "1",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/Prism_Scale.png"
+          },
+          {
+            "name": "TM: Earthquake",
+            "quantity": "3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ground.png"
+          },
+          {
+            "name": "Big Pearl",
+            "quantity": "2-3",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/Big_Pearl.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Cacnea",
+            "dexNumber": 331,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Slakoth",
+            "dexNumber": 287,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Tynamo",
+            "dexNumber": 602,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Exploud",
+          "dexNumber": 295,
+          "nature": "Random",
+          "ability": "Scrappy",
+          "item": "Choice Specs",
+          "moves": [
+            "Focus Blast",
+            "Fire Blast",
+            "Boomburst",
+            "Surf"
+          ]
+        },
+        {
+          "name": "Sigilyph",
+          "dexNumber": 561,
+          "nature": "Random",
+          "ability": "Tinted Lens",
+          "item": "Life Orb",
+          "moves": [
+            "Psyshock",
+            "Air Slash",
+            "Energy Ball",
+            "Heat Wave"
+          ]
+        },
+        {
+          "name": "Chansey",
+          "dexNumber": 113,
+          "nature": "Random",
+          "ability": "Serene Grace",
+          "item": "Eviolite",
+          "moves": [
+            "Ice Beam",
+            "Thunderbolt"
+          ]
+        },
+        {
+          "name": "Solrock",
+          "dexNumber": 338,
+          "nature": "Random",
+          "ability": "Levitate",
+          "item": "Choice Band",
+          "moves": [
+            "Flare Blitz",
+            "Stone Edge",
+            "Explosion"
+          ]
+        },
+        {
+          "name": "Togekiss",
+          "dexNumber": 468,
+          "nature": "Random",
+          "ability": "Serene Grace",
+          "item": "Life Orb",
+          "moves": [
+            "Thunder Wave",
+            "Air Slash",
+            "Flamethrower",
+            "Ancient Power"
+          ]
+        },
+        {
+          "name": "Regigigas",
+          "dexNumber": 486,
+          "nature": "Random",
+          "ability": "Slow Start",
+          "item": "Choice Scarf",
+          "moves": [
+            "Giga Impact",
+            "Fire Punch",
+            "Zen Headbutt",
+            "Heavy Slam"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Focus Sash",
+            "quantity": "5-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Oran Berry",
+            "quantity": "3-8",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Oran_Berry.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Prism Scale",
+            "quantity": "1",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/Prism_Scale.png"
+          },
+          {
+            "name": "TM: Earthquake",
+            "quantity": "3",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/TM-Ground.png"
+          },
+          {
+            "name": "Big Pearl",
+            "quantity": "2-3",
+            "tier": 0,
+            "picture": "SharedPokemonLibrary/Assets/Items/Big_Pearl.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Cacnea",
+            "dexNumber": 331,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Porygon",
+            "dexNumber": 137,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Slakoth",
+            "dexNumber": 287,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Trapinch",
+            "dexNumber": 328,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Tynamo",
+            "dexNumber": 602,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Claydol",
+          "dexNumber": 344,
+          "nature": "Random",
+          "ability": "Levitate",
+          "item": "Choice Band",
+          "moves": [
+            "Earthquake",
+            "Zen Headbutt",
+            "Stealth Rock",
+            "Explosion",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Staraptor",
+          "dexNumber": 398,
+          "nature": "Random",
+          "ability": "Reckless",
+          "item": "Choice Band",
+          "moves": [
+            "Brave Bird",
+            "Close Combat",
+            "Steel Wing",
+            "Double-Edge"
+          ]
+        },
+        {
+          "name": "Porygon-Z",
+          "dexNumber": 474,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Choice Specs",
+          "moves": [
+            "Thunderbolt",
+            "Tri Attack",
+            "Shadow Ball",
+            "Nasty Plot"
+          ]
+        },
+        {
+          "name": "Flygon",
+          "dexNumber": 330,
+          "nature": "Random",
+          "ability": "Levitate",
+          "item": "Life Orb",
+          "moves": [
+            "Superpower",
+            "Outrage",
+            "Earthquake",
+            "Fire Blast"
+          ]
+        },
+        {
+          "name": "Bronzong",
+          "dexNumber": 437,
+          "nature": "Random",
+          "ability": "Random",
+          "item": "Choice Band",
+          "moves": [
+            "Earthquake",
+            "Explosion",
+            "Toxic",
+            "Iron Head"
+          ]
+        },
+        {
+          "name": "Lugia",
+          "dexNumber": 249,
+          "nature": "Random",
+          "ability": "Multiscale",
+          "item": "Choice Specs",
+          "moves": [
+            "Aeroblast",
+            "Psyshock",
+            "Hydro Pump",
+            "Earth Power",
+            "Giga Drain"
+          ]
+        }
+      ]
+    }
+  }
+}

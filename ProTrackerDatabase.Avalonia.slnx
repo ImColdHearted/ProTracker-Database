@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="ProTrackerDatabase.Avalonia.csproj" />
+  <Project Path="PokemonSim/pokemonsim.csproj" />
+  <Project Path="PokemonSim.Shadow/PokemonSim.Shadow.csproj" />
+  <Project Path="PokemonSim.Tests/PokemonSim.Tests.csproj" />
+  <Project Path="PokemonSim.DevConsole/PokemonSim.DevConsole.csproj" />
+</Solution>

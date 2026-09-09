@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Section 154: the development harness that used to be pokemonsim.csproj's
+       reason to be an Exe (its Program.cs did not survive the copy into the
+       repo). Kept OUT of the tracker: the Avalonia app has exactly one entry
+       point, and this console is only for engine work. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PokemonSim\pokemonsim.csproj" />
+  </ItemGroup>
+
+</Project>

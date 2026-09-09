@@ -1,0 +1,593 @@
+{
+  "name": "Saphirr",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Saphirr.png",
+  "BossCooldown": 288,
+  "bossId": "saphirr",
+  "location": "Route 227",
+  "locationPicture": "SharedPokemonLibrary/Assets/Locations/SaphirrLoc.png",
+  "requirements": "Having completed the Sinnoh League, Completed the Heatran Quest, One Fire Type Pok\u00E9mon in the team, One Pok\u00E9mon with the move Rock Climb.",
+  "difficulties": {
+    "easy": {
+      "tierChances": {
+        "tier1": 85,
+        "tier2": 10,
+        "tier3": 5
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "pveCoins": 0,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Fire Gem",
+            "quantity": "2-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Gem.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Yache Berry",
+            "quantity": "7-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Yache_Berry.png"
+          },
+          {
+            "name": "Fire Stone",
+            "quantity": "1-2",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Vulpix",
+            "dexNumber": 37,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Growlithe",
+            "dexNumber": 58,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Darumaka",
+            "dexNumber": 554,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Fletchling",
+            "dexNumber": 661,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Charmander",
+            "dexNumber": 4,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Cyndaquil",
+            "dexNumber": 155,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Torchic",
+            "dexNumber": 255,
+            "picture": "",
+            "winStreakRequired": 0
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Charizard",
+          "dexNumber": 6,
+          "nature": "Modest",
+          "ability": "Blaze",
+          "item": "None",
+          "moves": [
+            "Fire Blast",
+            "Air Slash",
+            "Focus Blast",
+            "Roost"
+          ]
+        },
+        {
+          "name": "Torkoal",
+          "dexNumber": 324,
+          "nature": "Bold",
+          "ability": "Drought",
+          "item": "None",
+          "moves": [
+            "Shell Smash",
+            "Fire Blast",
+            "Earth Power",
+            "Yawn"
+          ]
+        },
+        {
+          "name": "Tangrowth",
+          "dexNumber": 465,
+          "nature": "Modest",
+          "ability": "Chlorophyll",
+          "item": "None",
+          "moves": [
+            "Solar Beam",
+            "Ancient Power",
+            "Sludge Bomb",
+            "Focus Blast"
+          ]
+        },
+        {
+          "name": "Chandelure",
+          "dexNumber": 609,
+          "nature": "Modest",
+          "ability": "Flash Fire",
+          "item": "None",
+          "moves": [
+            "Fire Blast",
+            "Shadow Ball",
+            "Energy Ball",
+            "Calm Mind"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Modest",
+          "ability": "Flame Body",
+          "item": "None",
+          "moves": [
+            "Fire Blast",
+            "Giga Drain",
+            "Bug Buzz",
+            "Roost"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Naive",
+          "ability": "Blaze",
+          "item": "None",
+          "moves": [
+            "Close Combat",
+            "Grass Knot",
+            "Fire Blast",
+            "Earthquake"
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "tierChances": {
+        "tier1": 80,
+        "tier2": 10,
+        "tier3": 10
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 12000,
+          "maximum": 30000
+        },
+        "pveCoins": 2,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Fire Gem",
+            "quantity": "2-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Gem.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Yache Berry",
+            "quantity": "7-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Yache_Berry.png"
+          },
+          {
+            "name": "Fire Stone",
+            "quantity": "1-2",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Vulpix",
+            "dexNumber": 37,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Growlithe",
+            "dexNumber": 58,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Darumaka",
+            "dexNumber": 554,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Fletchling",
+            "dexNumber": 661,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Charmander",
+            "dexNumber": 4,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Cyndaquil",
+            "dexNumber": 155,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Torchic",
+            "dexNumber": 255,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Charmander",
+            "dexNumber": 4,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 390,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Charizard",
+          "dexNumber": 6,
+          "nature": "Modest",
+          "ability": "Blaze",
+          "item": "Focus Sash",
+          "moves": [
+            "Fire Blast",
+            "Air Slash",
+            "Focus Blast",
+            "Roost"
+          ]
+        },
+        {
+          "name": "Garchomp",
+          "dexNumber": 445,
+          "nature": "Adamant",
+          "ability": "Rough Skin",
+          "item": "Focus Sash",
+          "moves": [
+            "Earthquake",
+            "Outrage",
+            "Fire Blast",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Tangrowth",
+          "dexNumber": 465,
+          "nature": "Modest",
+          "ability": "Chlorophyll",
+          "item": "Choice Specs",
+          "moves": [
+            "Solar Beam",
+            "Ancient Power",
+            "Sludge Bomb",
+            "Focus Blast"
+          ]
+        },
+        {
+          "name": "Torkoal",
+          "dexNumber": 324,
+          "nature": "Bold",
+          "ability": "Drought",
+          "item": "Leftovers",
+          "moves": [
+            "Shell Smash",
+            "Fire Blast",
+            "Earth Power",
+            "Yawn"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Modest",
+          "ability": "Flame Body",
+          "item": "Life Orb",
+          "moves": [
+            "Fire Blast",
+            "Giga Drain",
+            "Bug Buzz",
+            "Roost"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Naive",
+          "ability": "Blaze",
+          "item": "Life Orb",
+          "moves": [
+            "Close Combat",
+            "Grass Knot",
+            "Fire Blast",
+            "Earthquake"
+          ]
+        }
+      ]
+    },
+    "hard": {
+      "tierChances": {
+        "tier1": 60,
+        "tier2": 25,
+        "tier3": 15
+      },
+      "rewards": {
+        "pokedollars": {
+          "minimum": 20000,
+          "maximum": 40000
+        },
+        "pveCoins": 4,
+        "items": [
+          {
+            "name": "Revival Herb",
+            "quantity": "3-5",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Revival_Herb.png"
+          },
+          {
+            "name": "Fire Gem",
+            "quantity": "2-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Gem.png"
+          },
+          {
+            "name": "Focus Sash",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Focus_Sash.png"
+          },
+          {
+            "name": "Rare Candy",
+            "quantity": "3-10",
+            "tier": 1,
+            "picture": "SharedPokemonLibrary/Assets/Items/Rare_Candy.png"
+          },
+          {
+            "name": "Yache Berry",
+            "quantity": "7-10",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Yache_Berry.png"
+          },
+          {
+            "name": "Fire Stone",
+            "quantity": "1-2",
+            "tier": 2,
+            "picture": "SharedPokemonLibrary/Assets/Items/Fire_Stone.png"
+          }
+        ],
+        "pokemon": [
+          {
+            "name": "Vulpix",
+            "dexNumber": 37,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Growlithe",
+            "dexNumber": 58,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Darumaka",
+            "dexNumber": 554,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Fletchling",
+            "dexNumber": 661,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Charmander",
+            "dexNumber": 4,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Cyndaquil",
+            "dexNumber": 155,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Torchic",
+            "dexNumber": 255,
+            "picture": "",
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Charmander",
+            "dexNumber": 4,
+            "picture": "",
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Chimchar",
+            "dexNumber": 390,
+            "picture": "",
+            "winStreakRequired": 3
+          }
+        ]
+      },
+      "team": [
+        {
+          "name": "Groudon",
+          "dexNumber": 383,
+          "nature": "Adamant",
+          "ability": "Drought",
+          "item": "Choice Band",
+          "moves": [
+            "Earthquake",
+            "Stone Edge",
+            "Fire Blast",
+            "Dragon Tail"
+          ]
+        },
+        {
+          "name": "Mega Garchomp",
+          "dexNumber": 10058,
+          "nature": "Adamant",
+          "ability": "Sand Force",
+          "item": "Garchompite",
+          "moves": [
+            "Earthquake",
+            "Outrage",
+            "Fire Blast",
+            "Stone Edge"
+          ]
+        },
+        {
+          "name": "Tangrowth",
+          "dexNumber": 465,
+          "nature": "Modest",
+          "ability": "Chlorophyll",
+          "item": "Choice Specs",
+          "moves": [
+            "Solar Beam",
+            "Ancient Power",
+            "Sludge Bomb",
+            "Focus Blast"
+          ]
+        },
+        {
+          "name": "Torkoal",
+          "dexNumber": 324,
+          "nature": "Bold",
+          "ability": "Drought",
+          "item": "Leftovers",
+          "moves": [
+            "Shell Smash",
+            "Fire Blast",
+            "Earth Power",
+            "Yawn"
+          ]
+        },
+        {
+          "name": "Volcarona",
+          "dexNumber": 637,
+          "nature": "Modest",
+          "ability": "Flame Body",
+          "item": "Choice Specs",
+          "moves": [
+            "Fire Blast",
+            "Giga Drain",
+            "Bug Buzz",
+            "Roost"
+          ]
+        },
+        {
+          "name": "Infernape",
+          "dexNumber": 392,
+          "nature": "Naive",
+          "ability": "Blaze",
+          "item": "Life Orb",
+          "moves": [
+            "Close Combat",
+            "Grass Knot",
+            "Fire Blast",
+            "Earthquake"
+          ]
+        }
+      ]
+    }
+  }
+}
