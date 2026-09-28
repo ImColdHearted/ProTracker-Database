@@ -145,10 +145,10 @@ namespace Foot_Tracker.Services
         /// </summary>
         public static void Append(string pokemonName, int? level, string? location)
         {
-            // Admin Client isolation (§101) - session history is normal-client
-            // data; in admin mode nothing is recorded, refined, cleared, or
-            // flushed (the admin session is purely in-memory by design).
-            if (AdminModeService.IsActive)
+            // Isolation (§101, §249) - session history is normal-client data;
+            // while any isolated session is active nothing is recorded,
+            // refined, cleared, or flushed here. See IsolatedSession.
+            if (IsolatedSession.IsActive)
                 return;
 
             if (string.IsNullOrWhiteSpace(pokemonName))
@@ -170,6 +170,12 @@ namespace Foot_Tracker.Services
 
             allRecords.Add(record);
             GetHistoryFor(pokemonName).Insert(0, record);
+
+            // §429. The record being replaced is final now - its level and
+            // map will not be refined again - so it is the one worth
+            // sharing. No I/O: the service folds it into memory and posts
+            // on its own timer.
+            LevelShareService.Observe(currentRecord);
 
             currentRecord = record;
 
@@ -194,10 +200,10 @@ namespace Foot_Tracker.Services
         /// </summary>
         public static void RefineCurrentLevel(int level)
         {
-            // Admin Client isolation (§101) - session history is normal-client
-            // data; in admin mode nothing is recorded, refined, cleared, or
-            // flushed (the admin session is purely in-memory by design).
-            if (AdminModeService.IsActive)
+            // Isolation (§101, §249) - session history is normal-client data;
+            // while any isolated session is active nothing is recorded,
+            // refined, cleared, or flushed here. See IsolatedSession.
+            if (IsolatedSession.IsActive)
                 return;
 
             if (currentRecord is null || currentRecord.Level == level)
@@ -222,7 +228,7 @@ namespace Foot_Tracker.Services
         /// </summary>
         public static void RefineCurrentGender(string? gender)
         {
-            if (AdminModeService.IsActive)
+            if (IsolatedSession.IsActive)
                 return;
 
             if (string.IsNullOrWhiteSpace(gender))
@@ -247,7 +253,7 @@ namespace Foot_Tracker.Services
         /// </summary>
         public static void RefineCurrentRareType(string? rareType)
         {
-            if (AdminModeService.IsActive)
+            if (IsolatedSession.IsActive)
                 return;
 
             if (string.IsNullOrWhiteSpace(rareType) || rareType == "None")
@@ -272,10 +278,10 @@ namespace Foot_Tracker.Services
         /// </summary>
         public static void RefineCurrentLocationIfUnknown(string location)
         {
-            // Admin Client isolation (§101) - session history is normal-client
-            // data; in admin mode nothing is recorded, refined, cleared, or
-            // flushed (the admin session is purely in-memory by design).
-            if (AdminModeService.IsActive)
+            // Isolation (§101, §249) - session history is normal-client data;
+            // while any isolated session is active nothing is recorded,
+            // refined, cleared, or flushed here. See IsolatedSession.
+            if (IsolatedSession.IsActive)
                 return;
 
             if (currentRecord is null || string.IsNullOrWhiteSpace(location))
@@ -306,9 +312,9 @@ namespace Foot_Tracker.Services
         /// </summary>
         public static void RefineCurrentLocation(string location)
         {
-            // Admin Client isolation (§101) - same front door as every other
-            // mutator here.
-            if (AdminModeService.IsActive)
+            // Isolation (§101, §249) - same front door as every other mutator
+            // here. See IsolatedSession.
+            if (IsolatedSession.IsActive)
                 return;
 
             if (currentRecord is null || string.IsNullOrWhiteSpace(location))
@@ -335,10 +341,10 @@ namespace Foot_Tracker.Services
         /// </summary>
         public static void Clear()
         {
-            // Admin Client isolation (§101) - session history is normal-client
-            // data; in admin mode nothing is recorded, refined, cleared, or
-            // flushed (the admin session is purely in-memory by design).
-            if (AdminModeService.IsActive)
+            // Isolation (§101, §249) - session history is normal-client data;
+            // while any isolated session is active nothing is recorded,
+            // refined, cleared, or flushed here. See IsolatedSession.
+            if (IsolatedSession.IsActive)
                 return;
 
             // §112: Reset ends a hunt, it does not un-happen it. The
@@ -346,6 +352,9 @@ namespace Foot_Tracker.Services
             // before the session is wiped; the log itself is never cleared
             // here, which is the whole point of it being permanent.
             EncounterDatabaseService.FlushPending();
+
+            // §429: and its level range, for the same reason.
+            LevelShareService.Observe(currentRecord);
 
             allRecords.Clear();
 
@@ -376,6 +385,9 @@ namespace Foot_Tracker.Services
             // §112: written under the profile it belonged to, before the
             // active client number changes underneath it.
             EncounterDatabaseService.FlushPending();
+
+            // §429: and its level range, for the same reason.
+            LevelShareService.Observe(currentRecord);
 
             allRecords.Clear();
 
@@ -474,6 +486,11 @@ namespace Foot_Tracker.Services
             // being admin-gated: a pending encounter can only ever have come
             // from a normal-mode Append.
             EncounterDatabaseService.FlushPending();
+
+            // §429: a hunt stopped or an app closing leaves no next
+            // encounter to make this one final, so it is final here. Counted
+            // once however many flushes follow.
+            LevelShareService.Observe(currentRecord);
 
             string? savePath = GetSavePath();
 

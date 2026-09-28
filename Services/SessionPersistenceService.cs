@@ -474,6 +474,57 @@ namespace Foot_Tracker.Services
             );
         }
 
+        /// <summary>§250. Where a World Quest session lives: per client, like
+        /// the normal session, because it is driven by one client's capture
+        /// and two clients in the mode at once must not share a file; and
+        /// per quest, so next month's quest starts clean and this month's is
+        /// still there to look at. Null before a client is bound, for the
+        /// same two-processes-one-file reason as GetSessionPath.</summary>
+        private static string? GetWorldQuestSessionPath(string questId)
+        {
+            int clientNumber =
+                ActiveClientNumber;
+
+            if (clientNumber <= 0)
+                return null;
+
+            string safeId =
+                SafeQuestId(questId);
+
+            if (safeId.Length == 0)
+                return null;
+
+            return Path.Combine(
+                SessionFolder,
+                $"world-quest-session-client{clientNumber}-{safeId}.json"
+            );
+        }
+
+        /// <summary>A quest id is a Discord message id today and a
+        /// "test-xxxxxxxx" id from the admin console's test quest (§234).
+        /// Both are already filename-safe; this keeps it that way if a
+        /// future id is not, and caps the length so a hostile id cannot make
+        /// a path too long to create.</summary>
+        private static string SafeQuestId(string questId)
+        {
+            if (string.IsNullOrWhiteSpace(questId))
+                return string.Empty;
+
+            var kept =
+                new System.Text.StringBuilder(questId.Length);
+
+            foreach (char c in questId)
+            {
+                if (char.IsAsciiLetterOrDigit(c) || c == '-' || c == '_')
+                    kept.Append(c);
+
+                if (kept.Length >= 64)
+                    break;
+            }
+
+            return kept.ToString();
+        }
+
         // ============================================================
         // LEGACY MIGRATION
         // ============================================================
@@ -541,6 +592,38 @@ namespace Foot_Tracker.Services
             if (sessionPath == null)
                 return;
 
+            WriteSession(
+                sessionPath,
+                session
+            );
+        }
+
+        /// <summary>§250. The World Quest session, to its own per-client,
+        /// per-quest file. Same writer, same durability, same refusal to
+        /// write before a client is bound.</summary>
+        public static void SaveWorldQuest(
+            HuntSession session,
+            string questId)
+        {
+            string? sessionPath =
+                GetWorldQuestSessionPath(questId);
+
+            if (sessionPath == null)
+                return;
+
+            WriteSession(
+                sessionPath,
+                session
+            );
+        }
+
+        /// <summary>§250. Everything Save used to do after choosing its
+        /// path, so the normal and the World Quest sessions are written by
+        /// one piece of code rather than two that can drift.</summary>
+        private static void WriteSession(
+            string sessionPath,
+            HuntSession session)
+        {
             Directory.CreateDirectory(
                 SessionFolder
             );
@@ -654,6 +737,31 @@ namespace Foot_Tracker.Services
 
             MigrateLegacySessionIfNeeded();
 
+            return ReadSession(
+                sessionPath
+            );
+        }
+
+        /// <summary>§250. The World Quest session for <paramref name="questId"/>
+        /// on the active client, or null when there is none yet. No legacy
+        /// migration - there is no legacy.</summary>
+        public static HuntSessionSaveData? LoadWorldQuest(
+            string questId)
+        {
+            string? sessionPath =
+                GetWorldQuestSessionPath(questId);
+
+            if (sessionPath == null)
+                return null;
+
+            return ReadSession(
+                sessionPath
+            );
+        }
+
+        private static HuntSessionSaveData? ReadSession(
+            string sessionPath)
+        {
             if (!File.Exists(sessionPath))
                 return null;
 
@@ -664,7 +772,7 @@ namespace Foot_Tracker.Services
                         sessionPath
                     );
 
-                return
+                HuntSessionSaveData? data =
                     JsonSerializer.Deserialize<HuntSessionSaveData>(
                         json,
                         new JsonSerializerOptions
@@ -672,6 +780,12 @@ namespace Foot_Tracker.Services
                             PropertyNameCaseInsensitive = true
                         }
                     );
+
+                // §405: the old spelling of the two Nidoran becomes the new.
+                if (data is not null)
+                    SessionNameMigration.Apply(data);
+
+                return data;
             }
             catch
             {
@@ -696,6 +810,78 @@ namespace Foot_Tracker.Services
                 File.Delete(
                     sessionPath
                 );
+            }
+        }
+
+        /// <summary>§250. Removes the World Quest session file for
+        /// <paramref name="questId"/> on the active client - what Reset does
+        /// to it, the way Delete is what Reset does to the normal one.</summary>
+        public static void DeleteWorldQuest(
+            string questId)
+        {
+            string? sessionPath =
+                GetWorldQuestSessionPath(questId);
+
+            if (sessionPath == null)
+                return;
+
+            if (File.Exists(sessionPath))
+            {
+                File.Delete(
+                    sessionPath
+                );
+            }
+        }
+    }
+
+    /// <summary>§405. Every species name a saved session holds, under the
+    /// library's current spelling - the targets, the two encounter cards
+    /// and the per-species dictionaries (counts under the old and new
+    /// spelling of one species are added together).</summary>
+    internal static class SessionNameMigration
+    {
+        public static void Apply(HuntSessionSaveData data)
+        {
+            data.TargetPokemon = PokemonNames.Modern(data.TargetPokemon);
+            data.CurrentEncounter = PokemonNames.Modern(data.CurrentEncounter);
+            data.PreviousEncounter = PokemonNames.Modern(data.PreviousEncounter);
+
+            for (int i = 0; i < data.TargetPokemons.Count; i++)
+                data.TargetPokemons[i] = PokemonNames.Modern(data.TargetPokemons[i]);
+
+            MergeCounts(data.EncounterCounts);
+            MergeCounts(data.CaughtCounts);
+            MergeCounts(data.RanFromCounts);
+            KeepLatest(data.LastEncounteredUtc);
+        }
+
+        private static void MergeCounts(Dictionary<string, int>? counts)
+        {
+            if (counts is null)
+                return;
+
+            foreach (string key in counts.Keys.Where(PokemonNames.IsLegacy).ToList())
+            {
+                string modern = PokemonNames.Modern(key);
+                int add = counts[key];
+                counts.Remove(key);
+                counts[modern] = counts.TryGetValue(modern, out int have) ? have + add : add;
+            }
+        }
+
+        private static void KeepLatest(Dictionary<string, DateTime>? times)
+        {
+            if (times is null)
+                return;
+
+            foreach (string key in times.Keys.Where(PokemonNames.IsLegacy).ToList())
+            {
+                string modern = PokemonNames.Modern(key);
+                DateTime when = times[key];
+                times.Remove(key);
+
+                if (!times.TryGetValue(modern, out DateTime already) || when > already)
+                    times[modern] = when;
             }
         }
     }

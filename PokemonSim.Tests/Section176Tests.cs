@@ -57,8 +57,13 @@ namespace PokemonSim.Tests
             return mon;
         }
 
+        /// <summary>§311. §176's nine effect flags were their own block
+        /// behind the move blocks, because appending was the only way to add
+        /// anything. They are part of the move slot now - same nine flags,
+        /// same order, eleven columns further in - so the offsets these facts
+        /// were written with still mean what they meant.</summary>
         static int Effect(int slot, int offset) =>
-            ObserverEncoder.EffectBlockStart + slot * ObserverEncoder.EffectBlockStride + offset;
+            ObserverEncoder.MoveBlockStart + slot * ObserverEncoder.MoveBlockStride + 11 + offset;
 
         static int Team(int slot, int offset) =>
             ObserverEncoder.TeamBlockStart + slot * ObserverEncoder.TeamBlockStride + offset;
@@ -72,14 +77,14 @@ namespace PokemonSim.Tests
         [Fact]
         public void TheThreeNewBlocksSitBehindTheSection175Vector()
         {
-            // Everything section 175 wrote is untouched, and the new blocks
-            // start exactly where it stopped. That is the whole reason a
-            // 76-input model still loads and still behaves.
-            Assert.Equal(ObservationSchema.FeatureCountV2, ObserverEncoder.EffectBlockStart);
-
+            // §311 folded the effect flags into the move slot and put the
+            // bench and the hazards in blocks of their own, so there is no
+            // "behind the §175 vector" left to assert. What survives is what
+            // this was really guarding: the blocks tile, without gaps and
+            // without overlap.
             Assert.Equal(
-                ObserverEncoder.EffectBlockStart +
-                ObservationSchema.MoveSlots * ObserverEncoder.EffectBlockStride,
+                ObserverEncoder.MoveBlockStart +
+                ObservationSchema.MoveSlots * ObserverEncoder.MoveBlockStride,
                 ObserverEncoder.TeamBlockStart);
 
             Assert.Equal(
@@ -87,10 +92,7 @@ namespace PokemonSim.Tests
                 ObservationSchema.TeamSlots * ObserverEncoder.TeamBlockStride,
                 ObserverEncoder.HazardBlockStart);
 
-            // Section 177 appended behind this, so what the hazard block
-            // now ends is the section 176 vector - which is exactly the
-            // prefix an older model is fed.
-            Assert.Equal(ObservationSchema.FeatureCountV3,
+            Assert.Equal(ObserverEncoder.FieldBlockStart,
                          ObserverEncoder.HazardBlockStart + ObserverEncoder.HazardBlockSize);
 
             Assert.Equal(ObservationSchema.MoveSlots + ObservationSchema.TeamSlots,
@@ -341,7 +343,7 @@ namespace PokemonSim.Tests
 
             (BattleState state, _) = TestKit.Duel(766, slow, fast);
 
-            int outspeeds = ObserverEncoder.GlobalBlockStart;
+            int outspeeds = ObserverEncoder.PositionBlockStart + 30;
 
             Assert.Equal(0f, ObserverEncoder.Encode(state, state.Player1)[outspeeds]);
 
@@ -688,9 +690,10 @@ namespace PokemonSim.Tests
             Assert.True(withHead.Status.CanChooseSwitches);
             Assert.DoesNotContain("no switch head", withHead.Status.Description);
 
-            // §177: this probe is the section 176 width, and says so.
-            Assert.Equal(ObservationSchema.FeatureCountV3, withHead.Status.InputWidth);
-            Assert.Contains("pre-177", withHead.Status.Description);
+            // §311: this probe is the §176 width, which is retired - so it
+            // is refused, and the refusal names the generation.
+            Assert.False(withHead.Status.Available, withHead.Status.Description);
+            Assert.Contains("\u00a7176", withHead.Status.Description);
 
             Assert.Equal(ObservationSchema.MoveSlots, moveOnly.Status.OutputWidth);
             Assert.False(moveOnly.Status.CanChooseSwitches);

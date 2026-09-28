@@ -61,7 +61,7 @@
             </Grid>
 
             <TextBlock Grid.Row="1" Text="{Binding TimeHunting}" HorizontalAlignment="Center"
-                       Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold" FontSize="15" Margin="0,4,0,2" />
+                       Foreground="{DynamicResource ThemeTextBrush}" FontWeight="{DynamicResource ThemeHeadingFontWeight}" FontSize="15" Margin="0,4,0,2" />
         </Grid>
     </DockPanel>
 </Window>

@@ -30,6 +30,17 @@ public partial class SwapPokemonWindow : Window
         }
     }
 
+    // §272: the skins column. Separate from Card_PointerPressed above because
+    // the two columns do different things with the same card type - that one
+    // replaces the target and closes, this one restyles it and stays open.
+    private void FormCard_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (sender is Control { DataContext: ViewModels.PokemonCardItem card })
+        {
+            ViewModel?.SelectSkinCommand.Execute(card);
+        }
+    }
+
     private void CancelButton_Click(object? sender, RoutedEventArgs e)
     {
         Close(false);

@@ -1,0 +1,286 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.CustomAppearancesWindow"
+        x:DataType="vm:CustomAppearancesViewModel"
+        Title="Custom Appearances"
+        Width="920" Height="700" MinWidth="700" MinHeight="480"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §345. The community gallery. Two halves: what other players have
+         shared (above) and sharing your own (below).
+
+         §366 REVERSED THIS WINDOW'S ONE RULE. §345 left it unthemed, on the
+         same reasoning as the Appearance window: you might be applying a
+         theme that makes this window unreadable, and the way back out has to
+         stay legible. That argument was only ever true of ONE of the two
+         windows. Change Appearance is where you undo a bad choice, so it
+         stays neutral; this one is a gallery you browse, and a gallery that
+         ignores the appearance you just applied is the one window in the app
+         that does. So the background, the panels, the cards, the text and
+         the buttons all follow the user's own settings now.
+
+         The exception is the preview tile on each card, which paints the
+         SHARED theme's colours - that is the whole point of the card, and
+         the one thing here that must not inherit. -->
+    <Grid Margin="14" RowDefinitions="Auto,*,Auto">
+
+        <!-- Header: the title, the status line every message lands on, and
+             Refresh. The mockup drew none of the last two; they are here
+             because loading, failures and "Applied X" have to say so
+             somewhere, and a gallery with no way to reload is a gallery you
+             close and reopen. Both are small and out of the way. -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+            <StackPanel Grid.Column="0" Spacing="2">
+                <TextBlock Text="Shared Appearances" FontSize="17" FontWeight="Bold"
+                           TextDecorations="Underline"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Text="{Binding StatusText}" FontSize="12" Opacity="0.75"
+                           TextWrapping="Wrap"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+            </StackPanel>
+            <Button Grid.Column="1" Content="Refresh" Padding="14,6"
+                    Command="{Binding RefreshCommand}"
+                    IsEnabled="{Binding !IsBusy}" VerticalAlignment="Top" />
+        </Grid>
+
+        <!-- The gallery.
+
+             §366: an explicit 1px outline and the Stats/Panels fill rather
+             than Classes="themedPanel". The class is the right look but its
+             border and inset are zero until a Stats colour is chosen (see
+             ThemeManager.PanelIsVisible), and this panel is an outlined box
+             in the design whether or not anything has been chosen. -->
+        <Border Grid.Row="1" CornerRadius="6" Padding="8"
+                Background="{DynamicResource ThemeStatsBackgroundBrush}"
+                BorderBrush="{DynamicResource ThemeBorderBrush}"
+                BorderThickness="1">
+            <Grid RowDefinitions="*,Auto">
+                <Panel Grid.Row="0">
+                    <TextBlock Text="Nothing shared yet. Yours could be the first."
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Opacity="0.6" IsVisible="{Binding IsEmpty}"
+                               Foreground="{DynamicResource ThemeTextBrush}" />
+
+                    <!-- §366: a WrapPanel of fixed-width cards rather than a
+                         UniformGrid. Four fit across at the default width and
+                         the rows reflow to three or two as the window
+                         narrows, which a fixed column count cannot do. The
+                         card's Width is what makes the columns line up: a
+                         WrapPanel packs by each item's own content width, so
+                         without it a card with a short name would sit
+                         narrower than the one above it. Same reasoning, and
+                         the same fix, as the target sprites in
+                         MainWindow.axaml.
+
+                         The one place this differs from the mockup: a last
+                         row that does not fill starts at the left rather
+                         than centred under the row above. No panel centres a
+                         final row on its own, and faking it would mean
+                         measuring the rows by hand on every resize. -->
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding PageItems}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:CommunityThemeItem">
+                                    <!-- §368: black, not the transparent fill
+                                         §366 gave it. Transparent let the
+                                         user's own background picture run
+                                         straight through the cards, and a
+                                         background busy enough to be worth
+                                         setting is busy enough to read four
+                                         columns of small text through. The
+                                         panel behind them still shows it, so
+                                         the window is still wearing the
+                                         appearance - the cards are just the
+                                         one surface that stops competing with
+                                         the text on them.
+
+                                         One fixed colour rather than a themed
+                                         brush, because it is asked to be black
+                                         specifically. The OUTLINE is still the
+                                         user's Border Color and the text is
+                                         still the user's Font Color, so the
+                                         card is not a hole in the theme - but
+                                         see §208 for why "fixed fill, themed
+                                         text" needs watching: a dark Font
+                                         Color now reads dark-on-black here.
+                                         One line to change if anybody hits
+                                         it. -->
+                                    <Border Width="200" Margin="5" Padding="10"
+                                            CornerRadius="6"
+                                            Background="Black"
+                                            BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                            BorderThickness="1"
+                                            ToolTip.Tip="{Binding CardTooltip}">
+                                        <StackPanel Spacing="8">
+
+                                            <!-- THE ONE THING THAT DOES NOT
+                                                 INHERIT. Every brush here
+                                                 comes from the shared theme,
+                                                 not from the user's - its own
+                                                 background behind its own
+                                                 swatches, so the card shows
+                                                 what Apply would give you
+                                                 rather than what you already
+                                                 have. -->
+                                            <Border Height="76" CornerRadius="4"
+                                                    Background="{Binding BackgroundPreview}"
+                                                    BorderBrush="{Binding BorderSwatch}"
+                                                    BorderThickness="2">
+                                                <WrapPanel HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center">
+                                                    <Border Width="20" Height="20" Margin="2"
+                                                            CornerRadius="3"
+                                                            Background="{Binding TextSwatch}" />
+                                                    <Border Width="20" Height="20" Margin="2"
+                                                            CornerRadius="3"
+                                                            Background="{Binding ButtonSwatch}" />
+                                                    <Border Width="20" Height="20" Margin="2"
+                                                            CornerRadius="3"
+                                                            Background="{Binding HeaderSwatch}" />
+                                                    <Border Width="20" Height="20" Margin="2"
+                                                            CornerRadius="3"
+                                                            Background="{Binding StatsSwatch}" />
+                                                    <Border Width="20" Height="20" Margin="2"
+                                                            CornerRadius="3"
+                                                            Background="{Binding EncountersSwatch}" />
+                                                </WrapPanel>
+                                            </Border>
+
+                                            <TextBlock Text="{Binding Name}" FontWeight="Bold"
+                                                       FontSize="13" HorizontalAlignment="Center"
+                                                       TextAlignment="Center" TextWrapping="Wrap"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+                                            <!-- The four labelled rows. Label
+                                                 and value are two TextBlocks
+                                                 rather than one with Runs:
+                                                 this project compiles its
+                                                 bindings, and a bound Run has
+                                                 no precedent anywhere in it. -->
+                                            <StackPanel Spacing="2">
+                                                <StackPanel Orientation="Horizontal" Spacing="4"
+                                                            HorizontalAlignment="Center">
+                                                    <TextBlock Text="Creator:" FontWeight="Bold" FontSize="11"
+                                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                                    <TextBlock Text="{Binding Creator}" FontSize="11"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Spacing="4"
+                                                            HorizontalAlignment="Center">
+                                                    <TextBlock Text="Font-size:" FontWeight="Bold" FontSize="11"
+                                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                                    <TextBlock Text="{Binding FontSizeText}" FontSize="11"
+                                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Spacing="4"
+                                                            HorizontalAlignment="Center">
+                                                    <TextBlock Text="Font:" FontWeight="Bold" FontSize="11"
+                                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                                    <TextBlock Text="{Binding FontName}" FontSize="11"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Spacing="4"
+                                                            HorizontalAlignment="Center">
+                                                    <TextBlock Text="Background:" FontWeight="Bold" FontSize="11"
+                                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                                    <TextBlock Text="{Binding BackgroundSummary}" FontSize="11"
+                                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                            <!-- View Image is hidden, not
+                                                 disabled, on a theme with no
+                                                 picture: there is nothing to
+                                                 explain, and a greyed button
+                                                 on half the cards reads as
+                                                 something broken. Apply then
+                                                 sits alone and centred. -->
+                                            <StackPanel Orientation="Horizontal" Spacing="6"
+                                                        HorizontalAlignment="Center">
+                                                <Button Content="View Image" Padding="10,5"
+                                                        Click="ViewImageButton_Click"
+                                                        IsVisible="{Binding HasImage}" />
+                                                <Button Content="Apply" Padding="14,5"
+                                                        Command="{Binding $parent[Window].((vm:CustomAppearancesViewModel)DataContext).ApplyCommand}"
+                                                        CommandParameter="{Binding}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Panel>
+
+                <!-- The pager, under the grid and centred, exactly where the
+                     mockup puts it. Absent entirely while everything fits on
+                     one page. -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="10"
+                            HorizontalAlignment="Center" Margin="0,8,0,2"
+                            IsVisible="{Binding ShowPager}">
+                    <Button Content="‹" Padding="12,3"
+                            Command="{Binding PreviousPageCommand}"
+                            IsEnabled="{Binding CanGoBack}"
+                            ToolTip.Tip="Previous page" />
+                    <TextBlock Text="{Binding PageLabel}" VerticalAlignment="Center"
+                               TextDecorations="Underline"
+                               Foreground="{DynamicResource ThemeTextBrush}" />
+                    <Button Content="›" Padding="12,3"
+                            Command="{Binding NextPageCommand}"
+                            IsEnabled="{Binding CanGoForward}"
+                            ToolTip.Tip="Next page" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Sharing your own -->
+        <Border Grid.Row="2" Margin="0,12,0,0" Padding="12" CornerRadius="6"
+                Background="{DynamicResource ThemeStatsBackgroundBrush}"
+                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1">
+            <StackPanel Spacing="8">
+                <TextBlock Text="Share your appearance" FontWeight="Bold" FontSize="14"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock Text="{Binding CurrentAppearanceNote}" FontSize="12" Opacity="0.75"
+                           TextWrapping="Wrap"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+
+                <!-- §366: the checkbox moved up beside the two boxes and the
+                     Share button moved down beside the notice, which is the
+                     mockup's arrangement and reads better: the row is what
+                     you are sending, the line below is what happens to it. -->
+                <Grid ColumnDefinitions="*,*,Auto">
+                    <TextBox Grid.Column="0" PlaceholderText="Name" MaxLength="40" Margin="0,0,8,0"
+                             Text="{Binding ShareName}" />
+                    <TextBox Grid.Column="1" PlaceholderText="Your name (optional)" MaxLength="32"
+                             Margin="0,0,12,0" Text="{Binding ShareAuthor}" />
+                    <CheckBox Grid.Column="2" Content="Include my background picture"
+                              VerticalAlignment="Center"
+                              Foreground="{DynamicResource ThemeTextBrush}"
+                              IsChecked="{Binding IncludeBackgroundImage}"
+                              IsVisible="{Binding CanIncludeBackgroundImage}" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Grid.Column="0" FontSize="11" Opacity="0.6" TextWrapping="Wrap"
+                               VerticalAlignment="Center" Margin="0,0,12,0"
+                               Foreground="{DynamicResource ThemeTextBrush}"
+                               Text="Everything shared is reviewed before it appears here. Pictures are resized and re-saved before they are sent, which removes any location data your camera may have written into them." />
+                    <Button Grid.Column="1" Content="Share" Padding="20,7"
+                            VerticalAlignment="Center"
+                            Command="{Binding ShareCommand}"
+                            IsEnabled="{Binding !IsBusy}" />
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

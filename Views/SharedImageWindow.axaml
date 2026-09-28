@@ -1,0 +1,54 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Foot_Tracker.Views.SharedImageWindow"
+        Title="Background picture"
+        Width="900" Height="640" MinWidth="420" MinHeight="320"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §366. What View Image opens: the background picture behind a shared
+         appearance, at the size it really is, before deciding whether to
+         apply it.
+
+         It exists because the card could only ever DESCRIBE the picture.
+         The gallery deliberately does not download thirty backgrounds to
+         draw thirty cards, so "Background: Custom Image" was the whole of
+         what anyone knew before applying - and applying to find out means
+         replacing the appearance you already had.
+
+         Themed like the gallery that opened it. The picture is inside a
+         panel rather than bleeding to the window edge so that a picture
+         which happens to match the user's own background still reads as a
+         picture. -->
+    <Grid Margin="14" RowDefinitions="Auto,*,Auto">
+
+        <StackPanel Grid.Row="0" Spacing="2" Margin="0,0,0,10">
+            <TextBlock x:Name="NameText" FontSize="16" FontWeight="Bold"
+                       TextTrimming="CharacterEllipsis"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBlock x:Name="SizeText" FontSize="12" Opacity="0.75"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+        </StackPanel>
+
+        <Border Grid.Row="1" CornerRadius="6" Padding="8"
+                Background="{DynamicResource ThemeStatsBackgroundBrush}"
+                BorderBrush="{DynamicResource ThemeBorderBrush}"
+                BorderThickness="1">
+            <Panel>
+                <!-- Uniform, so the picture is never stretched out of shape
+                     to fill the window - a background shown at the wrong
+                     proportions is not the background being judged. -->
+                <Image x:Name="Picture" Stretch="Uniform" />
+
+                <TextBlock x:Name="StatusText" Text="Loading the picture…"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           TextWrapping="Wrap" TextAlignment="Center"
+                           Opacity="0.7"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+            </Panel>
+        </Border>
+
+        <Button Grid.Row="2" Content="Close" Padding="20,7" Margin="0,12,0,0"
+                HorizontalAlignment="Right" Click="CloseButton_Click" />
+    </Grid>
+</Window>

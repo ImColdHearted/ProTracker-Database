@@ -1,0 +1,86 @@
+<!-- §403. Where a species spawns, on the region picture: the Search's
+     "Locations" answer. The picture and the boxes are drawn the way the
+     Map Boxes editor (§399) draws them - an Image without smoothing under
+     a MapBoxLayer - but read-only: a drag pans, the wheel zooms, a click
+     on a box picks its map in the list, and the found boxes flash. -->
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:controls="using:Foot_Tracker.Controls"
+        x:Class="Foot_Tracker.Views.SpawnLocationsWindow"
+        x:DataType="vm:SpawnLocationsViewModel"
+        Title="{Binding Title}"
+        Width="1040" Height="680"
+        MinWidth="720" MinHeight="440"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <Border Classes="themedPanel">
+    <Grid Margin="12" RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,300">
+
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="6" Margin="0,0,0,8">
+            <Image Source="{Binding Sprite}" Width="32" Height="32" Stretch="Uniform"
+                   RenderOptions.BitmapInterpolationMode="None" VerticalAlignment="Center" />
+            <TextBlock Text="{Binding Species}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"
+                       Margin="0,0,10,0" Foreground="{DynamicResource ThemeTextBrush}" />
+            <Button Content="−" FontSize="12" Padding="10,4" Command="{Binding ZoomOutCommand}" ToolTip.Tip="Zoom out (or turn the wheel)" />
+            <TextBlock Text="{Binding ZoomText}" Width="48" TextAlignment="Center" VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <Button Content="+" FontSize="12" Padding="10,4" Command="{Binding ZoomInCommand}" ToolTip.Tip="Zoom in (or turn the wheel)" />
+            <Button Content="Fit" FontSize="12" Click="FitButton_Click" ToolTip.Tip="The largest zoom that shows the whole picture" />
+        </StackPanel>
+
+        <Border Grid.Row="1" Grid.Column="0" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                Background="#22000000">
+            <Panel>
+                <ScrollViewer Name="MapScroller" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <Panel Name="MapSurface" Background="Transparent"
+                           HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
+                           PointerPressed="Surface_PointerPressed"
+                           PointerMoved="Surface_PointerMoved"
+                           PointerReleased="Surface_PointerReleased"
+                           PointerCaptureLost="Surface_PointerCaptureLost">
+                        <Image Source="{Binding Image}" Stretch="Fill"
+                               RenderOptions.BitmapInterpolationMode="None" />
+                        <controls:MapBoxLayer Name="BoxLayer" />
+                    </Panel>
+                </ScrollViewer>
+                <TextBlock Text="The world picture is missing." IsVisible="{Binding !HasImage}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.7"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+            </Panel>
+        </Border>
+
+        <Grid Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" RowDefinitions="Auto,*">
+            <TextBlock Grid.Row="0" Text="Maps it spawns on:" FontWeight="Bold" FontSize="12" Margin="0,0,0,4"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <!-- Clicking a row narrows the flashing to that map's boxes and
+                 brings the first into view; clicking it again widens back.
+                 Page opens the map's spawn page. -->
+            <ListBox Grid.Row="1" ItemsSource="{Binding Rows}" SelectedItem="{Binding SelectedRow, Mode=TwoWay}" FontSize="12">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SpawnLocationRow">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackPanel Grid.Column="0" Spacing="1">
+                                <TextBlock Text="{Binding Title}" FontWeight="Bold" />
+                                <TextBlock Text="{Binding Detail}" FontSize="11" Opacity="0.75" TextWrapping="Wrap" />
+                            </StackPanel>
+                            <Button Grid.Column="1" Content="Page" FontSize="11" Padding="6,2" VerticalAlignment="Center"
+                                    Click="PageButton_Click" ToolTip.Tip="Opens the map's spawn page" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+            <TextBlock Grid.Column="0" Text="{Binding Status}" TextWrapping="Wrap" FontSize="12" VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <Button Grid.Column="1" Content="Close" Click="CloseButton_Click" Margin="8,0,0,0" />
+        </Grid>
+    </Grid>
+    </Border>
+</Window>

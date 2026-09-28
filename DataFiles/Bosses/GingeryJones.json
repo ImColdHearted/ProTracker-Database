@@ -23,22 +23,6 @@
           {
             "name": "Pancham",
             "dexNumber": 674
-          },
-          {
-            "name": "Tyrunt",
-            "dexNumber": 696
-          },
-          {
-            "name": "Amaura",
-            "dexNumber": 698
-          },
-          {
-            "name": "Vullaby",
-            "dexNumber": 629
-          },
-          {
-            "name": "Timburr",
-            "dexNumber": 532
           }
         ],
         "items": [
@@ -161,23 +145,28 @@
         "pokemon": [
           {
             "name": "Pancham",
-            "dexNumber": 674
+            "dexNumber": 674,
+            "winStreakRequired": 0
           },
           {
             "name": "Tyrunt",
-            "dexNumber": 696
+            "dexNumber": 696,
+            "winStreakRequired": 3
           },
           {
             "name": "Amaura",
-            "dexNumber": 698
+            "dexNumber": 698,
+            "winStreakRequired": 3
           },
           {
             "name": "Vullaby",
-            "dexNumber": 629
+            "dexNumber": 629,
+            "winStreakRequired": 3
           },
           {
             "name": "Timburr",
-            "dexNumber": 532
+            "dexNumber": 532,
+            "winStreakRequired": 3
           }
         ],
         "items": [
@@ -302,23 +291,28 @@
         "pokemon": [
           {
             "name": "Pancham",
-            "dexNumber": 674
+            "dexNumber": 674,
+            "winStreakRequired": 0
           },
           {
             "name": "Tyrunt",
-            "dexNumber": 696
+            "dexNumber": 696,
+            "winStreakRequired": 3
           },
           {
             "name": "Amaura",
-            "dexNumber": 698
+            "dexNumber": 698,
+            "winStreakRequired": 3
           },
           {
             "name": "Vullaby",
-            "dexNumber": 629
+            "dexNumber": 629,
+            "winStreakRequired": 3
           },
           {
             "name": "Timburr",
-            "dexNumber": 532
+            "dexNumber": 532,
+            "winStreakRequired": 3
           }
         ],
         "items": [

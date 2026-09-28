@@ -40,6 +40,17 @@ public partial class App : Application
             Program.StartupStage = "loading boss cooldown history";
             BossCooldownService.Load();
 
+            // §277: the per-boss win/loss record, loaded with the cooldowns it
+            // sits beside - both are per client and both are read by the Boss
+            // Database the moment it opens.
+            BossRecordService.Load();
+
+            // §385: the user's own font files, registered before the
+            // appearance is applied so a saved font resolves on the first
+            // paint rather than after a restart.
+            Program.StartupStage = "loading user fonts";
+            UserFontService.Load();
+
             // Push the saved appearance settings into the app's resource dictionary.
             Program.StartupStage = "applying saved appearance settings";
             ThemeManager.Apply();

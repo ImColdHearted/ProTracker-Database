@@ -125,11 +125,15 @@ namespace Foot_Tracker.Services
             // Admin Client isolation (§101): every lifetime mutation - the
             // view model's encounter/catch/shiny paths AND the boss/PVP
             // trackers' own tallies - funnels through this one method, so
-            // this single check guarantees no admin-mode activity can touch
-            // the real lifetime file. Callers get the current on-disk stats
-            // back unchanged, which every call site already handles (it is
-            // the same shape as the lock-timeout fallback below).
-            if (AdminModeService.IsActive)
+            // this single check guarantees no isolated-session activity can
+            // touch the real lifetime file. Callers get the current on-disk
+            // stats back unchanged, which every call site already handles (it
+            // is the same shape as the lock-timeout fallback below).
+            //
+            // §249: IsolatedSession, not AdminModeService - the admin override
+            // is one reason a session is isolated, and this file must refuse
+            // for every reason there will ever be. See IsolatedSession.
+            if (IsolatedSession.IsActive)
                 return LoadFromDisk();
 
             bool lockTaken = false;

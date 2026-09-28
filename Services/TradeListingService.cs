@@ -24,7 +24,22 @@ namespace Foot_Tracker.Services
         long LastBid,
         string LastBidder,
         DateTime? EndsUtc,
-        int BidCount);
+        int BidCount,
+
+        /// <summary>§269. The listing's own ENDED badge. Read by content like
+        /// every other badge, not inferred from "not Active": an instant-price
+        /// listing carries neither badge, so absence of Active is not the same
+        /// fact.</summary>
+        bool IsEnded,
+
+        /// <summary>§269. From the notice an ended auction prints - "Auction
+        /// Ended: X won this auction with N Pokedollars on DATE UTC." Empty,
+        /// zero and null when the auction ended with nobody bidding, or when
+        /// the notice did not parse: the badge is the fact that it ENDED, and
+        /// these are only the detail.</summary>
+        string WinningBidder,
+        long WinningBid,
+        DateTime? EndedUtc);
 
     /// <summary>
     /// §236. Reads one PRO Trade Zone listing.
@@ -104,6 +119,27 @@ namespace Foot_Tracker.Services
         private static readonly Regex HistoryAmountRegex = new(
             @"proAuctionHistory__amount"">([^<]*)<", RegexOptions.Compiled);
         private static readonly Regex SpanRegex = new(@"<span>([^<]*)</span>", RegexOptions.Compiled);
+
+        /// <summary>§269. The notice box an ended auction carries:
+        /// "Auction Ended: Lykabaws won this auction with 325.000 Pokedollars
+        /// on 2026-09-09 12:20 PM UTC." The winner is a profile link, so tags
+        /// are allowed either side of the name rather than assumed away, and
+        /// the amount keeps its dot grouping for Money to strip.</summary>
+        private static readonly Regex AuctionEndedRegex = new(
+            @"Auction Ended:\s*(?:<[^>]*>\s*)*([^<]+?)\s*(?:<[^>]*>\s*)*won this auction with\s*([0-9.,]+)\s*Pokedollars\s*on\s*(\d{4}-\d{2}-\d{2}[^<.]*?)\s*\.",
+            RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+        /// <summary>§269. The shapes the ended notice prints its moment in.
+        /// Parsed as UTC because the notice says UTC; a date that will not
+        /// parse leaves the time null rather than guessing at a local
+        /// one.</summary>
+        private static readonly string[] EndedStampFormats =
+        {
+            "yyyy-MM-dd hh:mm tt UTC",
+            "yyyy-MM-dd HH:mm UTC",
+            "yyyy-MM-dd hh:mm:ss tt UTC",
+            "yyyy-MM-dd HH:mm:ss UTC",
+        };
         private static readonly Regex WhitespaceRegex = new(@"\s+", RegexOptions.Compiled);
 
         /// <summary>The badges that name a server. Cross-Server is a real one,
@@ -254,6 +290,36 @@ namespace Foot_Tracker.Services
                 endsUtc = DateTimeOffset.FromUnixTimeSeconds(unix).UtcDateTime;
             }
 
+            // §269: who won, for how much and when - from the notice, not
+            // from the last snapshot. An auction that ended between two polls
+            // is recorded at the page's own figures rather than at whatever
+            // the tracker last happened to see.
+            string winningBidder = string.Empty;
+            long winningBid = 0;
+            DateTime? endedUtc = null;
+
+            Match ended = AuctionEndedRegex.Match(content);
+
+            if (ended.Success)
+            {
+                winningBidder = Text(ended.Groups[1].Value);
+                winningBid = Money(ended.Groups[2].Value);
+
+                string stamp = WhitespaceRegex.Replace(ended.Groups[3].Value.Trim(), " ");
+
+                if (DateTime.TryParseExact(stamp, EndedStampFormats, CultureInfo.InvariantCulture,
+                        DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out DateTime parsed))
+                {
+                    endedUtc = parsed;
+                }
+                else
+                {
+                    Log.Debug(
+                        "Auction Tracker: listing {ListingId} has ended but its timestamp did not parse - {Stamp}",
+                        listingId, stamp);
+                }
+            }
+
             return new TradeListing(
                 listingId,
                 url,
@@ -274,7 +340,11 @@ namespace Foot_Tracker.Services
                 lastBid,
                 lastBidder,
                 endsUtc,
-                bidCount);
+                bidCount,
+                badges.Contains("Ended", StringComparer.OrdinalIgnoreCase),
+                winningBidder,
+                winningBid,
+                endedUtc);
         }
 
         /// <summary>Everything above the inline stylesheet - see the class

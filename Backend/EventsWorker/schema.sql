@@ -102,6 +102,12 @@ CREATE INDEX IF NOT EXISTS idx_reports_sender ON reports (sender_hash, sent_at_u
 -- started from the console for testing, not one PRO announced. A real Discord
 -- message id is all digits, so the two can never be confused, and
 -- DELETE /v1/admin/world-quests/test removes the test ones and only those.
+-- Section 298: ended_utc is set when the admin declares a quest finished
+-- because both servers have met the goal. A quest ends 24 hours after it
+-- starts OR the moment the community goal is met, and nothing the Worker can
+-- read says which happened - so the second condition arrives as a judgement
+-- from someone who played it, not as a fact off the wire. NULL is the normal
+-- state; see POST /v1/admin/world-quests/{id}/end.
 CREATE TABLE IF NOT EXISTS world_quests (
   message_id    TEXT PRIMARY KEY,                  -- the Discord message, and the dedupe key
   pokemon       TEXT,
@@ -116,7 +122,8 @@ CREATE TABLE IF NOT EXISTS world_quests (
   ends_utc      TEXT,                              -- started_utc plus the duration
   parsed        INTEGER NOT NULL DEFAULT 0,
   raw           TEXT,
-  seen_utc      TEXT NOT NULL
+  seen_utc      TEXT NOT NULL,
+  ended_utc     TEXT                             -- section 298: declared over by the admin, NULL until then
 );
 
 CREATE INDEX IF NOT EXISTS idx_quests_started ON world_quests (started_utc DESC);
@@ -140,3 +147,49 @@ CREATE TABLE IF NOT EXISTS announcements (
 );
 
 CREATE INDEX IF NOT EXISTS idx_announcements_posted ON announcements (posted_utc DESC);
+
+-- Section 397: the Spawns pages under the tracker's Game Data menu. One row
+-- per map the admin filed under a region (Kanto, Johto, Hoenn, Sinnoh or
+-- Other); pokemon is the page itself - a JSON array of the species the
+-- admin's Pokedex scans named the map for, each with land/water,
+-- morning/day/night and membersOnly - replaced whole on every publish.
+-- map_key is the name folded to [a-z0-9], the key both sides compute, so a
+-- map cannot be filed twice under two spellings. Master token only to
+-- write; every tracker reads. The Worker creates this on first use.
+CREATE TABLE IF NOT EXISTS spawn_maps (
+  map_key     TEXT PRIMARY KEY,                 -- "route1", "mtmoon1f"
+  region      TEXT NOT NULL,                    -- Kanto | Johto | Hoenn | Sinnoh | Other
+  map         TEXT NOT NULL,                    -- the name as the admin typed it
+  pokemon     TEXT NOT NULL,                    -- JSON array, sorted by name
+  marker      TEXT,                             -- section 399/402: the map's boxes on the region picture, a JSON array of {x,y,width,height,imageWidth,imageHeight} (a 399 row holds one object), or NULL
+  linked_to   TEXT,                             -- section 412: the name of the map whose spot this page shares (a safari zone's areas behind one box), or NULL
+  updated_utc TEXT NOT NULL,
+  updated_by  TEXT NOT NULL                     -- "master"
+);
+
+-- section 409: where each boss stands on the world picture - one point per
+-- boss, in the picture's pixels with the picture's size, as a map's box.
+-- boss_id is the boss file's name folded to [a-z0-9]; boss its display name.
+CREATE TABLE IF NOT EXISTS boss_pins (
+  boss_id      TEXT PRIMARY KEY,
+  boss         TEXT NOT NULL,
+  x            INTEGER NOT NULL,
+  y            INTEGER NOT NULL,
+  image_width  INTEGER NOT NULL,
+  image_height INTEGER NOT NULL,
+  updated_utc  TEXT NOT NULL,
+  updated_by   TEXT NOT NULL
+);
+
+-- Section 429: the lowest and highest level met per species per map, from
+-- every tracker whose owner opted in. Widened by public posts, never
+-- narrowed except by the master token's DELETE.
+CREATE TABLE IF NOT EXISTS spawn_levels (
+  map_key     TEXT NOT NULL,                    -- "route1", as spawn_maps keys it
+  species     TEXT NOT NULL COLLATE NOCASE,     -- the library's name ("Linoone-Galarian"); one row however a client cases it
+  min_level   INTEGER NOT NULL,
+  max_level   INTEGER NOT NULL,
+  samples     INTEGER NOT NULL DEFAULT 0,       -- sightings folded in, for a sense of how sure the range is
+  updated_utc TEXT NOT NULL,
+  PRIMARY KEY (map_key, species)
+);

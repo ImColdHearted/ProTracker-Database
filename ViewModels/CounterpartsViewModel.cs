@@ -13,7 +13,10 @@ public sealed record CounterpartCardItem(CounterpartEntry Entry, Bitmap? Sprite)
     public string Name => Entry.Name;
 
     /// <summary>Backs a small type-icon row next to this card's name.</summary>
-    public IReadOnlyList<string> Types => PokemonSpriteService.GetTypes(Name);
+    /// <summary>§428. GetDisplayTypes, not GetTypes: a card's name is the
+    /// catalog's ("Alolan Marowak", "Kirlia Female", "Mega Gallade"), not the
+    /// library's, and the exact lookup typed none of those.</summary>
+    public IReadOnlyList<string> Types => PokemonSpriteService.GetDisplayTypes(Name);
 }
 
 /// <summary>

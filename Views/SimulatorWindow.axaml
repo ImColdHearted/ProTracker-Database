@@ -3,15 +3,43 @@
         xmlns:vm="using:Foot_Tracker.ViewModels"
         xmlns:sim="using:Foot_Tracker.Services.Simulator"
         xmlns:controls="using:Foot_Tracker.Controls"
+        xmlns:conv="using:Foot_Tracker.Converters"
         x:Class="Foot_Tracker.Views.SimulatorWindow"
         x:DataType="vm:SimulatorViewModel"
         Title="Simulator"
-        Width="900" Height="800"
+        Width="1020" Height="850"
         MinWidth="850" MinHeight="660"
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource ThemeBackgroundBrush}"
         BorderBrush="{DynamicResource ThemeBorderBrush}"
         BorderThickness="1">
+
+    <Window.Styles>
+        <!-- §374: the nature on a team card's stat table. The stat the
+             nature raises wears the boost colour, the one it lowers the
+             loss colour - green for more, orange for less. Class styles,
+             the way MainWindow colours its live menu items, because a
+             local Foreground would beat any style: the plain rows keep
+             the Statistics text colour through App.axaml's themedPanel
+             rule, and only these classes override it. The brushes come
+             from ThemeManager (NatureBoostBrushKey) - which of the two
+             greens and oranges depends on the panel they sit on.
+             §376: and the numbers as PRO's own card draws them - every IV
+             orange, every EV blue, zero included (IvBrushKey). The
+             "invested" class §374 gave a non-zero EV went with it. -->
+        <Style Selector="TextBlock.boosted">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeNatureBoostBrush}" />
+        </Style>
+        <Style Selector="TextBlock.hindered">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeNatureLossBrush}" />
+        </Style>
+        <Style Selector="TextBlock.iv">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeIvBrush}" />
+        </Style>
+        <Style Selector="TextBlock.ev">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeEvBrush}" />
+        </Style>
+    </Window.Styles>
 
     <!-- §154-§157: the offline battle simulator. Two views in one window:
          the team-builder setup (species picked through the Set Target
@@ -32,6 +60,13 @@
     <Panel Margin="10">
 
         <!-- ================= SETUP ================= -->
+        <!-- §372: rebuilt from a mockup. The cards are two across and each
+             one is a small table - IVs and EVs as rows, the moves as a
+             list, the record in the corner - where a card used to be a
+             single column of one-line summaries. The opponent column lost
+             every mention of which brain plays: there is one brain now
+             (see SimulatorViewModel.StartBattle) and the screen does not
+             name it. -->
         <Grid IsVisible="{Binding !InBattle}" RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,340">
 
             <!-- §162: teams are built from the player's own game - the
@@ -47,50 +82,150 @@
                         ToolTip.Tip="Re-add a Pokemon you imported before." />
                 <!-- §198: the cards are the party order, so the gesture that
                      changes the order needs saying out loud - it is not
-                     discoverable from a card that looks read-only. -->
-                <TextBlock Text="Drag a card up or down to change who leads."
+                     discoverable from a card that looks read-only. §372: no
+                     longer "up or down" - the cards are a grid now, and a
+                     card can be dragged onto any other. -->
+                <TextBlock Text="Drag a card onto another to change the party order - the first card leads."
                            FontSize="11" Opacity="0.75" VerticalAlignment="Center"
                            Foreground="{DynamicResource ThemeTextBrush}" />
             </StackPanel>
 
             <ScrollViewer Grid.Row="1" Grid.Column="0">
+                <!-- §372: two across. A UniformGrid rather than a WrapPanel
+                     of fixed widths, so the two columns share whatever width
+                     the window has rather than leaving a strip down the
+                     right. The drag-to-reorder code in the code-behind
+                     hit-tests the cards in two dimensions for the same
+                     reason - see SimulatorWindow.axaml.cs. -->
                 <ItemsControl x:Name="TeamSlotList" ItemsSource="{Binding TeamSlots}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="vm:SimulatorSlotViewModel">
                             <Border Classes="themedPanel"
                                     BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
-                                    CornerRadius="4" Padding="8" Margin="0,0,4,8">
-                                <Grid ColumnDefinitions="120,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                                    CornerRadius="4" Padding="8" Margin="0,0,8,8">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto">
 
-                                    <!-- §162: the slot is a read-only mirror of the
-                                         imported card - the team is what the player
-                                         actually owns. Only the item is chosen here. -->
-                                    <Panel Grid.Row="0" Grid.Column="0" Grid.RowSpan="4"
-                                           Width="100" Height="100" Margin="0,0,10,0"
-                                           VerticalAlignment="Top">
-                                        <TextBlock Text="?" FontSize="34" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.4"
-                                                   IsVisible="{Binding Sprite, Converter={x:Static ObjectConverters.IsNull}}" />
-                                        <Image Source="{Binding Sprite}" Stretch="Uniform" Margin="4"
-                                               RenderOptions.BitmapInterpolationMode="None" />
-                                    </Panel>
-
-                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Headline}" TextWrapping="Wrap"
-                                               FontWeight="Bold" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,2" />
-
-                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding MovesLine}" TextWrapping="Wrap"
-                                               FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,2" />
-
-                                    <StackPanel Grid.Row="2" Grid.Column="1" Spacing="2" Margin="0,0,0,4">
-                                        <TextBlock Text="{Binding SpreadLine}" FontSize="11" TextWrapping="Wrap"
-                                                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.85" />
-                                        <TextBlock Text="{Binding NoteLine}" FontSize="11" TextWrapping="Wrap"
-                                                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.7"
-                                                   IsVisible="{Binding HasNotes}" />
+                                    <!-- §372: the record, top right. Finished
+                                         battles this Pokemon was on the team
+                                         for - see SimulatorPokemonStorage.
+                                         RecordBattle. -->
+                                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="4">
+                                        <TextBlock Text="Wins:" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <TextBlock Text="{Binding Wins}" FontSize="11" Margin="0,0,12,0"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <TextBlock Text="Losses:" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <TextBlock Text="{Binding Losses}" FontSize="11"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
                                     </StackPanel>
 
-                                    <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Spacing="6">
-                                        <Button FontSize="11" ToolTip.Tip="Click to choose a held item"
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Headline}" TextWrapping="Wrap"
+                                               FontWeight="Bold" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}"
+                                               HorizontalAlignment="Center" Margin="0,10,0,4" />
+
+                                    <!-- sprite | stat table | moves -->
+                                    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="100,Auto,*" Margin="0,10,0,8">
+
+                                        <!-- §162: the slot is a read-only mirror of the
+                                             imported card - the team is what the player
+                                             actually owns. Only the item is chosen here. -->
+                                        <!-- §374: the species' types under the sprite - the
+                                             same icon row every other sprite in the app wears. -->
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="2">
+                                            <Panel Width="100" Height="100">
+                                                <TextBlock Text="?" FontSize="34" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.4"
+                                                           IsVisible="{Binding Sprite, Converter={x:Static ObjectConverters.IsNull}}" />
+                                                <Image Source="{Binding Sprite}" Stretch="Uniform" Margin="4"
+                                                       RenderOptions.BitmapInterpolationMode="None" />
+                                            </Panel>
+                                            <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="x:String">
+                                                        <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+
+                                        <!-- §372: the six numbers SpreadLine used to
+                                             put on one line, as rows: the stat, its
+                                             IV, its EV, in the card's own order.
+                                             §374: the IV and EV columns are 10px
+                                             narrower each, their right margins 10px
+                                             smaller, so the IV sits where it did and
+                                             the EV 10px to its left; the table is
+                                             20px narrower and the moves start there.
+                                             The stat name carries the nature
+                                             classes styled at the top of the
+                                             window, the IV and the EV their own
+                                             colour classes (§376) - no local
+                                             Foreground on any of them, or the
+                                             classes could not win. -->
+                                        <ItemsControl Grid.Column="1" ItemsSource="{Binding StatRows}" Margin="6,0,0,0" VerticalAlignment="Center">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="vm:SimulatorStatRow">
+                                                    <Grid ColumnDefinitions="36,20,24">
+                                                        <TextBlock Grid.Column="0" Text="{Binding Label, StringFormat={}{0}:}" FontSize="11"
+                                                                   Classes.boosted="{Binding Boosted}" Classes.hindered="{Binding Hindered}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding Iv}" FontSize="11" TextAlignment="Right" Margin="0,0,8,0"
+                                                                   Classes="iv" />
+                                                        <TextBlock Grid.Column="2" Text="{Binding Ev}" FontSize="11" TextAlignment="Right" Margin="0,0,5,0"
+                                                                   Classes="ev" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+
+                                        <!-- §374: 2px in from the table where it was 12 -
+                                             with the table's own 20px, the list starts
+                                             30px further left and has that much more
+                                             room for a name. -->
+                                        <StackPanel Grid.Column="2" Margin="2,0,0,0" VerticalAlignment="Center">
+                                            <TextBlock Text="Moves" FontWeight="Bold" FontSize="11" TextDecorations="Underline"
+                                                       HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,2" />
+                                            <ItemsControl ItemsSource="{Binding Moves}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="vm:SimulatorMoveRow">
+                                                        <!-- §374: a Hidden Power line is the name in its
+                                                             type's colour, bracket dropped, the full name
+                                                             on hover; every other move is its name. Two
+                                                             TextBlocks rather than one with a switching
+                                                             brush, so the plain one never binds a colour
+                                                             it does not have. -->
+                                                        <Panel>
+                                                            <TextBlock Text="{Binding Name}" FontSize="11" HorizontalAlignment="Center"
+                                                                       TextTrimming="CharacterEllipsis"
+                                                                       IsVisible="{Binding !IsHiddenPower}"
+                                                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                                                            <TextBlock Text="{Binding Name}" FontSize="11" HorizontalAlignment="Center"
+                                                                       TextTrimming="CharacterEllipsis"
+                                                                       IsVisible="{Binding IsHiddenPower}"
+                                                                       ToolTip.Tip="{Binding Tip}"
+                                                                       Foreground="{Binding TypeColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        </Panel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- §198's rule still holds - Remove cannot be
+                                         taken back, so Replace sits well clear of
+                                         it. §372: clear by being on the far side
+                                         of the card rather than by a 100px margin
+                                         that a half-width card has no room for. -->
+                                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="Auto,Auto,*" Margin="0,18,0,0">
+                                        <Button Grid.Column="0" FontSize="11" ToolTip.Tip="Click to choose a held item" Margin="0,0,6,0"
                                                 Command="{Binding $parent[ItemsControl].((vm:SimulatorViewModel)DataContext).PickItemCommand}"
                                                 CommandParameter="{Binding}">
                                             <StackPanel Orientation="Horizontal" Spacing="4">
@@ -100,20 +235,14 @@
                                                 <TextBlock Text="{Binding ItemButtonText}" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </Button>
-                                        <Button Content="Remove" FontSize="11"
+                                        <Button Grid.Column="1" Content="Remove" FontSize="11"
                                                 Command="{Binding $parent[ItemsControl].((vm:SimulatorViewModel)DataContext).RemoveSlotCommand}"
                                                 CommandParameter="{Binding}" />
-                                        <!-- §198: swaps this card's Pokemon for a
-                                             stored one and keeps its place in the
-                                             order, so replacing the first card
-                                             replaces the lead. Held 100px clear of
-                                             Remove: the two sit in the same row and
-                                             one of them cannot be taken back. -->
-                                        <Button Content="Replace from Storage" FontSize="11" Margin="100,0,0,0"
+                                        <Button Grid.Column="2" Content="Replace from Storage" FontSize="11" HorizontalAlignment="Right"
                                                 ToolTip.Tip="Swap this Pokemon for one from storage, keeping its place in the party order."
                                                 Command="{Binding $parent[ItemsControl].((vm:SimulatorViewModel)DataContext).ReplaceFromStorageCommand}"
                                                 CommandParameter="{Binding}" />
-                                    </StackPanel>
+                                    </Grid>
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -121,21 +250,25 @@
                 </ItemsControl>
             </ScrollViewer>
 
-            <!-- §155: the opponent column - random vs boss, the Boss
-                 Database list, the selected fight's team and validation,
-                 and the bulk-battle lab. -->
+            <!-- §155: the opponent column - random vs boss vs custom, the
+                 Boss Database list, and the switches. §372: no brain is
+                 named anywhere in it. -->
             <Border Grid.Row="1" Grid.Column="1" Classes="themedPanel" Margin="8,0,0,0" Padding="8"
                     BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4">
                 <ScrollViewer>
                     <StackPanel Spacing="6">
                         <TextBlock Text="Opponent" FontWeight="Bold" FontSize="14"
                                    Foreground="{DynamicResource ThemeTextBrush}" />
-                        <RadioButton GroupName="OpponentMode" Content="Random team (baseline AI)" FontSize="12"
-                                     IsChecked="{Binding UseRandomOpponent, Mode=TwoWay}" />
-                        <RadioButton GroupName="OpponentMode" Content="Boss from the Boss Database (Monte Carlo AI)" FontSize="12"
-                                     IsChecked="{Binding UseBossOpponent, Mode=TwoWay}" />
-                        <TextBlock Text="{Binding BossListNote}" FontSize="11" Opacity="0.8" TextWrapping="Wrap"
-                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <Grid ColumnDefinitions="Auto,*">
+                            <RadioButton Grid.Column="0" GroupName="OpponentMode" Content="Random team" FontSize="12" Margin="0,0,16,0"
+                                         IsChecked="{Binding UseRandomOpponent, Mode=TwoWay}" />
+                            <RadioButton Grid.Column="1" GroupName="OpponentMode" Content="Boss from the Boss Database" FontSize="12"
+                                         IsChecked="{Binding UseBossOpponent, Mode=TwoWay}" />
+                        </Grid>
+                        <!-- §173: the player's own opponents, one .json each in
+                             CustomBosses. -->
+                        <RadioButton GroupName="OpponentMode" Content="Custom opponent" FontSize="12"
+                                     IsChecked="{Binding UseCustomOpponent, Mode=TwoWay}" />
 
                         <StackPanel IsVisible="{Binding UseBossOpponent}" Spacing="6">
                             <TextBox Text="{Binding BossSearch}" PlaceholderText="Search bosses..." FontSize="12" />
@@ -175,33 +308,12 @@
                             </ListBox>
                         </StackPanel>
 
-                        <!-- §173: the player's own opponents, one .json
-                             each in CustomBosses. §185: and the one place
-                             the trained network plays a person. A Boss
-                             Database fight keeps the Monte Carlo brain,
-                             because guides have been written against how it
-                             plays; a custom opponent has none to break. -->
-                        <RadioButton GroupName="OpponentMode" Content="Custom opponent" FontSize="12"
-                                     IsChecked="{Binding UseCustomOpponent, Mode=TwoWay}" Margin="0,4,0,0" />
-
                         <StackPanel IsVisible="{Binding UseCustomOpponent}" Spacing="6">
                             <TextBlock Text="{Binding CustomBossNote}" FontSize="11" Opacity="0.8" TextWrapping="Wrap"
                                        Foreground="{DynamicResource ThemeTextBrush}" />
-
-                            <!-- §218: which brain plays a custom opponent.
-                                 Unticked is Monte Carlo, the same brain the
-                                 Boss Database fights use and, while the
-                                 network is still being trained, the stronger
-                                 of the two. -->
-                            <CheckBox Content="Play with the trained model instead of Monte Carlo" FontSize="11"
-                                      IsChecked="{Binding UseModelOpponent, Mode=TwoWay}"
-                                      ToolTip.Tip="Off: the Monte Carlo boss brain. On: the deep-learning model, falling back to Monte Carlo if no model is installed." />
-
-                            <!-- §185: which brain this battle actually got,
-                                 said before it starts rather than left to be
-                                 inferred from how it played. -->
-                            <TextBlock Text="{Binding OpponentBrainText}" FontSize="11" Opacity="0.8" TextWrapping="Wrap"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <!-- §372: the "play with the trained model" switch and
+                                 the note saying which brain the battle got are
+                                 gone with the model. -->
                             <ListBox ItemsSource="{Binding CustomBossChoices}"
                                      SelectedItem="{Binding SelectedCustomBoss, Mode=TwoWay}"
                                      Height="330" FontSize="12">
@@ -218,14 +330,13 @@
                             </ListBox>
                         </StackPanel>
 
-                        <!-- §156: the observer - records primary battles as
-                             local training observations, shadow-scores them
-                             when a model is present, and never influences
-                             anything. -->
-                        <TextBlock Text="Observer (learning experiment)" FontWeight="Bold" FontSize="13" Margin="0,10,0,0"
-                                   Foreground="{DynamicResource ThemeTextBrush}"
-                                   ToolTip.Tip="Records your visible Simulator battles as local training data (state, legal moves, chosen action, outcome). Watch-only: it never picks a move, never touches the battle, and Monte Carlo's internal rollouts are never recorded." />
-                        <CheckBox Content="Record my battles" IsChecked="{Binding ObserverEnabled, Mode=TwoWay}" FontSize="12" />
+                        <!-- §156: the observer - records visible battles as
+                             local training observations and never influences
+                             anything. §372: kept, without its heading; the
+                             model it was collecting for is no longer offered,
+                             but what it records is still recorded. -->
+                        <CheckBox Content="Record my battles" IsChecked="{Binding ObserverEnabled, Mode=TwoWay}" FontSize="12" Margin="0,10,0,0"
+                                  ToolTip.Tip="Records your visible Simulator battles as local training data (state, legal moves, chosen action, outcome). Watch-only: it never picks a move and never touches the battle." />
 
                         <!-- §201: the stadium. Off falls back to the two
                              bordered panels this window used before, for
@@ -244,42 +355,46 @@
         </Grid>
 
         <!-- ================= BATTLE ================= -->
-        <Grid IsVisible="{Binding InBattle}" RowDefinitions="Auto,Auto,*,Auto" ColumnDefinitions="*,300">
+        <!-- §371. Three rows, not four - see the inner Grid below for why the
+             scene and the controls share one. §372: the header is the
+             title and the field conditions; the turn counter sits over the
+             log, where the mockup put it; the seed, the observer status and
+             the animation speed dropdown are gone from it. -->
+        <Grid IsVisible="{Binding InBattle}" RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,300">
 
-            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="12" Margin="0,0,0,6">
-                <TextBlock Text="{Binding BattleTitle}" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource ThemeTextBrush}" />
-                <TextBlock Text="{Binding TurnText}" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                <TextBlock Text="{Binding WeatherText}" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                <TextBlock Text="{Binding TerrainText}" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                <!-- §156: passive observer status - display only, the
-                     observer never touches the battle. -->
-                <TextBlock Text="Observer Active" FontSize="12" FontWeight="Bold" VerticalAlignment="Center"
-                           Foreground="{DynamicResource ThemeTextBrush}" IsVisible="{Binding ObserverActive}" />
-                <TextBlock Text="{Binding ObserverBattleText}" FontSize="11" VerticalAlignment="Center" Opacity="0.85"
-                           Foreground="{DynamicResource ThemeTextBrush}" IsVisible="{Binding ObserverActive}" />
+            <Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="Auto,*" Margin="0,0,10,6">
+                <TextBlock Grid.Column="0" Text="{Binding BattleTitle}" FontWeight="Bold" FontSize="15"
+                           VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding WeatherText}" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Text="{Binding TerrainText}" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                </StackPanel>
+            </Grid>
 
-                <!-- §217: how fast the move animations play, or Off. Off is
-                     a real option, not a courtesy: the turn resolves the
-                     same either way, the pictures are the only difference. -->
-                <ComboBox ItemsSource="{Binding AnimationSpeeds}"
-                          SelectedItem="{Binding AnimationSpeed}"
-                          Width="104" Height="26" FontSize="11"
-                          VerticalAlignment="Center"
-                          ToolTip.Tip="Move animation speed" />
-            </StackPanel>
+            <!-- §372: the turn, over the log it counts. -->
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TurnText}" FontWeight="Bold" FontSize="13"
+                       TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,6" />
 
-            <!-- §201: the battle scene. The whole thing is one fixed
-                 937x755 canvas - the field asset's own pixel size - inside a
-                 Viewbox, so every position below is in the FIELD's
-                 coordinates and the Pokemon stay on their painted pads at
-                 any window size. The view model works out each sprite's size
-                 and margin from its trimmed bitmap; see its Stand method.
-                 Hidden, along with everything in it, when the field asset is
-                 missing - Pokemon standing on nothing is worse than the
-                 panels. -->
-            <Viewbox Grid.Row="1" Grid.Column="0" Margin="0,0,10,6"
+            <!-- §371: the picture yields to the controls, never the other
+                 way round. Row 0 (the scene) is star, row 1 (the controls) is
+                 Auto, so the controls are measured first at their natural
+                 height and the Viewbox is handed whatever remains - it scales
+                 the stadium down to fit, up to the same 470 cap it always had.
+                 A shorter window means a smaller picture, not a hidden team.
+
+                 VerticalAlignment="Top" on this Grid is what keeps tall
+                 windows looking as they did: a star row inside a Grid that is
+                 NOT stretched collapses to its content, so on a big screen the
+                 scene sits at 470, the controls sit directly under it, and
+                 the spare space falls below them as before - rather than
+                 opening up as a gap between the two. -->
+            <Grid Grid.Row="1" Grid.Column="0" RowDefinitions="*,Auto" VerticalAlignment="Top">
+
+            <Viewbox Grid.Row="0" Margin="0,0,10,6"
                      Stretch="Uniform" StretchDirection="Both" MaxHeight="470"
-                     HorizontalAlignment="Center" IsVisible="{Binding BattleSceneVisible}">
+                     HorizontalAlignment="Center" VerticalAlignment="Top"
+                     IsVisible="{Binding BattleSceneVisible}">
                 <Panel Width="937" Height="755">
                     <Image Source="{Binding BattleFieldImage}" Stretch="Fill" />
 
@@ -357,7 +472,7 @@
             <!-- the two Pokemon: the pre-§201 view, and still what a
                  battle looks like with the stadium switched off or its asset
                  missing. -->
-            <Grid Grid.Row="1" Grid.Column="0" ColumnDefinitions="*,*" Margin="0,0,10,6"
+            <Grid Grid.Row="0" ColumnDefinitions="*,*" Margin="0,0,10,6" VerticalAlignment="Top"
                   IsVisible="{Binding BattlePanelsVisible}">
                 <Border Grid.Column="0" Classes="themedPanel" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4" Padding="8" Margin="0,0,4,0">
                     <StackPanel Spacing="4">
@@ -402,99 +517,110 @@
                     </StackPanel>
                 </Border>
             </Grid>
+            <!-- controls: the inner Grid's Auto row, measured before the
+                 scene so it is never the thing that gets cut (§371).
+                 §372: the team on the left as two rows of three, the moves
+                 beside it as two rows of two - the mockup's arrangement,
+                 and half the height of the old one-under-the-other. -->
+            <Grid Grid.Row="1" ColumnDefinitions="Auto,*" Margin="0,0,10,0">
 
-            <!-- battle log -->
-            <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Classes="themedPanel"
+                <StackPanel Grid.Column="0" Spacing="4" VerticalAlignment="Top">
+                    <TextBlock Text="Team" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <!-- §157: the whole team as clickable sprites, Showdown
+                         style - click a healthy teammate to switch to it (or to
+                         send it in after a faint). The active one is framed,
+                         fainted ones fade. -->
+                    <ItemsControl ItemsSource="{Binding BattleTeam}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="3" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="vm:SimulatorTeamSlotItem">
+                                <Button Width="60" Height="60" Padding="0" Margin="0,0,6,6"
+                                        ToolTip.Tip="{Binding HpTip}"
+                                        IsEnabled="{Binding CanSwitch}"
+                                        Command="{Binding $parent[ItemsControl].((vm:SimulatorViewModel)DataContext).SwitchToCommand}"
+                                        CommandParameter="{Binding}">
+                                    <Panel Width="56" Height="56">
+                                        <Border BorderBrush="{DynamicResource ThemeTextBrush}" BorderThickness="2"
+                                                CornerRadius="4" IsVisible="{Binding IsActive}" />
+                                        <TextBlock Text="?" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.4"
+                                                   IsVisible="{Binding Sprite, Converter={x:Static ObjectConverters.IsNull}}" />
+                                        <Image Source="{Binding Sprite}" Stretch="Uniform" Margin="3"
+                                               Opacity="{Binding SpriteOpacity}"
+                                               RenderOptions.BitmapInterpolationMode="None" />
+                                    </Panel>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Spacing="4" Margin="14,0,0,0" VerticalAlignment="Top">
+                    <TextBlock Text="{Binding ResultText}" FontWeight="Bold" FontSize="13"
+                               Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap"
+                               IsVisible="{Binding ResultText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+
+                    <TextBlock Text="Moves" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" />
+
+                    <!-- §161: the once-per-battle power-ups. Each toggle arms
+                         the NEXT move click; the engine re-checks legality when
+                         the turn resolves. -->
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <ToggleButton Content="Mega Evolve" FontSize="11" MinWidth="110"
+                                      HorizontalContentAlignment="Center"
+                                      IsChecked="{Binding MegaArmed}" IsVisible="{Binding MegaAvailable}"
+                                      ToolTip.Tip="Mega Evolve along with your next move (once per battle)." />
+                        <ToggleButton Content="Z-Power" FontSize="11" MinWidth="110"
+                                      HorizontalContentAlignment="Center"
+                                      IsChecked="{Binding ZArmed}" IsVisible="{Binding ZAvailable}"
+                                      ToolTip.Tip="Fire the matching move as its Z-Move (once per battle)." />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Button Width="180" Command="{Binding UseMove1Command}" IsEnabled="{Binding MoveButton1.IsEnabled}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding MoveButton1.Label}" FontWeight="Bold" FontSize="12" />
+                                <TextBlock Text="{Binding MoveButton1.Detail}" FontSize="10" Opacity="0.85" />
+                            </StackPanel>
+                        </Button>
+                        <Button Width="180" Command="{Binding UseMove2Command}" IsEnabled="{Binding MoveButton2.IsEnabled}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding MoveButton2.Label}" FontWeight="Bold" FontSize="12" />
+                                <TextBlock Text="{Binding MoveButton2.Detail}" FontSize="10" Opacity="0.85" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Button Width="180" Command="{Binding UseMove3Command}" IsEnabled="{Binding MoveButton3.IsEnabled}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding MoveButton3.Label}" FontWeight="Bold" FontSize="12" />
+                                <TextBlock Text="{Binding MoveButton3.Detail}" FontSize="10" Opacity="0.85" />
+                            </StackPanel>
+                        </Button>
+                        <Button Width="180" Command="{Binding UseMove4Command}" IsEnabled="{Binding MoveButton4.IsEnabled}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding MoveButton4.Label}" FontWeight="Bold" FontSize="12" />
+                                <TextBlock Text="{Binding MoveButton4.Detail}" FontSize="10" Opacity="0.85" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+            </Grid>
+
+            <!-- battle log. §371: the outer star row is the whole
+                 scene-plus-controls height, so no span. -->
+            <Border Grid.Row="1" Grid.Column="1" Classes="themedPanel"
                     BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4" Padding="4">
                 <ListBox Name="LogList" ItemsSource="{Binding LogLines}" FontSize="11" />
             </Border>
 
-            <!-- controls -->
-            <StackPanel Grid.Row="2" Grid.Column="0" Spacing="8" Margin="0,0,10,0">
-
-                <TextBlock Text="{Binding ResultText}" FontWeight="Bold" FontSize="14"
-                           Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" />
-
-                <TextBlock Text="Moves" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" />
-
-                <!-- §161: the once-per-battle power-ups. Each toggle arms
-                     the NEXT move click; the engine re-checks legality when
-                     the turn resolves. -->
-                <StackPanel Orientation="Horizontal" Spacing="6">
-                    <ToggleButton Content="Mega Evolve" FontSize="11" MinWidth="110"
-                                  HorizontalContentAlignment="Center"
-                                  IsChecked="{Binding MegaArmed}" IsVisible="{Binding MegaAvailable}"
-                                  ToolTip.Tip="Mega Evolve along with your next move (once per battle)." />
-                    <ToggleButton Content="Z-Power" FontSize="11" MinWidth="110"
-                                  HorizontalContentAlignment="Center"
-                                  IsChecked="{Binding ZArmed}" IsVisible="{Binding ZAvailable}"
-                                  ToolTip.Tip="Fire the matching move as its Z-Move (once per battle)." />
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Spacing="6">
-                    <Button Width="180" Command="{Binding UseMove1Command}" IsEnabled="{Binding MoveButton1.IsEnabled}">
-                        <StackPanel>
-                            <TextBlock Text="{Binding MoveButton1.Label}" FontWeight="Bold" FontSize="12" />
-                            <TextBlock Text="{Binding MoveButton1.Detail}" FontSize="10" Opacity="0.85" />
-                        </StackPanel>
-                    </Button>
-                    <Button Width="180" Command="{Binding UseMove2Command}" IsEnabled="{Binding MoveButton2.IsEnabled}">
-                        <StackPanel>
-                            <TextBlock Text="{Binding MoveButton2.Label}" FontWeight="Bold" FontSize="12" />
-                            <TextBlock Text="{Binding MoveButton2.Detail}" FontSize="10" Opacity="0.85" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="6">
-                    <Button Width="180" Command="{Binding UseMove3Command}" IsEnabled="{Binding MoveButton3.IsEnabled}">
-                        <StackPanel>
-                            <TextBlock Text="{Binding MoveButton3.Label}" FontWeight="Bold" FontSize="12" />
-                            <TextBlock Text="{Binding MoveButton3.Detail}" FontSize="10" Opacity="0.85" />
-                        </StackPanel>
-                    </Button>
-                    <Button Width="180" Command="{Binding UseMove4Command}" IsEnabled="{Binding MoveButton4.IsEnabled}">
-                        <StackPanel>
-                            <TextBlock Text="{Binding MoveButton4.Label}" FontWeight="Bold" FontSize="12" />
-                            <TextBlock Text="{Binding MoveButton4.Detail}" FontSize="10" Opacity="0.85" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-
-                <TextBlock Text="Team" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" />
-                <!-- §157: the whole team as clickable sprites, Showdown
-                     style - click a healthy teammate to switch to it (or to
-                     send it in after a faint). The active one is framed,
-                     fainted ones fade. -->
-                <ItemsControl ItemsSource="{Binding BattleTeam}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" Spacing="6" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="vm:SimulatorTeamSlotItem">
-                            <Button Width="60" Height="60" Padding="0"
-                                    ToolTip.Tip="{Binding HpTip}"
-                                    IsEnabled="{Binding CanSwitch}"
-                                    Command="{Binding $parent[ItemsControl].((vm:SimulatorViewModel)DataContext).SwitchToCommand}"
-                                    CommandParameter="{Binding}">
-                                <Panel Width="56" Height="56">
-                                    <Border BorderBrush="{DynamicResource ThemeTextBrush}" BorderThickness="2"
-                                            CornerRadius="4" IsVisible="{Binding IsActive}" />
-                                    <TextBlock Text="?" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.4"
-                                               IsVisible="{Binding Sprite, Converter={x:Static ObjectConverters.IsNull}}" />
-                                    <Image Source="{Binding Sprite}" Stretch="Uniform" Margin="3"
-                                           Opacity="{Binding SpriteOpacity}"
-                                           RenderOptions.BitmapInterpolationMode="None" />
-                                </Panel>
-                            </Button>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-
-            <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
                 <TextBlock Text="Resolving..." FontSize="12" VerticalAlignment="Center"
                            Foreground="{DynamicResource ThemeTextBrush}" IsVisible="{Binding IsResolving}" />
                 <!-- §203: one button. Cancelling used to stop the battle
@@ -503,6 +629,10 @@
                      the two differed only in which was greyed out. The
                      label says which of the two it is about to do. -->
                 <Button Content="{Binding LeaveBattleText}" Command="{Binding LeaveBattleCommand}" />
+                <!-- §372: the same fight again - same team, same opponent,
+                     fresh dice. See SimulatorViewModel.RestartBattle. -->
+                <Button Content="Restart Battle" Command="{Binding RestartBattleCommand}"
+                        ToolTip.Tip="Start this battle over: same team, same opponent, a fresh roll." />
             </StackPanel>
         </Grid>
     </Panel>

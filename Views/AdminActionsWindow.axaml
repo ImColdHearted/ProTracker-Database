@@ -17,10 +17,8 @@
         <TextBlock Text="What would you like to do?" TextWrapping="Wrap"
                    Foreground="{DynamicResource ThemeTextBrush}" />
 
-        <Button Content="Create Event…" Click="CreateEventButton_Click" HorizontalAlignment="Stretch" />
-        <Button Content="Remove Event…" Click="RemoveEventButton_Click" HorizontalAlignment="Stretch" />
-
-        <Separator Margin="0,4" />
+        <!-- §253: Create Event and Remove Event, the two buttons this window
+             was built around (§29), are gone with the Events board. -->
 
         <!-- §101: the Admin Client override and the Admin Console. The
              toggle button's text follows AdminModeService's current state -

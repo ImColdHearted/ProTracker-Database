@@ -4,4 +4,6 @@
   <Project Path="PokemonSim.Shadow/PokemonSim.Shadow.csproj" />
   <Project Path="PokemonSim.Tests/PokemonSim.Tests.csproj" />
   <Project Path="PokemonSim.DevConsole/PokemonSim.DevConsole.csproj" />
+  <!-- §295: the Android companion. Needs the android workload; unloads harmlessly without it. -->
+  <Project Path="ProTracker.Android/ProTracker.Android.csproj" />
 </Solution>

@@ -27,6 +27,28 @@ public sealed class LinuxX11WindowCaptureService : IWindowCaptureService
     private long _selectedHandle;
     private bool _hasSelection;
 
+    // §300. The bound window has gone, and when that was last checked.
+    //
+    // A Linux tester's client window closed while the tracker was bound to
+    // it. Every capture from then on ran `import -window 0x260000a`, which
+    // answered "no window with specified ID exists" and then - this is the
+    // part that matters - fell back to picking a window INTERACTIVELY:
+    // "import: unable to grab mouse". The scan loop repeats five times a
+    // second, so his pointer became a crosshair and stayed one. His report
+    // was titled "Mouse is a cross".
+    //
+    // So a failed capture asks wmctrl whether the window is still there, and
+    // if it is not, no capture tool is run again until it comes back. The
+    // check is the failure path's alone: a working capture never pays for it.
+    private bool _windowMissing;
+    private DateTime _windowCheckedUtc = DateTime.MinValue;
+
+    // Long enough that the re-check costs a fraction of what the failing
+    // captures it replaces did, short enough that a client which comes back
+    // on the same window id is picked up while the player is still looking
+    // at the status line.
+    private static readonly TimeSpan WindowRecheckInterval = TimeSpan.FromSeconds(2);
+
     public string PlatformName => "Linux (X11)";
     public string? LastError { get; private set; }
     public bool HasSelectedClient => _hasSelection;
@@ -117,6 +139,11 @@ public sealed class LinuxX11WindowCaptureService : IWindowCaptureService
         _selectedHandle = handle;
         _hasSelection = true;
 
+        // §300: a deliberate (re)bind is a fresh start - the new handle has
+        // not failed yet, whatever the old one did.
+        _windowMissing = false;
+        _windowCheckedUtc = DateTime.MinValue;
+
         // §114 recorded the session type here because wmctrl and import
         // talk to an X server, and the theory was that under Wayland an
         // XWayland window would still be LISTED - so the app believes it has
@@ -151,6 +178,8 @@ public sealed class LinuxX11WindowCaptureService : IWindowCaptureService
     {
         _selectedHandle = 0;
         _hasSelection = false;
+        _windowMissing = false;
+        _windowCheckedUtc = DateTime.MinValue;
     }
 
     public byte[]? CaptureSelectedWindowPng()
@@ -166,8 +195,35 @@ public sealed class LinuxX11WindowCaptureService : IWindowCaptureService
         // ImageMagick's `import` accepts the X11 window id in decimal or 0x-hex.
         string windowIdArg = "0x" + _selectedHandle.ToString("x", CultureInfo.InvariantCulture);
 
+        // §300: while the window is known to be gone, run nothing at all.
+        // This is the whole fix for the crosshair - a tool that is never
+        // started cannot grab the pointer - and it re-checks on its own, so
+        // a client that comes back on the same id needs no click from anyone.
+        if (_windowMissing)
+        {
+            if (DateTime.UtcNow - _windowCheckedUtc < WindowRecheckInterval)
+            {
+                LastError = MissingWindowMessage(windowIdArg);
+                return null;
+            }
+
+            _windowCheckedUtc = DateTime.UtcNow;
+
+            if (!WindowStillListed(_selectedHandle))
+            {
+                LastError = MissingWindowMessage(windowIdArg);
+                return null;
+            }
+
+            _windowMissing = false;
+        }
+
+        bool toolRan = false;
+
         if (ProcessRunner.IsToolAvailable("import"))
         {
+            toolRan = true;
+
             byte[]? png = ProcessRunner.RunCaptureStdout("import", new[] { "-window", windowIdArg, "png:-" }, out string stderr);
 
             if (png is { Length: > 0 })
@@ -180,6 +236,8 @@ public sealed class LinuxX11WindowCaptureService : IWindowCaptureService
 
         if (ProcessRunner.IsToolAvailable("maim"))
         {
+            toolRan = true;
+
             byte[]? png = ProcessRunner.RunCaptureStdout("maim", new[] { "-i", windowIdArg }, out string stderr);
 
             if (png is { Length: > 0 })
@@ -191,8 +249,75 @@ public sealed class LinuxX11WindowCaptureService : IWindowCaptureService
         }
 
         LastError ??= "No supported screenshot tool (import/maim) is available.";
+
+        // §300: a capture tool ran and did not produce a frame. Was it the
+        // window, or the tool? wmctrl - already required, and already how
+        // this class finds windows in the first place - is asked rather than
+        // the answer being guessed from the wording of someone else's error
+        // message, which is localised: the tester's read "Ο πόρος είναι
+        // προσωρινά μη διαθέσιμος".
+        //
+        // Only when a tool actually ran, so a machine with neither installed
+        // does not spawn a wmctrl five times a second for an answer that
+        // cannot help it; and no more often than the re-check interval, so
+        // neither does a tool that is failing for its own reasons.
+        if (!toolRan || DateTime.UtcNow - _windowCheckedUtc < WindowRecheckInterval)
+            return null;
+
+        _windowCheckedUtc = DateTime.UtcNow;
+
+        if (!WindowStillListed(_selectedHandle))
+        {
+            _windowMissing = true;
+            LastError = MissingWindowMessage(windowIdArg);
+        }
+
         return null;
     }
+
+    /// <summary>§300. Is this window id still one the window manager lists?
+    /// Same read as FindClientWindows, without the per-window /proc work -
+    /// the question here is only whether the id exists.</summary>
+    private static bool WindowStillListed(long handle)
+    {
+        try
+        {
+            byte[]? output = ProcessRunner.RunCaptureStdout("wmctrl", new[] { "-l" }, out _);
+
+            if (output is null)
+            {
+                // wmctrl itself is not answering. That is not evidence the
+                // window has gone, and treating it as such would stop
+                // captures for a reason that has nothing to do with them.
+                return true;
+            }
+
+            string text = System.Text.Encoding.UTF8.GetString(output);
+
+            foreach (string line in text.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+            {
+                string[] parts = line.Split((char[]?)null, 2, StringSplitOptions.RemoveEmptyEntries);
+
+                if (parts.Length == 0)
+                    continue;
+
+                if (TryParseWindowId(parts[0], out long listed) && listed == handle)
+                    return true;
+            }
+
+            return false;
+        }
+        catch
+        {
+            // Same reasoning as a wmctrl that returns nothing.
+            return true;
+        }
+    }
+
+    private static string MissingWindowMessage(string windowIdArg) =>
+        $"The PRO client window {windowIdArg} no longer exists - it was closed, or the client " +
+        "was restarted and has a new one. Nothing is being captured until it is back; pick the " +
+        "client again if it has restarted.";
 
     private static bool ProcessNameMatches(int pid, string processName)
     {

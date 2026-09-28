@@ -1,0 +1,131 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:ProTracker.Companion.ViewModels"
+             x:Class="ProTracker.Companion.Views.Pages.TeamBuilderPage"
+             x:DataType="vm:TeamBuilderViewModel">
+
+    <!-- §314. The phone's way onto a team. The desktop reads the player's own
+         cards with OCR and keeps them in storage; a phone has neither camera
+         onto the game nor that storage, so this builds out of the Pokedex
+         instead - the species list, the real learnset, §307's abilities, the
+         twenty-five natures, and an EV spread the player picks.
+
+         THERE IS NO IV CONTROL, on purpose. A Pokedex entry is a species, not
+         a caught creature. ImportedPokemon already defaults its six IVs to
+         31 and the view model does not touch them. -->
+
+    <ScrollViewer>
+        <StackPanel Spacing="8">
+
+            <TextBlock Text="{Binding BasketLine}" FontWeight="Bold" FontSize="13" TextWrapping="Wrap"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <!-- ============================================== the species -->
+            <TextBox Text="{Binding SpeciesSearch, Mode=TwoWay}" FontSize="12"
+                     PlaceholderText="Search the Pokedex" />
+
+            <ListBox ItemsSource="{Binding SpeciesMatches}"
+                     SelectedItem="{Binding SelectedSpecies, Mode=TwoWay}"
+                     MaxHeight="190" FontSize="12" />
+
+            <TextBlock Text="{Binding SpeciesLine}" FontSize="11" Opacity="0.85" TextWrapping="Wrap"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <!-- ================================= the ability and the nature -->
+            <TextBlock Text="Ability" FontWeight="Bold" FontSize="12" Margin="0,4,0,0"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <ComboBox ItemsSource="{Binding AbilityOptions}"
+                      SelectedItem="{Binding SelectedAbility, Mode=TwoWay}"
+                      HorizontalAlignment="Stretch" FontSize="12" />
+
+            <TextBlock Text="Nature" FontWeight="Bold" FontSize="12" Margin="0,4,0,0"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <ComboBox ItemsSource="{Binding NatureOptions}"
+                      SelectedItem="{Binding SelectedNature, Mode=TwoWay}"
+                      HorizontalAlignment="Stretch" FontSize="12" />
+
+            <!-- ================================================ the spread -->
+            <TextBlock Text="EVs" FontWeight="Bold" FontSize="12" Margin="0,6,0,0"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <TextBlock Text="IVs are 31 across the board - a Pokedex entry is a species, not a caught Pokemon."
+                       FontSize="10" Opacity="0.7" TextWrapping="Wrap"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <Grid ColumnDefinitions="Auto,*,Auto,*" RowDefinitions="Auto,Auto,Auto">
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="HP" FontSize="11" Margin="0,0,6,0"
+                           VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding EvHp, Mode=TwoWay}" FontSize="12"
+                         Margin="0,0,10,4" />
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Atk" FontSize="11" Margin="0,0,6,0"
+                           VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding EvAttack, Mode=TwoWay}" FontSize="12"
+                         Margin="0,0,0,4" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Def" FontSize="11" Margin="0,0,6,0"
+                           VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding EvDefense, Mode=TwoWay}" FontSize="12"
+                         Margin="0,0,10,4" />
+
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="SpA" FontSize="11" Margin="0,0,6,0"
+                           VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding EvSpAttack, Mode=TwoWay}" FontSize="12"
+                         Margin="0,0,0,4" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="SpD" FontSize="11" Margin="0,0,6,0"
+                           VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EvSpDefense, Mode=TwoWay}" FontSize="12"
+                         Margin="0,0,10,0" />
+
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="Spe" FontSize="11" Margin="0,0,6,0"
+                           VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding EvSpeed, Mode=TwoWay}" FontSize="12" />
+            </Grid>
+
+            <TextBlock Text="{Binding EvSummary}" FontSize="11" Opacity="0.85" TextWrapping="Wrap"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <!-- ================================================= the moves -->
+            <TextBlock Text="Moves - pick up to four" FontWeight="Bold" FontSize="12" Margin="0,6,0,0"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <TextBox Text="{Binding MoveSearch, Mode=TwoWay}" FontSize="12"
+                     PlaceholderText="Search this Pokemon's moves" />
+
+            <ScrollViewer MaxHeight="220">
+                <ItemsControl ItemsSource="{Binding MoveChoices}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:BuilderMoveChoice">
+                            <CheckBox Content="{Binding Name}" FontSize="12"
+                                      IsChecked="{Binding IsChosen, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- ================================================ the basket -->
+            <Button Content="{Binding AddLabel}" FontWeight="Bold" HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center" Margin="0,6,0,0"
+                    Command="{Binding AddCommand}" />
+
+            <TextBlock Text="{Binding Status}" FontSize="11" TextWrapping="Wrap"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <!-- §316: no Empty-the-basket button. Back is the way out of this
+                 page and it always was; a second control that also means
+                 "never mind" was one more thing to explain. -->
+            <Border Classes="themedPanel" Padding="8"
+                    BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4"
+                    IsVisible="{Binding !IsEditing}">
+                <ItemsControl ItemsSource="{Binding BasketNames}" FontSize="11" />
+            </Border>
+
+            <Button Name="DoneButton" Content="Done" FontWeight="Bold" HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center" Margin="0,4,0,8"
+                    Click="Done_Click" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

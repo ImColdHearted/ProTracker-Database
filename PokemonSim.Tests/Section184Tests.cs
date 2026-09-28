@@ -513,13 +513,19 @@ namespace PokemonSim.Tests
 
         // ---------------- the schema grew by two --------------------------
 
+        /// <summary>§311. This was TheWebFeaturesSitAtTheEndAndDisturbNothing
+        /// BeforeThem, and "at the end" was never where the web BELONGED - it
+        /// was where the prefix rule forced §184 to put it, two columns
+        /// stranded behind the risk dial while the other three hazards sat
+        /// together four hundred features earlier. §311 put it back beside
+        /// them. What the fact is really about - one web flag a side, and
+        /// raising one disturbs nothing else - is unchanged.</summary>
         [Fact]
-        public void TheWebFeaturesSitAtTheEndAndDisturbNothingBeforeThem()
+        public void TheWebSitsWithTheOtherHazardsAndDisturbsNothingElse()
         {
-            Assert.Equal(6, ObservationSchema.Version);
-            Assert.Equal(205, ObservationSchema.FeatureCount);
-            Assert.Equal(ObservationSchema.FeatureCountV5, ObservationSchema.WebFeatureIndex);
-            Assert.Equal(ObservationSchema.WebFeatureIndex + 2, ObservationSchema.FeatureCount);
+            Assert.Equal(7, ObservationSchema.Version);
+            Assert.Equal(483, ObservationSchema.FeatureCount);
+            Assert.Equal(4, ObserverEncoder.HazardBlockStride);
 
             var (state, _) = Web(1857);
 
@@ -529,13 +535,22 @@ namespace PokemonSim.Tests
 
             float[] webbed = ObserverEncoder.Encode(state, state.Player1);
 
-            Assert.Equal(0f, clear[ObservationSchema.WebFeatureIndex]);
-            Assert.Equal(1f, webbed[ObservationSchema.WebFeatureIndex]);
-            Assert.Equal(0f, webbed[ObservationSchema.WebFeatureIndex + 1]);
+            Assert.Equal(0f, clear[MyWeb]);
+            Assert.Equal(1f, webbed[MyWeb]);
+            Assert.Equal(0f, webbed[TheirWeb]);
 
-            for (int i = 0; i < ObservationSchema.FeatureCountV5; i++)
-                Assert.Equal(clear[i], webbed[i]);
+            for (int i = 0; i < ObservationSchema.FeatureCount; i++)
+            {
+                if (i != MyWeb)
+                    Assert.Equal(clear[i], webbed[i]);
+            }
         }
+
+        /// <summary>§311. Mine is the fourth entry of my half of the hazard
+        /// block; theirs is the fourth of theirs.</summary>
+        static int MyWeb => ObserverEncoder.HazardBlockStart + 3;
+
+        static int TheirWeb => ObserverEncoder.HazardBlockStart + ObserverEncoder.HazardBlockStride + 3;
 
         [Fact]
         public void TheWebIsReadFromTheActorsPointOfView()
@@ -549,10 +564,10 @@ namespace PokemonSim.Tests
 
             // Player 1 laid it, so it is on the opponent's side of its view
             // and on its own side of theirs.
-            Assert.Equal(0f, mine[ObservationSchema.WebFeatureIndex]);
-            Assert.Equal(1f, mine[ObservationSchema.WebFeatureIndex + 1]);
-            Assert.Equal(1f, theirs[ObservationSchema.WebFeatureIndex]);
-            Assert.Equal(0f, theirs[ObservationSchema.WebFeatureIndex + 1]);
+            Assert.Equal(0f, mine[MyWeb]);
+            Assert.Equal(1f, mine[TheirWeb]);
+            Assert.Equal(1f, theirs[MyWeb]);
+            Assert.Equal(0f, theirs[TheirWeb]);
         }
     }
 }

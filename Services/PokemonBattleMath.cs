@@ -358,25 +358,69 @@ namespace Foot_Tracker.Services
             /// BEFORE stages/items/abilities - CalculateStat's output.</summary>
             public int AttackStat { get; init; }
             public int AttackStage { get; init; }
+            /// <summary>§307: kept for the notes and for DefenderAtFullHp's
+            /// sake, but nothing in the chain below reads it any more. Every
+            /// ability reaches a damage number through MoveOracle's measured
+            /// factor instead, which knows 124 of them rather than the seven
+            /// this file used to carry - and which cannot disagree with the
+            /// simulator, because it IS the simulator.</summary>
             public string AttackerAbility { get; init; } = "None";
-            public string AttackerItem { get; init; } = "None";
             public bool AttackerBurned { get; init; }
 
             /// <summary>The already-computed defending stat (Defense or SpDefense)
             /// BEFORE stages - CalculateStat's output.</summary>
             public int DefenseStat { get; init; }
             public int DefenseStage { get; init; }
+            /// <summary>§307: see AttackerAbility. Not read by the chain.</summary>
             public string DefenderAbility { get; init; } = "None";
             public bool DefenderAtFullHp { get; init; } = true;
 
             public string Weather { get; init; } = "None"; // see WeatherOptions
-            public bool ScreenUp { get; init; }
+
+            /// <summary>§261. One of TerrainOptions. The rules are ported from
+            /// the battle engine's own (PokemonSim/Engine/TerrainEffects.cs and
+            /// the Misty clause in its DamageCalculator) rather than written a
+            /// second time here, so the calculator and the simulator cannot
+            /// disagree about what a terrain does.</summary>
+            public string Terrain { get; init; } = "None";
+
+            /// <summary>Terrain only boosts a GROUNDED attacker's move, and
+            /// Misty only shields a GROUNDED target - see IsGrounded.</summary>
+            public bool AttackerGrounded { get; init; } = true;
+            public bool DefenderGrounded { get; init; } = true;
+
+            /// <summary>§261. The defender's side screens, replacing §72's
+            /// single ScreenUp flag. Reflect covers Physical, Light Screen
+            /// covers Special, Aurora Veil covers both - and none of the three
+            /// applies to a critical hit.</summary>
+            public bool Reflect { get; init; }
+            public bool LightScreen { get; init; }
+            public bool AuroraVeil { get; init; }
 
             /// <summary>The selected move's display name - lets weather apply
-            /// its move-specific interactions (Weather Ball, Solar Beam/
-            /// Solar Blade) without a second move-data lookup here (§103).
-            /// Empty is fine: only those exact names change anything.</summary>
+            /// its move-specific interactions (Solar Beam / Solar Blade)
+            /// without a second move-data lookup here (§103). Empty is fine:
+            /// only those exact names change anything.
+            ///
+            /// §306: Weather Ball came off this list. The simulator answers
+            /// its type and its power now, and doing it here as well would
+            /// double the same boost twice.</summary>
             public string MoveName { get; init; } = "";
+
+            // ---- §306 ----
+
+            /// <summary>Charge: the user's next Electric move hits twice as
+            /// hard. It lives here rather than in the simulator bridge
+            /// because the simulator applies it in its own damage chain
+            /// rather than in a move effect, and the bridge only measures
+            /// effects.</summary>
+            public bool AttackerCharged { get; init; }
+
+            /// <summary>Foresight: the target's Ghost type stops refusing
+            /// Normal and Fighting moves. It is the only §306 field option
+            /// that needed the type chart, which is why it is a flag here and
+            /// not a multiplier at the call site.</summary>
+            public bool DefenderForesighted { get; init; }
         }
 
         public sealed class DamageResult
@@ -389,6 +433,12 @@ namespace Foot_Tracker.Services
             /// not modern Snow, verified against the PRO wiki), and saying
             /// so beats silently multiplying by 1.</summary>
             public string WeatherNote { get; init; } = "";
+
+            /// <summary>§261. The same promise §103 made for weather, kept for
+            /// terrain: what the selected terrain did to THIS calculation, or
+            /// why it did nothing. A toggle that silently multiplies by 1 is
+            /// the thing §103 existed to stop.</summary>
+            public string TerrainNote { get; init; } = "";
 
             public int MinDamage { get; init; }
             public int MaxDamage { get; init; }
@@ -404,14 +454,38 @@ namespace Foot_Tracker.Services
         // modifiers whose math is simple and known, rather than every item and
         // ability in the game. "Huge Power" covers Pure Power (identical x2),
         // "Filter" covers Solid Rock (identical x0.75).
+        /// <summary>§309: the seven this window offered before the engine
+        /// owned items. Kept only as the fallback for a build where
+        /// HeldItems cannot be reached - the Damage window builds its list
+        /// out of the engine's hundred and five now, and every entry reaches
+        /// the damage through MoveOracle's measured factor.</summary>
         public static readonly IReadOnlyList<string> AttackerItems = new[]
             { "None", "Choice Band", "Choice Specs", "Life Orb", "Expert Belt", "Muscle Band", "Wise Glasses" };
 
+        /// <summary>§307: these two lists are what the window offered before
+        /// it knew which Pokemon it was asking about. They are kept because
+        /// the IV and World Quest calculators still name them, and because a
+        /// species the dex does not know falls back to them - but the Damage
+        /// window builds its list per species now, out of the dex, and every
+        /// entry reaches the damage through the simulator.</summary>
         public static readonly IReadOnlyList<string> AttackerAbilities = new[]
             { "None", "Adaptability", "Guts", "Huge Power", "Sheer Force", "Technician", "Tinted Lens" };
 
         public static readonly IReadOnlyList<string> DefenderAbilities = new[]
             { "None", "Filter", "Flash Fire", "Levitate", "Multiscale", "Thick Fat", "Volt Absorb", "Water Absorb" };
+
+        /// <summary>§261. Both ability lists in one, for a window where each
+        /// side both attacks and defends: the old window had a fixed attacker
+        /// and a fixed defender, so two lists were enough. Every entry still
+        /// does something (§103) - the offensive ones in the power and attack
+        /// steps, the defensive ones in effectiveness, defense and the final
+        /// modifiers - and an ability listed for the wrong role simply does
+        /// not fire, which is what it does in a real battle too.</summary>
+        public static readonly IReadOnlyList<string> AllAbilities =
+            AttackerAbilities.Concat(DefenderAbilities.Where(a => a != "None"))
+                             .OrderBy(a => a == "None" ? 0 : 1)
+                             .ThenBy(a => a, StringComparer.Ordinal)
+                             .ToArray();
 
         // §103: Sandstorm and the ice weather joined Sun/Rain. PRO's ice
         // weather IS Hail (chip 1/16, Blizzard accuracy, no defensive boost -
@@ -424,6 +498,46 @@ namespace Foot_Tracker.Services
         // end-of-turn model at all.
         public static readonly IReadOnlyList<string> WeatherOptions = new[] { "None", "Sun", "Rain", "Sandstorm", "Hail (Snow)" };
 
+        // §261. The four terrains the battle engine models. Electric, Grassy
+        // and Psychic each boost their own type by x1.3 for a grounded
+        // attacker; Misty gives no boost at all and instead halves Dragon
+        // moves aimed at a grounded target. Those are exactly the engine's
+        // rules - see TerrainEffects.GetDamageModifier and the Misty clause in
+        // its DamageCalculator.
+        //
+        // What is deliberately NOT here, because the engine does not have it
+        // either: Grassy Terrain halving Earthquake, Bulldoze and Magnitude
+        // into grounded targets. Adding it on this side alone would make the
+        // calculator and the simulator disagree about the same move on the
+        // same field, which is worse than a known, named gap. It wants adding
+        // to both at once, in a section of its own.
+        public static readonly IReadOnlyList<string> TerrainOptions =
+            new[] { "None", "Electric", "Grassy", "Psychic", "Misty" };
+
+        /// <summary>
+        /// §261. Ported from the battle engine's Grounding.IsGrounded: a
+        /// Flying type hovers, and so does Levitate.
+        ///
+        /// The engine also grounds for Gravity and Ingrain and un-grounds for
+        /// Magnet Rise and an unpopped Air Balloon. This calculator has no
+        /// input for any of those four, so they cannot be wrong here - they
+        /// are simply not askable, which is why this takes types and an
+        /// ability rather than pretending to a fuller model.
+        /// </summary>
+        public static bool IsGrounded(IReadOnlyList<string> types, string? ability)
+        {
+            if (string.Equals(ability?.Replace(" ", "").Trim(), "levitate", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            foreach (string? type in types)
+            {
+                if (string.Equals(type?.Trim(), "Flying", StringComparison.OrdinalIgnoreCase))
+                    return false;
+            }
+
+            return true;
+        }
+
         public static DamageResult Calculate(DamageRequest request)
         {
             bool physical = string.Equals(request.MoveCategory, "Physical", StringComparison.OrdinalIgnoreCase);
@@ -435,21 +549,12 @@ namespace Foot_Tracker.Services
             int movePower = request.MovePower;
             string weatherNote = "";
             string moveName = request.MoveName?.Trim() ?? "";
-            bool weatherActive = request.Weather is "Sun" or "Rain" or "Sandstorm" or "Hail (Snow)";
-
-            if (weatherActive && string.Equals(moveName, "Weather Ball", StringComparison.OrdinalIgnoreCase))
-            {
-                moveType = request.Weather switch
-                {
-                    "Sun" => "Fire",
-                    "Rain" => "Water",
-                    "Sandstorm" => "Rock",
-                    _ => "Ice",
-                };
-                movePower *= 2;
-                weatherNote = $"Weather Ball became {moveType}-type at double power in {request.Weather}. ";
-            }
-            else if ((string.Equals(moveName, "Solar Beam", StringComparison.OrdinalIgnoreCase) ||
+            // §306: Weather Ball used to be handled here, doubling its power
+            // and swapping its type. The simulator's own WeatherBall effect
+            // does both now and the bridge reports the answer, so doing it
+            // twice would double a boost the caller has already applied.
+            // Solar Beam stays: nothing in the simulator models its halving.
+            if ((string.Equals(moveName, "Solar Beam", StringComparison.OrdinalIgnoreCase) ||
                       string.Equals(moveName, "Solar Blade", StringComparison.OrdinalIgnoreCase)) &&
                      request.Weather is "Rain" or "Sandstorm" or "Hail (Snow)")
             {
@@ -457,17 +562,26 @@ namespace Foot_Tracker.Services
                 weatherNote = $"{moveName}'s power is halved in {request.Weather}. ";
             }
 
-            double typeEffectiveness = GetTypeEffectiveness(moveType, request.DefenderTypes);
+            // §306: Foresight (and Odor Sleuth, and Scrappy) let Normal and
+            // Fighting through a Ghost's immunity. Everything else about the
+            // matchup is unchanged, so the Ghost type is simply not consulted
+            // for those two move types.
+            IReadOnlyList<string> defenderTypes = request.DefenderTypes;
 
-            // Absorbing/immunity abilities zero the move out entirely.
-            typeEffectiveness *= (request.DefenderAbility, NormalizedType(moveType)) switch
+            if (request.DefenderForesighted &&
+                (NormalizedType(moveType) is "Normal" or "Fighting"))
             {
-                ("Levitate", "Ground") => 0.0,
-                ("Flash Fire", "Fire") => 0.0,
-                ("Volt Absorb", "Electric") => 0.0,
-                ("Water Absorb", "Water") => 0.0,
-                _ => 1.0
-            };
+                defenderTypes = defenderTypes
+                    .Where(t => !string.Equals(t?.Trim(), "Ghost", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            double typeEffectiveness = GetTypeEffectiveness(moveType, defenderTypes);
+
+            // §307: the absorbing and immunity abilities used to be a table
+            // here. Every ability now comes through AbilityFactor, measured
+            // off the simulator, which reports an immunity as a factor of
+            // zero - and knows 124 of them rather than these four.
 
             bool hasStab = request.AttackerTypes.Any(t =>
                 string.Equals(t?.Trim(), moveType.Trim(), StringComparison.OrdinalIgnoreCase));
@@ -485,44 +599,19 @@ namespace Foot_Tracker.Services
             }
 
             // ---- Power-side modifiers ----
+            // §309: Muscle Band and Wise Glasses used to add their tenth
+            // here. Every item reaches the damage through MoveOracle's
+            // measured factor now, for §307's reason applied to items.
             int power = movePower;
-
-            if (request.AttackerAbility == "Technician" && power <= 60)
-                power = (int)Math.Floor(power * 1.5);
-
-            if (request.AttackerAbility == "Sheer Force")
-                power = (int)Math.Floor(power * 1.3);
-
-            if (request.AttackerItem == "Muscle Band" && physical)
-                power = (int)Math.Floor(power * 1.1);
-
-            if (request.AttackerItem == "Wise Glasses" && special)
-                power = (int)Math.Floor(power * 1.1);
 
             // ---- Attack-side stat (normal and crit variants - a crit ignores
             // the attacker's NEGATIVE stages and the defender's POSITIVE ones) ----
             int AttackFor(bool crit)
             {
                 int stage = crit ? Math.Max(request.AttackStage, 0) : request.AttackStage;
+                // §309: the Choice items' half again used to be applied here
+                // AND by the engine's StatResolver. Only the engine does now.
                 int value = (int)Math.Floor(request.AttackStat * StageMultiplier(stage));
-
-                if (request.AttackerAbility == "Huge Power" && physical)
-                    value = PokeRound(value * 2.0);
-
-                if (request.AttackerAbility == "Guts" && request.AttackerBurned)
-                    value = PokeRound(value * 1.5);
-
-                if (request.AttackerItem == "Choice Band" && physical)
-                    value = PokeRound(value * 1.5);
-
-                if (request.AttackerItem == "Choice Specs" && special)
-                    value = PokeRound(value * 1.5);
-
-                if (request.DefenderAbility == "Thick Fat" &&
-                    (NormalizedType(moveType) is "Fire" or "Ice"))
-                {
-                    value = PokeRound(value * 0.5);
-                }
 
                 return Math.Max(value, 1);
             }
@@ -557,6 +646,50 @@ namespace Foot_Tracker.Services
                 _ => 1.0
             };
 
+            // ---- §261 terrain, by the battle engine's rules ----
+            //
+            // Electric/Grassy/Psychic: x1.3 on their own type, and only when
+            // the ATTACKER is grounded. Misty: no boost at all - it halves
+            // Dragon moves aimed at a grounded DEFENDER. One terrain is up at
+            // a time, so the two clauses can never both fire.
+            string terrainName = (request.Terrain ?? "None").Trim();
+            string terrainMoveType = NormalizedType(moveType);
+            double terrain = 1.0;
+            string terrainNote = "";
+
+            if (request.AttackerGrounded)
+            {
+                bool boosted =
+                    (terrainName == "Electric" && terrainMoveType == "Electric") ||
+                    (terrainName == "Grassy" && terrainMoveType == "Grass") ||
+                    (terrainName == "Psychic" && terrainMoveType == "Psychic");
+
+                if (boosted)
+                {
+                    terrain = 1.3;
+                    terrainNote = $"{terrainName} Terrain: {terrainMoveType} move power x1.3. ";
+                }
+            }
+
+            if (terrainName == "Misty" && terrainMoveType == "Dragon" && request.DefenderGrounded)
+            {
+                terrain *= 0.5;
+                terrainNote += "Misty Terrain: Dragon damage into the grounded defender x0.5. ";
+            }
+
+            // §103's rule, kept: a terrain that changed nothing says so, and
+            // says which of the three reasons it was.
+            if (terrainNote.Length == 0 && terrainName != "None")
+            {
+                terrainNote = terrainName == "Misty"
+                    ? (terrainMoveType == "Dragon"
+                        ? "Misty Terrain: no effect - it only shields a GROUNDED defender, and this one is not."
+                        : "Misty Terrain: no effect on this move - it halves Dragon moves only, and gives no boost of its own.")
+                    : (!request.AttackerGrounded
+                        ? $"{terrainName} Terrain: no effect - terrain only boosts a GROUNDED attacker, and this one hovers."
+                        : $"{terrainName} Terrain: no effect on this move - it boosts {(terrainName == "Grassy" ? "Grass" : terrainName)} moves only.");
+            }
+
             // ---- §103: say what the weather actually did (or honestly
             // didn't) - the dropdown must never be a silent no-op. ----
             if (sandstormSpDefApplies)
@@ -571,12 +704,15 @@ namespace Foot_Tracker.Services
             if (weatherNote.Length == 0 && request.Weather == "Hail (Snow)")
                 weatherNote = "Hail (Snow): no effect on this matchup - PRO implements Hail (no Ice-type Defense boost; chip damage is outside this calculator's scope).";
 
-            double stab = hasStab ? (request.AttackerAbility == "Adaptability" ? 2.0 : 1.5) : 1.0;
+            double stab = hasStab ? 1.5 : 1.0;
 
-            // Burn halves physical damage - unless Guts is what's powering the
-            // attacker through it (Guts both ignores the halving and got its
-            // x1.5 above).
-            bool burnApplies = request.AttackerBurned && physical && request.AttackerAbility != "Guts";
+            // Burn halves physical damage. §307: the Guts exception that used
+            // to live on this line is gone, and it has to be - AbilityFactor
+            // measures the ability against a baseline that IS burned, so Guts
+            // comes back as a factor of three (it undoes this halving and
+            // adds half again). Keeping the exception here as well would undo
+            // the halving twice.
+            bool burnApplies = request.AttackerBurned && physical;
 
             int Chain(int roll, bool crit)
             {
@@ -588,6 +724,10 @@ namespace Foot_Tracker.Services
 
                 int damage = baseDamage;
                 damage = PokeRound(damage * weather);
+
+                // §261: terrain sits beside weather, the other field-wide
+                // power modifier, and is applied the same way.
+                damage = PokeRound(damage * terrain);
 
                 if (crit)
                     damage = PokeRound(damage * 1.5);
@@ -601,23 +741,24 @@ namespace Foot_Tracker.Services
 
                 // "Other" modifiers, applied in a stable order. Screens don't
                 // apply on a crit; Multiscale only at full HP.
-                if (request.ScreenUp && !crit)
+                //
+                // §261: three screens, each covering the category it really
+                // covers, replacing §72's one flag that halved everything.
+                // Aurora Veil covers both categories, so the three are one
+                // test rather than three - stacking a veil with a screen
+                // would halve twice, which no pair of screens does.
+                if (!crit &&
+                    (request.AuroraVeil ||
+                     (request.Reflect && physical) ||
+                     (request.LightScreen && special)))
+                {
                     damage = PokeRound(damage * 0.5);
+                }
 
-                if (request.DefenderAbility == "Multiscale" && request.DefenderAtFullHp)
-                    damage = PokeRound(damage * 0.5);
-
-                if (request.DefenderAbility == "Filter" && typeEffectiveness > 1.0)
-                    damage = PokeRound(damage * 0.75);
-
-                if (request.AttackerAbility == "Tinted Lens" && typeEffectiveness < 1.0)
+                // §306: Charge doubles an Electric move, once, for the one
+                // move that follows it.
+                if (request.AttackerCharged && NormalizedType(moveType) == "Electric")
                     damage = PokeRound(damage * 2.0);
-
-                if (request.AttackerItem == "Expert Belt" && typeEffectiveness > 1.0)
-                    damage = PokeRound(damage * 1.2);
-
-                if (request.AttackerItem == "Life Orb")
-                    damage = PokeRound(damage * 1.3);
 
                 return Math.Max(damage, 1);
             }
@@ -632,7 +773,8 @@ namespace Foot_Tracker.Services
                 HasStab = hasStab,
                 EffectiveAttack = AttackFor(false),
                 EffectiveDefense = DefenseFor(false),
-                WeatherNote = weatherNote.Trim()
+                WeatherNote = weatherNote.Trim(),
+                TerrainNote = terrainNote.Trim()
             };
         }
 

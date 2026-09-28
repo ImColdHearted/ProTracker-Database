@@ -88,6 +88,7 @@ namespace PokemonSim.Simulation
                     return;
 
                 bySpecies = new Dictionary<string, List<CompetitiveSet>>(StringComparer.OrdinalIgnoreCase);
+                pools.Clear();
 
                 try
                 {
@@ -124,7 +125,14 @@ namespace PokemonSim.Simulation
             }
         }
 
-        public static bool TryGet(string species, out IReadOnlyList<CompetitiveSet> sets)
+        public static bool TryGet(string species, out IReadOnlyList<CompetitiveSet> sets) =>
+            TryGet(species, TierFilter.All, out sets);
+
+        /// <summary>§327. The sets this species has IN THESE TIERS. A
+        /// species with none answers false, which is what keeps an
+        /// Ubers-only legendary out of a restricted pool.</summary>
+        public static bool TryGet(
+            string species, TierFilter tiers, out IReadOnlyList<CompetitiveSet> sets)
         {
             EnsureLoaded();
 
@@ -135,14 +143,63 @@ namespace PokemonSim.Simulation
                     bySpecies.TryGetValue(species.Trim(), out List<CompetitiveSet>? rows) &&
                     rows.Count > 0)
                 {
-                    sets = rows;
-                    return true;
+                    if (tiers.IsUnrestricted)
+                    {
+                        sets = rows;
+                        return true;
+                    }
+
+                    List<CompetitiveSet> allowed = rows.Where(r => tiers.Allows(r.Format)).ToList();
+
+                    if (allowed.Count > 0)
+                    {
+                        sets = allowed;
+                        return true;
+                    }
                 }
             }
 
             sets = Array.Empty<CompetitiveSet>();
             return false;
         }
+
+        /// <summary>
+        /// §327. Every species with at least one set in these tiers,
+        /// sorted, cached per filter.
+        ///
+        /// Sorted because a random team is meant to be reproducible from
+        /// its seed, and a pool in dictionary order would not be. Cached
+        /// because a lab run asks for this once per team and there are
+        /// two thousand five hundred sets to walk.
+        /// </summary>
+        public static IReadOnlyList<string> SpeciesIn(TierFilter tiers)
+        {
+            EnsureLoaded();
+
+            lock (gate)
+            {
+                if (bySpecies == null)
+                    return Array.Empty<string>();
+
+                if (pools.TryGetValue(tiers.Name, out List<string>? cached))
+                    return cached;
+
+                var names = new List<string>();
+
+                foreach (KeyValuePair<string, List<CompetitiveSet>> entry in bySpecies)
+                {
+                    if (tiers.IsUnrestricted || entry.Value.Any(r => tiers.Allows(r.Format)))
+                        names.Add(entry.Key);
+                }
+
+                names.Sort(StringComparer.OrdinalIgnoreCase);
+                pools[tiers.Name] = names;
+
+                return names;
+            }
+        }
+
+        static readonly Dictionary<string, List<string>> pools = new();
 
         /// <summary>
         /// A set turned into something the team builder can build. Each

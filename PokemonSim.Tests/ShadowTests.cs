@@ -83,11 +83,27 @@ namespace PokemonSim.Tests
 
             using var evaluator = new OnnxShadowEvaluator(path);
 
-            Assert.True(evaluator.Status.Available, evaluator.Status.Description);
+            // §311. The shipped pokemon_ai.onnx is ten features wide with a
+            // four-wide output - the §156 encoder, from before the vector
+            // said anything about what a move WAS. It was already blind to
+            // its own moves and structurally unable to propose a switch;
+            // §311 retired its width outright, so it is refused rather than
+            // fed the first ten columns of a vector where column 8 is a stat
+            // stage instead of the weather.
+            //
+            // This test is therefore about the REFUSAL until a §311 model
+            // ships: it must be a clean, named one rather than a crash or a
+            // confident wrong answer.
+            if (!evaluator.Status.Available)
+            {
+                Assert.Contains("\u00a7156", evaluator.Status.Description);
+                Assert.Contains("retrained", evaluator.Status.Description);
+                Assert.Null(evaluator.Predict(
+                    new float[ObservationSchema.FeatureCount],
+                    new float[ObservationSchema.ActionSlots]));
+                return;
+            }
 
-            // §175: the model declares its own width - ten for anything
-            // trained before the move-aware encoder, ObservationSchema's
-            // FeatureCount for anything after it. Either loads.
             int width = evaluator.Status.InputWidth;
             int actions = evaluator.Status.OutputWidth;
 

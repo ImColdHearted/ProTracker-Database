@@ -33,8 +33,14 @@ namespace PokemonSim.Data
             if (loaded)
                 return;
 
-            loaded = true;
-
+            // §316: the flag is set at the END, on success. It used to be set
+            // here, before the read - so a load that threw (a data file that
+            // was never unpacked onto a phone, which is exactly what §316
+            // found) left the dex EMPTY and marked loaded, and every later
+            // EnsureLoaded returned in silence. A caller then saw a species
+            // with no abilities rather than an error, which is the hardest
+            // kind of failure to chase. A throw now leaves it unloaded, so the
+            // next call tries again and the exception reaches somebody.
             MoveDex.EnsureLoaded();
 
             string json = File.ReadAllText(path);
@@ -98,6 +104,8 @@ namespace PokemonSim.Data
 
                         Abilities = data.abilities ?? new List<string>(),
 
+                        WeightKg = data.weight,
+
                         PreferredNatures = (data.preferredNatures ?? new List<string>())
                             .Select(n => Enum.Parse<Nature>(n, ignoreCase: true))
                             .ToList(),
@@ -112,6 +120,8 @@ namespace PokemonSim.Data
                     warnings.Add($"{name}: skipped - {ex.Message}");
                 }
             }
+
+            loaded = true;
         }
 
         public static bool TryGet(string name, out PokemonSpecies species)
@@ -126,6 +136,56 @@ namespace PokemonSim.Data
                 return species;
 
             throw new KeyNotFoundException($"pokedex.json has no species named \"{name}\".");
+        }
+
+        /// <summary>§303. Kilograms for a species, or 0 when the dex has
+        /// none - which every weight-based move reads as "no scaling"
+        /// rather than as a featherweight. Takes the species NAME because
+        /// that is all a PokemonState carries.</summary>
+        /// <summary>§307. The abilities this species can have, in the dex's
+        /// own order (the first is the usual one, the last is the hidden one
+        /// where there is one). Empty for a species the dex does not know.
+        ///
+        /// Every one of the 804 species carries these now: §307 filled in the
+        /// 743 that had none, joined to Showdown's dex by the same species-key
+        /// mapping §303 used for weight.</summary>
+        public static IReadOnlyList<string> AbilitiesOf(string? species)
+        {
+            if (string.IsNullOrWhiteSpace(species))
+                return Array.Empty<string>();
+
+            return TryGet(species, out PokemonSpecies found)
+                ? found.Abilities
+                : Array.Empty<string>();
+        }
+
+        /// <summary>§307. Whether the engine has a rule for this ability, as
+        /// opposed to merely knowing the name. The dex lists 308 across every
+        /// species and AbilityFactory implements 124 of them, so a calculator
+        /// offering one of the other 184 has to say that it changes
+        /// nothing rather than silently changing nothing.</summary>
+        public static bool AbilityIsSimulated(string? ability)
+        {
+            if (string.IsNullOrWhiteSpace(ability))
+                return false;
+
+            string id = Engine.Abilities.AbilityFactory.Normalize(ability);
+
+            foreach (string supported in Engine.Abilities.AbilityFactory.SupportedIds)
+            {
+                if (supported == id)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public static double WeightOf(string? species)
+        {
+            if (string.IsNullOrWhiteSpace(species))
+                return 0;
+
+            return TryGet(species, out PokemonSpecies found) ? found.WeightKg : 0;
         }
 
         public static List<PokemonSpecies> All()

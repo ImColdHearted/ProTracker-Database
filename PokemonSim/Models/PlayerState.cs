@@ -9,7 +9,49 @@ namespace PokemonSim.Models
 
         public required List<PokemonState> Team;
 
-        public required PokemonState ActivePokemon;
+        /// <summary>
+        /// §305. The Pokemon this side has on the field, one per slot. One
+        /// entry in singles; two when a doubles format arrives.
+        ///
+        /// This is the real state. ActivePokemon below is slot zero under
+        /// its old name, kept because seventy-odd places across the engine,
+        /// the strategies, the observer and the tracker's own Simulator
+        /// window read it - and every one of them means slot zero, because
+        /// slot zero is the only slot there has ever been. Converting them
+        /// all at once would be a hundred-and-forty-call-site change with no
+        /// way to tell a typo from a design decision; leaving the name in
+        /// place means the shape changes here and the behaviour does not
+        /// change anywhere.
+        /// </summary>
+        public List<PokemonState> Active { get; set; } = new();
+
+        /// <summary>Slot zero. See Active - this is the old name for it, and
+        /// in singles it is the whole field.</summary>
+        public required PokemonState ActivePokemon
+        {
+            get => Active[0];
+            set
+            {
+                if (Active.Count == 0)
+                    Active.Add(value);
+                else
+                    Active[0] = value;
+            }
+        }
+
+        /// <summary>Which slot a Pokemon of this side is standing in, or -1
+        /// if it is on the bench. The question a forced switch has to answer
+        /// before it can put a replacement anywhere.</summary>
+        public int SlotOf(PokemonState pokemon)
+        {
+            for (int i = 0; i < Active.Count; i++)
+            {
+                if (ReferenceEquals(Active[i], pokemon))
+                    return i;
+            }
+
+            return -1;
+        }
 
         // Legacy per-player hazard fields from an earlier layout. The live
         // hazard state is BattleState's SpikesP1/P2, ToxicSpikesP1/P2 and
@@ -31,20 +73,38 @@ namespace PokemonSim.Models
             return Team.All(p => p.Fainted);
         }
 
+        /// <summary>Every slot that still has something standing in it.</summary>
+        public IEnumerable<PokemonState> Standing()
+        {
+            foreach (PokemonState pokemon in Active)
+            {
+                if (!pokemon.Fainted)
+                    yield return pokemon;
+            }
+        }
+
         public PokemonState? GetNextAvailablePokemon()
         {
-            return Team.FirstOrDefault(p => !p.Fainted && p != ActivePokemon);
+            return Team.FirstOrDefault(p => !p.Fainted && !Active.Contains(p));
         }
 
         public PlayerState Clone()
         {
             var clonedTeam = Team.Select(p => p.Clone()).ToList();
 
+            // §305: every slot, not just the first - and each mapped onto
+            // the clone's OWN team member, the way the single active always
+            // was.
+            var clonedActive = Active
+                .Select(p => clonedTeam[Team.IndexOf(p)])
+                .ToList();
+
             return new PlayerState
             {
                 Name = Name,
                 Team = clonedTeam,
-                ActivePokemon = clonedTeam[Team.IndexOf(ActivePokemon)],
+                Active = clonedActive,
+                ActivePokemon = clonedActive[0],
                 StealthRock = StealthRock,
                 SpikesLayers = SpikesLayers,
                 ToxicSpikesLayers = ToxicSpikesLayers,

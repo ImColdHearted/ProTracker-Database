@@ -4,8 +4,8 @@
         x:Class="Foot_Tracker.Views.SoundSettingsWindow"
         x:DataType="vm:SoundSettingsViewModel"
         Title="Sound Settings"
-        Width="400" Height="440"
-        MinWidth="340" MinHeight="360"
+        Width="420" Height="560"
+        MinWidth="360" MinHeight="480"
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource ThemeBackgroundBrush}"
         BorderBrush="{DynamicResource ThemeBorderBrush}"
@@ -17,16 +17,35 @@
          fill, no outline, no inset. Its child is deliberately not
          re-indented. See App.axaml. -->
     <Border Classes="themedPanel">
-    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto">
+    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto">
 
         <TextBlock Grid.Row="0"
-                   Text="Choose a sound to play when Since Form or Since Shiny resets, or None to turn it off, and how loud it plays. Test plays it at the slider's volume."
+                   Text="Choose a sound to play when Since Form or Since Shiny resets, or None to turn it off, how loud it plays, and where. Test plays it at the slider's volume, through the chosen device."
                    TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,12" />
+
+        <!-- §389: the output device. A Linux hunter's alerts kept leaving his
+             headset; this pins them to one device, and they fall back to the
+             system default - saying so below - when it is not there. Windows
+             and Linux list devices (SoundOutputDevices); the Mac chooses its
+             own, and the second TextBlock says so in the picker's place. -->
+        <StackPanel Grid.Row="1" Spacing="4" Margin="0,0,0,12">
+            <TextBlock Text="Play through" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+            <ComboBox Width="300" HorizontalAlignment="Left"
+                      IsVisible="{Binding CanPickOutputDevice}"
+                      ItemsSource="{Binding OutputDeviceOptions}"
+                      SelectedItem="{Binding SelectedOutputDevice, Mode=TwoWay}" />
+            <TextBlock Text="{Binding OutputDeviceNote}" TextWrapping="Wrap" FontSize="11"
+                       IsVisible="{Binding CanPickOutputDevice}"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <TextBlock Text="{Binding OutputDevicePlatformNote}" TextWrapping="Wrap" FontSize="11" Opacity="0.75"
+                       IsVisible="{Binding !CanPickOutputDevice}"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+        </StackPanel>
 
         <!-- §146: a Test button beside each choice plays it through the same
              path a real alert uses, so "is the sound off or is it broken" is
              one click instead of a wait for the next rare encounter. -->
-        <StackPanel Grid.Row="1" Spacing="4" Margin="0,0,0,12">
+        <StackPanel Grid.Row="2" Spacing="4" Margin="0,0,0,12">
             <TextBlock Text="Since Form Sound" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <ComboBox Width="160" HorizontalAlignment="Left"
@@ -45,7 +64,7 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Spacing="4">
+        <StackPanel Grid.Row="3" Spacing="4">
             <TextBlock Text="Since Shiny Sound" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <ComboBox Width="160" HorizontalAlignment="Left"
@@ -62,17 +81,17 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Spacing="4" Margin="0,12,0,0">
+        <StackPanel Grid.Row="4" Spacing="4" Margin="0,12,0,0">
             <TextBlock Text="{Binding TestNote}" TextWrapping="Wrap" FontSize="11"
                        Foreground="{DynamicResource ThemeTextBrush}" />
             <TextBlock Text="{Binding ClientNote}" TextWrapping="Wrap" FontSize="11" Opacity="0.75"
                        Foreground="{DynamicResource ThemeTextBrush}" />
         </StackPanel>
 
-        <TextBlock Grid.Row="5" Text="{Binding SaveError}" Foreground="{DynamicResource ThemeErrorBrush}" TextWrapping="Wrap"
+        <TextBlock Grid.Row="6" Text="{Binding SaveError}" Foreground="{DynamicResource ThemeErrorBrush}" TextWrapping="Wrap"
                    IsVisible="{Binding HasSaveError}" Margin="0,0,0,8" />
 
-        <StackPanel Grid.Row="6" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="7" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
             <Button Content="Save" Command="{Binding SaveCommand}" />
             <Button Content="Cancel" Click="CancelButton_Click" />
         </StackPanel>

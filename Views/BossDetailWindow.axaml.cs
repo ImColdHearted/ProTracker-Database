@@ -16,6 +16,11 @@ public partial class BossDetailWindow : Window
         var vm = new BossDetailViewModel();
         vm.Load(bossId, difficulty);
         DataContext = vm;
+
+        // §289: the cooldown beside the name is re-read when the window comes
+        // back to the front, the same way the Boss Database refreshes its
+        // cards - no timer, the shown resolution is a minute.
+        Activated += (_, _) => vm.RefreshCooldown();
     }
 
     // The old TeamMember_PointerPressed handler is gone: the redesigned team

@@ -12,6 +12,10 @@ namespace PokemonSim.Models
         // Section 154: the data file always carried abilities for some
         // species; the loader just never read them.
         public List<string>? abilities { get; set; }
+
+        // §303: kilograms, from the dex. Zero means the row has none, which
+        // the weight-based moves read as "leave the power alone".
+        public double weight { get; set; }
     }
 
     public class StatsJson

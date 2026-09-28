@@ -44,6 +44,11 @@ namespace PokemonSim.Engine
                 !state.IgnoreDefenderAbilities && Ability(defender) == "unaware";
             bool ignoreDefenseStages = Ability(attacker) == "unaware";
 
+            // §304: Darkest Lariat and Sacred Sword do the same thing the
+            // ability does, for one move, without needing the ability.
+            if (move.IgnoresDefensiveBoosts)
+                ignoreDefenseStages = true;
+
             MoveCategory category = move.Category;
 
             // Section 158: Tera Blast-class - listed Special, but runs
@@ -53,6 +58,25 @@ namespace PokemonSim.Engine
                 StatResolver.GetStat(state, attacker, "SpAttack"))
             {
                 category = MoveCategory.Physical;
+            }
+
+            // §304: Shell Side Arm's rule is stronger than that one. It
+            // compares the two hits it could actually deal - the user's
+            // attacking stat against the matching defence on the other side
+            // - and takes the bigger. A Pokemon with the higher Sp. Atk
+            // still throws it physically into something whose Defense is
+            // soft enough, which is the whole point of the move.
+            if (move.UsesBetterDamage)
+            {
+                double physical =
+                    StatResolver.GetStat(state, attacker, "Attack", ignoreOffenseStages) /
+                    System.Math.Max(1.0, StatResolver.GetStat(state, defender, "Defense", ignoreDefenseStages));
+
+                double special =
+                    StatResolver.GetStat(state, attacker, "SpAttack", ignoreOffenseStages) /
+                    System.Math.Max(1.0, StatResolver.GetStat(state, defender, "SpDefense", ignoreDefenseStages));
+
+                category = physical > special ? MoveCategory.Physical : MoveCategory.Special;
             }
 
             if (category == MoveCategory.Physical)
@@ -85,9 +109,19 @@ namespace PokemonSim.Engine
                 return new DamageResult(0, 1.0, false);
             }
 
+            // §304: Plasma Fists turns every Normal move on the field
+            // Electric for the turn. Computed once here rather than written
+            // onto the move, because MoveState instances are the Pokemon's
+            // own and a move that came out Electric once must not stay that
+            // way for the rest of the battle.
+            PokemonType moveType = move.Type;
+
+            if (state.IonDelugeTurns > 0 && moveType == PokemonType.Normal)
+                moveType = PokemonType.Electric;
+
             double stab = 1.0;
 
-            if (!move.Typeless && attacker.Types.Contains(move.Type))
+            if (!move.Typeless && attacker.Types.Contains(moveType))
             {
                 stab = 1.5;
             }
@@ -97,7 +131,7 @@ namespace PokemonSim.Engine
             if (!move.Typeless)
             {
                 bool scrappy = Ability(attacker) == "scrappy" &&
-                    (move.Type == PokemonType.Normal || move.Type == PokemonType.Fighting);
+                    (moveType == PokemonType.Normal || moveType == PokemonType.Fighting);
 
                 foreach (var type in defender.Types)
                 {
@@ -106,7 +140,38 @@ namespace PokemonSim.Engine
                     if (scrappy && type == PokemonType.Ghost)
                         continue;
 
-                    effectiveness *= TypeChart.GetMultiplier(move.Type, type);
+                    // §304: Roost - the target gave its Flying type up for
+                    // the turn, so the chart must not consult it.
+                    if (defender.RoostedThisTurn && type == PokemonType.Flying)
+                        continue;
+
+                    // §304: Thousand Arrows reaches a Flying target, and
+                    // reaches it for neutral rather than for its usual
+                    // nothing. Every other type it has still counts.
+                    if (move.IgnoresFlyingImmunity && type == PokemonType.Flying)
+                        continue;
+
+                    effectiveness *= TypeChart.GetMultiplier(moveType, type);
+                }
+
+                // §309: an unpopped Air Balloon is a Ground immunity, and
+                // until now it was not one. Grounding.IsGrounded has known
+                // about the balloon since §159, but nothing consulted it
+                // here - Ground immunity in this engine belongs to
+                // LevitateEffect, which is keyed on the ABILITY - so the
+                // balloon lifted its holder over Spikes and the terrain and
+                // then took an Earthquake in full.
+                //
+                // Written as an effectiveness of zero rather than as a
+                // cancelled move so that the resolver's "It doesn't affect"
+                // line, the crash-damage rule and the calculator's immunity
+                // sentence all fall out of the one answer, the way
+                // Levitate's do.
+                if (moveType == PokemonType.Ground &&
+                    !move.IgnoresFlyingImmunity &&
+                    Items.HeldItems.Normalize(defender.HeldItemId) == "airballoon")
+                {
+                    effectiveness = 0.0;
                 }
             }
 
@@ -115,23 +180,39 @@ namespace PokemonSim.Engine
 
             double modifier = stab * effectiveness;
 
+            // §304: Charge spends itself on the user's next Electric move,
+            // whichever move that turns out to be. Doubling it here rather
+            // than in an effect is the only way a flag set by one move can
+            // reach the damage of another.
+            if (attacker.ChargeActive && moveType == PokemonType.Electric)
+                modifier *= 2.0;
+
+            // §304: Glaive Rush leaves its user standing - until it moves
+            // again everything hits it twice as hard.
+            if (defender.GlaiveRushActive)
+                modifier *= 2.0;
+
+            // §304: and a Minimized target is twice as easy to flatten.
+            if (move.IsFlattening && defender.Minimized)
+                modifier *= 2.0;
+
             var weather = state.Environment.Weather;
 
             if (weather == WeatherType.Rain)
             {
-                if (move.Type == PokemonType.Water)
+                if (moveType == PokemonType.Water)
                     modifier *= 1.5;
 
-                if (move.Type == PokemonType.Fire)
+                if (moveType == PokemonType.Fire)
                     modifier *= 0.5;
             }
 
             if (weather == WeatherType.Sun)
             {
-                if (move.Type == PokemonType.Fire)
+                if (moveType == PokemonType.Fire)
                     modifier *= 1.5;
 
-                if (move.Type == PokemonType.Water)
+                if (moveType == PokemonType.Water)
                     modifier *= 0.5;
             }
 
@@ -141,14 +222,14 @@ namespace PokemonSim.Engine
             {
                 modifier *= TerrainEffects.GetDamageModifier(
                     state.Environment.Terrain,
-                    move.Type
+                    moveType
                 );
             }
 
             // Section 158: Misty Terrain shields grounded targets from
             // Dragon moves.
             if (state.Environment.Terrain == TerrainType.Misty &&
-                move.Type == PokemonType.Dragon &&
+                moveType == PokemonType.Dragon &&
                 Grounding.IsGrounded(state, defender))
             {
                 modifier *= 0.5;

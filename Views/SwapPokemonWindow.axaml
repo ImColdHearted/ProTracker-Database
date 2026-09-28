@@ -4,9 +4,18 @@
         x:Class="Foot_Tracker.Views.SwapPokemonWindow"
         x:DataType="vm:SwapPokemonViewModel"
         Title="{Binding CurrentTargetName, StringFormat='Replace {0} with…'}"
-        Width="600" Height="480"
+        Width="790" Height="560"
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <Window.Styles>
+        <!-- §272: PokemonSelectorWindow's own highlight, so the skin already in
+             force is outlined the same way in both windows. -->
+        <Style Selector="Border.selected">
+            <Setter Property="BorderBrush" Value="#42C8FF" />
+            <Setter Property="BorderThickness" Value="3" />
+        </Style>
+    </Window.Styles>
 
     <!-- §188: the content sits on a themedPanel so it reads off a surface
          rather than off the background image. The panel follows the Stats
@@ -14,16 +23,20 @@
          fill, no outline, no inset. Its child is deliberately not
          re-indented. See App.axaml. -->
     <Border Classes="themedPanel">
-    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="16">
+    <!-- §272: two columns now, the same shape PokemonSelectorWindow uses -
+         search results on the left to REPLACE this target, its forms and event
+         skins on the right to RESTYLE it. The right column is why this window
+         got wider; it is also why §271's separate right-click picker is gone. -->
+    <Grid RowDefinitions="Auto,Auto,*,Auto" ColumnDefinitions="*,268" Margin="16">
 
-        <TextBox Grid.Row="0" PlaceholderText="Search Pokémon…" Text="{Binding SearchText}" Margin="0,0,0,8" />
+        <TextBox Grid.Row="0" Grid.ColumnSpan="2" PlaceholderText="Search Pokémon…" Text="{Binding SearchText}" Margin="0,0,0,8" />
 
-        <TextBlock Grid.Row="1" Text="Click a card to replace this target."
-                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.7" Margin="0,0,0,8" />
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="Click a card to replace this target - or pick one of its event skins on the right to change how it is drawn."
+                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.7" TextWrapping="Wrap" Margin="0,0,0,8" />
 
         <!-- Single click picks and closes immediately - no Select button, no
              multi-select, no forms panel (see SwapPokemonViewModel). -->
-        <ScrollViewer Grid.Row="2">
+        <ScrollViewer Grid.Row="2" Grid.Column="0">
             <ItemsControl ItemsSource="{Binding SearchResults}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -47,7 +60,49 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+        <!-- The skins column: the SAME cards PokemonSelectorWindow lists, from
+             the same builder, pinned to the target in this slot rather than to
+             whatever is searched on the left. Picking one does not close the
+             window - restyling a target is not asking to replace it. -->
+        <Border Grid.Row="2" Grid.Column="1"
+                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1,0,0,0"
+                Margin="8,0,0,0" Padding="8,0,0,0"
+                IsVisible="{Binding HasForms}">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top"
+                           Text="{Binding CurrentTargetName, StringFormat='How {0} is drawn'}"
+                           Foreground="{DynamicResource ThemeTextBrush}" FontWeight="Bold"
+                           FontSize="12" TextWrapping="Wrap" Margin="4,0,4,4" />
+                <TextBlock DockPanel.Dock="Bottom" Text="{Binding SkinMessage}"
+                           Foreground="{DynamicResource ThemeTextBrush}"
+                           FontSize="11" TextWrapping="Wrap" Margin="4,4,4,0" />
+                <ScrollViewer>
+                    <ItemsControl ItemsSource="{Binding AvailableForms}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="vm:PokemonCardItem">
+                                <Border Width="116" Height="140" Margin="4" Classes="themedPanel"
+                                        BorderThickness="2" CornerRadius="4" Cursor="Hand"
+                                        Classes.selected="{Binding IsSelected}"
+                                        PointerPressed="FormCard_PointerPressed">
+                                    <StackPanel>
+                                        <Image Source="{Binding Sprite}" Width="96" Height="96" Stretch="Uniform" />
+                                        <TextBlock Text="{Binding Tag, StringFormat=[{0}]}" FontSize="10" TextAlignment="Center" />
+                                        <TextBlock Text="{Binding Name}" FontSize="11" TextAlignment="Center" TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
             <Button Content="Cancel" Click="CancelButton_Click" />
         </StackPanel>
     </Grid>

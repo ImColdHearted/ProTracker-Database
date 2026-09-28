@@ -982,5 +982,905 @@
     "key": "TERAVOLT",
     "name": "Teravolt",
     "description": "Moves can be used regardless of Abilities."
+  },
+  {
+    "id": 165,
+    "key": "AROMAVEIL",
+    "name": "Aroma Veil",
+    "description": "Protects itself and its allies from attacks that limit their move choices."
+  },
+  {
+    "id": 166,
+    "key": "FLOWERVEIL",
+    "name": "Flower Veil",
+    "description": "Ally Grass-type Pokémon are protected from status conditions and the lowering of their stats."
+  },
+  {
+    "id": 167,
+    "key": "CHEEKPOUCH",
+    "name": "Cheek Pouch",
+    "description": "Restores HP as well when the Pokémon eats a Berry."
+  },
+  {
+    "id": 168,
+    "key": "PROTEAN",
+    "name": "Protean",
+    "description": "Changes the Pokémon’s type to the type of the move it’s about to use."
+  },
+  {
+    "id": 169,
+    "key": "FURCOAT",
+    "name": "Fur Coat",
+    "description": "Halves the damage from physical moves."
+  },
+  {
+    "id": 170,
+    "key": "MAGICIAN",
+    "name": "Magician",
+    "description": "The Pokémon steals the held item of a Pokémon it hits with a move."
+  },
+  {
+    "id": 171,
+    "key": "BULLETPROOF",
+    "name": "Bulletproof",
+    "description": "Protects the Pokémon from some ball and bomb moves."
+  },
+  {
+    "id": 172,
+    "key": "COMPETITIVE",
+    "name": "Competitive",
+    "description": "Boosts the Sp. Atk stat sharply when a stat is lowered."
+  },
+  {
+    "id": 173,
+    "key": "STRONGJAW",
+    "name": "Strong Jaw",
+    "description": "The Pokémon’s strong jaw boosts the power of its biting moves."
+  },
+  {
+    "id": 174,
+    "key": "REFRIGERATE",
+    "name": "Refrigerate",
+    "description": "Normal-type moves become Ice-type moves. The power of those moves is boosted a little."
+  },
+  {
+    "id": 175,
+    "key": "SWEETVEIL",
+    "name": "Sweet Veil",
+    "description": "Prevents itself and ally Pokémon from falling asleep."
+  },
+  {
+    "id": 176,
+    "key": "STANCECHANGE",
+    "name": "Stance Change",
+    "description": "The Pokémon changes its form to Blade Forme when it uses an attack move, and changes to Shield Forme when it uses King’s Shield."
+  },
+  {
+    "id": 177,
+    "key": "GALEWINGS",
+    "name": "Gale Wings",
+    "description": "Gives priority to Flying-type moves when the Pokémon’s HP is full."
+  },
+  {
+    "id": 178,
+    "key": "MEGALAUNCHER",
+    "name": "Mega Launcher",
+    "description": "Powers up aura and pulse moves."
+  },
+  {
+    "id": 179,
+    "key": "GRASSPELT",
+    "name": "Grass Pelt",
+    "description": "Boosts the Pokémon’s Defense stat in Grassy Terrain."
+  },
+  {
+    "id": 180,
+    "key": "SYMBIOSIS",
+    "name": "Symbiosis",
+    "description": "The Pokémon passes its item to an ally that has used up an item."
+  },
+  {
+    "id": 181,
+    "key": "TOUGHCLAWS",
+    "name": "Tough Claws",
+    "description": "Powers up moves that make direct contact."
+  },
+  {
+    "id": 182,
+    "key": "PIXILATE",
+    "name": "Pixilate",
+    "description": "Normal-type moves become Fairy-type moves. The power of those moves is boosted a little."
+  },
+  {
+    "id": 183,
+    "key": "GOOEY",
+    "name": "Gooey",
+    "description": "Contact with the Pokémon lowers the attacker’s Speed stat."
+  },
+  {
+    "id": 184,
+    "key": "AERILATE",
+    "name": "Aerilate",
+    "description": "Normal-type moves become Flying-type moves. The power of those moves is boosted a little."
+  },
+  {
+    "id": 185,
+    "key": "PARENTALBOND",
+    "name": "Parental Bond",
+    "description": "Parent and child each attacks."
+  },
+  {
+    "id": 186,
+    "key": "DARKAURA",
+    "name": "Dark Aura",
+    "description": "Powers up each Pokémon’s Dark-type moves."
+  },
+  {
+    "id": 187,
+    "key": "FAIRYAURA",
+    "name": "Fairy Aura",
+    "description": "Powers up each Pokémon’s Fairy-type moves."
+  },
+  {
+    "id": 188,
+    "key": "AURABREAK",
+    "name": "Aura Break",
+    "description": "The effects of “Aura” Abilities are reversed to lower the power of affected moves."
+  },
+  {
+    "id": 189,
+    "key": "PRIMORDIALSEA",
+    "name": "Primordial Sea",
+    "description": "The Pokémon changes the weather to nullify Fire-type attacks."
+  },
+  {
+    "id": 190,
+    "key": "DESOLATELAND",
+    "name": "Desolate Land",
+    "description": "The Pokémon changes the weather to nullify Water-type attacks."
+  },
+  {
+    "id": 191,
+    "key": "DELTASTREAM",
+    "name": "Delta Stream",
+    "description": "The Pokémon changes the weather to eliminate all of the Flying type’s weaknesses."
+  },
+  {
+    "id": 192,
+    "key": "STAMINA",
+    "name": "Stamina",
+    "description": "Boosts the Defense stat when hit by an attack."
+  },
+  {
+    "id": 193,
+    "key": "WIMPOUT",
+    "name": "Wimp Out",
+    "description": "The Pokémon cowardly switches out when its HP becomes half or less."
+  },
+  {
+    "id": 194,
+    "key": "EMERGENCYEXIT",
+    "name": "Emergency Exit",
+    "description": "The Pokémon, sensing danger, switches out when its HP becomes half or less."
+  },
+  {
+    "id": 195,
+    "key": "WATERCOMPACTION",
+    "name": "Water Compaction",
+    "description": "Boosts the Pokémon’s Defense stat sharply when hit by a Water-type move."
+  },
+  {
+    "id": 196,
+    "key": "MERCILESS",
+    "name": "Merciless",
+    "description": "The Pokémon’s attacks become critical hits if the target is poisoned."
+  },
+  {
+    "id": 197,
+    "key": "SHIELDSDOWN",
+    "name": "Shields Down",
+    "description": "When its HP becomes half or less, the Pokémon’s shell breaks and it becomes aggressive."
+  },
+  {
+    "id": 198,
+    "key": "STAKEOUT",
+    "name": "Stakeout",
+    "description": "Doubles the damage dealt to the target’s replacement if the target switches out."
+  },
+  {
+    "id": 199,
+    "key": "WATERBUBBLE",
+    "name": "Water Bubble",
+    "description": "Lowers the power of Fire-type moves done to the Pokémon and prevents the Pokémon from getting a burn."
+  },
+  {
+    "id": 200,
+    "key": "STEELWORKER",
+    "name": "Steelworker",
+    "description": "Powers up Steel-type moves."
+  },
+  {
+    "id": 201,
+    "key": "BERSERK",
+    "name": "Berserk",
+    "description": "Boosts the Pokémon’s Sp. Atk stat when it takes a hit that causes its HP to become half or less."
+  },
+  {
+    "id": 202,
+    "key": "SLUSHRUSH",
+    "name": "Slush Rush",
+    "description": "Boosts the Pokémon’s Speed stat in a hailstorm."
+  },
+  {
+    "id": 203,
+    "key": "LONGREACH",
+    "name": "Long Reach",
+    "description": "The Pokémon uses its moves without making contact with the target."
+  },
+  {
+    "id": 204,
+    "key": "LIQUIDVOICE",
+    "name": "Liquid Voice",
+    "description": "All sound-based moves become Water-type moves."
+  },
+  {
+    "id": 205,
+    "key": "TRIAGE",
+    "name": "Triage",
+    "description": "Gives priority to a healing move."
+  },
+  {
+    "id": 206,
+    "key": "GALVANIZE",
+    "name": "Galvanize",
+    "description": "Normal-type moves become Electric-type moves. The power of those moves is boosted a little."
+  },
+  {
+    "id": 207,
+    "key": "SURGESURFER",
+    "name": "Surge Surfer",
+    "description": "Doubles the Pokémon’s Speed stat on Electric Terrain."
+  },
+  {
+    "id": 208,
+    "key": "SCHOOLING",
+    "name": "Schooling",
+    "description": "When it has a lot of HP, the Pokémon forms a powerful school. It stops schooling when its HP is low."
+  },
+  {
+    "id": 209,
+    "key": "DISGUISE",
+    "name": "Disguise",
+    "description": "Once per battle, the shroud that covers the Pokémon can protect it from an attack."
+  },
+  {
+    "id": 210,
+    "key": "BATTLEBOND",
+    "name": "Battle Bond",
+    "description": "Defeating an opposing Pokémon strengthens the Pokémon’s bond with its Trainer, and it becomes Ash-Greninja. Water Shuriken gets more powerful."
+  },
+  {
+    "id": 211,
+    "key": "POWERCONSTRUCT",
+    "name": "Power Construct",
+    "description": "Other Cells gather to aid when its HP becomes half or less. Then the Pokémon changes its form to Complete Forme."
+  },
+  {
+    "id": 212,
+    "key": "CORROSION",
+    "name": "Corrosion",
+    "description": "The Pokémon can poison the target even if it’s a Steel or Poison type."
+  },
+  {
+    "id": 213,
+    "key": "COMATOSE",
+    "name": "Comatose",
+    "description": "It’s always drowsing and will never wake up. It can attack without waking up."
+  },
+  {
+    "id": 214,
+    "key": "QUEENLYMAJESTY",
+    "name": "Queenly Majesty",
+    "description": "Its majesty pressures the opposing Pokémon, making it unable to attack using priority moves."
+  },
+  {
+    "id": 215,
+    "key": "INNARDSOUT",
+    "name": "Innards Out",
+    "description": "Damages the attacker landing the finishing hit by the amount equal to its last HP."
+  },
+  {
+    "id": 216,
+    "key": "DANCER",
+    "name": "Dancer",
+    "description": "When another Pokémon uses a dance move, it can use a dance move following it regardless of its Speed."
+  },
+  {
+    "id": 217,
+    "key": "BATTERY",
+    "name": "Battery",
+    "description": "Powers up ally Pokémon’s special moves."
+  },
+  {
+    "id": 218,
+    "key": "FLUFFY",
+    "name": "Fluffy",
+    "description": "Halves the damage taken from moves that make direct contact, but doubles that of Fire-type moves."
+  },
+  {
+    "id": 219,
+    "key": "DAZZLING",
+    "name": "Dazzling",
+    "description": "Surprises the opposing Pokémon, making it unable to attack using priority moves."
+  },
+  {
+    "id": 220,
+    "key": "SOULHEART",
+    "name": "Soul-Heart",
+    "description": "Boosts its Sp. Atk stat every time a Pokémon faints."
+  },
+  {
+    "id": 221,
+    "key": "TANGLINGHAIR",
+    "name": "Tangling Hair",
+    "description": "Contact with the Pokémon lowers the attacker’s Speed stat."
+  },
+  {
+    "id": 222,
+    "key": "RECEIVER",
+    "name": "Receiver",
+    "description": "The Pokémon copies the Ability of a defeated ally."
+  },
+  {
+    "id": 223,
+    "key": "POWEROFALCHEMY",
+    "name": "Power of Alchemy",
+    "description": "The Pokémon copies the Ability of a defeated ally."
+  },
+  {
+    "id": 224,
+    "key": "BEASTBOOST",
+    "name": "Beast Boost",
+    "description": "The Pokémon boosts its most proficient stat each time it knocks out a Pokémon."
+  },
+  {
+    "id": 225,
+    "key": "RKSSYSTEM",
+    "name": "RKS System",
+    "description": "Changes the Pokémon’s type to match the memory disc it holds."
+  },
+  {
+    "id": 226,
+    "key": "ELECTRICSURGE",
+    "name": "Electric Surge",
+    "description": "Turns the ground into Electric Terrain when the Pokémon enters a battle."
+  },
+  {
+    "id": 227,
+    "key": "PSYCHICSURGE",
+    "name": "Psychic Surge",
+    "description": "Turns the ground into Psychic Terrain when the Pokémon enters a battle."
+  },
+  {
+    "id": 228,
+    "key": "MISTYSURGE",
+    "name": "Misty Surge",
+    "description": "Turns the ground into Misty Terrain when the Pokémon enters a battle."
+  },
+  {
+    "id": 229,
+    "key": "GRASSYSURGE",
+    "name": "Grassy Surge",
+    "description": "Turns the ground into Grassy Terrain when the Pokémon enters a battle."
+  },
+  {
+    "id": 230,
+    "key": "FULLMETALBODY",
+    "name": "Full Metal Body",
+    "description": "Prevents other Pokémon’s moves or Abilities from lowering the Pokémon’s stats."
+  },
+  {
+    "id": 231,
+    "key": "SHADOWSHIELD",
+    "name": "Shadow Shield",
+    "description": "Reduces the amount of damage the Pokémon takes while its HP is full."
+  },
+  {
+    "id": 232,
+    "key": "PRISMARMOR",
+    "name": "Prism Armor",
+    "description": "Reduces the power of supereffective attacks taken."
+  },
+  {
+    "id": 233,
+    "key": "NEUROFORCE",
+    "name": "Neuroforce",
+    "description": "Powers up moves that are super effective."
+  },
+  {
+    "id": 234,
+    "key": "INTREPIDSWORD",
+    "name": "Intrepid Sword",
+    "description": "Boosts the Pokémon’s Attack stat when the Pokémon enters a battle."
+  },
+  {
+    "id": 235,
+    "key": "DAUNTLESSSHIELD",
+    "name": "Dauntless Shield",
+    "description": "Boosts the Pokémon’s Defense stat when the Pokémon enters a battle."
+  },
+  {
+    "id": 236,
+    "key": "LIBERO",
+    "name": "Libero",
+    "description": "Changes the Pokémon’s type to the type of the move it’s about to use."
+  },
+  {
+    "id": 237,
+    "key": "BALLFETCH",
+    "name": "Ball Fetch",
+    "description": "If the Pokémon is not holding an item, it will fetch the Poké Ball from the first failed throw of the battle."
+  },
+  {
+    "id": 238,
+    "key": "COTTONDOWN",
+    "name": "Cotton Down",
+    "description": "When the Pokémon is hit by an attack, it scatters cotton fluff around and lowers the Speed stat of all Pokémon except itself."
+  },
+  {
+    "id": 239,
+    "key": "PROPELLERTAIL",
+    "name": "Propeller Tail",
+    "description": "Ignores the effects of opposing Pokémon’s Abilities and moves that draw in moves."
+  },
+  {
+    "id": 240,
+    "key": "MIRRORARMOR",
+    "name": "Mirror Armor",
+    "description": "Bounces back only the stat-lowering effects that the Pokémon receives."
+  },
+  {
+    "id": 241,
+    "key": "GULPMISSILE",
+    "name": "Gulp Missile",
+    "description": "When the Pokémon uses Surf or Dive, it will come back with prey. When it takes damage, it will spit out the prey to attack."
+  },
+  {
+    "id": 242,
+    "key": "STALWART",
+    "name": "Stalwart",
+    "description": "Ignores the effects of opposing Pokémon’s Abilities and moves that draw in moves."
+  },
+  {
+    "id": 243,
+    "key": "STEAMENGINE",
+    "name": "Steam Engine",
+    "description": "Boosts the Pokémon’s Speed stat drastically if hit by a Fire- or Water-type move."
+  },
+  {
+    "id": 244,
+    "key": "PUNKROCK",
+    "name": "Punk Rock",
+    "description": "Boosts the power of sound-based moves. The Pokémon also takes half the damage from these kinds of moves."
+  },
+  {
+    "id": 245,
+    "key": "SANDSPIT",
+    "name": "Sand Spit",
+    "description": "The Pokémon creates a sandstorm when it’s hit by an attack."
+  },
+  {
+    "id": 246,
+    "key": "ICESCALES",
+    "name": "Ice Scales",
+    "description": "The Pokémon is protected by ice scales, which halve the damage taken from special moves."
+  },
+  {
+    "id": 247,
+    "key": "RIPEN",
+    "name": "Ripen",
+    "description": "Ripens Berries and doubles their effect."
+  },
+  {
+    "id": 248,
+    "key": "ICEFACE",
+    "name": "Ice Face",
+    "description": "The Pokémon’s ice head can take a physical attack as a substitute, but the attack also changes the Pokémon’s appearance. The ice will be restored when it hails."
+  },
+  {
+    "id": 249,
+    "key": "POWERSPOT",
+    "name": "Power Spot",
+    "description": "Just being next to the Pokémon powers up moves."
+  },
+  {
+    "id": 250,
+    "key": "MIMICRY",
+    "name": "Mimicry",
+    "description": "Changes the Pokémon’s type depending on the terrain."
+  },
+  {
+    "id": 251,
+    "key": "SCREENCLEANER",
+    "name": "Screen Cleaner",
+    "description": "When the Pokémon enters a battle, the effects of Light Screen, Reflect, and Aurora Veil are nullified for both opposing and ally Pokémon."
+  },
+  {
+    "id": 252,
+    "key": "STEELYSPIRIT",
+    "name": "Steely Spirit",
+    "description": "Powers up ally Pokémon’s Steel-type moves."
+  },
+  {
+    "id": 253,
+    "key": "PERISHBODY",
+    "name": "Perish Body",
+    "description": "When hit by a move that makes direct contact, the Pokémon and the attacker will faint after three turns unless they switch out of battle."
+  },
+  {
+    "id": 254,
+    "key": "WANDERINGSPIRIT",
+    "name": "Wandering Spirit",
+    "description": "The Pokémon exchanges Abilities with a Pokémon that hits it with a move that makes direct contact."
+  },
+  {
+    "id": 255,
+    "key": "GORILLATACTICS",
+    "name": "Gorilla Tactics",
+    "description": "Boosts the Pokémon’s Attack stat but only allows the use of the first selected move."
+  },
+  {
+    "id": 256,
+    "key": "NEUTRALIZINGGAS",
+    "name": "Neutralizing Gas",
+    "description": "If the Pokémon with Neutralizing Gas is in the battle, the effects of all Pokémon’s Abilities will be nullified or will not be triggered."
+  },
+  {
+    "id": 257,
+    "key": "PASTELVEIL",
+    "name": "Pastel Veil",
+    "description": "Protects the Pokémon and its ally Pokémon from being poisoned."
+  },
+  {
+    "id": 258,
+    "key": "HUNGERSWITCH",
+    "name": "Hunger Switch",
+    "description": "The Pokémon changes its form, alternating between its Full Belly Mode and Hangry Mode after the end of each turn."
+  },
+  {
+    "id": 259,
+    "key": "QUICKDRAW",
+    "name": "Quick Draw",
+    "description": "Enables the Pokémon to move first occasionally."
+  },
+  {
+    "id": 260,
+    "key": "UNSEENFIST",
+    "name": "Unseen Fist",
+    "description": "If the Pokémon uses moves that make direct contact, it can attack the target even if the target protects itself."
+  },
+  {
+    "id": 261,
+    "key": "CURIOUSMEDICINE",
+    "name": "Curious Medicine",
+    "description": "When the Pokémon enters a battle, it scatters medicine from its shell, which removes all stat changes from allies."
+  },
+  {
+    "id": 262,
+    "key": "TRANSISTOR",
+    "name": "Transistor",
+    "description": "Powers up Electric-type moves."
+  },
+  {
+    "id": 263,
+    "key": "DRAGONSMAW",
+    "name": "Dragon’s Maw",
+    "description": "Powers up Dragon-type moves."
+  },
+  {
+    "id": 264,
+    "key": "CHILLINGNEIGH",
+    "name": "Chilling Neigh",
+    "description": "When the Pokémon knocks out a target, it utters a chilling neigh, which boosts its Attack stat."
+  },
+  {
+    "id": 265,
+    "key": "GRIMNEIGH",
+    "name": "Grim Neigh",
+    "description": "When the Pokémon knocks out a target, it utters a terrifying neigh, which boosts its Sp. Atk stat."
+  },
+  {
+    "id": 266,
+    "key": "ASONEGLASTRIER",
+    "name": "As One",
+    "description": "This Ability combines the effects of both Calyrex’s Unnerve Ability and Glastrier’s Chilling Neigh Ability."
+  },
+  {
+    "id": 267,
+    "key": "ASONESPECTRIER",
+    "name": "As One",
+    "description": "This Ability combines the effects of both Calyrex’s Unnerve Ability and Spectrier’s Grim Neigh Ability."
+  },
+  {
+    "id": 268,
+    "key": "LINGERINGAROMA",
+    "name": "Lingering Aroma",
+    "description": "Contact with the Pokémon changes the attacker's Ability to Lingering Aroma."
+  },
+  {
+    "id": 269,
+    "key": "SEEDSOWER",
+    "name": "Seed Sower",
+    "description": "Turns the ground into Grassy Terrain when the Pokémon is hit by an attack."
+  },
+  {
+    "id": 270,
+    "key": "THERMALEXCHANGE",
+    "name": "Thermal Exchange",
+    "description": "Boosts the Attack stat when the Pokémon is hit by a Fire-type move. The Pokémon also cannot be burned."
+  },
+  {
+    "id": 271,
+    "key": "ANGERSHELL",
+    "name": "Anger Shell",
+    "description": "When an attack causes its HP to drop to half or less, the Pokémon gets angry. This lowers its Defense and Sp. Def stats but boosts its Attack, Sp. Atk, and Speed stats."
+  },
+  {
+    "id": 272,
+    "key": "PURIFYINGSALT",
+    "name": "Purifying Salt",
+    "description": "The Pokémon's pure salt protects it from status conditions and halves the damage taken from Ghost-type moves."
+  },
+  {
+    "id": 273,
+    "key": "WELLBAKEDBODY",
+    "name": "Well-Baked Body",
+    "description": "The Pokémon takes no damage when hit by Fire-type moves. Instead, its Defense stat is sharply boosted."
+  },
+  {
+    "id": 274,
+    "key": "WINDRIDER",
+    "name": "Wind Rider",
+    "description": "Boosts the Pokémon's Attack stat if Tailwind takes effect or if the Pokémon is hit by a wind move. The Pokémon also takes no damage from wind moves."
+  },
+  {
+    "id": 275,
+    "key": "GUARDDOG",
+    "name": "Guard Dog",
+    "description": "Boosts the Pokémon’s Attack stat if intimidated. Moves and items that would force the Pokémon to switch out also fail to work."
+  },
+  {
+    "id": 276,
+    "key": "ROCKYPAYLOAD",
+    "name": "Rocky Payload",
+    "description": "Powers up Rock-type moves."
+  },
+  {
+    "id": 277,
+    "key": "WINDPOWER",
+    "name": "Wind Power",
+    "description": "The Pokémon becomes charged when it is hit by a wind move, boosting the power of the next Electric-type move the Pokémon uses."
+  },
+  {
+    "id": 278,
+    "key": "ZEROTOHERO",
+    "name": "Zero to Hero",
+    "description": "The Pokémon transforms into its Hero Form when it switches out."
+  },
+  {
+    "id": 279,
+    "key": "COMMANDER",
+    "name": "Commander",
+    "description": "When the Pokémon enters a battle, it goes inside the mouth of an ally Dondozo if one is on the field. The Pokémon then issues commands from there."
+  },
+  {
+    "id": 280,
+    "key": "ELECTROMORPHOSIS",
+    "name": "Electromorphosis",
+    "description": "The Pokémon becomes charged when it takes damage, boosting the power of the next Electric-type move the Pokémon uses."
+  },
+  {
+    "id": 281,
+    "key": "PROTOSYNTHESIS",
+    "name": "Protosynthesis",
+    "description": "Boosts the Pokémon's most proficient stat in harsh sunlight or if the Pokémon is holding Booster Energy."
+  },
+  {
+    "id": 282,
+    "key": "QUARKDRIVE",
+    "name": "Quark Drive",
+    "description": "Boosts the Pokémon's most proficient stat on Electric Terrain or if the Pokémon is holding Booster Energy."
+  },
+  {
+    "id": 283,
+    "key": "GOODASGOLD",
+    "name": "Good as Gold",
+    "description": "A body of pure, solid gold gives the Pokémon full immunity to other Pokémon's status moves."
+  },
+  {
+    "id": 284,
+    "key": "VESSELOFRUIN",
+    "name": "Vessel of Ruin",
+    "description": "The power of the Pokémon's ruinous vessel lowers the Sp. Atk stats of all Pokémon except itself."
+  },
+  {
+    "id": 285,
+    "key": "SWORDOFRUIN",
+    "name": "Sword of Ruin",
+    "description": "The power of the Pokémon's ruinous sword lowers the Defense stats of all Pokémon except itself."
+  },
+  {
+    "id": 286,
+    "key": "TABLETSOFRUIN",
+    "name": "Tablets of Ruin",
+    "description": "The power of the Pokémon's ruinous wooden tablets lowers the Attack stats of all Pokémon except itself."
+  },
+  {
+    "id": 287,
+    "key": "BEADSOFRUIN",
+    "name": "Beads of Ruin",
+    "description": "The power of the Pokémon's ruinous beads lowers the Sp. Def stats of all Pokémon except itself."
+  },
+  {
+    "id": 288,
+    "key": "ORICHALCUMPULSE",
+    "name": "Orichalcum Pulse",
+    "description": "Turns the sunlight harsh when the Pokémon enters a battle. The ancient pulse thrumming through the Pokémon also boosts its Attack stat in harsh sunlight."
+  },
+  {
+    "id": 289,
+    "key": "HADRONENGINE",
+    "name": "Hadron Engine",
+    "description": "Turns the ground into Electric Terrain when the Pokémon enters a battle. The futuristic engine within the Pokémon also boosts its Sp. Atk stat on Electric Terrain."
+  },
+  {
+    "id": 290,
+    "key": "OPPORTUNIST",
+    "name": "Opportunist",
+    "description": "If an opponent's stat is boosted, the Pokémon seizes the opportunity to boost the same stat for itself."
+  },
+  {
+    "id": 291,
+    "key": "CUDCHEW",
+    "name": "Cud Chew",
+    "description": "When the Pokémon eats a Berry, it will regurgitate that Berry at the end of the next turn and eat it one more time."
+  },
+  {
+    "id": 292,
+    "key": "SHARPNESS",
+    "name": "Sharpness",
+    "description": "Powers up slicing moves."
+  },
+  {
+    "id": 293,
+    "key": "SUPREMEOVERLORD",
+    "name": "Supreme Overlord",
+    "description": "When the Pokémon enters a battle, its Attack and Sp. Atk stats are slightly boosted for each of the allies in its party that have already been defeated."
+  },
+  {
+    "id": 294,
+    "key": "COSTAR",
+    "name": "Costar",
+    "description": "When the Pokémon enters a battle, it copies an ally's stat changes."
+  },
+  {
+    "id": 295,
+    "key": "TOXICDEBRIS",
+    "name": "Toxic Debris",
+    "description": "Scatters poison spikes at the feet of the opposing team when the Pokémon takes damage from physical moves."
+  },
+  {
+    "id": 296,
+    "key": "ARMORTAIL",
+    "name": "Armor Tail",
+    "description": "The mysterious tail covering the Pokémon's head makes opponents unable to use priority moves against the Pokémon or its allies."
+  },
+  {
+    "id": 297,
+    "key": "EARTHEATER",
+    "name": "Earth Eater",
+    "description": "If hit by a Ground-type move, the Pokémon has its HP restored instead of taking damage."
+  },
+  {
+    "id": 298,
+    "key": "MYCELIUMMIGHT",
+    "name": "Mycelium Might",
+    "description": "The Pokémon will always act more slowly when using status moves, but these moves will be unimpeded by the Ability of the target."
+  },
+  {
+    "id": 299,
+    "key": "MINDSEYE",
+    "name": "Mind’s Eye",
+    "description": "The Pokémon ignores changes to opponents' evasiveness, its accuracy can't be lowered, and it can hit Ghost types with Normal-type and Fighting-type moves"
+  },
+  {
+    "id": 300,
+    "key": "SUPERSWEETSYRUP",
+    "name": "Supersweet Syrup",
+    "description": "Lowers the evasion of opposing Pokémon by 1 stage when first sent into battle"
+  },
+  {
+    "id": 301,
+    "key": "HOSPITALITY",
+    "name": "Hospitality",
+    "description": "When the Pokémon enters a battle, it showers its ally with hospitality, restoring a small amount of the ally's HP"
+  },
+  {
+    "id": 302,
+    "key": "TOXICCHAIN",
+    "name": "Toxic Chain",
+    "description": "The power of the Pokémon's toxic chain may badly poison any target the Pokémon hits with a move"
+  },
+  {
+    "id": 303,
+    "key": "EMBODYASPECT",
+    "name": "Embody Aspect",
+    "description": "The Pokémon's heart fills with memories, causing the Mask to shine and one of the Pokémon's stats to be boosted."
+  },
+  {
+    "id": 304,
+    "key": "TERASHIFT",
+    "name": "Tera Shift",
+    "description": "When the Pokémon enters a battle, it absorbs the energy around itself and transforms into its Terastal Form."
+  },
+  {
+    "id": 305,
+    "key": "TERASHELL",
+    "name": "Tera Shell",
+    "description": "The Pokémon's shell contains the powers of each type. All damage-dealing moves that hit the Pokémon when its HP is full will not be very effective."
+  },
+  {
+    "id": 306,
+    "key": "TERAFORMZERO",
+    "name": "Teraform Zero",
+    "description": "When Terapagos changes into its Stellar Form, it uses its hidden powers to eliminate all effects of weather and terrain, reducing them to zero."
+  },
+  {
+    "id": 307,
+    "key": "POISONPUPPETEER",
+    "name": "Poison Puppeteer",
+    "description": "Pokémon poisoned by Pecharunt's moves will also become confused."
+  },
+  {
+    "id": 308,
+    "key": "PIERCINGDRILL",
+    "name": "Piercing Drill",
+    "description": "When the Pokémon uses contact moves, it can hit even targets that are protecting themselves, dealing 1/4 of the damage that the move would otherwise deal. Everything aside from the target's protective effects is still triggered."
+  },
+  {
+    "id": 309,
+    "key": "DRAGONIZE",
+    "name": "Dragonize",
+    "description": "The Pokémon's Normal-type moves become Dragon-type moves and their power is boosted by 20%."
+  },
+  {
+    "id": 310,
+    "key": "MEGASOL",
+    "name": "Mega Sol",
+    "description": "Even when the sunlight has not turned harsh, the Pokémon can use its moves as if the weather were harsh sunlight."
+  },
+  {
+    "id": 311,
+    "key": "SPICYSPRAY",
+    "name": "Spicy Spray",
+    "description": "When the Pokémon takes damage from a move, it burns the attacker."
+  },
+  {
+    "id": 312,
+    "key": "EELEVATE",
+    "name": "Eelevate",
+    "description": "The Pokémon floats off the ground, making it immune to Ground-type moves, as well as the Spikes, Toxic Spikes, and Sticky Web statuses. When the Pokémon knocks out a target with an attack, its highest stat is boosted by 1 stage."
+  },
+  {
+    "id": 313,
+    "key": "FIREMANE",
+    "name": "Fire Mane",
+    "description": "Boosts the power of the Pokémon's Fire-type moves by 50%."
+  },
+  {
+    "id": 314,
+    "key": "AURAGUARD",
+    "name": "Aura Guard",
+    "description": "A Pokémon with Aura Guard takes half damage from moves that make contact. Moves affected by Long Reach which make contact will deal regular damage."
   }
 ]

@@ -8,7 +8,7 @@ namespace Foot_Tracker.Services
 {
     /// <summary>
     /// Gates the admin-only actions (originally the boss wiki scraper dev
-    /// tool, then the Events board tools, since §101 also the Admin Client /
+    /// tool, then the Events board tools until §253, since §101 also the Admin Client /
     /// Admin Console - see AdminLoginWindow) behind a single username and
     /// password. This is deliberately NOT a real multi-user auth system -
     /// there's exactly one admin (the developer), this runs entirely locally

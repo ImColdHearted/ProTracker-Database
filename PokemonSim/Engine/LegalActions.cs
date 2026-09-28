@@ -25,9 +25,27 @@ namespace PokemonSim.Engine
 
             if (!active.Fainted)
             {
-                if (active.Charging && active.ChargingMove != null)
+                // §301: a recharge turn holds exactly one action, the same
+                // shape as a charge turn - the move is offered back and
+                // MoveResolver spends the turn on the recharge rather than
+                // on the move. Before the charge test because the two can
+                // never both be owed, and this one is the cheaper read.
+                if (active.MustRecharge && active.RechargeMove != null)
                 {
-                    actions.Add(MoveAction(state, active, active.ChargingMove));
+                    actions.Add(MoveAction(state, active, active.RechargeMove, opposing));
+                }
+                // §304: a lock-in is the third turn that is already spoken
+                // for. Outrage, Thrash, Petal Dance, Uproar and Rollout all
+                // take the next turns and spend them on themselves, so the
+                // menu holds the one move - and holds it even with no PP
+                // left, because the lock is not paying for it again.
+                else if (active.LockedMove != null && active.LockedTurns > 0)
+                {
+                    actions.Add(MoveAction(state, active, active.LockedMove, opposing));
+                }
+                else if (active.Charging && active.ChargingMove != null)
+                {
+                    actions.Add(MoveAction(state, active, active.ChargingMove, opposing));
                 }
                 else
                 {
@@ -60,18 +78,29 @@ namespace PokemonSim.Engine
                         if (!Items.HeldItems.AllowsMove(active, move))
                             continue;
 
-                        actions.Add(MoveAction(state, active, move));
+                        actions.Add(MoveAction(state, active, move, opposing));
                     }
 
                     if (actions.Count == 0)
-                        actions.Add(MoveAction(state, active, Struggle()));
+                        actions.Add(MoveAction(state, active, Struggle(), opposing));
                 }
             }
 
             // Section 158: Ingrain roots the user in place, and a trapping
             // ability across the field (Shadow Tag, Magnet Pull) pins too.
-            bool maySwitch = !active.Charging && active.Trap == null && !active.Rooted &&
-                !OpponentTrapsUs(active, opposing);
+            // §301: a Pokemon that owes a recharge cannot leave the field
+            // either - the turn is already spoken for.
+            // §304: and a Pokemon in the middle of an Outrage cannot leave
+            // the field either, for the same reason as the other two.
+            // §375: a Shed Shell opens the two doors a trap closes - the
+            // trapping move and the trapping ability - and none of the
+            // others: roots, a charge, a recharge and a lock-in are the
+            // holder's own doing.
+            bool escapes = Items.HeldItems.LetsHolderEscape(active);
+
+            bool maySwitch = !active.Charging && !active.MustRecharge &&
+                active.LockedMove == null && !active.Rooted &&
+                (escapes || (active.Trap == null && !OpponentTrapsUs(active, opposing)));
 
             if (active.Fainted)
                 maySwitch = true;
@@ -116,7 +145,17 @@ namespace PokemonSim.Engine
             return false;
         }
 
-        private static BattleAction MoveAction(BattleState state, PokemonState user, MoveState move)
+        /// <summary>§305: the action now carries what it is aimed at.
+        /// In singles there is one answer and the engine used to work it out
+        /// for itself at resolution time; naming it here is the same answer
+        /// from the side that actually chose it, and it is what a doubles
+        /// menu will have to offer one entry per target of.</summary>
+        private static BattleAction MoveAction(
+            BattleState state,
+            PokemonState user,
+            MoveState move,
+            PokemonState? target = null,
+            int targetSlot = 0)
         {
             int priority = move.Priority;
 
@@ -133,6 +172,8 @@ namespace PokemonSim.Engine
                 Type = BattleActionType.Move,
                 User = user,
                 Move = move,
+                Target = target,
+                TargetSlot = targetSlot,
                 Priority = priority,
                 Speed = (int)StatResolver.GetStat(state, user, "Speed")
             };

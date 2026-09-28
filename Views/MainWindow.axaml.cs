@@ -1,9 +1,14 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+// §264: TryGetBitmapAsync lives in ClipboardExtensions, the same place
+// SetTextAsync moved to in the Avalonia 12 clipboard rework - IClipboard
+// itself carries neither (see AdminConsoleWindow.axaml.cs).
+using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
+using Foot_Tracker.Models;
 using Foot_Tracker.Services;
 using Foot_Tracker.Tracking;
 using Foot_Tracker.Tracking.Capture;
@@ -18,6 +23,23 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         Closing += (_, _) => (DataContext as MainWindowViewModel)?.OnClosing();
+
+        // §369. One GET of a small JSON file, once, after the window is up.
+        //
+        // On Opened rather than in a constructor, for §345's reason - a
+        // constructor cannot await - and after the window is showing rather
+        // than before, because nothing about this should delay the tracker
+        // appearing. CheckAsync answers null for every failure, and
+        // OfferUpdate(null) leaves the bar exactly as it was, so a player
+        // with no connection sees nothing at all rather than an error about
+        // something they did not ask for.
+        Opened += async (_, _) =>
+        {
+            UpdateService.AvailableUpdate? found = await UpdateService.CheckAsync();
+
+            if (DataContext is MainWindowViewModel vm)
+                vm.OfferUpdate(found);
+        };
 
         DataContextChanged += (_, _) =>
         {
@@ -130,7 +152,103 @@ public partial class MainWindow : Window
                 bool confirmed = await dialog.ShowDialog<bool?>(vm.ActiveWindow ?? this) == true;
                 return confirmed ? dialogVm.SelectedPokemon : null;
             };
+
+            // §251: World Quest mode's Submit Screenshot button. The same
+            // shape as the import picker above, §187's Linux notes included:
+            // a missing portal is reported, and a picked file the app cannot
+            // address by path is logged by LocalPathOf and returns null,
+            // which the view model treats as a cancel.
+            // §264: the clipboard route behind Ctrl+V. Avalonia 12 hands back
+            // an Avalonia Bitmap; the detectors want SkiaSharp, so it is
+            // re-encoded to PNG bytes here and decoded on the worker thread.
+            // Save(stream) is the single-argument overload on purpose - see
+            // the note on CaptureWindowPngAsync below for why the documented
+            // replacement is not used in this project.
+            vm.Quest.RequestClipboardImage = async () =>
+            {
+                if (Clipboard is null)
+                    return null;
+
+                using Bitmap? image = await Clipboard.TryGetBitmapAsync();
+
+                if (image is null)
+                    return null;
+
+                using var stream = new MemoryStream();
+                image.Save(stream, new PngBitmapEncoderOptions());
+
+                return stream.ToArray();
+            };
+
+            vm.Quest.RequestScreenshotFile = async () =>
+            {
+                if (!StorageProvider.CanOpen)
+                {
+                    Serilog.Log.Error(
+                        "This platform's open dialog is unavailable (StorageProvider.CanOpen is false) - " +
+                        "on Linux this usually means xdg-desktop-portal is not installed or not running");
+
+                    throw new PlatformNotSupportedException(
+                        "this system has no file-open dialog available (on Linux, xdg-desktop-portal is usually the missing piece)");
+                }
+
+                var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+                {
+                    Title = "Submit a World Quest Screenshot",
+                    AllowMultiple = false,
+                    FileTypeFilter = new[]
+                    {
+                        new FilePickerFileType("Screenshots")
+                        {
+                            Patterns = new[] { "*.png", "*.bmp", "*.jpg", "*.jpeg", "*.webp" }
+                        }
+                    }
+                });
+
+                return files.Count > 0 ? LocalPathOf(files[0], "screenshot") : null;
+            };
         };
+    }
+
+    /// <summary>
+    /// §264. Ctrl+V submits whatever image is on the clipboard, so Win+Shift+S
+    /// then Ctrl+V counts a catch without a file ever being saved.
+    ///
+    /// Only in World Quest mode, and only when the focus is not in a text box:
+    /// Ctrl+V inside the IV total box is pasting a number, which is what the
+    /// player meant. A TextBox marks the paste gesture handled and this is a
+    /// bubbling handler, so it would usually not be reached anyway - the focus
+    /// test is the part that does not depend on that staying true.
+    /// </summary>
+    private void Window_KeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.V || !e.KeyModifiers.HasFlag(KeyModifiers.Control))
+            return;
+
+        if (DataContext is not MainWindowViewModel vm || !vm.IsWorldQuestPanel)
+            return;
+
+        if (FocusManager?.GetFocusedElement() is TextBox)
+            return;
+
+        if (vm.Quest.PasteScreenshotCommand.CanExecute(null))
+            vm.Quest.PasteScreenshotCommand.Execute(null);
+
+        e.Handled = true;
+    }
+
+    /// <summary>§251. Enter in the World Quest IV total box is Add IVs, the
+    /// way Enter in the admin login boxes is Login - a player adding a run of
+    /// catches by hand should not have to reach for the mouse between them.</summary>
+    private void WorldQuestIvTotalBox_KeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.Enter || DataContext is not MainWindowViewModel vm)
+            return;
+
+        if (vm.Quest.SubmitPokemonCommand.CanExecute(null))
+            vm.Quest.SubmitPokemonCommand.Execute(null);
+
+        e.Handled = true;
     }
 
     /// <summary>
@@ -184,11 +302,39 @@ public partial class MainWindow : Window
     // Replaces the WinForms menu item that did:
     //   using var form = new AppearanceForm();
     //   if (form.ShowDialog(this) == DialogResult.OK) ThemeManager already reloaded internally
+    /// <summary>§369. The green Update item. It only exists while
+    /// PendingUpdate does, but the null check stays: the item's visibility
+    /// and the view model's state are two things, and a handler that trusts
+    /// the first to imply the second is one race away from a
+    /// NullReferenceException.</summary>
+    private async void UpdateButton_Click(object? sender, RoutedEventArgs e)
+    {
+        if (DataContext is not MainWindowViewModel vm || vm.PendingUpdate is null)
+            return;
+
+        await new UpdateWindow(vm.PendingUpdate).ShowDialog(this);
+    }
+
     private async void AppearanceButton_Click(object? sender, RoutedEventArgs e)
     {
         var window = new AppearanceWindow
         {
             DataContext = new ViewModels.AppearanceViewModel()
+        };
+
+        await window.ShowDialog<bool?>(this);
+    }
+
+    // §345. The community gallery. Same ShowDialog shape as Appearance
+    // above; it applies through AppearanceSettingsRepository and
+    // ThemeManager.Reload exactly as that window's Apply does, so there is
+    // nothing to refresh here afterwards - the theme is already live by the
+    // time this returns.
+    private async void CustomAppearancesButton_Click(object? sender, RoutedEventArgs e)
+    {
+        var window = new CustomAppearancesWindow
+        {
+            DataContext = new ViewModels.CustomAppearancesViewModel()
         };
 
         await window.ShowDialog<bool?>(this);
@@ -299,8 +445,10 @@ public partial class MainWindow : Window
         // §101: in Admin Client mode the session history deliberately records
         // nothing (it is normal-client data), so opening a window that could
         // only show the NORMAL client's rows under admin counters would
-        // mislead - say why instead.
-        if (Services.AdminModeService.IsActive)
+        // mislead - say why instead. §249: this decision is downstream of
+        // SessionEncounterHistoryService's own gate and must agree with it,
+        // so it reads the same predicate.
+        if (Services.IsolatedSession.IsActive)
         {
             if (DataContext is MainWindowViewModel vm)
                 vm.StatusMessage = "Per-Pokémon session history does not record in Admin Client mode.";
@@ -325,6 +473,19 @@ public partial class MainWindow : Window
 
     // Replaces CompactModeButton_Click: hides the main window and shows the
     // compact overlay, which reuses this window's MainWindowViewModel directly.
+    // §280: the Search item on the menu bar.
+    private void SearchButton_Click(object? sender, RoutedEventArgs e)
+    {
+        WindowRegistry.ShowOrActivate(this, () => new SearchWindow());
+    }
+
+    // §278: File - Tracker Settings. Non-modal Show(this), the same shape as
+    // the other small settings windows.
+    private void TrackerSettingsButton_Click(object? sender, RoutedEventArgs e)
+    {
+        WindowRegistry.ShowOrActivate(this, () => new TrackerSettingsWindow());
+    }
+
     private void CompactModeButton_Click(object? sender, RoutedEventArgs e)
     {
         var compact = new CompactWindow(this) { DataContext = DataContext };
@@ -339,14 +500,6 @@ public partial class MainWindow : Window
         Hide();
     }
 
-    // Replaces bossesToolStripMenuItem1_Click -> new BossCooldownForm().Show(this).
-    // Every non-modal opener below goes through WindowRegistry (§103): one
-    // window per type, repeat clicks activate the existing one.
-    private void BossCooldownsButton_Click(object? sender, RoutedEventArgs e)
-    {
-        WindowRegistry.ShowOrActivate(this, () => new BossCooldownWindow());
-    }
-
     // Replaces the boss menu tree (OpenBoss/BossDifficultyMenuItem_Click) - see
     // BossListViewModel for why this is one browsable list instead of ~150 menu items.
     private void BossDatabaseButton_Click(object? sender, RoutedEventArgs e)
@@ -357,14 +510,9 @@ public partial class MainWindow : Window
     // File > Admin Login - the same gate the boss wiki scraper used to sit
     // behind (removed, see MIGRATION_GUIDE.md §28). On a correct login,
     // marks this session authenticated (AdminModeService, §101) and opens
-    // AdminActionsWindow: the Events board tools, the Admin Client toggle,
-    // and the Admin Console.
-    // Both of those stay behind this real login step on purpose; just
-    // looking at the board (EventsButton_Click, below) never needs one - see
-    // MIGRATION_GUIDE.md §29 for why this ended up split into two
-    // windows/menu entries instead of the one §28 shipped, and the latest
-    // section for why a correct login now opens a small chooser instead of
-    // CreateEventWindow directly.
+    // AdminActionsWindow: the Admin Client toggle, the Admin Console and the
+    // scrapers. §253: the Events board tools that were the window's first
+    // two buttons are gone with the board.
     private async void AdminLoginButton_Click(object? sender, RoutedEventArgs e)
     {
         // §103: authentication is a per-process SESSION, not a per-click
@@ -385,15 +533,8 @@ public partial class MainWindow : Window
         WindowRegistry.ShowOrActivate(this, () => new AdminActionsWindow());
     }
 
-    // New top-level menu, next to Appearance (see MIGRATION_GUIDE.md §29) -
-    // opens the guild Events board directly, with no login required just to
-    // look. The whole point is guild members can check it on their own
-    // terms, with nothing pushed at them; posting a new entry is the
-    // separate, gated action above.
-    private void EventsButton_Click(object? sender, RoutedEventArgs e)
-    {
-        WindowRegistry.ShowOrActivate(this, () => new EventsWindow());
-    }
+    // §253: EventsButton_Click, which opened the guild Events board from the
+    // top-level Events menu (§29), is gone with the board.
 
     // File > Announcements - reads PRO's real update history straight from
     // the Update Logs forum topic, not Discord and not the general
@@ -404,6 +545,10 @@ public partial class MainWindow : Window
     // needs a result back the way SoundSettingsButton_Click's dialog does.
     private void AnnouncementsButton_Click(object? sender, RoutedEventArgs e)
     {
+        // §267: opening the window reads the newest post, so the yellow on
+        // the menu item goes now rather than waiting out its day.
+        (DataContext as MainWindowViewModel)?.MarkNewsRead();
+
         WindowRegistry.ShowOrActivate(this, () => new AnnouncementsWindow());
     }
 
@@ -432,23 +577,28 @@ public partial class MainWindow : Window
         WindowRegistry.ShowOrActivate(this, () => new DamageCalculatorWindow());
     }
 
-    private void WorldQuestCalculatorButton_Click(object? sender, RoutedEventArgs e)
-    {
-        WindowRegistry.ShowOrActivate(this, () => new WorldQuestCalculatorWindow());
-    }
-
     private void IvCalculatorButton_Click(object? sender, RoutedEventArgs e)
     {
         WindowRegistry.ShowOrActivate(this, () => new IvCalculatorWindow());
     }
 
-    /// <summary>§233. The live World Quest tracker - not the calculator above.
-    /// Through WindowRegistry like every other window here, which matters more
-    /// than usual for this one: it polls the PRO client while it is open, and
-    /// two copies would poll twice for nothing.</summary>
-    private void WorldQuestButton_Click(object? sender, RoutedEventArgs e)
+    // §233's WorldQuestButton_Click opened the World Quest window here.
+    // §251 folded that window into the stats panel (MainWindowViewModel.
+    // Quest, World Quest mode); the window and its opener are gone.
+
+    /// <summary>§254. The stats panel's Remove Catch button in World Quest
+    /// mode: the list of every catch counted for the quest, with a Remove on
+    /// each row. The window's DataContext is the SAME quest view model the
+    /// panel shows, so the list is live - a catch Auto Detect counts while
+    /// the window is open appears in it - and a removal changes the figures
+    /// on the panel the moment it happens. Single-instance through the
+    /// registry; it closes itself when the mode is left.</summary>
+    private void WorldQuestCatchesButton_Click(object? sender, RoutedEventArgs e)
     {
-        WindowRegistry.ShowOrActivate(this, () => new WorldQuestWindow());
+        if (DataContext is not MainWindowViewModel vm)
+            return;
+
+        WindowRegistry.ShowOrActivate(this, () => new WorldQuestCatchesWindow { DataContext = vm.Quest });
     }
 
     /// <summary>§236. The Auction Tracker. Through WindowRegistry like every
@@ -518,6 +668,16 @@ public partial class MainWindow : Window
         WindowRegistry.ShowOrActivate(this, () => new PreviouslyBattledUsersWindow());
     }
 
+    // §397. Game Data -> Spawns -> one region. The item's Tag names the
+    // region; one window per region, so a second click brings the open page
+    // forward. An unknown tag opens nothing rather than a blank page.
+    /// <summary>§407. Game Data → Maps: the world picture and the search
+    /// panel, one window.</summary>
+    private void MapsMenuItem_Click(object? sender, RoutedEventArgs e)
+    {
+        WindowRegistry.ShowOrActivate(this, () => new MapsWindow());
+    }
+
     // Opens the Hunting Log window (Hunting Logs menu, between Counterparts and
     // Guides) - the full per-encounter log behind the Session Encounters table
     // below (species, level, map, timestamp), distinct from that table's
@@ -580,21 +740,33 @@ public partial class MainWindow : Window
 
             await SaveScreenshotAsync(screenshotPath);
 
+            // §391: where this window is, for the check - read here, on the
+            // UI thread, before the check runs off it.
+            string pinned = Topmost ? "yes" : "no";
+            string trackerWindow =
+                $"{Bounds.Width:F0}x{Bounds.Height:F0} logical at ({Position.X},{Position.Y}), " +
+                $"scaling {RenderScaling:0.##}, pinned on top: {pinned}, state {WindowState}";
+
             // §134: the one-shot pipeline check runs BEFORE the log is
             // copied, so the copy carries its block, and is kept as its own
             // small file as well - it is the first thing to read. Off the UI
             // thread: it captures a frame and runs OCR once.
-            string trackingCheck = await Task.Run(TrackerDiagnostics.RunTrackingCheck);
+            string trackingCheck = await Task.Run(() => TrackerDiagnostics.RunTrackingCheck(trackerWindow));
             File.WriteAllText(checkPath, trackingCheck);
-
-            bool logCopied = TryCopyLatestLog(logPath);
 
             // Same capture method the whole OCR pipeline uses (EncounterTracker,
             // BossCooldownTracker) - a raw screenshot of the actual PRO client, not
             // the tracker app itself. Lets a report show exactly what the OCR was
             // reading, including on a user's own GUI scale/resolution, which the
-            // app's own screenshot alone can't show at all.
+            // app's own screenshot alone can't show at all. §391: before the
+            // log copy, so the log can be cut to what the bundle has room for.
             bool proClientCaptured = TrySaveProClientScreenshot(proClientPath);
+
+            long logBudget = LogCopyBudget(screenshotPath, checkPath, proClientPath);
+            bool logCopied = TryCopyLatestLog(logPath, logBudget, out bool logTrimmed);
+
+            if (logTrimmed)
+                Serilog.Log.Information("Report: today's log is over the upload cap - the copy carries its first and last parts ({Budget} bytes).", logBudget);
 
             var savedFiles = new List<string> { Path.GetFileName(screenshotPath), Path.GetFileName(checkPath) };
             if (proClientCaptured)
@@ -684,9 +856,9 @@ public partial class MainWindow : Window
             if (note.Length > 500)
                 note = note[..500];
 
-            bool sent = await BugReportUploadService.TrySendAsync(uploaded, note);
+            IReadOnlyList<string>? sent = await BugReportUploadService.TrySendAsync(uploaded, note);
 
-            if (!sent)
+            if (sent is null)
             {
                 vm.StatusMessage = savedMessage;
                 return;
@@ -697,12 +869,26 @@ public partial class MainWindow : Window
             // took them, they are litter in a folder nobody asked to have
             // filled. Anything that will not delete is left where it is -
             // the report has already arrived, and a stuck file is not worth
-            // interrupting anyone over.
-            int removed = BugReportUploadService.DeleteSentFiles(uploaded);
+            // interrupting anyone over. §391: only what went - a file the
+            // upload left out for its size stays, and is named.
+            int removed = BugReportUploadService.DeleteSentFiles(sent);
+            int leftOut = uploaded.Count - sent.Count;
+            string leftOutNote = string.Empty;
 
-            vm.StatusMessage = removed == uploaded.Count
-                ? $"{savedFiles.Count} report {fileWord} sent to the developer{missingNote}. The copies in Downloads have been cleaned up."
-                : $"{savedFiles.Count} report {fileWord} sent to the developer{missingNote}. Some copies are still in your Downloads folder.";
+            if (leftOut > 0)
+            {
+                string names = string.Join(", ", uploaded.Where(path => !sent.Contains(path)).Select(path => Path.GetFileName(path)));
+
+                leftOutNote = leftOut == 1
+                    ? $" 1 file was too large to send and stays in Downloads: {names}."
+                    : $" {leftOut} files were too large to send and stay in Downloads: {names}.";
+            }
+
+            string sentWord = sent.Count == 1 ? "file" : "files";
+
+            vm.StatusMessage = removed == sent.Count
+                ? $"{sent.Count} report {sentWord} sent to the developer{missingNote}. The sent copies in Downloads have been cleaned up.{leftOutNote}"
+                : $"{sent.Count} report {sentWord} sent to the developer{missingNote}. Some copies are still in your Downloads folder.{leftOutNote}";
         }
         catch (Exception ex)
         {
@@ -752,18 +938,67 @@ public partial class MainWindow : Window
 
         await using var stream = File.Create(path);
 
-        // PngBitmapEncoderOptions.Save was tried here (the officially documented
-        // non-obsolete replacement for the single-argument Save() overload), but it
-        // stopped resolving after the SkiaSharp version bump forced a different
-        // Avalonia.Skia resolution, breaking the Linux build entirely. A harmless
-        // "obsolete" warning is a far better outcome than a build error, so this
-        // reverts to the simple, always-available single-argument overload. See
-        // MIGRATION_GUIDE.md.
-        bitmap.Save(stream);
+        // §291: the BitmapEncoderOptions overload, which is what the obsolete
+        // warning on the single-argument Save asks for. §16 tried this once
+        // and it failed to resolve - but that was Avalonia 11 under a
+        // SkiaSharp bump that dragged Avalonia.Skia to a mismatched version;
+        // the project is on a single Avalonia 12.1.2 now and the type is
+        // where the warning says it is.
+        bitmap.Save(stream, new PngBitmapEncoderOptions());
     }
 
-    private static bool TryCopyLatestLog(string destinationPath)
+    // §391. How much of a long log the copy keeps: the first part, which
+    // has the start-up lines (platform, capture environment, the sound and
+    // appearance that were loaded), and then as much of the end as fits
+    // the budget - the end is where whatever prompted the report is.
+    private const int LogCopyHeadBytes = 64 * 1024;
+
+    // Room for the marker line and the multipart framing, and the least a
+    // copy is worth cutting down to - below that the whole log goes as it
+    // is, and the upload names it as left out rather than send a stub.
+    private const long LogCopyMarginBytes = 64 * 1024;
+    private const long LogCopyLeastBytes = 256 * 1024;
+
+    /// <summary>§391. What the bundle has room for once the screenshots and
+    /// the check are in it: the per-file cap, or what is left of the total
+    /// cap, whichever is smaller, less the margin. A 1920x1080 client
+    /// screenshot is easily three megabytes on its own, and the log used to
+    /// be the last file added - so it was the one the total cap dropped.</summary>
+    private static long LogCopyBudget(params string[] otherFiles)
     {
+        long others = 0;
+
+        foreach (string path in otherFiles)
+        {
+            try
+            {
+                if (File.Exists(path))
+                    others += new FileInfo(path).Length;
+            }
+            catch
+            {
+                // A file that cannot be sized is counted as nothing; the
+                // upload's own checks still hold.
+            }
+        }
+
+        long budget = Math.Min(BugReportUploadService.MaxFileBytes, BugReportUploadService.MaxTotalBytes - others) - LogCopyMarginBytes;
+
+        return Math.Max(budget, LogCopyLeastBytes);
+    }
+
+    /// <summary>Copies today's log for the report. §391: a log over the
+    /// upload cap used to be copied whole, silently left out of the upload
+    /// for its size, and then deleted from Downloads with the files that
+    /// went - so a report arrived with no log and said nothing about it.
+    /// The copy now fits <paramref name="limitBytes"/>: whole when it can
+    /// be, otherwise its first <see cref="LogCopyHeadBytes"/> and its last
+    /// part, cut at line ends, with a line between saying how much is
+    /// missing. <paramref name="trimmed"/> says which it was.</summary>
+    private static bool TryCopyLatestLog(string destinationPath, long limitBytes, out bool trimmed)
+    {
+        trimmed = false;
+
         // Serilog (see Program.cs) writes rolling daily logs here.
         string logsFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -781,8 +1016,80 @@ public partial class MainWindow : Window
         if (latestLog is null)
             return false;
 
-        File.Copy(latestLog.FullName, destinationPath, overwrite: true);
+        if (latestLog.Length <= limitBytes)
+        {
+            File.Copy(latestLog.FullName, destinationPath, overwrite: true);
+            return true;
+        }
+
+        // Read-shared: Serilog still has the file open for writing.
+        using var source = new FileStream(latestLog.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        using FileStream target = File.Create(destinationPath);
+
+        var head = new byte[LogCopyHeadBytes];
+        int headRead = ReadFully(source, head);
+        int headEnd = LastLineEnd(head, headRead);
+        target.Write(head, 0, headEnd);
+
+        long tailLength = Math.Min(source.Length - headEnd, limitBytes - headEnd);
+        var tail = new byte[tailLength];
+        source.Position = source.Length - tailLength;
+        int tailRead = ReadFully(source, tail);
+
+        // Start the tail on a whole line.
+        int tailStart = 0;
+
+        while (tailStart < tailRead && tail[tailStart] != (byte)'\n')
+            tailStart++;
+
+        if (tailStart < tailRead)
+            tailStart++;
+
+        long omitted = source.Length - headEnd - (tailRead - tailStart);
+
+        string marker =
+            Environment.NewLine + Environment.NewLine +
+            $"[... {omitted:N0} bytes of this log are left out here so the report fits the upload limit: " +
+            $"the file is {latestLog.Length:N0} bytes, and this copy carries its first {headEnd:N0} and last {tailRead - tailStart:N0} ...]" +
+            Environment.NewLine + Environment.NewLine;
+
+        byte[] markerBytes = System.Text.Encoding.UTF8.GetBytes(marker);
+        target.Write(markerBytes, 0, markerBytes.Length);
+        target.Write(tail, tailStart, tailRead - tailStart);
+
+        trimmed = true;
         return true;
+    }
+
+    private static int ReadFully(Stream stream, byte[] buffer)
+    {
+        int total = 0;
+
+        while (total < buffer.Length)
+        {
+            int read = stream.Read(buffer, total, buffer.Length - total);
+
+            if (read <= 0)
+                break;
+
+            total += read;
+        }
+
+        return total;
+    }
+
+    /// <summary>The index just past the last newline within the first
+    /// <paramref name="length"/> bytes, or <paramref name="length"/> when
+    /// there is none - so a cut lands after a whole line.</summary>
+    private static int LastLineEnd(byte[] buffer, int length)
+    {
+        for (int i = length - 1; i >= 0; i--)
+        {
+            if (buffer[i] == (byte)'\n')
+                return i + 1;
+        }
+
+        return length;
     }
 
     private static string GetDownloadsFolder()
@@ -806,5 +1113,106 @@ public partial class MainWindow : Window
         // Last resort if the user profile folder couldn't be resolved - still
         // somewhere findable, just not the conventional Downloads location.
         return Path.Combine(AppContext.BaseDirectory, "Reports");
+    }
+
+    // §386. How big the themed panels are right now, for the Appearance
+    // editor to say beside its Picture… buttons - so a user making a
+    // picture knows what size covers the thing it is for. Read off the
+    // live controls (Bounds is layout, not a guess), in device pixels via
+    // RenderScaling, since a picture is pixels. A hidden stats panel
+    // measures 0x0, which the editor reports as not showing.
+    public AppearancePanelSizes MeasureAppearancePanels()
+    {
+        Size Of(string name) => this.FindControl<Control>(name)?.Bounds.Size ?? default;
+
+        double targetBox = DataContext is MainWindowViewModel vm ? vm.TargetSpriteSize : 0;
+
+        return new AppearancePanelSizes(
+            ClientSize,
+            Of("StatsPanelHost"),
+            Of("EncounterTableHost"),
+            Of("CurrentEncounterBox"),
+            targetBox,
+            Of("SpriteRowHost"),
+            RenderScaling);
+    }
+
+
+    // §392. The encounter table's column grips - see the header's comments
+    // in MainWindow.axaml for why these are not GridSplitters. Each grip
+    // resizes the column named by its Tag and nothing else: the pointer is
+    // captured on press, and every move sets the column to its width at the
+    // press plus the pointer's travel since, measured in the header grid's
+    // own coordinates (so it is exact however many moves arrive between
+    // layouts), within the column's MinWidth and MaxWidth and the room the
+    // trailing filler had at the press - a column can grow only into empty
+    // space, never past the table's edge. Making room means narrowing
+    // another column first, which is its own grip.
+    private int gripColumn = -1;
+    private double gripStartX;
+    private double gripStartWidth;
+    private double gripRoom;
+
+    private Grid? EncounterHeader => this.FindControl<Grid>("EncounterHeaderGrid");
+
+    private void ColumnGrip_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (sender is not Control grip || grip.Tag is not string tag || !int.TryParse(tag, out int column))
+            return;
+
+        if (!e.GetCurrentPoint(grip).Properties.IsLeftButtonPressed)
+            return;
+
+        Grid? header = EncounterHeader;
+
+        if (header is null || column < 0 || column >= header.ColumnDefinitions.Count - 1)
+            return;
+
+        ColumnDefinition definition = header.ColumnDefinitions[column];
+        ColumnDefinition filler = header.ColumnDefinitions[header.ColumnDefinitions.Count - 1];
+
+        gripColumn = column;
+        gripStartX = e.GetPosition(header).X;
+        gripStartWidth = definition.ActualWidth;
+        gripRoom = Math.Max(0, filler.ActualWidth);
+
+        e.Pointer.Capture(grip);
+        e.Handled = true;
+    }
+
+    private void ColumnGrip_PointerMoved(object? sender, PointerEventArgs e)
+    {
+        if (gripColumn < 0 || sender is not Control grip || !ReferenceEquals(e.Pointer.Captured, grip))
+            return;
+
+        Grid? header = EncounterHeader;
+
+        if (header is null || gripColumn >= header.ColumnDefinitions.Count)
+            return;
+
+        ColumnDefinition definition = header.ColumnDefinitions[gripColumn];
+
+        double travel = e.GetPosition(header).X - gripStartX;
+        double ceiling = Math.Min(definition.MaxWidth, gripStartWidth + gripRoom);
+        double floor = Math.Min(definition.MinWidth, ceiling);
+        double width = Math.Clamp(gripStartWidth + travel, floor, ceiling);
+
+        definition.Width = new GridLength(width, GridUnitType.Pixel);
+        e.Handled = true;
+    }
+
+    private void ColumnGrip_PointerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        if (gripColumn < 0)
+            return;
+
+        gripColumn = -1;
+        e.Pointer.Capture(null);
+        e.Handled = true;
+    }
+
+    private void ColumnGrip_PointerCaptureLost(object? sender, PointerCaptureLostEventArgs e)
+    {
+        gripColumn = -1;
     }
 }

@@ -1,5 +1,5 @@
 {
-  "_comment": "PRO map-name dictionary for LocationDictionaryService - see MIGRATION_GUIDE.md. Regenerate by re-reading the two sources below and re-running the merge documented there. The app only ever reads this local file. Entries with source 'ingame' were confirmed from the corner HUD in real gameplay screenshots (see MIGRATION_GUIDE.md §101); entries citing 'wiki' alone may come from a location's own wiki page rather than the category listing - the Iron Island interior floors were read from the Iron Island page's spawn sections on 2026-08-29 (MIGRATION_GUIDE.md §102).",
+  "_comment": "PRO map-name dictionary for LocationDictionaryService - see MIGRATION_GUIDE.md. Regenerate by re-reading the two sources below and re-running the merge documented there. The app only ever reads this local file. Entries with source 'ingame' were confirmed from the corner HUD in real gameplay screenshots (see MIGRATION_GUIDE.md §101); entries citing 'wiki' alone may come from a location's own wiki page rather than the category listing - the Iron Island interior floors were read from the Iron Island page's spawn sections on 2026-08-29 (MIGRATION_GUIDE.md §102). Entries with source 'announcement' (§426) are maps the game's own Pokedex Area list or a spawn announcement names that neither source above had yet - the Mt. Pyre floors, the Hoenn Safari Zone areas, Mirage Island Summit and the rest of the September 2026 Hoenn spawns; the corner HUD prints them exactly so, and without them every encounter there was filed as Unknown Location.",
   "retrieved": "2026-08-28",
   "sources": [
     "https://wiki.pokemonrevolution.net/index.php?title=Category:Locations (and its regional subcategories, via the MediaWiki API)",
@@ -625,6 +625,13 @@
       "source": "wiki"
     },
     {
+      "name": "Diamond Empire Foyer",
+      "region": "Kanto",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
       "name": "Digletts Cave",
       "region": "Kanto",
       "kind": "standard",
@@ -636,6 +643,13 @@
     },
     {
       "name": "Digletts Cave Entrance 1",
+      "region": "Kanto",
+      "kind": "standard",
+      "aliases": [],
+      "source": "ingame"
+    },
+    {
+      "name": "Digletts Cave Entrance 2",
       "region": "Kanto",
       "kind": "standard",
       "aliases": [],
@@ -777,6 +791,13 @@
       "kind": "standard",
       "aliases": [],
       "source": "pokemap+wiki"
+    },
+    {
+      "name": "Eterna Forest Cave",
+      "region": "Sinnoh",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
     },
     {
       "name": "Eumi Island",
@@ -1125,6 +1146,13 @@
       "source": "pokemap"
     },
     {
+      "name": "Galeras Island West",
+      "region": "Eindoak",
+      "kind": "custom",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
       "name": "Ghoul Swamp",
       "region": "Phantasm Land",
       "kind": "custom",
@@ -1176,6 +1204,13 @@
       "source": "wiki"
     },
     {
+      "name": "Granite Cave B2F",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
       "name": "Green Path",
       "region": "Sevii Islands",
       "kind": "standard",
@@ -1225,6 +1260,48 @@
       "kind": "standard",
       "aliases": [],
       "source": "wiki"
+    },
+    {
+      "name": "Hoenn Safari Zone Area 1",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
+      "name": "Hoenn Safari Zone Area 2",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
+      "name": "Hoenn Safari Zone Area 3",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
+      "name": "Hoenn Safari Zone Area 4",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
+      "name": "Hoenn Safari Zone Area 5",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
+      "name": "Hoenn Safari Zone Area 6",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
     },
     {
       "name": "Howling Woods",
@@ -1594,6 +1671,20 @@
       "source": "pokemap+wiki"
     },
     {
+      "name": "Low Tide Entrance Room",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
+      "name": "Low Tide Ice Room",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
       "name": "Magma Hideout",
       "region": "Hoenn",
       "kind": "standard",
@@ -1689,6 +1780,13 @@
       "kind": "standard",
       "aliases": [],
       "source": "pokemap+wiki"
+    },
+    {
+      "name": "Mirage Island Summit",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "ingame"
     },
     {
       "name": "Mistpeak Valley",
@@ -1817,6 +1915,41 @@
       "kind": "standard",
       "aliases": [],
       "source": "pokemap+wiki"
+    },
+    {
+      "name": "Mt. Pyre 1F",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
+      "name": "Mt. Pyre 2F",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
+      "name": "Mt. Pyre 3F",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
+      "name": "Mt. Pyre Exterior",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
+      "name": "Mt. Pyre Summit",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
     },
     {
       "name": "Mt. Silver",
@@ -2499,15 +2632,23 @@
       "name": "Route 119A",
       "region": "Hoenn",
       "kind": "standard",
-      "aliases": [],
-      "source": "pokemap+wiki"
+      "aliases": [
+        "Route 1194",
+        "Route 119 A",
+        "Route 119 4"
+      ],
+      "source": "pokemap+wiki+ingame"
     },
     {
       "name": "Route 119B",
       "region": "Hoenn",
       "kind": "standard",
-      "aliases": [],
-      "source": "pokemap+wiki"
+      "aliases": [
+        "Route 1198",
+        "Route 119 B",
+        "Route 119 8"
+      ],
+      "source": "pokemap+wiki+ingame"
     },
     {
       "name": "Route 12",
@@ -3465,6 +3606,13 @@
       "source": "wiki"
     },
     {
+      "name": "Sinnoh Victory Road B1F Deep Entrance",
+      "region": "Sinnoh",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
       "name": "Six Island",
       "region": "Sevii Islands",
       "kind": "standard",
@@ -3869,6 +4017,13 @@
       "source": "pokemap+wiki"
     },
     {
+      "name": "Valley Of Steel Eastern Peak",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
+    },
+    {
       "name": "Valley Windworks",
       "region": "Sinnoh",
       "kind": "standard",
@@ -3929,6 +4084,13 @@
       "kind": "standard",
       "aliases": [],
       "source": "pokemap+wiki"
+    },
+    {
+      "name": "Victory Road Hoenn 1F",
+      "region": "Hoenn",
+      "kind": "standard",
+      "aliases": [],
+      "source": "announcement"
     },
     {
       "name": "Victory Road Johto",

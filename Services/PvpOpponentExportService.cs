@@ -45,7 +45,12 @@ namespace Foot_Tracker.Services
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine("Name,TimesBattled,BattledAtUtc");
+            // §276: the result joins the columns. The battle log does NOT -
+            // a CSV cell holding a whole match's narration would make the file
+            // unreadable in the spreadsheet this format exists for, and the
+            // JSON export carries the lines already because it serialises the
+            // whole entry.
+            sb.AppendLine("Name,Result,TimesBattled,BattledAtUtc");
 
             foreach (PvpOpponentEntry entry in
                      opponents.OrderByDescending(x => x.BattledAtUtc))
@@ -53,6 +58,7 @@ namespace Foot_Tracker.Services
                 AddCsvRow(
                     sb,
                     entry.Name,
+                    entry.HasOutcome ? entry.Outcome : string.Empty,
                     entry.TimesBattled.ToString(CultureInfo.InvariantCulture),
                     entry.BattledAtUtc.ToString("o", CultureInfo.InvariantCulture));
             }
@@ -68,10 +74,16 @@ namespace Foot_Tracker.Services
         private static void AddCsvRow(
             StringBuilder sb,
             string name,
+            string result,
             string timesBattled,
             string battledAtUtc)
         {
             sb.Append(EscapeCsv(name));
+            sb.Append(',');
+            // §276: escaped like the name, not appended raw. It is a fixed
+            // word today, and a column that is only safe because of what
+            // happens to be written into it is the next section's bug.
+            sb.Append(EscapeCsv(result));
             sb.Append(',');
             sb.Append(timesBattled);
             sb.Append(',');

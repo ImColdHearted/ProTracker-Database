@@ -16,8 +16,12 @@
     <StackPanel Margin="20" Spacing="16">
         <TextBlock Name="MessageText" TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
-            <Button Content="Yes" Click="YesButton_Click" />
-            <Button Content="No" Click="NoButton_Click" />
+            <!-- §275: the same window answers a plain notice. The two
+                 buttons are named so NotifyAsync can relabel Yes to OK and
+                 hide No - one themed dialog shell rather than a second
+                 window that would have to be kept in step with this one. -->
+            <Button Name="YesButton" Content="Yes" Click="YesButton_Click" />
+            <Button Name="NoButton" Content="No" Click="NoButton_Click" />
         </StackPanel>
     </StackPanel>
     </Border>

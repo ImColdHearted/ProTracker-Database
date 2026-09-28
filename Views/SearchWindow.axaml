@@ -1,0 +1,80 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.SearchWindow"
+        x:DataType="vm:SearchViewModel"
+        Title="Search"
+        Width="580" Height="560"
+        MinWidth="440" MinHeight="320"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <Border Classes="themedPanel">
+    <Grid Margin="16" RowDefinitions="Auto,Auto,*,Auto">
+
+        <TextBox Grid.Row="0" Name="QueryBox"
+                 Text="{Binding SearchText}"
+                 PlaceholderText="Pokémon, map, player, or boss…" />
+
+        <TextBlock Grid.Row="1" Text="{Binding StatusMessage}" TextWrapping="Wrap"
+                   FontSize="12" Opacity="0.8" Margin="0,8,0,8"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding Results}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SearchResultItem">
+                        <!-- The whole row opens the hit, the same shape the
+                             Previously Battled list uses (§276). -->
+                        <Border Cursor="Hand" Background="Transparent" Padding="4,5"
+                                CornerRadius="3" Margin="0,0,0,2"
+                                PointerPressed="Result_PointerPressed">
+                            <Grid ColumnDefinitions="36,*,Auto,Auto">
+                                <Image Grid.Column="0" Source="{Binding Sprite}" Width="32" Height="32"
+                                       Stretch="Uniform" RenderOptions.BitmapInterpolationMode="None" />
+                                <StackPanel Grid.Column="1" Spacing="1" Margin="8,0">
+                                    <TextBlock Text="{Binding Title}" FontWeight="Bold"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBlock Text="{Binding Detail}" FontSize="11" Opacity="0.75"
+                                               TextWrapping="Wrap"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                </StackPanel>
+                                <!-- §403: a Pokémon row offers both of its
+                                     answers - where it spawns (the region
+                                     picture) and what you have met. The row
+                                     itself still opens the encounters; a
+                                     Button takes its own press, so the row
+                                     handler does not also fire. -->
+                                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center"
+                                            Margin="0,0,8,0" IsVisible="{Binding IsPokemon}">
+                                    <Button Content="Locations" FontSize="11" Padding="6,2" Click="LocationsButton_Click"
+                                            ToolTip.Tip="Where it spawns, on the region picture" />
+                                    <Button Content="Encounters" FontSize="11" Padding="6,2" Click="EncountersButton_Click"
+                                            ToolTip.Tip="Your encounters with it" />
+                                </StackPanel>
+                                <!-- Which record this came from. A search that
+                                     mixes three kinds has to say which is
+                                     which, or two rows with the same name are
+                                     indistinguishable. -->
+                                <Border Grid.Column="3" VerticalAlignment="Center"
+                                        Background="{DynamicResource ThemeTableHeaderBrush}"
+                                        BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                        BorderThickness="1" CornerRadius="3" Padding="6,2">
+                                    <TextBlock Text="{Binding KindLabel}" FontSize="10"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="Close" Click="CloseButton_Click" />
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>

@@ -57,9 +57,23 @@
              itself (ThemeButtonBrush) is new. Defaults to a plain dark gray
              approximating FluentTheme's own default button fill - see
              AppearanceSettings.ButtonColorArgb. -->
+        <!-- §349: the Buttons section owns all four now, not just the fill.
+             Foreground is new here - button text used to inherit the window's
+             colour, which was the single global. With Statistics holding that
+             global, an unstyled button would have followed the stats panel,
+             which is not what "Buttons" means to anyone reading the
+             Appearance window. FontFamily/FontSize likewise: a local value
+             beats the inherited Window style, which is exactly the mechanism
+             the comment at the top of this file describes. -->
         <Style Selector="Button, ToggleButton.themedButton">
             <Setter Property="Background" Value="{DynamicResource ThemeButtonBrush}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeButtonBorderBrush}" />
+            <!-- §384: the Buttons section's width and corners, everywhere. -->
+            <Setter Property="BorderThickness" Value="{DynamicResource ThemeButtonBorderThickness}" />
+            <Setter Property="CornerRadius" Value="{DynamicResource ThemeButtonCornerRadius}" />
+            <Setter Property="Foreground" Value="{DynamicResource ThemeButtonTextBrush}" />
+            <Setter Property="FontFamily" Value="{DynamicResource ThemeButtonFontFamily}" />
+            <Setter Property="FontSize" Value="{DynamicResource ThemeButtonFontSize}" />
         </Style>
 
         <!-- §188: the panel every window OTHER than the main one puts its
@@ -89,6 +103,8 @@
             <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
             <Setter Property="BorderThickness" Value="{DynamicResource ThemePanelBorderThickness}" />
             <Setter Property="Margin" Value="{DynamicResource ThemePanelMargin}" />
+            <!-- §384: the Statistics corners follow the Statistics colours here. -->
+            <Setter Property="CornerRadius" Value="{DynamicResource ThemeStatsCornerRadius}" />
         </Style>
 
         <!-- §208: text inside a themed panel takes the user's Font Color.
@@ -210,6 +226,53 @@
             <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
         </Style>
 
+        <!-- §393: the menu bar's top-level items - File, Game Info and the
+             rest - in the theme's menu colours. Only the items directly in
+             a Menu: the dropdowns keep Fluent's palette for the variant
+             ThemeManager picks (§141), which is what keeps them readable.
+             Fluent paints the hovered, pressed and open states through the
+             template's own parts (PART_LayoutRoot for the highlight,
+             PART_HeaderPresenter for the text), so those are restated here
+             the way the Button states are above; a Style outranks the
+             control theme's own setters. The three live classes (§252,
+             §267, §369) keep their colours: they are excluded from the text
+             rules, and their own setters come later, in the window. -->
+        <Style Selector="Menu > MenuItem:not(.questLive):not(.newsLive):not(.updateAvailable)">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeMenuTextBrush}" />
+        </Style>
+
+        <Style Selector="Menu > MenuItem:not(.questLive):not(.newsLive):not(.updateAvailable):pointerover /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeMenuTextBrush}" />
+        </Style>
+
+        <Style Selector="Menu > MenuItem:not(.questLive):not(.newsLive):not(.updateAvailable):selected /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeMenuTextBrush}" />
+        </Style>
+
+        <Style Selector="Menu > MenuItem:not(.questLive):not(.newsLive):not(.updateAvailable):pressed /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeMenuTextBrush}" />
+        </Style>
+
+        <Style Selector="Menu > MenuItem:not(.questLive):not(.newsLive):not(.updateAvailable):open /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeMenuTextBrush}" />
+        </Style>
+
+        <Style Selector="Menu > MenuItem:pointerover /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="{DynamicResource ThemeMenuHighlightBrush}" />
+        </Style>
+
+        <Style Selector="Menu > MenuItem:selected /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="{DynamicResource ThemeMenuHighlightBrush}" />
+        </Style>
+
+        <Style Selector="Menu > MenuItem:pressed /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="{DynamicResource ThemeMenuHighlightBrush}" />
+        </Style>
+
+        <Style Selector="Menu > MenuItem:open /template/ Border#PART_LayoutRoot">
+            <Setter Property="Background" Value="{DynamicResource ThemeMenuHighlightBrush}" />
+        </Style>
+
     </Application.Styles>
 
     <!--
@@ -235,10 +298,61 @@
         <SolidColorBrush x:Key="ThemeErrorBrush" Color="#E05252" />
         <SolidColorBrush x:Key="ThemeWarningBrush" Color="#E0A030" />
 
+        <!-- §252: the World Quest menu item's colour while a quest is running,
+             for the same reason as the rest - blue is the dark-menu value,
+             which is what an untouched install has. ThemeManager overwrites
+             it from the background behind the menu (§141). -->
+        <SolidColorBrush x:Key="ThemeWorldQuestLiveBrush" Color="DodgerBlue" />
+        <SolidColorBrush x:Key="ThemeNewsLiveBrush" Color="Gold" />
+
+        <!-- §393: the menu bar's colours before Apply - the dark-menu
+             automatic values, which is what an untouched install has. -->
+        <SolidColorBrush x:Key="ThemeMenuTextBrush" Color="White" />
+        <SolidColorBrush x:Key="ThemeMenuHighlightBrush" Color="#26FFFFFF" />
+
         <!-- §208: the default background (#0F185A) mixed 12% toward the
              default text colour (White), which is what ThemeManager computes
              for an untouched install. -->
         <SolidColorBrush x:Key="ThemeTableHeaderBrush" Color="#2C346E" />
+
+        <!-- §380: the headings' weight, for the same reason - a window built
+             before Apply has run would otherwise draw them at the default
+             weight, which is Normal, and flicker bold a moment later. -->
+        <FontWeight x:Key="ThemeHeadingFontWeight">Bold</FontWeight>
+
+        <!-- §384: the widths and corners, for the same reason - a Border
+             whose BorderThickness resolves to nothing draws no border at
+             all until Apply runs. The values are the pre-§384 look. -->
+        <Thickness x:Key="ThemeSpriteBoxBorderThickness">1</Thickness>
+        <CornerRadius x:Key="ThemeSpriteBoxCornerRadius">0</CornerRadius>
+        <Thickness x:Key="ThemeEncountersBorderThickness">1</Thickness>
+        <Thickness x:Key="ThemeEncountersHeaderLineThickness">0,0,0,1</Thickness>
+        <CornerRadius x:Key="ThemeEncountersCornerRadius">0</CornerRadius>
+        <Thickness x:Key="ThemeStatsBorderThickness">1</Thickness>
+        <CornerRadius x:Key="ThemeStatsCornerRadius">0</CornerRadius>
+        <Thickness x:Key="ThemeButtonBorderThickness">1</Thickness>
+        <CornerRadius x:Key="ThemeButtonCornerRadius">3</CornerRadius>
+        <Thickness x:Key="ThemeStatsPanelPadding">10</Thickness>
+        <Thickness x:Key="ThemeTableFrameMargin">0</Thickness>
+        <Thickness x:Key="ThemeSpriteBoxFrameImageMargin">0</Thickness>
+        <x:Double x:Key="ThemeStatsFrameInset">24</x:Double>
+        <x:Double x:Key="ThemeTableFrameInset">24</x:Double>
+        <x:Double x:Key="ThemeSpriteBoxFrameInset">24</x:Double>
+
+        <!-- §387: the sprite row panel, absent until a theme sets it. -->
+        <SolidColorBrush x:Key="ThemeSpriteRowBackgroundBrush" Color="Transparent" />
+        <SolidColorBrush x:Key="ThemeSpriteRowBorderBrush" Color="Transparent" />
+        <Thickness x:Key="ThemeSpriteRowBorderThickness">0</Thickness>
+        <CornerRadius x:Key="ThemeSpriteRowCornerRadius">0</CornerRadius>
+        <Thickness x:Key="ThemeSpriteRowPadding">0</Thickness>
+        <x:Double x:Key="ThemeSpriteRowFrameInset">24</x:Double>
+
+        <!-- §393: the frames' reach past their panels - none until a theme
+             sets one, which is the §384 look. -->
+        <Thickness x:Key="ThemeStatsFrameOverhang">0</Thickness>
+        <Thickness x:Key="ThemeTableFrameOverhang">0</Thickness>
+        <Thickness x:Key="ThemeSpriteBoxFrameOverhang">0</Thickness>
+        <Thickness x:Key="ThemeSpriteRowFrameOverhang">0</Thickness>
     </Application.Resources>
 
 </Application>

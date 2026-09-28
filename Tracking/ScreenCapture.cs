@@ -3,12 +3,21 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
+using Foot_Tracker.Tracking.Capture;
 
 namespace Foot_Tracker.Tracking
 {
     // Windows-only PRO client window capture via PrintWindow (works even when the
     // window is occluded, unlike CopyFromScreen). Used internally by
     // Tracking/Capture/WindowsWindowCaptureService.cs.
+    //
+    // §257: three routes, tried in order. PrintWindow first, as always. If
+    // Windows refuses it or it paints black - which is what happens when the
+    // PRO client runs as administrator and this tracker does not - Windows
+    // Graphics Capture (Tracking/Capture/GraphicsCapture.cs) reads the window
+    // through the compositor, elevated or not, occluded or not, and keeps
+    // that window from then on. Only if that too is unavailable does the
+    // window's screen rectangle get copied, which needs it visible.
     //
     // The pure image-math helpers that used to live here (CropImage,
     // GetBattleTitleRegion, DrawDebugRegion) moved to ImageOps.cs /
@@ -52,6 +61,18 @@ namespace Foot_Tracker.Tracking
         // §163: recovery events are worth one log line each time the
         // situation CHANGES, never five lines a second while a hunt polls.
         private static string lastRecoverySignature = string.Empty;
+
+        // §257: the window Windows Graphics Capture has taken over, or Zero.
+        // Set the first time PrintWindow fails or paints black for a window
+        // and the compositor route succeeds; from then on that window goes
+        // to the compositor FIRST, and PrintWindow is tried again for it only
+        // if the compositor route fails.
+        private static IntPtr graphicsCaptureHandle = IntPtr.Zero;
+
+        // §257: the elevation sentence is two token queries; once per window
+        // is plenty for a log line that is deduplicated anyway.
+        private static IntPtr elevationNoteHandle = IntPtr.Zero;
+        private static string elevationNote = string.Empty;
 
         private static void LogRecoveryIfChanged(string signature)
         {
@@ -290,6 +311,33 @@ namespace Foot_Tracker.Tracking
                 return null;
             }
 
+            // §257: a window the compositor route has taken over skips
+            // PrintWindow, which was refused for it. Minimized is checked
+            // first here because the compositor delivers no frames for a
+            // minimized window and the last one would be handed back stale.
+            if (handle == graphicsCaptureHandle)
+            {
+                if (IsIconic(handle))
+                {
+                    LastFailureReason =
+                        "The client window is minimized - restore it on screen and try again.";
+                    return null;
+                }
+
+                Bitmap? composited = TryGraphicsCapture(handle, "was refused when last tried", out _);
+
+                if (composited is not null)
+                {
+                    LastFailureReason = null;
+                    return composited;
+                }
+
+                // The compositor route failed for this window after having
+                // worked: forget the take-over so PrintWindow gets another
+                // chance below, and the fallback chain runs in full.
+                graphicsCaptureHandle = IntPtr.Zero;
+            }
+
             Bitmap bitmap = new Bitmap(
                 bounds.Width,
                 bounds.Height
@@ -335,6 +383,20 @@ namespace Foot_Tracker.Tracking
                     return null;
                 }
 
+                // §257: before copying the screen, ask the compositor. It
+                // reads an elevated window, which is the usual reason
+                // PrintWindow was refused, and an occluded one, which the
+                // screen copy cannot. Once it works for a window it keeps it.
+                Bitmap? composited = TryGraphicsCapture(handle, why, out string? compositorFailure);
+
+                if (composited is not null)
+                {
+                    bitmap.Dispose();
+                    graphicsCaptureHandle = handle;
+                    LastFailureReason = null;
+                    return composited;
+                }
+
                 try
                 {
                     using (Graphics graphics = Graphics.FromImage(bitmap))
@@ -348,8 +410,13 @@ namespace Foot_Tracker.Tracking
                             CopyPixelOperation.SourceCopy);
                     }
 
+                    // §257: one signature for the whole outcome. A separate
+                    // line for the compositor's refusal would alternate with
+                    // this one and defeat the deduplication at capture rate.
                     LogRecoveryIfChanged(
-                        $"Windows/PrintWindow; PrintWindow {why} - capturing the window's screen rectangle instead (the window must stay visible on screen).");
+                        $"Windows/PrintWindow; PrintWindow {why}; Windows Graphics Capture unavailable ({compositorFailure}) - " +
+                        "capturing the window's screen rectangle instead (the window must stay visible on screen). " +
+                        ElevationNote(handle));
                 }
                 catch (Exception ex)
                 {
@@ -368,6 +435,50 @@ namespace Foot_Tracker.Tracking
 
             LastFailureReason = null;
             return bitmap;
+        }
+
+        /// <summary>§257. One frame through Windows Graphics Capture, as the
+        /// Bitmap the rest of this class deals in, or null with
+        /// <paramref name="failure"/> saying why, for the caller to fold into
+        /// its own log line. Success is logged here, once, with which of the
+        /// two processes is elevated - the fact a report bundle needs and
+        /// cannot otherwise show.</summary>
+        private static Bitmap? TryGraphicsCapture(IntPtr handle, string why, out string? failure)
+        {
+            byte[]? png = GraphicsCapture.CapturePng(handle, out failure);
+
+            if (png is null)
+                return null;
+
+            LogRecoveryIfChanged(
+                $"Windows/GraphicsCapture; PrintWindow {why} - Windows Graphics Capture is in use for this window. " +
+                ElevationNote(handle) + GraphicsCapture.BorderNote);
+
+            try
+            {
+                using var stream = new MemoryStream(png);
+                using var decoded = new Bitmap(stream);
+
+                // GDI+ keeps a decoded image tied to the stream it came from;
+                // the copy stands on its own after the stream is disposed.
+                return new Bitmap(decoded);
+            }
+            catch (Exception ex)
+            {
+                failure = "the compositor's frame could not be decoded: " + ex.Message;
+                return null;
+            }
+        }
+
+        private static string ElevationNote(IntPtr handle)
+        {
+            if (handle != elevationNoteHandle)
+            {
+                elevationNoteHandle = handle;
+                elevationNote = ProcessElevation.Describe(handle);
+            }
+
+            return elevationNote;
         }
 
         /// <summary>§163. A sparse sample says whether a frame is pure

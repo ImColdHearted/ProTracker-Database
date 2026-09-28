@@ -50,7 +50,10 @@ namespace Foot_Tracker.Services
             ["Nearo"] = "Nearo",
             ["Neura"] = "Neura",
             ["Sanger Memo"] = "Sanger Memo",
-            ["Skylane Horizon"] = "Skylane Horizon"
+            ["Skylane Horizon"] = "Skylane Horizon",
+            // §380. Google Fonts, SIL Open Font License (Assets/Fonts/OFL.txt) -
+            // one weight, so pair it with Bold headings off.
+            ["Griffy"] = "Griffy"
 
             // ["Montserrat"] = "Montserrat",
             // ["Press Start 2P"] = "Press Start 2P",
@@ -75,6 +78,203 @@ namespace Foot_Tracker.Services
         public const string ButtonBrushKey = "ThemeButtonBrush";
         public const string StatsBackgroundBrushKey = "ThemeStatsBackgroundBrush";
         public const string EncountersBackgroundBrushKey = "ThemeEncountersBackgroundBrush";
+
+        // §349. Three regions of the main window that now carry their own
+        // text colour, border colour and font.
+        //
+        // There is deliberately no ThemeStatsTextBrush pair here. Statistics
+        // IS the global: TextBrushKey, BorderBrushKey, FontFamilyKey and
+        // FontSizeKey are filled from the Stats fields below, so the stats
+        // panel and every other window in the app move together - the same
+        // rule §188 set for the panel background, extended to the rest.
+        //
+        // That is also why this change touched no other window. ThemeTextBrush
+        // is bound 548 times across 54 files; giving Statistics its own key
+        // would have meant deciding, for each of those, which section it
+        // belonged to - and 39 of those files have no sprites, no encounter
+        // table and no toolbar to belong to.
+        public const string SpriteBoxTextBrushKey = "ThemeSpriteBoxTextBrush";
+        public const string SpriteBoxBorderBrushKey = "ThemeSpriteBoxBorderBrush";
+        public const string SpriteBoxFontFamilyKey = "ThemeSpriteBoxFontFamily";
+        public const string SpriteBoxFontSizeKey = "ThemeSpriteBoxFontSize";
+
+        public const string EncountersTextBrushKey = "ThemeEncountersTextBrush";
+        public const string EncountersBorderBrushKey = "ThemeEncountersBorderBrush";
+        public const string EncountersFontFamilyKey = "ThemeEncountersFontFamily";
+        public const string EncountersFontSizeKey = "ThemeEncountersFontSize";
+
+        public const string ButtonTextBrushKey = "ThemeButtonTextBrush";
+        public const string ButtonBorderBrushKey = "ThemeButtonBorderBrush";
+        public const string ButtonFontFamilyKey = "ThemeButtonFontFamily";
+        public const string ButtonFontSizeKey = "ThemeButtonFontSize";
+
+        // §380. FontWeight.Bold or FontWeight.Normal, from BoldHeadings. The
+        // headings on MainWindow and CompactWindow take their weight from
+        // this instead of writing Bold, so a theme can turn it off.
+        public const string HeadingFontWeightKey = "ThemeHeadingFontWeight";
+
+        // §384. Border width and corner radius per section, as the Thickness
+        // and CornerRadius the windows bind to; the frame pictures (an
+        // IImage, or null for none) and their corner size; and the layout
+        // values a frame changes - the padding that keeps the stats panel's
+        // text out from under it, the margin that keeps the table inside
+        // it, the margin that shrinks a sprite away from it.
+        public const string SpriteBoxBorderThicknessKey = "ThemeSpriteBoxBorderThickness";
+        public const string SpriteBoxCornerRadiusKey = "ThemeSpriteBoxCornerRadius";
+        public const string EncountersBorderThicknessKey = "ThemeEncountersBorderThickness";
+        public const string EncountersHeaderLineThicknessKey = "ThemeEncountersHeaderLineThickness";
+        public const string EncountersCornerRadiusKey = "ThemeEncountersCornerRadius";
+        public const string StatsBorderThicknessKey = "ThemeStatsBorderThickness";
+        public const string StatsCornerRadiusKey = "ThemeStatsCornerRadius";
+        public const string ButtonBorderThicknessKey = "ThemeButtonBorderThickness";
+        public const string ButtonCornerRadiusKey = "ThemeButtonCornerRadius";
+
+        public const string StatsFrameImageKey = "ThemeStatsFrameImage";
+        public const string StatsFrameInsetKey = "ThemeStatsFrameInset";
+        public const string StatsPanelPaddingKey = "ThemeStatsPanelPadding";
+        public const string TableFrameImageKey = "ThemeTableFrameImage";
+        public const string TableFrameInsetKey = "ThemeTableFrameInset";
+        public const string TableFrameMarginKey = "ThemeTableFrameMargin";
+        public const string SpriteBoxFrameImageKey = "ThemeSpriteBoxFrameImage";
+        public const string SpriteBoxFrameInsetKey = "ThemeSpriteBoxFrameInset";
+        public const string SpriteBoxFrameImageMarginKey = "ThemeSpriteBoxFrameImageMargin";
+
+        // §393. How far each frame reaches past its panel, as the negative
+        // Margin the NineSliceFrame wears (a frame is a sibling of its
+        // panel in a Panel, so a negative margin grows it outward over the
+        // window around, and nothing in that tree clips).
+        public const string StatsFrameOverhangKey = "ThemeStatsFrameOverhang";
+        public const string TableFrameOverhangKey = "ThemeTableFrameOverhang";
+        public const string SpriteBoxFrameOverhangKey = "ThemeSpriteBoxFrameOverhang";
+        public const string SpriteRowFrameOverhangKey = "ThemeSpriteRowFrameOverhang";
+
+        // §393. The menu bar's text and its highlight - see
+        // EffectiveMenuTextColor for what "automatic" resolves to.
+        public const string MenuTextBrushKey = "ThemeMenuTextBrush";
+        public const string MenuHighlightBrushKey = "ThemeMenuHighlightBrush";
+
+        // §394. The menu bar's font - Statistics' unless its own is named.
+        public const string MenuFontFamilyKey = "ThemeMenuFontFamily";
+        public const string MenuFontSizeKey = "ThemeMenuFontSize";
+
+        // §387. The sprite row panel. Thickness and padding are derived:
+        // nothing showing means no line and no inset, so a window that
+        // never set it lays out as it did before the panel existed.
+        public const string SpriteRowBackgroundBrushKey = "ThemeSpriteRowBackgroundBrush";
+        public const string SpriteRowBorderBrushKey = "ThemeSpriteRowBorderBrush";
+        public const string SpriteRowBorderThicknessKey = "ThemeSpriteRowBorderThickness";
+        public const string SpriteRowCornerRadiusKey = "ThemeSpriteRowCornerRadius";
+        public const string SpriteRowPaddingKey = "ThemeSpriteRowPadding";
+        public const string SpriteRowFrameImageKey = "ThemeSpriteRowFrameImage";
+        public const string SpriteRowFrameInsetKey = "ThemeSpriteRowFrameInset";
+
+        /// <summary>§387. The inset the sprite row keeps from its panel's edge
+        /// once there is a panel to see.</summary>
+        internal const double SpriteRowPadding = 8;
+
+        /// <summary>§384. The bounds the editor's sliders and ImportTheme
+        /// hold the numbers to. A border wider than 8 is a bar, corners
+        /// beyond 40 make a pill of a panel, and a frame corner past 160px is
+        /// bigger than the sprite boxes it goes round.</summary>
+        public const double MaxBorderWidth = 8;
+        public const double MaxCornerRadius = 40;
+        public const double MinFrameInset = 4;
+        public const double MaxFrameInset = 160;
+
+        /// <summary>§393. A frame may reach this far past its panel. Beyond
+        /// 64 it is over the next panel's content, not round its own.</summary>
+        public const double MaxFrameOverhang = 64;
+
+        /// <summary>§384. The stats panel's padding with no frame - what
+        /// MainWindow set directly before the value became a resource.</summary>
+        internal const double StatsPanelPadding = 10;
+
+        public static double ClampBorderWidth(double value) =>
+            double.IsFinite(value) ? Math.Clamp(Math.Round(value * 2) / 2, 0, MaxBorderWidth) : 1;
+
+        public static double ClampCornerRadius(double value) =>
+            double.IsFinite(value) ? Math.Clamp(Math.Round(value), 0, MaxCornerRadius) : 0;
+
+        public static double ClampFrameInset(double value) =>
+            double.IsFinite(value) ? Math.Clamp(Math.Round(value), MinFrameInset, MaxFrameInset) : 24;
+
+        public static double ClampFrameOverhang(double value) =>
+            double.IsFinite(value) ? Math.Clamp(Math.Round(value), 0, MaxFrameOverhang) : 0;
+
+        /// <summary>§393. The frame's negative margin for an overhang.</summary>
+        public static Thickness FrameOverhangMargin(double overhang) =>
+            new(-ClampFrameOverhang(overhang));
+
+        // ============================================================
+        // §365. THE MAIN TOOLBAR'S BUTTON SIZES.
+        // ============================================================
+        //
+        // The row across the top of MainWindow - Set Target, Start, Stop,
+        // Reset, the pin, Remove Stats, Set Screen, and World Quest mode's
+        // two - had its widths and heights written into the XAML as fixed
+        // numbers, tuned by hand until the row looked right. §349 had already
+        // given every Button in the app its own FontSize from
+        // ButtonFontSizeKey above, so those numbers were tuned at one font
+        // size and stayed put at every other: pick 15px in Appearance and the
+        // labels grow inside buttons that do not, until they are trimmed.
+        //
+        // The fix keeps the hand-tuned numbers and makes them a FUNCTION of
+        // the chosen Buttons font size instead of a constant. They are
+        // published as resources, the same way PanelBorderThicknessKey and
+        // PanelMarginKey below already publish layout values, so the toolbar
+        // resizes the moment Appearance applies - no binding, no event, no
+        // restart, and nothing in MainWindow.axaml to keep in step but the
+        // resource names.
+        //
+        // They are used as MinWidth/MinHeight in the XAML, not Width/Height.
+        // That is §355's rule and it matters more here, not less: a scaled
+        // number still cannot know how wide a FONT FAMILY draws a label, so a
+        // floor lets a wide family push a button out instead of clipping its
+        // text, while a button whose label fits sits at exactly the number
+        // below.
+        //
+        // TO RETUNE THE ROW, EDIT ToolbarButtonSizes - not the XAML.
+        public const string ToolbarButtonHeightKey = "ThemeToolbarButtonHeight";
+        public const string ToolbarSetTargetWidthKey = "ThemeToolbarSetTargetWidth";
+        public const string ToolbarStartWidthKey = "ThemeToolbarStartWidth";
+        public const string ToolbarStopWidthKey = "ThemeToolbarStopWidth";
+        public const string ToolbarResetWidthKey = "ThemeToolbarResetWidth";
+        public const string ToolbarRemoveStatsWidthKey = "ThemeToolbarRemoveStatsWidth";
+        public const string ToolbarSetScreenWidthKey = "ThemeToolbarSetScreenWidth";
+        public const string ToolbarAutoDetectWidthKey = "ThemeToolbarAutoDetectWidth";
+        public const string ToolbarSubmitScreenshotWidthKey = "ThemeToolbarSubmitScreenshotWidth";
+
+        /// <summary>§365. The Buttons font size the sizes below were drawn
+        /// at. Every number in ToolbarButtonSizes is multiplied by
+        /// (chosen size / this), so at this size the row renders at exactly
+        /// the numbers written there and nothing about the layout moves.
+        ///
+        /// 12 rather than DefaultFontSize's 11 because the row was tuned with
+        /// Buttons set to 12px, which is what the user who tuned it had on
+        /// screen. Changing this number rescales the whole row at once.</summary>
+        public const double ToolbarBaseFontSize = 12;
+
+        /// <summary>§365. The toolbar's sizes at ToolbarBaseFontSize. This is
+        /// the one place they live; MainWindow.axaml names the resource and
+        /// nothing else.</summary>
+        private static readonly (string Key, double AtBaseFont)[] ToolbarButtonSizes =
+        {
+            (ToolbarButtonHeightKey, 27),
+            (ToolbarSetTargetWidthKey, 80),
+            (ToolbarStartWidthKey, 60),
+            (ToolbarStopWidthKey, 55),
+            (ToolbarResetWidthKey, 70),
+            (ToolbarRemoveStatsWidthKey, 100),
+            (ToolbarSetScreenWidthKey, 80),
+            // World Quest mode's two, in the slot the four hunt controls
+            // vacate (§264). Auto Detect was already a floor - §355 gave it
+            // one because its label changes by a character - and its 150 now
+            // scales like the rest. Submit Screenshot was a fixed 170 and is
+            // the longest label in the row, so it was the next one due to
+            // clip.
+            (ToolbarAutoDetectWidthKey, 150),
+            (ToolbarSubmitScreenshotWidthKey, 170),
+        };
 
         /// <summary>§208. The three states a button has besides its resting
         /// one, derived from the user's Button Color rather than settings of
@@ -218,6 +418,56 @@ namespace Foot_Tracker.Services
         /// theme default, white, which disappears on a pale background.</summary>
         public const string MenuVariantKey = "ThemeMenuVariant";
 
+        /// <summary>§252. The colour the main window's World Quest menu item
+        /// wears while a quest is running and World Quest mode is off. Chosen
+        /// by the same predicate as MenuVariantKey, in the same place, so the
+        /// two cannot disagree: red against the light menu's black text, blue
+        /// against the dark menu's white.</summary>
+        public const string WorldQuestLiveBrushKey = "ThemeWorldQuestLiveBrush";
+
+        /// <summary>§267. The colour the News menu item wears while there is
+        /// an announcement from the last day that the player has not opened.
+        /// Yellow, as asked - but chosen by the same predicate as the one
+        /// above, in the same place, because pure yellow on a light menu is
+        /// barely there: dark goldenrod against black text, gold against
+        /// white.</summary>
+        public const string NewsLiveBrushKey = "ThemeNewsLiveBrush";
+
+        /// <summary>§369. The colour the Update menu item wears while a newer
+        /// build is available. Green, as asked, and picked by the same
+        /// predicate as the two above for the same reason: a green bright
+        /// enough to read against the dark menu's white text disappears into
+        /// a light menu's white background. Plain green against black text,
+        /// lime green against white.
+        ///
+        /// The item is not merely coloured - it is not there at all until
+        /// there is something to install (MainWindowViewModel.UpdateAvailable),
+        /// so unlike World Quest and News this colour is never the only
+        /// signal. It is the second one.</summary>
+        public const string UpdateAvailableBrushKey = "ThemeUpdateAvailableBrush";
+
+        /// <summary>§374. The two colours a team card in the Simulator draws
+        /// its stat table with: the stat a nature raises by 10% wears the
+        /// first, the stat it lowers wears the second, and an EV that has
+        /// anything in it wears the first again - green for more, orange for
+        /// less, as asked. Chosen by StatsPanelIsLight rather than the menu
+        /// predicate the three above share, because the table sits on the
+        /// Statistics panel and not on the strip behind the menu: plain green
+        /// and dark orange against a light panel's dark text, lime green and
+        /// orange against a dark panel's white.</summary>
+        public const string NatureBoostBrushKey = "ThemeNatureBoostBrush";
+        public const string NatureLossBrushKey = "ThemeNatureLossBrush";
+
+        /// <summary>§376. The two colours a team card's numbers wear, as
+        /// PRO's own summary card draws them: every IV in its burnt orange,
+        /// every EV in its steel blue, zero included. PRO's exact values
+        /// against a dark panel - they were read off its card - and a
+        /// deeper pair against a light one, where the blue in particular
+        /// would wash out. Same predicate as the nature pair above, same
+        /// moment, same reason.</summary>
+        public const string IvBrushKey = "ThemeIvBrush";
+        public const string EvBrushKey = "ThemeEvBrush";
+
         /// <summary>§141. Relative luminance (WCAG, 0 = black, 1 = white)
         /// above which the strip behind the menu counts as light. Black and
         /// white text have equal contrast at 0.18; a little above that, so a
@@ -331,41 +581,215 @@ namespace Foot_Tracker.Services
 
             // §141: decided from the same settings the brush above was built
             // from, so the two can never disagree about what is behind the menu.
-            app.Resources[MenuVariantKey] =
-                BackgroundIsLightBehindMenu() ? ThemeVariant.Light : ThemeVariant.Dark;
+            // §393: decided once for the five resources that depend on it.
+            bool lightBehindMenu = BackgroundIsLightBehindMenu();
 
+            app.Resources[MenuVariantKey] =
+                lightBehindMenu ? ThemeVariant.Light : ThemeVariant.Dark;
+
+            // §393: the menu bar's own colours, automatic ones resolved by
+            // the same decision - see EffectiveMenuTextColor.
+            app.Resources[MenuTextBrushKey] = new SolidColorBrush(EffectiveMenuTextColor(Current, lightBehindMenu));
+            app.Resources[MenuHighlightBrushKey] = new SolidColorBrush(EffectiveMenuHighlightColor(Current, lightBehindMenu));
+
+            // §394: the menu's font, its own or Statistics'.
+            app.Resources[MenuFontFamilyKey] = BuildFontFamily(EffectiveMenuFontFamilyName(Current));
+            app.Resources[MenuFontSizeKey] = BuildFontSize(EffectiveMenuFontSizeName(Current));
+
+            // §252: same predicate, same moment - see WorldQuestLiveBrushKey.
+            app.Resources[WorldQuestLiveBrushKey] =
+                new SolidColorBrush(lightBehindMenu ? Colors.Red : Colors.DodgerBlue);
+
+            // §267: and again for News - see NewsLiveBrushKey for why the
+            // light menu gets goldenrod rather than the yellow it was asked
+            // for.
+            // §369: and once more for Update - see UpdateAvailableBrushKey.
+            app.Resources[UpdateAvailableBrushKey] =
+                new SolidColorBrush(lightBehindMenu ? Colors.Green : Colors.LimeGreen);
+
+            app.Resources[NewsLiveBrushKey] =
+                new SolidColorBrush(lightBehindMenu ? Colors.DarkGoldenrod : Colors.Gold);
+
+            // §374: the Simulator card's nature colours - by the panel they
+            // sit on, not the menu strip. See NatureBoostBrushKey.
+            bool statsPanelLight = StatsPanelIsLight();
+
+            app.Resources[NatureBoostBrushKey] =
+                new SolidColorBrush(statsPanelLight ? Colors.Green : Colors.LimeGreen);
+
+            app.Resources[NatureLossBrushKey] =
+                new SolidColorBrush(statsPanelLight ? Colors.DarkOrange : Colors.Orange);
+
+            // §376: the IV and EV colours, by the same panel. See IvBrushKey.
+            app.Resources[IvBrushKey] =
+                new SolidColorBrush(statsPanelLight ? Color.Parse("#B45800") : Color.Parse("#C86200"));
+
+            app.Resources[EvBrushKey] =
+                new SolidColorBrush(statsPanelLight ? Color.Parse("#1E78B4") : Color.Parse("#5FADD4"));
+
+            // §349. These four are Statistics now, not a separate global.
+            // Everything that binds ThemeTextBrush - the stats panel, and
+            // every other window in the app - follows the Statistics section,
+            // which is what §188 already did for the panel background.
+            //
+            // Current.TextColor and Current.BorderColor still exist and are
+            // no longer read here: they are the legacy fields the §349
+            // migration seeds these from, which is why an existing appearance
+            // looks unchanged after the update.
             app.Resources[TextBrushKey] =
-                new SolidColorBrush(Current.TextColor);
+                new SolidColorBrush(Current.StatsTextColor);
 
             app.Resources[BorderBrushKey] =
-                new SolidColorBrush(Current.BorderColor);
+                new SolidColorBrush(Current.StatsBorderColor);
 
             app.Resources[FontFamilyKey] =
-                BuildFontFamily(Current.FontFamilyName);
+                BuildFontFamily(Current.StatsFontFamilyName);
 
             app.Resources[FontSizeKey] =
-                BuildFontSize(Current.FontSizeName);
+                BuildFontSize(Current.StatsFontSizeName);
 
+            // §349. The three regions that do not follow Statistics.
+            app.Resources[SpriteBoxTextBrushKey] =
+                new SolidColorBrush(Current.SpriteBoxTextColor);
+
+            app.Resources[SpriteBoxBorderBrushKey] =
+                new SolidColorBrush(Current.SpriteBoxBorderColor);
+
+            app.Resources[SpriteBoxFontFamilyKey] =
+                BuildFontFamily(Current.SpriteBoxFontFamilyName);
+
+            app.Resources[SpriteBoxFontSizeKey] =
+                BuildFontSize(Current.SpriteBoxFontSizeName);
+
+            app.Resources[EncountersTextBrushKey] =
+                new SolidColorBrush(Current.EncountersTextColor);
+
+            app.Resources[EncountersBorderBrushKey] =
+                new SolidColorBrush(Current.EncountersBorderColor);
+
+            app.Resources[EncountersFontFamilyKey] =
+                BuildFontFamily(Current.EncountersFontFamilyName);
+
+            app.Resources[EncountersFontSizeKey] =
+                BuildFontSize(Current.EncountersFontSizeName);
+
+            app.Resources[ButtonTextBrushKey] =
+                new SolidColorBrush(Current.ButtonTextColor);
+
+            app.Resources[ButtonBorderBrushKey] =
+                new SolidColorBrush(Current.ButtonBorderColor);
+
+            app.Resources[ButtonFontFamilyKey] =
+                BuildFontFamily(Current.ButtonFontFamilyName);
+
+            app.Resources[ButtonFontSizeKey] =
+                BuildFontSize(Current.ButtonFontSizeName);
+
+            // §380. See HeadingFontWeightKey.
+            app.Resources[HeadingFontWeightKey] =
+                Current.BoldHeadings ? FontWeight.Bold : FontWeight.Normal;
+
+            // §384. Widths and corners, clamped here as well as on the way
+            // in, because a settings file can be edited by hand.
+            double spriteWidth = ClampBorderWidth(Current.SpriteBoxBorderWidth);
+            double tableWidth = ClampBorderWidth(Current.EncountersBorderWidth);
+            double statsWidth = ClampBorderWidth(Current.StatsBorderWidth);
+            double buttonWidth = ClampBorderWidth(Current.ButtonBorderWidth);
+
+            app.Resources[SpriteBoxBorderThicknessKey] = new Thickness(spriteWidth);
+            app.Resources[SpriteBoxCornerRadiusKey] = new CornerRadius(ClampCornerRadius(Current.SpriteBoxCornerRadius));
+            app.Resources[EncountersBorderThicknessKey] = new Thickness(tableWidth);
+            app.Resources[EncountersHeaderLineThicknessKey] = new Thickness(0, 0, 0, tableWidth);
+            app.Resources[EncountersCornerRadiusKey] = new CornerRadius(ClampCornerRadius(Current.EncountersCornerRadius));
+            app.Resources[StatsBorderThicknessKey] = new Thickness(statsWidth);
+            app.Resources[StatsCornerRadiusKey] = new CornerRadius(ClampCornerRadius(Current.StatsCornerRadius));
+            app.Resources[ButtonBorderThicknessKey] = new Thickness(buttonWidth);
+            app.Resources[ButtonCornerRadiusKey] = new CornerRadius(ClampCornerRadius(Current.ButtonCornerRadius));
+
+            // §384. The frames. A picture that fails to load is no frame,
+            // logged, rather than a window that will not open.
+            IImage? statsFrame = LoadFrameImage(Current.StatsFrameImagePath);
+            IImage? tableFrame = LoadFrameImage(Current.EncountersFrameImagePath);
+            IImage? spriteFrame = LoadFrameImage(Current.SpriteBoxFrameImagePath);
+            double statsInset = ClampFrameInset(Current.StatsFrameInset);
+            double tableInset = ClampFrameInset(Current.EncountersFrameInset);
+            double spriteInset = ClampFrameInset(Current.SpriteBoxFrameInset);
+
+            // §393: how far each reaches past its panel; the layout inside
+            // only has to clear the part of the band that is inside.
+            double statsOverhang = ClampFrameOverhang(Current.StatsFrameOverhang);
+            double tableOverhang = ClampFrameOverhang(Current.EncountersFrameOverhang);
+            double spriteOverhang = ClampFrameOverhang(Current.SpriteBoxFrameOverhang);
+
+            app.Resources[StatsFrameImageKey] = statsFrame;
+            app.Resources[StatsFrameInsetKey] = statsInset;
+            app.Resources[StatsFrameOverhangKey] = FrameOverhangMargin(statsOverhang);
+            app.Resources[StatsPanelPaddingKey] = new Thickness(StatsPanelPaddingFor(statsFrame is not null, statsInset, statsOverhang));
+            app.Resources[TableFrameImageKey] = tableFrame;
+            app.Resources[TableFrameInsetKey] = tableInset;
+            app.Resources[TableFrameOverhangKey] = FrameOverhangMargin(tableOverhang);
+            app.Resources[TableFrameMarginKey] = new Thickness(TableFrameMarginFor(tableFrame is not null, tableInset, tableOverhang));
+            app.Resources[SpriteBoxFrameImageKey] = spriteFrame;
+            app.Resources[SpriteBoxFrameInsetKey] = spriteInset;
+            app.Resources[SpriteBoxFrameOverhangKey] = FrameOverhangMargin(spriteOverhang);
+            app.Resources[SpriteBoxFrameImageMarginKey] = new Thickness(SpriteImageMarginFor(spriteFrame is not null, spriteInset, spriteOverhang));
+
+            // §387. The sprite row panel, derived the same way as the frames.
+            IImage? rowFrame = LoadFrameImage(Current.SpriteRowFrameImagePath);
+            double rowInset = ClampFrameInset(Current.SpriteRowFrameInset);
+            double rowOverhang = ClampFrameOverhang(Current.SpriteRowFrameOverhang);
+            double rowWidth = ClampBorderWidth(Current.SpriteRowBorderWidth);
+            bool rowVisible = SpriteRowIsVisible(Current.SpriteRowBackgroundColor, Current.SpriteRowBorderColor, rowWidth, HasPanelPicture(Current.SpriteRowBackgroundImagePath));
+
+            app.Resources[SpriteRowBackgroundBrushKey] =
+                BuildPanelBrush(Current.SpriteRowBackgroundColor, Current.SpriteRowBackgroundImagePath);
+            app.Resources[SpriteRowBorderBrushKey] = new SolidColorBrush(Current.SpriteRowBorderColor);
+            app.Resources[SpriteRowBorderThicknessKey] = new Thickness(rowVisible ? rowWidth : 0);
+            app.Resources[SpriteRowCornerRadiusKey] = new CornerRadius(ClampCornerRadius(Current.SpriteRowCornerRadius));
+            app.Resources[SpriteRowPaddingKey] = new Thickness(SpriteRowPaddingFor(rowVisible, rowFrame is not null, rowInset, rowOverhang));
+            app.Resources[SpriteRowFrameImageKey] = rowFrame;
+            app.Resources[SpriteRowFrameInsetKey] = rowInset;
+            app.Resources[SpriteRowFrameOverhangKey] = FrameOverhangMargin(rowOverhang);
+
+            // §365: the toolbar's sizes, in the same pass as the font size
+            // they are derived from, so the row can never be drawn for one
+            // font while wearing another. Rounded to whole pixels - the
+            // numbers in ToolbarButtonSizes are whole and at the base size
+            // they come back out unchanged.
+            double toolbarScale =
+                BuildFontSize(Current.ButtonFontSizeName) / ToolbarBaseFontSize;
+
+            foreach ((string key, double atBaseFont) in ToolbarButtonSizes)
+            {
+                app.Resources[key] =
+                    Math.Round(atBaseFont * toolbarScale);
+            }
+
+            // §383: the sprite boxes take a picture under their fill too.
             app.Resources[SpriteBoxBackgroundBrushKey] =
-                new SolidColorBrush(Current.SpriteBoxBackgroundColor);
+                BuildPanelBrush(Current.SpriteBoxBackgroundColor, Current.SpriteBoxBackgroundImagePath);
 
             app.Resources[ButtonBrushKey] =
                 new SolidColorBrush(Current.ButtonColor);
 
+            // §382: a picture under the fill when the settings name one, the
+            // flat fill otherwise. Every window that fills a panel with this
+            // brush gets the picture, which is what "Statistics paints every
+            // other window" has meant since §188.
             app.Resources[StatsBackgroundBrushKey] =
-                new SolidColorBrush(Current.StatsBackgroundColor);
+                BuildPanelBrush(Current.StatsBackgroundColor, Current.StatsBackgroundImagePath);
 
             app.Resources[EncountersBackgroundBrushKey] =
-                new SolidColorBrush(Current.EncountersBackgroundColor);
+                BuildPanelBrush(Current.EncountersBackgroundColor, Current.EncountersBackgroundImagePath);
 
             // §208: the button's other three states, in the same pass as the
             // colour they come from, so a saved Appearance change can never
             // leave a button resting in one palette and hovering in another.
             app.Resources[ButtonHoverBrushKey] =
-                new SolidColorBrush(Mix(Current.ButtonColor, Current.TextColor, ButtonHoverMix));
+                new SolidColorBrush(Mix(Current.ButtonColor, Current.ButtonTextColor, ButtonHoverMix));
 
             app.Resources[ButtonPressedBrushKey] =
-                new SolidColorBrush(Mix(Current.ButtonColor, Current.TextColor, ButtonPressedMix));
+                new SolidColorBrush(Mix(Current.ButtonColor, Current.ButtonTextColor, ButtonPressedMix));
 
             app.Resources[ButtonDisabledBrushKey] =
                 new SolidColorBrush(Mix(Current.ButtonColor, Current.BackgroundColor, ButtonDisabledMix));
@@ -386,15 +810,19 @@ namespace Foot_Tracker.Services
                     ? Current.HeaderBackgroundColor
                     : PanelIsVisible(Current.EncountersBackgroundColor)
                         ? Current.EncountersBackgroundColor
-                        : Mix(Current.BackgroundColor, Current.TextColor, TableHeaderMix));
+                        : Mix(Current.BackgroundColor, Current.EncountersTextColor, TableHeaderMix));
 
             // §188: both derived from the same colour the panels are filled
             // with, in the same pass, so nothing can disagree about whether
             // there is a panel there at all.
-            bool panel = PanelIsVisible(Current.StatsBackgroundColor);
+            // §382: a picture is a panel too, whatever the fill's alpha.
+            bool panel = PanelIsVisible(Current.StatsBackgroundColor) ||
+                         HasPanelPicture(Current.StatsBackgroundImagePath);
 
+            // §384: the width is the Statistics border width now, not a
+            // fixed 1 - the same rule (no fill, no picture: no line) as before.
             app.Resources[PanelBorderThicknessKey] =
-                new Thickness(panel ? PanelBorderWidth : 0);
+                new Thickness(panel ? ClampBorderWidth(Current.StatsBorderWidth) : 0);
 
             app.Resources[PanelMarginKey] =
                 new Thickness(panel ? PanelInset : 0);
@@ -552,7 +980,174 @@ namespace Foot_Tracker.Services
                 return new FontFamily($"avares://{CustomFontAssemblyName}/Assets/Fonts#{internalFontName}, Inter");
             }
 
+            // §385. A font the user added as a file: the same shape of
+            // family, from the user collection instead of the assembly.
+            if (UserFontService.IsUserFont(fontFamilyName))
+                return UserFontService.BuildFontFamily(fontFamilyName);
+
             return new FontFamily(fontFamilyName);
+        }
+
+        // ============================================================
+        // §384. FRAMES.
+        // ============================================================
+
+        /// <summary>§384. The frame picture as an IImage for NineSliceFrame,
+        /// or null when there is none or it cannot be read. Frames are small
+        /// (a few hundred pixels square), so they are loaded whole.</summary>
+        public static IImage? LoadFrameImage(string? imagePath)
+        {
+            if (!HasPanelPicture(imagePath))
+                return null;
+
+            try
+            {
+                return new Bitmap(imagePath!);
+            }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "ThemeManager could not read the frame picture {Path}; drawing no frame", imagePath);
+                return null;
+            }
+        }
+
+        /// <summary>§393. How much of a frame's band lies inside its panel:
+        /// the corner size less the overhang, never below nothing. What the
+        /// three layout rules below keep the content clear of.</summary>
+        public static double FrameInnerBand(double inset, double overhang) =>
+            Math.Max(0, inset - overhang);
+
+        /// <summary>§384. The stats panel's padding: its usual 10, or the
+        /// frame's corner size plus a little when a frame would otherwise
+        /// cover the first line of text. §393: less the overhang, which is
+        /// outside the panel.</summary>
+        public static double StatsPanelPaddingFor(bool framed, double inset, double overhang = 0) =>
+            framed ? Math.Max(StatsPanelPadding, FrameInnerBand(inset, overhang) + 2) : StatsPanelPadding;
+
+        /// <summary>§384. The margin that keeps the table's header and rows
+        /// inside the frame drawn around them; nothing without one. §393:
+        /// the inside part of the band only.</summary>
+        public static double TableFrameMarginFor(bool framed, double inset, double overhang = 0) =>
+            framed ? FrameInnerBand(inset, overhang) : 0;
+
+        /// <summary>§387. Whether the sprite row panel shows at all: a fill
+        /// with any alpha, a border that has both a colour and a width, or a
+        /// picture. A frame alone is drawn regardless; it has its own size.</summary>
+        public static bool SpriteRowIsVisible(Color fill, Color border, double width, bool hasPicture) =>
+            fill.A != 0 || (border.A != 0 && width > 0) || hasPicture;
+
+        /// <summary>§387. The row's inset from its panel: nothing without a
+        /// panel, 8 with one, the frame's corner size plus two under a frame
+        /// (§393: the inside part of it).</summary>
+        public static double SpriteRowPaddingFor(bool visible, bool framed, double inset, double overhang = 0) =>
+            framed ? Math.Max(SpriteRowPadding, FrameInnerBand(inset, overhang) + 2) : visible ? SpriteRowPadding : 0;
+
+        /// <summary>§384. How far a sprite pulls in from its box's edge so a
+        /// frame does not cover it: half the corner size, capped so a big
+        /// ornate frame still leaves most of a 96px box to the sprite. §393:
+        /// half of the inside part of the band.</summary>
+        public static double SpriteImageMarginFor(bool framed, double inset, double overhang = 0) =>
+            framed ? Math.Min(FrameInnerBand(inset, overhang) * 0.5, 28) : 0;
+
+        /// <summary>§393. The menu bar's text colour: the one set, or - when
+        /// it is transparent, "automatic" - black over a light strip and
+        /// white over a dark one, which is what Fluent's palette gave the
+        /// menu before the colour could be chosen at all (§141).</summary>
+        public static Color EffectiveMenuTextColor(AppearanceSettings settings, bool lightBehindMenu) =>
+            settings.MenuTextColor.A != 0 ? settings.MenuTextColor : lightBehindMenu ? Colors.Black : Colors.White;
+
+        /// <summary>§393. The highlight behind the menu item the pointer is
+        /// on or that is open: the one set, or a faint black over a light
+        /// strip and a faint white over a dark one, near Fluent's own.</summary>
+        public static Color EffectiveMenuHighlightColor(AppearanceSettings settings, bool lightBehindMenu) =>
+            settings.MenuHighlightColor.A != 0
+                ? settings.MenuHighlightColor
+                : lightBehindMenu ? Color.FromArgb(0x1A, 0, 0, 0) : Color.FromArgb(0x26, 255, 255, 255);
+
+        /// <summary>§394. The menu bar's font family name: its own when one
+        /// is set, else Statistics' - the window font, which is what the
+        /// menu inherited before it could have its own.</summary>
+        public static string EffectiveMenuFontFamilyName(AppearanceSettings settings) =>
+            string.IsNullOrWhiteSpace(settings.MenuFontFamilyName) ? settings.StatsFontFamilyName : settings.MenuFontFamilyName;
+
+        /// <summary>§394. The same for the size.</summary>
+        public static string EffectiveMenuFontSizeName(AppearanceSettings settings) =>
+            string.IsNullOrWhiteSpace(settings.MenuFontSizeName) ? settings.StatsFontSizeName : settings.MenuFontSizeName;
+
+        // ============================================================
+        // §382. PANEL PICTURES.
+        // ============================================================
+
+        /// <summary>§382. Whether a panel picture path names a file that is
+        /// there. An empty path, or one whose file has gone, is no picture.</summary>
+        public static bool HasPanelPicture(string? imagePath) =>
+            !string.IsNullOrWhiteSpace(imagePath) && File.Exists(imagePath);
+
+        /// <summary>§382. Pictures are drawn no larger than this on their
+        /// long edge before the fill goes over them: a panel is a few hundred
+        /// pixels wide, and a 4K texture composed whole would cost tens of
+        /// megabytes per Apply for nothing anyone could see.</summary>
+        internal const int PanelPictureMaxEdge = 1600;
+
+        /// <summary>
+        /// §382. The brush a panel is filled with: the flat colour when there
+        /// is no picture, and otherwise the picture with the fill colour
+        /// painted OVER it, composed once into one bitmap.
+        ///
+        /// Composed rather than layered because every panel in the app is one
+        /// Border (or one ListBox) with one Background, and the main window's
+        /// stats panel, its encounter table and every other window's
+        /// themedPanel all take this brush - one composed image reaches them
+        /// all without a nested element in any of them. The fill's alpha is
+        /// the tint: a navy at 70% over a texture dims it enough to read text
+        /// on; an opaque fill hides the picture entirely, which the editor
+        /// says. The picture is stretched to cover the panel and centred, so
+        /// it crops rather than squashes.
+        ///
+        /// Anything that goes wrong - a file that is not an image, a render
+        /// surface that cannot be made - falls back to the flat fill, logged,
+        /// so a bad picture can never take the window with it.
+        /// </summary>
+        public static IBrush BuildPanelBrush(Color fill, string? imagePath)
+        {
+            if (!HasPanelPicture(imagePath))
+                return new SolidColorBrush(fill);
+
+            try
+            {
+                using var picture = new Bitmap(imagePath!);
+
+                int sourceWidth = Math.Max(1, picture.PixelSize.Width);
+                int sourceHeight = Math.Max(1, picture.PixelSize.Height);
+                double scale = Math.Min(1.0, (double)PanelPictureMaxEdge / Math.Max(sourceWidth, sourceHeight));
+                int width = Math.Max(1, (int)Math.Round(sourceWidth * scale));
+                int height = Math.Max(1, (int)Math.Round(sourceHeight * scale));
+
+                var composed = new RenderTargetBitmap(new PixelSize(width, height), new Vector(96, 96));
+
+                using (DrawingContext context = composed.CreateDrawingContext())
+                {
+                    context.DrawImage(
+                        picture,
+                        new Rect(0, 0, sourceWidth, sourceHeight),
+                        new Rect(0, 0, width, height));
+
+                    if (fill.A != 0)
+                        context.FillRectangle(new SolidColorBrush(fill), new Rect(0, 0, width, height));
+                }
+
+                return new ImageBrush(composed)
+                {
+                    Stretch = Stretch.UniformToFill,
+                    AlignmentX = AlignmentX.Center,
+                    AlignmentY = AlignmentY.Center
+                };
+            }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "ThemeManager could not compose the panel picture {Path}; using the flat fill", imagePath);
+                return new SolidColorBrush(fill);
+            }
         }
 
         /// <summary>§104: resolves the one built-in background (Slate) to its
@@ -666,6 +1261,31 @@ namespace Foot_Tracker.Services
         // §141 - IS THE BACKGROUND LIGHT BEHIND THE MENU?
         // ==============================================================
 
+        /// <summary>§374. True when the Statistics panel - the fill behind the
+        /// stats table, every themedPanel and the Simulator's team cards - is
+        /// light enough that a colour picked for white text would be lost on
+        /// it. The panel's own colour when there is a panel and it is mostly
+        /// opaque (RelativeLuminance already counts a faint fill as the dark
+        /// thing it looks like); the strip behind the menu otherwise, since
+        /// with no panel it is the window background that shows through.
+        /// Logged like BackgroundIsLightBehindMenu, for the same reason.</summary>
+        public static bool StatsPanelIsLight()
+        {
+            Color panel = Current.StatsBackgroundColor;
+
+            if (!PanelIsVisible(panel) || panel.A < 128)
+                return BackgroundIsLightBehindMenu();
+
+            double luminance = RelativeLuminance(panel);
+            bool light = luminance > LightBackgroundLuminance;
+
+            Log.Information(
+                "Appearance: relative luminance of the stats panel {Luminance:0.000} - nature colours use the {Variant} pair",
+                luminance, light ? "light" : "dark");
+
+            return light;
+        }
+
         /// <summary>True when the strip of background behind the main window's
         /// menu bar is light enough that Fluent's dark-theme white menu text
         /// would be hard to read - see LightBackgroundLuminance. Logged each
@@ -687,12 +1307,16 @@ namespace Foot_Tracker.Services
         /// direction), over the top band of an image that is actually on
         /// screen after UniformToFill (a GIF by its first frame), or the flat
         /// colour itself.</summary>
-        internal static double MenuStripLuminance()
-        {
-            if (Current.UseCustomGradient)
-                return GradientTopEdgeLuminance(Current.CustomGradientColors, Current.CustomGradientDirection);
+        internal static double MenuStripLuminance() =>
+            MenuStripLuminance(Current, GetCurrentBackgroundPath());
 
-            string backgroundPath = GetCurrentBackgroundPath();
+        /// <summary>§393. The same, for any settings and the picture they
+        /// would show - the editor asks it about its working copy, whose
+        /// picture may not be applied yet.</summary>
+        internal static double MenuStripLuminance(AppearanceSettings settings, string? backgroundPath)
+        {
+            if (settings.UseCustomGradient)
+                return GradientTopEdgeLuminance(settings.CustomGradientColors, settings.CustomGradientDirection);
 
             if (!string.IsNullOrWhiteSpace(backgroundPath) && File.Exists(backgroundPath))
             {
@@ -702,8 +1326,15 @@ namespace Foot_Tracker.Services
                     return value;
             }
 
-            return RelativeLuminance(Current.BackgroundColor);
+            return RelativeLuminance(settings.BackgroundColor);
         }
+
+        /// <summary>§393. Whether the strip behind the menu is light, for
+        /// any settings - the editor's canvas resolves its automatic menu
+        /// colours through this, the way Apply does through
+        /// BackgroundIsLightBehindMenu.</summary>
+        public static bool BackgroundIsLightBehindMenu(AppearanceSettings settings, string? backgroundPath) =>
+            MenuStripLuminance(settings, backgroundPath) > LightBackgroundLuminance;
 
         /// <summary>WCAG relative luminance of a colour, composited over black
         /// (what a translucent window background sits on) so a faint colour

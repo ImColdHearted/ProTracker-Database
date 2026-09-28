@@ -38,7 +38,9 @@ namespace PokemonSim.Data
             if (loaded)
                 return;
 
-            loaded = true;
+            // §316: set at the END, on success - see PokemonDex.Load for
+            // why. A load that threw used to leave this true with nothing in
+            // it, and IsLoaded then reported a dex that was not there.
 
             string json = File.ReadAllText(path);
 
@@ -85,6 +87,10 @@ namespace PokemonSim.Data
                         UsesDefenseAsOffense = value.usesDefenseAsOffense,
                         UsesTargetAttack = value.usesTargetAttack,
                         UsesHigherOffense = value.usesHigherOffense,
+                        UsesBetterDamage = value.usesBetterDamage,
+                        IgnoresDefensiveBoosts = value.ignoresDefensiveBoosts,
+                        IgnoresEvasion = value.ignoresEvasion,
+                        IgnoresFlyingImmunity = value.ignoresFlyingImmunity,
                         RandomStatus = value.randomStatus?
                             .Select(s => Enum.Parse<StatusCondition>(s, ignoreCase: true))
                             .ToList()
@@ -120,6 +126,8 @@ namespace PokemonSim.Data
                     warnings.Add($"{entry.Key}: skipped - {ex.Message}");
                 }
             }
+
+            loaded = true;
         }
 
         public static bool TryGet(string name, out MoveState move)

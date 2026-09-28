@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -51,6 +52,17 @@ namespace PokemonSim.Observation
         string lastStatus = "recording";
 
         public string BattleId { get; }
+
+        /// <summary>
+        /// §319. Which encoder this observer writes with.
+        ///
+        /// False - the default and what everything ships with - is the FAIR
+        /// V8 vector: the opponent only as far as it has shown itself. True
+        /// is §311's omniscient V7, kept solely so the cost of honesty can be
+        /// measured; its records carry OmniscientVersion so they can never be
+        /// trained together with fair ones by accident.
+        /// </summary>
+        public bool Omniscient { get; init; }
 
         public int RecordedCount => Volatile.Read(ref recorded);
         public int DroppedCount => Volatile.Read(ref dropped);
@@ -111,7 +123,13 @@ namespace PokemonSim.Observation
                         Strategy = strategyName,
                         // Section 175: the encoder needs what was on offer
                         // this turn to say which slots were usable.
-                        State = ObserverEncoder.Encode(state, actor, legalActions, RiskOf(teacher)),
+                        Schema = Omniscient
+                            ? ObservationSchema.OmniscientVersion
+                            : ObservationSchema.Version,
+                        Encoder = Omniscient ? "omniscient" : "fair",
+                        State = Omniscient
+                            ? ObserverEncoder.Encode(state, actor, legalActions, RiskOf(teacher))
+                            : FairEncoder.Encode(state, actor, legalActions, RiskOf(teacher)),
                         LegalMoves = ObserverEncoder.LegalMoveMask(legalActions),
                         // Section 176: the same legality over moves AND the
                         // team positions this side could switch to, which is
@@ -175,6 +193,20 @@ namespace PokemonSim.Observation
                             Terrain = state.Environment.Terrain.ToString()
                         };
 
+                        // §319: what the OTHER side did on this same turn.
+                        // A label, written after the fact and never encoded -
+                        // Pokemon is simultaneous, so "what are they doing
+                        // right now" is the prediction problem, and this is
+                        // its answer. Found by looking at the other side's
+                        // record for this turn, which is sitting right here.
+                        DecisionRecord? theirs = pending.FirstOrDefault(
+                            other => other.Side != record.Side && other.Turn == record.Turn);
+
+                        if (theirs != null)
+                            record.OpponentActionIndex = ActionIndexOf(theirs);
+
+                        record.OpponentSwitched = record.After.OpponentSwitched;
+
                         Enqueue(record);
                     }
 
@@ -217,7 +249,13 @@ namespace PokemonSim.Observation
                         // away its own answer. A caller that has not been
                         // updated passes no candidates, and the empty mask
                         // still tells the trainer to skip it.
-                        State = ObserverEncoder.Encode(state, actor, null, RiskOf(teacher)),
+                        Schema = Omniscient
+                            ? ObservationSchema.OmniscientVersion
+                            : ObservationSchema.Version,
+                        Encoder = Omniscient ? "omniscient" : "fair",
+                        State = Omniscient
+                            ? ObserverEncoder.Encode(state, actor, null, RiskOf(teacher))
+                            : FairEncoder.Encode(state, actor, null, RiskOf(teacher)),
                         LegalMoves = new float[ObservationSchema.MoveSlots],
                         LegalActions = legalTeamIndexes == null
                             ? new float[ObservationSchema.ActionSlots]
@@ -343,6 +381,20 @@ namespace PokemonSim.Observation
         }
 
         // ---- plumbing ----
+
+        /// <summary>§319. One recorded decision as an index into its own
+        /// side's action space - the shape a prediction head is trained
+        /// against. -1 for a Struggle, which has no slot to name.</summary>
+        static int ActionIndexOf(DecisionRecord record)
+        {
+            if (record.Action.Kind == "Move" && record.Action.MoveIndex >= 0)
+                return record.Action.MoveIndex;
+
+            if (record.Action.SwitchTeamIndex >= 0)
+                return ObservationSchema.MoveSlots + record.Action.SwitchTeamIndex;
+
+            return -1;
+        }
 
         void ApplyShadow(DecisionRecord record, PlayerState actor)
         {

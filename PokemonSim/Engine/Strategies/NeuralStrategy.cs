@@ -72,6 +72,77 @@ namespace PokemonSim.Engine.Strategies
         /// </summary>
         public float RiskAppetite { get; set; } = ObservationSchema.NeutralRisk;
 
+        /// <summary>
+        /// §322. Which observation this player reads the battle through -
+        /// the same switch, with the same default, that §319 gave
+        /// BattleObserver.
+        ///
+        /// False is the fair V8 vector: the opponent only as far as it has
+        /// shown itself. True is §311's omniscient V7, kept so the cost of
+        /// honesty can be measured by playing one against the other rather
+        /// than argued about.
+        ///
+        /// WHY THIS EXISTS. §319 moved the observer to FairEncoder and left
+        /// this class - the one that actually PLAYS - still encoding with
+        /// ObserverEncoder. The two had been the same call for so long that
+        /// changing one and not the other looked like one change. It was
+        /// not, and the way it failed is the part worth remembering: a fair
+        /// model asks for 1206 features, the omniscient vector is 483, so
+        /// OnnxShadowEvaluator.Predict took its `state.Length < inputWidth`
+        /// exit and returned null - which this class treats as "no opinion"
+        /// and answers by falling through to the baseline. Every decision,
+        /// silently, with a model that had loaded perfectly and a lab report
+        /// that said the run was a deep-learning run. See Incompatibility
+        /// for the refusal that now stands in the way of that.
+        /// </summary>
+        public bool Omniscient { get; init; }
+
+        /// <summary>§322. How wide the vector this player writes is. The
+        /// model must want exactly this many.</summary>
+        public int EncoderWidth =>
+            Omniscient ? ObserverEncoder.TotalFeatures : FairEncoder.FeatureCount;
+
+        /// <summary>§322. One encode, one place to be wrong.</summary>
+        float[] Observe(
+            BattleState state, PlayerState self, IReadOnlyList<BattleAction>? legalActions) =>
+            Omniscient
+                ? ObserverEncoder.Encode(state, self, legalActions, RiskAppetite)
+                : FairEncoder.Encode(state, self, legalActions, RiskAppetite);
+
+        /// <summary>
+        /// §322. Why this model cannot play on this observation, in words
+        /// for the person who chose it - or null when it can.
+        ///
+        /// A caller that puts the network on the field is expected to ask
+        /// this FIRST and refuse the run, because the alternative is not an
+        /// error: it is a full run of baseline play reported as the model's.
+        /// A silent fallback is right for one turn the model cannot score
+        /// and catastrophic for every turn, and nothing in the fallback
+        /// itself can tell those two apart - only the width can, and only
+        /// before the run starts.
+        /// </summary>
+        public static string? Incompatibility(IShadowEvaluator? evaluator, bool omniscient = false)
+        {
+            if (evaluator == null)
+                return "no evaluator was supplied";
+
+            if (!evaluator.Status.Available)
+                return evaluator.Status.Description;
+
+            int wanted = omniscient ? ObserverEncoder.TotalFeatures : FairEncoder.FeatureCount;
+
+            if (evaluator.Status.InputWidth != wanted)
+            {
+                return $"the model reads {evaluator.Status.InputWidth} features but the " +
+                       (omniscient ? "omniscient" : "fair") +
+                       $" observation it would be shown is {wanted} wide, so it could not " +
+                       "score a single turn. Train a model on the current observation, or " +
+                       "install one that matches.";
+            }
+
+            return null;
+        }
+
         int decisions;
         int modelChoices;
         int switchChoices;
@@ -103,7 +174,7 @@ namespace PokemonSim.Engine.Strategies
                 return fallback.ChooseAction(state, self, legalActions);
 
             ShadowPrediction? prediction = evaluator.Predict(
-                ObserverEncoder.Encode(state, self, legalActions, RiskAppetite), mask);
+                Observe(state, self, legalActions), mask);
 
             if (prediction == null)
                 return fallback.ChooseAction(state, self, legalActions);
@@ -269,7 +340,7 @@ namespace PokemonSim.Engine.Strategies
             float[] replacements = ObserverEncoder.ReplacementMask(legalTeamIndexes);
 
             ShadowPrediction? prediction = evaluator.Predict(
-                ObserverEncoder.Encode(state, self, null, RiskAppetite), replacements);
+                Observe(state, self, null), replacements);
 
             string situation = BattleMemory.ReplacementSituation(
                 state.GetOpponentOf(self).ActivePokemon);

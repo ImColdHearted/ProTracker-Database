@@ -22,23 +22,28 @@
         "pokemon": [
           {
             "name": "Swablu",
-            "dexNumber": 333
+            "dexNumber": 333,
+            "winStreakRequired": 0
           },
           {
             "name": "Dratini",
-            "dexNumber": 147
+            "dexNumber": 147,
+            "winStreakRequired": 0
           },
           {
             "name": "Bagon",
-            "dexNumber": 371
+            "dexNumber": 371,
+            "winStreakRequired": 0
           },
           {
             "name": "Axew",
-            "dexNumber": 610
+            "dexNumber": 610,
+            "winStreakRequired": 0
           },
           {
             "name": "Skrelp",
-            "dexNumber": 690
+            "dexNumber": 690,
+            "winStreakRequired": 0
           }
         ],
         "items": [
@@ -158,23 +163,53 @@
         "pokemon": [
           {
             "name": "Swablu",
-            "dexNumber": 333
+            "dexNumber": 333,
+            "winStreakRequired": 0
           },
           {
             "name": "Dratini",
-            "dexNumber": 147
+            "dexNumber": 147,
+            "winStreakRequired": 0
           },
           {
             "name": "Bagon",
-            "dexNumber": 371
+            "dexNumber": 371,
+            "winStreakRequired": 0
           },
           {
             "name": "Axew",
-            "dexNumber": 610
+            "dexNumber": 610,
+            "winStreakRequired": 0
           },
           {
             "name": "Skrelp",
-            "dexNumber": 690
+            "dexNumber": 690,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Swablu",
+            "dexNumber": 333,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Bagon",
+            "dexNumber": 371,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Axew",
+            "dexNumber": 610,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Skrelp",
+            "dexNumber": 690,
+            "winStreakRequired": 3
           }
         ],
         "items": [
@@ -294,23 +329,53 @@
         "pokemon": [
           {
             "name": "Swablu",
-            "dexNumber": 333
+            "dexNumber": 333,
+            "winStreakRequired": 0
           },
           {
             "name": "Dratini",
-            "dexNumber": 147
+            "dexNumber": 147,
+            "winStreakRequired": 0
           },
           {
             "name": "Bagon",
-            "dexNumber": 371
+            "dexNumber": 371,
+            "winStreakRequired": 0
           },
           {
             "name": "Axew",
-            "dexNumber": 610
+            "dexNumber": 610,
+            "winStreakRequired": 0
           },
           {
             "name": "Skrelp",
-            "dexNumber": 690
+            "dexNumber": 690,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Swablu",
+            "dexNumber": 333,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Dratini",
+            "dexNumber": 147,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Bagon",
+            "dexNumber": 371,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Axew",
+            "dexNumber": 610,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Skrelp",
+            "dexNumber": 690,
+            "winStreakRequired": 3
           }
         ],
         "items": [

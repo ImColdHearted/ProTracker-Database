@@ -1,6 +1,6 @@
 {
   "name": "Toothless",
-  "NPCPicture": "SharedPokemonLibrary/Assets/Sprites/0.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Toothless.png",
   "BossCooldown": 288,
   "bossId": "toothless",
   "location": "Abandoned Ship B1F (Room 1)",

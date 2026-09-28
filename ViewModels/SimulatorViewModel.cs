@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -26,6 +28,40 @@ using Serilog;
 
 namespace Foot_Tracker.ViewModels;
 
+/// <summary>§372. One row of a team card's stat table: the stat's short
+/// name, its IV and its EV, in the card's own row order. §374: and what
+/// the nature does to it - Boosted for the +10% stat, Hindered for the
+/// -10% one, neither for the other four and for HP, which no nature
+/// touches. The card draws the name green or orange from these
+/// (SimulatorWindow.axaml's boosted/hindered styles). §376: the numbers
+/// themselves are coloured as PRO's card colours them - every IV orange,
+/// every EV blue - so the row no longer says whether an EV is invested;
+/// the colour is the column's, not the value's.</summary>
+public sealed record SimulatorStatRow(string Label, int Iv, int Ev, bool Boosted, bool Hindered);
+
+/// <summary>§374. One line of a team card's move list. A plain move is its
+/// name and nothing else. Hidden Power is the exception: its type is part
+/// of what the move is, and "Hidden Power (Fighting)" does not fit the
+/// column at any width the card can have, so the line carries the type
+/// separately - the name is drawn in that type's colour
+/// (PokemonTypeColors) with the bracket dropped, and the whole thing,
+/// bracket included, is the tooltip.</summary>
+public sealed record SimulatorMoveRow(string Name, string? HiddenPowerType, bool TypeFromIvs = false)
+{
+    public bool IsHiddenPower => HiddenPowerType != null;
+
+    /// <summary>The type's colour - only read for a Hidden Power line.</summary>
+    public Color TypeColor => PokemonTypeColors.For(HiddenPowerType);
+
+    /// <summary>The full name the colour stands in for, and where the type
+    /// came from when the card did not print it.</summary>
+    public string? Tip => HiddenPowerType == null
+        ? null
+        : TypeFromIvs
+            ? $"{Name} ({HiddenPowerType}) - the type the IVs give it"
+            : $"{Name} ({HiddenPowerType})";
+}
+
 /// <summary>§154/§157. One slot of the Simulator's team builder - top-level
 /// (not nested) so the window's compiled DataTemplates stay plain, same as
 /// AdminReplayItem. §157: the species is picked through the same
@@ -35,6 +71,27 @@ namespace Foot_Tracker.ViewModels;
 public sealed partial class SimulatorSlotViewModel : ViewModelBase
 {
     private readonly ISimulatorSpriteProvider sprites;
+
+    /// <summary>§372. The card's row order - Atk, Def, Spe, SpA, SpD, HP -
+    /// as indexes into the HP-first arrays the import carries. The same
+    /// order CardOrderSpread has always used; the table just lays it out
+    /// as rows instead of a line. §374: with the stat's name as
+    /// PokemonBattleMath.NatureCatalog spells it, so each row can ask the
+    /// nature what it does to it - null for HP, which no nature touches.</summary>
+    private static readonly (string Label, int Index, string? Stat)[] CardStatOrder =
+    {
+        ("Atk", 1, "Attack"), ("Def", 2, "Defense"), ("Spe", 5, "Speed"),
+        ("SpA", 3, "SpAttack"), ("SpD", 4, "SpDefense"), ("HP", 0, null),
+    };
+
+    /// <summary>§374. "Hidden Power", with or without the type the card
+    /// prints after it - CardImport writes it as "Hidden Power (Ice)" when
+    /// the card's own word was in the move data, and as plain "Hidden
+    /// Power" when it was not. Square brackets as well, since that is how
+    /// the game itself prints it and a storage entry could carry either.</summary>
+    private static readonly Regex HiddenPowerName = new(
+        @"^\s*Hidden\s+Power\s*(?:[\(\[]\s*([A-Za-z]+)\s*[\)\]])?\s*$",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
     /// <summary>§162: the Pokemon this slot carries - always one read off
     /// the player's own game (a fresh scan or a storage pick). The slot
@@ -49,6 +106,25 @@ public sealed partial class SimulatorSlotViewModel : ViewModelBase
     [ObservableProperty] private string spreadLine = "";
     [ObservableProperty] private string noteLine = "";
     [ObservableProperty] private bool hasNotes;
+
+    // §372: the card as the mockup draws it - a stat table and a move list
+    // where one line of each used to be, and a record in the corner.
+    // §374: the move list is rows rather than names, so Hidden Power can
+    // carry its type (see SimulatorMoveRow).
+    [ObservableProperty] private IReadOnlyList<SimulatorStatRow> statRows = Array.Empty<SimulatorStatRow>();
+    [ObservableProperty] private IReadOnlyList<SimulatorMoveRow> moves = Array.Empty<SimulatorMoveRow>();
+
+    /// <summary>§374. The species' types, for the icon row under the sprite
+    /// - the same TypeIconConverter row every other sprite in the app has,
+    /// from the same lookup (PokemonSpriteService.GetTypes).</summary>
+    [ObservableProperty] private IReadOnlyList<string> types = Array.Empty<string>();
+
+    /// <summary>§372. Finished battles this Pokemon was on the team for.
+    /// Read from storage when the card is filled and again after every
+    /// battle ends (RefreshRecord) - the store is the record, this is the
+    /// display.</summary>
+    [ObservableProperty] private int wins;
+    [ObservableProperty] private int losses;
 
     // §159: the held item, picked through the item picker dialog.
     [ObservableProperty] private string? selectedItemName;
@@ -78,7 +154,82 @@ public sealed partial class SimulatorSlotViewModel : ViewModelBase
         NoteLine = string.Join("  ", imported.Notes);
         HasNotes = imported.Notes.Count > 0;
 
+        // §372: the same six numbers as SpreadLine, as rows. Guarded on the
+        // array lengths the way ToImported guards them, so a malformed
+        // entry shows an empty table rather than throwing at the binding.
+        // §374: each row also knows what the nature does to it, from the
+        // same table the calculators use - 1.1 for the raised stat, 0.9 for
+        // the lowered one, 1.0 for the rest, for HP, and for a nature name
+        // the table does not know (a misread), which colours nothing rather
+        // than guessing.
+        StatRows = imported.Ivs.Length == 6 && imported.Evs.Length == 6
+            ? CardStatOrder.Select(o => new SimulatorStatRow(
+                    o.Label,
+                    imported.Ivs[o.Index],
+                    imported.Evs[o.Index],
+                    Boosted: o.Stat != null && PokemonBattleMath.GetNatureMultiplier(imported.NatureName, o.Stat) > 1.0,
+                    Hindered: o.Stat != null && PokemonBattleMath.GetNatureMultiplier(imported.NatureName, o.Stat) < 1.0))
+                .ToList()
+            : Array.Empty<SimulatorStatRow>();
+
+        Moves = imported.MoveNames.Count > 0
+            ? imported.MoveNames.Select(name => BuildMoveRow(name, imported.Ivs)).ToList()
+            : new List<SimulatorMoveRow> { new("(no moves)", null) };
+
+        Types = PokemonSpriteService.GetTypes(imported.SpeciesName);
+
+        RefreshRecord();
+
         _ = LoadSpriteAsync(imported.SpeciesName, imported.IsShiny);
+    }
+
+    /// <summary>§374. One move as the card lists it. Anything but Hidden
+    /// Power is its name. Hidden Power gets its type: the one the card
+    /// printed in the bracket when there was one, otherwise the one the
+    /// IVs give it - the same Gen 3+ formula the IV calculator shows, which
+    /// is how the game decides it - so the colour is there either way.
+    /// The bracket itself is dropped from the name; the colour says it,
+    /// and the tooltip spells it out.</summary>
+    internal static SimulatorMoveRow BuildMoveRow(string name, int[] ivs)
+    {
+        Match match = HiddenPowerName.Match(name ?? string.Empty);
+
+        if (!match.Success)
+            return new SimulatorMoveRow(name ?? string.Empty, null);
+
+        if (match.Groups[1].Success)
+        {
+            string printed = match.Groups[1].Value;
+            string typed = char.ToUpperInvariant(printed[0]) + printed.Substring(1).ToLowerInvariant();
+
+            return new SimulatorMoveRow("Hidden Power", typed);
+        }
+
+        // GetHiddenPowerType wants HP, Atk, Def, SPEED, SpA, SpD; the import
+        // carries HP, Atk, Def, SpA, SpD, Speed (see ImportedPokemon).
+        if (ivs is { Length: 6 })
+        {
+            string fromIvs = PokemonBattleMath.GetHiddenPowerType(
+                new[] { ivs[0], ivs[1], ivs[2], ivs[5], ivs[3], ivs[4] });
+
+            if (PokemonTypeColors.TryGet(fromIvs, out _))
+                return new SimulatorMoveRow("Hidden Power", fromIvs, TypeFromIvs: true);
+        }
+
+        return new SimulatorMoveRow("Hidden Power", null);
+    }
+
+    /// <summary>§372. Re-reads this card's record from storage.</summary>
+    public void RefreshRecord()
+    {
+        if (Imported == null)
+        {
+            Wins = 0;
+            Losses = 0;
+            return;
+        }
+
+        (Wins, Losses) = SimulatorPokemonStorage.RecordFor(Imported);
     }
 
     private async Task LoadSpriteAsync(string species, bool shiny)
@@ -265,8 +416,14 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
     /// it stays open across picks now, so this hands back everything chosen
     /// while it was up (an empty list = nothing was). The argument asks for
     /// the multi-pick window; Replace from Storage passes false and gets a
-    /// window that closes on the first click.</summary>
-    public Func<bool, Task<IReadOnlyList<ImportedPokemon>>>? RequestStoragePick { get; set; }
+    /// window that closes on the first click.
+    ///
+    /// §275: the second argument is how many team slots are free, so the
+    /// picker can refuse a pick that would not fit AT THE CLICK instead of
+    /// banking it and dropping it on the way out. The single-pick path
+    /// passes it too and the picker ignores it there - a swap needs no free
+    /// slot, which is the whole point of a swap.</summary>
+    public Func<bool, int, Task<IReadOnlyList<ImportedPokemon>>>? RequestStoragePick { get; set; }
 
     /// <summary>§173: the window opens the custom opponent editor - null
     /// starts a new one. True back means something was saved, so the
@@ -335,10 +492,13 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
     /// each to finish before setting the next.</summary>
     [ObservableProperty] private BattleEffectRequest? currentEffect;
 
-    [ObservableProperty] private string animationSpeed = "Normal";
-
-    public IReadOnlyList<string> AnimationSpeeds { get; } =
-        new[] { "Normal", "Fast", "Slow", "Off" };
+    /// <summary>§372. The animation speed dropdown is gone from the battle
+    /// header and every move plays at what used to be its Fast setting.
+    /// §217's four choices were Normal 1.00, Fast 0.55, Slow 1.60 and Off;
+    /// this is the one that was kept. Off is not offered any more - the
+    /// pictures are short at this speed and the turn resolves the same
+    /// either way.</summary>
+    private const double AnimationFactor = 0.55;
 
     /// <summary>§217. Everything one picture needs, resolved at the moment
     /// the move was announced. Deliberately NOT a reference to the
@@ -393,6 +553,12 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
     /// told this when it opens so it can say whether the next Add joins the
     /// team or waits in storage.</summary>
     public int FreeTeamSlots => Math.Max(0, TeamBuilder.MaxTeamSize - TeamSlots.Count);
+
+    /// <summary>§275. A full team's size, exposed so the View can tell the
+    /// storage picker what number to put in its refusal. Read from
+    /// TeamBuilder rather than written out as six, the same as every other
+    /// use of it in this file.</summary>
+    public int MaxTeamSize => TeamBuilder.MaxTeamSize;
 
     [ObservableProperty] private string setupStatus =
         "Import Pokemon from your game (1-6, screenshots of their summary cards), pick an opponent on the right, then press Start Battle.";
@@ -676,23 +842,12 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
             : "Observer off.";
     }
 
-    /// <summary>§185: which brain the custom opponent ended up with, and
-    /// why. Shown under the radio so the answer is visible before the
-    /// battle rather than inferred from how it played.</summary>
-    [ObservableProperty] private string opponentBrainText = "";
-
-    /// <summary>§218. Whether a custom opponent is played by the trained
-    /// model rather than by Monte Carlo. Off by default.
-    ///
-    /// §185's reasoning for preferring the network has not changed - a
-    /// custom opponent is the one fight with no published guides to
-    /// invalidate, so it is the one place an alternative brain costs nobody
-    /// anything. What that reasoning assumed was a model worth playing
-    /// against. While the training is unfinished Monte Carlo is the
-    /// stronger of the two, and an opponent you can beat by accident
-    /// teaches nothing, so the default sits there until the model earns it
-    /// back. Deliberately a checkbox and not a rebuild.</summary>
-    [ObservableProperty] private bool useModelOpponent;
+    // §372: OpponentBrainText and UseModelOpponent are gone. The trained
+    // model (§185, opt-in since §218) is no longer offered anywhere in the
+    // window: every opponent - random, Boss Database, custom - is played by
+    // the Monte Carlo brain, and no screen names the brain at all. The
+    // model code itself stays in the project, unreachable from here;
+    // BuildModelOpponent below is kept for the day it is wanted again.
 
     /// <summary>
     /// §185. The deep-learning opponent, or null when there is no model to
@@ -706,9 +861,18 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
     {
         IShadowEvaluator evaluator = EnsureShadowEvaluator();
 
-        if (!evaluator.Status.Available)
+        // §322: "available" was the wrong question. A model can load and
+        // still read a different number of features than the observation
+        // it would be shown, in which case it scores nothing and this
+        // opponent plays random moves at a person who was told they were
+        // facing the network. Asking about the width too turns that into
+        // this same honest note and the Monte Carlo brain they already
+        // trust.
+        string? problem = NeuralStrategy.Incompatibility(evaluator);
+
+        if (problem != null)
         {
-            note = "Deep-learning opponent unavailable (" + evaluator.Status.Description +
+            note = "Deep-learning opponent unavailable (" + problem +
                    ") - this battle uses the Monte Carlo brain instead. " +
                    "Install a trained model from Admin Console > Battle Lab.";
             return null;
@@ -1008,7 +1172,11 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
         // lost here - what is picked is already in storage - so a full team
         // is reported rather than refused, and it names the way in.
         // §203: and it hands back everything picked, not one Pokemon.
-        IReadOnlyList<ImportedPokemon> picked = await RequestStoragePick(true);
+        // §275: it is also told how many slots are free, and refuses a pick
+        // beyond that with a warning of its own - so the overflow arm below
+        // is now unreachable from a View that wires the picker properly, and
+        // is kept as the backstop for one that does not.
+        IReadOnlyList<ImportedPokemon> picked = await RequestStoragePick(true, FreeTeamSlots);
 
         if (picked.Count == 0)
             return;
@@ -1052,7 +1220,7 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
 
         // §203: one pick only - swapping one Pokemon has nothing to do
         // with a second - so this window closes on the first click.
-        IReadOnlyList<ImportedPokemon> picked = await RequestStoragePick(false);
+        IReadOnlyList<ImportedPokemon> picked = await RequestStoragePick(false, FreeTeamSlots);
 
         if (picked.Count == 0)
             return;
@@ -1105,10 +1273,38 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
             : $"{who} moved to slot {to + 1}.";
     }
 
-    /// <summary>§203. The team as it was when the app last closed.
-    /// References into storage, not copies - see SimulatorTeamStore for
-    /// why - so a slot whose Pokemon has since been deleted is dropped
-    /// rather than resurrected.</summary>
+    /// <summary>
+    /// §203/§317. The team as it was when the app last closed.
+    ///
+    /// STORAGE FIRST, THE SAVED COPY SECOND. §203 stored references only -
+    /// the GameId-then-Fingerprint identity - on the reasoning that every
+    /// Pokemon on a team is already in storage, so a copy would be a second
+    /// version of the same thing, free to drift, and a Pokemon re-imported
+    /// with better EVs would come back stale.
+    ///
+    /// That reasoning is still right, and the lookup still wins. What it
+    /// stopped being is COMPLETE: §314 gave the phone a builder that makes
+    /// Pokemon out of the Pokedex, and those were never in storage, so every
+    /// reference missed and a team built on a phone came back empty with
+    /// nothing said about it. §317 writes the Pokemon into the team file as
+    /// well, and reads it only when the reference cannot be resolved - so a
+    /// stored Pokemon is still the live one and a phone-built one survives.
+    ///
+    /// A slot that has neither is still dropped with a note, and that is the
+    /// case that keeps §203 honest: a Pokemon that WAS in storage saved no
+    /// copy, so deleting it from storage still drops the slot rather than
+    /// resurrecting something the player threw away. A team file written
+    /// before §317 has no copies at all and behaves exactly as it did.
+    /// </summary>
+    /// <summary>§317. The one definition of "storage already has this one",
+    /// used by the save to decide whether a copy is needed and by the restore
+    /// to decide whether to read one. Two spellings of this rule would mean a
+    /// slot that saves no copy and then cannot find one.</summary>
+    private static StoredPokemon? FindInStorage(
+        IReadOnlyList<StoredPokemon> stored, string? gameId, string fingerprint) =>
+        stored.FirstOrDefault(e =>
+            (gameId != null && e.GameId == gameId) || e.Fingerprint == fingerprint);
+
     private void RestoreTeam()
     {
         List<SavedTeamSlot> saved = SimulatorTeamStore.Load();
@@ -1126,9 +1322,12 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
         {
             foreach (SavedTeamSlot slot in saved.Take(TeamBuilder.MaxTeamSize))
             {
-                StoredPokemon? entry = stored.FirstOrDefault(e =>
-                    (slot.GameId != null && e.GameId == slot.GameId) ||
-                    e.Fingerprint == slot.Fingerprint);
+                StoredPokemon? entry = FindInStorage(stored, slot.GameId, slot.Fingerprint);
+
+                // §317: the copy the file carries, used only when the
+                // reference found nothing - which the save arranged to be
+                // exactly the slots storage never held.
+                entry ??= slot.Pokemon;
 
                 if (entry == null)
                 {
@@ -1152,26 +1351,57 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
             return;
 
         SetupStatus = missing == 0
-            ? $"Your last team is back ({TeamSlots.Count} Pokemon). Import or pick from storage to change it."
-            : $"Your last team is back ({TeamSlots.Count} Pokemon); {missing} could not be found in storage any more.";
+            ? $"Your last team is back ({TeamSlots.Count} Pokemon)."
+            : $"Your last team is back ({TeamSlots.Count} Pokemon); {missing} could not be found any more.";
     }
 
-    /// <summary>§203. Written on every change to the slots. Cheap enough to
-    /// do eagerly - six references and their items - and eager is what
-    /// makes it survive the app being closed from the taskbar rather than
-    /// through a menu.</summary>
-    private void SaveTeam()
+    /// <summary>
+    /// §203. Written on every change to the slots. Cheap enough to do
+    /// eagerly - six Pokemon and their items - and eager is what makes it
+    /// survive the app being closed from the taskbar rather than through a
+    /// menu.
+    ///
+    /// §316: public, so the Android companion's Update button can persist a
+    /// card it edited in place. Every one of the desktop's own callers is
+    /// still inside this class.
+    ///
+    /// §317: a slot storage does NOT hold also carries the Pokemon itself.
+    /// Only such a slot: a Pokemon that is in storage stays a pure reference,
+    /// so §203's rule still holds exactly - re-import it with better EVs and
+    /// the team picks the better one up, delete it from storage on purpose
+    /// and the slot is still dropped rather than resurrected from a copy.
+    /// What changes is the case §203 could not have: a Pokemon built on a
+    /// phone, which storage will never hold and which used to vanish.
+    ///
+    /// The copy costs nothing to make - the fingerprint is read off it
+    /// anyway, so this is the same object kept rather than thrown away.
+    /// </summary>
+    public void SaveTeam()
     {
         if (restoringTeam)
             return;
 
+        IReadOnlyList<StoredPokemon> stored = SimulatorPokemonStorage.All();
+
         SimulatorTeamStore.Save(TeamSlots
             .Where(s => s.Imported != null)
-            .Select(s => new SavedTeamSlot
+            .Select(s =>
             {
-                GameId = s.Imported!.GameId,
-                Fingerprint = StoredPokemon.From(s.Imported).Fingerprint,
-                ItemName = s.SelectedItemName
+                StoredPokemon copy = StoredPokemon.From(s.Imported!);
+
+                bool inStorage =
+                    FindInStorage(stored, s.Imported!.GameId, copy.Fingerprint) != null;
+
+                return new SavedTeamSlot
+                {
+                    GameId = s.Imported!.GameId,
+                    Fingerprint = copy.Fingerprint,
+                    ItemName = s.SelectedItemName,
+
+                    // The whole point: a copy exists for, and only for, a
+                    // Pokemon the lookup will not find.
+                    Pokemon = inStorage ? null : copy
+                };
             }));
     }
 
@@ -1233,26 +1463,21 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
         // still reaches the log title below so a replay can be discussed.
         int seed = Environment.TickCount & 0x7fffffff;
 
-        // §155: the opponent comes from the picked mode - the §154 random
-        // mirror team with the baseline strategy, or a Boss Database fight
-        // under the Monte Carlo brain.
+        // §155: the opponent comes from the picked mode. §372: whichever
+        // mode, it is played by the Monte Carlo brain - the §154 baseline
+        // strategy that the random mirror team used to get is no longer
+        // used, and the brain is never named on screen.
         List<PokemonState> opponentMons;
         var opponentNotes = new List<string>();
         string opponentName;
         string battleTitle;
-        // §185: the custom opponent is the network now, so this is no
-        // longer always a Monte Carlo brain.
-        IBattleStrategy? bossBrain = null;
+        IBattleStrategy bossBrain;
 
         // §183: one battle's worth of notes for the opponent's book. Built
         // for every battle and handed to both the brain (which reads it
         // while choosing) and the session (which folds it in when the
         // battle ends and it knows who won).
         BattleRecall recall = OpponentMemoryStore.Current.Begin();
-
-        // §185: only a custom opponent has a brain worth remarking on, so
-        // the note is cleared here and filled in only by that branch.
-        OpponentBrainText = "";
 
         if (UseCustomOpponent)
         {
@@ -1278,46 +1503,17 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
             opponentNotes.AddRange(customTeam.Warnings);
             opponentNotes.AddRange(CustomOpponents.Validate(entry.Team));
             opponentName = entry.Title;
-            battleTitle = $"You vs {entry.Title} (seed {seed})";
+            // §372: no seed in the title. It was there so a replay could be
+            // discussed; Restart Battle is a fresh roll by design, so there
+            // is nothing to quote it for, and the header reads as the mockup
+            // draws it.
+            battleTitle = $"You vs {entry.Title}";
 
-            // §185: and here the deep-learning model finally plays a
-            // person. §173 gave a custom opponent the same brain a boss
-            // gets, on the reasoning that it is a boss in every way except
-            // who authored it. That reasoning is deliberately reversed
-            // now, and only here: a Boss Database fight has published
-            // guides written against how it plays, and a boss that
-            // suddenly played differently would invalidate them. A custom
-            // opponent has no such guides, which makes it the one place an
-            // alternative opponent costs nobody anything.
-            // §218: the network is opt-in now. See UseModelOpponent.
-            if (UseModelOpponent)
-            {
-                bossBrain = BuildModelOpponent(recall, out string brainNote);
-
-                OpponentBrainText = brainNote;
-
-                if (bossBrain == null)
-                {
-                    // No usable model. Rather than refuse the battle, fall
-                    // back to the brain a custom opponent used to get - and
-                    // say so in both places the player looks, because Monte
-                    // Carlo is the STRONGER of the two and losing to it
-                    // while believing you faced the network would be the
-                    // wrong lesson.
-                    bossBrain = new MonteCarloStrategy(BossBrainConfig, seed: seed ^ 0x51ED, recall: recall);
-                    battleTitle += " [Monte Carlo - no trained model]";
-                }
-            }
-            else
-            {
-                // The title stays clean here on purpose. That marker means
-                // "you did not get the brain you asked for"; asking for
-                // Monte Carlo and receiving it is not that.
-                bossBrain = new MonteCarloStrategy(BossBrainConfig, seed: seed ^ 0x51ED, recall: recall);
-
-                OpponentBrainText = "Monte Carlo brain - the same one every Boss Database fight uses. " +
-                                    "Tick the box above to face the trained model instead.";
-            }
+            // §372: the same brain a boss gets. §185 had put the trained
+            // model here, §218 made it opt-in, and this takes it off the
+            // screen entirely - see the note where UseModelOpponent used
+            // to be declared.
+            bossBrain = new MonteCarloStrategy(BossBrainConfig, seed: seed ^ 0x51ED, recall: recall);
         }
         else if (UseBossOpponent)
         {
@@ -1343,7 +1539,7 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
             opponentNotes.AddRange(bossTeam.Errors);      // slot-level losses still show in the log
             opponentNotes.AddRange(bossTeam.Warnings);
             opponentName = fight.NpcName ?? fight.BossName;
-            battleTitle = $"You vs {fight.DisplayTitle} (seed {seed})";
+            battleTitle = $"You vs {fight.DisplayTitle}";
 
             // One brain family and configuration for every boss; a fresh
             // instance per battle so no decision state crosses fights -
@@ -1363,13 +1559,21 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
 
             opponentMons = opponentTeam.Team;
             opponentNotes.AddRange(opponentTeam.Warnings);
-            opponentName = "Baseline AI";
-            battleTitle = $"You vs Baseline AI (seed {seed})";
+
+            // §372: a random team used to be played by the §154 baseline
+            // strategy and titled after it. It is the Monte Carlo brain now
+            // like every other opponent, and it is named for what it is
+            // rather than for how it thinks - "Random Trainer sent out
+            // Pidgey!" is a line a log can carry; "Baseline AI sent out"
+            // was a line about the program.
+            opponentName = "Random Trainer";
+            battleTitle = "You vs Random Trainer";
+            bossBrain = new MonteCarloStrategy(BossBrainConfig, seed: seed ^ 0x51ED, recall: recall);
         }
 
         battleCts = new CancellationTokenSource();
 
-        // §185: only the Monte Carlo brain has rollouts to cut short.
+        // Rollouts in flight are cut short when the battle is left.
         if (bossBrain is MonteCarloStrategy cancellable)
             cancellable.CancellationToken = battleCts.Token;
 
@@ -1403,7 +1607,7 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
             bossBrain,
             seed: seed,
             observer: observer,
-            recall: bossBrain != null ? recall : null);
+            recall: recall);
 
         // §217: the engine reports every move as it is used. Subscribing to
         // this battle's own EventManager and not a shared one matters -
@@ -1611,19 +1815,23 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
             pendingAnimations.Clear();
         }
 
-        if (steps.Length == 0 || AnimationSpeed == "Off")
+        if (steps.Length == 0)
             return;
 
-        double factor = AnimationSpeed switch
-        {
-            "Fast" => 0.55,
-            "Slow" => 1.60,
-            _ => 1.00,
-        };
+        // §372: one speed. See AnimationFactor.
+        double factor = AnimationFactor;
+
+        // §372: THIS battle's token, taken once. The loop used to read the
+        // field on every step, and Restart Battle replaces the field with a
+        // fresh, uncancelled token the moment the new battle starts - so a
+        // turn's pictures still playing from the old one would have carried
+        // on under the new one's colours. A captured token belongs to the
+        // battle whose pictures these are, and is cancelled with it.
+        CancellationTokenSource? cts = battleCts;
 
         foreach (PendingAnimation step in steps)
         {
-            if (battleCts == null || battleCts.IsCancellationRequested)
+            if (cts == null || cts.IsCancellationRequested)
                 return;
 
             (Point attacker, Rect attackerBox) = SceneBox(step.ByPlayer);
@@ -1732,6 +1940,21 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
         InBattle = false;
     }
 
+    /// <summary>§372. Restart Battle: the same team, the same opponent at
+    /// the same difficulty, a fresh roll of the dice. Everything StartBattle
+    /// reads - the team cards, the opponent radios, the selected boss and
+    /// its difficulty, the stadium toggle - is still exactly as it was when
+    /// the battle began, so a restart IS a start, after leaving the one in
+    /// progress. A fresh seed rather than the same one on purpose: a
+    /// rematch that played out identically would look broken, and the seed
+    /// is no longer shown anywhere to be replayed from.</summary>
+    [RelayCommand]
+    private void RestartBattle()
+    {
+        LeaveBattle();
+        StartBattle();
+    }
+
     // ---- refresh ----
 
     private void RefreshBattleView()
@@ -1742,8 +1965,10 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
         BattleState state = session.State;
 
         TurnText = $"Turn {Math.Max(1, state.TurnNumber + (state.Outcome == BattleOutcome.Unfinished ? 1 : 0))}";
-        WeatherText = "Weather: " + (state.Environment.Weather == WeatherType.None ? "none" : state.Environment.Weather.ToString());
-        TerrainText = "Terrain: " + (state.Environment.Terrain == TerrainType.None ? "none" : state.Environment.Terrain.ToString());
+        // §372: "None" with a capital, the way the mockup has it and the
+        // way the enum names it when there IS weather - "Sun", "Rain".
+        WeatherText = "Weather: " + (state.Environment.Weather == WeatherType.None ? "None" : state.Environment.Weather.ToString());
+        TerrainText = "Terrain: " + (state.Environment.Terrain == TerrainType.None ? "None" : state.Environment.Terrain.ToString());
 
         var player = session.Player.ActivePokemon;
         var opponent = session.Opponent.ActivePokemon;
@@ -1778,6 +2003,27 @@ public sealed partial class SimulatorViewModel : ViewModelBase, IDisposable
         {
             memoryWritten = true;
             OpponentMemoryStore.Save();
+
+            // §372: the card records, on the same once-per-battle
+            // transition. A win or a loss goes to every Pokemon on the team
+            // - it was on the team for it, which is what the corner of the
+            // card says it counts. A draw or a cancelled battle is neither.
+            bool? won = session.Outcome switch
+            {
+                BattleOutcome.Player1Wins => true,
+                BattleOutcome.Player2Wins => false,
+                _ => null,
+            };
+
+            if (won is bool decided)
+            {
+                SimulatorPokemonStorage.RecordBattle(
+                    TeamSlots.Where(t => t.Imported != null).Select(t => t.Imported!),
+                    decided);
+
+                foreach (SimulatorSlotViewModel slot in TeamSlots)
+                    slot.RefreshRecord();
+            }
         }
 
         ResultText = session.Outcome switch

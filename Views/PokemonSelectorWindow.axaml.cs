@@ -32,6 +32,18 @@ public partial class PokemonSelectorWindow : Window
         }
     }
 
+    // §272: a click in the forms/event-skins column. Separate handler from
+    // Card_PointerPressed above because the two columns do different things
+    // with the same card type - the grid picks a TARGET, this picks the
+    // PICTURE that target is drawn with. See TargetSkinPicker.
+    private void FormCard_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (sender is Control { DataContext: ViewModels.PokemonCardItem card })
+        {
+            ViewModel?.SelectSkinCommand.Execute(card);
+        }
+    }
+
     // Double click: confirm immediately (replaces the DoubleClick handler).
     private void Card_DoubleTapped(object? sender, RoutedEventArgs e)
     {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- §315. The adaptive icon, used from API 26. The launcher masks the 108dp
+     canvas to whatever shape it draws - circle, squircle, rounded square -
+     and only the central 72dp is guaranteed to survive the mask, so the two
+     layers are split the way that survives it: the red is a BACKGROUND that
+     fills the whole canvas and becomes the mask's own shape, and Groudon is
+     a FOREGROUND sized to sit inside the safe zone, where nothing can crop
+     him. Putting the whole circle in the foreground instead would have shrunk
+     the art and left dead space in every non-round launcher.
+
+     monochrome is the API 33 themed icon and deliberately points at the SAME
+     bitmap as the foreground: that layer is already a solid silhouette on
+     transparency, which is exactly what a themed icon wants, and a second
+     copy would just be a second thing to keep in step. Devices below 33
+     ignore the element. -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+  <background android:drawable="@color/appicon_background" />
+  <foreground android:drawable="@mipmap/appicon_foreground" />
+  <monochrome android:drawable="@mipmap/appicon_foreground" />
+</adaptive-icon>

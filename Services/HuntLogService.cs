@@ -126,6 +126,10 @@ namespace Foot_Tracker.Services
 
                 if (deserialized != null)
                 {
+                    // §405: the old spelling of the two Nidoran becomes the new.
+                    foreach (HuntLogEntry entry in deserialized)
+                        entry.PokemonName = PokemonNames.Modern(entry.PokemonName);
+
                     entries.AddRange(deserialized);
                 }
 
@@ -206,9 +210,10 @@ namespace Foot_Tracker.Services
         /// </summary>
         public static void RegisterEncounter(string pokemonName, int? level, string? gender, string map, string? rareType)
         {
-            // Admin Client isolation (§101) - the Catch Logs are normal-client
-            // data; admin-mode activity must never add to or remove from them.
-            if (AdminModeService.IsActive)
+            // Isolation (§101, §249) - the Catch Logs are normal-client data;
+            // no isolated session, whatever its reason, may add to or remove
+            // from them. See IsolatedSession.
+            if (IsolatedSession.IsActive)
                 return;
 
             if (string.IsNullOrWhiteSpace(pokemonName))
@@ -243,9 +248,10 @@ namespace Foot_Tracker.Services
         /// </summary>
         public static void RemoveMostRecent()
         {
-            // Admin Client isolation (§101) - the Catch Logs are normal-client
-            // data; admin-mode activity must never add to or remove from them.
-            if (AdminModeService.IsActive)
+            // Isolation (§101, §249) - the Catch Logs are normal-client data;
+            // no isolated session, whatever its reason, may add to or remove
+            // from them. See IsolatedSession.
+            if (IsolatedSession.IsActive)
                 return;
 
             EnsureLoaded();
@@ -271,9 +277,10 @@ namespace Foot_Tracker.Services
         /// </summary>
         public static void ClearAll()
         {
-            // Admin Client isolation (§101) - the Catch Logs are normal-client
-            // data; admin-mode activity must never add to or remove from them.
-            if (AdminModeService.IsActive)
+            // Isolation (§101, §249) - the Catch Logs are normal-client data;
+            // no isolated session, whatever its reason, may add to or remove
+            // from them. See IsolatedSession.
+            if (IsolatedSession.IsActive)
                 return;
 
             EnsureLoaded();
@@ -310,9 +317,10 @@ namespace Foot_Tracker.Services
         /// other species' entries are untouched.</summary>
         public static void RemoveMostRecentForSpecies(string pokemonName)
         {
-            // Admin Client isolation (§101) - the Catch Logs are normal-client
-            // data; admin-mode activity must never add to or remove from them.
-            if (AdminModeService.IsActive)
+            // Isolation (§101, §249) - the Catch Logs are normal-client data;
+            // no isolated session, whatever its reason, may add to or remove
+            // from them. See IsolatedSession.
+            if (IsolatedSession.IsActive)
                 return;
 
             EnsureLoaded();
@@ -337,9 +345,10 @@ namespace Foot_Tracker.Services
         /// species' entries are untouched.</summary>
         public static void ClearAllForSpecies(string pokemonName)
         {
-            // Admin Client isolation (§101) - the Catch Logs are normal-client
-            // data; admin-mode activity must never add to or remove from them.
-            if (AdminModeService.IsActive)
+            // Isolation (§101, §249) - the Catch Logs are normal-client data;
+            // no isolated session, whatever its reason, may add to or remove
+            // from them. See IsolatedSession.
+            if (IsolatedSession.IsActive)
                 return;
 
             EnsureLoaded();

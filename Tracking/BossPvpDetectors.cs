@@ -211,65 +211,200 @@ namespace Foot_Tracker.Tracking
                 }
             }
 
-            // Two passes over the whole catalog (not interleaved per-entry) so a
-            // short last-word fallback match never preempts a real full-name match
-            // that happens to sit later in the list.
-
-            foreach (var (id, name) in catalog)
+            // §377: the passes over the catalog live in MatchCatalog, so the
+            // rule can be read - and ported to a test - on its own.
+            if (MatchCatalog(normalized, catalog, ExcludedFromAutoDetection, out bossId, out bossName, out string how))
             {
-                if (ExcludedFromAutoDetection.Contains(id))
-                    continue;
+                Log.Information(
+                    "BossBattleDetector matched boss '{BossName}' ({How}) from OCR text '{OcrText}'",
+                    bossName, how, normalized);
 
-                string cleanedName = StripQualifierSuffix(name);
-
-                if (normalized.Contains(cleanedName, StringComparison.OrdinalIgnoreCase))
-                {
-                    bossId = id;
-                    bossName = name;
-
-                    Log.Information(
-                        "BossBattleDetector matched boss '{BossName}' (full name) from OCR text '{OcrText}'",
-                        name, normalized);
-
-                    return true;
-                }
-            }
-
-            // Some bosses' battle titles show only part of their full name - e.g.
-            // "Oak" for "Professor Oak" (confirmed via a real tester's log: OCR
-            // correctly read "...VS. Oak", but the catalog name "Professor Oak"
-            // never appears verbatim in any battle title). Falls back to the last
-            // word of the cleaned name, guarded by a minimum length so short/common
-            // words (e.g. "And" in "Jessie And James") can't cause false matches.
-            foreach (var (id, name) in catalog)
-            {
-                if (ExcludedFromAutoDetection.Contains(id))
-                    continue;
-
-                string cleanedName = StripQualifierSuffix(name);
-                string lastWord = cleanedName
-                    .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                    .LastOrDefault() ?? string.Empty;
-
-                // Lowered from 4 to 3 - confirmed via a real tester's log that
-                // "Professor Oak" and "Professor Elm" both show only their
-                // 3-letter surname ("Oak", "Elm") in the actual battle title,
-                // and a length-4 minimum silently excluded both.
-                if (lastWord.Length >= 3 &&
-                    normalized.Contains(lastWord, StringComparison.OrdinalIgnoreCase))
-                {
-                    bossId = id;
-                    bossName = name;
-
-                    Log.Information(
-                        "BossBattleDetector matched boss '{BossName}' (last word '{LastWord}') from OCR text '{OcrText}'",
-                        name, lastWord, normalized);
-
-                    return true;
-                }
+                return true;
             }
 
             return false;
+        }
+
+        /// <summary>§377. The words a battle title may print ahead of a boss's
+        /// name - or may not. The catalog says "Professor Rowan", "Prof. Elm"
+        /// and "Officer Jenny"; a real title has read "VS. Oak" with no
+        /// honorific at all and "VS. Professor Rowan" with the whole of it,
+        /// so a match cannot depend on whether it is there, how it is
+        /// abbreviated, or how many spaces OCR put after it. Longest first,
+        /// so "Prof" is not taken off the front of "Professor". Each carries
+        /// the compact forms a title might hold, for the gate in MatchCatalog's
+        /// last pass.</summary>
+        private static readonly (string Prefix, string[] CompactAliases)[] Honorifics =
+        {
+            ("Elite Four", new[] { "elitefour" }),
+            ("Gym Leader", new[] { "gymleader", "leader" }),
+            ("Professor", new[] { "professor", "prof" }),
+            ("Guardian", new[] { "guardian" }),
+            ("Champion", new[] { "champion" }),
+            ("Officer", new[] { "officer" }),
+            ("Leader", new[] { "leader" }),
+            ("Prof.", new[] { "professor", "prof" }),
+            ("Prof", new[] { "professor", "prof" }),
+            ("Dr.", new[] { "doctor", "dr" }),
+        };
+
+        /// <summary>Letters and digits only, lower case: the shape two strings
+        /// have once the spaces OCR gets wrong are out of the way.</summary>
+        internal static string Compact(string text) =>
+            new string(text.ToLowerInvariant().Where(char.IsLetterOrDigit).ToArray());
+
+        /// <summary>§377. The catalog name with its honorific taken off -
+        /// "Rowan" for "Professor Rowan", "Jenny" for "Officer Jenny" - with
+        /// the honorific's compact aliases; null when the name carries none.
+        /// (The element is "Surname", not "Rest": C# reserves Rest as a tuple
+        /// element name - CS8126 - §379.)</summary>
+        internal static (string Surname, string[] Aliases)? WithoutHonorific(string cleanedName)
+        {
+            foreach ((string prefix, string[] aliases) in Honorifics)
+            {
+                if (!cleanedName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) ||
+                    cleanedName.Length <= prefix.Length)
+                {
+                    continue;
+                }
+
+                // "Prof." ends in its own punctuation; "Professor" needs the
+                // space, or "Professorial" would lose its front.
+                if (!prefix.EndsWith('.') && !char.IsWhiteSpace(cleanedName[prefix.Length]))
+                    continue;
+
+                string surname = cleanedName.Substring(prefix.Length).Trim();
+
+                return surname.Length > 0 ? (surname, aliases) : null;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// §377. Which boss, if any, a battle title names. Five passes, each
+        /// over the WHOLE catalog before the next starts (longest name first),
+        /// so a loose match never preempts a stricter one that happens to sit
+        /// later in the list:
+        ///
+        ///  1. the whole name, as written                 ("Professor Rowan")
+        ///  2. the whole name, spaces aside               ("Professor  Rowan", "ProfessorRowan")
+        ///  3. the name without its honorific, spaces aside ("Rowan"; "Prof. Rowan")
+        ///  4. the last word, three letters or more        ("Oak", "Jones")
+        ///  5. the honorific present and the surname within one letter of it
+        ///     ("Professer Rowen") - only for a name that HAS an honorific,
+        ///     and only when the title shows one, because a one-letter
+        ///     tolerance on a bare surname would let an NPC called Erica
+        ///     start Erika's cooldown.
+        ///
+        /// Pass 4 is the rule a real tester's log forced in the first place:
+        /// OCR read "...VS. Oak", and "Professor Oak" never appears verbatim in
+        /// a battle title. Three letters rather than four so that "Oak" and
+        /// "Elm" count; short common words ("And" in "Jessie And James")
+        /// still cannot match on their own.
+        /// </summary>
+        internal static bool MatchCatalog(
+            string normalized,
+            IReadOnlyList<(string BossId, string Name)> catalog,
+            IReadOnlySet<string> excluded,
+            out string? bossId,
+            out string? bossName,
+            out string how)
+        {
+            bossId = null;
+            bossName = null;
+            how = string.Empty;
+
+            string compactTitle = Compact(normalized);
+
+            // 1. as written
+            foreach (var (id, name) in catalog)
+            {
+                if (excluded.Contains(id))
+                    continue;
+
+                if (normalized.Contains(StripQualifierSuffix(name), StringComparison.OrdinalIgnoreCase))
+                    return Found(id, name, "full name", out bossId, out bossName, out how);
+            }
+
+            // 2. spaces aside
+            foreach (var (id, name) in catalog)
+            {
+                if (excluded.Contains(id))
+                    continue;
+
+                string compactName = Compact(StripQualifierSuffix(name));
+
+                if (compactName.Length >= 3 && compactTitle.Contains(compactName, StringComparison.Ordinal))
+                    return Found(id, name, "full name, spaces aside", out bossId, out bossName, out how);
+            }
+
+            // 3. without the honorific
+            foreach (var (id, name) in catalog)
+            {
+                if (excluded.Contains(id))
+                    continue;
+
+                var bare = WithoutHonorific(StripQualifierSuffix(name));
+
+                if (bare is null)
+                    continue;
+
+                string compactRest = Compact(bare.Value.Surname);
+
+                if (compactRest.Length >= 3 && compactTitle.Contains(compactRest, StringComparison.Ordinal))
+                    return Found(id, name, $"without the honorific: '{bare.Value.Surname}'", out bossId, out bossName, out how);
+            }
+
+            // 4. the last word
+            foreach (var (id, name) in catalog)
+            {
+                if (excluded.Contains(id))
+                    continue;
+
+                string lastWord = StripQualifierSuffix(name)
+                    .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                    .LastOrDefault() ?? string.Empty;
+
+                if (lastWord.Length >= 3 &&
+                    normalized.Contains(lastWord, StringComparison.OrdinalIgnoreCase))
+                {
+                    return Found(id, name, $"last word '{lastWord}'", out bossId, out bossName, out how);
+                }
+            }
+
+            // 5. honorific present, surname within a letter
+            foreach (var (id, name) in catalog)
+            {
+                if (excluded.Contains(id))
+                    continue;
+
+                var bare = WithoutHonorific(StripQualifierSuffix(name));
+
+                if (bare is null)
+                    continue;
+
+                bool honorificShown = bare.Value.Aliases.Any(alias =>
+                    ContainsFuzzyText(compactTitle, alias, alias.Length >= 7 ? 1 : 0));
+
+                if (!honorificShown)
+                    continue;
+
+                string compactRest = Compact(bare.Value.Surname);
+
+                if (compactRest.Length >= 5 && ContainsFuzzyText(compactTitle, compactRest, 1))
+                    return Found(id, name, $"honorific shown, '{bare.Value.Surname}' within a letter", out bossId, out bossName, out how);
+            }
+
+            return false;
+
+            static bool Found(string id, string name, string rule, out string? bossId, out string? bossName, out string how)
+            {
+                bossId = id;
+                bossName = name;
+                how = rule;
+                return true;
+            }
         }
 
         /// <summary>Strips a trailing parenthetical qualifier like "(Easy/Hard Only)"

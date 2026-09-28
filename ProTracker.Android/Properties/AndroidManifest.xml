@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- §295. No permissions: the companion reads its own private storage and
+       whatever the user hands it through the system file picker. -->
+  <!-- §315. android:icon is what the launcher, the app list, the share sheet
+       and the notification shade all read. There is deliberately no
+       android:roundIcon: that attribute exists so an app with a square icon
+       can supply a round alternative, and this icon is already a circle - a
+       second copy of the same bitmap under a second name would be bytes in
+       the APK and one more thing to forget to update. A round-icon launcher
+       with no roundIcon falls back to android:icon, which is the picture it
+       wanted. MainActivity declares no icon of its own, so it inherits this
+       one. -->
+  <application android:label="Pro Tracker" android:icon="@mipmap/appicon"
+               android:allowBackup="true" android:supportsRtl="true" />
+</manifest>

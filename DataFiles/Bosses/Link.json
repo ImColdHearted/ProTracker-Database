@@ -3,7 +3,7 @@
   "name": "Link",
   "location": "Twinleaf Town House 2 (Top Right Corner)",
   "locationPicture": "SharedPokemonLibrary/Assets/Locations/LinkLoc.png",
-  "NPCPicture": "SharedPokemonLibrary/Assets/Sprites/0.png",
+  "NPCPicture": "SharedPokemonLibrary/Assets/Bosses/Link.png",
   "BossCooldown": 288,
   "requirements": "Completed Sinnoh Elite 4",
   "difficulties": {
@@ -22,39 +22,48 @@
         "pokemon": [
           {
             "name": "Voltorb",
-            "dexNumber": 100
+            "dexNumber": 100,
+            "winStreakRequired": 0
           },
           {
             "name": "Ponyta",
-            "dexNumber": 77
+            "dexNumber": 77,
+            "winStreakRequired": 0
           },
           {
             "name": "Bronzor",
-            "dexNumber": 436
+            "dexNumber": 436,
+            "winStreakRequired": 0
           },
           {
             "name": "Hitmontop",
-            "dexNumber": 237
+            "dexNumber": 237,
+            "winStreakRequired": 0
           },
           {
             "name": "Phanpy",
-            "dexNumber": 231
+            "dexNumber": 231,
+            "winStreakRequired": 0
           },
           {
             "name": "Skarmory",
-            "dexNumber": 227
+            "dexNumber": 227,
+            "winStreakRequired": 0
           },
           {
             "name": "Absol",
-            "dexNumber": 359
+            "dexNumber": 359,
+            "winStreakRequired": 0
           },
           {
             "name": "Tepig",
-            "dexNumber": 498
+            "dexNumber": 498,
+            "winStreakRequired": 0
           },
           {
             "name": "Honedge",
-            "dexNumber": 679
+            "dexNumber": 679,
+            "winStreakRequired": 0
           }
         ],
         "items": [
@@ -222,39 +231,73 @@
         "pokemon": [
           {
             "name": "Voltorb",
-            "dexNumber": 100
+            "dexNumber": 100,
+            "winStreakRequired": 0
           },
           {
             "name": "Ponyta",
-            "dexNumber": 77
+            "dexNumber": 77,
+            "winStreakRequired": 0
           },
           {
             "name": "Bronzor",
-            "dexNumber": 436
+            "dexNumber": 436,
+            "winStreakRequired": 0
           },
           {
             "name": "Hitmontop",
-            "dexNumber": 237
+            "dexNumber": 237,
+            "winStreakRequired": 0
           },
           {
             "name": "Phanpy",
-            "dexNumber": 231
+            "dexNumber": 231,
+            "winStreakRequired": 0
           },
           {
             "name": "Skarmory",
-            "dexNumber": 227
+            "dexNumber": 227,
+            "winStreakRequired": 0
           },
           {
             "name": "Absol",
-            "dexNumber": 359
+            "dexNumber": 359,
+            "winStreakRequired": 0
           },
           {
             "name": "Tepig",
-            "dexNumber": 498
+            "dexNumber": 498,
+            "winStreakRequired": 0
           },
           {
             "name": "Honedge",
-            "dexNumber": 679
+            "dexNumber": 679,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Phanpy",
+            "dexNumber": 231,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Skarmory",
+            "dexNumber": 227,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Absol",
+            "dexNumber": 359,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Tepig",
+            "dexNumber": 498,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Honedge",
+            "dexNumber": 679,
+            "winStreakRequired": 3
           }
         ],
         "items": [
@@ -422,39 +465,73 @@
         "pokemon": [
           {
             "name": "Voltorb",
-            "dexNumber": 100
+            "dexNumber": 100,
+            "winStreakRequired": 0
           },
           {
             "name": "Ponyta",
-            "dexNumber": 77
+            "dexNumber": 77,
+            "winStreakRequired": 0
           },
           {
             "name": "Bronzor",
-            "dexNumber": 436
+            "dexNumber": 436,
+            "winStreakRequired": 0
           },
           {
             "name": "Hitmontop",
-            "dexNumber": 237
+            "dexNumber": 237,
+            "winStreakRequired": 0
           },
           {
             "name": "Phanpy",
-            "dexNumber": 231
+            "dexNumber": 231,
+            "winStreakRequired": 0
           },
           {
             "name": "Skarmory",
-            "dexNumber": 227
+            "dexNumber": 227,
+            "winStreakRequired": 0
           },
           {
             "name": "Absol",
-            "dexNumber": 359
+            "dexNumber": 359,
+            "winStreakRequired": 0
           },
           {
             "name": "Tepig",
-            "dexNumber": 498
+            "dexNumber": 498,
+            "winStreakRequired": 0
           },
           {
             "name": "Honedge",
-            "dexNumber": 679
+            "dexNumber": 679,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Phanpy",
+            "dexNumber": 231,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Skarmory",
+            "dexNumber": 227,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Absol",
+            "dexNumber": 359,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Tepig",
+            "dexNumber": 498,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Honedge",
+            "dexNumber": 679,
+            "winStreakRequired": 3
           }
         ],
         "items": [

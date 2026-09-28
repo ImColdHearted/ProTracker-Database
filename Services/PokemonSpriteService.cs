@@ -207,6 +207,26 @@ namespace Foot_Tracker.Services
                 // Canonical form name.
                 formLookup[form.Name] = form;
 
+                // §427. A form answers GetTypes under its name - the session
+                // table, the Map Explorer's card, the counterpart cards and
+                // the type icons beside a hunt target all ask by that name.
+                // Its OWN typing when the file gives one (the regional forms,
+                // and every form whose typing differs from its species' -
+                // Rotom-Wash, Shaymin-Sky, Charizard-Mega-X); its SPECIES'
+                // typing otherwise (§428), which is right for the Gigantamax
+                // and Totem forms, the Pikachu caps and most Megas, and was
+                // "no types at all" before. Never over a species' own key: a
+                // form's aliases include its species' name, and "Zorua" must
+                // stay Dark.
+                List<string>? types = form.Types is { Count: > 0 }
+                    ? form.Types
+                    : typeLookup.TryGetValue(form.SpeciesName, out List<string>? inherited) ? inherited : null;
+
+                bool typed = types is not null;
+
+                if (typed && !typeLookup.ContainsKey(form.Name))
+                    typeLookup[form.Name] = types!;
+
                 // OCR aliases.
                 foreach (string alias in form.OcrAliases)
                 {
@@ -223,6 +243,9 @@ namespace Foot_Tracker.Services
                     }
 
                     formLookup[alias] = form;
+
+                    if (typed && !typeLookup.ContainsKey(alias))
+                        typeLookup[alias] = types!;
                 }
             }
 
@@ -673,6 +696,51 @@ namespace Foot_Tracker.Services
             return LoadSprite(spriteFile);
         }
 
+        /// <summary>
+        /// §344. The sprite for a name that came out of a DATA FILE rather
+        /// than off the screen.
+        ///
+        /// GetSprite above consults one dictionary - the species names and
+        /// their OCR aliases - and nothing else. That is right for a name
+        /// Tesseract read, and wrong for every other caller, because the
+        /// alternate forms live in a second dictionary it never looks at and
+        /// the data files spell them differently again.
+        ///
+        /// The Damage Calculator is where this showed: its species list is
+        /// calc-pokedex.json, which writes "Alolan Sandslash", "Castform:
+        /// Sunny Form", "Dusk Mane Necrozma". The library writes
+        /// "Sandslash-Alolan", "Castform-Sunny", "Necrozma-Dusk". 221 of its
+        /// 804 entries drew an empty pad.
+        ///
+        /// §224 already solved exactly this, for exactly these spellings,
+        /// when the simulator's roster hit it - the fold, the species
+        /// anchor, the regional synonyms, the squashed words, the two
+        /// hand-mapped exceptions. It was made opt-in because
+        /// CounterpartMatcher must NOT match loosely: it decides which two
+        /// screenshots are a pair from what it read off the screen, and a
+        /// relaxed match there turns a bad OCR read into a confident wrong
+        /// pairing. That reasoning is about OCR. It does not apply to a name
+        /// that was typed into a JSON file by hand.
+        ///
+        /// So this is the display door: exact first, so every name that
+        /// resolves today resolves to the identical file, then §224's walk.
+        /// No new matching - opting in to the one that exists.
+        /// </summary>
+        public static Avalonia.Media.Imaging.Bitmap? GetDisplaySprite(string pokemonName)
+        {
+            if (string.IsNullOrWhiteSpace(pokemonName))
+                return null;
+
+            string key = pokemonName.Trim();
+
+            string? spriteFile =
+                spriteLookup.TryGetValue(key, out string? exact) ? exact
+                : formLookup.TryGetValue(key, out PokemonFormEntry? form) ? form.Sprite
+                : TryRelaxedSpriteFile(key);
+
+            return string.IsNullOrWhiteSpace(spriteFile) ? null : LoadSprite(spriteFile);
+        }
+
         /// <summary>§200. The sprite for an exact national-dex id, which is
         /// how the library names its files - 25.png, and 10000-and-up for
         /// the regional and alternate forms. Null for 0 or below, and for an
@@ -772,21 +840,45 @@ namespace Foot_Tracker.Services
         /// File.Exists per species, once.</summary>
         public static Avalonia.Media.Imaging.Bitmap? GetShinyEncounterSprite(string pokemonName)
         {
-            if (string.IsNullOrWhiteSpace(pokemonName))
-                return null;
-
-            string key = pokemonName.Trim();
-
-            string? spriteFile =
-                formLookup.TryGetValue(key, out var form) ? form.Sprite
-                : spriteLookup.TryGetValue(key, out string? file) ? file
-                : TryRelaxedSpriteFile(key); // §224.
+            string? spriteFile = SpriteFileFor(pokemonName);
 
             if (string.IsNullOrWhiteSpace(spriteFile))
                 return null;
 
             return LoadSprite(Path.Combine(ShinySpriteFolder, spriteFile))
                 ?? LoadSprite(spriteFile);
+        }
+
+        /// <summary>§359. Whether the library has a REAL shiny for this name,
+        /// rather than the ordinary sprite GetShinyEncounterSprite falls back
+        /// to. On an encounter card that fallback is right - the label says
+        /// Shiny and the recolour is all that is missing. In a PICKER it is
+        /// not: a Shiny card that draws the ordinary sprite looks identical
+        /// to the Normal card beside it and does nothing visible when
+        /// clicked, which reads as a broken button. So the card is offered
+        /// only when there is something to offer.</summary>
+        public static bool HasShinySprite(string pokemonName)
+        {
+            string? spriteFile = SpriteFileFor(pokemonName);
+
+            return !string.IsNullOrWhiteSpace(spriteFile)
+                && LoadSprite(Path.Combine(ShinySpriteFolder, spriteFile)) is not null;
+        }
+
+        /// <summary>§359. The sprite FILE a name resolves to - the three-step
+        /// lookup GetShinyEncounterSprite has always done, lifted out so
+        /// HasShinySprite asks the same question of the same name rather than
+        /// a second opinion of it.</summary>
+        private static string? SpriteFileFor(string pokemonName)
+        {
+            if (string.IsNullOrWhiteSpace(pokemonName))
+                return null;
+
+            string key = pokemonName.Trim();
+
+            return formLookup.TryGetValue(key, out var form) ? form.Sprite
+                : spriteLookup.TryGetValue(key, out string? file) ? file
+                : TryRelaxedSpriteFile(key); // §224.
         }
 
         private static Avalonia.Media.Imaging.Bitmap? LoadSprite(string spriteFile)
@@ -840,6 +932,79 @@ namespace Foot_Tracker.Services
                     out List<string>? types)
                 ? types
                 : Array.Empty<string>();
+        }
+
+        /// <summary>§428. Words a catalog puts on a name that change nothing
+        /// about its typing: a gender, a cosmetic colour, a Gigantamax or
+        /// event dressing. Stripped, one at a time from either end, when a
+        /// name misses the dictionaries - so "Kirlia Female", "Solosis Green",
+        /// "Gigantamax Butterfree" and "Mimikyu Male Busted" all type as their
+        /// Pokémon. Real forms ("Rotom Wash", "Castform Rainy") are NOT here:
+        /// those have their own entries and their own typing.</summary>
+        private static readonly HashSet<string> CosmeticWords = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "female", "male", "\u2640", "\u2642", "f", "m",
+            "green", "red", "yellow", "blue",
+            "busted", "disguised",
+            "gigantamax", "gigantimax", "gmax",
+            "pumpkin", "shiny", "forme", "form",
+        };
+
+        /// <summary>
+        /// §428. The types for a name as a PERSON wrote it - a counterpart
+        /// card's title, a catalog entry - rather than as the library spells
+        /// it. GetTypes is exact and stays exact, for §224's reason: a name
+        /// read off the screen must not be typed by a loose guess. A name
+        /// typed into a data file by hand is a different case, and this is
+        /// its door:
+        ///
+        ///   1. exact, so every name GetTypes answers is answered the same;
+        ///   2. the library's own name for it (§421) - "Alolan Marowak" is
+        ///      Marowak-Alolan, "Mega Gardevoir" is Gardevoir-Mega, "Nidoran
+        ///      ♀" is Nidoran F - and that name's types;
+        ///   3. with a cosmetic word taken off an end and the two steps
+        ///      above tried again, until nothing cosmetic is left.
+        ///
+        /// Empty for a name none of that places - a misspelling ("Crocanaw"),
+        /// a Pokémon the library lacks - rather than a wrong answer.
+        /// </summary>
+        public static IReadOnlyList<string> GetDisplayTypes(string? pokemonName)
+        {
+            if (string.IsNullOrWhiteSpace(pokemonName))
+                return Array.Empty<string>();
+
+            string[] words = PokemonNames.Modern(pokemonName.Trim())
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+            int start = 0;
+            int end = words.Length;
+
+            while (end > start)
+            {
+                string candidate = string.Join(' ', words, start, end - start);
+
+                IReadOnlyList<string> exact = GetTypes(candidate);
+
+                if (exact.Count > 0)
+                    return exact;
+
+                if (ResolveLibraryName(candidate) is string resolved)
+                {
+                    IReadOnlyList<string> resolvedTypes = GetTypes(resolved);
+
+                    if (resolvedTypes.Count > 0)
+                        return resolvedTypes;
+                }
+
+                if (CosmeticWords.Contains(words[end - 1]))
+                    end--;
+                else if (CosmeticWords.Contains(words[start]))
+                    start++;
+                else
+                    break;
+            }
+
+            return Array.Empty<string>();
         }
 
         public static Avalonia.Media.Imaging.Bitmap? GetTypeIcon(string typeName)
@@ -931,6 +1096,77 @@ namespace Foot_Tracker.Services
             // =========================================================
 
             return key;
+        }
+
+        /// <summary>
+        /// §421. The library's own name for a Pokémon TYPED BY HAND - into
+        /// the Pokedex Scraper's name box, a hand-written pokedex file, the
+        /// Map Explorer's search - or null when the library has nothing by
+        /// that name.
+        ///
+        /// The library spells a regional form species-first with a hyphen:
+        /// "Linoone-Galarian", "Zorua-Hisui". A person spells it the way
+        /// the game and the announcements do: "Galarian Linoone", "Hisui
+        /// Zorua". Every store in this app files by the library's spelling
+        /// (the hunt targets, the Pokedex scans, the Spawns pages), so a
+        /// record filed under the person's spelling is a record nothing can
+        /// find - that is how a hand-made pokedex-galarian_linoone file was
+        /// republished onto a Spawns page and the Map Explorer still said
+        /// "nothing called Galarian Linoone". This is the one door those
+        /// callers go through so they agree.
+        ///
+        /// Exact first, as GetDisplaySprite does: a species by its name, a
+        /// form by its name or one of its aliases ("Linoone Galarian",
+        /// "Linoone-Galar"). Then §224's relaxed walk, which is what turns
+        /// "Galarian Linoone" round, mapped back from the file it resolves
+        /// to onto the entry that owns it. One guard on the walk: its last
+        /// step hands back the BARE species for any modifier it cannot
+        /// place ("Foo Linoone" → Linoone). Right for drawing a sprite,
+        /// wrong for filing a record, so a walk that lands on a species is
+        /// accepted only when the typed name IS that species' name once
+        /// folded - anything else is a name the library does not know, and
+        /// null says so.
+        ///
+        /// Never used on the OCR path, for §224's reason: this is for names
+        /// a person typed.
+        /// </summary>
+        public static string? ResolveLibraryName(string? typedName)
+        {
+            if (string.IsNullOrWhiteSpace(typedName))
+                return null;
+
+            string key = typedName.Trim();
+
+            var species = pokemonEntries.FirstOrDefault(
+                p => p.Name.Equals(key, StringComparison.OrdinalIgnoreCase));
+
+            if (species is not null)
+                return species.Name;
+
+            if (formLookup.TryGetValue(key, out PokemonFormEntry? form))
+                return form.Name;
+
+            string? file = TryRelaxedSpriteFile(key);
+
+            if (string.IsNullOrWhiteSpace(file))
+                return null;
+
+            PokemonFormEntry? ownerForm = formEntries.FirstOrDefault(
+                f => string.Equals(f.Sprite, file, StringComparison.OrdinalIgnoreCase));
+
+            if (ownerForm is not null)
+                return ownerForm.Name;
+
+            PokemonLibraryEntry? ownerSpecies = pokemonEntries.FirstOrDefault(
+                p => string.Equals(p.Sprite, file, StringComparison.OrdinalIgnoreCase));
+
+            if (ownerSpecies is null)
+                return null;
+
+            // The bare-species guard described above.
+            return string.Equals(FoldName(ownerSpecies.Name), FoldName(key), StringComparison.Ordinal)
+                ? ownerSpecies.Name
+                : null;
         }
     }
 }

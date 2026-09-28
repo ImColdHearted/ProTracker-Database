@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 
@@ -15,7 +16,7 @@ public partial class PreviouslyBattledUsersWindow : Window
 
         // this = PreviouslyBattledUsersWindow itself, not whatever window
         // opened it - both popups should be owned by (and appear over) this
-        // window, same reasoning as RemoveEventWindow's ConfirmAsync wiring.
+        // window, the same ConfirmAsync wiring every confirming window uses.
         vm.ConfirmAsync = message => ConfirmDialogWindow.ShowAsync(this, message);
         vm.RequestExportFormat = () => ExportFormatDialogWindow.ShowAsync(this);
 
@@ -46,6 +47,20 @@ public partial class PreviouslyBattledUsersWindow : Window
         // Dispose() unsubscribes so closing the window doesn't leak this
         // instance for the rest of the app's lifetime.
         Closed += (_, _) => vm.Dispose();
+    }
+
+    // §276: a row opens that opponent's own history. Unowned, so this window
+    // can be closed without taking the detail window with it - the same
+    // reasoning BossListWindow records for its detail windows.
+    private void OpponentRow_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (sender is not Control { DataContext: ViewModels.PvpOpponentDisplayItem item })
+            return;
+
+        if (string.IsNullOrWhiteSpace(item.Name))
+            return;
+
+        new PvpOpponentDetailWindow(item.Name).Show();
     }
 
     private void CloseButton_Click(object? sender, RoutedEventArgs e)

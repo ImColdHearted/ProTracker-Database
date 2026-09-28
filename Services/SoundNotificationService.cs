@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using Foot_Tracker.Models;
 using Serilog;
 
 namespace Foot_Tracker.Services;
@@ -77,6 +78,21 @@ namespace Foot_Tracker.Services;
 // .mp3 fallbacks get the nearest thing each player offers (MCI's setaudio,
 // the command-line players' own options - see VolumeArguments). Every play
 // logs the percentage it went out at.
+//
+// §389: an output device of the user's choosing (Sound Settings, "Play
+// through"; UiPreferences.SoundOutputDevice), because a Linux hunter's
+// alerts kept leaving his headset. PlaySound takes the pin; the alert is
+// checked against the devices actually present (SoundOutputDevices) and
+// plays on the system default, saying so, when the chosen one is not
+// there. On Linux the device travels to the system player as its own
+// option (paplay --device, pw-play --target, aplay -D, mpv --audio-device,
+// and the PULSE_SINK / AUDIODEV environment the rest read - see
+// DeviceOptions), and a player that then fails is retried once on the
+// default rather than blacklisted. On Windows PlaySound cannot be told a
+// device, so a pinned clip goes through waveOut instead (PlayWithWaveOut):
+// the wave's own samples handed to that device number, released once the
+// clip has finished. Nothing pinned changes nothing: the paths above are
+// exactly what they were.
 internal static class SoundNotificationService
 {
     /// <summary>§103 priority policy, highest wins: a Shiny alert may
@@ -176,7 +192,86 @@ internal static class SoundNotificationService
         public required DateTime StartedUtc { get; init; }
         public StringBuilder StandardError { get; } = new();
         public bool StoppedByUs { get; set; }
+
+        // §389: the device the player was pointed at, and the same clip
+        // again on the system default should the player fail because of it.
+        public SoundOutputDevice? Device { get; init; }
+        public Action? Retry { get; init; }
     }
+
+    // §389: the devices present the last time anyone looked (WarmUp at
+    // every hunt start, Sound Settings when it opens or saves, or the first
+    // alert if neither has) - what a pinned device is checked against on
+    // Linux, where listing means running a tool or two. Windows re-lists
+    // at play time instead; that is a couple of winmm calls. Guarded by
+    // playbackLock, with the pins already reported missing since the last
+    // listing, so a hunt with the headset off logs it once.
+    private static IReadOnlyList<SoundOutputDevice>? presentDevices;
+    private static readonly HashSet<string> missingReported = new(StringComparer.Ordinal);
+
+    // §389: the clip waveOut is playing on a pinned Windows device. Guarded
+    // by playbackLock; released by StopWaveOut on the playback thread.
+    private static WaveOutRun? currentWaveOut;
+
+    private sealed class WaveOutRun
+    {
+        public required IntPtr Handle { get; init; }
+        public required IntPtr Header { get; init; }
+        public required IntPtr Data { get; init; }
+        public required string SoundName { get; init; }
+        public Timer? Cleanup { get; set; }
+    }
+
+    // §389: winmm's wave-out interface, the device-choosing route PlaySound
+    // does not have. Declared everywhere, called only behind
+    // OperatingSystem.IsWindows(), like the imports above.
+    [StructLayout(LayoutKind.Sequential, Pack = 2)]
+    private struct WaveFormatEx
+    {
+        public ushort FormatTag;
+        public ushort Channels;
+        public uint SamplesPerSec;
+        public uint AvgBytesPerSec;
+        public ushort BlockAlign;
+        public ushort BitsPerSample;
+        public ushort Size;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct WaveHeader
+    {
+        public IntPtr Data;
+        public uint BufferLength;
+        public uint BytesRecorded;
+        public IntPtr User;
+        public uint Flags;
+        public uint Loops;
+        public IntPtr Next;
+        public IntPtr Reserved;
+    }
+
+    [DllImport("winmm.dll")]
+    private static extern uint waveOutOpen(out IntPtr handle, uint deviceId, ref WaveFormatEx format, IntPtr callback, IntPtr instance, uint flags);
+
+    [DllImport("winmm.dll")]
+    private static extern uint waveOutPrepareHeader(IntPtr handle, IntPtr header, uint size);
+
+    [DllImport("winmm.dll")]
+    private static extern uint waveOutUnprepareHeader(IntPtr handle, IntPtr header, uint size);
+
+    [DllImport("winmm.dll")]
+    private static extern uint waveOutWrite(IntPtr handle, IntPtr header, uint size);
+
+    [DllImport("winmm.dll")]
+    private static extern uint waveOutReset(IntPtr handle);
+
+    [DllImport("winmm.dll")]
+    private static extern uint waveOutClose(IntPtr handle);
+
+    [DllImport("winmm.dll", CharSet = CharSet.Unicode)]
+    private static extern uint waveOutGetErrorTextW(uint error, StringBuilder text, uint size);
+
+    private const uint CALLBACK_NULL = 0;
 
     // Guards the whole open/play sequence (§103) - kept even though §146's
     // single playback thread already serialises the calls, so a second
@@ -230,8 +325,12 @@ internal static class SoundNotificationService
     // unrecognized name included) - the checks below make all of those a
     // harmless no-op, so callers never need their own "is this actually a
     // sound" check first, on any platform. §152: volumePercent is 0-100
-    // (see MaxVolumePercent); anything above 100 plays as 100.
-    internal static void PlaySound(string? soundName, SoundPriority priority = SoundPriority.Form, int volumePercent = MaxVolumePercent)
+    // (see MaxVolumePercent); anything above 100 plays as 100. §389:
+    // outputDevice is the pinned device, or null (and SystemDefault) for
+    // whatever the operating system plays through.
+    internal static void PlaySound(
+        string? soundName, SoundPriority priority = SoundPriority.Form, int volumePercent = MaxVolumePercent,
+        SoundOutputDevice? outputDevice = null)
     {
         // §146: each early return says why, at Information - an alert is a
         // rare event, and a silent one used to be indistinguishable from a
@@ -274,12 +373,18 @@ internal static class SoundNotificationService
         // Debug timeline can separate "how long until the worker ran" from
         // "how long MCI itself took" when measuring a reported delay.
         DateTime requestedAtUtc = DateTime.UtcNow;
-        Log.Information("Sound alert ({Priority}): {SoundName} requested at {Volume}%.", priority, soundName, volumePercent);
+
+        if (outputDevice is { IsSystemDefault: true })
+            outputDevice = null;
+
+        Log.Information(
+            "Sound alert ({Priority}): {SoundName} requested at {Volume}%{Through}.",
+            priority, soundName, volumePercent, outputDevice is null ? string.Empty : " through " + outputDevice.Label);
 
         // §103 took MCI off the UI thread, where a cold device open could
         // visibly stall the very displays the alert celebrates. §146 moved
         // it from a thread-pool worker to the dedicated thread above.
-        Enqueue(() => PlayCore(soundName, soundFilePath, priority, volumePercent, requestedAtUtc));
+        Enqueue(() => PlayCore(soundName, soundFilePath, priority, volumePercent, requestedAtUtc, outputDevice));
     }
 
     private static Thread StartPlaybackThread()
@@ -329,7 +434,9 @@ internal static class SoundNotificationService
             : $"MCI error {errorCode}";
     }
 
-    private static void PlayCore(string soundName, string soundFilePath, SoundPriority priority, int volumePercent, DateTime requestedAtUtc)
+    private static void PlayCore(
+        string soundName, string soundFilePath, SoundPriority priority, int volumePercent, DateTime requestedAtUtc,
+        SoundOutputDevice? outputDevice)
     {
         try
         {
@@ -375,17 +482,58 @@ internal static class SoundNotificationService
                 // and macOS hand the clip to the system's own player.
                 if (!OperatingSystem.IsWindows())
                 {
-                    PlayWithSystemPlayer(soundName, soundFilePath, wavePath, scaledWavePath, haveWave, volumePercent, priority, requestedAtUtc, timer);
+                    PlayWithSystemPlayer(
+                        soundName, soundFilePath, wavePath, scaledWavePath, haveWave, volumePercent, priority, requestedAtUtc, timer,
+                        ResolveOutput(outputDevice, soundName));
+
                     return;
                 }
 
                 // Ignored return value: fails harmlessly (nothing is open
                 // under this alias yet) on every play except one that starts
                 // before the previous sound finished - the one case "open"
-                // alone would otherwise reject outright. Both players are
-                // stopped, whichever one carried the last clip.
+                // alone would otherwise reject outright. All three players
+                // are stopped, whichever one carried the last clip (§389
+                // added waveOut).
                 mciSendStringW($"close {DeviceAlias}", null, 0, IntPtr.Zero);
                 PlaySoundW(null, IntPtr.Zero, 0);
+                StopWaveOut();
+
+                // §389: a pinned device that is present takes the clip
+                // through waveOut - PlaySound has no way to name a device.
+                // A device that cannot be opened, or a wave waveOut will not
+                // take, falls through to PlaySound on the default, and the
+                // log says so.
+                SoundOutputDevice? output = haveWave ? ResolveOutput(outputDevice, soundName) : null;
+
+                if (output is not null)
+                {
+                    string pinnedWave = scaledWavePath ?? wavePath;
+                    double pinnedMs = WaveLengthMs(wavePath);
+
+                    if (PlayWithWaveOut(soundName, pinnedWave, output, pinnedMs, out string failure))
+                    {
+                        playingPriority = (int)priority;
+                        playingEndsAtUtc = DateTime.UtcNow.AddMilliseconds(pinnedMs);
+
+                        Log.Information(
+                            "Sound {SoundName}: playing {File} at {Volume}% through {Device} (waveOut device {Index}) - worker picked up after {QueueMs:F0}ms, started at {StartMs}ms, clip length {LengthMs:F0}ms",
+                            soundName,
+                            Path.GetFileName(pinnedWave),
+                            scaledWavePath is null ? MaxVolumePercent : volumePercent,
+                            output.Label,
+                            output.Index,
+                            (requestedAtUtc == default ? 0 : (DateTime.UtcNow - requestedAtUtc).TotalMilliseconds - timer.ElapsedMilliseconds),
+                            timer.ElapsedMilliseconds,
+                            pinnedMs);
+
+                        return;
+                    }
+
+                    Log.Warning(
+                        "Sound {SoundName}: {Device} could not take the clip ({Failure}) - playing on the system default instead.",
+                        soundName, output.Label, failure);
+                }
 
                 // §147: the wave path first. PlaySound reads the file and
                 // hands it to the wave device on a thread of winmm's own; no
@@ -541,17 +689,28 @@ internal static class SoundNotificationService
     /// that decodes a file we have, started as a child process. Called under
     /// playbackLock from the playback thread. §152: a player given the scaled
     /// .wav copy needs nothing more; one given the .mp3 (or the original
-    /// .wav, when no copy could be made) gets its own volume option.</summary>
+    /// .wav, when no copy could be made) gets its own volume option. §389:
+    /// <paramref name="output"/> is the pinned device, already checked to be
+    /// present (null for the system default); the players that can be
+    /// pointed at it are tried first, and one that fails with it is retried
+    /// once on the default - see OnSystemPlayerExited.</summary>
     private static void PlayWithSystemPlayer(
         string soundName, string soundFilePath, string wavePath, string? scaledWavePath, bool haveWave,
-        int volumePercent, SoundPriority priority, DateTime requestedAtUtc, Stopwatch timer)
+        int volumePercent, SoundPriority priority, DateTime requestedAtUtc, Stopwatch timer, SoundOutputDevice? output)
     {
         // Latest wins, as on Windows: whatever is still playing stops first.
         StopSystemPlayer();
 
         var tried = new List<string>();
 
-        foreach ((string exe, string[] args, bool playsWave, bool playsMp3) in SystemPlayers)
+        // §389: with a device pinned, the players that can be pointed at it
+        // go first (a stable sort - the §148 order holds within each half);
+        // the rest are a last resort that plays on the default.
+        IEnumerable<(string Exe, string[] Args, bool PlaysWave, bool PlaysMp3)> candidates = output is null
+            ? SystemPlayers
+            : SystemPlayers.OrderBy(player => DeviceOptions(player.Exe, output) is null ? 1 : 0);
+
+        foreach ((string exe, string[] args, bool playsWave, bool playsMp3) in candidates)
         {
             if (failedPlayers.Contains(exe))
                 continue;
@@ -604,6 +763,28 @@ internal static class SoundNotificationService
                 }
             }
 
+            // §389: the device, as this player takes it - an option, an
+            // environment variable, or both. A player that takes neither
+            // plays on the default, and the log says so.
+            (string[] Arguments, (string Name, string Value)[] Environment)? deviceOptions =
+                output is null ? null : DeviceOptions(exe, output);
+
+            if (output is not null)
+            {
+                if (deviceOptions is null)
+                {
+                    Log.Information("Sound {SoundName}: {Player} cannot be pointed at {Device} - playing on the system default.", soundName, exe, output.Label);
+                }
+                else
+                {
+                    foreach (string arg in deviceOptions.Value.Arguments)
+                        startInfo.ArgumentList.Add(arg);
+
+                    foreach ((string name, string value) in deviceOptions.Value.Environment)
+                        startInfo.Environment[name] = value;
+                }
+            }
+
             startInfo.ArgumentList.Add(file);
 
             Process? process;
@@ -632,6 +813,10 @@ internal static class SoundNotificationService
                 Player = exe,
                 SoundName = soundName,
                 StartedUtc = DateTime.UtcNow,
+                Device = deviceOptions is null ? null : output,
+                Retry = deviceOptions is null
+                    ? null
+                    : () => PlayCore(soundName, soundFilePath, priority, volumePercent, DateTime.UtcNow, null),
             };
 
             currentRun = run;
@@ -655,12 +840,13 @@ internal static class SoundNotificationService
             playingEndsAtUtc = DateTime.UtcNow.AddMilliseconds(lengthMs);
 
             Log.Information(
-                "Sound {SoundName}: playing {File} at {Volume}% via {Player} (pid {Pid}) - worker picked up after {QueueMs:F0}ms, started at {StartMs}ms, clip length {LengthMs:F0}ms",
+                "Sound {SoundName}: playing {File} at {Volume}% via {Player} (pid {Pid}){Through} - worker picked up after {QueueMs:F0}ms, started at {StartMs}ms, clip length {LengthMs:F0}ms",
                 soundName,
                 Path.GetFileName(file),
                 playedPercent,
                 exe,
                 process.Id,
+                run.Device is null ? string.Empty : " through " + run.Device.Label,
                 (requestedAtUtc == default ? 0 : (DateTime.UtcNow - requestedAtUtc).TotalMilliseconds - timer.ElapsedMilliseconds),
                 timer.ElapsedMilliseconds,
                 lengthMs);
@@ -830,6 +1016,28 @@ internal static class SoundNotificationService
             {
                 Log.Information("Sound {SoundName}: {Player} stopped after {Ms:F0}ms for a newer alert.", run.SoundName, run.Player, ms);
             }
+            else if (exitCode != 0 && run.Retry is not null && run.Device is not null)
+            {
+                // §389: the player was pointed at a device and failed - a
+                // headset switched off since the list was made, most likely.
+                // The device is dropped from the present list, the same
+                // clip goes again on the system default, and the player is
+                // NOT blacklisted: it did nothing wrong. The retry carries
+                // no device, so it cannot come back here.
+                string stderr = run.StandardError.ToString().Trim();
+
+                Log.Warning(
+                    "Sound {SoundName}: {Player} could not play through {Device} - exit code {ExitCode} after {Ms:F0}ms{Detail}. Retrying on the system default, which alerts use until the device is listed again.",
+                    run.SoundName, run.Player, run.Device.Label, exitCode, ms,
+                    stderr.Length == 0 ? string.Empty : " (" + stderr + ")");
+
+                lock (playbackLock)
+                {
+                    MarkOutputUnavailable(run.Device);
+                }
+
+                Enqueue(run.Retry);
+            }
             else if (exitCode != 0)
             {
                 string stderr = run.StandardError.ToString().Trim();
@@ -875,8 +1083,9 @@ internal static class SoundNotificationService
 
     /// <summary>§148. The executable's full path from the PATH, with the
     /// usual system directories appended in case the tracker was launched
-    /// from a desktop entry with a bare environment. Null when absent.</summary>
-    private static string? FindOnPath(string executable)
+    /// from a desktop entry with a bare environment. Null when absent.
+    /// §389: shared with SoundOutputDevices, which runs the listing tools.</summary>
+    internal static string? FindOnPath(string executable)
     {
         IEnumerable<string> directories =
             (Environment.GetEnvironmentVariable("PATH") ?? string.Empty)
@@ -954,8 +1163,12 @@ internal static class SoundNotificationService
     /// worker thread, every failure swallowed - a warm-up must never matter
     /// functionally. §152: takes each sound with its volume, and makes the
     /// quieter copy now (ScaledWavePath) so the first alert never waits for
-    /// the read-scale-write either.</summary>
-    internal static void WarmUp(params (string? SoundName, int VolumePercent)[] sounds)
+    /// the read-scale-write either. §389: and lists the output devices, so
+    /// the first alert finds the pinned device already checked - on Linux
+    /// that is a tool or two run, not something an alert should wait for -
+    /// and the log says at the start of the hunt whether the device is
+    /// there.</summary>
+    internal static void WarmUp(SoundOutputDevice? outputDevice, params (string? SoundName, int VolumePercent)[] sounds)
     {
         // §148: no platform gate - warming the file cache is harmless anywhere.
         var clips = new List<(string SoundName, string Path, int VolumePercent)>();
@@ -976,6 +1189,24 @@ internal static class SoundNotificationService
 
         Task.Run(() =>
         {
+            if (outputDevice is { IsSystemDefault: false })
+            {
+                try
+                {
+                    IReadOnlyList<SoundOutputDevice> present = RefreshOutputDevices();
+                    SoundOutputDevice? match = present.FirstOrDefault(device => device.Matches(outputDevice));
+
+                    if (match is not null)
+                        Log.Information("Sound output: {Label} is present ({Id}) - alerts play through it.", match.Label, match.Id);
+                    else
+                        Log.Warning("Sound output: {Label} is not present now ({Count} devices listed) - alerts play on the system default until it is back.", outputDevice.Label, present.Count);
+                }
+                catch
+                {
+                    // The first alert lists again; nothing to surface here.
+                }
+            }
+
             foreach ((string soundName, string path, int volumePercent) in clips)
             {
                 try
@@ -998,5 +1229,277 @@ internal static class SoundNotificationService
                 }
             }
         });
+    }
+
+    /// <summary>§389. Lists the output devices now and remembers them as
+    /// the ones present - what a pinned device is checked against on Linux
+    /// until the next listing. Sound Settings calls this for its picker;
+    /// WarmUp calls it at every hunt start. Any thread.</summary>
+    internal static IReadOnlyList<SoundOutputDevice> RefreshOutputDevices()
+    {
+        IReadOnlyList<SoundOutputDevice> found = SoundOutputDevices.List();
+
+        lock (playbackLock)
+        {
+            presentDevices = found;
+            missingReported.Clear();
+        }
+
+        return found;
+    }
+
+    /// <summary>§389. The pinned device as it is present right now, or null
+    /// for the system default - because nothing is pinned, or because the
+    /// pinned device is not there, which is logged once per listing.
+    /// Windows lists afresh each time (two winmm calls, and device numbers
+    /// move when something is plugged in); Linux uses the last listing,
+    /// making one only if nobody has yet. Called under playbackLock.</summary>
+    private static SoundOutputDevice? ResolveOutput(SoundOutputDevice? wanted, string soundName)
+    {
+        if (wanted is null || wanted.IsSystemDefault)
+            return null;
+
+        IReadOnlyList<SoundOutputDevice> present = OperatingSystem.IsWindows()
+            ? SoundOutputDevices.List()
+            : presentDevices ??= SoundOutputDevices.List();
+
+        foreach (SoundOutputDevice candidate in present)
+        {
+            if (candidate.Matches(wanted))
+                return candidate;
+        }
+
+        if (missingReported.Add(wanted.Pin))
+        {
+            Log.Warning(
+                "Sound {SoundName}: the chosen output device {Label} is not present ({Count} listed) - playing on the system default until it is.",
+                soundName, wanted.Label, present.Count);
+        }
+
+        return null;
+    }
+
+    /// <summary>§389. A device a player just failed with is taken off the
+    /// present list, so the alerts after it go to the default without each
+    /// paying for the failure; the next listing puts it back if it is there.
+    /// Called under playbackLock.</summary>
+    private static void MarkOutputUnavailable(SoundOutputDevice device)
+    {
+        if (presentDevices is null)
+            return;
+
+        var remaining = new List<SoundOutputDevice>(presentDevices.Count);
+
+        foreach (SoundOutputDevice candidate in presentDevices)
+        {
+            if (!candidate.Matches(device))
+                remaining.Add(candidate);
+        }
+
+        presentDevices = remaining;
+    }
+
+    /// <summary>§389. How each system player is pointed at a device: the
+    /// arguments to add and the environment to set, or null for a player
+    /// that cannot be pointed at this kind of device at all (aplay knows
+    /// nothing of a Pulse sink, paplay nothing of an ALSA card).
+    ///
+    /// A Pulse sink name is what paplay's --device and mpv's pulse/ prefix
+    /// take, what pw-play's --target takes under PipeWire (the sink IS the
+    /// node), what mpg123's pulse output calls -a, and what every libpulse
+    /// client - SoX's pulseaudio driver, ffplay through SDL - reads from
+    /// PULSE_SINK; the variable is set for all of them, belt and braces. An
+    /// ALSA PCM is aplay's -D, mpv's alsa/ prefix, mpg123's alsa -a, and the
+    /// AUDIODEV that SoX and SDL's ALSA driver read, with the driver named
+    /// beside it so the variable is read by that driver and not another.</summary>
+    internal static (string[] Arguments, (string Name, string Value)[] Environment)? DeviceOptions(string executable, SoundOutputDevice device)
+    {
+        string id = device.Id;
+
+        if (device.Backend == SoundOutputDevice.PulseBackend)
+        {
+            (string Name, string Value)[] pulse = { ("PULSE_SINK", id) };
+
+            return executable switch
+            {
+                "paplay" => (new[] { "--device=" + id }, pulse),
+                "pw-play" => (new[] { "--target=" + id }, pulse),
+                "mpv" => (new[] { "--audio-device=pulse/" + id }, pulse),
+                "mpg123" => (new[] { "-o", "pulse", "-a", id }, pulse),
+                "play" => (Array.Empty<string>(), new[] { ("AUDIODRIVER", "pulseaudio"), ("AUDIODEV", id), ("PULSE_SINK", id) }),
+                "ffplay" => (Array.Empty<string>(), new[] { ("SDL_AUDIODRIVER", "pulseaudio"), ("PULSE_SINK", id) }),
+                _ => null,
+            };
+        }
+
+        if (device.Backend == SoundOutputDevice.AlsaBackend)
+        {
+            (string Name, string Value)[] none = Array.Empty<(string, string)>();
+
+            return executable switch
+            {
+                "aplay" => (new[] { "-D", id }, none),
+                "mpv" => (new[] { "--audio-device=alsa/" + id }, none),
+                "mpg123" => (new[] { "-o", "alsa", "-a", id }, none),
+                "play" => (Array.Empty<string>(), new[] { ("AUDIODRIVER", "alsa"), ("AUDIODEV", id) }),
+                "ffplay" => (Array.Empty<string>(), new[] { ("SDL_AUDIODRIVER", "alsa"), ("AUDIODEV", id) }),
+                _ => null,
+            };
+        }
+
+        return null;
+    }
+
+    /// <summary>§389. Windows: the wave's samples to the chosen device
+    /// through waveOut - open the device number with the clip's own format,
+    /// hand it one buffer with the whole clip, and let it play; the buffer
+    /// and the device are released by StopWaveOut, from a timer once the
+    /// clip has had time to finish or from the next alert, whichever comes
+    /// first. False with the reason when the device or the format is
+    /// refused, and the caller plays on the default. Called under
+    /// playbackLock on the playback thread.</summary>
+    private static bool PlayWithWaveOut(string soundName, string wavePlayed, SoundOutputDevice device, double lengthMs, out string failure)
+    {
+        failure = string.Empty;
+
+        if (device.Index < 0)
+        {
+            failure = "no device number";
+            return false;
+        }
+
+        byte[] bytes = File.ReadAllBytes(wavePlayed);
+
+        if (!WaveVolume.TryLocateSamples(bytes, out WaveVolume.WaveFormat format, out int dataStart, out int dataLength, out string reason))
+        {
+            failure = reason;
+            return false;
+        }
+
+        // PCM or IEEE float - the two tags a plain WAVEFORMATEX describes.
+        if (format.FormatTag is not (1 or 3) || dataLength <= 0)
+        {
+            failure = format.FormatTag is not (1 or 3) ? $"format tag {format.FormatTag} is not PCM" : "no samples";
+            return false;
+        }
+
+        var waveFormat = new WaveFormatEx
+        {
+            FormatTag = format.FormatTag,
+            Channels = format.Channels,
+            SamplesPerSec = format.SampleRate,
+            AvgBytesPerSec = format.ByteRate,
+            BlockAlign = format.BlockAlign,
+            BitsPerSample = format.BitsPerSample,
+            Size = 0,
+        };
+
+        uint error = waveOutOpen(out IntPtr handle, (uint)device.Index, ref waveFormat, IntPtr.Zero, IntPtr.Zero, CALLBACK_NULL);
+
+        if (error != 0)
+        {
+            failure = DescribeWaveOutError(error);
+            return false;
+        }
+
+        uint headerSize = (uint)Marshal.SizeOf<WaveHeader>();
+        IntPtr data = Marshal.AllocHGlobal(dataLength);
+        IntPtr header = Marshal.AllocHGlobal((int)headerSize);
+
+        try
+        {
+            Marshal.Copy(bytes, dataStart, data, dataLength);
+            Marshal.StructureToPtr(new WaveHeader { Data = data, BufferLength = (uint)dataLength }, header, false);
+
+            error = waveOutPrepareHeader(handle, header, headerSize);
+
+            if (error == 0)
+                error = waveOutWrite(handle, header, headerSize);
+        }
+        catch (Exception ex)
+        {
+            failure = ex.Message;
+            error = uint.MaxValue;
+        }
+
+        if (error != 0)
+        {
+            if (failure.Length == 0)
+                failure = DescribeWaveOutError(error);
+
+            waveOutReset(handle);
+            waveOutUnprepareHeader(handle, header, headerSize);
+            waveOutClose(handle);
+            Marshal.FreeHGlobal(header);
+            Marshal.FreeHGlobal(data);
+            return false;
+        }
+
+        var run = new WaveOutRun
+        {
+            Handle = handle,
+            Header = header,
+            Data = data,
+            SoundName = soundName,
+        };
+
+        currentWaveOut = run;
+
+        // Released on the playback thread once the clip has had time to end,
+        // plus a margin - unless a newer alert has released it already.
+        run.Cleanup = new Timer(
+            _ => Enqueue(() =>
+            {
+                lock (playbackLock)
+                {
+                    if (ReferenceEquals(currentWaveOut, run))
+                        StopWaveOut();
+                }
+            }),
+            null,
+            (int)Math.Max(0, lengthMs) + 500,
+            Timeout.Infinite);
+
+        return true;
+    }
+
+    /// <summary>§389. Stops and releases whatever waveOut is playing: reset
+    /// (which completes the buffer whether or not it finished), unprepare,
+    /// close, free. Called under playbackLock.</summary>
+    private static void StopWaveOut()
+    {
+        WaveOutRun? run = currentWaveOut;
+
+        if (run is null)
+            return;
+
+        currentWaveOut = null;
+
+        try
+        {
+            run.Cleanup?.Dispose();
+            waveOutReset(run.Handle);
+            waveOutUnprepareHeader(run.Handle, run.Header, (uint)Marshal.SizeOf<WaveHeader>());
+            waveOutClose(run.Handle);
+        }
+        catch (Exception ex)
+        {
+            Log.Information(ex, "Sound {SoundName}: the waveOut device could not be released cleanly.", run.SoundName);
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(run.Header);
+            Marshal.FreeHGlobal(run.Data);
+        }
+    }
+
+    /// <summary>§389. winmm's own wording for a waveOut return code.</summary>
+    private static string DescribeWaveOutError(uint error)
+    {
+        var buffer = new StringBuilder(256);
+
+        return waveOutGetErrorTextW(error, buffer, (uint)buffer.Capacity) == 0 && buffer.Length > 0
+            ? $"{buffer} (waveOut error {error})"
+            : $"waveOut error {error}";
     }
 }

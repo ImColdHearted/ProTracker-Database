@@ -1,0 +1,190 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- §295. The Android companion: the tracker's read-only windows on a
+	     phone, running the SAME view models and services as the desktop
+	     app, linked from the parent folder rather than copied. Nothing here
+	     captures a screen or runs OCR - that is the desktop tracker's job;
+	     this reads what it recorded. See MIGRATION_GUIDE.md §295.
+
+	     Build: dotnet workload install android; an Android SDK (API 35) and
+	     JDK 17 on the path; then `dotnet build ProTracker.Android` or open
+	     the solution in Visual Studio with the .NET MAUI / Android workload
+	     and deploy to a device with USB debugging on. -->
+
+	<PropertyGroup>
+		<TargetFramework>net10.0-android</TargetFramework>
+		<SupportedOSPlatformVersion>24</SupportedOSPlatformVersion>
+		<OutputType>Exe</OutputType>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationId>net.protracker.companion</ApplicationId>
+		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0.4</ApplicationDisplayVersion>
+		<!-- NOT Foot_Tracker.Android: a namespace segment called Android
+		     would shadow the global Android.* namespaces inside every file
+		     of this project. -->
+		<RootNamespace>ProTracker.Companion</RootNamespace>
+		<AssemblyName>ProTracker.Companion</AssemblyName>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+		<AndroidPackageFormat>apk</AndroidPackageFormat>
+		<AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+		<!-- The linked desktop files carry [SupportedOSPlatform("windows")]
+		     guards on the two DPAPI calls that never run here. -->
+		<NoWarn>$(NoWarn);CA1416</NoWarn>
+	</PropertyGroup>
+
+	<!-- §296. The Android SDK's implicit usings (AutoImport.props) put
+	     Android.App and Android.Widget into every file, and their Application
+	     and Button tie with Avalonia's. This is an Avalonia app: the two
+	     files that want Android types say so themselves. -->
+	<ItemGroup>
+		<Using Remove="Android.App" />
+		<Using Remove="Android.Widget" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="12.1.2" />
+		<PackageReference Include="Avalonia.Android" Version="12.1.2" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.2" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.2" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="Serilog" Version="4.4.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+		<!-- §112's encounter log. Microsoft.Data.Sqlite's bundled e_sqlite3
+		     ships an arm64 build, so the desktop's encounters.db opens as-is. -->
+		<PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.12" />
+	</ItemGroup>
+
+	<!-- The shared code, LINKED from the desktop project - one copy, one
+	     truth. The list is the dependency closure of the view models the
+	     pages use, computed from the source and checked by the §295 battery:
+	     a file added to a linked view model's dependencies without being
+	     added here fails that check before it fails a build. -->
+	<ItemGroup>
+		<Compile Include="..\Models\AbilityData.cs" Link="Shared\Models\AbilityData.cs" />
+		<Compile Include="..\Models\ActiveEvents.cs" Link="Shared\Models\ActiveEvents.cs" />
+		<Compile Include="..\Models\BossCooldownEntry.cs" Link="Shared\Models\BossCooldownEntry.cs" />
+		<Compile Include="..\Models\BossData.cs" Link="Shared\Models\BossData.cs" />
+		<Compile Include="..\Models\BossRecordEntry.cs" Link="Shared\Models\BossRecordEntry.cs" />
+		<Compile Include="..\Models\HuntLogEntry.cs" Link="Shared\Models\HuntLogEntry.cs" />
+		<Compile Include="..\Models\HuntSession.cs" Link="Shared\Models\HuntSession.cs" />
+		<Compile Include="..\Models\LifetimeStats.cs" Link="Shared\Models\LifetimeStats.cs" />
+		<Compile Include="..\Models\MapEncounterTally.cs" Link="Shared\Models\MapEncounterTally.cs" />
+		<Compile Include="..\Models\Model.cs" Link="Shared\Models\Model.cs" />
+		<Compile Include="..\Models\MoveData.cs" Link="Shared\Models\MoveData.cs" />
+		<Compile Include="..\Models\PokedexSpawn.cs" Link="Shared\Models\PokedexSpawn.cs" />
+		<Compile Include="..\Models\PvpOpponentEntry.cs" Link="Shared\Models\PvpOpponentEntry.cs" />
+		<Compile Include="..\Models\SessionEncounterRecord.cs" Link="Shared\Models\SessionEncounterRecord.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\Services\AbilityLookupService.cs" Link="Shared\Services\AbilityLookupService.cs" />
+		<Compile Include="..\Services\AdminLoginStore.cs" Link="Shared\Services\AdminLoginStore.cs" />
+		<Compile Include="..\Services\AdminModeService.cs" Link="Shared\Services\AdminModeService.cs" />
+		<Compile Include="..\Services\AnnouncementsService.cs" Link="Shared\Services\AnnouncementsService.cs" />
+		<Compile Include="..\Services\AppVersion.cs" Link="Shared\Services\AppVersion.cs" />
+		<Compile Include="..\Services\BossCooldownService.cs" Link="Shared\Services\BossCooldownService.cs" />
+		<Compile Include="..\Services\BossRecordService.cs" Link="Shared\Services\BossRecordService.cs" />
+		<Compile Include="..\Services\BossRepository.cs" Link="Shared\Services\BossRepository.cs" />
+		<Compile Include="..\Services\DisplayNumber.cs" Link="Shared\Services\DisplayNumber.cs" />
+		<Compile Include="..\Services\DurableFile.cs" Link="Shared\Services\DurableFile.cs" />
+		<Compile Include="..\Services\EncounterDatabaseService.cs" Link="Shared\Services\EncounterDatabaseService.cs" />
+		<Compile Include="..\Services\EnumFormatHelper.cs" Link="Shared\Services\EnumFormatHelper.cs" />
+		<Compile Include="..\Services\EventsSyncService.cs" Link="Shared\Services\EventsSyncService.cs" />
+		<Compile Include="..\Services\FirstRunNoticeService.cs" Link="Shared\Services\FirstRunNoticeService.cs" />
+		<Compile Include="..\Services\HuntLogExportService.cs" Link="Shared\Services\HuntLogExportService.cs" />
+		<Compile Include="..\Services\HuntLogService.cs" Link="Shared\Services\HuntLogService.cs" />
+		<Compile Include="..\Services\IsolatedSession.cs" Link="Shared\Services\IsolatedSession.cs" />
+		<Compile Include="..\Services\LifetimeStatsService.cs" Link="Shared\Services\LifetimeStatsService.cs" />
+		<Compile Include="..\Services\MapEncounterService.cs" Link="Shared\Services\MapEncounterService.cs" />
+		<Compile Include="..\Services\MoveLookupService.cs" Link="Shared\Services\MoveLookupService.cs" />
+		<Compile Include="..\Services\PokedexService.cs" Link="Shared\Services\PokedexService.cs" />
+		<Compile Include="..\Services\PokemonDescriptionService.cs" Link="Shared\Services\PokemonDescriptionService.cs" />
+		<Compile Include="..\Services\PokemonSpriteService.cs" Link="Shared\Services\PokemonSpriteService.cs" />
+		<Compile Include="..\Services\PvpOpponentExportService.cs" Link="Shared\Services\PvpOpponentExportService.cs" />
+		<Compile Include="..\Services\PvpOpponentService.cs" Link="Shared\Services\PvpOpponentService.cs" />
+		<Compile Include="..\Services\SessionEncounterHistoryService.cs" Link="Shared\Services\SessionEncounterHistoryService.cs" />
+		<Compile Include="..\Services\SessionPersistenceService.cs" Link="Shared\Services\SessionPersistenceService.cs" />
+		<Compile Include="..\Services\TimeFormatHelper.cs" Link="Shared\Services\TimeFormatHelper.cs" />
+		<Compile Include="..\Services\WorldQuestMode.cs" Link="Shared\Services\WorldQuestMode.cs" />
+		<Compile Include="..\Services\WorldQuestService.cs" Link="Shared\Services\WorldQuestService.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\ViewModels\BossDetailViewModel.cs" Link="Shared\ViewModels\BossDetailViewModel.cs" />
+		<Compile Include="..\ViewModels\BossListViewModel.cs" Link="Shared\ViewModels\BossListViewModel.cs" />
+		<Compile Include="..\ViewModels\EncounterCountRow.cs" Link="Shared\ViewModels\EncounterCountRow.cs" />
+		<Compile Include="..\ViewModels\HuntLogDisplayItem.cs" Link="Shared\ViewModels\HuntLogDisplayItem.cs" />
+		<Compile Include="..\ViewModels\HuntLogSpeciesDetailViewModel.cs" Link="Shared\ViewModels\HuntLogSpeciesDetailViewModel.cs" />
+		<Compile Include="..\ViewModels\HuntLogViewModel.cs" Link="Shared\ViewModels\HuntLogViewModel.cs" />
+		<Compile Include="..\ViewModels\HuntingStatsViewModel.cs" Link="Shared\ViewModels\HuntingStatsViewModel.cs" />
+		<Compile Include="..\ViewModels\MapDetailViewModel.cs" Link="Shared\ViewModels\MapDetailViewModel.cs" />
+		<Compile Include="..\ViewModels\PreviouslyBattledUsersViewModel.cs" Link="Shared\ViewModels\PreviouslyBattledUsersViewModel.cs" />
+		<Compile Include="..\ViewModels\PvpOpponentDetailViewModel.cs" Link="Shared\ViewModels\PvpOpponentDetailViewModel.cs" />
+		<Compile Include="..\ViewModels\PvpOpponentDisplayItem.cs" Link="Shared\ViewModels\PvpOpponentDisplayItem.cs" />
+		<Compile Include="..\ViewModels\SearchViewModel.cs" Link="Shared\ViewModels\SearchViewModel.cs" />
+		<Compile Include="..\ViewModels\SessionEncounterHistoryViewModel.cs" Link="Shared\ViewModels\SessionEncounterHistoryViewModel.cs" />
+		<Compile Include="..\ViewModels\ViewModelBase.cs" Link="Shared\ViewModels\ViewModelBase.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\Converters\StringNotEmptyConverter.cs" Link="Shared\Converters\StringNotEmptyConverter.cs" />
+		<Compile Include="..\Converters\TypeIconConverter.cs" Link="Shared\Converters\TypeIconConverter.cs" />
+
+		<!-- §313. The Simulator's own closure, on top of §295's: the
+		     fifteen desktop files SimulatorViewModel reaches that no
+		     read-only page did. Computed from the source the same way and
+		     checked by the §313 battery. -->
+		<Compile Include="..\Models\BattleEffect.cs" Link="Shared\Models\BattleEffect.cs" />
+		<Compile Include="..\Models\ManualBattleBounds.cs" Link="Shared\Models\ManualBattleBounds.cs" />
+		<Compile Include="..\Models\UiPreferences.cs" Link="Shared\Models\UiPreferences.cs" />
+		<Compile Include="..\Services\CalculatorDataService.cs" Link="Shared\Services\CalculatorDataService.cs" />
+		<Compile Include="..\Services\CounterpartSpriteService.cs" Link="Shared\Services\CounterpartSpriteService.cs" />
+		<Compile Include="..\Services\ItemSpriteService.cs" Link="Shared\Services\ItemSpriteService.cs" />
+		<Compile Include="..\Services\UiPreferencesService.cs" Link="Shared\Services\UiPreferencesService.cs" />
+		<Compile Include="..\Services\Simulator\BattleSpriteService.cs" Link="Shared\Services\Simulator\BattleSpriteService.cs" />
+		<Compile Include="..\Services\Simulator\BossOpponentSource.cs" Link="Shared\Services\Simulator\BossOpponentSource.cs" />
+		<Compile Include="..\Services\Simulator\CustomBossStore.cs" Link="Shared\Services\Simulator\CustomBossStore.cs" />
+		<Compile Include="..\Services\Simulator\MoveAnimationCatalog.cs" Link="Shared\Services\Simulator\MoveAnimationCatalog.cs" />
+		<Compile Include="..\Services\Simulator\ObservationStore.cs" Link="Shared\Services\Simulator\ObservationStore.cs" />
+		<Compile Include="..\Services\Simulator\OpponentMemoryStore.cs" Link="Shared\Services\Simulator\OpponentMemoryStore.cs" />
+		<Compile Include="..\Services\Simulator\SimulatorPokemonStorage.cs" Link="Shared\Services\Simulator\SimulatorPokemonStorage.cs" />
+		<Compile Include="..\Services\Simulator\SimulatorSpriteProvider.cs" Link="Shared\Services\Simulator\SimulatorSpriteProvider.cs" />
+		<Compile Include="..\Services\Simulator\SimulatorTeamStore.cs" Link="Shared\Services\Simulator\SimulatorTeamStore.cs" />
+		<Compile Include="..\Services\Simulator\TrackerSpeciesSource.cs" Link="Shared\Services\Simulator\TrackerSpeciesSource.cs" />
+		<Compile Include="..\ViewModels\SimulatorViewModel.cs" Link="Shared\ViewModels\SimulatorViewModel.cs" />
+	</ItemGroup>
+
+	<!-- §313. The battle engine, as a project rather than as linked files:
+	     it is its own library with its own data, and the desktop consumes it
+	     the same way. PokemonSim targets net10.0, which a net10.0-android app
+	     references without ceremony.
+
+	     PokemonSim.Shadow brings Microsoft.ML.OnnxRuntime with it, which is
+	     the one dependency here that is NATIVE. It is wanted: the Simulator's
+	     Neural brain is the whole point of the observer, and §311 retired the
+	     shipped model, so the first phone build will report the model as
+	     needing a retrain rather than scoring. That is the correct state, not
+	     a failure. -->
+	<ItemGroup>
+		<ProjectReference Include="..\PokemonSim\pokemonsim.csproj" />
+		<ProjectReference Include="..\PokemonSim.Shadow\PokemonSim.Shadow.csproj" />
+	</ItemGroup>
+
+	<!-- The data the services read, packed into the APK as assets and
+	     unpacked to the app's private storage on first launch (see
+	     Bootstrap.cs), where AppContext.BaseDirectory is then pointed - so
+	     every Path.Combine(AppContext.BaseDirectory, "DataFiles", ...) in the
+	     linked services works unchanged. -->
+	<ItemGroup>
+		<AndroidAsset Include="..\DataFiles\**\*.*" Exclude="..\DataFiles\**\*.lnk" Link="Assets\bundle\DataFiles\%(RecursiveDir)%(Filename)%(Extension)" />
+		<AndroidAsset Include="..\SharedPokemonLibrary\Data\**\*.json" Link="Assets\bundle\SharedPokemonLibrary\Data\%(RecursiveDir)%(Filename)%(Extension)" />
+		<AndroidAsset Include="..\SharedPokemonLibrary\Typings\**\*.json" Link="Assets\bundle\SharedPokemonLibrary\Typings\%(RecursiveDir)%(Filename)%(Extension)" />
+		<AndroidAsset Include="..\SharedPokemonLibrary\Assets\**\*.*" Exclude="..\SharedPokemonLibrary\Assets\Counterparts\World Cup\**" Link="Assets\bundle\SharedPokemonLibrary\Assets\%(RecursiveDir)%(Filename)%(Extension)" />
+		<!-- §313: the engine's own data. SimDataFiles.Resolve looks under
+		     AppContext.BaseDirectory + PokemonSimData first, which is exactly
+		     where the bundle unpacks it - so MoveDex and PokemonDex load on a
+		     phone without either of them knowing where they are. The model
+		     rides along for the shadow evaluator to find. -->
+		<AndroidAsset Include="..\PokemonSim\DataFiles\*.json" Link="Assets\bundle\PokemonSimData\%(Filename)%(Extension)" />
+		<AndroidAsset Include="..\PokemonSim\DataFiles\pokemon_ai.onnx" Link="Assets\bundle\PokemonSimData\pokemon_ai.onnx" />
+	</ItemGroup>
+
+</Project>

@@ -41,6 +41,46 @@ namespace PokemonSim.Engine
             if (attacker.Fainted)
                 return;
 
+            // §304. Three pieces of bookkeeping that belong to the moment a
+            // move is attempted, before any of the gates below can turn it
+            // back.
+            //
+            // MoveFailedThisTurn starts TRUE and is cleared at the very
+            // bottom of this method, which is the one place a move that
+            // actually went off can reach. Every early return below is a
+            // failure of some kind - a flinch, a full paralysis, a miss, a
+            // Protect - and there are a dozen of them; marking failure once
+            // at the top is the only version of this that cannot be got
+            // wrong by adding a thirteenth. BattleEngine reads the flag
+            // after the move and breaks any lock-in the failure ended.
+            //
+            // Glaive Rush and Rage are single-move conditions on the USER:
+            // each covers the gap between the move that set it and the
+            // user's next one, so the user's next one is where they end.
+            if (!viaSleepTalk)
+            {
+                attacker.MoveFailedThisTurn = true;
+                attacker.GlaiveRushActive = false;
+                attacker.RageActive = false;
+            }
+
+            // §301. The recharge turn: Hyper Beam and its four siblings set
+            // MustRecharge when they land, and this is the turn that pays.
+            //
+            // First, ahead of Truant and every status gate, because it is
+            // not a failure to act - the turn is spent by design. Running it
+            // after Truant would let a loaf absorb the recharge and hand the
+            // opponent a second free turn; running it after the PP block
+            // would charge PP for a turn in which no move is used.
+            if (attacker.MustRecharge && !viaSleepTalk)
+            {
+                log.Write($"{attacker.Species} must recharge!");
+
+                attacker.MustRecharge = false;
+                attacker.RechargeMove = null;
+                return;
+            }
+
             // Section 158: Truant loafs every other turn.
             if (!viaSleepTalk && Ability(attacker) == "truant")
             {
@@ -205,6 +245,12 @@ namespace PokemonSim.Engine
             attacker.LastMoveName = move.Name;
             attacker.ActedThisTurn = true;
 
+            // §304: Fury Cutter, Echoed Voice and Rollout read how many
+            // turns in a row this move has been used, so the count has to
+            // be advanced before anything asks about its power - which is
+            // here, the moment the move is committed and announced.
+            Effects.LockIn.CountUse(attacker, move);
+
             log.Write($"{attacker.Species} used {move.Name}!");
 
             // Section 217. The move is committed: every gate above has
@@ -312,13 +358,24 @@ namespace PokemonSim.Engine
             // data files omit accuracy for sure-hit and self-targeted moves.
             // Section 158: Lock-On and No Guard skip the roll entirely;
             // Compound Eyes, Victory Star and Snow Cloak bend it.
-            if (move.Accuracy > 0 && targetsOpponent && !attacker.LockOnActive &&
+            // §304: two more sure hits. Glaive Rush leaves its user open
+            // until it moves again, and a Minimized target cannot dodge the
+            // moves that flatten it.
+            bool sureHit = defender.GlaiveRushActive ||
+                           (move.IsFlattening && defender.Minimized);
+
+            if (move.Accuracy > 0 && targetsOpponent && !attacker.LockOnActive && !sureHit &&
                 Ability(attacker) != "noguard" && Ability(defender) != "noguard")
             {
                 double accuracy = move.Accuracy;
 
                 accuracy *= AccuracyStageCalculator.GetMultiplier(attacker.AccuracyStage);
-                accuracy *= 1.0 / AccuracyStageCalculator.GetMultiplier(defender.EvasionStage);
+
+                // §304: Darkest Lariat and Sacred Sword do not see the
+                // target's evasion, the same way they do not see its
+                // defensive boosts.
+                if (!move.IgnoresEvasion)
+                    accuracy *= 1.0 / AccuracyStageCalculator.GetMultiplier(defender.EvasionStage);
 
                 if (Ability(attacker) == "compoundeyes")
                     accuracy *= 1.3;
@@ -326,8 +383,10 @@ namespace PokemonSim.Engine
                 if (Ability(attacker) == "victorystar")
                     accuracy *= 1.1;
 
-                // Section 159: Wide Lens.
+                // Section 159: Wide Lens. §375: Bright Powder, on the
+                // other end of the move.
                 accuracy *= Items.HeldItems.AccuracyMultiplier(attacker);
+                accuracy *= Items.HeldItems.AccuracyAgainstMultiplier(defender);
 
                 if (!state.IgnoreDefenderAbilities &&
                     Ability(defender) == "snowcloak" &&
@@ -339,6 +398,10 @@ namespace PokemonSim.Engine
                 if (state.Rng.Next(1, 101) > accuracy)
                 {
                     log.Write("The attack missed!");
+
+                    // §304: the three kicks hurt themselves for missing.
+                    Effects.CrashDamageEffect.OnMiss(state, attacker, move);
+
                     state.IgnoreDefenderAbilities = false;
                     return;
                 }
@@ -351,17 +414,35 @@ namespace PokemonSim.Engine
             bool brokeSubstitute = false;
             int hitsLanded = 0;
 
+            // §375: what the defender ITSELF took, as opposed to what its
+            // substitute soaked - an Eject Button answers only to the first.
+            int directDamage = 0;
+
             if (move.Category != MoveCategory.Status)
             {
                 // Section 158: Skill Link always rolls the full count.
-                int hits = move.MaxHits > move.MinHits
-                    ? Ability(attacker) == "skilllink"
-                        ? move.MaxHits
-                        : state.Rng.Next(move.MinHits, move.MaxHits + 1)
-                    : move.MinHits;
+                // §304: unless the move decided its own count in BeforeMove
+                // - Beat Up, which throws one punch per healthy party
+                // member and cannot say that in MinHits and MaxHits.
+                int hits = state.HitCountOverride > 0
+                    ? state.HitCountOverride
+                    : move.MaxHits > move.MinHits
+                        ? Ability(attacker) == "skilllink"
+                            ? move.MaxHits
+                            : state.Rng.Next(move.MinHits, move.MaxHits + 1)
+                        : move.MinHits;
+
+                state.HitCountOverride = 0;
 
                 for (int i = 0; i < hits && !defender.Fainted; i++)
                 {
+                    // §304: which hit this is, 1-based. Triple Kick, Triple
+                    // Axel and Beat Up all get stronger as the count rises
+                    // and this is the only thing that can tell them where
+                    // they are. Set before the damage is calculated so the
+                    // BeforeDamage formulas below read the right one.
+                    state.CurrentHitNumber = i + 1;
+
                     DamageResult result = DamageCalculator.CalculateDamage(state, attacker, defender, move);
 
                     effectiveness = result.Effectiveness;
@@ -369,6 +450,11 @@ namespace PokemonSim.Engine
                     if (result.Effectiveness <= 0)
                     {
                         log.Write($"It doesn't affect {defender.Species}...");
+
+                        // §304: a kick that swings at something it cannot
+                        // touch crashes just as hard as one that misses.
+                        Effects.CrashDamageEffect.OnMiss(state, attacker, move);
+
                         break;
                     }
 
@@ -458,7 +544,9 @@ namespace PokemonSim.Engine
                     {
                         // Section 158: Endure hangs on at 1 HP; Sturdy does
                         // the same from full health. Section 159: so does a
-                        // Focus Sash, eating itself (SashSaves logs).
+                        // Focus Sash, eating itself; §375: so does a Focus
+                        // Band, one time in ten (SavesFromLethalHit logs
+                        // both).
                         if (hitDamage >= defender.CurrentHP)
                         {
                             bool endures = defender.Enduring;
@@ -469,7 +557,7 @@ namespace PokemonSim.Engine
                                 Ability(defender) == "sturdy";
 
                             bool sash = !endures && !sturdy &&
-                                Items.HeldItems.SashSaves(state, defender, hitDamage);
+                                Items.HeldItems.SavesFromLethalHit(state, defender, hitDamage);
 
                             if (endures || sturdy || sash)
                             {
@@ -490,6 +578,7 @@ namespace PokemonSim.Engine
                             defender.CurrentHP = 0;
 
                         damage += hitDamage;
+                        directDamage += hitDamage;
 
                         // Section 158: Counter / Mirror Coat / Metal Burst
                         // bookkeeping, cleared at end of turn.
@@ -498,6 +587,21 @@ namespace PokemonSim.Engine
                         else if (move.Category == MoveCategory.Special)
                             defender.LastSpecialDamageTaken += hitDamage;
 
+                        // §304: Rage Fist counts the hits its owner has
+                        // taken, for the whole battle - so this is a count
+                        // of hits, not of moves, and a five-hit Bullet Seed
+                        // is worth five of them.
+                        if (hitDamage > 0)
+                            defender.TimesAttacked++;
+
+                        // §304: and Rage answers a hit with a stage of
+                        // Attack, while it is standing.
+                        if (hitDamage > 0 && defender.RageActive && !defender.Fainted)
+                        {
+                            state.Log.Write($"{defender.Species}'s rage is building!");
+                            ApplyStatChange(state, defender, "Attack", 1);
+                        }
+
                         // Section 159: Rocky Helmet, Weakness Policy, the
                         // Air Balloon pop, a Sitrus Berry check.
                         Items.HeldItems.AfterHitTaken(state, attacker, defender, move, result.Effectiveness, hitDamage);
@@ -505,6 +609,8 @@ namespace PokemonSim.Engine
 
                     hitsLanded++;
                 }
+
+                state.CurrentHitNumber = 0;
 
                 if (hits > 1 && hitsLanded > 1)
                     log.Write($"Hit {hitsLanded} times!");
@@ -574,6 +680,32 @@ namespace PokemonSim.Engine
                     },
                     state
                 );
+            }
+
+            // §375: an Eject Button leaves last, once everything the hit
+            // set off has run and before the next action - and only for a
+            // hit the holder took itself, not one its substitute did.
+            Items.HeldItems.AfterMoveTaken(state, attacker, defender, move, directDamage);
+
+            // §304. The bottom of the method, and the only way to it: the
+            // move was used and it went off. Spend clears the failure flag
+            // set at the top, counts a turn off any lock-in the user is
+            // under, and confuses it if that was the last turn of an
+            // Outrage.
+            //
+            // Charge is spent here too. It belongs to whatever Electric
+            // move comes next rather than to any move of its own, so no
+            // move's effect list can hold it and this is where the move
+            // that spends it finishes.
+            if (!viaSleepTalk)
+            {
+                if (attacker.ChargeActive && move.Type == PokemonType.Electric &&
+                    (move.Effects == null || !move.Effects.Contains("Charge")))
+                {
+                    attacker.ChargeActive = false;
+                }
+
+                Effects.LockIn.Spend(state, attacker, move);
             }
 
             // -------- LOCAL FUNCTIONS --------
@@ -756,8 +888,15 @@ namespace PokemonSim.Engine
 
             // ---- Flinch ----
             // Section 158: Inner Focus refuses it; Steadfast answers it.
-            if (!sheerForce && move.FlinchChance > 0 && !defender.Fainted && !substituteBlocks &&
-                state.Rng.Chance(Math.Min(1.0, move.FlinchChance * chanceScale)))
+            // §375: a damaging move with no flinch of its own borrows a
+            // Razor Fang's; a move that has one keeps its own number.
+            double flinchChance = move.FlinchChance;
+
+            if (flinchChance <= 0 && !isStatusMove && damageDealt > 0)
+                flinchChance = Items.HeldItems.FlinchChance(attacker);
+
+            if (!sheerForce && flinchChance > 0 && !defender.Fainted && !substituteBlocks &&
+                state.Rng.Chance(Math.Min(1.0, flinchChance * chanceScale)))
             {
                 if (state.IgnoreDefenderAbilities || Ability(defender) != "innerfocus")
                 {
@@ -863,6 +1002,15 @@ namespace PokemonSim.Engine
                 return;
             }
 
+            // §304: nobody falls asleep while an Uproar is going on, on
+            // either side of the field.
+            if (status == StatusCondition.Sleep && UproarInProgress(state))
+            {
+                if (announceFailure)
+                    state.Log.Write($"{target.Species} can't sleep in an uproar!");
+                return;
+            }
+
             // Section 158: field protections - Safeguard's side and Misty
             // Terrain for the grounded.
             if (source != null && !ReferenceEquals(source, target) &&
@@ -906,6 +1054,27 @@ namespace PokemonSim.Engine
             {
                 TryInflictStatus(state, source, status, announceFailure: false, substituteBlocks: false);
             }
+        }
+
+        /// <summary>§304: whether either active Pokemon is mid-Uproar. The
+        /// lock is the condition - an Uproar that has run out or been
+        /// broken has released its user, and with it everybody's sleep.</summary>
+        static bool UproarInProgress(BattleState state)
+        {
+            foreach (PokemonState pokemon in new[]
+            {
+                state.Player1.ActivePokemon,
+                state.Player2.ActivePokemon
+            })
+            {
+                if (!pokemon.Fainted && pokemon.LockedMove != null &&
+                    string.Equals(pokemon.LockedMove.Name, "Uproar", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>Section 158: a stat change with a known opponent

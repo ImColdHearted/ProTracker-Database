@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- §315. The red the icon has always been, sampled out of Assets/AppIcon.png
+       rather than guessed, so the adaptive icon's background layer and the
+       desktop's window icon are the same colour by construction. -->
+  <color name="appicon_background">#BF0202</color>
+</resources>

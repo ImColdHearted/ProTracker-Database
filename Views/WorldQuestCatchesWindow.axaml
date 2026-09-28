@@ -1,0 +1,71 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.WorldQuestCatchesWindow"
+        x:DataType="vm:WorldQuestViewModel"
+        Title="World Quest Catches"
+        Width="400" Height="460"
+        MinWidth="340" MinHeight="300"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <!-- §254. Every catch counted for the running World Quest, newest first,
+         with a Remove on each row. Opened from the stats panel's Remove
+         Catch button while the mode is on; its DataContext is the SAME
+         WorldQuestViewModel the panel shows, so the list is live and a
+         removal here moves the figures there at once.
+
+         §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. Its child is deliberately
+         not re-indented. -->
+    <Border Classes="themedPanel">
+    <Grid Margin="16" RowDefinitions="Auto,Auto,*,Auto">
+
+        <TextBlock Grid.Row="0" Text="World Quest Catches" FontSize="18" FontWeight="Bold"
+                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,4" />
+
+        <TextBlock Grid.Row="1" Text="{Binding CatchesSummaryText}"
+                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,12" />
+
+        <ScrollViewer Grid.Row="2">
+            <StackPanel>
+                <TextBlock Text="Catches appear here as they are detected, read from a screenshot, or added by hand."
+                           TextWrapping="Wrap" Opacity="0.7"
+                           Foreground="{DynamicResource ThemeTextBrush}"
+                           IsVisible="{Binding !HasCatches}" Margin="0,8,0,0" />
+
+                <ItemsControl ItemsSource="{Binding Catches}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:WorldQuestCatchRow">
+                            <!-- The Remove command is the window's view model's,
+                                 not the row's, reached the way MainWindow reaches
+                                 its own from inside a template. The row itself
+                                 is the parameter. -->
+                            <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto" Margin="0,3,0,3">
+                                <TextBlock Grid.Column="0" Text="{Binding NumberText}" Width="34"
+                                           Foreground="{DynamicResource ThemeTextBrush}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Text="{Binding When}" Width="70"
+                                           Foreground="{DynamicResource ThemeTextBrush}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="2" Text="{Binding TotalText}" FontWeight="Bold"
+                                           Foreground="{DynamicResource ThemeTextBrush}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="3" Text="{Binding Source}" Opacity="0.7" Margin="8,0"
+                                           Foreground="{DynamicResource ThemeTextBrush}" VerticalAlignment="Center" />
+                                <Button Grid.Column="4" Content="Remove" Padding="8,3" FontSize="11"
+                                        Command="{Binding $parent[Window].((vm:WorldQuestViewModel)DataContext).RemoveCatchCommand}"
+                                        CommandParameter="{Binding}"
+                                        ToolTip.Tip="Takes this catch out of the count. The status line on the main window says what went." />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="Close" Click="CloseButton_Click" />
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -81,6 +83,29 @@ public sealed partial class SessionEncounterHistoryViewModel : ViewModelBase, ID
 
     [ObservableProperty] private string allTimeSummary = string.Empty;
 
+    /// <summary>§273. Whether the Shiny/Form column is sorting rather than
+    /// just reporting. On, every form comes first, then every shiny, then the
+    /// rest - each group still newest first, so the only thing that changed
+    /// is which rows you have to page to. Off is the chronological order this
+    /// window has always opened in.
+    ///
+    /// One flag for both views. They reach the order by completely different
+    /// means - a slice of an in-memory list against three keyset walks over
+    /// the log - but it is one question the reader asked, and two toggles
+    /// that could disagree would be two things to explain.</summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(RareHeaderText))]
+    [NotifyPropertyChangedFor(nameof(RareHeaderTip))]
+    private bool rareFirst;
+
+    /// <summary>The header carries the arrow, so the column that is doing the
+    /// sorting says so where the sorting was asked for.</summary>
+    public string RareHeaderText => RareFirst ? "Shiny/Form \u25B2" : "Shiny/Form";
+
+    public string RareHeaderTip => RareFirst
+        ? "Sorted forms first, then shinies. Click to go back to newest first."
+        : "Click to bring every form to the top, then every shiny.";
+
 
 
     // ---- §128 paging state -------------------------------------------
@@ -106,9 +131,29 @@ public sealed partial class SessionEncounterHistoryViewModel : ViewModelBase, ID
     [ObservableProperty] private int allTimePageIndex;
     [ObservableProperty] private int allTimePageCount = 1;
 
-    /// <summary>The id each already-visited page started after. Index 0 is
-    /// page one, which starts at the top and so has no cursor.</summary>
-    private readonly List<long?> allTimePageCursors = new() { null };
+    /// <summary>§273. Where each already-visited page starts. Chronologically
+    /// that is only an id; rare-first it is also WHICH RANK that id sits in,
+    /// because the three ranks are walked one after another (see
+    /// EncounterDatabaseService.QueryRareFirst). One pair serves both - the
+    /// chronological order is the single rank <see cref="AllRanks"/>, so
+    /// nothing here has to ask which mode it is in. Index 0 is page one, which
+    /// starts at the top of the first rank and so has no id.</summary>
+    private readonly List<(int Rank, long? BeforeId)> allTimePageCursors = new() { (0, null) };
+
+    /// <summary>The rank a chronological page starts in: there is only one
+    /// list, so it is rank 0 and never advances.</summary>
+    private const int AllRanks = 0;
+
+    /// <summary>§273. Back to page one, cursor stack emptied. Called by the
+    /// All time toggle and by the Shiny/Form header, which both invalidate
+    /// every recorded cursor - the second because the rows a page contains
+    /// are about to change.</summary>
+    private void ResetAllTimePaging()
+    {
+        allTimePageCursors.Clear();
+        allTimePageCursors.Add((0, null));
+        AllTimePageIndex = 0;
+    }
 
     partial void OnSessionPageIndexChanged(int value) => RaisePagerChanged();
     partial void OnSessionPageCountChanged(int value) => RaisePagerChanged();
@@ -197,10 +242,49 @@ public sealed partial class SessionEncounterHistoryViewModel : ViewModelBase, ID
 
         SessionPage.Clear();
 
+        // §273: the same rows, in whichever order the Shiny/Form header last
+        // asked for. OrderBy is a STABLE sort, so within a rank the rows keep
+        // the newest-first order Records is already kept in - the rare-first
+        // view is the chronological one regrouped, not re-sorted.
+        IReadOnlyList<SessionEncounterRecord> ordered = RareFirst
+            ? (IReadOnlyList<SessionEncounterRecord>)Records.OrderBy(SessionRankOf).ToList()
+            : Records;
+
         int start = SessionPageIndex * PageSize;
 
-        for (int i = start; i < Records.Count && i < start + PageSize; i++)
-            SessionPage.Add(Records[i]);
+        for (int i = start; i < ordered.Count && i < start + PageSize; i++)
+            SessionPage.Add(ordered[i]);
+    }
+
+    /// <summary>§273. The session record's rank, by the same rule
+    /// EncounterDatabaseService applies to a logged row - forms 0, shinies 1,
+    /// everything else 2. The two live apart because the types do, and they
+    /// have to keep saying the same thing.</summary>
+    internal static int SessionRankOf(SessionEncounterRecord record) =>
+        string.IsNullOrWhiteSpace(record.RareType) || record.RareType == "None"
+            ? EncounterDatabaseService.RankOrdinary
+            : record.RareType == "Shiny"
+                ? EncounterDatabaseService.RankShiny
+                : EncounterDatabaseService.RankForm;
+
+    /// <summary>§273. The Shiny/Form header. Both views go back to page one:
+    /// a page number means nothing across a reordering, and the rows the
+    /// reader just asked to see are at the top.</summary>
+    [RelayCommand]
+    private void ToggleRareFirst()
+    {
+        RareFirst = !RareFirst;
+
+        if (ShowAllTime)
+        {
+            ResetAllTimePaging();
+            LoadAllTimePage();
+        }
+        else
+        {
+            SessionPageIndex = 0;
+            FillSessionPage();
+        }
     }
 
     // Each list's empty state depends on BOTH which view is showing and
@@ -256,9 +340,7 @@ public sealed partial class SessionEncounterHistoryViewModel : ViewModelBase, ID
         // §128: the cursor stack belongs to one visit. Coming back to All
         // time after switching away must not reuse ids from a list that has
         // since grown - every new encounter shifts what page two contains.
-        allTimePageCursors.Clear();
-        allTimePageCursors.Add(null);
-        AllTimePageIndex = 0;
+        ResetAllTimePaging();
 
         // The pager reads its numbers from whichever mode is showing, so it
         // has to be told the mode changed even when neither count did.
@@ -339,13 +421,33 @@ public sealed partial class SessionEncounterHistoryViewModel : ViewModelBase, ID
         // A page reached for the first time has no cursor recorded yet; it
         // continues from where the previous page stopped.
         while (allTimePageCursors.Count <= AllTimePageIndex)
-            allTimePageCursors.Add(null);
+            allTimePageCursors.Add((0, null));
 
-        long? beforeId = allTimePageCursors[AllTimePageIndex];
+        (int rank, long? beforeId) = allTimePageCursors[AllTimePageIndex];
 
-        System.Collections.Generic.IReadOnlyList<EncounterLogRow> page =
-            EncounterDatabaseService.Query(
+        // §273: rare-first walks the three ranks in turn and so needs to be
+        // told which one this page starts in; chronological is one list and
+        // starts where it left off. Both are keyset, and both cost the same
+        // at page five hundred as at page one.
+        System.Collections.Generic.IReadOnlyList<EncounterLogRow> page;
+        (int Rank, long? BeforeId) nextCursor;
+
+        if (RareFirst)
+        {
+            EncounterDatabaseService.RankedPage ranked =
+                EncounterDatabaseService.QueryRareFirst(
+                    PokemonName, client, rank, beforeId, EncounterDatabaseService.PageSize);
+
+            page = ranked.Rows;
+            nextCursor = (ranked.NextRank, ranked.NextBeforeId);
+        }
+        else
+        {
+            page = EncounterDatabaseService.Query(
                 PokemonName, client, beforeId, EncounterDatabaseService.PageSize);
+
+            nextCursor = (AllRanks, page.Count > 0 ? page[page.Count - 1].Id : null);
+        }
 
         foreach (EncounterLogRow row in page)
             AllTimeRecords.Add(row);
@@ -353,11 +455,11 @@ public sealed partial class SessionEncounterHistoryViewModel : ViewModelBase, ID
         // Record where the NEXT page should start, so moving forward and back
         // again lands on exactly the same rows.
         if (page.Count > 0 && allTimePageCursors.Count == AllTimePageIndex + 1)
-            allTimePageCursors.Add(page[page.Count - 1].Id);
+            allTimePageCursors.Add(nextCursor);
 
         AllTimeSummary = total == 0
             ? "No encounters of this Pokémon have been recorded on this profile yet."
-            : $"{total:N0} recorded on this profile.";
+            : $"{DisplayNumber.Count(total)} recorded on this profile.";
 
         UpdateAllTimeFlags();
     }

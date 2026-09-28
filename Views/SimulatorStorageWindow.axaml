@@ -50,8 +50,20 @@
                                     </Panel>
                                 </Button>
 
+                                <!-- §275: no fill and no outline of its own. The
+                                     name, level, ability and moves are a card's
+                                     text, and this Button was taking the blanket
+                                     ThemeButtonBrush (App.axaml) - the same fill
+                                     as the sprite box beside it - which drew a
+                                     second box inside the card and made the
+                                     writing look like part of the sprite's
+                                     background. Transparent here, so it reads off
+                                     the card's own themedPanel; hover and press
+                                     still come from the theme's template, so it
+                                     is no less obviously clickable. -->
                                 <Button Grid.Column="1" Padding="6" HorizontalAlignment="Stretch"
                                         HorizontalContentAlignment="Left"
+                                        Background="Transparent" BorderThickness="0"
                                         Command="{Binding $parent[ItemsControl].((vm:SimulatorStorageViewModel)DataContext).PickCardCommand}"
                                         CommandParameter="{Binding}">
                                     <StackPanel Spacing="2">

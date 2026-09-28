@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- §295. No action bar: Avalonia draws its own chrome. -->
+  <style name="ProTrackerTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <item name="windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="android:windowFullscreen">false</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowBackground">#0F185A</item>
+  </style>
+</resources>

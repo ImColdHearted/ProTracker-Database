@@ -15,10 +15,15 @@ namespace Foot_Tracker.Models
     ///     counting internally (HuntSession is untouched) - they're just not
     ///     displayed. See UiPreferencesService.ExcludableStats for the list of
     ///     valid keys.
+    ///   - §271: which counterpart sprite each hunting target is drawn as -
+    ///     see TargetSpriteSkins.
+    ///   - §278: whether the encounter table is kept per map - see
+    ///     PerMapEncounterTable.
     ///   - Whether the entire stats panel is hidden as one unit, regardless of
     ///     the per-stat list above - see StatsPanelHidden.
     ///   - Which sound (if any) plays when Since Form/Since Shiny resets - see
-    ///     SinceFormSound/SinceShinySound.
+    ///     SinceFormSound/SinceShinySound - and, §389, through which output
+    ///     device - see SoundOutputDevice.
     /// </summary>
     public class UiPreferences
     {
@@ -75,11 +80,62 @@ namespace Foot_Tracker.Models
         public int SinceFormSoundVolume { get; set; } = 100;
         public int SinceShinySoundVolume { get; set; } = 100;
 
+        // §389. Where those play: a device pin as SoundOutputDevice.Pin
+        // writes it ("pulse:alsa_output.usb-...", "winmm:Headset Earphone
+        // (Logitech..."), or empty - the default, and what every file from
+        // before this section reads as - for whatever the operating system
+        // sends sound to. The label beside it is what the Sound Settings
+        // window shows for the pin while the device is unplugged, and what
+        // the log names. Same for every client, like the four above; a
+        // Linux hunter's alerts kept leaving his headset, which is where
+        // this came from.
+        public string SoundOutputDevice { get; set; } = string.Empty;
+        public string SoundOutputDeviceLabel { get; set; } = string.Empty;
+
         // §135. The "Don't show this again" checkbox on the warning that
         // opens in front of Set Screen Boundaries. Per client like everything
         // else here - a player who dismissed it on one profile sees it once
         // more on another, which is the cheaper mistake.
         public bool SuppressBoundariesWarning { get; set; }
+
+        // §278. Whether the front encounter table is kept PER MAP rather than
+        // for the hunt as a whole - File, Tracker Settings. False is the
+        // tracker as it has always worked, and is the default on purpose:
+        // per-map tracking writes a file for every map visited, and that is a
+        // cost nobody should start paying without asking for it.
+        //
+        // Only the TABLE partitions. Every stat - time hunting, Since Shiny,
+        // the catch totals and the rate - stays whole in either mode, because
+        // those are about the hunt and not about the ground you are standing
+        // on. See MapEncounterService.
+        public bool PerMapEncounterTable { get; set; }
+
+        // §429. Whether this tracker SHARES the levels it meets Pokémon at -
+        // species, map and level, nothing else - with the events server, so
+        // every Map Explorer can show the level range each species spawns
+        // in on each map (and a hunter can pick a repel-trick level). OFF by
+        // default, and only ever turned on by the player: File, Tracker
+        // Settings, or the "Share level data" box in the Map Explorer. What
+        // is sent is the lowest and highest level per species per map, once
+        // an encounter's record is final; the server keeps only the widest
+        // range it has ever been told. See LevelShareService.
+        public bool ShareLevelData { get; set; }
+
+        // §271. Which counterpart sprite each hunting target is DRAWN as -
+        // species name (as the target was set) to the catalog-relative image
+        // path, e.g. "Charizard" ->
+        // "SharedPokemonLibrary/Assets/Counterparts/Halloween/Charizard.png".
+        // A species with no entry here draws its ordinary sprite, which is
+        // every species until the player right-clicks one and picks.
+        //
+        // Here rather than in HuntSession because nothing about it is hunt
+        // data: it changes no count, it is not exported, and a hunt reset
+        // should not undo a skin the player chose. Keyed by SPECIES rather
+        // than by slot so reordering the targets - or swapping one out and
+        // back - keeps each one looking the way it was set, and so the same
+        // choice applies in World Quest mode, where the target is not the
+        // player's to change.
+        public Dictionary<string, string> TargetSpriteSkins { get; set; } = new();
 
         // §135. The battle-window box the player drew by hand in Set Screen
         // Boundaries, or null when none is saved. Pixels of the captured

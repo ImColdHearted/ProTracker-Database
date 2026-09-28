@@ -317,13 +317,20 @@ namespace Foot_Tracker.Services
             // names are "Farfetchd" and "Mr Mime"; the catalog spells the
             // same species "Farfetch'd" in one event and "Farfetchd" in
             // another. Both must match, in the picker and in the matcher.
-            return value
-                .Trim()
-                .Replace("-", " ")
-                .Replace("_", " ")
-                .Replace("'", string.Empty)
-                .Replace(".", string.Empty)
-                .ToLowerInvariant();
+            // §405: the catalog writes "Nidoran ♀", the library "Nidoran F"
+            // - the sign becomes the letter, so the two meet.
+            return string.Join(
+                " ",
+                value
+                    .Trim()
+                    .Replace("-", " ")
+                    .Replace("_", " ")
+                    .Replace("'", string.Empty)
+                    .Replace(".", string.Empty)
+                    .Replace("\u2640", " f")
+                    .Replace("\u2642", " m")
+                    .ToLowerInvariant()
+                    .Split(' ', StringSplitOptions.RemoveEmptyEntries));
         }
 
         public static Avalonia.Media.Imaging.Bitmap? GetImage(

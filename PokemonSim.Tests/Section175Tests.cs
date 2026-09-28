@@ -58,30 +58,46 @@ namespace PokemonSim.Tests
 
         static int Slot(int index) => ObserverEncoder.MoveBlockStart + index * ObserverEncoder.MoveBlockStride;
 
-        static int Global(int offset) => ObserverEncoder.GlobalBlockStart + offset;
+        /// <summary>§311. §175's global-block offsets, translated to where
+        /// the re-laid vector put them. Every fact below was written as
+        /// "global slot 14 is how many of mine are alive", and that is still
+        /// true - only the column moved - so the offsets stay and this maps
+        /// them. Rewriting sixteen call sites to new literals would have
+        /// thrown away what each one is actually asserting.</summary>
+        static int Global(int offset) => ObserverEncoder.PositionBlockStart + offset switch
+        {
+            0 => 30,                                  // outspeeds
+            1 => 31,                                  // speed ratio
+            >= 2 and <= 7 => 16 + (offset - 2),       // self status
+            >= 8 and <= 13 => 22 + (offset - 8),      // opponent status
+            14 => 32,                                 // mine alive
+            15 => 33,                                 // theirs alive
+            16 => 34,                                 // my team's hp
+            17 => 35,                                 // theirs
+            18 => 38,                                 // best effectiveness
+            19 => 39,                                 // best damage
+            20 => 28,                                 // my level
+            21 => 29,                                 // theirs
+            _ => throw new ArgumentOutOfRangeException(nameof(offset)),
+        };
 
         // ---------------- layout ----------------
 
         [Fact]
         public void TheLayoutAddsUpToTheDeclaredWidth()
         {
-            Assert.Equal(ObservationSchema.LegacyFeatureCount, ObserverEncoder.MoveBlockStart);
-
+            // §311 re-laid the vector, so what this pins is no longer "the
+            // §175 width is still a prefix" - there are no prefixes any more.
+            // What it pins instead is the thing that outlived the layout: the
+            // move block is four equal strides, and the blocks add up to the
+            // width the schema declares.
             Assert.Equal(
                 ObserverEncoder.MoveBlockStart + ObservationSchema.MoveSlots * ObserverEncoder.MoveBlockStride,
-                ObserverEncoder.GlobalBlockStart);
+                ObserverEncoder.TeamBlockStart);
 
-            // The global block is the 22 entries the encoder fills after
-            // the move blocks. Section 176 appended more behind it, so what
-            // this pins now is that the section 175 vector is still exactly
-            // the front of the current one.
-            Assert.Equal(22, ObserverEncoder.GlobalBlockSize);
-            Assert.Equal(ObservationSchema.FeatureCountV2,
-                         ObserverEncoder.GlobalBlockStart + ObserverEncoder.GlobalBlockSize);
-            Assert.True(ObservationSchema.FeatureCount >= ObservationSchema.FeatureCountV2);
+            Assert.Equal(ObservationSchema.FeatureCount, ObserverEncoder.TotalFeatures);
 
-            Assert.Equal(4, ObservationSchema.Version);
-            Assert.Equal(10, ObservationSchema.LegacyFeatureCount);
+            Assert.Equal(7, ObservationSchema.Version);
             Assert.Equal(6, ObserverEncoder.StatusFlags.Length);
             Assert.DoesNotContain(StatusCondition.None, ObserverEncoder.StatusFlags);
         }
@@ -617,62 +633,53 @@ namespace PokemonSim.Tests
             return path;
         }
 
+        /// <summary>§311. These two probes are 10 and 76 features wide, and
+        /// both are now REFUSED rather than fed the front of a current state.
+        /// The refusal names the generation, because "retrain this" and
+        /// "something is wrong with your exporter" are different problems and
+        /// a bare width would not tell them apart.</summary>
         [Fact]
-        public void TheEvaluatorAcceptsBothWidthsAndSaysWhichItGot()
+        public void TheEvaluatorRefusesARetiredWidthAndSaysWhichOneItWas()
         {
             using var narrow = new OnnxShadowEvaluator(WriteProbe(NarrowProbe));
             using var wide = new OnnxShadowEvaluator(WriteProbe(WideProbe));
 
-            Assert.True(narrow.Status.Available, narrow.Status.Description);
-            Assert.True(wide.Status.Available, wide.Status.Description);
+            Assert.False(narrow.Status.Available, narrow.Status.Description);
+            Assert.False(wide.Status.Available, wide.Status.Description);
 
-            Assert.Equal(ObservationSchema.FeatureCountV1, narrow.Status.InputWidth);
-            Assert.Equal(ObservationSchema.FeatureCountV2, wide.Status.InputWidth);
-
-            // Both of these probes predate section 176, and the status line
-            // says which generation each one is.
-            Assert.Contains("pre-175", narrow.Status.Description);
-            Assert.Contains("pre-176", wide.Status.Description);
-            Assert.DoesNotContain("pre-175", wide.Status.Description);
+            Assert.Contains("\u00a7156", narrow.Status.Description);
+            Assert.Contains("\u00a7175", wide.Status.Description);
+            Assert.Contains("retrained", narrow.Status.Description);
         }
 
+        /// <summary>
+        /// §311. This was ANarrowModelIsFedThePrefixOfAWideState, and it was
+        /// the prefix rule's own test: a ten-input model handed the first ten
+        /// columns of a current state agreed with a wide one, because the ten
+        /// meant the same ten things.
+        ///
+        /// They do not any more. Column 8 was the weather as an ordinal and
+        /// is now a stat stage. Feeding the old model the front of the new
+        /// vector would not throw - it would score nonsense - so the test is
+        /// inverted: an old model must get NO opinion rather than a confident
+        /// wrong one.
+        /// </summary>
         [Fact]
-        public void ANarrowModelIsFedThePrefixOfAWideState()
+        public void ARetiredModelIsNotFedThePrefixOfACurrentState()
         {
             using var narrow = new OnnxShadowEvaluator(WriteProbe(NarrowProbe));
             using var wide = new OnnxShadowEvaluator(WriteProbe(WideProbe));
-
-            if (!narrow.Status.Available || !wide.Status.Available)
-                return;   // covered by the load test above
 
             var state = new float[ObservationSchema.FeatureCount];
             state[0] = 0.1f;
-            state[1] = 0.9f;      // slot 1 is the best of the four
+            state[1] = 0.9f;
             state[2] = 0.2f;
             state[3] = 0.3f;
 
             var open = new float[] { 1, 1, 1, 1 };
 
-            ShadowPrediction? narrowSaid = narrow.Predict(state, open);
-            ShadowPrediction? wideSaid = wide.Predict(state, open);
-
-            Assert.NotNull(narrowSaid);
-            Assert.NotNull(wideSaid);
-
-            // Both graphs copy inputs 0-3 to the outputs, so both must
-            // agree - which is only true if the narrow one really was
-            // handed the first ten features rather than refused.
-            Assert.Equal(1, narrowSaid!.PreferredMoveIndex);
-            Assert.Equal(1, wideSaid!.PreferredMoveIndex);
-
-            for (int i = 0; i < ObservationSchema.MoveSlots; i++)
-                Assert.Equal(state[i], narrowSaid.Scores[i], 5);
-
-            // Masking still wins over the model's own preference.
-            ShadowPrediction? masked = wide.Predict(state, new float[] { 0, 0, 1, 0 });
-
-            Assert.NotNull(masked);
-            Assert.Equal(2, masked!.PreferredMoveIndex);
+            Assert.Null(narrow.Predict(state, open));
+            Assert.Null(wide.Predict(state, open));
         }
 
         [Fact]
@@ -680,11 +687,7 @@ namespace PokemonSim.Tests
         {
             using var wide = new OnnxShadowEvaluator(WriteProbe(WideProbe));
 
-            if (!wide.Status.Available)
-                return;
-
-            Assert.Null(wide.Predict(new float[ObservationSchema.LegacyFeatureCount],
-                                     new float[] { 1, 1, 1, 1 }));
+            Assert.Null(wide.Predict(new float[10], new float[] { 1, 1, 1, 1 }));
         }
     }
 }

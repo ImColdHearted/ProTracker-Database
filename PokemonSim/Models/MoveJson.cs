@@ -36,6 +36,13 @@ namespace PokemonSim.Models
         public bool usesDefenseAsOffense { get; set; }
         public bool usesTargetAttack { get; set; }
         public bool usesHigherOffense { get; set; }
+
+        // §304: Shell Side Arm's real rule, and the two stat-stage
+        // blindnesses Darkest Lariat and Sacred Sword share.
+        public bool usesBetterDamage { get; set; }
+        public bool ignoresDefensiveBoosts { get; set; }
+        public bool ignoresEvasion { get; set; }
+        public bool ignoresFlyingImmunity { get; set; }
         public TerrainType setTerrain { get; set; }
         public string? target { get; set; }
     }

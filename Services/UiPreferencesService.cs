@@ -21,12 +21,25 @@ namespace Foot_Tracker.Services
         {
             ("TimeHunting", "Time Hunting"),
             ("TotalEncounters", "Total Encounters"),
-            ("TargetedEncountersFound", "Targeted Encounters Found"),
+            // §364: the label matches the panel's own wording now. The KEY is
+            // deliberately left as it was - it is what a saved preferences
+            // file contains, and renaming it would un-hide this stat for
+            // everyone who had hidden it.
+            ("TargetedEncountersFound", "Target Pokémon Found"),
+            ("TargetedPokemonCaught", "Target Pokémon Caught"),
+            ("TargetedPokemonFled", "Target Pokémon Fled"),
             ("SinceShiny", "Since Shiny"),
             ("SinceForm", "Since Form"),
+            // §364: Successful Catches and Pokémon Broken Free count EVERY
+            // catch and every break-out, target or not, which is why they
+            // stay beside the two target-only stats above rather than being
+            // replaced by them. A hunter catches things he is not hunting.
             ("SuccessfulCatches", "Successful Catches"),
             ("PokemonBrokenFree", "Pokémon Broken Free"),
-            ("CatchRate", "Catch Rate"),
+            // §364: Catch Rate is gone from the panel, so it is gone from
+            // here. A preferences file that still lists the key is harmless -
+            // nothing reads it, and the next Save rewrites the list from this
+            // catalogue.
         };
 
         /// <summary>§126. The encounter table's own columns, offered in the
@@ -159,14 +172,16 @@ namespace Foot_Tracker.Services
         }
 
         /// <summary>§146. Writes the two sound choices (and, since §152, their
-        /// volumes) into every client's preference file that exists (and the
-        /// one for the client in use, whether or not it exists yet), so a
-        /// sound picked once plays on whichever client the hunt runs on.
-        /// Everything else in each file is left exactly as it was. Returns
-        /// how many files were written; a file that cannot be read or written
-        /// is logged and skipped rather than stopping the rest.</summary>
+        /// volumes, and since §389 the output device) into every client's
+        /// preference file that exists (and the one for the client in use,
+        /// whether or not it exists yet), so a sound picked once plays on
+        /// whichever client the hunt runs on. Everything else in each file is
+        /// left exactly as it was. Returns how many files were written; a
+        /// file that cannot be read or written is logged and skipped rather
+        /// than stopping the rest.</summary>
         public static int SaveSoundsForEveryClient(
-            string sinceFormSound, string sinceShinySound, int sinceFormSoundVolume, int sinceShinySoundVolume, int maxClients)
+            string sinceFormSound, string sinceShinySound, int sinceFormSoundVolume, int sinceShinySoundVolume,
+            string soundOutputDevice, string soundOutputDeviceLabel, int maxClients)
         {
             int written = 0;
             int activeClient = SessionPersistenceService.AppearanceClientNumber;
@@ -193,6 +208,8 @@ namespace Foot_Tracker.Services
                     settings.SinceShinySound = sinceShinySound;
                     settings.SinceFormSoundVolume = sinceFormSoundVolume;
                     settings.SinceShinySoundVolume = sinceShinySoundVolume;
+                    settings.SoundOutputDevice = soundOutputDevice;
+                    settings.SoundOutputDeviceLabel = soundOutputDeviceLabel;
 
                     Directory.CreateDirectory(SettingsFolder);
                     DurableFile.WriteAllText(path, JsonSerializer.Serialize(settings, options));

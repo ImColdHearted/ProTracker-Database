@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Foot_Tracker.ViewModels;
 
@@ -27,6 +28,17 @@ public partial class SessionEncounterHistoryWindow : Window
         // this instance for the rest of the app's lifetime, same pattern as
         // PreviouslyBattledUsersWindow/HuntLogSpeciesDetailWindow.
         Closed += (_, _) => vm.Dispose();
+    }
+
+    // §273: the Shiny/Form header sorts. One handler for both lists' headers
+    // - they are two views of one question, and the view model holds one flag
+    // for exactly that reason.
+    private void RareHeader_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (DataContext is SessionEncounterHistoryViewModel vm)
+        {
+            vm.ToggleRareFirstCommand.Execute(null);
+        }
     }
 
     private void CloseButton_Click(object? sender, RoutedEventArgs e)

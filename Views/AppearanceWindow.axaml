@@ -1,243 +1,1755 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:m="using:Foot_Tracker.Models"
         xmlns:conv="using:Foot_Tracker.Converters"
+        xmlns:sys="using:System"
+        xmlns:controls="using:Foot_Tracker.Controls"
         x:Class="Foot_Tracker.Views.AppearanceWindow"
         x:DataType="vm:AppearanceViewModel"
-        Title="Appearance"
-        Width="780" Height="560" MinWidth="640" MinHeight="480"
-        WindowStartupLocation="CenterOwner">
+        Title="Appearance Editor"
+        Width="1500" Height="940" MinWidth="1180" MinHeight="760"
+        WindowStartupLocation="CenterOwner"
+        Icon="/Assets/AppIcon.png"
+        FontFamily="Inter" FontSize="12">
 
-    <!-- §103 layout, §104 contents: the six preset backgrounds and the whole
-         "Backgrounds, shadows and outlines" expander are gone - with Border
-         Shadow, Box Shadow Color, Text Shadow, Text Shadow Color, Text Stroke
-         and Text Stroke Color removed from the program, the only thing left
-         inside that expander was the preset picker it also held, so the
-         expander went with them. What remains is one row of background
-         actions, the live preview (a miniature of the main window, so every
-         color demonstrates itself on the surface it actually paints), the
-         eight colors/fonts that survived, and Save/Load/Cancel.
+    <!-- §381. The Appearance window as a visual editor.
 
-         The labels no longer need Effect="{x:Null}" - that opted them out of
-         the global Text Shadow style in App.axaml, which no longer exists.
-         They still don't bind Foreground to the user's Text Color, for the
-         original reason: this is where a bad color combination gets fixed, so
-         its own labels must stay legible no matter what is picked. -->
-    <Grid Margin="14" RowDefinitions="Auto,*,Auto,Auto" ColumnDefinitions="*">
+         Three columns under a toolbar: what can be edited (left), what it
+         looks like (centre), what the selected thing's settings are (right),
+         with the picture library under the canvas. Every control here binds
+         to the SAME AppearanceViewModel properties the old form bound to -
+         the four §349 sections, the background modes, §380's headings flag -
+         so Apply, Save, Load, Reset and Revert do exactly what they did.
 
-        <!-- Background actions -->
-        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto" Margin="0,0,0,10">
-            <Button Grid.Column="0" Content="Custom Image…" Click="SelectCustomImageButton_Click" Margin="0,0,8,0" />
-            <Button Grid.Column="1" Content="Create Gradient…" Click="CreateGradientButton_Click" Margin="0,0,12,0" />
-            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4" Margin="0,0,4,0">
-                <TextBlock Text="Background color" VerticalAlignment="Center" />
-                <ColorPicker Width="72" Color="{Binding BackgroundCustomColor, Mode=TwoWay}" />
-            </StackPanel>
-            <Button Grid.Column="3" Content="Use" Command="{Binding UseCustomColorBackgroundCommand}"
-                    Margin="0,0,8,0"
-                    ToolTip.Tip="Switch the background to this flat color." />
-            <!-- Was inside the removed expander (§104) - the only way back to
-                 the built-in background that doesn't also reset every color. -->
-            <!-- §209: Load used to mean "re-read what I saved", and now means
-                 "open a theme file somebody sent me". That left the revert with
-                 no button, so it sits here beside Reset - the two are the same
-                 family, one going back to your saved look and the other to the
-                 application defaults. -->
-            <StackPanel Grid.Column="6" Orientation="Horizontal" Spacing="8">
-                <Button Content="Revert" Command="{Binding LoadSavedCommand}"
-                        ToolTip.Tip="Go back to the appearance you last applied, discarding edits made since." />
-                <Button Content="Reset" Click="ResetButton_Click"
-                        ToolTip.Tip="Put every option back to the application defaults. Nothing changes on disk until Apply." />
-            </StackPanel>
-        </Grid>
+         The window paints ITSELF in a fixed palette (the resources below),
+         not in the user's colours, for the reason the old window did not
+         either: you may be editing a combination that is unreadable, and
+         the way back out has to stay legible. The palette is resources, not
+         literals, so it can be retuned in one place. The font and size are
+         set locally on the Window so the app-wide Window style, which
+         follows the user's Statistics font, does not reach the editor's own
+         chrome - the canvas draws the user's fonts, the chrome does not. -->
 
-        <!-- Live preview: a miniature of the real main window. -->
-        <Border Grid.Row="1"
-                BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
-                BorderThickness="2" CornerRadius="4"
-                Background="{Binding PreviewBackgroundBrush}">
-            <Panel>
-                <Image Source="{Binding PreviewBackgroundImage}" Stretch="UniformToFill" />
+    <Window.Resources>
+        <!-- The editor's palette. Only place in the file a hex value appears. -->
+        <SolidColorBrush x:Key="AppearanceEditorBackground" Color="#071329" />
+        <SolidColorBrush x:Key="AppearanceEditorPanel" Color="#0D1B38" />
+        <SolidColorBrush x:Key="AppearanceEditorPanelSecondary" Color="#101F42" />
+        <SolidColorBrush x:Key="AppearanceEditorInput" Color="#0A1633" />
+        <SolidColorBrush x:Key="AppearanceEditorAccent" Color="#7B3FE4" />
+        <SolidColorBrush x:Key="AppearanceEditorAccentHover" Color="#8F58F0" />
+        <SolidColorBrush x:Key="AppearanceEditorAccentPressed" Color="#6633C4" />
+        <SolidColorBrush x:Key="AppearanceEditorAccentBorder" Color="#A47BF5" />
+        <SolidColorBrush x:Key="AppearanceEditorAccentSecondary" Color="#FF982C" />
+        <SolidColorBrush x:Key="AppearanceEditorText" Color="#FFD666" />
+        <SolidColorBrush x:Key="AppearanceEditorTextBright" Color="#F3EEDD" />
+        <SolidColorBrush x:Key="AppearanceEditorTextMuted" Color="#8794B5" />
+        <SolidColorBrush x:Key="AppearanceEditorTextOnAccent" Color="#FFF6E5" />
+        <SolidColorBrush x:Key="AppearanceEditorBorder" Color="#27395F" />
+        <SolidColorBrush x:Key="AppearanceEditorBorderStrong" Color="#3B5085" />
+        <SolidColorBrush x:Key="AppearanceEditorSelected" Color="#FF982C" />
+        <SolidColorBrush x:Key="AppearanceEditorSelectedBackground" Color="#2B1C5C" />
+        <SolidColorBrush x:Key="AppearanceEditorSelectedTag" Color="#FF982C" />
+        <SolidColorBrush x:Key="AppearanceEditorSelectedTagText" Color="#1A0E2E" />
+        <SolidColorBrush x:Key="AppearanceEditorHover" Color="#16264D" />
+        <SolidColorBrush x:Key="AppearanceEditorError" Color="#E05252" />
+        <SolidColorBrush x:Key="AppearanceEditorCanvasFrame" Color="#FF982C" />
+        <SolidColorBrush x:Key="AppearanceEditorUploadBorder" Color="#4A63A0" />
+        <LinearGradientBrush x:Key="AppearanceEditorToolbar" StartPoint="0%,0%" EndPoint="100%,0%">
+            <GradientStop Offset="0" Color="#0B1733" />
+            <GradientStop Offset="1" Color="#111F45" />
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="AppearanceEditorPanelGradient" StartPoint="0%,0%" EndPoint="0%,100%">
+            <GradientStop Offset="0" Color="#0F1E3E" />
+            <GradientStop Offset="1" Color="#0B1733" />
+        </LinearGradientBrush>
 
-                <Grid Margin="12" RowDefinitions="Auto,Auto,*" ColumnDefinitions="*,120">
+        <!-- Toolbar glyphs, 24x24 path data. -->
+        <StreamGeometry x:Key="IconUndo">M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62C8.77 11.22 10.54 10.5 12.5 10.5c3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z</StreamGeometry>
+        <StreamGeometry x:Key="IconRedo">M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.96 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z</StreamGeometry>
+        <StreamGeometry x:Key="IconEye">M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z</StreamGeometry>
+        <StreamGeometry x:Key="IconReset">M12 5V2L7 7l5 5V8c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z</StreamGeometry>
+        <StreamGeometry x:Key="IconRevert">M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z</StreamGeometry>
+        <StreamGeometry x:Key="IconSave">M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z</StreamGeometry>
+        <StreamGeometry x:Key="IconOpen">M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z</StreamGeometry>
+        <StreamGeometry x:Key="IconApply">M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z</StreamGeometry>
+        <StreamGeometry x:Key="IconUpload">M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z</StreamGeometry>
+        <StreamGeometry x:Key="IconRefresh">M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z</StreamGeometry>
+        <StreamGeometry x:Key="IconClose">M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z</StreamGeometry>
+        <StreamGeometry x:Key="IconPicture">M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z</StreamGeometry>
+    </Window.Resources>
 
-                    <!-- Menu strip + toolbar mock -->
-                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="6">
-                        <Border Width="34" Height="12" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                        <Border Width="46" Height="12" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                        <Border Width="40" Height="12" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                        <Border Width="52" Height="12" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                        <Button Content="▶ Start" FontSize="10" Padding="6,2" Margin="18,0,0,0"
-                                Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
-                                Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
-                                BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                    </StackPanel>
+    <Window.Styles>
+        <!-- ============================================================
+             The editor's own chrome. Every class here starts with "editor"
+             so nothing leaks onto the canvas, which draws the USER's colours
+             through local bindings. App.axaml paints every Button in the
+             user's Button Color, hover included, at the template presenter -
+             the classed styles below are more specific and win.
+             ============================================================ -->
 
-                    <!-- Sprite boxes -->
-                    <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Spacing="18" Margin="4,10,0,10"
-                                HorizontalAlignment="Center">
-                        <StackPanel Spacing="3">
-                            <Border Width="56" Height="56"
-                                    BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
-                                    BorderThickness="1"
-                                    Background="{Binding SpriteBoxBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                            <TextBlock Text="Hunting" HorizontalAlignment="Center" FontSize="11"
-                                       FontFamily="{Binding PreviewFontFamily}"
-                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextBright}" />
+        </Style>
+        <Style Selector="TextBlock.editorTitle">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="TextBlock.editorHeading">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="TextBlock.editorLabel">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextMuted}" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="TextBlock.editorMuted">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextMuted}" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector="TextBlock.editorError">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorError}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+        <Style Selector="Border.editorPanel">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorPanel}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="8" />
+        </Style>
+        <Style Selector="Border.editorPanelSecondary">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorPanelSecondary}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="6" />
+        </Style>
+        <Style Selector="Border.editorDivider">
+            <Setter Property="Height" Value="1" />
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorBorder}" />
+            <Setter Property="Margin" Value="0,8" />
+        </Style>
+
+        <!-- Primary (purple) buttons: Apply, Save. -->
+        <Style Selector="Button.editorPrimary">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorAccent}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorAccentBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextOnAccent}" />
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="14,6" />
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.editorPrimary:pointerover">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorAccentHover}" />
+        </Style>
+        <Style Selector="Button.editorPrimary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorAccentHover}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorAccentSecondary}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextOnAccent}" />
+        </Style>
+        <Style Selector="Button.editorPrimary:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorAccentPressed}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorAccentSecondary}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextOnAccent}" />
+        </Style>
+        <Style Selector="Button.editorPrimary:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorPanelSecondary}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorBorder}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextMuted}" />
+        </Style>
+
+        <!-- Secondary buttons: everything else on the toolbar and in the inspector. -->
+        <Style Selector="Button.editorSecondary, ToggleButton.editorToggle">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorPanelSecondary}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorBorderStrong}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Padding" Value="12,6" />
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.editorSecondary:pointerover, ToggleButton.editorToggle:pointerover">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorHover}" />
+        </Style>
+        <Style Selector="Button.editorSecondary:pointerover /template/ ContentPresenter#PART_ContentPresenter, ToggleButton.editorToggle:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorHover}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorAccentSecondary}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+        </Style>
+        <Style Selector="Button.editorSecondary:pressed /template/ ContentPresenter#PART_ContentPresenter, ToggleButton.editorToggle:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorSelectedBackground}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorAccentSecondary}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+        </Style>
+        <Style Selector="Button.editorSecondary:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorPanel}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorBorder}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextMuted}" />
+        </Style>
+        <Style Selector="ToggleButton.editorToggle:checked /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorSelectedBackground}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorAccentSecondary}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+        </Style>
+
+        <!-- Icon-only buttons: Undo, Redo, the card's remove cross. -->
+        <Style Selector="Button.editorIcon">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="MinHeight" Value="32" />
+        </Style>
+        <Style Selector="Button.editorIcon:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorHover}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorBorderStrong}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+        </Style>
+        <Style Selector="Button.editorIcon:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorSelectedBackground}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorBorderStrong}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+        </Style>
+        <Style Selector="Button.editorIcon:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextMuted}" />
+        </Style>
+        <Style Selector="Button.editorIcon:disabled">
+            <Setter Property="Opacity" Value="0.45" />
+        </Style>
+        <Style Selector="Button.editorIcon PathIcon">
+            <Setter Property="Width" Value="16" />
+            <Setter Property="Height" Value="16" />
+        </Style>
+
+        <!-- The upload card in the library. -->
+        <Style Selector="Button.editorUpload">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorPanelSecondary}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorUploadBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.editorUpload:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorHover}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorAccentSecondary}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+        </Style>
+        <Style Selector="Button.editorUpload:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorSelectedBackground}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorAccentSecondary}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+        </Style>
+
+        <!-- Collapsible section headers in the inspector. -->
+        <Style Selector="ToggleButton.editorSection">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="0,6" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+        <Style Selector="ToggleButton.editorSection:pointerover /template/ ContentPresenter#PART_ContentPresenter, ToggleButton.editorSection:checked /template/ ContentPresenter#PART_ContentPresenter, ToggleButton.editorSection:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+        </Style>
+
+        <!-- Inputs. -->
+        <Style Selector="ComboBox.editorInput">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorInput}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorBorderStrong}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextBright}" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style Selector="TextBox.editorInput">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorInput}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorBorderStrong}" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextBright}" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style Selector="CheckBox.editorCheck">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextBright}" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style Selector="ColorPicker.editorColor">
+            <Setter Property="Width" Value="118" />
+            <Setter Property="Height" Value="28" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="CornerRadius" Value="6" />
+        </Style>
+
+        <!-- The navigation list. -->
+        <Style Selector="ListBox.editorNav">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="ListBox.editorNav ListBoxItem">
+            <Setter Property="Padding" Value="10,8" />
+            <Setter Property="Margin" Value="0,1" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorTextBright}" />
+        </Style>
+        <Style Selector="ListBox.editorNav ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorHover}" />
+        </Style>
+        <Style Selector="ListBox.editorNav ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorSelectedBackground}" />
+        </Style>
+        <Style Selector="ListBox.editorNav ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorSelectedBackground}" />
+        </Style>
+        <Style Selector="ListBox.editorNav ListBoxItem:selected Border.navAccent">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorAccentSecondary}" />
+        </Style>
+        <Style Selector="ListBox.editorNav ListBoxItem:selected TextBlock.navLabel">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="ListBox.editorNav ListBoxItem:selected PathIcon">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorAccentSecondary}" />
+        </Style>
+
+        <!-- Library cards: the picture in use carries the accent border. -->
+        <Style Selector="Border.assetCard">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorPanelSecondary}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorBorder}" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Border.assetCard:pointerover">
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorBorderStrong}" />
+        </Style>
+        <Style Selector="Border.assetCard.inUse">
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorSelected}" />
+        </Style>
+        <Style Selector="Border.assetCard.inUse:pointerover">
+            <Setter Property="BorderBrush" Value="{StaticResource AppearanceEditorSelected}" />
+        </Style>
+
+        <!-- Canvas selection: the outline and the tag naming the element. -->
+        <Style Selector="Rectangle.selectionOutline">
+            <Setter Property="Stroke" Value="{StaticResource AppearanceEditorSelected}" />
+            <Setter Property="StrokeThickness" Value="2" />
+            <Setter Property="StrokeDashArray" Value="5,3" />
+            <Setter Property="RadiusX" Value="4" />
+            <Setter Property="RadiusY" Value="4" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="Margin" Value="-4" />
+        </Style>
+        <Style Selector="Border.selectionTag">
+            <Setter Property="Background" Value="{StaticResource AppearanceEditorSelectedTag}" />
+            <Setter Property="CornerRadius" Value="3" />
+            <Setter Property="Padding" Value="6,2" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="-4,-22,0,0" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+        <Style Selector="Border.selectionTag TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorSelectedTagText}" />
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <!-- One row of the inspector: a label and a control. -->
+        <Style Selector="Grid.editorRow">
+            <Setter Property="Margin" Value="0,3" />
+        </Style>
+        <Style Selector="Slider.editorSlider">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorAccentSecondary}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="IsSnapToTickEnabled" Value="True" />
+        </Style>
+        <Style Selector="TextBlock.editorValue">
+            <Setter Property="Foreground" Value="{StaticResource AppearanceEditorText}" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="MinWidth" Value="40" />
+            <Setter Property="TextAlignment" Value="Right" />
+        </Style>
+    </Window.Styles>
+
+    <!-- The window's own fill is set here rather than on the Window, whose
+         attributes are read before the resources above exist. Ctrl+Z and
+         Ctrl+Y are handled in code-behind (OnKeyDown). -->
+    <Grid RowDefinitions="Auto,*,Auto" Background="{StaticResource AppearanceEditorBackground}">
+
+        <!-- ============================================================ toolbar -->
+        <Border Grid.Row="0" Background="{StaticResource AppearanceEditorToolbar}"
+                BorderBrush="{StaticResource AppearanceEditorBorder}" BorderThickness="0,0,0,1"
+                Padding="14,8">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                    <Image Source="/Assets/AppIcon.png" Width="22" Height="22" />
+                    <TextBlock Classes="editorTitle" Text="Appearance Editor" VerticalAlignment="Center" />
+                    <Border Width="1" Height="18" Background="{StaticResource AppearanceEditorBorderStrong}" Margin="4,0" />
+                    <TextBlock Classes="editorLabel" Text="{Binding Breadcrumb}" FontSize="12" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                    <Button Classes="editorIcon" Command="{Binding UndoCommand}" ToolTip.Tip="Undo (Ctrl+Z)">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Data="{StaticResource IconUndo}" />
+                            <TextBlock Text="Undo" Foreground="{StaticResource AppearanceEditorText}" />
                         </StackPanel>
-                        <StackPanel Spacing="3" Margin="80,0,80,0">
-                            <Border Width="56" Height="56"
-                                    BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
-                                    BorderThickness="1"
-                                    Background="{Binding SpriteBoxBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                            <TextBlock Text="Current" HorizontalAlignment="Center" FontSize="11"
-                                       FontFamily="{Binding PreviewFontFamily}"
-                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                    </Button>
+                    <Button Classes="editorIcon" Command="{Binding RedoCommand}" ToolTip.Tip="Redo (Ctrl+Y)">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Data="{StaticResource IconRedo}" />
+                            <TextBlock Text="Redo" Foreground="{StaticResource AppearanceEditorText}" />
                         </StackPanel>
-                        <StackPanel Spacing="3">
-                            <Border Width="56" Height="56"
-                                    BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
-                                    BorderThickness="1"
-                                    Background="{Binding SpriteBoxBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                            <TextBlock Text="Previous" HorizontalAlignment="Center" FontSize="11"
-                                       FontFamily="{Binding PreviewFontFamily}"
-                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                        </StackPanel>
-                    </StackPanel>
+                    </Button>
 
-                    <!-- Encounter tables -->
-                    <Grid Grid.Row="2" Grid.Column="0" ColumnDefinitions="*,*" Margin="0,0,8,0">
-                        <Border Grid.Column="0" Margin="0,0,4,0" MinHeight="70"
-                                BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
-                                BorderThickness="1"
-                                Background="{Binding EncountersBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
-                            <TextBlock Text="Pokémon · Encounters · Rate" HorizontalAlignment="Center"
-                                       VerticalAlignment="Top" Margin="0,4,0,0" FontSize="10"
-                                       FontFamily="{Binding PreviewFontFamily}"
-                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                        </Border>
-                        <Border Grid.Column="1" Margin="4,0,0,0" MinHeight="70"
-                                BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
-                                BorderThickness="1"
-                                Background="{Binding EncountersBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                    </Grid>
+                    <Border Width="1" Height="20" Background="{StaticResource AppearanceEditorBorderStrong}" Margin="6,0" />
 
-                    <!-- Stats column -->
-                    <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1"
-                            BorderBrush="{Binding BorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
-                            BorderThickness="1" Padding="6" Margin="0,10,0,0"
-                            Background="{Binding StatsBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
-                        <StackPanel Spacing="4" HorizontalAlignment="Center">
-                            <TextBlock Text="Time Hunting" HorizontalAlignment="Center" FontSize="11"
-                                       FontFamily="{Binding PreviewFontFamily}"
-                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                            <TextBlock Text="1:23:45" HorizontalAlignment="Center" FontSize="11"
-                                       FontFamily="{Binding PreviewFontFamily}"
-                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                            <TextBlock Text="Total Encounters" HorizontalAlignment="Center" FontSize="11"
-                                       FontFamily="{Binding PreviewFontFamily}"
-                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
-                            <TextBlock Text="5379" HorizontalAlignment="Center" FontSize="11"
-                                       FontFamily="{Binding PreviewFontFamily}"
-                                       Foreground="{Binding TextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                    <ToggleButton Classes="editorToggle" IsChecked="{Binding IsPreviewMode, Mode=TwoWay}"
+                                  ToolTip.Tip="Show the appearance without the selection outline.">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Data="{StaticResource IconEye}" Width="14" Height="14" />
+                            <TextBlock Text="Preview" Foreground="{StaticResource AppearanceEditorText}" />
                         </StackPanel>
-                    </Border>
-                </Grid>
-            </Panel>
+                    </ToggleButton>
+
+                    <Button Classes="editorSecondary" Command="{Binding LoadSavedCommand}"
+                            ToolTip.Tip="Go back to the appearance you last applied, discarding edits made since.">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Data="{StaticResource IconRevert}" Width="14" Height="14" />
+                            <TextBlock Text="Revert" Foreground="{StaticResource AppearanceEditorText}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="editorSecondary" Command="{Binding ResetToDefaultsCommand}"
+                            ToolTip.Tip="Put every option back to the application defaults. Nothing changes on disk until Apply.">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Data="{StaticResource IconReset}" Width="14" Height="14" />
+                            <TextBlock Text="Reset" Foreground="{StaticResource AppearanceEditorText}" />
+                        </StackPanel>
+                    </Button>
+
+                    <Border Width="1" Height="20" Background="{StaticResource AppearanceEditorBorderStrong}" Margin="6,0" />
+
+                    <Button Classes="editorSecondary" Command="{Binding LoadThemeFileCommand}"
+                            ToolTip.Tip="Open a theme file somebody sent you. It fills these settings in so you can look at it - nothing is kept until you press Apply.">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Data="{StaticResource IconOpen}" Width="14" Height="14" />
+                            <TextBlock Text="Open" Foreground="{StaticResource AppearanceEditorText}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="editorPrimary" Command="{Binding SaveThemeFileCommand}"
+                            ToolTip.Tip="Write these colours, gradient and fonts to a file you can send somebody. The picture background is not included.">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Data="{StaticResource IconSave}" Width="14" Height="14" />
+                            <TextBlock Text="Save" Foreground="{StaticResource AppearanceEditorTextOnAccent}" FontWeight="SemiBold" />
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="editorPrimary" Command="{Binding ApplyCommand}"
+                            ToolTip.Tip="Save these settings for this client and repaint the app now. The window stays open.">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <PathIcon Data="{StaticResource IconApply}" Width="14" Height="14" />
+                            <TextBlock Text="Apply" Foreground="{StaticResource AppearanceEditorTextOnAccent}" FontWeight="SemiBold" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
         </Border>
 
-        <!-- The options that survived §104 -->
-        <Grid Grid.Row="2" Margin="0,10,0,0">
-            <WrapPanel>
-                <StackPanel Spacing="2" Margin="0,0,14,6">
-                    <TextBlock Text="Font Color" FontWeight="Bold" FontSize="12" />
-                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding TextColor, Mode=TwoWay}" />
-                </StackPanel>
-                <StackPanel Spacing="2" Margin="0,0,14,6">
-                    <TextBlock Text="Picture Background" FontWeight="Bold" FontSize="12" />
-                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding SpriteBoxBackgroundColor, Mode=TwoWay}" />
-                </StackPanel>
-                <StackPanel Spacing="2" Margin="0,0,14,6">
-                    <TextBlock Text="Table Background" FontWeight="Bold" FontSize="12" />
-                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding EncountersBackgroundColor, Mode=TwoWay}" />
-                </StackPanel>
-                <!-- §209: the encounter table's heading band, which §208 gave
-                     its own brush. Leaving this transparent does not mean "no
-                     header" - it means the header follows Table Background,
-                     and failing that a band derived from the window
-                     background. So an untouched install is unchanged. -->
-                <StackPanel Spacing="2" Margin="0,0,14,6">
-                    <TextBlock Text="Header Background" FontWeight="Bold" FontSize="12"
-                               ToolTip.Tip="Fills the encounter table's column headings. Leave it clear to follow Table Background instead." />
-                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding HeaderBackgroundColor, Mode=TwoWay}"
-                                 ToolTip.Tip="Fills the encounter table's column headings. Leave it clear to follow Table Background instead." />
-                </StackPanel>
-                <!-- §188: this one swatch fills the main window's stats panel
-                     AND the panel every other window now puts its content on,
-                     so the label says so. Transparent still means no panel
-                     anywhere, which is what a fresh install looks like. -->
-                <StackPanel Spacing="2" Margin="0,0,14,6">
-                    <TextBlock Text="Stats &amp; Panels" FontWeight="Bold" FontSize="12"
-                               ToolTip.Tip="Fills the stats panel here and the content panel in every other window" />
-                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding StatsBackgroundColor, Mode=TwoWay}"
-                                 ToolTip.Tip="Fills the stats panel here and the content panel in every other window" />
-                </StackPanel>
-                <StackPanel Spacing="2" Margin="0,0,14,6">
-                    <TextBlock Text="Border Color" FontWeight="Bold" FontSize="12" />
-                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding BorderColor, Mode=TwoWay}" />
-                </StackPanel>
-                <StackPanel Spacing="2" Margin="0,0,14,6">
-                    <TextBlock Text="Button Color" FontWeight="Bold" FontSize="12" />
-                    <ColorPicker Width="76" HorizontalAlignment="Left" Color="{Binding ButtonColor, Mode=TwoWay}" />
-                </StackPanel>
-                <StackPanel Spacing="2" Margin="0,0,14,6">
-                    <TextBlock Text="Font" FontWeight="Bold" FontSize="12" />
-                    <ComboBox Width="130" HorizontalAlignment="Left"
-                              ItemsSource="{Binding FontFamilyOptions}"
-                              SelectedItem="{Binding SelectedFontFamily, Mode=TwoWay}" />
-                </StackPanel>
-                <StackPanel Spacing="2" Margin="0,0,0,6">
-                    <TextBlock Text="Font Size" FontWeight="Bold" FontSize="12" />
-                    <ComboBox Width="100" HorizontalAlignment="Left"
-                              ItemsSource="{Binding FontSizeOptions}"
-                              SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}" />
-                </StackPanel>
-            </WrapPanel>
+        <!-- ============================================================ body -->
+        <Grid Grid.Row="1" ColumnDefinitions="224,*,336" Margin="12,12,12,0">
 
+            <!-- ==================================================== left: navigation -->
+            <Border Grid.Column="0" Classes="editorPanel" Padding="8" Margin="0,0,12,0">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Classes="editorTitle" Text="Appearance" Margin="8,4,0,10" />
+                    <TextBlock DockPanel.Dock="Bottom" Classes="editorMuted" Margin="8,10,8,4"
+                               Text="Click a row, or click the element on the canvas. Either one selects it." />
+                    <ListBox Classes="editorNav" ItemsSource="{Binding Categories}"
+                             SelectedItem="{Binding SelectedCategory, Mode=TwoWay}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="m:AppearanceCategory">
+                                <Grid ColumnDefinitions="3,Auto,*,Auto">
+                                    <Border Grid.Column="0" Classes="navAccent" Width="3" CornerRadius="2"
+                                            Background="Transparent" Margin="0,2" />
+                                    <PathIcon Grid.Column="1" Data="{Binding Icon}" Width="16" Height="16" Margin="10,0,10,0"
+                                              Foreground="{StaticResource AppearanceEditorTextMuted}" />
+                                    <TextBlock Grid.Column="2" Classes="navLabel" Text="{Binding Label}" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="3" Text="›" Foreground="{StaticResource AppearanceEditorTextMuted}"
+                                               FontSize="14" Margin="6,0,2,0" VerticalAlignment="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+
+            <!-- ==================================================== centre: canvas + library -->
+            <Grid Grid.Column="1" RowDefinitions="*,Auto">
+
+                <!-- The canvas. A Viewbox keeps the mock's proportions at any
+                     window size; the mock itself is laid out at 1000x640,
+                     roughly the main window, so its fonts read at the sizes
+                     the pickers name. -->
+                <Border Grid.Row="0" Classes="editorPanel" Padding="10">
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="4,0,4,8">
+                            <TextBlock Grid.Column="0" Classes="editorHeading" Text="Live preview" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Classes="editorLabel" Text="{Binding SelectedElementName}" />
+                        </Grid>
+
+                        <Border BorderBrush="{StaticResource AppearanceEditorCanvasFrame}" BorderThickness="2" CornerRadius="8"
+                                ClipToBounds="True" Background="{StaticResource AppearanceEditorBackground}">
+                            <Viewbox Stretch="Uniform" StretchDirection="Both">
+                                <!-- Background: the whole window. A click on nothing
+                                     else selects it. -->
+                                <Grid Width="1000" Height="640" Background="{Binding PreviewBackgroundBrush}"
+                                      Tag="Background" PointerPressed="Element_PointerPressed">
+                                    <Image Source="{Binding PreviewBackgroundImage}" Stretch="UniformToFill" IsHitTestVisible="False" />
+
+                                    <Rectangle Classes="selectionOutline" Margin="3" IsVisible="{Binding ShowBackgroundOutline}" />
+                                    <Border Classes="selectionTag" Margin="10,8,0,0" IsVisible="{Binding ShowBackgroundOutline}">
+                                        <TextBlock Text="Background" />
+                                    </Border>
+
+                                    <Grid Margin="18,14,18,18" RowDefinitions="Auto,Auto,Auto,*" ColumnDefinitions="*,236">
+
+                                        <!-- Menu strip: §393 its own colours, and its own element;
+                                             §394 its own font, or Statistics'. "File" wears the
+                                             highlight, as the item the pointer is on would. -->
+                                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent"
+                                              HorizontalAlignment="Left" Margin="0,0,0,10"
+                                              Tag="MenuBar" PointerPressed="Element_PointerPressed">
+                                            <StackPanel Orientation="Horizontal" Spacing="22" Margin="6,0,6,0">
+                                                <Border Background="{Binding MenuPreviewHighlightBrush}" CornerRadius="3" Padding="6,2" Margin="-6,-2">
+                                                    <TextBlock Text="File" FontFamily="{Binding MenuPreviewFontFamily}" FontSize="{Binding MenuPreviewFontSize}" Foreground="{Binding MenuPreviewTextBrush}" />
+                                                </Border>
+                                                    <TextBlock Text="Game Info" FontFamily="{Binding MenuPreviewFontFamily}" FontSize="{Binding MenuPreviewFontSize}" Foreground="{Binding MenuPreviewTextBrush}" />
+                                                    <TextBlock Text="Game Data" FontFamily="{Binding MenuPreviewFontFamily}" FontSize="{Binding MenuPreviewFontSize}" Foreground="{Binding MenuPreviewTextBrush}" />
+                                                    <TextBlock Text="Appearance" FontFamily="{Binding MenuPreviewFontFamily}" FontSize="{Binding MenuPreviewFontSize}" Foreground="{Binding MenuPreviewTextBrush}" />
+                                                    <TextBlock Text="World Quest" FontFamily="{Binding MenuPreviewFontFamily}" FontSize="{Binding MenuPreviewFontSize}" Foreground="{Binding MenuPreviewTextBrush}" />
+                                                    <TextBlock Text="Battle Sim" FontFamily="{Binding MenuPreviewFontFamily}" FontSize="{Binding MenuPreviewFontSize}" Foreground="{Binding MenuPreviewTextBrush}" />
+                                                    <TextBlock Text="News" FontFamily="{Binding MenuPreviewFontFamily}" FontSize="{Binding MenuPreviewFontSize}" Foreground="{Binding MenuPreviewTextBrush}" />
+                                                    <TextBlock Text="Search" FontFamily="{Binding MenuPreviewFontFamily}" FontSize="{Binding MenuPreviewFontSize}" Foreground="{Binding MenuPreviewTextBrush}" />
+                                            </StackPanel>
+                                            <Rectangle Classes="selectionOutline" Margin="-3" IsVisible="{Binding ShowMenuBarOutline}" />
+                                            <Border Classes="selectionTag" Margin="-3,-21,0,0" IsVisible="{Binding ShowMenuBarOutline}">
+                                                <TextBlock Text="Menu Bar" />
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Toolbar buttons: the Buttons element. -->
+                                        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent"
+                                              HorizontalAlignment="Left" Margin="0,0,0,14"
+                                              Tag="Buttons" PointerPressed="Element_PointerPressed">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <StackPanel.Styles>
+                                                    <Style Selector="Border.mockButton">
+                                                        <Setter Property="Padding" Value="12,5" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </StackPanel.Styles>
+                                                <Border Classes="mockButton" BorderThickness="{Binding ButtonPreviewBorderThickness}" CornerRadius="{Binding ButtonPreviewCornerRadius}" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" BorderBrush="{Binding ButtonBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                                                    <TextBlock Text="Set Target" FontFamily="{Binding ButtonPreviewFontFamily}" FontSize="{Binding ButtonPreviewFontSize}" Foreground="{Binding ButtonTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                </Border>
+                                                <Border Classes="mockButton" BorderThickness="{Binding ButtonPreviewBorderThickness}" CornerRadius="{Binding ButtonPreviewCornerRadius}" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" BorderBrush="{Binding ButtonBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                                                    <TextBlock Text="▶  Start" FontFamily="{Binding ButtonPreviewFontFamily}" FontSize="{Binding ButtonPreviewFontSize}" Foreground="{Binding ButtonTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                </Border>
+                                                <Border Classes="mockButton" BorderThickness="{Binding ButtonPreviewBorderThickness}" CornerRadius="{Binding ButtonPreviewCornerRadius}" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" BorderBrush="{Binding ButtonBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                                                    <TextBlock Text="■  Stop" FontFamily="{Binding ButtonPreviewFontFamily}" FontSize="{Binding ButtonPreviewFontSize}" Foreground="{Binding ButtonTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                </Border>
+                                                <Border Classes="mockButton" BorderThickness="{Binding ButtonPreviewBorderThickness}" CornerRadius="{Binding ButtonPreviewCornerRadius}" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" BorderBrush="{Binding ButtonBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                                                    <TextBlock Text="↺  Reset" FontFamily="{Binding ButtonPreviewFontFamily}" FontSize="{Binding ButtonPreviewFontSize}" Foreground="{Binding ButtonTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                </Border>
+                                                <Border Classes="mockButton" BorderThickness="{Binding ButtonPreviewBorderThickness}" CornerRadius="{Binding ButtonPreviewCornerRadius}" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" BorderBrush="{Binding ButtonBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                                                    <TextBlock Text="Pin" FontFamily="{Binding ButtonPreviewFontFamily}" FontSize="{Binding ButtonPreviewFontSize}" Foreground="{Binding ButtonTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                </Border>
+                                                <Border Classes="mockButton" BorderThickness="{Binding ButtonPreviewBorderThickness}" CornerRadius="{Binding ButtonPreviewCornerRadius}" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" BorderBrush="{Binding ButtonBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                                                    <TextBlock Text="✕  Remove Stats" FontFamily="{Binding ButtonPreviewFontFamily}" FontSize="{Binding ButtonPreviewFontSize}" Foreground="{Binding ButtonTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                </Border>
+                                                <Border Classes="mockButton" BorderThickness="{Binding ButtonPreviewBorderThickness}" CornerRadius="{Binding ButtonPreviewCornerRadius}" Background="{Binding ButtonColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" BorderBrush="{Binding ButtonBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                                                    <TextBlock Text="Set Screen" FontFamily="{Binding ButtonPreviewFontFamily}" FontSize="{Binding ButtonPreviewFontSize}" Foreground="{Binding ButtonTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                </Border>
+                                            </StackPanel>
+                                            <Rectangle Classes="selectionOutline" IsVisible="{Binding ShowButtonsOutline}" />
+                                            <Border Classes="selectionTag" IsVisible="{Binding ShowButtonsOutline}">
+                                                <TextBlock Text="Toolbar Buttons" />
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Sprite boxes: the Pokémon Sprites element. -->
+                                        <Grid Grid.Row="2" Grid.Column="0" Background="Transparent" Margin="0,0,14,14"
+                                              Tag="SpriteRow" PointerPressed="Element_PointerPressed">
+                                            <Grid.Styles>
+                                                <Style Selector="TextBlock.spriteCaption">
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                    <Setter Property="TextDecorations" Value="Underline" />
+                                                    <Setter Property="Margin" Value="0,0,0,6" />
+                                                </Style>
+                                                <Style Selector="Panel.spriteFrame">
+                                                    <Setter Property="Width" Value="96" />
+                                                    <Setter Property="Height" Value="96" />
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                </Style>
+                                                <Style Selector="TextBlock.spriteName">
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                    <Setter Property="Margin" Value="0,6,0,0" />
+                                                </Style>
+                                            </Grid.Styles>
+                                            <!-- §387: the row panel round the three groups. Invisible
+                                                 until a fill, border or picture is set, like the window's. -->
+                                            <Border Background="{Binding SpriteRowPreviewBrush}"
+                                                    BorderBrush="{Binding SpriteRowBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                                    BorderThickness="{Binding SpriteRowPreviewBorderThickness}"
+                                                    CornerRadius="{Binding SpriteRowPreviewCornerRadius}"
+                                                    Padding="{Binding SpriteRowPreviewPadding}">
+                                            <Grid ColumnDefinitions="*,*,*">
+                                                <StackPanel Grid.Column="0">
+                                                    <TextBlock Classes="spriteCaption" Text="Currently Hunting" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding SpriteBoxPreviewFontFamily}" FontSize="{Binding SpriteBoxPreviewFontSize}" Foreground="{Binding SpriteBoxTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <Panel Classes="spriteFrame" Background="Transparent" Tag="SpriteBoxes" PointerPressed="Element_PointerPressed">
+                                                        <Border Background="{Binding SpriteBoxPreviewBrush}" BorderBrush="{Binding SpriteBoxBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                                                BorderThickness="{Binding SpriteBoxPreviewBorderThickness}" CornerRadius="{Binding SpriteBoxPreviewCornerRadius}">
+                                                            <Image Source="{Binding PreviewSpriteHunting}" Stretch="Uniform" Margin="{Binding SpriteImagePreviewMargin}" />
+                                                        </Border>
+                                                        <controls:NineSliceFrame Source="{Binding SpriteBoxFrameImage}" Inset="{Binding SpriteBoxFrameInset}" Margin="{Binding SpriteBoxFramePreviewOverhang}" IsHitTestVisible="False" />
+                                                        <Rectangle Classes="selectionOutline" Margin="-3" IsVisible="{Binding ShowSpriteBoxesOutline}" />
+                                                        <Border Classes="selectionTag" Margin="-3,-21,0,0" IsVisible="{Binding ShowSpriteBoxesOutline}">
+                                                            <TextBlock Text="Pokémon Sprite Boxes" />
+                                                        </Border>
+                                                    </Panel>
+                                                    <TextBlock Classes="spriteName" Text="Pikachu" FontFamily="{Binding SpriteBoxPreviewFontFamily}" FontSize="{Binding SpriteBoxPreviewFontSize}" Foreground="{Binding SpriteBoxTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock Classes="spriteCaption" Text="Current Encounter" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding SpriteBoxPreviewFontFamily}" FontSize="{Binding SpriteBoxPreviewFontSize}" Foreground="{Binding SpriteBoxTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <Panel Classes="spriteFrame" Background="Transparent" Tag="SpriteBoxes" PointerPressed="Element_PointerPressed">
+                                                        <Border Background="{Binding SpriteBoxPreviewBrush}" BorderBrush="{Binding SpriteBoxBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                                                BorderThickness="{Binding SpriteBoxPreviewBorderThickness}" CornerRadius="{Binding SpriteBoxPreviewCornerRadius}">
+                                                            <Image Source="{Binding PreviewSpriteCurrent}" Stretch="Uniform" Margin="{Binding SpriteImagePreviewMargin}" />
+                                                        </Border>
+                                                        <controls:NineSliceFrame Source="{Binding SpriteBoxFrameImage}" Inset="{Binding SpriteBoxFrameInset}" Margin="{Binding SpriteBoxFramePreviewOverhang}" IsHitTestVisible="False" />
+                                                        <Rectangle Classes="selectionOutline" Margin="-3" IsVisible="{Binding ShowSpriteBoxesOutline}" />
+                                                    </Panel>
+                                                    <TextBlock Classes="spriteName" Text="Eevee" FontFamily="{Binding SpriteBoxPreviewFontFamily}" FontSize="{Binding SpriteBoxPreviewFontSize}" Foreground="{Binding SpriteBoxTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="2">
+                                                    <TextBlock Classes="spriteCaption" Text="Previous Encounter" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding SpriteBoxPreviewFontFamily}" FontSize="{Binding SpriteBoxPreviewFontSize}" Foreground="{Binding SpriteBoxTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <Panel Classes="spriteFrame" Background="Transparent" Tag="SpriteBoxes" PointerPressed="Element_PointerPressed">
+                                                        <Border Background="{Binding SpriteBoxPreviewBrush}" BorderBrush="{Binding SpriteBoxBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                                                BorderThickness="{Binding SpriteBoxPreviewBorderThickness}" CornerRadius="{Binding SpriteBoxPreviewCornerRadius}">
+                                                            <Image Source="{Binding PreviewSpritePrevious}" Stretch="Uniform" Margin="{Binding SpriteImagePreviewMargin}" />
+                                                        </Border>
+                                                        <controls:NineSliceFrame Source="{Binding SpriteBoxFrameImage}" Inset="{Binding SpriteBoxFrameInset}" Margin="{Binding SpriteBoxFramePreviewOverhang}" IsHitTestVisible="False" />
+                                                        <Rectangle Classes="selectionOutline" Margin="-3" IsVisible="{Binding ShowSpriteBoxesOutline}" />
+                                                    </Panel>
+                                                    <TextBlock Classes="spriteName" Text="Gengar" FontFamily="{Binding SpriteBoxPreviewFontFamily}" FontSize="{Binding SpriteBoxPreviewFontSize}" Foreground="{Binding SpriteBoxTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                </StackPanel>
+                                            </Grid>
+                                            </Border>
+                                            <controls:NineSliceFrame Source="{Binding SpriteRowFrameImage}" Inset="{Binding SpriteRowFrameInset}" Margin="{Binding SpriteRowFramePreviewOverhang}" IsHitTestVisible="False" />
+                                            <Rectangle Classes="selectionOutline" IsVisible="{Binding ShowSpriteRowOutline}" />
+                                            <Border Classes="selectionTag" IsVisible="{Binding ShowSpriteRowOutline}">
+                                                <TextBlock Text="Sprite Row Panel" />
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Encounter table: the Encounter Tables element. -->
+                                        <Grid Grid.Row="3" Grid.Column="0" Background="Transparent" Margin="0,0,14,0"
+                                              Tag="EncounterTable" PointerPressed="Element_PointerPressed">
+                                            <Grid.Styles>
+                                                <Style Selector="TextBlock.cell">
+                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                    <Setter Property="Margin" Value="10,0" />
+                                                </Style>
+                                                <Style Selector="TextBlock.cell.num">
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                </Style>
+                                            </Grid.Styles>
+                                            <Border BorderThickness="{Binding EncountersPreviewBorderThickness}"
+                                                    CornerRadius="{Binding EncountersPreviewCornerRadius}"
+                                                    Margin="{Binding TablePreviewMargin}"
+                                                    Background="{Binding EncountersPreviewBrush}"
+                                                    BorderBrush="{Binding EncountersBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
+                                                    <Border Grid.Row="0" Padding="0,6"
+                                                            BorderThickness="{Binding EncountersPreviewHeaderLine}"
+                                                            BorderBrush="{Binding EncountersBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}"
+                                                            Background="{Binding HeaderBackgroundColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                                                        <Grid ColumnDefinitions="2*,1.3*,1*,1*,1.7*,1*">
+                                                            <TextBlock Grid.Column="0" Classes="cell" Text="Pokémon" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                            <TextBlock Grid.Column="1" Classes="cell num" Text="Encounters" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                            <TextBlock Grid.Column="2" Classes="cell num" Text="Caught" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                            <TextBlock Grid.Column="3" Classes="cell num" Text="Fled" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                            <TextBlock Grid.Column="4" Classes="cell num" Text="Last Encountered" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                            <TextBlock Grid.Column="5" Classes="cell num" Text="Rate" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        </Grid>
+                                                    </Border>
+                                                    <Grid Grid.Row="1" ColumnDefinitions="2*,1.3*,1*,1*,1.7*,1*" Margin="0,8,0,4">
+                                                        <TextBlock Grid.Column="0" Classes="cell" Text="Rattata" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="1" Classes="cell num" Text="5,498" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="2" Classes="cell num" Text="12" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="3" Classes="cell num" Text="2,846" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="4" Classes="cell num" Text="39 Minutes Ago" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="5" Classes="cell num" Text="43.9%" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    </Grid>
+                                                    <Grid Grid.Row="2" ColumnDefinitions="2*,1.3*,1*,1*,1.7*,1*" Margin="0,4">
+                                                        <TextBlock Grid.Column="0" Classes="cell" Text="Wingull" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="1" Classes="cell num" Text="1,984" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="2" Classes="cell num" Text="4" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="3" Classes="cell num" Text="971" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="4" Classes="cell num" Text="41 Minutes Ago" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="5" Classes="cell num" Text="14.9%" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    </Grid>
+                                                    <Grid Grid.Row="3" ColumnDefinitions="2*,1.3*,1*,1*,1.7*,1*" Margin="0,4">
+                                                        <TextBlock Grid.Column="0" Classes="cell" Text="Krabby" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="1" Classes="cell num" Text="1,726" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="2" Classes="cell num" Text="0" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="3" Classes="cell num" Text="839" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="4" Classes="cell num" Text="39 Minutes Ago" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="5" Classes="cell num" Text="13.8%" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    </Grid>
+                                                    <Grid Grid.Row="4" ColumnDefinitions="2*,1.3*,1*,1*,1.7*,1*" Margin="0,4">
+                                                        <TextBlock Grid.Column="0" Classes="cell" Text="Corsola" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="1" Classes="cell num" Text="1,104" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="2" Classes="cell num" Text="1" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="3" Classes="cell num" Text="561" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="4" Classes="cell num" Text="43 Minutes Ago" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                        <TextBlock Grid.Column="5" Classes="cell num" Text="8.8%" FontFamily="{Binding EncountersPreviewFontFamily}" FontSize="{Binding EncountersPreviewFontSize}" Foreground="{Binding EncountersTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    </Grid>
+                                                </Grid>
+                                            </Border>
+                                            <controls:NineSliceFrame Source="{Binding TableFrameImage}" Inset="{Binding EncountersFrameInset}" Margin="{Binding TableFramePreviewOverhang}" IsHitTestVisible="False" />
+                                            <Rectangle Classes="selectionOutline" IsVisible="{Binding ShowEncounterTableOutline}" />
+                                            <Border Classes="selectionTag" IsVisible="{Binding ShowEncounterTableOutline}">
+                                                <TextBlock Text="Encounter Table" />
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Statistics panel: the Statistics element. -->
+                                        <Grid Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Background="Transparent"
+                                              Tag="Statistics" PointerPressed="Element_PointerPressed">
+                                            <Grid.Styles>
+                                                <Style Selector="TextBlock.statLabel">
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                    <Setter Property="TextDecorations" Value="Underline" />
+                                                    <Setter Property="TextAlignment" Value="Center" />
+                                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                                    <Setter Property="Margin" Value="0,7,0,1" />
+                                                </Style>
+                                                <Style Selector="TextBlock.statValue">
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                </Style>
+                                            </Grid.Styles>
+                                            <Border BorderThickness="{Binding StatsPreviewBorderThickness}"
+                                                    CornerRadius="{Binding StatsPreviewCornerRadius}"
+                                                    Padding="{Binding StatsPreviewPadding}"
+                                                    Background="{Binding StatsPreviewBrush}"
+                                                    BorderBrush="{Binding StatsBorderColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}">
+                                                <StackPanel>
+                                                    <TextBlock Classes="statLabel" Text="Time Hunting" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statValue" Text="2:07:25" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statLabel" Text="Total Pokémon Encountered" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statValue" Text="12,534" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statLabel" Text="Target Pokémon Found" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statValue" Text="223" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statLabel" Text="Target Pokémon Caught" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statValue" Text="24" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statLabel" Text="Target Pokémon Fled" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statValue" Text="96" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statLabel" Text="Encounters Since Shiny" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statValue" Text="82" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statLabel" Text="Successful Catches" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statValue" Text="162" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statLabel" Text="Pokémon Broken Free" FontWeight="{Binding HeadingFontWeight}" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                    <TextBlock Classes="statValue" Text="65" FontFamily="{Binding StatsPreviewFontFamily}" FontSize="{Binding StatsPreviewFontSize}" Foreground="{Binding StatsTextColor, Converter={x:Static conv:ColorToBrushConverter.Instance}}" />
+                                                </StackPanel>
+                                            </Border>
+                                            <controls:NineSliceFrame Source="{Binding StatsFrameImage}" Inset="{Binding StatsFrameInset}" Margin="{Binding StatsFramePreviewOverhang}" IsHitTestVisible="False" />
+                                            <Rectangle Classes="selectionOutline" IsVisible="{Binding ShowStatisticsOutline}" />
+                                            <Border Classes="selectionTag" IsVisible="{Binding ShowStatisticsOutline}">
+                                                <TextBlock Text="Statistics Panel" />
+                                            </Border>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Viewbox>
+                        </Border>
+                    </DockPanel>
+                </Border>
+
+                <!-- The picture library. One horizontal row of cards, the
+                     upload card first; the picture in use wears the accent. -->
+                <Border Grid.Row="1" Classes="editorPanel" Padding="12" Margin="0,12,0,0" Height="232">
+                    <Grid ColumnDefinitions="196,*">
+                        <DockPanel Grid.Column="0" Margin="0,0,12,0">
+                            <TextBlock DockPanel.Dock="Top" Classes="editorTitle" Text="Visual Asset Library" Margin="0,0,0,8" />
+                            <TextBox DockPanel.Dock="Top" Classes="editorInput" Watermark="Search pictures…"
+                                     Text="{Binding AssetSearchText, Mode=TwoWay}" Margin="0,0,0,8" />
+                            <TextBlock DockPanel.Dock="Bottom" Classes="editorMuted" Text="{Binding BackgroundModeText}" Margin="0,6,0,0" />
+                            <ListBox Classes="editorNav" ItemsSource="{Binding AssetFilters}"
+                                     SelectedItem="{Binding AssetFilter, Mode=TwoWay}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="sys:String">
+                                        <Grid ColumnDefinitions="3,Auto,*">
+                                            <Border Grid.Column="0" Classes="navAccent" Width="3" CornerRadius="2" Background="Transparent" Margin="0,2" />
+                                            <PathIcon Grid.Column="1" Data="{StaticResource IconPicture}" Width="14" Height="14" Margin="8,0,8,0"
+                                                      Foreground="{StaticResource AppearanceEditorTextMuted}" />
+                                            <TextBlock Grid.Column="2" Classes="navLabel" Text="{Binding}" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DockPanel>
+
+                        <DockPanel Grid.Column="1">
+                            <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto,Auto,*,Auto,Auto" Margin="0,0,0,8">
+                                <TextBlock Grid.Column="0" Classes="editorLabel" Text="Use a picture for" Margin="0,0,8,0" />
+                                <ComboBox Grid.Column="1" Classes="editorInput" MinWidth="250" ItemsSource="{Binding AssetTargetOptions}"
+                                          SelectedItem="{Binding SelectedAssetTarget, Mode=TwoWay}" ToolTip.Tip="{Binding AssetTargetText}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate x:DataType="m:AssetTargetOption">
+                                            <TextBlock Text="{Binding Label}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBlock Grid.Column="2" Classes="editorMuted" Text="{Binding AssetTargetText}" Margin="12,0,0,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                <TextBlock Grid.Column="3" Classes="editorLabel" Text="{Binding AssetCountText}" Margin="0,0,10,0" />
+                                <Button Grid.Column="4" Classes="editorIcon" Command="{Binding RefreshAssetsCommand}" Padding="6,4" MinHeight="26"
+                                        ToolTip.Tip="Re-read the library folder.">
+                                    <PathIcon Data="{StaticResource IconRefresh}" Width="14" Height="14" />
+                                </Button>
+                            </Grid>
+
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Button Classes="editorUpload" Width="132" Height="150" Click="AddPictureButton_Click"
+                                            ToolTip.Tip="Add a picture to the library and make it the background. PNG, JPG, BMP, WebP or an animated GIF.">
+                                        <StackPanel Spacing="6" HorizontalAlignment="Center">
+                                            <PathIcon Data="{StaticResource IconUpload}" Width="26" Height="26" Foreground="{StaticResource AppearanceEditorAccentSecondary}" />
+                                            <TextBlock Text="Add picture" HorizontalAlignment="Center" Foreground="{StaticResource AppearanceEditorText}" FontWeight="SemiBold" />
+                                            <TextBlock Text="click to browse" HorizontalAlignment="Center" Classes="editorMuted" />
+                                            <TextBlock Text="PNG · JPG · GIF" HorizontalAlignment="Center" Classes="editorMuted" />
+                                        </StackPanel>
+                                    </Button>
+
+                                    <ItemsControl ItemsSource="{Binding Assets}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="10" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="m:AppearanceAssetItem">
+                                                <Border Classes="assetCard" Classes.inUse="{Binding IsInUse}" Width="132" Height="150"
+                                                        PointerPressed="AssetCard_PointerPressed"
+                                                        ToolTip.Tip="{Binding Name}">
+                                                    <Grid RowDefinitions="*,Auto,Auto">
+                                                        <Border Grid.Row="0" CornerRadius="6,6,0,0" ClipToBounds="True" Margin="1,1,1,0"
+                                                                Background="{StaticResource AppearanceEditorInput}">
+                                                            <Panel>
+                                                                <Image Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+                                                                <Button Classes="editorIcon" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                                                        Padding="4" MinHeight="0" Margin="2"
+                                                                        IsVisible="{Binding CanRemove}"
+                                                                        Command="{Binding $parent[Window].((vm:AppearanceViewModel)DataContext).RemoveAssetCommand}"
+                                                                        CommandParameter="{Binding}"
+                                                                        ToolTip.Tip="Remove this picture from the library. A background you have applied is not affected.">
+                                                                    <PathIcon Data="{StaticResource IconClose}" Width="11" Height="11" />
+                                                                </Button>
+                                                            </Panel>
+                                                        </Border>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Name}" Margin="8,6,8,0" FontSize="11"
+                                                                   TextTrimming="CharacterEllipsis" />
+                                                        <TextBlock Grid.Row="2" Text="{Binding Caption}" Classes="editorMuted" Margin="8,1,8,6" FontSize="10" TextTrimming="CharacterEllipsis" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <Border Width="200" Height="150" IsVisible="{Binding HasNoAssets}" VerticalAlignment="Center">
+                                        <TextBlock Classes="editorMuted" VerticalAlignment="Center" TextAlignment="Center"
+                                                   Text="No pictures match. Add one with the card on the left, or clear the search." />
+                                    </Border>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </DockPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- ==================================================== right: inspector -->
+            <Border Grid.Column="2" Classes="editorPanel" Padding="0" Margin="12,0,0,0">
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" BorderBrush="{StaticResource AppearanceEditorBorder}" BorderThickness="0,0,0,1" Padding="14,10">
+                        <TextBlock Classes="editorTitle" Text="Properties" />
+                    </Border>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="14,12,14,14">
+
+                            <!-- Selected element header -->
+                            <TextBlock Classes="editorLabel" Text="Selected Element" />
+                            <Grid ColumnDefinitions="Auto,*" Margin="0,6,0,10">
+                                <Border Grid.Column="0" Width="34" Height="34" CornerRadius="6" Margin="0,0,10,0"
+                                        Background="{StaticResource AppearanceEditorSelectedBackground}"
+                                        BorderBrush="{StaticResource AppearanceEditorAccentSecondary}" BorderThickness="1">
+                                    <PathIcon Data="{Binding SelectedCategory.Icon}" Width="16" Height="16"
+                                              Foreground="{StaticResource AppearanceEditorAccentSecondary}" />
+                                </Border>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Classes="editorHeading" FontSize="13" Text="{Binding SelectedElementName}" />
+                                    <TextBlock Classes="editorMuted" Text="{Binding SelectedElementDetail}" />
+                                </StackPanel>
+                            </Grid>
+                            <Border Classes="editorDivider" />
+
+                            <!-- ============================ element inspector -->
+                            <StackPanel IsVisible="{Binding ShowElementInspector}">
+
+                                <!-- Background -->
+                                <StackPanel IsVisible="{Binding IsBackgroundSelected}">
+                                    <ToggleButton Name="SecBackground" Classes="editorSection" IsChecked="True">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock Grid.Column="0" Text="BACKGROUND" Foreground="{StaticResource AppearanceEditorText}" />
+                                            <TextBlock Grid.Column="1" Classes="editorLabel" Text="{Binding WindowSizeText}"
+                                                       ToolTip.Tip="What the tracker window measures right now, in screen pixels. A picture at least this size covers it without being scaled up; a bigger one is cropped to fit." />
+                                        </Grid>
+                                    </ToggleButton>
+                                    <StackPanel IsVisible="{Binding #SecBackground.IsChecked}" Spacing="6">
+                                        <Border Classes="editorPanelSecondary" Padding="10,8">
+                                            <StackPanel Spacing="2">
+                                                <TextBlock Classes="editorLabel" Text="Current" />
+                                                <TextBlock Text="{Binding BackgroundModeText}" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </Border>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="AddPictureButton_Click" Tag="Window"
+                                                ToolTip.Tip="Choose a picture. It joins the library below and becomes the background.">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="{StaticResource IconPicture}" Width="14" Height="14" />
+                                                <TextBlock Text="Picture…" Foreground="{StaticResource AppearanceEditorText}" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="CreateGradientButton_Click"
+                                                ToolTip.Tip="Two to four colours and a direction.">
+                                            <TextBlock Text="Gradient…" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </Button>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Flat colour" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding BackgroundCustomColor, Mode=TwoWay}" />
+                                                <Button Classes="editorSecondary" Padding="10,4" MinHeight="28" Command="{Binding UseCustomColorBackgroundCommand}"
+                                                        ToolTip.Tip="Switch the background to this flat colour.">
+                                                    <TextBlock Text="Use" Foreground="{StaticResource AppearanceEditorText}" />
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Command="{Binding ClearBackgroundCommand}"
+                                                ToolTip.Tip="Drop the picture, colour or gradient and go back to the built-in look, keeping every other setting.">
+                                            <TextBlock Text="Built-in background" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </Button>
+                                        <TextBlock Classes="editorMuted" Margin="0,4,0,0"
+                                                   Text="A picture is a file on this computer: it travels with the community share, but not with a saved theme file. Select the statistics panel or the table to give either its own picture." />
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- Sprite boxes -->
+                                <!-- §393: the menu bar - two colours, each with an Automatic
+                                     button, since a transparent pick is "automatic" and a
+                                     colour picker has no other way to say so. -->
+                                <StackPanel IsVisible="{Binding IsMenuBarSelected}">
+                                    <ToggleButton Name="SecMenuColors" Classes="editorSection" IsChecked="True" Content="COLOURS" />
+                                    <StackPanel IsVisible="{Binding #SecMenuColors.IsChecked}">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Text" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding MenuTextColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding MenuTextColor}" />
+                                                <Button Classes="editorSecondary" Content="Automatic" Command="{Binding UseAutomaticMenuTextCommand}"
+                                                        IsVisible="{Binding !IsMenuTextAutomatic}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <TextBlock Classes="editorMuted" Margin="0,0,0,6" Text="{Binding MenuTextNote}" TextWrapping="Wrap" />
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Highlight" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding MenuHighlightColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding MenuHighlightColor}" />
+                                                <Button Classes="editorSecondary" Content="Automatic" Command="{Binding UseAutomaticMenuHighlightCommand}"
+                                                        IsVisible="{Binding !IsMenuHighlightAutomatic}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <TextBlock Classes="editorMuted" Margin="0,0,0,6" Text="{Binding MenuHighlightNote}" TextWrapping="Wrap" />
+                                        <TextBlock Classes="editorMuted" Margin="0,4,0,0"
+                                                   Text="File, Game Info, Game Data and the rest, along the top of the window. The dropdowns keep their own colours so they stay readable. Both colours travel in a shared theme." />
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <!-- §394: its own font, or Statistics' - the first entry. -->
+                                    <ToggleButton Name="SecMenuType" Classes="editorSection" IsChecked="True" Content="TYPOGRAPHY" />
+                                    <StackPanel IsVisible="{Binding #SecMenuType.IsChecked}">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Font" />
+                                            <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding MenuFontFamilyOptions}" SelectedItem="{Binding MenuFontFamily, Mode=TwoWay}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Size" />
+                                            <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding MenuFontSizeOptions}" SelectedItem="{Binding MenuFontSize, Mode=TwoWay}" />
+                                        </Grid>
+                                        <TextBlock Classes="editorMuted" Margin="0,4,0,0" Text="Same as Statistics is the window font, which the menu has always worn. A font of its own reaches the dropdowns too." />
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel IsVisible="{Binding IsSpriteBoxesSelected}">
+                                    <ToggleButton Name="SecSpriteColors" Classes="editorSection" IsChecked="True" Content="COLOURS" />
+                                    <StackPanel IsVisible="{Binding #SecSpriteColors.IsChecked}">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Fill" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding SpriteBoxBackgroundColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding SpriteBoxBackgroundColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Border" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding SpriteBoxBorderColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding SpriteBoxBorderColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Text" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding SpriteBoxTextColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding SpriteBoxTextColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecSpriteType" Classes="editorSection" IsChecked="True" Content="TYPOGRAPHY" />
+                                    <StackPanel IsVisible="{Binding #SecSpriteType.IsChecked}">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Font" />
+                                            <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontFamilyOptions}" SelectedItem="{Binding SpriteBoxFontFamily, Mode=TwoWay}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Size" />
+                                            <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontSizeOptions}" SelectedItem="{Binding SpriteBoxFontSize, Mode=TwoWay}" />
+                                        </Grid>
+                                        <CheckBox Classes="editorCheck" Content="Bold headings" IsChecked="{Binding BoldHeadings, Mode=TwoWay}" Margin="0,4,0,0"
+                                                  ToolTip.Tip="Every heading on the window. Untick for a font that has no bold weight." />
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecSpritePicture" Classes="editorSection" IsChecked="True">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock Grid.Column="0" Text="PICTURE" Foreground="{StaticResource AppearanceEditorText}" />
+                                            <TextBlock Grid.Column="1" Classes="editorLabel" Text="{Binding SpriteBoxSizeText}"
+                                                       ToolTip.Tip="What one sprite box measures right now, in screen pixels - the target boxes shrink as targets are added. A picture at least this size covers a box; it is cropped to each." />
+                                        </Grid>
+                                    </ToggleButton>
+                                    <StackPanel IsVisible="{Binding #SecSpritePicture.IsChecked}" Spacing="6">
+                                        <Border Classes="editorPanelSecondary" Padding="10,8">
+                                            <TextBlock Text="{Binding SpriteBoxPictureText}" TextWrapping="Wrap" />
+                                        </Border>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="AddPictureButton_Click" Tag="SpritesPicture"
+                                                ToolTip.Tip="Choose a picture. It joins the library and goes behind the three sprite boxes.">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="{StaticResource IconPicture}" Width="14" Height="14" />
+                                                <TextBlock Text="Picture…" Foreground="{StaticResource AppearanceEditorText}" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Command="{Binding RemoveSpriteBoxPictureCommand}"
+                                                IsVisible="{Binding HasSpriteBoxPicture}">
+                                            <TextBlock Text="Remove picture" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </Button>
+                                        <TextBlock Classes="editorMuted"
+                                                   Text="One picture for all three boxes, cropped to each. Drawn over the window background and under the fill: the fill's opacity tints it, and an opaque fill hides it." />
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecSpriteBoxBorder" Classes="editorSection" IsChecked="True" Content="BORDER" />
+                                    <StackPanel IsVisible="{Binding #SecSpriteBoxBorder.IsChecked}" Spacing="4">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Width" />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxBorderWidth}" TickFrequency="0.5" Value="{Binding SpriteBoxBorderWidth, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding SpriteBoxBorderWidth, StringFormat='{}{0:0.#} px'}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Corners" />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxCornerRadius}" TickFrequency="1" Value="{Binding SpriteBoxCornerRadius, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding SpriteBoxCornerRadius, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                        <Border Classes="editorPanelSecondary" Padding="10,8" Margin="0,4,0,0">
+                                            <TextBlock Text="{Binding SpriteBoxFrameText}" TextWrapping="Wrap" />
+                                        </Border>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="AddPictureButton_Click" Tag="SpritesFrame"
+                                                ToolTip.Tip="A PNG with a transparent middle. It joins the library and is drawn round each sprite box in nine slices, so the corners keep their shape.">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="{StaticResource IconPicture}" Width="14" Height="14" />
+                                                <TextBlock Text="Frame picture…" Foreground="{StaticResource AppearanceEditorText}" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Command="{Binding RemoveSpriteBoxFrameCommand}"
+                                                IsVisible="{Binding HasSpriteBoxFrame}">
+                                            <TextBlock Text="Remove frame" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </Button>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto" IsVisible="{Binding HasSpriteBoxFrame}">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Corner size"
+                                                       ToolTip.Tip="How many pixels of the frame picture are a corner. The corners are drawn at that size; the edges stretch between them." />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="{Binding MinFrameInset}" Maximum="{Binding MaxFrameInset}" TickFrequency="1" Value="{Binding SpriteBoxFrameInset, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding SpriteBoxFrameInset, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto" IsVisible="{Binding HasSpriteBoxFrame}">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Reach"
+                                                       ToolTip.Tip="How far the frame reaches past the panel's edge, over the window around it - the way an ornate frame sits round a box rather than inside it. Zero keeps it within the panel." />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxFrameOverhang}" TickFrequency="1" Value="{Binding SpriteBoxFrameOverhang, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding SpriteBoxFrameOverhang, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- Sprite row panel (§387) -->
+                                <StackPanel IsVisible="{Binding IsSpriteRowSelected}">
+                                    <ToggleButton Name="SecRowColors" Classes="editorSection" IsChecked="True" Content="COLOURS" />
+                                    <StackPanel IsVisible="{Binding #SecRowColors.IsChecked}">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Fill" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding SpriteRowBackgroundColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding SpriteRowBackgroundColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Border" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding SpriteRowBorderColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding SpriteRowBorderColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <TextBlock Classes="editorMuted" Margin="0,4,0,0"
+                                                   Text="The panel is invisible until a fill, a border or a picture is set - then it draws behind the three groups, and the row pulls in from its edge a little. The captions and boxes inside keep the Pokémon Sprites colours and font." />
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecRowPicture" Classes="editorSection" IsChecked="True">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock Grid.Column="0" Text="PICTURE" Foreground="{StaticResource AppearanceEditorText}" />
+                                            <TextBlock Grid.Column="1" Classes="editorLabel" Text="{Binding SpriteRowSizeText}"
+                                                       ToolTip.Tip="What the whole sprite row measures in the tracker window right now, in screen pixels. A picture at least this size covers it without being scaled up; a bigger one is cropped to fit." />
+                                        </Grid>
+                                    </ToggleButton>
+                                    <StackPanel IsVisible="{Binding #SecRowPicture.IsChecked}" Spacing="6">
+                                        <Border Classes="editorPanelSecondary" Padding="10,8">
+                                            <TextBlock Text="{Binding SpriteRowPictureText}" TextWrapping="Wrap" />
+                                        </Border>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="AddPictureButton_Click" Tag="SpriteRowPicture"
+                                                ToolTip.Tip="Choose a picture. It joins the library and goes behind the whole sprite row.">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="{StaticResource IconPicture}" Width="14" Height="14" />
+                                                <TextBlock Text="Picture…" Foreground="{StaticResource AppearanceEditorText}" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Command="{Binding RemoveSpriteRowPictureCommand}"
+                                                IsVisible="{Binding HasSpriteRowPicture}">
+                                            <TextBlock Text="Remove picture" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </Button>
+                                        <TextBlock Classes="editorMuted"
+                                                   Text="Drawn over the window background and under the fill: the fill's opacity tints it, and an opaque fill hides it. Or click a card in the library below while the row panel is selected." />
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecSpriteRowBorder" Classes="editorSection" IsChecked="True" Content="BORDER" />
+                                    <StackPanel IsVisible="{Binding #SecSpriteRowBorder.IsChecked}" Spacing="4">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Width" />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxBorderWidth}" TickFrequency="0.5" Value="{Binding SpriteRowBorderWidth, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding SpriteRowBorderWidth, StringFormat='{}{0:0.#} px'}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Corners" />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxCornerRadius}" TickFrequency="1" Value="{Binding SpriteRowCornerRadius, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding SpriteRowCornerRadius, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                        <Border Classes="editorPanelSecondary" Padding="10,8" Margin="0,4,0,0">
+                                            <TextBlock Text="{Binding SpriteRowFrameText}" TextWrapping="Wrap" />
+                                        </Border>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="AddPictureButton_Click" Tag="SpriteRowFrame"
+                                                ToolTip.Tip="A PNG with a transparent middle. It joins the library and is drawn round the sprite row panel in nine slices, so the corners keep their shape.">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="{StaticResource IconPicture}" Width="14" Height="14" />
+                                                <TextBlock Text="Frame picture…" Foreground="{StaticResource AppearanceEditorText}" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Command="{Binding RemoveSpriteRowFrameCommand}"
+                                                IsVisible="{Binding HasSpriteRowFrame}">
+                                            <TextBlock Text="Remove frame" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </Button>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto" IsVisible="{Binding HasSpriteRowFrame}">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Corner size"
+                                                       ToolTip.Tip="How many pixels of the frame picture are a corner. The corners are drawn at that size; the edges stretch between them." />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="{Binding MinFrameInset}" Maximum="{Binding MaxFrameInset}" TickFrequency="1" Value="{Binding SpriteRowFrameInset, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding SpriteRowFrameInset, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto" IsVisible="{Binding HasSpriteRowFrame}">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Reach"
+                                                       ToolTip.Tip="How far the frame reaches past the panel's edge, over the window around it - the way an ornate frame sits round a box rather than inside it. Zero keeps it within the panel." />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxFrameOverhang}" TickFrequency="1" Value="{Binding SpriteRowFrameOverhang, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding SpriteRowFrameOverhang, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- Encounter table -->
+                                <StackPanel IsVisible="{Binding IsEncounterTableSelected}">
+                                    <ToggleButton Name="SecTableColors" Classes="editorSection" IsChecked="True" Content="COLOURS" />
+                                    <StackPanel IsVisible="{Binding #SecTableColors.IsChecked}">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Fill" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding EncountersBackgroundColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding EncountersBackgroundColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Header"
+                                                       ToolTip.Tip="Fills the column headings. Leave it clear to follow the fill instead." />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding HeaderBackgroundColor, Mode=TwoWay}"
+                                                             ToolTip.Tip="Fills the column headings. Leave it clear to follow the fill instead." />
+                                                <TextBlock Classes="editorLabel" Text="{Binding HeaderBackgroundColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Border" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding EncountersBorderColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding EncountersBorderColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Text" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding EncountersTextColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding EncountersTextColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecTableType" Classes="editorSection" IsChecked="True" Content="TYPOGRAPHY" />
+                                    <StackPanel IsVisible="{Binding #SecTableType.IsChecked}">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Font" />
+                                            <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontFamilyOptions}" SelectedItem="{Binding EncountersFontFamily, Mode=TwoWay}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Size" />
+                                            <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontSizeOptions}" SelectedItem="{Binding EncountersFontSize, Mode=TwoWay}" />
+                                        </Grid>
+                                        <CheckBox Classes="editorCheck" Content="Bold headings" IsChecked="{Binding BoldHeadings, Mode=TwoWay}" Margin="0,4,0,0"
+                                                  ToolTip.Tip="Every heading on the window. Untick for a font that has no bold weight." />
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecTablePicture" Classes="editorSection" IsChecked="True">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock Grid.Column="0" Text="PICTURE" Foreground="{StaticResource AppearanceEditorText}" />
+                                            <TextBlock Grid.Column="1" Classes="editorLabel" Text="{Binding EncountersSizeText}"
+                                                       ToolTip.Tip="What it measures in the tracker window right now, in screen pixels. A picture at least this size covers it without being scaled up; a bigger one is cropped to fit." />
+                                        </Grid>
+                                    </ToggleButton>
+                                    <StackPanel IsVisible="{Binding #SecTablePicture.IsChecked}" Spacing="6">
+                                        <Border Classes="editorPanelSecondary" Padding="10,8">
+                                            <TextBlock Text="{Binding EncountersPictureText}" TextWrapping="Wrap" />
+                                        </Border>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="AddPictureButton_Click" Tag="TablePicture"
+                                                ToolTip.Tip="Choose a picture. It joins the library and goes behind the table.">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="{StaticResource IconPicture}" Width="14" Height="14" />
+                                                <TextBlock Text="Picture…" Foreground="{StaticResource AppearanceEditorText}" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Command="{Binding RemoveEncountersPictureCommand}"
+                                                IsVisible="{Binding HasEncountersPicture}">
+                                            <TextBlock Text="Remove picture" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </Button>
+                                        <TextBlock Classes="editorMuted"
+                                                   Text="Drawn over the window background and under the fill: the fill's opacity tints the picture, and an opaque fill hides it. Or click a card in the library below while the table is selected." />
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecEncountersBorder" Classes="editorSection" IsChecked="True" Content="BORDER" />
+                                    <StackPanel IsVisible="{Binding #SecEncountersBorder.IsChecked}" Spacing="4">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Width" />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxBorderWidth}" TickFrequency="0.5" Value="{Binding EncountersBorderWidth, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding EncountersBorderWidth, StringFormat='{}{0:0.#} px'}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Corners" />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxCornerRadius}" TickFrequency="1" Value="{Binding EncountersCornerRadius, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding EncountersCornerRadius, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                        <Border Classes="editorPanelSecondary" Padding="10,8" Margin="0,4,0,0">
+                                            <TextBlock Text="{Binding EncountersFrameText}" TextWrapping="Wrap" />
+                                        </Border>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="AddPictureButton_Click" Tag="TableFrame"
+                                                ToolTip.Tip="A PNG with a transparent middle. It joins the library and is drawn round the table in nine slices, so the corners keep their shape.">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="{StaticResource IconPicture}" Width="14" Height="14" />
+                                                <TextBlock Text="Frame picture…" Foreground="{StaticResource AppearanceEditorText}" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Command="{Binding RemoveEncountersFrameCommand}"
+                                                IsVisible="{Binding HasEncountersFrame}">
+                                            <TextBlock Text="Remove frame" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </Button>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto" IsVisible="{Binding HasEncountersFrame}">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Corner size"
+                                                       ToolTip.Tip="How many pixels of the frame picture are a corner. The corners are drawn at that size; the edges stretch between them." />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="{Binding MinFrameInset}" Maximum="{Binding MaxFrameInset}" TickFrequency="1" Value="{Binding EncountersFrameInset, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding EncountersFrameInset, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto" IsVisible="{Binding HasEncountersFrame}">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Reach"
+                                                       ToolTip.Tip="How far the frame reaches past the panel's edge, over the window around it - the way an ornate frame sits round a box rather than inside it. Zero keeps it within the panel." />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxFrameOverhang}" TickFrequency="1" Value="{Binding EncountersFrameOverhang, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding EncountersFrameOverhang, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- Statistics -->
+                                <StackPanel IsVisible="{Binding IsStatisticsSelected}">
+                                    <ToggleButton Name="SecStatsColors" Classes="editorSection" IsChecked="True" Content="COLOURS" />
+                                    <StackPanel IsVisible="{Binding #SecStatsColors.IsChecked}">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Fill" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding StatsBackgroundColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding StatsBackgroundColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Border" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding StatsBorderColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding StatsBorderColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Text" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding StatsTextColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding StatsTextColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecStatsType" Classes="editorSection" IsChecked="True" Content="TYPOGRAPHY" />
+                                    <StackPanel IsVisible="{Binding #SecStatsType.IsChecked}">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Font" />
+                                            <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontFamilyOptions}" SelectedItem="{Binding StatsFontFamily, Mode=TwoWay}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Size" />
+                                            <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontSizeOptions}" SelectedItem="{Binding StatsFontSize, Mode=TwoWay}" />
+                                        </Grid>
+                                        <CheckBox Classes="editorCheck" Content="Bold headings" IsChecked="{Binding BoldHeadings, Mode=TwoWay}" Margin="0,4,0,0"
+                                                  ToolTip.Tip="Every heading on the window. Untick for a font that has no bold weight." />
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecStatsPicture" Classes="editorSection" IsChecked="True">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock Grid.Column="0" Text="PICTURE" Foreground="{StaticResource AppearanceEditorText}" />
+                                            <TextBlock Grid.Column="1" Classes="editorLabel" Text="{Binding StatsSizeText}"
+                                                       ToolTip.Tip="What it measures in the tracker window right now, in screen pixels. A picture at least this size covers it without being scaled up; a bigger one is cropped to fit." />
+                                        </Grid>
+                                    </ToggleButton>
+                                    <StackPanel IsVisible="{Binding #SecStatsPicture.IsChecked}" Spacing="6">
+                                        <Border Classes="editorPanelSecondary" Padding="10,8">
+                                            <TextBlock Text="{Binding StatsPictureText}" TextWrapping="Wrap" />
+                                        </Border>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="AddPictureButton_Click" Tag="StatsPicture"
+                                                ToolTip.Tip="Choose a picture. It joins the library and goes behind the statistics panel.">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="{StaticResource IconPicture}" Width="14" Height="14" />
+                                                <TextBlock Text="Picture…" Foreground="{StaticResource AppearanceEditorText}" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Command="{Binding RemoveStatsPictureCommand}"
+                                                IsVisible="{Binding HasStatsPicture}">
+                                            <TextBlock Text="Remove picture" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </Button>
+                                        <TextBlock Classes="editorMuted"
+                                                   Text="Drawn over the window background and under the fill: the fill's opacity tints the picture, and an opaque fill hides it. Or click a card in the library below while the panel is selected." />
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecStatsBorder" Classes="editorSection" IsChecked="True" Content="BORDER" />
+                                    <StackPanel IsVisible="{Binding #SecStatsBorder.IsChecked}" Spacing="4">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Width" />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxBorderWidth}" TickFrequency="0.5" Value="{Binding StatsBorderWidth, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding StatsBorderWidth, StringFormat='{}{0:0.#} px'}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Corners" />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxCornerRadius}" TickFrequency="1" Value="{Binding StatsCornerRadius, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding StatsCornerRadius, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                        <Border Classes="editorPanelSecondary" Padding="10,8" Margin="0,4,0,0">
+                                            <TextBlock Text="{Binding StatsFrameText}" TextWrapping="Wrap" />
+                                        </Border>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="AddPictureButton_Click" Tag="StatsFrame"
+                                                ToolTip.Tip="A PNG with a transparent middle. It joins the library and is drawn round the statistics panel in nine slices, so the corners keep their shape.">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <PathIcon Data="{StaticResource IconPicture}" Width="14" Height="14" />
+                                                <TextBlock Text="Frame picture…" Foreground="{StaticResource AppearanceEditorText}" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Command="{Binding RemoveStatsFrameCommand}"
+                                                IsVisible="{Binding HasStatsFrame}">
+                                            <TextBlock Text="Remove frame" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </Button>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto" IsVisible="{Binding HasStatsFrame}">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Corner size"
+                                                       ToolTip.Tip="How many pixels of the frame picture are a corner. The corners are drawn at that size; the edges stretch between them." />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="{Binding MinFrameInset}" Maximum="{Binding MaxFrameInset}" TickFrequency="1" Value="{Binding StatsFrameInset, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding StatsFrameInset, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto" IsVisible="{Binding HasStatsFrame}">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Reach"
+                                                       ToolTip.Tip="How far the frame reaches past the panel's edge, over the window around it - the way an ornate frame sits round a box rather than inside it. Zero keeps it within the panel." />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxFrameOverhang}" TickFrequency="1" Value="{Binding StatsFrameOverhang, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding StatsFrameOverhang, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <TextBlock Classes="editorMuted"
+                                               Text="These colours, this font, this picture, this width and these corners also paint every other window - Hunt Log, Search, the Simulator and the rest. The frame is the main window's alone." />
+                                </StackPanel>
+
+                                <!-- Buttons -->
+                                <StackPanel IsVisible="{Binding IsButtonsSelected}">
+                                    <ToggleButton Name="SecButtonColors" Classes="editorSection" IsChecked="True" Content="COLOURS" />
+                                    <StackPanel IsVisible="{Binding #SecButtonColors.IsChecked}">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Fill" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding ButtonColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding ButtonColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Border" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding ButtonBorderColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding ButtonBorderColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Text" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                                <ColorPicker Classes="editorColor" Color="{Binding ButtonTextColor, Mode=TwoWay}" />
+                                                <TextBlock Classes="editorLabel" Text="{Binding ButtonTextColor}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecButtonType" Classes="editorSection" IsChecked="True" Content="TYPOGRAPHY" />
+                                    <StackPanel IsVisible="{Binding #SecButtonType.IsChecked}">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Font" />
+                                            <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontFamilyOptions}" SelectedItem="{Binding ButtonFontFamily, Mode=TwoWay}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Size" />
+                                            <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontSizeOptions}" SelectedItem="{Binding ButtonFontSize, Mode=TwoWay}" />
+                                        </Grid>
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <ToggleButton Name="SecButtonBorder" Classes="editorSection" IsChecked="True" Content="BORDER" />
+                                    <StackPanel IsVisible="{Binding #SecButtonBorder.IsChecked}" Spacing="4">
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Width" />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxBorderWidth}" TickFrequency="0.5" Value="{Binding ButtonBorderWidth, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding ButtonBorderWidth, StringFormat='{}{0:0.#} px'}" />
+                                        </Grid>
+                                        <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto">
+                                            <TextBlock Grid.Column="0" Classes="editorLabel" Text="Corners" />
+                                            <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxCornerRadius}" TickFrequency="1" Value="{Binding ButtonCornerRadius, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Classes="editorValue" Text="{Binding ButtonCornerRadius, StringFormat='{}{0:0} px'}" />
+                                        </Grid>
+                                    </StackPanel>
+                                    <Border Classes="editorDivider" />
+                                    <TextBlock Classes="editorMuted" Text="Every button in the app - the toolbar here and the ones on every other window." />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- ============================ borders inspector -->
+                            <StackPanel IsVisible="{Binding ShowBordersInspector}">
+                                <ToggleButton Name="SecBorders" Classes="editorSection" IsChecked="True" Content="BORDER COLOURS" />
+                                <StackPanel IsVisible="{Binding #SecBorders.IsChecked}">
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Sprite boxes" />
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                            <ColorPicker Classes="editorColor" Color="{Binding SpriteBoxBorderColor, Mode=TwoWay}" />
+                                            <TextBlock Classes="editorLabel" Text="{Binding SpriteBoxBorderColor}" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Table" />
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                            <ColorPicker Classes="editorColor" Color="{Binding EncountersBorderColor, Mode=TwoWay}" />
+                                            <TextBlock Classes="editorLabel" Text="{Binding EncountersBorderColor}" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Statistics" />
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                            <ColorPicker Classes="editorColor" Color="{Binding StatsBorderColor, Mode=TwoWay}" />
+                                            <TextBlock Classes="editorLabel" Text="{Binding StatsBorderColor}" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Buttons" />
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                            <ColorPicker Classes="editorColor" Color="{Binding ButtonBorderColor, Mode=TwoWay}" />
+                                            <TextBlock Classes="editorLabel" Text="{Binding ButtonBorderColor}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                                <Border Classes="editorDivider" />
+                                <ToggleButton Name="SecBorderSizes" Classes="editorSection" IsChecked="True" Content="WIDTH AND CORNERS" />
+                                <StackPanel IsVisible="{Binding #SecBorderSizes.IsChecked}">
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto,*,Auto">
+                                        <TextBlock Grid.Column="1" Classes="editorLabel" Text="width" HorizontalAlignment="Center" />
+                                        <TextBlock Grid.Column="3" Classes="editorLabel" Text="corners" HorizontalAlignment="Center" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto,*,Auto">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Sprite boxes" ToolTip.Tip="Each of the three boxes" />
+                                        <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxBorderWidth}" TickFrequency="0.5" Value="{Binding SpriteBoxBorderWidth, Mode=TwoWay}" ToolTip.Tip="Width" />
+                                        <TextBlock Grid.Column="2" Classes="editorValue" MinWidth="34" Margin="0,0,8,0" Text="{Binding SpriteBoxBorderWidth, StringFormat='{}{0:0.#}'}" />
+                                        <Slider Grid.Column="3" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxCornerRadius}" TickFrequency="1" Value="{Binding SpriteBoxCornerRadius, Mode=TwoWay}" ToolTip.Tip="Corners" />
+                                        <TextBlock Grid.Column="4" Classes="editorValue" MinWidth="28" Text="{Binding SpriteBoxCornerRadius, StringFormat='{}{0:0}'}" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto,*,Auto">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Sprite row" />
+                                        <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxBorderWidth}" TickFrequency="0.5" Value="{Binding SpriteRowBorderWidth, Mode=TwoWay}" ToolTip.Tip="Width" />
+                                        <TextBlock Grid.Column="2" Classes="editorValue" MinWidth="34" Margin="0,0,8,0" Text="{Binding SpriteRowBorderWidth, StringFormat='{}{0:0.#}'}" />
+                                        <Slider Grid.Column="3" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxCornerRadius}" TickFrequency="1" Value="{Binding SpriteRowCornerRadius, Mode=TwoWay}" ToolTip.Tip="Corners" />
+                                        <TextBlock Grid.Column="4" Classes="editorValue" MinWidth="28" Text="{Binding SpriteRowCornerRadius, StringFormat='{}{0:0}'}" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto,*,Auto">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Table" />
+                                        <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxBorderWidth}" TickFrequency="0.5" Value="{Binding EncountersBorderWidth, Mode=TwoWay}" ToolTip.Tip="Width" />
+                                        <TextBlock Grid.Column="2" Classes="editorValue" MinWidth="34" Margin="0,0,8,0" Text="{Binding EncountersBorderWidth, StringFormat='{}{0:0.#}'}" />
+                                        <Slider Grid.Column="3" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxCornerRadius}" TickFrequency="1" Value="{Binding EncountersCornerRadius, Mode=TwoWay}" ToolTip.Tip="Corners" />
+                                        <TextBlock Grid.Column="4" Classes="editorValue" MinWidth="28" Text="{Binding EncountersCornerRadius, StringFormat='{}{0:0}'}" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto,*,Auto">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Statistics" />
+                                        <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxBorderWidth}" TickFrequency="0.5" Value="{Binding StatsBorderWidth, Mode=TwoWay}" ToolTip.Tip="Width" />
+                                        <TextBlock Grid.Column="2" Classes="editorValue" MinWidth="34" Margin="0,0,8,0" Text="{Binding StatsBorderWidth, StringFormat='{}{0:0.#}'}" />
+                                        <Slider Grid.Column="3" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxCornerRadius}" TickFrequency="1" Value="{Binding StatsCornerRadius, Mode=TwoWay}" ToolTip.Tip="Corners" />
+                                        <TextBlock Grid.Column="4" Classes="editorValue" MinWidth="28" Text="{Binding StatsCornerRadius, StringFormat='{}{0:0}'}" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*,Auto,*,Auto">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Buttons" />
+                                        <Slider Grid.Column="1" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxBorderWidth}" TickFrequency="0.5" Value="{Binding ButtonBorderWidth, Mode=TwoWay}" ToolTip.Tip="Width" />
+                                        <TextBlock Grid.Column="2" Classes="editorValue" MinWidth="34" Margin="0,0,8,0" Text="{Binding ButtonBorderWidth, StringFormat='{}{0:0.#}'}" />
+                                        <Slider Grid.Column="3" Classes="editorSlider" Minimum="0" Maximum="{Binding MaxCornerRadius}" TickFrequency="1" Value="{Binding ButtonCornerRadius, Mode=TwoWay}" ToolTip.Tip="Corners" />
+                                        <TextBlock Grid.Column="4" Classes="editorValue" MinWidth="28" Text="{Binding ButtonCornerRadius, StringFormat='{}{0:0}'}" />
+                                    </Grid>
+                                </StackPanel>
+                                <Border Classes="editorDivider" />
+                                <ToggleButton Name="SecBorderFrames" Classes="editorSection" IsChecked="True" Content="FRAMES" />
+                                <StackPanel IsVisible="{Binding #SecBorderFrames.IsChecked}" Spacing="4">
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Sprite boxes" />
+                                        <TextBlock Grid.Column="1" Text="{Binding SpriteBoxFrameText}" TextWrapping="Wrap" VerticalAlignment="Center" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Sprite row" />
+                                        <TextBlock Grid.Column="1" Text="{Binding SpriteRowFrameText}" TextWrapping="Wrap" VerticalAlignment="Center" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Table" />
+                                        <TextBlock Grid.Column="1" Text="{Binding EncountersFrameText}" TextWrapping="Wrap" VerticalAlignment="Center" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Statistics" />
+                                        <TextBlock Grid.Column="1" Text="{Binding StatsFrameText}" TextWrapping="Wrap" VerticalAlignment="Center" />
+                                    </Grid>
+                                    <TextBlock Classes="editorMuted" Margin="0,4,0,0"
+                                               Text="Select a panel on the canvas to set or remove its frame and its corner size. Frames are the main window's; every other window keeps the plain line, in the Statistics width and corners." />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- ============================ typography inspector -->
+                            <StackPanel IsVisible="{Binding ShowTypographyInspector}">
+                                <!-- §394: the menu bar, first - it is the top of the window. -->
+                                <ToggleButton Name="SecTypeMenu" Classes="editorSection" IsChecked="True" Content="MENU BAR" />
+                                <StackPanel IsVisible="{Binding #SecTypeMenu.IsChecked}">
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Font" />
+                                        <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding MenuFontFamilyOptions}" SelectedItem="{Binding MenuFontFamily, Mode=TwoWay}" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Size" />
+                                        <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding MenuFontSizeOptions}" SelectedItem="{Binding MenuFontSize, Mode=TwoWay}" />
+                                    </Grid>
+                                </StackPanel>
+                                <Border Classes="editorDivider" />
+                                <ToggleButton Name="SecTypeSprites" Classes="editorSection" IsChecked="True" Content="SPRITE BOXES" />
+                                <StackPanel IsVisible="{Binding #SecTypeSprites.IsChecked}">
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Font" />
+                                        <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontFamilyOptions}" SelectedItem="{Binding SpriteBoxFontFamily, Mode=TwoWay}" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Size" />
+                                        <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontSizeOptions}" SelectedItem="{Binding SpriteBoxFontSize, Mode=TwoWay}" />
+                                    </Grid>
+                                </StackPanel>
+                                <Border Classes="editorDivider" />
+                                <!-- §388: the table's own font - it followed the sprite boxes' from §351 to §387. -->
+                                <ToggleButton Name="SecTypeTable" Classes="editorSection" IsChecked="True" Content="ENCOUNTER TABLE" />
+                                <StackPanel IsVisible="{Binding #SecTypeTable.IsChecked}">
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Font" />
+                                        <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontFamilyOptions}" SelectedItem="{Binding EncountersFontFamily, Mode=TwoWay}" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Size" />
+                                        <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontSizeOptions}" SelectedItem="{Binding EncountersFontSize, Mode=TwoWay}" />
+                                    </Grid>
+                                </StackPanel>
+                                <Border Classes="editorDivider" />
+                                <ToggleButton Name="SecTypeStats" Classes="editorSection" IsChecked="True" Content="STATISTICS AND EVERY OTHER WINDOW" />
+                                <StackPanel IsVisible="{Binding #SecTypeStats.IsChecked}">
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Font" />
+                                        <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontFamilyOptions}" SelectedItem="{Binding StatsFontFamily, Mode=TwoWay}" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Size" />
+                                        <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontSizeOptions}" SelectedItem="{Binding StatsFontSize, Mode=TwoWay}" />
+                                    </Grid>
+                                </StackPanel>
+                                <Border Classes="editorDivider" />
+                                <ToggleButton Name="SecTypeButtons" Classes="editorSection" IsChecked="True" Content="BUTTONS" />
+                                <StackPanel IsVisible="{Binding #SecTypeButtons.IsChecked}">
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Font" />
+                                        <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontFamilyOptions}" SelectedItem="{Binding ButtonFontFamily, Mode=TwoWay}" />
+                                    </Grid>
+                                    <Grid Classes="editorRow" ColumnDefinitions="92,*">
+                                        <TextBlock Grid.Column="0" Classes="editorLabel" Text="Size" />
+                                        <ComboBox Grid.Column="1" Classes="editorInput" ItemsSource="{Binding FontSizeOptions}" SelectedItem="{Binding ButtonFontSize, Mode=TwoWay}" />
+                                    </Grid>
+                                </StackPanel>
+                                <Border Classes="editorDivider" />
+                                <CheckBox Classes="editorCheck" Content="Bold headings" IsChecked="{Binding BoldHeadings, Mode=TwoWay}"
+                                          ToolTip.Tip="Every heading on the window. Untick for a font that has no bold weight." />
+                                <Border Classes="editorDivider" />
+                                <ToggleButton Name="SecUserFonts" Classes="editorSection" IsChecked="True" Content="YOUR FONTS" />
+                                <StackPanel IsVisible="{Binding #SecUserFonts.IsChecked}" Spacing="6">
+                                    <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="AddFontButton_Click"
+                                            ToolTip.Tip="A .ttf or .otf file. It is copied into the app's Fonts folder, loaded at once, and appears in every Font box under the name the font declares.">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <PathIcon Data="{StaticResource IconUpload}" Width="14" Height="14" />
+                                            <TextBlock Text="Add font file…" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </StackPanel>
+                                    </Button>
+                                    <ItemsControl ItemsSource="{Binding UserFonts}" IsVisible="{Binding HasUserFonts}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="sys:String">
+                                                <Border Classes="editorPanelSecondary" Padding="10,4" Margin="0,2">
+                                                    <Grid ColumnDefinitions="*,Auto">
+                                                        <TextBlock Grid.Column="0" Text="{Binding}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                                        <Button Grid.Column="1" Classes="editorIcon" Padding="4" MinHeight="0"
+                                                                Command="{Binding $parent[Window].((vm:AppearanceViewModel)DataContext).RemoveUserFontCommand}"
+                                                                CommandParameter="{Binding}"
+                                                                ToolTip.Tip="Delete this font's files from the Fonts folder. A section still using it has to change first.">
+                                                            <PathIcon Data="{StaticResource IconClose}" Width="11" Height="11" />
+                                                        </Button>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <TextBlock Classes="editorMuted" Text="No fonts added yet." IsVisible="{Binding !HasUserFonts}" />
+                                    <TextBlock Classes="editorLabel" Text="Fonts folder" Margin="0,4,0,0" />
+                                    <TextBox Classes="editorInput" IsReadOnly="True" Text="{Binding FontsFolder, Mode=OneWay}" TextWrapping="Wrap" FontSize="10" />
+                                    <TextBlock Classes="editorMuted"
+                                               Text="A shared theme names the font; somebody without it sees Inter and the rest of the theme. Fonts under Assets/Fonts still need a line in ThemeManager's catalog." />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- ============================ assets inspector -->
+                            <StackPanel IsVisible="{Binding ShowAssetsInspector}">
+                                <ToggleButton Name="SecAssets" Classes="editorSection" IsChecked="True" Content="PICTURE LIBRARY" />
+                                <StackPanel IsVisible="{Binding #SecAssets.IsChecked}" Spacing="6">
+                                    <Border Classes="editorPanelSecondary" Padding="10,8">
+                                        <StackPanel Spacing="2">
+                                            <TextBlock Classes="editorLabel" Text="Background now" />
+                                            <TextBlock Text="{Binding BackgroundModeText}" TextWrapping="Wrap" />
+                                            <TextBlock Classes="editorMuted" Text="{Binding WindowSizeText, StringFormat='Window: {0}'}" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Click="AddPictureButton_Click">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <PathIcon Data="{StaticResource IconUpload}" Width="14" Height="14" />
+                                            <TextBlock Text="Add pictures…" Foreground="{StaticResource AppearanceEditorText}" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Classes="editorSecondary" HorizontalAlignment="Stretch" Command="{Binding RefreshAssetsCommand}">
+                                        <TextBlock Text="Re-read the library folder" Foreground="{StaticResource AppearanceEditorText}" />
+                                    </Button>
+                                    <TextBlock Classes="editorLabel" Text="Library folder" Margin="0,6,0,0" />
+                                    <TextBox Classes="editorInput" IsReadOnly="True" Text="{Binding AssetsFolder, Mode=OneWay}" TextWrapping="Wrap" FontSize="10" />
+                                    <TextBlock Classes="editorMuted"
+                                               Text="Click a card below to use a picture. The cross on a card removes it from the library; the background you have applied is a separate copy and stays." />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
         </Grid>
 
-        <!-- §209: the action row moved out of the swatch grid's right-hand
-             column and onto the foot of the window, with Apply in front.
-             Apply writes this client's appearance and repaints the app
-             without closing, which is what makes it an Apply; Save and Load
-             are about theme FILES now, not about this client's own settings.
-             Cancel just closes - by the time it is pressed, Apply has either
-             been used or nothing was meant to be kept. -->
-        <Grid Grid.Row="3" ColumnDefinitions="*,Auto" Margin="0,8,0,0">
-            <StackPanel Grid.Column="0" Spacing="4" VerticalAlignment="Bottom">
-                <!-- §140: which client's file Apply writes - with no client
-                     detected it is Client 1's, and applying is allowed. -->
-                <TextBlock Text="{Binding ClientNote}" FontSize="11" Opacity="0.75" TextWrapping="Wrap" />
-                <TextBlock Text="{Binding StatusText}" FontSize="11" TextWrapping="Wrap"
-                           IsVisible="{Binding HasStatus}" />
-                <TextBlock Text="{Binding SaveError}" Foreground="{DynamicResource ThemeErrorBrush}"
-                           TextWrapping="Wrap" IsVisible="{Binding HasSaveError}" />
+        <!-- ============================================================ status -->
+        <Border Grid.Row="2" Margin="12,10,12,10" Classes="editorPanel" Padding="12,8">
+            <StackPanel Spacing="3">
+                <TextBlock Classes="editorMuted" Text="{Binding ClientNote}" />
+                <TextBlock Text="{Binding StatusText}" IsVisible="{Binding HasStatus}" TextWrapping="Wrap" />
+                <TextBlock Classes="editorError" Text="{Binding SaveError}" IsVisible="{Binding HasSaveError}" />
             </StackPanel>
-
-            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8"
-                        VerticalAlignment="Bottom" Margin="14,0,0,0">
-                <Button Content="Apply" MinWidth="86" HorizontalContentAlignment="Center"
-                        Command="{Binding ApplyCommand}"
-                        ToolTip.Tip="Save these settings for this client and repaint the app now. The window stays open." />
-                <Button Content="Save" MinWidth="86" HorizontalContentAlignment="Center"
-                        Command="{Binding SaveThemeFileCommand}"
-                        ToolTip.Tip="Write these colours, gradient and font to a file you can send somebody. The picture background is not included." />
-                <Button Content="Load" MinWidth="86" HorizontalContentAlignment="Center"
-                        Command="{Binding LoadThemeFileCommand}"
-                        ToolTip.Tip="Open a theme file somebody sent you. It fills these settings in so you can look at it - nothing is kept until you press Apply." />
-                <Button Content="Cancel" MinWidth="86" HorizontalContentAlignment="Center"
-                        Click="CancelButton_Click" />
-            </StackPanel>
-        </Grid>
+        </Border>
     </Grid>
 </Window>

@@ -11,6 +11,38 @@ namespace PokemonSim.Engine.Effects
     /// a substitute stops conditions aimed THROUGH it (Infiltrator slips
     /// past), never the user's own self-targeted state.
     /// </summary>
+    /// <summary>
+    /// §301. Hyper Beam, Giga Impact, Blast Burn, Frenzy Plant and Hydro
+    /// Cannon: the user spends its next turn recharging.
+    ///
+    /// AfterMove, which is the phase that answers "did this move go off" for
+    /// free - a miss, a Protect and a semi-invulnerable target all return
+    /// before it, so none of them costs a recharge. The damage test covers
+    /// the one case that reaches this phase without connecting: a target the
+    /// move had no effect on at all, which breaks out of the hit loop and
+    /// falls through. Damage a Substitute soaked still counts, because the
+    /// resolver adds it to the same total.
+    /// </summary>
+    public class RechargeEffect : BaseMoveEffect
+    {
+        public override MovePhase Phase => MovePhase.AfterMove;
+
+        public override void Apply(
+            BattleState state,
+            PokemonState attacker,
+            PokemonState defender,
+            MoveState move,
+            ref int damage,
+            ref bool cancelled)
+        {
+            if (cancelled || damage <= 0)
+                return;
+
+            attacker.MustRecharge = true;
+            attacker.RechargeMove = move;
+        }
+    }
+
     public class LeechSeedEffect : BaseMoveEffect
     {
         public override MovePhase Phase => MovePhase.AfterMove;

@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Foot_Tracker.ViewModels"
+             x:Class="ProTracker.Companion.Views.Pages.PvpDetailPage"
+             x:DataType="vm:PvpOpponentDetailViewModel">
+
+    <!-- §295. PvpOpponentDetailWindow (§276), stacked. -->
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,*">
+        <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+        <TextBlock Grid.Row="1" Text="{Binding RecordLine}" FontWeight="Bold" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+        <TextBlock Grid.Row="2" Text="{Binding FacedLine}" Opacity="0.8" TextWrapping="Wrap" Margin="0,2,0,10"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+        <Grid Grid.Row="3" ColumnDefinitions="*,90" Margin="0,0,0,4">
+            <Border Grid.Column="0" Classes="tableHeader"><TextBlock Text="Battle" /></Border>
+            <Border Grid.Column="1" Classes="tableHeader"><TextBlock Text="Result" /></Border>
+        </Grid>
+        <ScrollViewer Grid.Row="4" MaxHeight="220">
+            <ItemsControl ItemsSource="{Binding Battles}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PvpBattleRow">
+                        <Border Classes="row" Padding="0,8" Classes.selectedRow="{Binding IsSelected}"
+                                PointerPressed="BattleRow_PointerPressed">
+                            <Grid ColumnDefinitions="*,90">
+                                <TextBlock Grid.Column="0" Text="{Binding When}" Margin="6,0" VerticalAlignment="Center"
+                                           Foreground="{DynamicResource ThemeTextBrush}" />
+                                <Panel Grid.Column="1">
+                                    <TextBlock Text="Won" Foreground="#4CAF50" FontWeight="Bold" TextAlignment="Center" IsVisible="{Binding IsWin}" />
+                                    <TextBlock Text="Lost" Foreground="#E05252" FontWeight="Bold" TextAlignment="Center" IsVisible="{Binding IsLoss}" />
+                                    <TextBlock Text="-" Opacity="0.6" TextAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}"
+                                               IsVisible="{Binding IsUnknownResult}" />
+                                </Panel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <TextBlock Grid.Row="5" Text="What PRO printed during this battle" FontWeight="Bold" Margin="0,12,0,4"
+                   Foreground="{DynamicResource ThemeTextBrush}" IsVisible="{Binding HasSelectedBattle}" />
+        <Border Grid.Row="6" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="3" Padding="8"
+                IsVisible="{Binding HasSelectedBattle}">
+            <ScrollViewer DataContext="{Binding SelectedBattle}" x:DataType="vm:PvpBattleRow">
+                <StackPanel>
+                    <TextBlock Text="Nothing was captured for this battle - it was recorded before the battle log was kept."
+                               TextWrapping="Wrap" Opacity="0.7" Foreground="{DynamicResource ThemeTextBrush}" IsVisible="{Binding !HasLog}" />
+                    <ItemsControl ItemsSource="{Binding Log}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <TextBlock Text="{Binding}" TextWrapping="Wrap" FontSize="12" Margin="0,1"
+                                           Foreground="{DynamicResource ThemeTextBrush}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

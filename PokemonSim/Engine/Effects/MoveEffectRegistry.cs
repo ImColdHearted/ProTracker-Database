@@ -25,6 +25,10 @@ namespace PokemonSim.Engine.Effects
             Register("Spikes", () => new SpikesEffect());
             Register("ToxicSpikes", () => new ToxicSpikesEffect());
             Register("TwoTurn", () => new TwoTurnMoveEffect());
+
+            // §301: the mirror of TwoTurn - the turn is spent after the
+            // damage instead of before it.
+            Register("Recharge", () => new RechargeEffect());
             Register("RapidSpin", () => new RapidSpinEffect());
             Register("Defog", () => new DefogEffect());
             Register("StruggleRecoil", () => new StruggleRecoilEffect());
@@ -158,6 +162,62 @@ namespace PokemonSim.Engine.Effects
             Register("ShedTail", () => new ShedTailEffect());
             Register("ChillyReception", () => new ChillyReceptionEffect());
             Register("Drain75", () => new DrainEffect(0.75));
+
+            // ---- §303: the power-formula family. ----
+            Register("PowerIfNoItem", () => new PowerIfNoItemEffect());
+            Register("PowerIfTargetHurt", () => new PowerIfTargetHurtEffect());
+            Register("PowerIfHurtByTarget", () => new PowerIfHurtByTargetEffect());
+            Register("PowerIfMovingFirst", () => new PowerIfMovingFirstEffect());
+            Register("PowerIfMovingLast", () => new PowerIfMovingLastEffect());
+            Register("PowerIfTargetAsleep", () => new PowerIfTargetAsleepEffect());
+            Register("PowerOnElectricTerrain", () => new PowerOnElectricTerrainEffect());
+            Register("PowerFromTargetBoosts", () => new PowerFromTargetBoostsEffect());
+            Register("PowerFromSpeedRatio", () => new PowerFromSpeedRatioEffect());
+            Register("PowerFromUserHpBands", () => new PowerFromUserHpBandsEffect());
+            Register("PowerFromTargetWeight", () => new PowerFromTargetWeightEffect());
+            Register("PowerFromWeightRatio", () => new PowerFromWeightRatioEffect());
+
+            // ---- §304: the lock-ins, the counters and the leftovers. ----
+
+            // The multi-turn lock. Three numbers, one class: how few turns,
+            // how many, and whether running out confuses the user.
+            Register("LockIn2to3Confuse", () => new LockInEffect(2, 3, confuses: true));
+            Register("LockIn3", () => new LockInEffect(3, 3, confuses: false));
+            Register("LockIn5", () => new LockInEffect(5, 5, confuses: false));
+            Register("UproarWake", () => new UproarWakeEffect());
+
+            // The consecutive-use ramps.
+            Register("PowerFromFuryCutter", () => new PowerFromConsecutiveUsesEffect(doubles: true, maxSteps: 3));
+            Register("PowerFromEchoedVoice", () => new PowerFromConsecutiveUsesEffect(doubles: false, maxSteps: 5));
+            Register("PowerFromRollout", () => new PowerFromConsecutiveUsesEffect(doubles: true, maxSteps: 5, defenseCurlDoubles: true));
+            Register("DefenseCurl", () => new DefenseCurlEffect());
+            Register("Minimize", () => new MinimizeEffect());
+
+            // The counters §303 had to leave behind.
+            Register("PowerFromTimesAttacked", () => new PowerFromTimesAttackedEffect());
+            Register("PowerIfLastMoveFailed", () => new PowerIfLastMoveFailedEffect());
+            Register("PowerFromHitNumber", () => new PowerFromHitNumberEffect());
+            Register("PowerIfTargetSwitching", () => new PowerIfTargetSwitchingEffect());
+            Register("PowerFromHappiness", () => new PowerFromHappinessEffect(inverted: false));
+            Register("PowerFromLowHappiness", () => new PowerFromHappinessEffect(inverted: true));
+            Register("PowerIfAshGreninja", () => new PowerIfAshGreninjaEffect());
+            Register("BeatUp", () => new BeatUpEffect());
+            Register("PowerFromBeatUpAlly", () => new PowerFromBeatUpAllyEffect());
+
+            // The leftovers.
+            Register(CrashDamageEffect.Name, () => new CrashDamageEffect());
+            Register("SmackDown", () => new SmackDownEffect());
+            Register("HealBlock", () => new HealBlockEffect());
+            Register("CureTargetBurn", () => new CureTargetBurnEffect());
+            Register("GlaiveRush", () => new GlaiveRushEffect());
+            Register("Rage", () => new RageEffect());
+            Register("Charge", () => new ChargeEffect());
+            Register("Roost", () => new RoostEffect());
+            Register("IonDeluge", () => new IonDelugeEffect());
+            Register("SpectralThief", () => new SpectralThiefEffect());
+            Register("Wish", () => new WishEffect());
+            Register("RevivalBlessing", () => new RevivalBlessingEffect());
+            Register("UpperHandGate", () => new UpperHandGateEffect());
 
             // Honest failures - the premise is outside the Simulator.
             Register("FailNoItems", () => new FailEffect("But it failed! (Held items are not simulated.)"));

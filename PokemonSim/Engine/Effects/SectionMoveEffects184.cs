@@ -285,7 +285,7 @@ namespace PokemonSim.Engine.Effects
 
             state.Log.Write($"{attacker.Species} shed its tail to make a substitute!");
 
-            SwitchResolver.Resolve(state, player, next);
+            SwitchResolver.Resolve(state, player, next, slot: player.SlotOf(attacker));
 
             next.SubstituteHP = cost;
         }
@@ -317,7 +317,7 @@ namespace PokemonSim.Engine.Effects
             PokemonState? next = player.GetNextAvailablePokemon();
 
             if (next != null)
-                SwitchResolver.Resolve(state, player, next);
+                SwitchResolver.Resolve(state, player, next, slot: player.SlotOf(attacker));
         }
     }
 }

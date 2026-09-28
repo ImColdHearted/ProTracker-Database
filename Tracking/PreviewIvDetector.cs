@@ -1053,6 +1053,14 @@ namespace Foot_Tracker.Tracking
         /// junk - it can only be part of the real name. That single rule is
         /// what keeps a Porygon quest from counting a Porygon2.
         /// </summary>
+        /// <summary>§258. Gate 3 as a rule of its own, so the summary-card
+        /// route (WorldQuestCardReader) refuses the wrong species by exactly
+        /// the test the preview route uses - same slack, same letters-only
+        /// rule - rather than by a second reading of what "same species"
+        /// means.</summary>
+        internal static bool IsQuestSpecies(string? species, string questSpecies) =>
+            MatchesWord(species, questSpecies, SpeciesExtraSlack, SpeciesMissingSlack);
+
         internal static bool MatchesWord(string? text, string expected, int extraSlack, int missingSlack)
         {
             string wanted = Simplify(expected);

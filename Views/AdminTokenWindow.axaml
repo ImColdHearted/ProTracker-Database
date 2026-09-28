@@ -7,7 +7,8 @@
         Background="{DynamicResource ThemeBackgroundBrush}"
         CanResize="False">
 
-    <!-- §143/§153: changing the shared Events board needs an admin
+    <!-- §143/§153: an admin action on the events server (§253: the Admin
+         Console's, now that the Events board is gone) needs an admin
          credential. §153 made this a sign-in with two modes: a delegated
          admin login (username + password - the slow key derivation runs on
          this machine and only the derived verifier ever leaves it), or the

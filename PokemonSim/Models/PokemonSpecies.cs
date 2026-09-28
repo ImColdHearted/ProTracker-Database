@@ -13,6 +13,10 @@ namespace PokemonSim.Models
 
         public required List<MoveState> Learnset;
 
+        /// <summary>§303: kilograms. Low Kick, Grass Knot, Heavy Slam and
+        /// Heat Crash are all weight; zero means the dex row had none.</summary>
+        public double WeightKg;
+
         public List<Nature> PreferredNatures = new();
     }
 }

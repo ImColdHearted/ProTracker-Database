@@ -22,6 +22,19 @@ public sealed class EncounterCountRow
 
     public int RanFromCount { get; init; }
 
+    /// <summary>§279. The three counted columns, grouped. Formatted here
+    /// rather than with a StringFormat on each binding, for the reason
+    /// PvpOpponentDisplayItem already records: formatting belongs to the
+    /// display item, done once where the list is built, not repeated in the
+    /// view. Count is the one that reaches five figures on a real hunt and is
+    /// the reason for the section; the other two follow it so a row does not
+    /// group one column and run the next two together.</summary>
+    public string CountDisplay => DisplayNumber.Count(Count);
+
+    public string CaughtDisplay => DisplayNumber.Count(CaughtCount);
+
+    public string RanFromDisplay => DisplayNumber.Count(RanFromCount);
+
     /// <summary>When this species was last seen, or null if the hunt predates
     /// §123 recording it - an old restored session has counts but no
     /// timestamps, and that reads as a blank cell rather than a wrong one.</summary>

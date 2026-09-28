@@ -24,7 +24,10 @@ namespace PokemonSim.Engine.Effects
 
             string ability = Abilities.AbilityFactory.Normalize(attacker.AbilityId);
 
+            // §304: heal block stops Rest outright - it is the biggest
+            // heal in the game and the block does not make exceptions.
             if (attacker.CurrentHP >= attacker.MaxHP ||
+                attacker.HealBlockTurns > 0 ||
                 attacker.Status == StatusCondition.Sleep ||
                 ability == "insomnia" || ability == "vitalspirit" || ability == "purifyingsalt")
             {

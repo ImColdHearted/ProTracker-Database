@@ -23,7 +23,7 @@ namespace Foot_Tracker.Services;
 //
 // The Worker changes that because a secret can live there. The client knows
 // only the server's own address, which is not a secret and is already in the
-// config file the events board reads; the webhook URL - which IS a
+// config file EventsSyncService reads; the webhook URL - which IS a
 // credential, and a permanent write one - stays a Cloudflare secret. Nothing
 // shipped to a player can post into the channel; it can only ask the Worker
 // to, and the Worker caps how often.
@@ -43,12 +43,14 @@ internal static class BugReportUploadService
 
     // Kept in step with REPORT_MAX_TOTAL_BYTES in worker.js. Checked here as
     // well as there so an oversized bundle costs nothing rather than a
-    // pointless upload the server was always going to refuse.
-    private const long MaxTotalBytes = 8L * 1024 * 1024;
+    // pointless upload the server was always going to refuse. §391:
+    // internal, so the log copy can be cut to what the bundle has left.
+    internal const long MaxTotalBytes = 8L * 1024 * 1024;
 
     // Kept in step with REPORT_MAX_FILE_BYTES in worker.js, for the same
-    // reason as the total above.
-    private const long MaxFileBytes = 4L * 1024 * 1024;
+    // reason as the total above. §391: internal, so the log copy can be cut
+    // to fit it before it is ever offered.
+    internal const long MaxFileBytes = 4L * 1024 * 1024;
 
     // §229. Kept in step with REPORT_MIN_INTERVAL_MINUTES in worker.js. The
     // server is what actually enforces this - a number in a client anyone
@@ -61,10 +63,15 @@ internal static class BugReportUploadService
         EventsSyncService.LocalDataFolder,
         "last-report-utc.txt");
 
-    /// <summary>Never throws. False means the caller should show its usual
-    /// "the files are in your Downloads folder" message, which is what it
-    /// showed before any of this existed.</summary>
-    internal static async Task<bool> TrySendAsync(
+    /// <summary>Never throws. Null means nothing was sent and the caller
+    /// should show its usual "the files are in your Downloads folder"
+    /// message, which is what it showed before any of this existed. §391:
+    /// otherwise the paths that actually went - a file skipped for its size
+    /// is not among them, so the caller neither deletes it nor tells the
+    /// player it arrived. A report used to say "sent, cleaned up" of a log
+    /// that was over the cap, dropped here, and then deleted from Downloads
+    /// with the rest.</summary>
+    internal static async Task<IReadOnlyList<string>?> TrySendAsync(
         IReadOnlyList<string> paths,
         string note,
         CancellationToken cancellationToken = default)
@@ -72,13 +79,13 @@ internal static class BugReportUploadService
         try
         {
             if (!EventsSyncService.IsOnline)
-                return false;
+                return null;
 
             // Owned by the request below, which disposes it.
             var content = new MultipartFormDataContent();
 
             long total = 0;
-            int added = 0;
+            var sent = new List<string>();
 
             foreach (string path in paths)
             {
@@ -111,13 +118,13 @@ internal static class BugReportUploadService
                 content.Add(FilePart(bytes, Path.GetFileName(path)));
 
                 total += length;
-                added++;
+                sent.Add(path);
             }
 
-            if (added == 0)
+            if (sent.Count == 0)
             {
                 content.Dispose();
-                return false;
+                return null;
             }
 
             content.Add(TextPart(note ?? string.Empty, "note"));
@@ -142,7 +149,7 @@ internal static class BugReportUploadService
             if (response.IsSuccessStatusCode)
             {
                 MarkSent(); // §229
-                return true;
+                return sent;
             }
 
             // The status is the useful half - 503 means the webhook is not
@@ -177,12 +184,12 @@ internal static class BugReportUploadService
                 (int)response.StatusCode,
                 reason);
 
-            return false;
+            return null;
         }
         catch (Exception ex)
         {
             Log.Warning(ex, "Report upload failed; the files stay in Downloads.");
-            return false;
+            return null;
         }
     }
 

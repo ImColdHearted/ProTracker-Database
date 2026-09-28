@@ -6,10 +6,10 @@ namespace Foot_Tracker.Services
     /// Turns a PascalCase name into a human-readable label by inserting a
     /// space before each internal capital letter - "CommunityHunting"
     /// becomes "Community Hunting", "Giveaway" stays "Giveaway" (only one
-    /// capital, nothing to split). Originally written for GuildEventType
-    /// (see CreateEventWindow's Type ComboBox and EventsViewModel's card
-    /// TypeLabel); also used for the Boss Database's boss list (see
-    /// BossListViewModel) - boss IDs are plain filename-derived strings
+    /// capital, nothing to split). Originally written for the Events board's
+    /// event-type enum (gone in §253); used for the Boss Database's boss
+    /// list (see BossListViewModel) and the simulator's boss opponents -
+    /// boss IDs are plain filename-derived strings
     /// rather than enum members, but the same PascalCase-splitting still
     /// applies. Not tied to any one enum or source, so it's free to reuse
     /// again wherever a PascalCase name needs the same treatment.

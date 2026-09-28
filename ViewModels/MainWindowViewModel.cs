@@ -33,11 +33,17 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
     private readonly HuntSession huntSession = new();
 
     // §101 Admin Client isolation: the second, purely in-memory session every
-    // hunting mutation routes to while AdminModeService.IsActive - see the
-    // Session property below and MIGRATION_GUIDE.md §101. Never persisted,
+    // hunting mutation routes to while IsolatedSession.Reason is Admin - see
+    // the Session property below and MIGRATION_GUIDE.md §101/§249. Never persisted,
     // never merged into the real session; leaving admin mode simply routes
     // back to huntSession, which nothing modified in the meantime.
     private readonly HuntSession adminHuntSession = new();
+
+    // §250 World Quest isolation: the third session, routed to while
+    // IsolatedSession.Reason is WorldQuest. Unlike the admin one it IS
+    // persisted - per client, per quest - by PersistSession below. The quest
+    // species is forced as its only target every time it is loaded.
+    private readonly HuntSession worldQuestHuntSession = new();
     private readonly DispatcherTimer huntTimer = new() { Interval = TimeSpan.FromSeconds(1) };
 
     // §150: while a hunt runs and an events server is configured, one
@@ -56,6 +62,15 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
     // the admin publishes should already know the list by the time its user
     // presses Play.
     private readonly DispatcherTimer activeEventsTimer = new() { Interval = TimeSpan.FromMinutes(5) };
+
+    // §252: the World Quest menu item changes colour while a quest is
+    // running and the mode is off. This timer asks the events server every
+    // five minutes which quest that is - a quest lasts a day at most, so
+    // five minutes late is soon enough - and the answer is kept, so leaving
+    // the mode re-colours the item without another fetch.
+    private readonly DispatcherTimer worldQuestPollTimer = new() { Interval = TimeSpan.FromMinutes(5) };
+    private WorldQuest? runningWorldQuest;
+
     private readonly EncounterTracker encounterTracker = new();
     private readonly BossCooldownTracker bossCooldownTracker = new();
     private readonly PvpTracker pvpTracker = new();
@@ -156,8 +171,45 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
     /// goes through (§101): the isolated in-memory admin session while Admin
     /// Client mode is active, the real per-client session otherwise. The
     /// persistence calls below deliberately DON'T use this - they always
-    /// name huntSession explicitly, so admin activity can never be saved.</summary>
-    private HuntSession Session => AdminModeService.IsActive ? adminHuntSession : huntSession;
+    /// name huntSession explicitly, so admin activity can never be saved.
+    ///
+    /// §249: routed on IsolatedSession.Reason rather than a bare "is admin"
+    /// check, because this is the one place that has to know WHICH isolated
+    /// session is running. A second reason adds a second arm here and
+    /// nothing anywhere else.</summary>
+    private HuntSession Session => IsolatedSession.Reason switch
+    {
+        IsolationReason.Admin => adminHuntSession,
+        IsolationReason.WorldQuest => worldQuestHuntSession,
+        _ => huntSession,
+    };
+
+    /// <summary>§249/§250. The one place the ACTIVE session is written back
+    /// after a hunting mutation. Ten call sites used to repeat "if not admin,
+    /// save huntSession"; §249 folded them into one method so that the edit
+    /// a second, persisted isolated session needed could be made once. This
+    /// is that edit.
+    ///
+    /// Each session goes to its own file, and only the session that was
+    /// actually mutated is written: the normal one to the client's session
+    /// file, the World Quest one to its per-client, per-quest file, the admin
+    /// one nowhere - it is in-memory by design (§101). Writing the normal
+    /// session while an isolated one is active would be harmless in bytes
+    /// but wrong in principle, and this is the line that keeps isolated
+    /// activity out of the normal client's file.</summary>
+    private void PersistSession()
+    {
+        switch (IsolatedSession.Reason)
+        {
+            case IsolationReason.None:
+                SessionPersistenceService.Save(huntSession);
+                break;
+
+            case IsolationReason.WorldQuest when WorldQuestMode.Current is { } quest:
+                SessionPersistenceService.SaveWorldQuest(worldQuestHuntSession, quest.MessageId);
+                break;
+        }
+    }
 
     // §101 watchdog - see WatchdogTickAsync. One timer, one recovery at a
     // time, bounded per hour, and never a second detector loop: recovery
@@ -294,28 +346,36 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
 
     [ObservableProperty] private string totalEncounters = "0";
     [ObservableProperty] private string targetedEncountersFound = "0";
+    // §364: the two companions to the stat above - of the targets found, how
+    // many were caught and how many were fled from. Strings like every other
+    // stat here because DisplayNumber.Count formats them.
+    [ObservableProperty] private string targetedPokemonCaught = "0";
+    [ObservableProperty] private string targetedPokemonFled = "0";
     [ObservableProperty] private string timeHunting = "00:00:00";
     [ObservableProperty] private string sinceShiny = "0";
     [ObservableProperty] private string sinceForm = "0";
-    [ObservableProperty] private string catchRate = "0.00%";
     [ObservableProperty] private string successfulCatches = "0";
     [ObservableProperty] private string failedCatches = "0";
 
     // Replaces the old single CurrentlyHuntingSprite/CurrentlyHuntedLabel pair -
     // up to 4 simultaneous targets now, shown side by side. TargetSpriteSize
-    // shrinks once there are more than 2, per the "keep the same size for 2, get
-    // smaller for 3-4" request - bound directly by each Image in MainWindow.axaml
-    // rather than needing a converter. TargetsPanelMaxWidth forces exactly 2 per
-    // row (a genuine 2x2 grid) specifically at 4 targets, rather than however a
-    // single wide row happens to wrap.
+    // shrinks as targets are added, per the "keep the same size for 2, get
+    // smaller for 3-4" request - bound directly by each Image in
+    // MainWindow.axaml rather than needing a converter.
+    //
+    // §367: TargetsPanelMaxWidth is gone. It existed to cap the wrap panel at
+    // exactly two items across so 4 targets formed a 2x2 grid; the ask now is
+    // four in one row, which is what the panel does on its own once nothing
+    // caps it. See UpdateTrackerDisplay for the sizes and where they come
+    // from.
     public ObservableCollection<TargetDisplayItem> CurrentTargets { get; } = new();
     [ObservableProperty] private double targetSpriteSize = 90;
-    // Wider than the sprite itself - a bare TargetSpriteSize-width label wraps
-    // longer names ("Charmeleon") onto two lines even with plenty of vertical
-    // room, since the sprite box (e.g. 50px at 4 targets) is narrower than most
-    // Pokemon names need to render on one line.
-    [ObservableProperty] private double targetLabelMaxWidth = 90;
-    [ObservableProperty] private double targetsPanelMaxWidth = 9999;
+    // The width of a whole card - sprite, name and type icons. At one or two
+    // targets it is wider than the sprite, because a bare sprite-width label
+    // wraps longer names ("Charmeleon") onto two lines even with plenty of
+    // vertical room. At three and four there is no width to spare for that -
+    // see UpdateTrackerDisplay.
+    [ObservableProperty] private double targetLabelMaxWidth = 110;
 
     [ObservableProperty] private Bitmap? currentEncounterSprite;
     [ObservableProperty] private Bitmap? previousEncounterSprite;
@@ -378,8 +438,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
 
     // §137: the Current Event selector (AvailableEvents/SelectedEvent, a
     // persisted name and nothing more) was removed from the stats panel with
-    // its state here. EventSettingsService and Models/EventSettings.cs are
-    // now unreferenced and can be deleted from the project.
+    // its state here. §253 deleted the EventSettingsService and
+    // Models/EventSettings.cs it left behind, with the Events board.
 
     [ObservableProperty] private bool isRunning;
     [ObservableProperty] private string? statusMessage;
@@ -424,11 +484,12 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
     [ObservableProperty] private bool showTimeHunting = true;
     [ObservableProperty] private bool showTotalEncounters = true;
     [ObservableProperty] private bool showTargetedEncountersFound = true;
+    [ObservableProperty] private bool showTargetedPokemonCaught = true;
+    [ObservableProperty] private bool showTargetedPokemonFled = true;
     [ObservableProperty] private bool showSinceShiny = true;
     [ObservableProperty] private bool showSinceForm = true;
     [ObservableProperty] private bool showSuccessfulCatches = true;
     [ObservableProperty] private bool showPokemonBrokenFree = true;
-    [ObservableProperty] private bool showCatchRate = true;
 
     // Master switch for the whole stats panel (see UiPreferences.StatsPanelHidden
     // and ExcludeStatsWindow's own master checkbox) - distinct from the eight
@@ -438,6 +499,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
     // an empty docked slot. Named the "shown" way (ShowStatsPanel, matching
     // the ShowXxx naming above) rather than as a StatsPanelHidden flag
     // directly, so every IsVisible binding here reads the same direction.
+    // §256: hiding the panel hides Report a Problem with it - the menu bar's
+    // fallback copy (§136) is gone, so nothing else reads this for it.
     [ObservableProperty] private bool showStatsPanel = true;
 
     // Which sound (see SoundNotificationService.SoundCatalog - "None" plus
@@ -458,6 +521,12 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
     // nothing binds to them; they only travel to PlaySound and WarmUp.
     private int sinceFormSoundVolume = SoundNotificationService.MaxVolumePercent;
     private int sinceShinySoundVolume = SoundNotificationService.MaxVolumePercent;
+
+    // §389: where they play - the device pinned in Sound Settings, or null
+    // for the system default. Same file, same moments, same shape as the
+    // volumes; travels to PlaySound (which checks the device is present)
+    // and to WarmUp (which lists the devices at hunt start).
+    private SoundOutputDevice? soundOutputDevice;
 
     // Unlike most other [ObservableProperty] pairs here, these two don't
     // persist through their own partial On...Changed hook - Sound Settings
@@ -546,6 +615,17 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         sinceShinySound = uiPreferences.SinceShinySound;
         sinceFormSoundVolume = uiPreferences.SinceFormSoundVolume;
         sinceShinySoundVolume = uiPreferences.SinceShinySoundVolume;
+        soundOutputDevice = SoundOutputDevice.Parse(uiPreferences.SoundOutputDevice, uiPreferences.SoundOutputDeviceLabel);
+
+        LoadTargetSpriteSkins();
+
+        // §278: which way the encounter table is kept, from this client's own
+        // preferences. TrackerSettings is what the running app reads; the
+        // preference file is where the answer lives.
+        TrackerSettings.Apply(uiPreferences.PerMapEncounterTable);
+        TrackerSettings.ApplyLevelSharing(uiPreferences.ShareLevelData);
+        MapEncounterService.CurrentMapChanged += OnMapEncountersChanged;
+        TrackerSettings.Changed += OnMapEncountersChanged;
 
         // §135: the saved box (if any) reaches the locator with the rest
         // of this client's preferences, here and again on every client
@@ -703,7 +783,15 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
                 // §101: leaving admin mode reopens the lifetime-stats gate -
                 // flush any normal-mode seconds that were still pending when
                 // admin mode began (see FlushPendingLifetimeTime's own gate).
-                if (!AdminModeService.IsActive)
+                //
+                // §249: IsolatedSession, deliberately, even though this is
+                // the ADMIN change handler. The flush below refuses while
+                // ANY isolation is active; if a second reason were still
+                // holding the gate shut when admin mode ended, flushing here
+                // would zero the pending counter against an unchanged file
+                // and silently drop the seconds. Every gate on this path
+                // reads the same predicate, so they cannot disagree.
+                if (!IsolatedSession.IsActive)
                     FlushPendingLifetimeTime();
 
                 IsRunning = false;
@@ -736,6 +824,12 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
                 ? $"Tracker bound to client {clientNumber} (any other window on it will step down within a few seconds)."
                 : "Could not bind client " + clientNumber + " - see the main window's status line for why.";
 
+        // §298: and the World Quest one. The Admin Console can end a quest
+        // for everyone; the admin who ends the quest they are hunting comes
+        // out of the mode through the same path the menu item uses, rather
+        // than the console reaching into a session it cannot see.
+        WorldQuestMode.LeaveHandler = LeaveWorldQuestAsync;
+
         watchdogTimer.Tick += (_, _) => _ = WatchdogTickAsync();
         watchdogTimer.Start();
 
@@ -745,9 +839,32 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         // import refused / why is nothing being saved" is answerable from
         // the log the tester already sends.
         AdminModeService.LogStartupState();
+        WorldQuestMode.LogStartupState();
+        RefreshWorldQuestUi();
 
         LoadPreviousSession();
         UpdateTrackerDisplay();
+
+        // §251: the quest view model's status line is this window's while
+        // the mode is on. The stats panel has no room for a line of its own,
+        // and the toolbar's is where every other message already goes - so
+        // "Added 120 IVs by hand" lands where "Encountered Rattata" does.
+        Quest.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(WorldQuestViewModel.StatusMessage) &&
+                IsWorldQuestPanel &&
+                !string.IsNullOrWhiteSpace(Quest.StatusMessage))
+            {
+                StatusMessage = Quest.StatusMessage;
+            }
+        };
+
+        // §251: the mode restored from its marker (§250) restores its panel
+        // too. Fetched by the marker's id, not by "whatever is running now" -
+        // see WorldQuestViewModel.StartAsync. Fire-and-forget: StartAsync
+        // catches its own failures and says so on the status line.
+        if (WorldQuestMode.IsActive)
+            _ = Quest.StartAsync();
 
         // §207: one read now, then one every five minutes for the life of
         // the window. No IsOnline gate: RefreshAsync is quiet, does nothing
@@ -757,6 +874,20 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         activeEventsTimer.Tick += (_, _) => _ = ActiveEventService.RefreshAsync();
         activeEventsTimer.Start();
         _ = ActiveEventService.RefreshAsync();
+
+        // §252: the same shape for the running World Quest - one read now,
+        // one every five minutes. RefreshWorldQuestLiveAsync is quiet, does
+        // nothing without an events server, and keeps its last answer when
+        // the server cannot be reached.
+        worldQuestPollTimer.Tick += (_, _) => _ = RefreshWorldQuestLiveAsync();
+        worldQuestPollTimer.Start();
+        _ = RefreshWorldQuestLiveAsync();
+
+        // §267: News rides the same timer rather than starting a third one.
+        // Both ask the same events server, both are quiet when it is down,
+        // and an announcement is not more urgent than five minutes.
+        worldQuestPollTimer.Tick += (_, _) => _ = RefreshNewsLiveAsync();
+        _ = RefreshNewsLiveAsync();
 
         autoClientDetectionTimer.Tick += (_, _) => TryAutoAssignClient();
         autoClientDetectionTimer.Start();
@@ -968,8 +1099,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         {
             Session.TargetPokemons = pendingTargets;
 
-            if (!AdminModeService.IsActive)
-                SessionPersistenceService.Save(huntSession);
+            PersistSession();
         }
 
         Session.Start();
@@ -996,14 +1126,16 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         // moment a hunt starts, so the session's first shiny/form alert never
         // pays first-touch disk latency at the exact moment it matters.
         // §152: with their volumes, so the quieter copies are ready too.
-        SoundNotificationService.WarmUp((SinceShinySound, sinceShinySoundVolume), (SinceFormSound, sinceFormSoundVolume));
+        // §389: and the output device, so it is listed and checked now.
+        SoundNotificationService.WarmUp(soundOutputDevice, (SinceShinySound, sinceShinySoundVolume), (SinceFormSound, sinceFormSoundVolume));
 
         // §146: which sounds this hunt will use and whose preference file
         // they came from - the line that was missing when forms went by in
         // silence and the log could not say whether a sound was selected.
         Log.Information(
-            "Sound alerts for this hunt: form={FormSound} at {FormVolume}%, shiny={ShinySound} at {ShinyVolume}% (client {Client} preferences)",
-            SinceFormSound, sinceFormSoundVolume, SinceShinySound, sinceShinySoundVolume, SessionPersistenceService.AppearanceClientNumber);
+            "Sound alerts for this hunt: form={FormSound} at {FormVolume}%, shiny={ShinySound} at {ShinyVolume}%, output={Output} (client {Client} preferences)",
+            SinceFormSound, sinceFormSoundVolume, SinceShinySound, sinceShinySoundVolume,
+            soundOutputDevice?.Label ?? "system default", SessionPersistenceService.AppearanceClientNumber);
 
         // Covers the edge case where Play is pressed while a boss fight is
         // already in progress (e.g. the user started hunting mid-battle) -
@@ -1054,10 +1186,13 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
 
         await encounterTracker.StopAsync();
 
-        if (!AdminModeService.IsActive)
-            SessionPersistenceService.Save(huntSession);
+        PersistSession();
         SessionEncounterHistoryService.FlushToDisk();
         FlushPendingLifetimeTime();
+
+        // §429: a stopped hunt's last ranges go now rather than on the
+        // timer - fire and forget, the service keeps what does not go.
+        _ = LevelShareService.FlushAsync();
 
         IsRunning = false;
         UpdateTrackerDisplay();
@@ -1168,11 +1303,29 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
 
         // §101: in Admin Client mode, Reset means "reset the DIAGNOSTIC
         // session" - the normal client's counts, file, and history are not
-        // in play and stay exactly as they were.
-        if (AdminModeService.IsActive)
+        // in play and stay exactly as they were. §249: the condition is
+        // "any isolated session" and the target is Session, which the router
+        // already resolves to the right one - so a second isolated session
+        // resets itself here without this block learning its name.
+        if (IsolatedSession.IsActive)
         {
-            adminHuntSession.Reset();
-            StatusMessage = "Admin diagnostic session reset. Normal hunting data untouched.";
+            Session.Reset();
+
+            if (IsolatedSession.Reason == IsolationReason.WorldQuest && WorldQuestMode.Current is { } quest)
+            {
+                // §250: unlike the admin session this one has a file, so
+                // Reset removes it the way the normal branch removes the
+                // normal one - and HuntSession.Reset clears the targets, so
+                // the quest species is forced straight back.
+                SessionPersistenceService.DeleteWorldQuest(quest.MessageId);
+                worldQuestHuntSession.TargetPokemons = new List<string> { quest.Pokemon };
+                TargetPokemonInput = quest.Pokemon;
+                StatusMessage = "World Quest session reset. Normal hunting data untouched.";
+            }
+            else
+            {
+                StatusMessage = "Admin diagnostic session reset. Normal hunting data untouched.";
+            }
         }
         else
         {
@@ -1195,7 +1348,442 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         StopCommand.NotifyCanExecuteChanged();
     }
 
+    // ---- §250 World Quest mode ----
+
+    /// <summary>§251. The quest half of the stats panel: the figures and the
+    /// three ways of counting a catch that were the World Quest window's
+    /// until §251 folded it in here. One instance for the life of the
+    /// window - started on the way into the mode, stopped on the way out,
+    /// disposed with this view model.</summary>
+    public WorldQuestViewModel Quest { get; } = new();
+
+    // §254: the World Quest menu item reads "World Quest" and nothing else.
+    // §250 gave it a bound header - "Start World Quest Hunting" / "Leave
+    // World Quest Hunting" - so one item could say which of the two it would
+    // do; the answer was to drop the words. The state lives in the colour
+    // (§252) and the tooltip (WorldQuestMenuTip) instead, and the title bar
+    // and the stats panel already say when the mode is on.
+
+    /// <summary>§251. True while the stats panel shows the quest's figures
+    /// and controls in place of the hunt's stats and Report a Problem. It IS
+    /// WorldQuestMode.IsActive, mirrored into a property the view can bind
+    /// and refreshed at every transition by RefreshWorldQuestUi.
+    ///
+    /// §256: Report a Problem has one home now, the foot of the stats panel,
+    /// visible there outside this mode (the button binds !IsWorldQuestPanel
+    /// inside the panel's own ShowStatsPanel). The menu bar's fallback copy
+    /// and the ReportProblemInMenu rule that placed it (§136, §251, §255)
+    /// are gone: hiding the panel, or entering the mode, hides the button,
+    /// and a player who wants it shows the panel or leaves the mode.</summary>
+    [ObservableProperty] private bool isWorldQuestPanel;
+
+    private void RefreshWorldQuestUi()
+    {
+        IsWorldQuestPanel = WorldQuestMode.IsActive;
+
+        // §252: the colour follows the mode as much as the quest - off while
+        // hunting it, back the moment the mode is left with the quest still
+        // running. §254: so does the tooltip.
+        UpdateWorldQuestLive();
+    }
+
+    /// <summary>§252. True while a World Quest is running AND the mode is
+    /// off: the World Quest menu item wears its colour (red on a light menu,
+    /// blue on a dark one - ThemeManager.WorldQuestLiveBrushKey) so a quest
+    /// that began while the player was hunting something else is noticed
+    /// without a window opening on them. A steady colour, not a flash: it is
+    /// a state the player can act on any time in the next day, not an alarm.</summary>
+    [ObservableProperty] private bool worldQuestLive;
+
+    /// <summary>§252, §254. What the World Quest menu item says on hover,
+    /// now that its label says nothing but the name: in the mode, that it is
+    /// on and a click leaves it; with a quest running, which species, how
+    /// long ago it started - the number the late-entry warning in
+    /// ToggleWorldQuest is about - and that a click hunts it; otherwise that
+    /// nothing is running and what the colour will mean when it comes.</summary>
+    [ObservableProperty] private string worldQuestMenuTip = "No World Quest is running right now.";
+
+    /// <summary>§252. A quest ends the moment the community goal is met, and
+    /// the tracker cannot see that happen - it only knows when the quest
+    /// began. This far in, a warning is due before a session is started for
+    /// a quest that may already be over.</summary>
+    private static readonly TimeSpan LateEntryWarningAge = TimeSpan.FromHours(10);
+
+    /// <summary>§252. One poll. Quiet on failure - it repeats every five
+    /// minutes for the life of the window, and a server that is down is not
+    /// news - and the last answer stands until the next one.</summary>
+    private async Task RefreshWorldQuestLiveAsync()
+    {
+        if (!EventsSyncService.IsOnline)
+            return;
+
+        WorldQuest? mine = null;
+
+        try
+        {
+            // §298: the same fetch answers both questions - which quest is
+            // running (the menu colour) and what has become of the one this
+            // tracker is hunting, if any. A quest an admin ended is over for
+            // the player in it too, and they are the last person who should
+            // find out by noticing their count stopped moving.
+            (runningWorldQuest, mine) =
+                await WorldQuestService.FetchActiveAndAsync(WorldQuestMode.Current?.MessageId);
+        }
+        catch (Exception ex)
+        {
+            Log.Debug(ex, "World Quest poll: the running quest could not be fetched");
+            return;
+        }
+
+        if (mine is { EndedUtc: not null })
+            Quest.NoteEnded(mine);
+
+        UpdateWorldQuestLive();
+    }
+
+    /// <summary>§252. Recomputes the colour from the last poll and the mode.
+    /// Called by the poll and by every mode transition.</summary>
+    private void UpdateWorldQuestLive()
+    {
+        WorldQuest? quest = runningWorldQuest;
+
+        // The polls are five minutes apart; a quest whose derived end has
+        // passed in between is not running, whatever the last answer said.
+        if (quest?.EndsUtc is { } ends && ends <= DateTime.UtcNow)
+            quest = null;
+
+        // §267: and a quest the player has already been into stops colouring
+        // the item for good. §252's rule put the colour BACK the moment the
+        // mode was left with the quest still running, which is right for a
+        // quest never entered and nagging for one already hunted - the item
+        // had said what it had to say the first time.
+        bool live = quest is not null
+            && !WorldQuestMode.IsActive
+            && !FirstRunNoticeService.HasSeen(FirstRunNoticeService.WorldQuestEntered(quest.MessageId));
+
+        WorldQuestLive = live;
+
+        // §254: three states, one sentence each - the label no longer says
+        // which click this is, so the hover does.
+        if (WorldQuestMode.Current is { } on)
+        {
+            WorldQuestMenuTip = $"World Quest hunting is on for {on.Pokemon} - click to leave it. Your normal session is paused until you do.";
+        }
+        else if (live)
+        {
+            WorldQuestMenuTip = $"A World Quest for {quest!.Pokemon} is running - it started {FormatAge(DateTime.UtcNow - quest.StartedUtc)} ago. Click to hunt it. It ends early if the community goal is met.";
+        }
+        else
+        {
+            WorldQuestMenuTip = runningWorldQuest is null
+                ? "No World Quest is running right now. This turns red or blue when one is - click it then to hunt the quest."
+                : $"A World Quest for {runningWorldQuest.Pokemon} is running - you have already hunted it, so this is not highlighted. Click to go back in.";
+        }
+    }
+
+    /// <summary>§267. True while an announcement posted in the last day has
+    /// not been opened: the News menu item wears yellow
+    /// (ThemeManager.NewsLiveBrushKey) until the player reads it, or until the
+    /// post is a day old - whichever comes first. A post nobody opened is not
+    /// news forever, and a post that WAS opened stops being news at once.</summary>
+    [ObservableProperty] private bool newsLive;
+
+    [ObservableProperty] private string newsMenuTip = "PRO's announcements.";
+
+    // ============================================================
+    // §369. THE UPDATE MENU ITEM.
+    // ============================================================
+    //
+    // Unlike World Quest and News, which are always in the bar and change
+    // colour, this item is ABSENT until there is a newer build. A permanent
+    // "Check for updates" that answers no nine times out of ten teaches
+    // people not to look at it; an item that is only ever there when it
+    // means something cannot.
+    //
+    // The view model holds the answer and formats the words; the check
+    // itself runs in MainWindow.axaml.cs on Opened, and the press opens the
+    // window that does the work. Nothing here downloads anything.
+
+    /// <summary>True once a newer build has been found for this platform.
+    /// Drives both the item's visibility and its green (see
+    /// ThemeManager.UpdateAvailableBrushKey).</summary>
+    [ObservableProperty] private bool updateAvailable;
+
+    /// <summary>What the bar says. Carries the version, so the answer to
+    /// "which update" is visible without opening anything.</summary>
+    [ObservableProperty] private string updateMenuHeader = "Update";
+
+    [ObservableProperty] private string updateMenuTip = string.Empty;
+
+    /// <summary>The update the menu item is offering, held for the window
+    /// the click opens. Null whenever UpdateAvailable is false.</summary>
+    public UpdateService.AvailableUpdate? PendingUpdate { get; private set; }
+
+    /// <summary>§369. Called with whatever the startup check found - an
+    /// update, or null. Null is the ordinary case and clears everything,
+    /// so a later check that finds nothing takes the item away again rather
+    /// than leaving a stale offer in the bar.</summary>
+    public void OfferUpdate(UpdateService.AvailableUpdate? update)
+    {
+        PendingUpdate = update;
+
+        if (update is null)
+        {
+            UpdateAvailable = false;
+            UpdateMenuHeader = "Update";
+            UpdateMenuTip = string.Empty;
+            return;
+        }
+
+        UpdateAvailable = true;
+        UpdateMenuHeader = "Update " + update.Version;
+
+        UpdateMenuTip =
+            $"Version {update.Version} is out - you are on {update.CurrentVersion}. " +
+            "Click to see what changed and install it." +
+            (string.IsNullOrWhiteSpace(update.Notes) ? string.Empty : "\n\n" + update.Notes);
+    }
+
+    /// <summary>§267. How long an unread announcement keeps the menu item
+    /// lit.</summary>
+    private static readonly TimeSpan NewsHighlightAge = TimeSpan.FromHours(24);
+
+    /// <summary>The newest announcement the last poll saw, or null.</summary>
+    private Announcement? newestAnnouncement;
+
+    /// <summary>§267. One poll, the same shape as the World Quest one: quiet
+    /// on failure, nothing without an events server, last answer stands.</summary>
+    private async Task RefreshNewsLiveAsync()
+    {
+        if (!EventsSyncService.IsOnline)
+            return;
+
+        try
+        {
+            IReadOnlyList<Announcement> posts = await AnnouncementsService.FetchAsync();
+
+            newestAnnouncement = posts
+                .Where(p => p.Published is not null)
+                .OrderByDescending(p => p.Published!.Value)
+                .FirstOrDefault();
+        }
+        catch (Exception ex)
+        {
+            Log.Debug(ex, "News poll: the announcements could not be fetched");
+            return;
+        }
+
+        UpdateNewsLive();
+    }
+
+    /// <summary>§267. Recomputes the News colour from the last poll and what
+    /// has been read. Called by the poll, and again the moment the window is
+    /// opened.</summary>
+    private void UpdateNewsLive()
+    {
+        Announcement? post = newestAnnouncement;
+
+        if (post?.Published is not { } published)
+        {
+            NewsLive = false;
+            NewsMenuTip = "PRO's announcements.";
+            return;
+        }
+
+        TimeSpan age = DateTimeOffset.UtcNow - published.ToUniversalTime();
+
+        bool read = FirstRunNoticeService.HasSeen(FirstRunNoticeService.NewsRead(post.Id));
+        bool live = !read && age >= TimeSpan.Zero && age < NewsHighlightAge;
+
+        NewsLive = live;
+
+        NewsMenuTip = live
+            ? $"A new announcement from {post.Title}, {FormatAge(age)} ago - click to read it."
+            : read
+                ? "PRO's announcements. You have read the latest one."
+                : "PRO's announcements. Nothing new in the last day.";
+    }
+
+    /// <summary>§267. Called when the News window is opened: the newest post
+    /// is read, so the highlight goes now rather than waiting out the day.
+    /// Marking the NEWEST one is what the highlight is about - it lights for
+    /// the newest unread post, so that is the one opening the window
+    /// clears.</summary>
+    public void MarkNewsRead()
+    {
+        if (newestAnnouncement is { } post)
+            FirstRunNoticeService.MarkSeen(FirstRunNoticeService.NewsRead(post.Id));
+
+        UpdateNewsLive();
+    }
+
+    /// <summary>§252. "3h 12m", or "45m" inside the first hour.</summary>
+    private static string FormatAge(TimeSpan age)
+    {
+        if (age < TimeSpan.Zero)
+            age = TimeSpan.Zero;
+
+        int hours = (int)age.TotalHours;
+
+        return hours > 0 ? $"{hours}h {age.Minutes}m" : $"{age.Minutes}m";
+    }
+
+    /// <summary>
+    /// §250. Enters or leaves World Quest mode: a separate hunting session
+    /// for the running quest, with the quest species forced as the target,
+    /// isolated from the normal client's records by IsolatedSession.
+    ///
+    /// The ORDER on the way in is the whole design. The outgoing normal
+    /// session is stopped and saved while it is still the active context -
+    /// StopHuntCoreAsync persists it, flushes its history and flushes any
+    /// pending lifetime seconds, all through gates that are still open.
+    /// Entering first would shut those gates on the normal session's own
+    /// last few seconds, which is exactly the §101 pending-seconds problem,
+    /// created on purpose. Then the mode is entered, the quest session is
+    /// loaded or started with the target forced, and hunting begins at once
+    /// - "toggle in, and it is hunting the quest".
+    ///
+    /// On the way out the mirror: stop and save the QUEST session while it is
+    /// still the context (so PersistSession writes the quest file), leave,
+    /// and the normal session is simply there again - paused, exactly as it
+    /// was saved. It is NOT resumed. Toggling out is a decision to stop
+    /// quest hunting, not a decision to start normal hunting.
+    /// </summary>
     [RelayCommand]
+    private async Task ToggleWorldQuest()
+    {
+        if (WorldQuestMode.IsActive)
+        {
+            await LeaveWorldQuestAsync();
+            return;
+        }
+
+        if (AdminModeService.IsActive)
+        {
+            StatusMessage = "Leave Admin Client before starting World Quest hunting.";
+            return;
+        }
+
+        WorldQuest? quest;
+
+        try
+        {
+            quest = await WorldQuestService.FetchActiveAsync();
+        }
+        catch (Exception ex)
+        {
+            Log.Warning(ex, "World Quest mode: the running quest could not be fetched");
+            quest = null;
+        }
+
+        if (quest is null)
+        {
+            StatusMessage = "No World Quest is running right now, or the events server could not be reached.";
+            return;
+        }
+
+        // §252: the freshest possible answer for the menu colour.
+        runningWorldQuest = quest;
+        UpdateWorldQuestLive();
+
+        // §252: the late-entry warning. A quest also ends the moment the
+        // community goal is met, and the tracker cannot see that - it knows
+        // only when the quest began. Ten hours in, that is worth a question
+        // BEFORE the normal session is stopped and saved below, so declining
+        // changes nothing at all.
+        TimeSpan age = DateTime.UtcNow - quest.StartedUtc;
+
+        if (age >= LateEntryWarningAge && ConfirmAsync is not null)
+        {
+            bool proceed = await ConfirmAsync(
+                $"This World Quest ({quest.Pokemon}) started {FormatAge(age)} ago.\n\n" +
+                "A quest ends as soon as the community goal is met, and the tracker cannot see that happen - " +
+                "check in game that it is still running before hunting.\n\nStart World Quest hunting anyway?");
+
+            if (!proceed)
+            {
+                StatusMessage = $"World Quest hunting not started. The quest for {quest.Pokemon} began {FormatAge(age)} ago - check in game whether it is still running.";
+                return;
+            }
+        }
+
+        if (Session.IsRunning)
+        {
+            await StopHuntCoreAsync();
+        }
+        else
+        {
+            PersistSession();
+            FlushPendingLifetimeTime();
+        }
+
+        if (!WorldQuestMode.Enter(quest.MessageId, quest.Pokemon))
+        {
+            StatusMessage = "World Quest hunting could not start - see the log.";
+            AfterModeChange();
+            return;
+        }
+
+        // IsolatedSession.Reason is WorldQuest from here: Session is the
+        // quest session, PersistSession writes the quest file, and every
+        // §249 gate is shut on the normal client's records.
+        LoadWorldQuestSession(quest.MessageId, quest.Pokemon);
+        AfterModeChange();
+
+        // §251: the quest figures and the three ways of counting a catch,
+        // in the stats panel now that IsWorldQuestPanel is true. Started
+        // with the quest already in hand, so nothing is fetched twice.
+        await Quest.StartAsync(quest);
+
+        await Play();
+
+        StatusMessage = $"World Quest hunting {quest.Pokemon} (the quest began {FormatAge(age)} ago) - your normal session is paused and untouched. Turn on Auto Detect to read catches from the preview panel.";
+    }
+
+    private async Task LeaveWorldQuestAsync()
+    {
+        if (!WorldQuestMode.IsActive)
+            return;
+
+        if (Session.IsRunning)
+            await StopHuntCoreAsync();
+        else
+            PersistSession();
+
+        // §251: the watcher and the countdown stop with the mode.
+        Quest.Stop();
+
+        WorldQuestMode.Leave();
+
+        // Reason is None again: Session is huntSession, paused and saved
+        // before the mode was entered, with nothing having touched it since.
+        TargetPokemonInput = string.Join(", ", Session.TargetPokemons);
+        AfterModeChange();
+
+        StatusMessage = "World Quest hunting left. Your normal session is back, paused where you left it.";
+    }
+
+    /// <summary>The refresh both transitions need, and the same one the end
+    /// of AssignTrackerClient does for the same reason: CanStart/CanStop/
+    /// CanSelectTarget read plain flags the toolkit cannot track, so without
+    /// an explicit re-poll the buttons stay stuck in their previous state -
+    /// the softlock §101's note there describes.</summary>
+    private void AfterModeChange()
+    {
+        IsRunning = false;
+        UpdateTrackerDisplay();
+        UpdateSessionEncounters();
+        PlayCommand.NotifyCanExecuteChanged();
+        StopCommand.NotifyCanExecuteChanged();
+        SelectTargetCommand.NotifyCanExecuteChanged();
+        RefreshWorldQuestUi();
+    }
+
+    /// <summary>§250. The quest species is the target, full stop. Set Target
+    /// is greyed out while the mode is on rather than silently ignored.</summary>
+    private bool CanSelectTarget() => !WorldQuestMode.IsActive;
+
+    [RelayCommand(CanExecute = nameof(CanSelectTarget))]
     private async Task SelectTarget()
     {
         // Prefer the sprite-picker dialog (ported PokemonSelectorForm, now
@@ -1207,15 +1795,21 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
                 ? null
                 : new List<string> { TargetPokemonInput.Trim() });
 
+        // §272: the picker's forms column can change how a target is DRAWN
+        // without any target being chosen, so the display is refreshed even
+        // when the dialog was cancelled. The skin itself is already saved by
+        // then - TargetSpriteService writes as it is picked.
         if (chosen is null || chosen.Count == 0)
+        {
+            UpdateTrackerDisplay();
             return;
+        }
 
         Session.TargetPokemons = chosen.Take(4).ToList();
         TargetPokemonInput = string.Join(", ", Session.TargetPokemons);
         UpdateTrackerDisplay();
 
-        if (!AdminModeService.IsActive)
-            SessionPersistenceService.Save(huntSession);
+        PersistSession();
     }
 
     /// <summary>Current targets, exposed read-only for the View to pre-fill the
@@ -1237,15 +1831,34 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         if (RequestSwapTargetSelection is null)
             return;
 
+        // §250: the sprite click is the other way a target changes, and it
+        // has no CanExecute to grey it out - so it says why instead.
+        if (WorldQuestMode.IsActive)
+        {
+            StatusMessage = "The World Quest species is the target while World Quest mode is on. Leave the mode to hunt something else.";
+            return;
+        }
+
         string? newName = await RequestSwapTargetSelection(currentName);
 
+        // §272: same as SelectTarget - this window's skins column may have
+        // changed the picture while leaving the target alone.
         if (string.IsNullOrWhiteSpace(newName) ||
             string.Equals(newName, currentName, StringComparison.OrdinalIgnoreCase))
+        {
+            UpdateTrackerDisplay();
             return;
+        }
 
+        // §361: still refused, and for the same reason as ever - swapping a
+        // target for one already in the list would leave two slots of the
+        // same species with the same picture, which is the state §361 exists
+        // to make reachable only on purpose, from the picker, where the
+        // second slot gets a picture of its own.
         if (Session.TargetPokemons.Any(p => string.Equals(p, newName, StringComparison.OrdinalIgnoreCase)))
         {
-            StatusMessage = $"{newName} is already one of your hunting targets.";
+            StatusMessage = $"{newName} is already one of your hunting targets - "
+                + "use Set Target to hunt it more than once.";
             return;
         }
 
@@ -1265,10 +1878,16 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         TargetPokemonInput = string.Join(", ", Session.TargetPokemons);
         UpdateTrackerDisplay();
 
-        if (!AdminModeService.IsActive)
-            SessionPersistenceService.Save(huntSession);
+        PersistSession();
         StatusMessage = $"Swapped {currentName} for {newName}.";
     }
+
+    /// <summary>§271. Hands this client's saved skins to TargetSpriteService,
+    /// and gives it the way back to disk. Called at startup and again on every
+    /// client switch, beside the other per-client display preferences - a
+    /// second client's skins are its own.</summary>
+    private void LoadTargetSpriteSkins() =>
+        TargetSpriteService.Load(uiPreferences, () => UiPreferencesService.Save(uiPreferences));
 
     [RelayCommand]
     private void ToggleSinceFormPaused()
@@ -1276,8 +1895,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         Session.SinceFormPaused = !Session.SinceFormPaused;
         UpdateTrackerDisplay();
 
-        if (!AdminModeService.IsActive)
-            SessionPersistenceService.Save(huntSession);
+        PersistSession();
     }
 
     // ============================================================
@@ -1298,11 +1916,15 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         ShowTimeHunting = !excludedStatKeys.Contains("TimeHunting");
         ShowTotalEncounters = !excludedStatKeys.Contains("TotalEncounters");
         ShowTargetedEncountersFound = !excludedStatKeys.Contains("TargetedEncountersFound");
+        // §364: new keys, so a preferences file written before this section
+        // has neither of them and both stats default to shown - which is what
+        // a new stat should do.
+        ShowTargetedPokemonCaught = !excludedStatKeys.Contains("TargetedPokemonCaught");
+        ShowTargetedPokemonFled = !excludedStatKeys.Contains("TargetedPokemonFled");
         ShowSinceShiny = !excludedStatKeys.Contains("SinceShiny");
         ShowSinceForm = !excludedStatKeys.Contains("SinceForm");
         ShowSuccessfulCatches = !excludedStatKeys.Contains("SuccessfulCatches");
         ShowPokemonBrokenFree = !excludedStatKeys.Contains("PokemonBrokenFree");
-        ShowCatchRate = !excludedStatKeys.Contains("CatchRate");
     }
 
     /// <summary>§126. Same shape as ApplyExcludedStats above, for the
@@ -1386,11 +2008,14 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         uiPreferences.SinceShinySound = refreshed.SinceShinySound;
         uiPreferences.SinceFormSoundVolume = refreshed.SinceFormSoundVolume;
         uiPreferences.SinceShinySoundVolume = refreshed.SinceShinySoundVolume;
+        uiPreferences.SoundOutputDevice = refreshed.SoundOutputDevice;
+        uiPreferences.SoundOutputDeviceLabel = refreshed.SoundOutputDeviceLabel;
 
         SinceFormSound = uiPreferences.SinceFormSound;
         SinceShinySound = uiPreferences.SinceShinySound;
         sinceFormSoundVolume = uiPreferences.SinceFormSoundVolume;
         sinceShinySoundVolume = uiPreferences.SinceShinySoundVolume;
+        soundOutputDevice = SoundOutputDevice.Parse(uiPreferences.SoundOutputDevice, uiPreferences.SoundOutputDeviceLabel);
     }
 
     // ============================================================
@@ -1530,8 +2155,9 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
     {
         // §101: imports write the REAL session and its persistence - exactly
         // what Admin Client mode promises not to touch. Leave admin mode
-        // first, deliberately, if an import is really wanted.
-        if (AdminModeService.IsActive)
+        // first, deliberately, if an import is really wanted. §249: refused
+        // under any isolation, for the same reason.
+        if (IsolatedSession.IsActive)
         {
             // §187: it used to stop at "leave Admin Client first", which is
             // only useful to someone who already knows where that is - and
@@ -1758,6 +2384,21 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
 
             FlushPendingLifetimeTime();
             SessionPersistenceService.Save(huntSession);
+
+            // §250: a deliberate client choice ends World Quest mode, as it
+            // ends Admin Client below (§101). It has to happen HERE, before
+            // SetActiveClient changes the number, because the quest session
+            // file is per client and must be written under the client the
+            // hunting actually happened on. Automatic binding (leaveAdminMode
+            // false) leaves the mode alone, exactly as it does for admin.
+            if (leaveAdminMode && WorldQuestMode.IsActive)
+            {
+                worldQuestHuntSession.Pause();
+                huntTimer.Stop();
+                PersistSession();
+                Quest.Stop();
+                WorldQuestMode.Leave();
+            }
         }
 
         if (!SessionPersistenceService.SetActiveClient(clientNumber, force))
@@ -1791,6 +2432,10 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         // show/save over whichever client was active before. See
         // BossCooldownService/PvpOpponentService's GetSavePath remarks.
         BossCooldownService.Load();
+
+        // §277: the record follows the client the same way the cooldowns do -
+        // a boss beaten on one account is not a win on another.
+        BossRecordService.ReloadForActiveClient();
         PvpOpponentService.ReloadForActiveClient();
         HuntLogService.ReloadForActiveClient();
 
@@ -1810,6 +2455,15 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         ApplyExcludedStats(uiPreferences.ExcludedStats);
         ApplyExcludedTableColumns(uiPreferences.ExcludedTableColumns);
         ShowStatsPanel = !uiPreferences.StatsPanelHidden;
+        LoadTargetSpriteSkins();
+
+        // §278: the mode is per client like every other preference here, and
+        // the map being hunted belongs to the client that was hunting it - the
+        // next confirmed map reloads from the new client's own files.
+        TrackerSettings.Apply(uiPreferences.PerMapEncounterTable);
+        TrackerSettings.ApplyLevelSharing(uiPreferences.ShareLevelData);
+        MapEncounterService.ClearCurrentMap();
+
         BattleWindowLocator.SetManualBounds(uiPreferences.ManualBattleBounds);
 
         // §109: the generated properties, same as RefreshSoundSelections.
@@ -1817,6 +2471,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         SinceShinySound = uiPreferences.SinceShinySound;
         sinceFormSoundVolume = uiPreferences.SinceFormSoundVolume;
         sinceShinySoundVolume = uiPreferences.SinceShinySoundVolume;
+        soundOutputDevice = SoundOutputDevice.Parse(uiPreferences.SoundOutputDevice, uiPreferences.SoundOutputDeviceLabel);
 
         // Runs automatically as soon as a client is assigned - independent of
         // Play/hunting, so boss cooldowns get tracked even if the user never
@@ -1846,6 +2501,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         IsRunning = false;
         PlayCommand.NotifyCanExecuteChanged();
         StopCommand.NotifyCanExecuteChanged();
+        SelectTargetCommand.NotifyCanExecuteChanged();
+        RefreshWorldQuestUi();
 
         return true;
     }
@@ -1877,7 +2534,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         // IsRunning stays true but the clock itself is frozen, and lifetime
         // stats should stay in sync with the on-screen Time Hunting stat rather
         // than counting boss-fight time as hunting time.
-        if (Session.IsAccruingTime && !AdminModeService.IsActive)
+        if (Session.IsAccruingTime && !IsolatedSession.IsActive)
         {
             lifetimeSaveTickCounter++;
 
@@ -1914,8 +2571,36 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         // through here.
         SessionEncounterHistoryService.LoadForActiveClient(saved is not null);
 
+        // §250: the quest session lives per client too, so it is (re)loaded
+        // here for the same reasons the normal one is - at startup before a
+        // client is bound (nothing found, a fresh session with the forced
+        // target), again when auto-bind names the client (the real file),
+        // and on a deliberate client switch, except that a deliberate switch
+        // leaves the mode first - see AssignTrackerClient.
+        if (WorldQuestMode.Current is { } quest)
+            LoadWorldQuestSession(quest.MessageId, quest.Pokemon);
+
         UpdateTrackerDisplay();
         UpdateSessionEncounters();
+    }
+
+    /// <summary>§250. Loads the World Quest session for the active client and
+    /// quest, or starts a fresh one, and FORCES the quest species as its only
+    /// target either way. A restored session already carries that target;
+    /// forcing it again is the guarantee, not a repair.</summary>
+    private void LoadWorldQuestSession(string questId, string pokemon)
+    {
+        HuntSessionSaveData? saved = SessionPersistenceService.LoadWorldQuest(questId);
+
+        if (saved is null)
+            worldQuestHuntSession.Reset();
+        else
+            worldQuestHuntSession.Restore(saved);
+
+        worldQuestHuntSession.TargetPokemons = new List<string> { pokemon };
+
+        if (IsolatedSession.Reason == IsolationReason.WorldQuest)
+            TargetPokemonInput = pokemon;
     }
 
     private void FlushPendingLifetimeTime()
@@ -1931,7 +2616,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         // handler re-flushes the moment admin mode is left. Only closing the
         // app while still IN admin mode loses them (at most 29 seconds,
         // display-only lifetime stats - documented in MIGRATION_GUIDE.md).
-        if (AdminModeService.IsActive)
+        // §249: the same predicate LifetimeStatsService refuses on.
+        if (IsolatedSession.IsActive)
             return;
 
         lifetimeStats = LifetimeStatsService.AddHuntingTime(
@@ -2050,6 +2736,12 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
 
         Session.RegisterPokemonEncounter(resolvedName);
 
+        // §278: and the map's own table, which is a SECOND tally rather than a
+        // move - the session keeps counting everything, so every stat, the
+        // export and the import are untouched by this section.
+        if (TrackerSettings.PerMapEncounterTable)
+            MapEncounterService.RegisterEncounter(resolvedName);
+
         // Update the on-screen display before either save below, not after -
         // see MIGRATION_GUIDE.md §75. Both methods only read Session (the
         // active context's session, already fully updated above by this
@@ -2094,8 +2786,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         // this method no longer reads at all. Skipped entirely in Admin
         // Client mode (§101) - there is nothing of the normal session to
         // save, and the admin session is never saved anywhere.
-        if (!AdminModeService.IsActive)
-            SessionPersistenceService.Save(huntSession);
+        PersistSession();
 
         // §101 Admin Console status feed - three field writes, off the
         // sprite path like everything after the display update.
@@ -2135,6 +2826,9 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
             case CatchResult.Success:
                 Session.SuccessfulCatches++;
                 Session.RegisterCatch(species);
+
+                if (TrackerSettings.PerMapEncounterTable)
+                    MapEncounterService.RegisterCatch(species);
                 lifetimeStats = LifetimeStatsService.AddSuccessfulCatch();
                 break;
 
@@ -2150,6 +2844,9 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
             // could be counted.
             case CatchResult.RunAway:
                 Session.RegisterRunAway(species);
+
+                if (TrackerSettings.PerMapEncounterTable)
+                    MapEncounterService.RegisterRunAway(species);
                 break;
 
             // A knockout, or the EXP line. Deliberately counted as neither a
@@ -2228,8 +2925,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
             pendingCatchGender = null;
         }
 
-        if (!AdminModeService.IsActive)
-            SessionPersistenceService.Save(huntSession);
+        PersistSession();
     }
 
     private void OnRareEncounterDetected(RareEncounterType rareType)
@@ -2298,8 +2994,9 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         // §103: Shiny outranks Form - see SoundNotificationService's
         // priority policy. Playback itself now runs off the UI thread, so
         // this call is a cheap enqueue either way. §152: at the volume the
-        // Sound Settings slider set for that sound.
-        SoundNotificationService.PlaySound(soundToPlay, soundPriority, soundVolume);
+        // Sound Settings slider set for that sound. §389: through the device
+        // it pinned, if that device is present.
+        SoundNotificationService.PlaySound(soundToPlay, soundPriority, soundVolume, soundOutputDevice);
 
         UpdateTrackerDisplay();
 
@@ -2324,8 +3021,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
             StatusMessage = $"{encounterMessagePrefix} {Session.CurrentEncounter}";
         }
 
-        if (!AdminModeService.IsActive)
-            SessionPersistenceService.Save(huntSession);
+        PersistSession();
     }
 
     /// <summary>§138. The matcher's answer for the current encounter's
@@ -2369,8 +3065,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
                 Session.PreviousEncounterFormImage = result.ImagePath ?? string.Empty;
                 UpdateTrackerDisplay();
 
-                if (!AdminModeService.IsActive)
-                    SessionPersistenceService.Save(huntSession);
+                PersistSession();
             }
 
             return;
@@ -2393,8 +3088,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
                 Session.CurrentEncounterFormImage = result.ImagePath ?? string.Empty;
                 UpdateTrackerDisplay();
 
-                if (!AdminModeService.IsActive)
-                    SessionPersistenceService.Save(huntSession);
+                PersistSession();
             }
         }
         else
@@ -2419,6 +3113,13 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
             return;
 
         CurrentRouteText = routeName;
+
+        // §278: the map the table follows. No-ops when the map has not
+        // actually changed, which is most of the time - RouteDetector confirms
+        // the same corner over and over while the player stands still - and
+        // no-ops entirely in classic mode and in an isolated session.
+        if (TrackerSettings.PerMapEncounterTable)
+            MapEncounterService.SetCurrentMap(routeName);
 
         if (battleActive)
         {
@@ -2445,8 +3146,54 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         }
     }
 
+    /// <summary>§278. Where the front table's four facts come from - the
+    /// hunt's own dictionaries in classic mode, the current map's in per-map
+    /// mode. Falling back to the session's when no map is confirmed yet is
+    /// deliberate: the table is not blank while the tracker waits for a corner
+    /// reading, it just is not partitioned yet.</summary>
+    private IReadOnlyDictionary<string, int> EncounterCountsSource =>
+        MapTally?.EncounterCounts ?? Session.EncounterCounts;
+
+    private IReadOnlyDictionary<string, int> CaughtCountsSource =>
+        MapTally?.CaughtCounts ?? Session.CaughtCounts;
+
+    private IReadOnlyDictionary<string, int> RanFromCountsSource =>
+        MapTally?.RanFromCounts ?? Session.RanFromCounts;
+
+    private IReadOnlyDictionary<string, DateTime> LastEncounteredSource =>
+        MapTally?.LastEncounteredUtc ?? Session.LastEncounteredUtc;
+
+    /// <summary>The map tally the table should read, or null whenever the
+    /// table should read the hunt - classic mode, or per-map mode before any
+    /// map has been confirmed.</summary>
+    private Models.MapEncounterTally? MapTally =>
+        TrackerSettings.PerMapEncounterTable ? MapEncounterService.Current : null;
+
+    /// <summary>§278. What the table is a table OF. Empty in classic mode, so
+    /// the heading reads as it always has; the map's name in per-map mode, and
+    /// a plain note while no map has been confirmed yet - because a table that
+    /// silently shows the whole hunt under a per-map setting would be the
+    /// worst of both.</summary>
+    [ObservableProperty] private string encounterTableScope = string.Empty;
+
+    /// <summary>§278. The map changed, or the mode did. Both mean the table is
+    /// now a table of something else.</summary>
+    private void OnMapEncountersChanged()
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            EncounterPageIndex = 0;
+            UpdateSessionEncounters();
+        });
+    }
+
     private void UpdateSessionEncounters()
     {
+        EncounterTableScope =
+            !TrackerSettings.PerMapEncounterTable ? string.Empty
+            : MapEncounterService.Current is { } tally ? $"on {tally.MapName}"
+            : "waiting for a map reading";
+
         // Replaces ResetEncounterTable/UpdateSessionEncounters, which manually
         // built TableLayoutPanel rows. MainWindow.axaml binds directly to these
         // collections instead - split across two columns the same way the
@@ -2454,33 +3201,48 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         // once the left one filled up.
         SessionEncounters.Clear();
 
-        int total = Session.EncounterCounts.Values.Sum();
+        // §278: the same table, from whichever tally the mode names. Classic
+        // is the hunt's own dictionaries, exactly as before; per map is the
+        // map being stood on. Everything below this - the ordering, the rate,
+        // the paging - is identical either way, which is the point: one table,
+        // two sources, and no second rendering path to keep in step.
+        var counts = EncounterCountsSource;
+        var caughtCounts = CaughtCountsSource;
+        var ranCounts = RanFromCountsSource;
+        var lastSeen = LastEncounteredSource;
 
-        foreach (var kvp in Session.EncounterCounts.OrderByDescending(k => k.Value))
+        int total = counts.Values.Sum();
+
+        foreach (var kvp in counts.OrderByDescending(k => k.Value))
         {
             SessionEncounters.Add(new EncounterCountRow
             {
                 PokemonName = kvp.Key,
                 Count = kvp.Value,
                 RatePercent = total > 0 ? kvp.Value / (double)total * 100.0 : 0,
-                Sprite = PokemonSpriteService.GetSprite(kvp.Key),
+                // §425. GetEncounterSprite, not GetSprite: the table's names
+                // are encounter names, and an encounter can be a regional
+                // form - "Zorua-Hisui", "Linoone-Galarian" - which lives in
+                // the forms dictionary GetSprite never opens. Every regional
+                // row drew blank here while its species drew fine.
+                Sprite = PokemonSpriteService.GetEncounterSprite(kvp.Key),
 
                 // §125. TryGetValue rather than an indexer: a species with
                 // no catches and no runs simply has no entry, and that is
                 // the common case - most of a hunt is encounters you did
                 // nothing about.
                 CaughtCount =
-                    Session.CaughtCounts.TryGetValue(kvp.Key, out int caught)
+                    caughtCounts.TryGetValue(kvp.Key, out int caught)
                         ? caught
                         : 0,
 
                 RanFromCount =
-                    Session.RanFromCounts.TryGetValue(kvp.Key, out int ran)
+                    ranCounts.TryGetValue(kvp.Key, out int ran)
                         ? ran
                         : 0,
 
                 LastEncounteredUtc =
-                    Session.LastEncounteredUtc.TryGetValue(kvp.Key, out DateTime seen)
+                    lastSeen.TryGetValue(kvp.Key, out DateTime seen)
                         ? seen
                         : null
             });
@@ -2515,29 +3277,37 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         // §101: the unobtrusive-but-unmissable Admin Client indicator - the
         // title carries it everywhere (taskbar included) without covering
         // any hunting UI.
-        string adminPrefix = AdminModeService.IsActive ? "ADMIN MODE - " : string.Empty;
+        // §250: keyed on the reason now that there are two. ADMIN MODE was
+        // the §101 indicator; WORLD QUEST is the same idea for the same
+        // purpose - unmissable in the taskbar, covering no hunting UI.
+        string modePrefix = IsolatedSession.Reason switch
+        {
+            IsolationReason.Admin => "ADMIN MODE - ",
+            IsolationReason.WorldQuest => "WORLD QUEST - ",
+            _ => string.Empty,
+        };
 
         WindowTitle = Session.IsRunning && Session.TargetPokemons.Count > 0
-            ? $"{adminPrefix}Pro Tracker & Database - Hunting {targetsText}{clientText}"
-            : $"{adminPrefix}Pro Tracker & Database{clientText}";
+            ? $"{modePrefix}Pro Tracker & Database - Hunting {targetsText}{clientText}"
+            : $"{modePrefix}Pro Tracker & Database{clientText}";
 
-        TotalEncounters = Session.TotalEncounters.ToString();
-        TargetedEncountersFound = Session.GetTargetedEncounterCount().ToString();
+        TotalEncounters = DisplayNumber.Count(Session.TotalEncounters);
+        TargetedEncountersFound = DisplayNumber.Count(Session.GetTargetedEncounterCount());
+        TargetedPokemonCaught = DisplayNumber.Count(Session.GetTargetedCaughtCount());
+        TargetedPokemonFled = DisplayNumber.Count(Session.GetTargetedRanFromCount());
         TimeHunting = TimeFormatHelper.FormatElapsed(Session.GetCurrentElapsedTime());
-        SinceShiny = Session.EncountersSinceShiny.ToString();
-        SinceForm = Session.EncountersSinceForm.ToString();
+        SinceShiny = DisplayNumber.Count(Session.EncountersSinceShiny);
+        SinceForm = DisplayNumber.Count(Session.EncountersSinceForm);
 
         SinceFormPaused = Session.SinceFormPaused;
         SinceFormPauseButtonText = Session.SinceFormPaused ? "Resume Since Form" : "Pause Since Form";
 
-        int totalCatchAttempts = Session.SuccessfulCatches + Session.FailedCatches;
-        double rate = totalCatchAttempts > 0
-            ? Session.SuccessfulCatches / (double)totalCatchAttempts * 100.0
-            : 0;
-
-        CatchRate = $"{rate:F2}%";
-        SuccessfulCatches = Session.SuccessfulCatches.ToString();
-        FailedCatches = Session.FailedCatches.ToString();
+        // §364: Catch Rate was computed here from SuccessfulCatches and
+        // FailedCatches and shown as its own stat. It is gone at the user's
+        // request - the two numbers it was derived from are both still on the
+        // panel, so nothing was lost that was not already visible.
+        SuccessfulCatches = DisplayNumber.Count(Session.SuccessfulCatches);
+        FailedCatches = DisplayNumber.Count(Session.FailedCatches);
 
         // Up to 4 targets shown side by side - sprite size shrinks once there are
         // more than 2, so 3-4 targets still fit comfortably in the same area.
@@ -2549,26 +3319,80 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         }
         else
         {
+            // §361: the same species can hold more than one slot now, so each
+            // one is drawn with ITS OWN picture rather than the species'. The
+            // occurrence is how many slots of this species came before - see
+            // TargetSpriteService.SkinFor. Counted here rather than asked for,
+            // because this loop is the only place that knows the order.
+            var seen = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
             foreach (string name in Session.TargetPokemons)
             {
-                CurrentTargets.Add(new TargetDisplayItem(name, PokemonSpriteService.GetEncounterSprite(name)));
+                seen.TryGetValue(name, out int occurrence);
+                seen[name] = occurrence + 1;
+
+                // §271: the sprite the player chose for this slot, which is
+                // the species' ordinary one until they choose otherwise.
+                CurrentTargets.Add(new TargetDisplayItem(
+                    name, TargetSpriteService.SpriteFor(name, occurrence)));
             }
         }
 
-        TargetSpriteSize = Session.TargetPokemons.Count <= 2 ? 90 : 50;
+        // ============================================================
+        // §367. HOW BIG A TARGET SPRITE IS.
+        // ============================================================
+        //
+        // Users hunting three or four Pokemon asked for bigger sprites now
+        // that the window is wider. Both numbers below are the largest that
+        // fit the space there actually is, which is a smaller space than it
+        // looks:
+        //
+        //   window width                     1010
+        //   - the main Grid's Margin=16        -32
+        //   - the stats panel                 -220
+        //   - the content Grid's Margin        -32
+        //   = the sprite row                   726
+        //   / three even columns               242   <- this is the budget
+        //
+        // A card is TargetLabelMaxWidth wide (the StackPanel in
+        // MainWindow.axaml binds its Width to it) plus its 5px margin each
+        // side, so N of them need N * (label + 10) and that has to stay
+        // inside 242:
+        //
+        //   2 targets   label 110   card 120   240   fits
+        //   3 targets   label  70   card  80   240   fits
+        //   4 targets   label  50   card  60   240   fits
+        //
+        // Which is why 3 goes to 70 and 4 to 50 rather than the 90 and 64
+        // the mockups drew: those need a 300px column, and taking 58px from
+        // somewhere means the Current and Previous Encounter headings move.
+        // Keeping the three columns even was the choice; nothing else on the
+        // window shifts by a pixel.
+        //
+        // The trade at four targets is the label. It used to get 70 (the
+        // sprite's 50 plus 20) because it sat in a 2x2 grid with room to
+        // spare; in one row of four it gets 50, so a long name wraps onto a
+        // second line where it did not before. That is the cost of the row,
+        // and it is a cost this comment would rather name than have somebody
+        // rediscover. Two type icons are 23 each plus 2 of spacing = 48, so
+        // they still fit a 50px card.
+        //
+        // These are derived for the window at its default width with the
+        // stats panel showing - the tightest case. Hide the panel or widen
+        // the window and the columns grow; the cards keep these sizes and
+        // simply sit in more space.
+        TargetSpriteSize =
+            Session.TargetPokemons.Count <= 2 ? 90
+            : Session.TargetPokemons.Count == 3 ? 70
+            : 50;
 
-        // Labels get more room than the bare sprite width - see
-        // TargetLabelMaxWidth's declaration comment for why.
-        TargetLabelMaxWidth = TargetSpriteSize + 20;
-
-        // At exactly 4 targets, constrain the wrap panel to fit precisely 2 per
-        // row - forces a genuine 2x2 grid instead of however a single wide row
-        // happens to wrap based on the window's current width. Budgeted against
-        // TargetLabelMaxWidth (the widest element per item, wider than the
-        // sprite itself) plus a 10px gap between adjacent items.
-        TargetsPanelMaxWidth = Session.TargetPokemons.Count == 4
-            ? (TargetLabelMaxWidth + 10) * 2
-            : 9999;
+        // One and two targets keep the old +20 for names. Three and four
+        // spend every pixel of it on the sprite instead, which is what was
+        // asked for.
+        TargetLabelMaxWidth =
+            Session.TargetPokemons.Count <= 2
+                ? TargetSpriteSize + 20
+                : TargetSpriteSize;
 
         if (Session.TargetPokemons.Count == 0)
         {
@@ -2578,7 +3402,9 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         }
         else
         {
-            PrimaryTargetSprite = PokemonSpriteService.GetEncounterSprite(Session.TargetPokemons[0]);
+            // §271: CompactWindow's single sprite follows the same choice -
+            // it is the same target, shown smaller.
+            PrimaryTargetSprite = TargetSpriteService.SpriteFor(Session.TargetPokemons[0]);
             PrimaryTargetLabel = Session.TargetPokemons.Count > 1
                 ? $"{Session.TargetPokemons[0]} +{Session.TargetPokemons.Count - 1}"
                 : Session.TargetPokemons[0];
@@ -2766,10 +3592,27 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         if (adminHuntSession.IsRunning)
             adminHuntSession.Pause();
 
+        // §251: the quest session's running stretch is folded into its
+        // ElapsedTime the same way, and it IS saved below - §250 persisted
+        // it after every mutation but not at shutdown, so closing the app
+        // mid-quest lost the hunting time since the last catch.
+        if (worldQuestHuntSession.IsRunning)
+            worldQuestHuntSession.Pause();
+
         huntTimer.Stop();
         FlushPendingLifetimeTime();
         SessionPersistenceService.Save(huntSession);
+
+        // §251: while the mode is on, PersistSession routes to the quest
+        // file; the normal session was saved on the way in and again just
+        // now, unchanged since.
+        if (IsolatedSession.Reason == IsolationReason.WorldQuest)
+            PersistSession();
+
         SessionEncounterHistoryService.FlushToDisk();
+
+        // §429: the last post, waited for briefly - the process is going.
+        LevelShareService.FlushOnExit();
 
         // Release this process's claim on its client number (if any) so the
         // next tracker to start doesn't have to wait for the stale-PID check
@@ -2783,10 +3626,12 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IDisposable
         watchdogTimer.Stop();
         presenceTimer.Stop();
         activeEventsTimer.Stop();
+        worldQuestPollTimer.Stop();
         huntTimer.Tick -= HuntTimer_Tick;
         autoClientDetectionTimer.Stop();
         encounterTracker.Dispose();
         bossCooldownTracker.Dispose();
         pvpTracker.Dispose();
+        Quest.Dispose();
     }
 }

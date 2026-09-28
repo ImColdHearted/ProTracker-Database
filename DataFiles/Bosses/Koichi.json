@@ -22,19 +22,23 @@
         "pokemon": [
           {
             "name": "Tyrogue",
-            "dexNumber": 236
+            "dexNumber": 236,
+            "winStreakRequired": 0
           },
           {
             "name": "Riolu",
-            "dexNumber": 447
+            "dexNumber": 447,
+            "winStreakRequired": 0
           },
           {
             "name": "Ralts",
-            "dexNumber": 280
+            "dexNumber": 280,
+            "winStreakRequired": 0
           },
           {
             "name": "Pancham",
-            "dexNumber": 674
+            "dexNumber": 674,
+            "winStreakRequired": 0
           }
         ],
         "items": [
@@ -172,19 +176,43 @@
         "pokemon": [
           {
             "name": "Tyrogue",
-            "dexNumber": 236
+            "dexNumber": 236,
+            "winStreakRequired": 0
           },
           {
             "name": "Riolu",
-            "dexNumber": 447
+            "dexNumber": 447,
+            "winStreakRequired": 0
           },
           {
             "name": "Ralts",
-            "dexNumber": 280
+            "dexNumber": 280,
+            "winStreakRequired": 0
           },
           {
             "name": "Pancham",
-            "dexNumber": 674
+            "dexNumber": 674,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Tyrogue",
+            "dexNumber": 236,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Pancham",
+            "dexNumber": 674,
+            "winStreakRequired": 3
           }
         ],
         "items": [
@@ -322,19 +350,43 @@
         "pokemon": [
           {
             "name": "Tyrogue",
-            "dexNumber": 236
+            "dexNumber": 236,
+            "winStreakRequired": 0
           },
           {
             "name": "Riolu",
-            "dexNumber": 447
+            "dexNumber": 447,
+            "winStreakRequired": 0
           },
           {
             "name": "Ralts",
-            "dexNumber": 280
+            "dexNumber": 280,
+            "winStreakRequired": 0
           },
           {
             "name": "Pancham",
-            "dexNumber": 674
+            "dexNumber": 674,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Tyrogue",
+            "dexNumber": 236,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Riolu",
+            "dexNumber": 447,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Ralts",
+            "dexNumber": 280,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Pancham",
+            "dexNumber": 674,
+            "winStreakRequired": 3
           }
         ],
         "items": [

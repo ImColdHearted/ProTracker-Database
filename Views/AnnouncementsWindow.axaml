@@ -43,7 +43,7 @@
                                 <!-- Only present when the post carried one the
                                      Worker and the client both agreed to fetch. -->
                                 <Image Source="{Binding Image}" Stretch="Uniform"
-                                       HorizontalAlignment="Left" MaxHeight="320" Margin="0,6,0,0"
+                                       HorizontalAlignment="Left" MaxHeight="96" Margin="0,6,0,0"
                                        IsVisible="{Binding Image, Converter={x:Static ObjectConverters.IsNotNull}}" />
                             </StackPanel>
                         </Border>

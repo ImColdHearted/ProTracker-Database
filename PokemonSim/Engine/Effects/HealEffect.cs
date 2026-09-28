@@ -26,6 +26,16 @@ namespace PokemonSim.Engine.Effects
             ref int damage,
             ref bool cancelled)
         {
+            // §304: Psychic Noise's heal block. Refused here rather than
+            // reduced to nothing, so the move fails and keeps its PP
+            // instead of quietly doing zero.
+            if (attacker.HealBlockTurns > 0)
+            {
+                state.Log.Write($"{attacker.Species} cannot heal!");
+                cancelled = true;
+                return;
+            }
+
             if (attacker.CurrentHP >= attacker.MaxHP)
             {
                 state.Log.Write($"{attacker.Species}'s HP is already full!");

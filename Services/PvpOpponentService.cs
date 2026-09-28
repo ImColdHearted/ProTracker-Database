@@ -36,6 +36,14 @@ namespace Foot_Tracker.Services
         // only this rolling log is capped.
         private const int MaxSavedBattles = 250;
 
+        /// <summary>§276. How many distinct message-box lines one battle
+        /// keeps. A long PVP match prints a great many, and this log holds 250
+        /// battles - the cap is what stops a rolling log from becoming a
+        /// transcript archive. The lines kept are the FIRST ones seen, not the
+        /// last: a match's opening moves are what identify the opponent's
+        /// team, which is what these are being collected for.</summary>
+        public const int MaxLogLinesPerBattle = 120;
+
         /// <summary>Raised after the saved battle log changes - a new battle
         /// registered, or the MaxSavedBattles cap trimmed an old entry.
         /// PreviouslyBattledUsersViewModel subscribes to this to keep its list
@@ -279,14 +287,19 @@ namespace Foot_Tracker.Services
         /// is detected, mirroring EncounterTracker's per-battle lock) or matched
         /// against the roster already saved on this PvpOpponentEntry.
         /// </summary>
-        public static void RegisterBattle(string opponentName)
+        /// <returns>§276. The entry just created, so the caller can hand back
+        /// the battle's result and its message lines as they arrive - see
+        /// RecordOutcome and AddLogLine. Null when nothing was recorded
+        /// (Admin Client, or a blank name), which the caller must treat as
+        /// "there is no battle to update" rather than as a failure.</returns>
+        public static PvpOpponentEntry? RegisterBattle(string opponentName)
         {
             // Admin Client isolation (§101) - see AdminModeService.
             if (AdminModeService.IsActive)
-                return;
+                return null;
 
             if (string.IsNullOrWhiteSpace(opponentName))
-                return;
+                return null;
 
             EnsureLoaded();
 
@@ -298,17 +311,106 @@ namespace Foot_Tracker.Services
                     ? count
                     : 1;
 
-            opponents.Add(new PvpOpponentEntry
+            var entry = new PvpOpponentEntry
             {
                 Name = opponentName,
                 TimesBattled = (int)Math.Min(lifetimeCount, int.MaxValue),
                 BattledAtUtc = DateTime.UtcNow
-            });
+            };
+
+            opponents.Add(entry);
 
             TrimToMostRecent();
             Save();
 
             OpponentsChanged?.Invoke();
+
+            return entry;
+        }
+
+        /// <summary>
+        /// §276. Writes the result PRO reported onto the battle it belonged
+        /// to. The outcome has been read since §91 - it fed the lifetime PVP
+        /// tallies - and was then thrown away; this is where it lands.
+        ///
+        /// Only ever called with a result that was actually READ. A battle the
+        /// tracker gave up on (window unreadable, a disconnect) is left with
+        /// an empty Outcome on purpose, because "we never saw" and "you lost"
+        /// are different facts.
+        /// </summary>
+        public static void RecordOutcome(PvpOpponentEntry? entry, bool won)
+        {
+            if (!Owns(entry))
+                return;
+
+            entry!.Outcome = won ? "Won" : "Lost";
+
+            Save();
+
+            OpponentsChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// §276. Appends one message-box line to a battle in progress, if it
+        /// is new to that battle and there is still room under
+        /// <see cref="MaxLogLinesPerBattle"/>. Returns true when the line was
+        /// actually kept, so the caller can save on a change rather than on
+        /// every scan - PRO's message box holds the same sentence for several
+        /// seconds, which at the tracker's cadence is a dozen identical reads.
+        ///
+        /// Distinctness is by exact text within THIS battle only. The same
+        /// move used twice prints the same line twice and is kept once, which
+        /// is the right trade here: this is a record of what was seen, not a
+        /// turn-by-turn transcript, and OCR noise would make counting
+        /// repetitions meaningless anyway.
+        /// </summary>
+        public static bool AddLogLine(PvpOpponentEntry? entry, string line)
+        {
+            if (!Owns(entry))
+                return false;
+
+            string cleaned = (line ?? string.Empty).Trim();
+
+            if (cleaned.Length == 0)
+                return false;
+
+            if (entry!.BattleLog.Count >= MaxLogLinesPerBattle)
+                return false;
+
+            if (entry.BattleLog.Contains(cleaned, StringComparer.Ordinal))
+                return false;
+
+            entry.BattleLog.Add(cleaned);
+
+            return true;
+        }
+
+        /// <summary>§276. Persists whatever AddLogLine has accumulated. Split
+        /// from AddLogLine so a battle's lines cost one write rather than one
+        /// write each.</summary>
+        public static void SaveLog(PvpOpponentEntry? entry)
+        {
+            if (!Owns(entry))
+                return;
+
+            Save();
+
+            OpponentsChanged?.Invoke();
+        }
+
+        /// <summary>§276. Whether this battle is still in the log at all. A
+        /// tracked battle can be trimmed out from under its tracker
+        /// (MaxSavedBattles) or cleared by hand while it is still being
+        /// fought, and writing to an entry the log no longer holds would
+        /// silently update nothing and save the file for no reason.</summary>
+        private static bool Owns(PvpOpponentEntry? entry)
+        {
+            if (entry is null)
+                return false;
+
+            EnsureLoaded();
+
+            return opponents.Contains(entry);
         }
 
         /// <summary>

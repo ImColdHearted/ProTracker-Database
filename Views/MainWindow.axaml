@@ -2,14 +2,87 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Foot_Tracker.ViewModels"
         xmlns:conv="using:Foot_Tracker.Converters"
+        xmlns:controls="using:Foot_Tracker.Controls"
         x:Class="Foot_Tracker.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Title="{Binding WindowTitle}"
         Icon="/Assets/AppIcon.png"
-        Width="875" Height="600"
+        Width="1010" Height="625"
         Background="{DynamicResource ThemeBackgroundBrush}"
         BorderBrush="{DynamicResource ThemeBorderBrush}"
-        BorderThickness="1">
+        BorderThickness="1"
+        KeyDown="Window_KeyDown">
+
+    <Window.Styles>
+        <!-- §252: the World Quest menu item while a quest is running and the
+             mode is off (MainWindowViewModel.WorldQuestLive, applied as the
+             questLive class). The brush is ThemeManager's, chosen by the
+             same predicate that picks the menu's theme variant (§141): red
+             against the light menu's black text, blue against the dark
+             menu's white. A steady colour rather than a flash - see the
+             property's remark. -->
+        <Style Selector="MenuItem.questLive">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeWorldQuestLiveBrush}" />
+        </Style>
+
+        <!-- §267: the same shape for News - yellow while an announcement from
+             the last day has not been opened. See ThemeManager's
+             NewsLiveBrushKey for why the light menu gets goldenrod. -->
+        <Style Selector="MenuItem.newsLive">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeNewsLiveBrush}" />
+        </Style>
+
+        <!-- §369: the same shape again for Update - green while a newer
+             build is available. Unlike the two above, the item it colours
+             is hidden until there is something to install, so the colour is
+             the second signal rather than the only one. See
+             ThemeManager.UpdateAvailableBrushKey for why a light menu gets a
+             darker green. -->
+        <Style Selector="MenuItem.updateAvailable">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeUpdateAvailableBrush}" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <!-- §355: one width floor for every button in the top toolbar,
+             asked for by a user who found them growing and shrinking.
+
+             74 is Set Target's own width, measured off the build - it was
+             named as the right size, and it is the widest of the four hunt
+             controls, so nothing has to shrink to meet it. Set Target,
+             Start, Stop, Reset and the pin all become that width; Exclude
+             Stats and Set Screen Boundaries keep the width their text needs,
+             because a floor cannot clip.
+
+             MinWidth rather than Width for exactly that reason: this window
+             renders in the user's chosen theme font, and at 16px or 20px
+             every label here is wider than 74. A floor grows with them; a
+             fixed width would cut them off.
+
+             The explicit centring is the same pairing AppearanceWindow's
+             Apply/Save/Cancel/Load already use - a button wider than its
+             text has to be told where to put it. -->
+        <!-- §365: every button in this row now carries its own scaled
+             MinWidth inline, and a local value beats a style setter, so the
+             30 below is the fallback for the one control that does not - the
+             pin, which is sized by its glyph. The centring still applies to
+             all of them, and it is what a floor needs: a button wider than
+             its text has to be told where to put it. -->
+        <Style Selector="StackPanel.toolbar Button, StackPanel.toolbar ToggleButton">
+            <Setter Property="MinWidth" Value="30" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+
+        <!-- §392: a column grip - transparent so the header keeps reading
+             as separate chips, the resize cursor so it can be found, and
+             side margins that reach three pixels over each neighbouring
+             chip so a two-pixel gutter is an eight-pixel handle. -->
+        <Style Selector="Border.columnGrip">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Cursor" Value="SizeWestEast" />
+            <Setter Property="Margin" Value="-3,0,-3,2" />
+            <Setter Property="ZIndex" Value="1" />
+        </Style>
+    </Window.Styles>
 
     <Grid RowDefinitions="Auto,Auto,*" Margin="16" ColumnDefinitions="*">
 
@@ -21,8 +94,14 @@
              menu text stays readable over any Appearance. The menu never used
              the Appearance text colour; its white came from the app's dark
              theme default, which vanished on a pale background. -->
+        <!-- §394: the menu's own font, or Statistics' - ThemeManager
+             publishes whichever applies, so the Menu asks for nothing else.
+             Set here rather than inherited from the window, and inherited
+             from here by the dropdowns. -->
         <ThemeVariantScope Grid.Row="0" RequestedThemeVariant="{DynamicResource ThemeMenuVariant}">
-            <Menu Margin="0,0,0,8">
+            <Menu Margin="0,0,0,8"
+                  FontFamily="{DynamicResource ThemeMenuFontFamily}"
+                  FontSize="{DynamicResource ThemeMenuFontSize}">
                 <MenuItem Header="_File">
                     <MenuItem Header="Compact Mode" Click="CompactModeButton_Click" />
                     <!-- See SinceFormSound/SinceShinySound's declaration comment in
@@ -34,6 +113,10 @@
                          dropdown place and adding a future sound needs no XAML
                          changes here at all (see SoundSettingsViewModel.SoundOptions). -->
                     <MenuItem Header="Sound Settings…" Click="SoundSettingsButton_Click" />
+                    <!-- §278: how the encounter table is kept - one for the
+                         whole hunt, or one per map. Classic is the default;
+                         see MapEncounterService for why. -->
+                    <MenuItem Header="Tracker Settings…" Click="TrackerSettingsButton_Click" />
                     <Separator />
                     <MenuItem Header="Export Hunt Data (CSV)…" Command="{Binding ExportCsvCommand}" />
                     <MenuItem Header="Import Hunt Data (CSV)…" Command="{Binding ImportCsvCommand}" />
@@ -51,7 +134,7 @@
                      Counterparts, Guides (renamed Game Guides), Announcements and
                      Calculators menus. Every child keeps its original handler and
                      window; only the position moved. -->
-                <MenuItem Header="_Game Information">
+                <MenuItem Header="_Game Info">
                     <MenuItem Header="Boss Database" Click="BossDatabaseButton_Click" />
                     <MenuItem Header="Counterparts">
                         <MenuItem Header="Clone" Click="CounterpartsMenuItem_Click" Tag="Clone" />
@@ -76,28 +159,51 @@
                     </MenuItem>
                                     <MenuItem Header="Calculators">
                         <MenuItem Header="Damage" Click="DamageCalculatorButton_Click" />
-                        <MenuItem Header="World Quest" Click="WorldQuestCalculatorButton_Click" />
                         <MenuItem Header="IV" Click="IvCalculatorButton_Click" />
                     </MenuItem>
                 </MenuItem>
                    <!-- §103: "Stats" became "Statistics", gaining Boss Cooldowns (from
                      the old Bosses menu) and Previously Battled Players (from the
-                     old PVP menu). The parent item deliberately has NO Click
+                     old PVP menu). §274 took Boss Cooldowns back out again - the
+                     Boss Database card shows and starts a cooldown now, so a
+                     second window over the same 49 files had nothing left to do.
+                     The parent item deliberately has NO Click
                      handler anymore: MenuItem.Click is a routed event, so the old
                      parent handler re-fired on every CHILD click too - that one
                      wiring is why Lifetime Stats used to open twice and Exclude
                      Stats dragged a Lifetime Stats window along with it. -->
-                <MenuItem Header="_Statistics">
-                <MenuItem Header="Boss Cooldowns" Click="BossCooldownsButton_Click" />
+                <MenuItem Header="_Game Data">
+                   <!-- §236: tracks the player's own Trade Zone auctions. It reads
+                     public listing pages and remembers what they said; it never
+                     posts, bids or ends anything, all of which need a logged-in
+                     session. What it remembers stays on this machine - see
+                     Services/AuctionTrackerService.cs. -->
+                <MenuItem Header="_Auctions" Click="AuctionTrackerButton_Click" />
+                <MenuItem Header="Catch Logs" Click="HuntingLogButton_Click" />
                 <MenuItem Header="Lifetime Stats" Click="HuntingStatsButton_Click" />
+                <!-- §407: the world picture with every published map boxed
+                     and named, and a search for a Pokémon or a map - in
+                     place of §397's Spawns submenu of five region pages
+                     (those still exist behind the Page buttons). In its
+                     alphabetical place. -->
+                <MenuItem Header="Maps" Click="MapsMenuItem_Click" />
                 <MenuItem Header="Previously Battled Players" Click="PreviouslyBattledUsersButton_Click" />
                     <!-- Three small standalone tools - species data from the
                          cleaned PokemonSim pokedex (calc-pokedex.json), moves from
                          the same moves.json the boss panel reads, math in
                          PokemonBattleMath - see MIGRATION_GUIDE.md §89. -->
                 </MenuItem>
-                <MenuItem Header="_Appearance" Click="AppearanceButton_Click" />
-                <MenuItem Header="_Events" Click="EventsButton_Click" />
+                <!-- §345: Appearance became a parent of two. "Change
+                     Appearance" is the window this item used to open,
+                     unchanged; "Custom Appearances" is the community
+                     gallery. The old handler keeps its name so nothing
+                     else that references it has to move. -->
+                <MenuItem Header="_Appearance">
+                    <MenuItem Header="Change Appearance" Click="AppearanceButton_Click" />
+                    <MenuItem Header="Custom Appearances" Click="CustomAppearancesButton_Click" />
+                </MenuItem>
+                <!-- §253: the Events menu (§29's guild Events board) is gone
+                     with the board. -->
                 <!-- §233: the live World Quest tracker. Top level rather than
                      beside the World Quest Calculator under Game Information ->
                      Calculators, because the two are different things: the
@@ -105,34 +211,56 @@
                      fetches the running quest and watches the client for
                      catches. Its progress never leaves this machine - see
                      Services/WorldQuestService.cs. -->
-                <MenuItem Header="_World Quest" Click="WorldQuestButton_Click" />
-                <!-- §236: tracks the player's own Trade Zone auctions. It reads
-                     public listing pages and remembers what they said; it never
-                     posts, bids or ends anything, all of which need a logged-in
-                     session. What it remembers stays on this machine - see
-                     Services/AuctionTrackerService.cs. -->
-                <MenuItem Header="_Auctions" Click="AuctionTrackerButton_Click" />
+                <!-- §250: the mode toggle - one item that enters AND leaves.
+                     §251: one item again (§250's submenu opened the World
+                     Quest window §233 built; that window's figures and its
+                     watcher live in the stats panel now, and the window is
+                     gone). §252: coloured while a quest is running and the
+                     mode is off (the questLive class, styled above). §254:
+                     the header is the two words and nothing else - the bound
+                     "Start ... / Leave ... Hunting" label went - and the
+                     tooltip says which click this is, in three states. -->
+                <MenuItem Header="_World Quest" Command="{Binding ToggleWorldQuestCommand}"
+                          Classes.questLive="{Binding WorldQuestLive}"
+                          ToolTip.Tip="{Binding WorldQuestMenuTip}" />
                 <!-- §154: the offline battle simulator (PokemonSim library +
                      SimulatorWindow). Deliberately NOT behind Admin Login -
                      it is a toy for anyone, touches no hunting data, and one
                      window per click policy comes from WindowRegistry. -->
-                <MenuItem Header="_Simulator" Click="SimulatorButton_Click" />
-                            <MenuItem Header="Catch Logs" Click="HuntingLogButton_Click" />
+                <MenuItem Header="_Battle Sim" Click="SimulatorButton_Click" />
                                 <!-- Reads PRO's real update history straight from the Update
                          Logs forum topic - see AnnouncementsService and
                          MIGRATION_GUIDE.md §83/§84. -->
-                    <MenuItem Header="Announcements" Click="AnnouncementsButton_Click" />
-                <!-- §127/§136. Report a Problem normally lives at the foot of
-                     the stats panel, beside the swap arrow. This menu copy is its
-                     fallback for when that panel is hidden and takes the button
-                     with it - the Margin is the original spacing that held it
-                     away from Announcements, kept so the fallback looks like it
-                     always did rather than like a new item crowding the menu.
-                 
-                     Exactly one of the two is ever visible: this one is bound to
-                     the negation of the flag the other one's container follows. -->
-                <MenuItem Header="_Report a Problem" Click="ReportProblemButton_Click"
-                          Margin="55,0,0,0" IsVisible="{Binding !ShowStatsPanel}" />
+                    <MenuItem Header="News" Click="AnnouncementsButton_Click"
+                              Classes.newsLive="{Binding NewsLive}"
+                              ToolTip.Tip="{Binding NewsMenuTip}" />
+
+                <!-- §280: one box over the tracker's own records - the
+                     Pokémon it knows, the maps it has hunted, the players it
+                     has battled - opening whichever window already answers
+                     that kind of question. -->
+                <MenuItem Header="Search" Click="SearchButton_Click" />
+                <!-- §369. The last item in the bar, and only there at all
+                     when the tracker has found a newer build than the one
+                     running. Not a permanently-present "Check for updates"
+                     that usually says no: the whole point is that a player
+                     who is not looking for an update still sees one.
+
+                     Its header carries the version, so the bar says
+                     "Update 1.0.7" rather than leaving the player to open
+                     something to find out what it is. -->
+                <MenuItem Header="{Binding UpdateMenuHeader}"
+                          Click="UpdateButton_Click"
+                          IsVisible="{Binding UpdateAvailable}"
+                          Classes.updateAvailable="{Binding UpdateAvailable}"
+                          ToolTip.Tip="{Binding UpdateMenuTip}" />
+                <!-- §256: the menu bar's copy of Report a Problem is gone. §136
+                     had put it here as the fallback for a hidden stats panel,
+                     §251 showed it in World Quest mode as well, §255 took the
+                     mode back, and the ask was to take the rest: the button
+                     lives at the foot of the stats panel and nowhere else, so
+                     hiding the panel hides it. A menu bar at the default
+                     window width had no room for a ninth item anyway. -->
             </Menu>
         </ThemeVariantScope>
 
@@ -146,21 +274,109 @@
              the foot of the stats panel, so the slot is gone and the line
              runs to the window's edge. The buttons start at the left edge on
              both stats sides now (they used to start at the slot's inner
-             edge when the panel was docked left). TextWrapping keeps a long
-             message from overflowing the window. -->
+             edge when the panel was docked left).
+
+             §336: the status line used to wrap. This row is auto-height, so
+             a three-line message made the row three lines tall and pushed
+             the sprites, the table and the stats panel down the window - and
+             pushed them back up when the message got shorter. A tester
+             reported the jumping as making him uncomfortable.
+
+             So the line no longer wraps: NoWrap pins it to exactly one line
+             whatever it says, CharacterEllipsis ends anything too long with
+             an ellipsis rather than letting it overflow, and the tooltip
+             carries the whole text for the messages that are occasionally
+             longer than the bar (a World Quest refusal, a failed client
+             switch). The row's height is now the buttons' height and only
+             the buttons' height, so NOTHING below it can move.
+
+             §336 also shortened the tracker's own lines at the source - see
+             ReportIdleStatus - so the ellipsis is the exception rather than
+             the normal state of the bar. -->
         <Grid Grid.Row="1" Margin="0,0,0,10" ColumnDefinitions="Auto,*">
-            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="5">
-                <Button Content="Set Target" Command="{Binding SelectTargetCommand}" />
-                <Button Content="▶ Start" Command="{Binding PlayCommand}" />
-                <Button Content="■ Stop" Command="{Binding StopCommand}" />
-                <Button Content="↺ Reset" Command="{Binding ResetCommand}" />
+            <StackPanel Grid.Column="0" Classes="toolbar" Orientation="Horizontal" Spacing="5">
+                <!-- §264. Set Target, Start, Stop and Reset are the normal
+                     hunt's controls and none of them is usable in World Quest
+                     mode: the target is forced to the quest's species and
+                     greyed (§250), and the session is started and stopped by
+                     the toggle itself. Rather than sit there disabled, they
+                     step aside for the mode's own two, which were taking a
+                     third of the stats panel's height. -->
+                <!-- §365: the hand-tuned sizes moved to
+                     ThemeManager.ToolbarButtonSizes and come back as
+                     resources scaled by the Buttons font size. At 12px -
+                     ThemeManager.ToolbarBaseFontSize, the size they were
+                     tuned at - these resolve to exactly the 80/60/55/70 and
+                     27 that used to be written here, so nothing moves;
+                     above it they grow with the label and below it they
+                     shrink with it.
+
+                     MinWidth/MinHeight rather than Width/Height, which is
+                     §355's rule and the reason this scales safely: a number
+                     scaled by font SIZE still knows nothing about how wide a
+                     font FAMILY draws, so the floor lets a wide family push
+                     a button out rather than trimming its text. Retune the
+                     row in ThemeManager, not here. -->
+                <StackPanel Orientation="Horizontal" Spacing="5" IsVisible="{Binding !IsWorldQuestPanel}">
+                    <Button Content="Set Target" Command="{Binding SelectTargetCommand}"
+                            MinWidth="{DynamicResource ThemeToolbarSetTargetWidth}"
+                            MinHeight="{DynamicResource ThemeToolbarButtonHeight}"/>
+                    <Button Content="▶ Start" Command="{Binding PlayCommand}"
+                            MinWidth="{DynamicResource ThemeToolbarStartWidth}"
+                            MinHeight="{DynamicResource ThemeToolbarButtonHeight}"/>
+                    <Button Content="■ Stop" Command="{Binding StopCommand}"
+                            MinWidth="{DynamicResource ThemeToolbarStopWidth}"
+                            MinHeight="{DynamicResource ThemeToolbarButtonHeight}"/>
+                    <Button Content="↺ Reset" Command="{Binding ResetCommand}"
+                            MinWidth="{DynamicResource ThemeToolbarResetWidth}"
+                            MinHeight="{DynamicResource ThemeToolbarButtonHeight}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Spacing="5" IsVisible="{Binding IsWorldQuestPanel}">
+                    <!-- §355: a floor of its own. This is the button that
+                         actually moved: AutoDetectText is "Auto Detect: On"
+                         or "Auto Detect: Off", one character apart, and the
+                         pin, Exclude Stats and Set Screen Boundaries slid
+                         sideways every time it was pressed. 150 clears the
+                         longer label at the default font with room to spare,
+                         so both states render at the same width. At a large
+                         enough theme font it grows past 150 and the single
+                         character can move things again - a floor is the
+                         graceful version of that, a fixed width would clip
+                         the label instead.
+
+                         §365: that floor is now 150 AT 12px and scales from
+                         there, so the argument above holds at every Buttons
+                         font size rather than only at the one it was written
+                         for. -->
+                    <Button Content="{Binding Quest.AutoDetectText}"
+                            MinHeight="{DynamicResource ThemeToolbarButtonHeight}"
+                            MinWidth="{DynamicResource ThemeToolbarAutoDetectWidth}"
+                            Command="{Binding Quest.ToggleAutoDetectCommand}"
+                            ToolTip.Tip="While on, reads each catch's IVs off the preview panel in the PRO client every second and a half. Off each time World Quest hunting starts." />
+                    <!-- §365: was a fixed Width="170" and the longest label
+                         in the row, so it was the next one due to clip. A
+                         scaled floor instead, like everything else here. -->
+                    <Button Content="Submit Screenshot or Ctrl+V"
+                            MinHeight="{DynamicResource ThemeToolbarButtonHeight}"
+                            MinWidth="{DynamicResource ThemeToolbarSubmitScreenshotWidth}"
+                            Command="{Binding Quest.SubmitScreenshotCommand}"
+                            ToolTip.Tip="Reads the IVs off a screenshot of the client with the catch preview open, or of the Pokemon's summary card. Ctrl+V reads one straight off the clipboard, so Win+Shift+S then Ctrl+V needs no file at all. A PNG reads best - a JPG may not read at all. If a few of the card's IVs do not read, the rest go in the box below for you to complete." />
+                </StackPanel>
                 <!-- §103: icon-only and beside Reset (was "📌 Always on
                      Top" with a 40px gap). Still a separate control - not
                      merged into Reset - so a mis-click can't reset
                      anything; the checked state shows via the
                      ToggleButton.themedButton:checked border style in
                      App.axaml, not color alone. -->
+                <!-- §365: a MinHeight so the pin rises with the row rather
+                     than being stretched to it. Its width stays whatever the
+                     glyph needs, and its FontSize="12" is left alone
+                     deliberately - that is the size of the 📌 itself, not a
+                     label, and it is the one control in this row that does
+                     NOT follow the Buttons font. Say the word if it should. -->
                 <ToggleButton Classes="themedButton" Padding="8,4" FontSize="12" Content="📌"
+                              MinHeight="{DynamicResource ThemeToolbarButtonHeight}"
                               IsChecked="{Binding $parent[Window].Topmost, Mode=TwoWay}"
                               ToolTip.Tip="Always on top"
                               AutomationProperties.Name="Always on top" />
@@ -170,18 +386,24 @@
                      setting - and it is reached often enough while
                      arranging a layout that two clicks into a menu was
                      the wrong place for it. -->
-                <Button Content="Exclude Stats" Click="ExcludeStatsButton_Click"
+                <Button Content="Remove Stats" Click="ExcludeStatsButton_Click"
+                        MinWidth="{DynamicResource ThemeToolbarRemoveStatsWidth}"
+                        MinHeight="{DynamicResource ThemeToolbarButtonHeight}"
                         ToolTip.Tip="Choose which stats and which table columns are shown" />
                 <!-- §135: a last resort, and the button says so twice - in
                      this tooltip and in the warning it opens with (which a
                      checkbox can silence). Auto-detection stays in charge;
                      a saved box is used only when it finds nothing. -->
-                <Button Content="Set Screen Boundaries" Click="SetScreenBoundariesButton_Click"
+                <Button Content="Set Screen" Click="SetScreenBoundariesButton_Click"
+                        MinWidth="{DynamicResource ThemeToolbarSetScreenWidth}"
+                        MinHeight="{DynamicResource ThemeToolbarButtonHeight}"
                         ToolTip.Tip="Set screen boundaries as a last resort if auto detection fails, and no errors occur."/>
             </StackPanel>
             <TextBlock Grid.Column="1" Text="{Binding StatusMessage}"
                        Foreground="{DynamicResource ThemeTextBrush}"
-                       VerticalAlignment="Center" Margin="12,0,0,0" TextWrapping="Wrap" />
+                       VerticalAlignment="Center" Margin="12,0,0,0"
+                       TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+                       ToolTip.Tip="{Binding StatusMessage}" />
         </Grid>
 
         <!-- Main content: sprites + encounter table on one side, vertical stats
@@ -197,7 +419,9 @@
             <!-- Right-side (or left-side, once swapped) stats panel: replaces
                  the vertical stack of underlined labels + values (Time Hunting,
                  Total Encounters, Since Shiny, Since Form, Successful Catches,
-                 Failed Catches, Catch Rate). Each block below is individually
+                 Failed Catches, Catch Rate - §364 dropped the last of those
+                 and added Target Pokémon Caught and Target Pokémon Fled).
+                 Each block below is individually
                  hideable via the Exclude Stats window (Stats menu) - hidden
                  stats keep counting in huntSession, they're just not shown.
                  IsVisible hides this whole Border as one unit (a separate,
@@ -209,31 +433,113 @@
                  is the new Stats
                  Background color from the Appearance window - transparent by
                  default, same as before that option existed. -->
-            <Border DockPanel.Dock="{Binding StatsPanelDock}" Width="220"
-                    IsVisible="{Binding ShowStatsPanel}"
-                    Background="{DynamicResource ThemeStatsBackgroundBrush}"
-                    BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Padding="10">
-                <!-- §136: a two-row Grid rather than one StackPanel, so the
-                     Report a Problem / swap-arrow row is pinned to the foot
-                     of the panel whatever the stats above it add up to. -->
-                <Grid RowDefinitions="*,Auto">
-                <StackPanel Grid.Row="0" Spacing="20">
+            <!-- §384: a Panel round the Border so the frame picture, when
+                 there is one, draws over the panel's edge; the dock, width
+                 and visibility moved up onto it. The Border's width, corners
+                 and padding are the Statistics section's now. -->
+            <Panel x:Name="StatsPanelHost" DockPanel.Dock="{Binding StatsPanelDock}" Width="220"
+                   IsVisible="{Binding ShowStatsPanel}">
+            <Border Background="{DynamicResource ThemeStatsBackgroundBrush}"
+                    BorderBrush="{DynamicResource ThemeBorderBrush}"
+                    BorderThickness="{DynamicResource ThemeStatsBorderThickness}"
+                    CornerRadius="{DynamicResource ThemeStatsCornerRadius}"
+                    Padding="{DynamicResource ThemeStatsPanelPadding}">
+                <!-- §136: a Grid rather than one StackPanel, so the Report a
+                     Problem / swap-arrow row is pinned to the foot of the
+                     panel whatever the stats above it add up to. §251: three
+                     rows. The middle one is World Quest mode's controls,
+                     present only in that mode; and the stats row scrolls if
+                     it ever outgrows the window, which the quest figures with
+                     their captions can do at the default 600px height. The
+                     bars are invisible app-wide (App.axaml), so nothing shows
+                     unless the wheel is needed. -->
+                <Grid RowDefinitions="*,Auto,Auto">
+                <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <StackPanel Spacing="20">
+                    <!-- §251: the hunt stats are in two groups around Since
+                         Shiny, because World Quest mode keeps exactly that
+                         one - a quest is a shiny hunt too - and replaces the
+                         rest with the quest's own figures. Each stat's own
+                         Exclude Stats flag still applies inside its group. -->
+                    <StackPanel Spacing="20" IsVisible="{Binding !IsWorldQuestPanel}">
                     <StackPanel Spacing="2" Margin="0,7,0,0" IsVisible="{Binding ShowTimeHunting}">
-                        <TextBlock Text="Time Hunting" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="Time Hunting" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" />
                         <TextBlock Text="{Binding TimeHunting}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
                     </StackPanel>
                     <StackPanel Spacing="2" IsVisible="{Binding ShowTotalEncounters}">
-                        <TextBlock Text="Total Encounters" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="Total Pokémon Encountered" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" />
                         <TextBlock Text="{Binding TotalEncounters}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
                     </StackPanel>
                     <StackPanel Spacing="2" IsVisible="{Binding ShowTargetedEncountersFound}">
-                        <TextBlock Text="Targeted Encounters Found" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+                        <TextBlock Text="Target Pokémon Found" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
                         <TextBlock Text="{Binding TargetedEncountersFound}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
                     </StackPanel>
+                    <!-- §364: what became of the ones that were found. Both
+                         are derived from the same per-species tallies the
+                         encounter table's Caught and Fled columns read, summed
+                         over the distinct targeted species - so a Pokemon
+                         holding two target slots (its form and its shiny) is
+                         counted once, exactly as Found already is. Neither
+                         replaces Successful Catches or Pokémon Broken Free
+                         below: those count every catch and every break-out,
+                         target or not, and a hunter catches things he is not
+                         hunting. Same wrapped label as Found - these are the
+                         longest captions in a 220px panel. -->
+                    <StackPanel Spacing="2" IsVisible="{Binding ShowTargetedPokemonCaught}">
+                        <TextBlock Text="Target Pokémon Caught" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+                        <TextBlock Text="{Binding TargetedPokemonCaught}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Spacing="2" IsVisible="{Binding ShowTargetedPokemonFled}">
+                        <TextBlock Text="Target Pokémon Fled" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+                        <TextBlock Text="{Binding TargetedPokemonFled}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    </StackPanel>
+
+                    <!-- §251: World Quest mode's figures - the countdown and
+                         §235's four - read from the quest view model that was
+                         the World Quest window's (MainWindowViewModel.Quest).
+                         The same shape as the hunt stats, plus §235's caption
+                         under each figure saying what it is measured against:
+                         all four re-aim at the second ticket the moment the
+                         first is earned, and a figure that changed target
+                         without saying so would read as a figure that changed
+                         value. The countdown is a MAXIMUM - a quest also ends
+                         the moment the community goal is met - and its
+                         tooltip says so. Tighter spacing than the hunt stats
+                         because there are more lines to fit. -->
+                    <StackPanel Spacing="10" IsVisible="{Binding IsWorldQuestPanel}">
+                        <StackPanel Spacing="2" Margin="0,7,0,0" ToolTip.Tip="{Binding Quest.EndsText}">
+                            <TextBlock Text="Time Remaining" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding Quest.CountdownText}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="IV's Needed" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding Quest.IvsNeededText}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding Quest.IvsNeededCaption}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="Average Submissions" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding Quest.AverageSubmissionsText}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding Quest.AverageSubmissionsCaption}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="IV's Obtained" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding Quest.ObtainedText}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding Quest.ObtainedCaption}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="Current %" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding Quest.CurrentPercentText}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding Quest.CurrentPercentCaption}" Foreground="{DynamicResource ThemeTextBrush}" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </StackPanel>
+
                     <StackPanel Spacing="2" IsVisible="{Binding ShowSinceShiny}">
-                        <TextBlock Text="Since Shiny" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="Encounters Since Shiny" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" />
                         <TextBlock Text="{Binding SinceShiny}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
                     </StackPanel>
+
+                    <StackPanel Spacing="20" IsVisible="{Binding !IsWorldQuestPanel}">
                     <StackPanel Spacing="2" IsVisible="{Binding ShowSinceForm}">
                         <!-- §136: the Pause Since Form control is this small
                              icon beside the label - two bars while counting
@@ -247,7 +553,7 @@
                              this with it now - the control belongs to the number
                              it pauses. -->
                         <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Center">
-                            <TextBlock Text="Since Form" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" VerticalAlignment="Center" />
+                            <TextBlock Text="Encounters Since Form" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" VerticalAlignment="Center" />
                             <Button Margin="0,0,-7,0" Padding="6,3" VerticalAlignment="Center"
                                     Command="{Binding ToggleSinceFormPausedCommand}"
                                     ToolTip.Tip="{Binding SinceFormPauseButtonText}"
@@ -260,22 +566,43 @@
                         <TextBlock Text="{Binding SinceForm}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
                     </StackPanel>
                     <StackPanel Spacing="2" IsVisible="{Binding ShowSuccessfulCatches}">
-                        <TextBlock Text="Successful Catches" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="Successful Catches" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" />
                         <TextBlock Text="{Binding SuccessfulCatches}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
                     </StackPanel>
                     <StackPanel Spacing="2" IsVisible="{Binding ShowPokemonBrokenFree}">
-                        <TextBlock Text="Pokémon Broken Free" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
+                        <TextBlock Text="Pokémon Broken Free" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" HorizontalAlignment="Center" />
                         <TextBlock Text="{Binding FailedCatches}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
                     </StackPanel>
-                    <StackPanel Spacing="2" IsVisible="{Binding ShowCatchRate}">
-                        <TextBlock Text="Catch Rate" Foreground="{DynamicResource ThemeTextBrush}" TextDecorations="Underline" FontWeight="Bold" HorizontalAlignment="Center" />
-                        <TextBlock Text="{Binding CatchRate}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
                     </StackPanel>
                     <!-- §137: the Current Event label and dropdown that used to
                          end this list are gone - the selector never did more
                          than persist a name, and the counterpart-sprite
                          follow-up it was waiting for is served by the Events
                          board now. -->
+                </StackPanel>
+                </ScrollViewer>
+
+                <!-- §251: World Quest mode's three ways of counting a catch -
+                     Auto Detect, Submit Screenshot, and the IV total typed by
+                     hand. §264 moved the first two up to the toolbar, into the
+                     slot the hunting controls vacate in this mode, which gives
+                     the stats above room to breathe; the typed total stays
+                     here, next to the figures it is correcting. Enter in the
+                     box is Add IVs (MainWindow.axaml.cs). The messages all
+                     three produce go to the toolbar's status line, which is
+                     the quest view model's status line while the mode is
+                     on. -->
+                <StackPanel Grid.Row="1" Spacing="6" Margin="0,12,0,0" IsVisible="{Binding IsWorldQuestPanel}">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBox Grid.Column="0" MinWidth="0" PlaceholderText="IV total"
+                                 Text="{Binding Quest.ManualTotalText}"
+                                 KeyDown="WorldQuestIvTotalBox_KeyDown"
+                                 ToolTip.Tip="The catch's six IVs added together, 0 to 186." />
+                        <Button Grid.Column="1" Margin="6,0,0,0" Padding="10,6" VerticalAlignment="Center"
+                                Content="Add IVs"
+                                Command="{Binding Quest.SubmitPokemonCommand}"
+                                ToolTip.Tip="Adds a catch you read off the panel yourself. Always available - use it whenever a catch is not detected." />
+                    </Grid>
                 </StackPanel>
 
                 <!-- §136: the swap arrow and Report a Problem, moved here from
@@ -285,9 +612,17 @@
                      so they stack outward-in - the arrow hugs the panel's
                      outer edge, pointing where the panel will MOVE, and
                      Report a Problem sits inboard of it - and the pair flips
-                     with the panel. Hiding the panel takes them with it and
-                     the File-menu copy of Report a Problem comes back. -->
-                <DockPanel Grid.Row="1" LastChildFill="False" Margin="0,12,0,0">
+                     with the panel. Hiding the panel takes them with it; since
+                     §256 nothing comes back in their place - the button is
+                     here and nowhere else.
+                     §251: in World Quest mode the inboard slot holds the undo
+                     for a bad read, detected or typed, and Report a Problem
+                     is absent for the duration (§255). §254: that undo is
+                     Remove Catch, which opens the list of every catch counted
+                     for this quest with a Remove on each row - Remove Last
+                     could only take the newest, and a bad read is not always
+                     the newest by the time it is noticed. -->
+                <DockPanel Grid.Row="2" LastChildFill="False" Margin="0,12,0,0">
                     <Button DockPanel.Dock="{Binding StatsPanelDock}"
                             VerticalAlignment="Center" Margin="6,0,0,0" Padding="12,6"
                             Command="{Binding ToggleStatsPanelSideCommand}"
@@ -301,26 +636,73 @@
                             VerticalAlignment="Center" Margin="6,0,6,0" Padding="10,6"
                             Content="Report a Problem"
                             Click="ReportProblemButton_Click"
+                            IsVisible="{Binding !IsWorldQuestPanel}"
                             ToolTip.Tip="Save a report with the current log, a screenshot and a tracking check" />
+                    <Button DockPanel.Dock="{Binding StatsPanelDock}"
+                            VerticalAlignment="Center" Margin="6,0,6,0" Padding="10,6"
+                            Content="Remove Catch"
+                            Click="WorldQuestCatchesButton_Click"
+                            IsVisible="{Binding IsWorldQuestPanel}"
+                            ToolTip.Tip="Opens the list of every catch counted for this quest, newest first, with a Remove on each." />
                 </DockPanel>
                 </Grid>
             </Border>
+            <controls:NineSliceFrame Source="{DynamicResource ThemeStatsFrameImage}"
+                                     Inset="{DynamicResource ThemeStatsFrameInset}"
+                                     Margin="{DynamicResource ThemeStatsFrameOverhang}"
+                                     IsHitTestVisible="False" />
+            </Panel>
 
             <Grid RowDefinitions="Auto,*" Margin="16,0,16,0">
 
                 <!-- Sprite row: replaces the three PictureBox + Label pairs (CurrentlyHunting,
-                     CurrentEncounter, PreviousEncounter) -->
-                <Grid Grid.Row="0" ColumnDefinitions="*,*,*" Margin="0,0,0,16">
+                     CurrentEncounter, PreviousEncounter)
+
+                     §349: FontFamily/FontSize here rather than on each label.
+                     Font is inherited, so one setter on the row carries to
+                     everything in it - the same mechanism App.axaml's Window
+                     style has used for the whole app until now.
+
+                     §350: written as TextElement.FontFamily/TextElement.FontSize.
+                     Avalonia's Grid is a Panel, not a TemplatedControl, so it has
+                     no FontFamily/FontSize of its own; the inheritable font lives
+                     on TextElement as an attached property that any Control can
+                     carry. Same property object either way - TemplatedControl and
+                     TextBlock both AddOwner it - so inheritance reaches the labels
+                     exactly as intended. -->
+                <!-- §387: a panel round the whole sprite row - fill, border,
+                     picture and frame of its own, invisible until a theme
+                     sets one (thickness and padding are derived from that).
+                     The row's margin moved up onto the host. -->
+                <Panel x:Name="SpriteRowHost" Grid.Row="0" Margin="0,0,0,16">
+                <Border Background="{DynamicResource ThemeSpriteRowBackgroundBrush}"
+                        BorderBrush="{DynamicResource ThemeSpriteRowBorderBrush}"
+                        BorderThickness="{DynamicResource ThemeSpriteRowBorderThickness}"
+                        CornerRadius="{DynamicResource ThemeSpriteRowCornerRadius}"
+                        Padding="{DynamicResource ThemeSpriteRowPadding}">
+                <Grid ColumnDefinitions="*,*,*"
+                      TextElement.FontFamily="{DynamicResource ThemeSpriteBoxFontFamily}"
+                      TextElement.FontSize="{DynamicResource ThemeSpriteBoxFontSize}">
                     <StackPanel Grid.Column="0" HorizontalAlignment="Center" Spacing="4">
-                        <TextBlock Text="Currently Hunting" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="Bold" />
-                        <!-- Up to 4 targets side by side - TargetSpriteSize (in the
-                             ViewModel) shrinks once there are more than 2, so 3-4
-                             targets still fit comfortably in the same area. -->
+                        <TextBlock Text="Currently Hunting" Foreground="{DynamicResource ThemeSpriteBoxTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" />
+                        <!-- Up to 4 targets side by side - TargetSpriteSize (in
+                             the ViewModel) shrinks as targets are added, so 3
+                             and 4 still fit across this column. The sizes and
+                             the arithmetic behind them are in
+                             UpdateTrackerDisplay, not here.
+
+                             §367: the WrapPanel's MaxWidth is gone with
+                             TargetsPanelMaxWidth. It existed to cap the panel
+                             at two cards across so four targets formed a 2x2
+                             grid; the ask is four in one row, and with nothing
+                             capping it the panel does that by itself - the
+                             cards are sized so four fit. It is still a
+                             WrapPanel rather than a horizontal StackPanel so a
+                             narrowed window wraps instead of clipping. -->
                         <ItemsControl ItemsSource="{Binding CurrentTargets}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <WrapPanel HorizontalAlignment="Center"
-                                               MaxWidth="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).TargetsPanelMaxWidth}" />
+                                    <WrapPanel HorizontalAlignment="Center" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
@@ -330,17 +712,32 @@
                                          otherwise a WrapPanel packs items based on each one's actual
                                          content width, and row 2 ends up misaligned with row 1's columns
                                          (e.g. "Chimchar" is narrower than "Charmander", shifting things
-                                         left) instead of lining up cleanly underneath. -->
+                                         left) instead of lining up cleanly underneath.
+
+                                         §367: this Width plus the 5px margins
+                                         either side IS the budget the sizes are
+                                         derived from - four of them have to
+                                         stay inside a 242px column. -->
                                     <StackPanel Spacing="2" Margin="5,2,5,2"
                                                 Width="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).TargetLabelMaxWidth}">
-                                        <Border Classes="huntingSprite" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
-                                                Width="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).TargetSpriteSize}"
-                                                Height="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).TargetSpriteSize}"
-                                                HorizontalAlignment="Center"
+                                        <!-- §384: a Panel round each box for the frame
+                                             picture; the box's width and corners are the
+                                             Pokémon Sprites section's. -->
+                                        <Panel Width="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).TargetSpriteSize}"
+                                               Height="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).TargetSpriteSize}"
+                                               HorizontalAlignment="Center">
+                                        <Border Classes="huntingSprite" BorderBrush="{DynamicResource ThemeSpriteBoxBorderBrush}"
+                                                BorderThickness="{DynamicResource ThemeSpriteBoxBorderThickness}"
+                                                CornerRadius="{DynamicResource ThemeSpriteBoxCornerRadius}"
                                                 PointerPressed="TargetSprite_PointerPressed">
-                                            <Image Source="{Binding Sprite}" Stretch="Uniform" />
+                                            <Image Source="{Binding Sprite}" Stretch="Uniform" Margin="{DynamicResource ThemeSpriteBoxFrameImageMargin}" />
                                         </Border>
-                                        <TextBlock Text="{Binding Name}" Foreground="{DynamicResource ThemeTextBrush}"
+                                        <controls:NineSliceFrame Source="{DynamicResource ThemeSpriteBoxFrameImage}"
+                                                                 Inset="{DynamicResource ThemeSpriteBoxFrameInset}"
+                                                                 Margin="{DynamicResource ThemeSpriteBoxFrameOverhang}"
+                                                                 IsHitTestVisible="False" />
+                                        </Panel>
+                                        <TextBlock Text="{Binding Name}" Foreground="{DynamicResource ThemeSpriteBoxTextBrush}"
                                                    HorizontalAlignment="Center" FontSize="11" TextWrapping="Wrap"
                                                    TextAlignment="Center" />
                                         <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
@@ -351,7 +748,7 @@
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate x:DataType="x:String">
-                                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="23" Height="23" Stretch="Uniform" />
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
@@ -362,11 +759,19 @@
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" HorizontalAlignment="Center" Spacing="4">
-                        <TextBlock Text="Current Encounter" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="Bold" />
-                        <Border Classes="huntingSprite" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Width="96" Height="96">
-                            <Image Source="{Binding CurrentEncounterSprite}" Stretch="Uniform" />
+                        <TextBlock Text="Current Encounter" Foreground="{DynamicResource ThemeSpriteBoxTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" />
+                        <Panel x:Name="CurrentEncounterBox" Width="96" Height="96">
+                        <Border Classes="huntingSprite" BorderBrush="{DynamicResource ThemeSpriteBoxBorderBrush}"
+                                BorderThickness="{DynamicResource ThemeSpriteBoxBorderThickness}"
+                                CornerRadius="{DynamicResource ThemeSpriteBoxCornerRadius}">
+                            <Image Source="{Binding CurrentEncounterSprite}" Stretch="Uniform" Margin="{DynamicResource ThemeSpriteBoxFrameImageMargin}" />
                         </Border>
-                        <TextBlock Text="{Binding CurrentEncounteredLabel}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                        <controls:NineSliceFrame Source="{DynamicResource ThemeSpriteBoxFrameImage}"
+                                                 Inset="{DynamicResource ThemeSpriteBoxFrameInset}"
+                                                 Margin="{DynamicResource ThemeSpriteBoxFrameOverhang}"
+                                                 IsHitTestVisible="False" />
+                        </Panel>
+                        <TextBlock Text="{Binding CurrentEncounteredLabel}" Foreground="{DynamicResource ThemeSpriteBoxTextBrush}" HorizontalAlignment="Center" />
                         <ItemsControl ItemsSource="{Binding CurrentEncounterTypes}" HorizontalAlignment="Center">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -375,18 +780,26 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
-                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="23" Height="23" Stretch="Uniform" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" HorizontalAlignment="Center" Spacing="4">
-                        <TextBlock Text="Previous Encounter" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="Bold" />
-                        <Border Classes="huntingSprite" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Width="96" Height="96">
-                            <Image Source="{Binding PreviousEncounterSprite}" Stretch="Uniform" />
+                        <TextBlock Text="Previous Encounter" Foreground="{DynamicResource ThemeSpriteBoxTextBrush}" HorizontalAlignment="Center" TextDecorations="Underline" FontWeight="{DynamicResource ThemeHeadingFontWeight}" />
+                        <Panel Width="96" Height="96">
+                        <Border Classes="huntingSprite" BorderBrush="{DynamicResource ThemeSpriteBoxBorderBrush}"
+                                BorderThickness="{DynamicResource ThemeSpriteBoxBorderThickness}"
+                                CornerRadius="{DynamicResource ThemeSpriteBoxCornerRadius}">
+                            <Image Source="{Binding PreviousEncounterSprite}" Stretch="Uniform" Margin="{DynamicResource ThemeSpriteBoxFrameImageMargin}" />
                         </Border>
-                        <TextBlock Text="{Binding PreviouslyEncounteredLabel}" Foreground="{DynamicResource ThemeTextBrush}" HorizontalAlignment="Center" />
+                        <controls:NineSliceFrame Source="{DynamicResource ThemeSpriteBoxFrameImage}"
+                                                 Inset="{DynamicResource ThemeSpriteBoxFrameInset}"
+                                                 Margin="{DynamicResource ThemeSpriteBoxFrameOverhang}"
+                                                 IsHitTestVisible="False" />
+                        </Panel>
+                        <TextBlock Text="{Binding PreviouslyEncounteredLabel}" Foreground="{DynamicResource ThemeSpriteBoxTextBrush}" HorizontalAlignment="Center" />
                         <ItemsControl ItemsSource="{Binding PreviousEncounterTypes}" HorizontalAlignment="Center">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -395,13 +808,22 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
-                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
+                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="23" Height="23" Stretch="Uniform" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
                 </Grid>
+                </Border>
+                <controls:NineSliceFrame Source="{DynamicResource ThemeSpriteRowFrameImage}"
+                                         Inset="{DynamicResource ThemeSpriteRowFrameInset}"
+                                         Margin="{DynamicResource ThemeSpriteRowFrameOverhang}"
+                                         IsHitTestVisible="False" />
+                </Panel>
 
+                <!-- §349: the table's own font, set once on the scope that
+                     contains the header and every row. See the sprite row
+                     above for why one setter is enough. -->
                 <!-- §125. One encounter table, one page at a time.
                      
                      This replaced two DataGrids bound to SessionEncountersLeft
@@ -433,7 +855,19 @@
                      how wide a column is, the rows follow it exactly, and
                      dragging a splitter in the header moves the whole
                      table. -->
-                <Grid Grid.Row="1" RowDefinitions="Auto,*,Auto" Grid.IsSharedSizeScope="True">
+                <!-- §350: TextElement.* attached form - see the sprite row above. -->
+                <!-- §384: the table pulls in by the frame's corner size when
+                     there is a frame (ThemeTableFrameMargin is 0 otherwise),
+                     and the frame itself is the sibling after it, in the
+                     same cell, so it draws round the whole table.
+                     §393: every frame's Margin is its overhang resource - a
+                     negative margin from ThemeManager that grows the frame
+                     past its panel, over the window around it; nothing on
+                     the way up this tree clips, so it shows. -->
+                <Grid x:Name="EncounterTableHost" Grid.Row="1" RowDefinitions="Auto,*,Auto" Grid.IsSharedSizeScope="True"
+                      Margin="{DynamicResource ThemeTableFrameMargin}"
+                      TextElement.FontFamily="{DynamicResource ThemeEncountersFontFamily}"
+                      TextElement.FontSize="{DynamicResource ThemeEncountersFontSize}">
 
                     <!-- Header. Column widths repeated verbatim in the row
                          template below; the two must stay in step.
@@ -455,10 +889,10 @@
                          block instead of a word on a bar. -->
                     <Border Grid.Row="0"
                             Background="Transparent"
-                            BorderBrush="{DynamicResource ThemeBorderBrush}"
-                            BorderThickness="0,0,0,1"
+                            BorderBrush="{DynamicResource ThemeEncountersBorderBrush}"
+                            BorderThickness="{DynamicResource ThemeEncountersHeaderLineThickness}"
                             Margin="0,0,0,2">
-                    <Grid>
+                    <Grid x:Name="EncounterHeaderGrid">
                         <!-- §189: the Pokemon column is a width now, not a star.
                              As a star it swallowed every pixel a wide window
                              had, so full screen gave it about a thousand of
@@ -466,66 +900,82 @@
                              edge with no way to change it. A width plus the
                              trailing star filler means the table is the size
                              it needs to be and the empty space is empty
-                             space, and the splitters between the chips let
-                             any of it be dragged. Each splitter moves the
-                             column on either side of it, so the table's total
-                             width never runs off the window and no horizontal
-                             scrollbar is needed. -->
+                             space, and the grips between the chips let any
+                             of it be dragged.
+                             §392: the grips are the app's own, not
+                             GridSplitters. A GridSplitter between two pixel
+                             columns resizes only the one on its left and
+                             clamps the drag by the one on its right, so each
+                             drag grew the table with nothing shrinking, a
+                             neighbour at its limit froze a column it did not
+                             even touch, and Rate - last, with no grip after
+                             it - could not be resized at all. Each grip now
+                             resizes the column on its left alone, within the
+                             room the trailing filler has, so the header can
+                             never run past the table; and Rate has a grip
+                             of its own. See ColumnGrip_PointerPressed. -->
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="EncounterName" Width="155" MinWidth="155" MaxWidth="225" />
+                            <ColumnDefinition SharedSizeGroup="EncounterName" Width="185" MinWidth="100" MaxWidth="500" />
                             <ColumnDefinition Width="2" />
-                            <ColumnDefinition SharedSizeGroup="EncounterCount" Width="75" MinWidth="65" MaxWidth="100" />
+                            <ColumnDefinition SharedSizeGroup="EncounterCount" Width="115" MinWidth="10" MaxWidth="250" />
                             <ColumnDefinition Width="2" />
-                            <ColumnDefinition SharedSizeGroup="EncounterCaught" Width="75" MinWidth="55" MaxWidth="120" />
+                            <ColumnDefinition SharedSizeGroup="EncounterCaught" Width="85" MinWidth="10" MaxWidth="250" />
                             <ColumnDefinition Width="2" />
-                            <ColumnDefinition SharedSizeGroup="EncounterFled" Width="75" MinWidth="55" MaxWidth="120" />
+                            <ColumnDefinition SharedSizeGroup="EncounterFled" Width="85" MinWidth="10" MaxWidth="250" />
                             <ColumnDefinition Width="2" />
-                            <ColumnDefinition SharedSizeGroup="EncounterLast" Width="130" MinWidth="75" MaxWidth="120" />
+                            <ColumnDefinition SharedSizeGroup="EncounterLast" Width="155" MinWidth="10" MaxWidth="250" />
                             <ColumnDefinition Width="2" />
-                            <ColumnDefinition SharedSizeGroup="EncounterRate" Width="70" MinWidth="55" MaxWidth="100" />
+                            <ColumnDefinition SharedSizeGroup="EncounterRate" Width="90" MinWidth="10" MaxWidth="250" />
+                            <ColumnDefinition Width="2" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <Border Grid.Column="0" Background="{DynamicResource ThemeTableHeaderBrush}"
-                                BorderBrush="{DynamicResource ThemeBorderBrush}"
-                                BorderThickness="1" Margin="0,0,0,2">
+                                BorderBrush="{DynamicResource ThemeEncountersBorderBrush}"
+                                BorderThickness="{DynamicResource ThemeEncountersBorderThickness}"
+                                CornerRadius="{DynamicResource ThemeEncountersCornerRadius}" Margin="0,0,0,2">
                             <TextBlock Text="Pokémon" Margin="6,5" TextAlignment="Center"
-                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                                       FontWeight="{DynamicResource ThemeHeadingFontWeight}" Foreground="{DynamicResource ThemeEncountersTextBrush}" />
                         </Border>
                         <Border Grid.Column="2" Background="{DynamicResource ThemeTableHeaderBrush}"
-                                BorderBrush="{DynamicResource ThemeBorderBrush}"
-                                BorderThickness="1" Margin="0,0,0,2"
+                                BorderBrush="{DynamicResource ThemeEncountersBorderBrush}"
+                                BorderThickness="{DynamicResource ThemeEncountersBorderThickness}"
+                                CornerRadius="{DynamicResource ThemeEncountersCornerRadius}" Margin="0,0,0,2"
                                 IsVisible="{Binding ShowEncountersColumn}">
                             <TextBlock Text="Encounters" Margin="6,5" TextAlignment="Center"
-                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                                       FontWeight="{DynamicResource ThemeHeadingFontWeight}" Foreground="{DynamicResource ThemeEncountersTextBrush}" />
                         </Border>
                         <Border Grid.Column="4" Background="{DynamicResource ThemeTableHeaderBrush}"
-                                BorderBrush="{DynamicResource ThemeBorderBrush}"
-                                BorderThickness="1" Margin="0,0,0,2"
+                                BorderBrush="{DynamicResource ThemeEncountersBorderBrush}"
+                                BorderThickness="{DynamicResource ThemeEncountersBorderThickness}"
+                                CornerRadius="{DynamicResource ThemeEncountersCornerRadius}" Margin="0,0,0,2"
                                 IsVisible="{Binding ShowCaughtColumn}">
                             <TextBlock Text="Caught" Margin="6,5" TextAlignment="Center"
-                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                                       FontWeight="{DynamicResource ThemeHeadingFontWeight}" Foreground="{DynamicResource ThemeEncountersTextBrush}" />
                         </Border>
                         <Border Grid.Column="6" Background="{DynamicResource ThemeTableHeaderBrush}"
-                                BorderBrush="{DynamicResource ThemeBorderBrush}"
-                                BorderThickness="1" Margin="0,0,0,2"
+                                BorderBrush="{DynamicResource ThemeEncountersBorderBrush}"
+                                BorderThickness="{DynamicResource ThemeEncountersBorderThickness}"
+                                CornerRadius="{DynamicResource ThemeEncountersCornerRadius}" Margin="0,0,0,2"
                                 IsVisible="{Binding ShowRanFromColumn}">
                             <TextBlock Text="Fled" Margin="6,5" TextAlignment="Center"
-                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                                       FontWeight="{DynamicResource ThemeHeadingFontWeight}" Foreground="{DynamicResource ThemeEncountersTextBrush}" />
                         </Border>
                         <Border Grid.Column="8" Background="{DynamicResource ThemeTableHeaderBrush}"
-                                BorderBrush="{DynamicResource ThemeBorderBrush}"
-                                BorderThickness="1" Margin="0,0,0,2"
+                                BorderBrush="{DynamicResource ThemeEncountersBorderBrush}"
+                                BorderThickness="{DynamicResource ThemeEncountersBorderThickness}"
+                                CornerRadius="{DynamicResource ThemeEncountersCornerRadius}" Margin="0,0,0,2"
                                 IsVisible="{Binding ShowLastEncounteredColumn}">
                             <TextBlock Text="Last Encountered" Margin="6,5" TextAlignment="Center"
-                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                                       FontWeight="{DynamicResource ThemeHeadingFontWeight}" Foreground="{DynamicResource ThemeEncountersTextBrush}" />
                         </Border>
                         <Border Grid.Column="10" Background="{DynamicResource ThemeTableHeaderBrush}"
-                                BorderBrush="{DynamicResource ThemeBorderBrush}"
-                                BorderThickness="1" Margin="0,0,0,2"
+                                BorderBrush="{DynamicResource ThemeEncountersBorderBrush}"
+                                BorderThickness="{DynamicResource ThemeEncountersBorderThickness}"
+                                CornerRadius="{DynamicResource ThemeEncountersCornerRadius}" Margin="0,0,0,2"
                                 IsVisible="{Binding ShowRateColumn}">
                             <TextBlock Text="Rate" Margin="6,5" TextAlignment="Center"
-                                       FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                                       FontWeight="{DynamicResource ThemeHeadingFontWeight}" Foreground="{DynamicResource ThemeEncountersTextBrush}" />
                         </Border>
 
                         <!-- §189: the grips. They sit in the gutters between the
@@ -533,22 +983,36 @@
                              separate blocks, and take the resize cursor so the
                              handle is findable without a visible seam. Only the
                              header carries them - a splitter per row would be a
-                             thousand of them for one job. -->
-                        <GridSplitter Grid.Column="1" ResizeDirection="Columns"
-                                      Background="Transparent" Cursor="SizeWestEast" Margin="0,0,0,2"
-                                      ToolTip.Tip="Drag to resize the Pokémon and Encounters columns" />
-                        <GridSplitter Grid.Column="3" ResizeDirection="Columns"
-                                      Background="Transparent" Cursor="SizeWestEast" Margin="0,0,0,2"
-                                      ToolTip.Tip="Drag to resize the Encounters and Caught columns" />
-                        <GridSplitter Grid.Column="5" ResizeDirection="Columns"
-                                      Background="Transparent" Cursor="SizeWestEast" Margin="0,0,0,2"
-                                      ToolTip.Tip="Drag to resize the Caught and Fled columns" />
-                        <GridSplitter Grid.Column="7" ResizeDirection="Columns"
-                                      Background="Transparent" Cursor="SizeWestEast" Margin="0,0,0,2"
-                                      ToolTip.Tip="Drag to resize the Fled and Last Encountered columns" />
-                        <GridSplitter Grid.Column="9" ResizeDirection="Columns"
-                                      Background="Transparent" Cursor="SizeWestEast" Margin="0,0,0,2"
-                                      ToolTip.Tip="Drag to resize the Last Encountered and Rate columns" />
+                             thousand of them for one job.
+                             §392: plain Borders with the app's own drag
+                             (MainWindow.axaml.cs, ColumnGrip_*), the Tag naming
+                             the column each one resizes; the negative side
+                             margins make an eight-pixel handle out of a
+                             two-pixel gutter, over the chips' edges. -->
+                        <Border Grid.Column="1" Tag="0" Classes="columnGrip"
+                                ToolTip.Tip="Drag to resize the Pokémon column"
+                                PointerPressed="ColumnGrip_PointerPressed" PointerMoved="ColumnGrip_PointerMoved"
+                                PointerReleased="ColumnGrip_PointerReleased" PointerCaptureLost="ColumnGrip_PointerCaptureLost" />
+                        <Border Grid.Column="3" Tag="2" Classes="columnGrip"
+                                ToolTip.Tip="Drag to resize the Encounters column"
+                                PointerPressed="ColumnGrip_PointerPressed" PointerMoved="ColumnGrip_PointerMoved"
+                                PointerReleased="ColumnGrip_PointerReleased" PointerCaptureLost="ColumnGrip_PointerCaptureLost" />
+                        <Border Grid.Column="5" Tag="4" Classes="columnGrip"
+                                ToolTip.Tip="Drag to resize the Caught column"
+                                PointerPressed="ColumnGrip_PointerPressed" PointerMoved="ColumnGrip_PointerMoved"
+                                PointerReleased="ColumnGrip_PointerReleased" PointerCaptureLost="ColumnGrip_PointerCaptureLost" />
+                        <Border Grid.Column="7" Tag="6" Classes="columnGrip"
+                                ToolTip.Tip="Drag to resize the Fled column"
+                                PointerPressed="ColumnGrip_PointerPressed" PointerMoved="ColumnGrip_PointerMoved"
+                                PointerReleased="ColumnGrip_PointerReleased" PointerCaptureLost="ColumnGrip_PointerCaptureLost" />
+                        <Border Grid.Column="9" Tag="8" Classes="columnGrip"
+                                ToolTip.Tip="Drag to resize the Last Encountered column"
+                                PointerPressed="ColumnGrip_PointerPressed" PointerMoved="ColumnGrip_PointerMoved"
+                                PointerReleased="ColumnGrip_PointerReleased" PointerCaptureLost="ColumnGrip_PointerCaptureLost" />
+                        <Border Grid.Column="11" Tag="10" Classes="columnGrip"
+                                ToolTip.Tip="Drag to resize the Rate column"
+                                PointerPressed="ColumnGrip_PointerPressed" PointerMoved="ColumnGrip_PointerMoved"
+                                PointerReleased="ColumnGrip_PointerReleased" PointerCaptureLost="ColumnGrip_PointerCaptureLost" />
                     </Grid>
                     </Border>
 
@@ -571,7 +1035,7 @@
                                 <!-- The DataGrid this replaced drew horizontal
                                      grid lines; a hundred unseparated rows is
                                      harder to read than fifty were. -->
-                                <Border BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                <Border BorderBrush="{DynamicResource ThemeEncountersBorderBrush}"
                                         BorderThickness="0,0,0,1">
                                 <Grid>
                                     <!-- §189: the same six groups as the header,
@@ -595,6 +1059,7 @@
                                         <ColumnDefinition SharedSizeGroup="EncounterLast" Width="Auto" />
                                         <ColumnDefinition Width="4" />
                                         <ColumnDefinition SharedSizeGroup="EncounterRate" Width="Auto" />
+                                        <ColumnDefinition Width="4" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
@@ -602,9 +1067,9 @@
                                                 VerticalAlignment="Center" Margin="8,3"
                                                 Cursor="Hand" PointerPressed="EncounterRow_PointerPressed"
                                                 ToolTip.Tip="Click to see every encounter of this Pokémon from the current hunt">
-                                        <Image Source="{Binding Sprite}" Width="34" Height="34" Stretch="Uniform" />
+                                        <Image Source="{Binding Sprite}" Width="36" Height="36" Stretch="Uniform" />
                                         <TextBlock Text="{Binding PokemonName}" VerticalAlignment="Center"
-                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                                   Foreground="{DynamicResource ThemeEncountersTextBrush}" />
                                         <ItemsControl ItemsSource="{Binding Types}" VerticalAlignment="Center">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
@@ -614,7 +1079,7 @@
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate x:DataType="x:String">
                                                     <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}"
-                                                           Width="20" Height="20" Stretch="Uniform" />
+                                                           Width="23" Height="23" Stretch="Uniform" />
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
@@ -624,32 +1089,48 @@
                                          WINDOW's view model, not the row's -
                                          a row knows its own numbers, not which
                                          columns the user wants. -->
-                                    <TextBlock Grid.Column="2" Text="{Binding Count}" TextAlignment="Center"
+                                    <TextBlock Grid.Column="2" Text="{Binding CountDisplay}" TextAlignment="Center"
                                                Margin="4,3" VerticalAlignment="Center"
-                                               Foreground="{DynamicResource ThemeTextBrush}"
+                                               Foreground="{DynamicResource ThemeEncountersTextBrush}"
                                                IsVisible="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ShowEncountersColumn}" />
-                                    <TextBlock Grid.Column="4" Text="{Binding CaughtCount}" TextAlignment="Center"
+                                    <TextBlock Grid.Column="4" Text="{Binding CaughtDisplay}" TextAlignment="Center"
                                                Margin="4,3" VerticalAlignment="Center"
-                                               Foreground="{DynamicResource ThemeTextBrush}"
+                                               Foreground="{DynamicResource ThemeEncountersTextBrush}"
                                                IsVisible="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ShowCaughtColumn}" />
-                                    <TextBlock Grid.Column="6" Text="{Binding RanFromCount}" TextAlignment="Center"
+                                    <TextBlock Grid.Column="6" Text="{Binding RanFromDisplay}" TextAlignment="Center"
                                                Margin="4,3" VerticalAlignment="Center"
-                                               Foreground="{DynamicResource ThemeTextBrush}"
+                                               Foreground="{DynamicResource ThemeEncountersTextBrush}"
                                                IsVisible="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ShowRanFromColumn}" />
                                     <TextBlock Grid.Column="8" Text="{Binding LastEncounteredDisplay}" TextAlignment="Center"
                                                Margin="4,3" VerticalAlignment="Center"
-                                               Foreground="{DynamicResource ThemeTextBrush}"
+                                               Foreground="{DynamicResource ThemeEncountersTextBrush}"
                                                IsVisible="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ShowLastEncounteredColumn}" />
                                     <TextBlock Grid.Column="10" Text="{Binding RatePercent, Mode=OneWay, StringFormat={}{0:F1}%}" TextAlignment="Center"
                                                Margin="4,3" VerticalAlignment="Center"
-                                               Foreground="{DynamicResource ThemeTextBrush}"
+                                               Foreground="{DynamicResource ThemeEncountersTextBrush}"
                                                IsVisible="{Binding $parent[ListBox].((vm:MainWindowViewModel)DataContext).ShowRateColumn}" />
                                 </Grid>
                                 </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+
+                    <!-- §278: what this table is a table OF. Blank in classic
+                         mode, so the window reads exactly as it always has;
+                         "on Route 11" once per-map tracking is on, and a plain
+                         note while no map has been confirmed yet - a table
+                         silently showing the whole hunt under a per-map
+                         setting would be the worst of both. The spare third
+                         row of this grid was already declared and unused. -->
+                    <TextBlock Grid.Row="2" Text="{Binding EncounterTableScope}"
+                               FontSize="11" Opacity="0.7" Margin="4,3,0,0"
+                               Foreground="{DynamicResource ThemeEncountersTextBrush}"
+                               IsVisible="{Binding EncounterTableScope, Converter={x:Static conv:StringNotEmptyConverter.Instance}}" />
                 </Grid>
+                <controls:NineSliceFrame Grid.Row="1" Source="{DynamicResource ThemeTableFrameImage}"
+                                         Inset="{DynamicResource ThemeTableFrameInset}"
+                                         Margin="{DynamicResource ThemeTableFrameOverhang}"
+                                         IsHitTestVisible="False" />
             </Grid>
         </DockPanel>
     </Grid>

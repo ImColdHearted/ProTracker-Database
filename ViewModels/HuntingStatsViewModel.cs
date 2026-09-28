@@ -37,11 +37,11 @@ public sealed partial class HuntingStatsViewModel : ViewModelBase
         var stats = LifetimeStatsService.Load();
 
         TotalTimeHunting = TimeFormatHelper.FormatElapsed(stats.TotalHuntingTime);
-        TotalPokemon = stats.TotalEncounters.ToString();
-        ShinyPokemon = stats.ShinyEncounters.ToString();
-        EventForms = stats.FormEncounters.ToString();
-        SuccessfulCatches = stats.SuccessfulCatches.ToString();
-        FailedCatches = stats.FailedCatches.ToString();
+        TotalPokemon = DisplayNumber.Count(stats.TotalEncounters);
+        ShinyPokemon = DisplayNumber.Count(stats.ShinyEncounters);
+        EventForms = DisplayNumber.Count(stats.FormEncounters);
+        SuccessfulCatches = DisplayNumber.Count(stats.SuccessfulCatches);
+        FailedCatches = DisplayNumber.Count(stats.FailedCatches);
 
         // "1 in N" per category - the old combined shiny+form rate split into
         // two when the window gained a separate row for each.
@@ -52,16 +52,16 @@ public sealed partial class HuntingStatsViewModel : ViewModelBase
             ? $"1 in {stats.TotalEncounters / (double)stats.ShinyEncounters:F0}"
             : "N/A";
 
-        BossesFought = stats.BossBattles.ToString();
-        BossVictories = stats.BossVictories.ToString();
-        LossesToBosses = stats.BossLosses.ToString();
+        BossesFought = DisplayNumber.Count(stats.BossBattles);
+        BossVictories = DisplayNumber.Count(stats.BossVictories);
+        LossesToBosses = DisplayNumber.Count(stats.BossLosses);
 
         // Matches = every battle the tracker identified an opponent for (the
         // same per-opponent counts behind Previously Battled Users). Wins +
         // losses can lag behind it: a battle whose window disappeared before
         // the result text was read ends with no recorded outcome.
-        PVPMatches = stats.PvpOpponentBattleCounts.Values.Sum().ToString();
-        PVPWins = stats.PvpWins.ToString();
-        PVPLosses = stats.PvpLosses.ToString();
+        PVPMatches = DisplayNumber.Count(stats.PvpOpponentBattleCounts.Values.Sum());
+        PVPWins = DisplayNumber.Count(stats.PvpWins);
+        PVPLosses = DisplayNumber.Count(stats.PvpLosses);
     }
 }

@@ -17,13 +17,24 @@ namespace PokemonSim.Engine
     /// </summary>
     public static class SwitchResolver
     {
+        /// <summary>§305: slot is which position the replacement takes. The
+        /// default of -1 means "the one the outgoing Pokemon was standing
+        /// in", which is the only thing a singles switch could ever have
+        /// meant and is what every existing caller gets.</summary>
         public static void Resolve(
             BattleState state,
             PlayerState player,
             PokemonState newPokemon,
-            bool voluntary = true)
+            bool voluntary = true,
+            int slot = -1)
         {
-            var old = player.ActivePokemon;
+            if (slot < 0)
+                slot = 0;
+
+            if (slot >= player.Active.Count)
+                return;
+
+            var old = player.Active[slot];
 
             if (old == newPokemon)
                 return;
@@ -57,7 +68,7 @@ namespace PokemonSim.Engine
 
             ResetVolatileState(old);
 
-            player.ActivePokemon = newPokemon;
+            player.Active[slot] = newPokemon;
             newPokemon.EnteredFieldTurn = state.TurnNumber;
 
             // §197: a fresh Pokemon has not had its go yet, whether it walked
@@ -130,6 +141,40 @@ namespace PokemonSim.Engine
             pokemon.ConsecutiveProtects = 0;
             pokemon.Charging = false;
             pokemon.ChargingMove = null;
+
+            // §301: unreachable in a normal battle - LegalActions does not
+            // offer the switch while a recharge is owed - but a forced
+            // switch (Whirlwind, Dragon Tail, a red card) can still drag the
+            // Pokemon out, and it must not come back owing a turn.
+            pokemon.MustRecharge = false;
+            pokemon.RechargeMove = null;
+
+            // §304: the lock-in leaves with its owner - as with the
+            // recharge, LegalActions never offers the switch while one is
+            // running, but a forced switch can still drag the Pokemon out
+            // and it must not come back owing turns of Outrage. No
+            // confusion either: it was dragged out, it did not finish.
+            pokemon.LockedMove = null;
+            pokemon.LockedTurns = 0;
+            pokemon.LockConfusesOnEnd = false;
+
+            // The consecutive-use ramp, the single-move conditions and the
+            // two turn-scoped markers all go the same way. What does NOT go
+            // is TimesAttacked, which is a count of what has happened to
+            // this Pokemon in this battle rather than a condition on the
+            // field, and Happiness, which is not a battle state at all.
+            pokemon.ConsecutiveMoveName = null;
+            pokemon.ConsecutiveMoveUses = 0;
+            pokemon.MoveFailedThisTurn = false;
+            pokemon.MoveFailedLastTurn = false;
+            pokemon.HealBlockTurns = 0;
+            pokemon.SmackedDown = false;
+            pokemon.GlaiveRushActive = false;
+            pokemon.RageActive = false;
+            pokemon.ChargeActive = false;
+            pokemon.DefenseCurled = false;
+            pokemon.Minimized = false;
+            pokemon.RoostedThisTurn = false;
             pokemon.SubstituteHP = 0;
             pokemon.Flinched = false;
             pokemon.Trap = null;

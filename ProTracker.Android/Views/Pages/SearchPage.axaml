@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Foot_Tracker.ViewModels"
+             x:Class="ProTracker.Companion.Views.Pages.SearchPage"
+             x:DataType="vm:SearchViewModel">
+
+    <!-- §295. SearchWindow (§280/§288) on the same view model; a hit pushes
+         the page for its kind instead of opening a window. -->
+    <Grid RowDefinitions="Auto,Auto,*">
+        <TextBox Grid.Row="0" Name="QueryBox" Text="{Binding SearchText}" PlaceholderText="Pokémon, map, player, or boss…" />
+        <TextBlock Grid.Row="1" Text="{Binding StatusMessage}" TextWrapping="Wrap" FontSize="12" Opacity="0.8" Margin="0,8,0,8"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding Results}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SearchResultItem">
+                        <Border Classes="row" Margin="0,0,0,2" PointerPressed="Result_PointerPressed">
+                            <Grid ColumnDefinitions="36,*,Auto">
+                                <Image Grid.Column="0" Source="{Binding Sprite}" Width="32" Height="32" Stretch="Uniform"
+                                       RenderOptions.BitmapInterpolationMode="None" />
+                                <StackPanel Grid.Column="1" Spacing="1" Margin="8,0">
+                                    <TextBlock Text="{Binding Title}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBlock Text="{Binding Detail}" FontSize="11" Opacity="0.75" TextWrapping="Wrap"
+                                               Foreground="{DynamicResource ThemeTextBrush}" />
+                                </StackPanel>
+                                <Border Grid.Column="2" VerticalAlignment="Center" Classes="tableHeader" CornerRadius="3" Padding="6,2" Margin="0">
+                                    <TextBlock Text="{Binding KindLabel}" FontSize="10" Margin="0" FontWeight="Normal" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

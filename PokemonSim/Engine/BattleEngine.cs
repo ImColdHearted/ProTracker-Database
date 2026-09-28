@@ -37,16 +37,39 @@ namespace PokemonSim.Engine
         public IReadOnlyList<BattleAction> GetLegalActions(PlayerState player) =>
             LegalActions.For(state, player);
 
+        /// <summary>§305: any empty slot, not only the first. In singles
+        /// there is one slot and this is the question it always asked.</summary>
         public bool NeedsReplacement(PlayerState player) =>
-            state.Outcome == BattleOutcome.Unfinished &&
-            player.ActivePokemon.Fainted &&
-            !player.HasLost();
+            EmptySlot(player) >= 0;
+
+        /// <summary>§305. The first slot waiting for a replacement, or -1 if
+        /// none is.</summary>
+        public int EmptySlot(PlayerState player)
+        {
+            if (state.Outcome != BattleOutcome.Unfinished || player.HasLost())
+                return -1;
+
+            for (int i = 0; i < player.Active.Count; i++)
+            {
+                if (player.Active[i].Fainted)
+                    return i;
+            }
+
+            return -1;
+        }
 
         /// <summary>Send in a replacement after a faint. Entry hazards and
         /// switch-in abilities apply exactly as for a chosen switch.</summary>
-        public void Replace(PlayerState player, PokemonState replacement)
+        public void Replace(PlayerState player, PokemonState replacement) =>
+            Replace(player, replacement, EmptySlot(player));
+
+        /// <summary>§305: into a named slot. The slot-less form above fills
+        /// the first empty one, which in singles is the only one.</summary>
+        public void Replace(PlayerState player, PokemonState replacement, int slot)
         {
-            SwitchResolver.Resolve(state, player, replacement, voluntary: false);
+            SwitchResolver.Resolve(state, player, replacement, voluntary: false,
+                slot: slot < 0 ? 0 : slot);
+
             UpdateOutcome();
         }
 
@@ -64,7 +87,24 @@ namespace PokemonSim.Engine
         /// then moves by priority, speed, and a seeded coin flip on ties;
         /// then the end-of-turn phase (residuals, weather, terrain, traps,
         /// Protect bookkeeping) and the outcome check.</summary>
-        public void RunTurn(BattleAction player1Action, BattleAction player2Action)
+        /// <summary>§305. The two-action form, which is every caller there
+        /// has ever been: the tests, the dev console, the strategy loop and
+        /// the tracker's Simulator window. It hands both actions to the list
+        /// form below, so there is one turn and it is written once.</summary>
+        public void RunTurn(BattleAction player1Action, BattleAction player2Action) =>
+            RunTurn(new[] { player1Action, player2Action });
+
+        /// <summary>
+        /// §305. One turn from the actions every side chose.
+        ///
+        /// A list rather than a pair because a doubles turn is four actions
+        /// and a singles turn is two, and the only difference between them
+        /// should be how many there are. Everything inside already worked
+        /// off the queue rather than off the two arguments - the arguments
+        /// were only ever used to build it - so this is the same turn with
+        /// the pair taken out of its signature.
+        /// </summary>
+        public void RunTurn(IReadOnlyList<BattleAction> actions)
         {
             if (state.Outcome != BattleOutcome.Unfinished)
                 return;
@@ -74,15 +114,40 @@ namespace PokemonSim.Engine
             state.TurnNumber++;
             state.Log.Turn(state.TurnNumber);
 
+            // §319: the picture the end of this turn will be measured
+            // against. The knowledge layer learns by DIFFING the visible
+            // field, so it needs a before as well as an after - and it has
+            // to be taken here, after the turn counter moves and before any
+            // action resolves.
+            state.Knowledge.BeginTurn(state);
+
+            // §305: every action knows whose it is before anything else
+            // reads it, so the two passes below do not have to guess.
+            foreach (var action in actions)
+                action.Owner ??= state.GetOwner(action.User);
+
             // Section 161: mega evolutions resolve before anything else in
             // the turn, faster side first (slower first under Trick Room,
             // like everything else).
-            PerformMegaEvolutions(player1Action, player2Action);
+            PerformMegaEvolutions(actions);
+
+            // §304: what each side chose, recorded before a single action
+            // resolves. Upper Hand asks whether its target is about to use
+            // a priority move and Pursuit whether its target is about to
+            // leave; both questions are about the future, which is only
+            // answerable from here. Cleared at end of turn.
+            //
+            // §305: the FIRST action each side declared. In singles that is
+            // the only one; in doubles a side declares two and this will
+            // have to become a list of its own, which is a change to what
+            // the two moves reading it mean rather than to the plumbing.
+            state.DeclaredP1 = actions.FirstOrDefault(a => a.Owner == state.Player1);
+            state.DeclaredP2 = actions.FirstOrDefault(a => a.Owner == state.Player2);
 
             var queue = new ActionQueue();
 
-            Enqueue(queue, state.Player1, player1Action);
-            Enqueue(queue, state.Player2, player2Action);
+            foreach (var action in actions)
+                Enqueue(queue, action.Owner!, action);
 
             queue.Sort(state.TrickRoomTurns > 0);
 
@@ -102,6 +167,12 @@ namespace PokemonSim.Engine
 
             UpdateOutcome();
 
+            // §319: and the after. Everything the observation encoder is
+            // allowed to know about the opponent is written here, out of the
+            // difference between the two pictures - never out of the
+            // opponent's own state.
+            state.Knowledge.EndTurn(state);
+
             if (state.Outcome == BattleOutcome.Unfinished && state.TurnNumber >= state.MaxTurns)
             {
                 state.Outcome = BattleOutcome.Draw;
@@ -113,7 +184,47 @@ namespace PokemonSim.Engine
         {
             action.Owner = owner;
             action.TieBreak = state.Rng.Next(1_000_000);
+
+            // §375: a Quick Claw is rolled here, once per move action, so
+            // the sort below can read the answer.
+            action.QuickClaw = action.Type == BattleActionType.Move &&
+                Items.HeldItems.QuickClawTriggers(state, action.User);
+
             queue.Actions.Add(action);
+        }
+
+        /// <summary>
+        /// §305. Who this move is aimed at.
+        ///
+        /// A move is aimed at a POSITION, not at a Pokemon. If the thing
+        /// that was standing there when the action was chosen has switched
+        /// out in the meantime, the move hits whatever took its place -
+        /// which is how the games play it, and which is exactly what the old
+        /// line did by reading the opposing active at the moment of
+        /// resolution rather than at the moment of choosing.
+        ///
+        /// So the SLOT is the answer and BattleAction.Target is only the
+        /// name of what was standing in it at the time. Reading the stored
+        /// Pokemon instead would have quietly changed a switch from a dodge
+        /// into a way of dragging the attack onto the bench.
+        ///
+        /// TargetSlot is 0 unless somebody set it, and slot 0 is the
+        /// opposing active, so every caller that builds an action by hand
+        /// gets the behaviour it has always had.
+        /// </summary>
+        PokemonState DefenderFor(BattleAction action, PlayerState opponent)
+        {
+            PokemonState? inSlot = state.InSlot(opponent, action.TargetSlot);
+
+            if (inSlot != null && !inSlot.Fainted)
+                return inSlot;
+
+            // The slot is empty - somebody has fainted and not been replaced
+            // yet. Anything else still standing on that side will do.
+            foreach (PokemonState standing in opponent.Standing())
+                return standing;
+
+            return opponent.ActivePokemon;
         }
 
         /// <summary>Section 161. Both sides' flagged mega evolutions, in
@@ -122,27 +233,28 @@ namespace PokemonSim.Engine
         /// stored Speed is refreshed so the queue sorts on the new stats
         /// rather than the value the legal-action layer computed before the
         /// transform.</summary>
-        void PerformMegaEvolutions(BattleAction player1Action, BattleAction player2Action)
+        /// <summary>§305: over the turn's actions rather than over a pair.
+        /// The ordering is by the ACTING Pokemon's speed now, which in
+        /// singles is the same Pokemon as the side's active and so the same
+        /// order - but in doubles a side has two of them and "the side's
+        /// speed" would have stopped meaning anything.</summary>
+        void PerformMegaEvolutions(IReadOnlyList<BattleAction> actions)
         {
-            var candidates = new List<(BattleAction Action, PlayerState Side)>
-            {
-                (player1Action, state.Player1),
-                (player2Action, state.Player2)
-            };
-
-            var ordered = candidates
-                .OrderByDescending(c => StatResolver.GetStat(state, c.Side.ActivePokemon, "Speed"))
+            var ordered = actions
+                .OrderByDescending(a => StatResolver.GetStat(state, a.User, "Speed"))
                 .ToList();
 
             if (state.TrickRoomTurns > 0)
                 ordered.Reverse();
 
-            foreach ((BattleAction action, PlayerState side) in ordered)
+            foreach (BattleAction action in ordered)
             {
+                PlayerState side = action.Owner ?? state.GetOwner(action.User);
+
                 if (!action.MegaEvolve || action.Type != BattleActionType.Move)
                     continue;
 
-                if (!ReferenceEquals(action.User, side.ActivePokemon))
+                if (side.SlotOf(action.User) < 0)
                     continue;
 
                 if (MegaEvolutions.Perform(state, side, action.User))
@@ -275,6 +387,14 @@ namespace PokemonSim.Engine
             if (action.User.Fainted)
                 return;
 
+            // §375: so does one that LEFT the field earlier this turn - hit
+            // by a Roar, or sent off by its own Eject Button. Its
+            // replacement chose nothing, and the bench does not act. (Before
+            // this, a Pokemon Roared out ahead of its own move still made
+            // that move, from the bench.)
+            if (owner.SlotOf(action.User) < 0)
+                return;
+
             if (action.Type == BattleActionType.Switch)
             {
                 if (action.SwitchTarget != null)
@@ -288,7 +408,12 @@ namespace PokemonSim.Engine
             if (action.Type == BattleActionType.Move && action.Move != null)
             {
                 var attacker = action.User;
-                var defender = opponent.ActivePokemon;
+                var defender = DefenderFor(action, opponent);
+
+                // §375: said when the action comes up, whether or not the
+                // claw changed anything - the games announce it either way.
+                if (action.QuickClaw)
+                    state.Log.Write($"{attacker.Species}'s Quick Claw let it move first!");
 
                 if (defender.Fainted)
                 {
@@ -326,7 +451,28 @@ namespace PokemonSim.Engine
                     state.Log.Write($"{attacker.Species} surrounded itself with its Z-Power!");
                 }
 
+                // §319: the move is out, so it has been announced. Said
+                // here rather than worked out by the knowledge layer's diff
+                // because LastMoveName persists across turns - a Pokemon that
+                // never got to act still carries the last name it used, and a
+                // diff cannot tell that from a genuine repeat.
+                state.Knowledge.NoteMoveUsed(state, attacker, move.Name);
+
                 MoveResolver.Resolve(state, attacker, defender, move);
+
+                // §304: the move did not go off - it missed, was blocked,
+                // hit something it could not touch, or its user never got
+                // to act. Any lock-in ends there, and it ends WITHOUT the
+                // confusion, which is the price of finishing an Outrage
+                // rather than of starting one.
+                //
+                // Here rather than inside the resolver because the resolver
+                // has a dozen ways to give up and this needs to run after
+                // every one of them; the resolver marks the failure in one
+                // place and clears it in one place, and this reads the
+                // answer.
+                if (attacker.MoveFailedThisTurn)
+                    Effects.LockIn.Break(state, attacker);
 
                 // §197: the Pokemon has now had its go, so Fake Out and First
                 // Impression are done for this stay on the field. AFTER the
@@ -392,7 +538,27 @@ namespace PokemonSim.Engine
 
                 pokemon.ProtectedThisTurn = false;
                 pokemon.Flinched = false;
+
+                // §304: this turn's answer becomes last turn's, which is
+                // the one Stomping Tantrum and Temper Flare read. A
+                // Pokemon that never acted counts as having failed -
+                // being frozen solid or sent out over a faint is exactly
+                // the situation those two moves are angry about.
+                pokemon.MoveFailedLastTurn = pokemon.MoveFailedThisTurn;
+                pokemon.MoveFailedThisTurn = false;
+
+                // §304: Roost gives the Flying type back at the end of the
+                // turn it was surrendered on.
+                pokemon.RoostedThisTurn = false;
             }
+
+            // §304: Plasma Fists' ion deluge is over before anything else
+            // ticks - it lasts the turn it was used and no longer.
+            state.IonDelugeTurns = 0;
+
+            // §304: the wishes, which land on whoever is standing in the
+            // slot now rather than on whoever made them.
+            ResolveWishes();
 
             // Section 158: the volatile and side-condition batch; §159
             // adds the held items (Leftovers, the status orbs) before the
@@ -406,6 +572,12 @@ namespace PokemonSim.Engine
                 new BattleEvent { Type = BattleEventType.EndTurn },
                 state
             );
+
+            // §304: nobody has declared anything for next turn yet, and a
+            // stale declaration would answer Upper Hand and Pursuit with
+            // last turn's news.
+            state.DeclaredP1 = null;
+            state.DeclaredP2 = null;
         }
 
         /// <summary>Section 158. Leech Seed, Curse, Salt Cure, the Ingrain
@@ -508,6 +680,10 @@ namespace PokemonSim.Engine
                 if (pokemon.MagnetRiseTurns > 0 && --pokemon.MagnetRiseTurns == 0)
                     state.Log.Write($"{pokemon.Species}'s Magnet Rise wore off!");
 
+                // §304: Psychic Noise's two turns.
+                if (pokemon.HealBlockTurns > 0 && --pokemon.HealBlockTurns == 0)
+                    state.Log.Write($"{pokemon.Species} can heal again!");
+
                 pokemon.LastPhysicalDamageTaken = 0;
                 pokemon.LastSpecialDamageTaken = 0;
                 pokemon.ActedThisTurn = false;
@@ -529,6 +705,43 @@ namespace PokemonSim.Engine
 
             if (state.GravityTurns > 0 && --state.GravityTurns == 0)
                 state.Log.Write("Gravity returned to normal!");
+        }
+
+        /// <summary>§304. Wish: made on one turn, landing at the end of
+        /// the next, on whoever is standing in the slot by then. The amount
+        /// was fixed when the wish was made - half the WISHER's maximum HP
+        /// - so a Blissey's wish is worth having whoever collects it.</summary>
+        void ResolveWishes()
+        {
+            foreach (var side in new[] { state.Player1, state.Player2 })
+            {
+                if (state.WishTurns(side) <= 0)
+                    continue;
+
+                if (--state.WishTurns(side) > 0)
+                    continue;
+
+                int heal = state.WishHeal(side);
+
+                state.WishHeal(side) = 0;
+
+                var pokemon = side.ActivePokemon;
+
+                if (pokemon.Fainted || pokemon.CurrentHP >= pokemon.MaxHP)
+                    continue;
+
+                // §304: a heal-blocked Pokemon collects nothing, and the
+                // wish is spent either way.
+                if (pokemon.HealBlockTurns > 0)
+                {
+                    state.Log.Write($"{pokemon.Species} cannot heal!");
+                    continue;
+                }
+
+                pokemon.CurrentHP = Math.Min(pokemon.MaxHP, pokemon.CurrentHP + heal);
+
+                state.Log.Write($"{pokemon.Species}'s wish came true!");
+            }
         }
 
         void TickSide(ref int turns, string message)

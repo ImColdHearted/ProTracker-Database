@@ -15,9 +15,11 @@ namespace Foot_Tracker.Services;
 ///     separate admin HuntSession instead of the real one, and branches its
 ///     Reset to that admin session only.
 ///   - LifetimeStatsService, HuntLogService and SessionEncounterHistoryService
-///     each check this flag at their own front door and no-op their writes,
-///     so even paths that don't go through the view model (the boss/PVP
-///     trackers' tallies) cannot leak admin activity into real stores.
+///     each refuse at their own front door and no-op their writes, so even
+///     paths that don't go through the view model (the boss/PVP trackers'
+///     tallies) cannot leak admin activity into real stores. §249: they read
+///     IsolatedSession.IsActive, which this flag feeds, rather than this flag
+///     directly - see IsolatedSession for why.
 ///   - SessionPersistenceService keeps saving only the untouched normal
 ///     HuntSession object, which is byte-equivalent to what was already on
 ///     disk - leaving admin mode therefore finds the normal client exactly

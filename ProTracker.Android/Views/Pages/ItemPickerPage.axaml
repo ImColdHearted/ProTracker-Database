@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Foot_Tracker.ViewModels"
+             x:Class="ProTracker.Companion.Views.Pages.ItemPickerPage"
+             x:DataType="vm:SimulatorItemPickerViewModel">
+
+    <!-- §316. The held-item picker on a phone. The view model is §159's own,
+         linked rather than rewritten: the same pool, the same live filter,
+         the same No Item button. Only the window around it is new, because a
+         phone has pages instead of dialogs. -->
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <TextBox Grid.Row="0" Text="{Binding SearchText, Mode=TwoWay}" FontSize="12"
+                 PlaceholderText="Search items" Margin="0,0,0,6" />
+
+        <Button Grid.Row="1" Content="No Item" HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center" Margin="0,0,0,6"
+                Command="{Binding PickNoneCommand}" />
+
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding Cards}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SimulatorItemCard">
+                        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                Margin="0,0,0,4" Padding="8,6"
+                                Command="{Binding $parent[ItemsControl].((vm:SimulatorItemPickerViewModel)DataContext).PickCardCommand}"
+                                CommandParameter="{Binding}">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Panel Grid.Column="0" Width="28" Height="28" Margin="0,0,8,0">
+                                    <Image Source="{Binding Sprite}" Stretch="Uniform"
+                                           RenderOptions.BitmapInterpolationMode="None" />
+                                </Panel>
+                                <TextBlock Grid.Column="1" Text="{Binding Name}" FontSize="12"
+                                           VerticalAlignment="Center" TextWrapping="Wrap"
+                                           Foreground="{DynamicResource ThemeTextBrush}" />
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

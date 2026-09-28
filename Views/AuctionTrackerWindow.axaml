@@ -4,21 +4,51 @@
         x:Class="Foot_Tracker.Views.AuctionTrackerWindow"
         x:DataType="vm:AuctionTrackerViewModel"
         Title="Auction Tracker"
-        Width="640" Height="795"
+        Width="640" Height="690"
         MinWidth="600" MinHeight="500"
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource ThemeBackgroundBrush}"
         BorderBrush="{DynamicResource ThemeBorderBrush}"
         BorderThickness="1">
 
+    <Window.Styles>
+        <!-- §310. The one colour this window needs: a bid you are losing. It
+             is a class rather than two TextBlocks swapped by IsVisible so the
+             line keeps its place in the layout whichever way it reads. -->
+        <Style Selector="TextBlock.losingBid">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeErrorBrush}" />
+        </Style>
+        <Style Selector="ToggleButton.tab">
+            <Setter Property="MinWidth" Value="130" />
+            <Setter Property="Margin" Value="8,0,0,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </Window.Styles>
+
     <!-- §238: no whole-window themedPanel here, unlike the §188 dialogs. The
          CARDS are the panels, the way BossDetailWindow's are; a panel inside a
          panel is two surfaces of one colour, which is no surface at all. -->
     <Grid Margin="14" RowDefinitions="Auto,*,Auto,Auto">
 
-        <TextBlock Grid.Row="0" Text="Auction Tracker" FontSize="18" FontWeight="Bold"
-                   TextDecorations="Underline" Margin="0,0,0,10"
-                   Foreground="{DynamicResource ThemeTextBrush}" />
+        <!-- §310: the title, and the two halves of the window beside it.
+             ToggleButtons rather than a TabControl, because the rest of this
+             window's switches (History, the terrain buttons in the Damage
+             window) are toggles and a TabControl would bring its own header
+             styling to argue with the theme. -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto,Auto" Margin="0,0,0,10">
+            <TextBlock Grid.Column="0" Text="Auction Tracker" FontSize="18" FontWeight="Bold"
+                       TextDecorations="Underline" VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+
+            <ToggleButton Grid.Column="2" Classes="tab" Content="Auctions"
+                          IsChecked="{Binding ShowingAuctions, Mode=OneWay}"
+                          Command="{Binding ShowRoleCommand}" CommandParameter="Auctions"
+                          ToolTip.Tip="The auctions you are running." />
+            <ToggleButton Grid.Column="3" Classes="tab" Content="Auction Bids"
+                          IsChecked="{Binding ShowingBids, Mode=OneWay}"
+                          Command="{Binding ShowRoleCommand}" CommandParameter="Bids"
+                          ToolTip.Tip="Auctions somebody else is running that you are bidding on." />
+        </Grid>
 
         <ScrollViewer Grid.Row="1">
             <ItemsControl ItemsSource="{Binding Cards}">
@@ -27,35 +57,65 @@
                         <Border Classes="themedPanel" Margin="0,0,0,10" Padding="12"
                                 BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
                                 CornerRadius="4">
-                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+                            <!-- §270: two rows, not three. The buttons used to
+                                 be a third row pulled back up by a -40 margin;
+                                 they share the details' row now, bottom-right,
+                                 which puts them in the same place without a
+                                 number that has to be re-guessed whenever a
+                                 button's padding changes. -->
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
 
                                 <!-- The sprite is drawn from the tracker's own
                                      library off the title, not fetched from
                                      the listing. See AuctionCard.SpriteFor. -->
-                                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
-                                        Classes="huntingSprite"
-                                        Width="112" Height="112" Margin="0,0,14,0"
-                                        VerticalAlignment="Top"
-                                        BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
-                                        CornerRadius="3">
-                                    <Image Source="{Binding Sprite}" Stretch="Uniform" Margin="6" />
-                                </Border>
+                                <!-- §270: 84, down from 112. This column is
+                                     what the card's height was: the sprite, the
+                                     gap and the button came to 146 against the
+                                     text column's 117, and the 29 between them
+                                     was the empty strip under the details. At
+                                     84 the text column is the taller of the
+                                     two, so the card is as tall as its contents
+                                     and no taller - and shrinking the sprite
+                                     further buys nothing. -->
+                                <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+                                            VerticalAlignment="Top" Margin="0,0,10,0" Spacing="2">
+                                    <Border Classes="huntingSprite"
+                                            Width="84" Height="84"
+                                            BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                            CornerRadius="3">
+                                        <Image Source="{Binding Sprite}" Stretch="Uniform" Margin="6" />
+                                    </Border>
+
+                                    <!-- §268: back to the thread this card
+                                         summarises. Bidding, questions and
+                                         closing the auction all happen there;
+                                         until now the only way back was to
+                                         find it by hand. -->
+                                    <Button Margin="0,1,0,0" Content="View on Forum"
+                                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                            Command="{Binding $parent[ItemsControl].((vm:AuctionTrackerViewModel)DataContext).OpenListingCommand}"
+                                            CommandParameter="{Binding}"
+                                            ToolTip.Tip="{Binding Url}" />
+                                </StackPanel>
 
                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}"
                                            FontWeight="Bold" FontSize="13"
                                            TextTrimming="CharacterEllipsis" Margin="0,0,0,6"
                                            />
+                                <TextBlock Grid.Column="1" Margin="0,15,0,0" Text="{Binding CheckedText}" FontSize="10" Opacity="0.6"
+                                               VerticalAlignment="Center"
+                                               />
 
                                 <!-- A linked card shows what the Trade Zone
                                      said; an unlinked one shows the box to
                                      paste the listing address into. -->
-                                <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="110,*"
-                                      RowDefinitions="Auto,Auto,Auto,Auto,Auto">
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Current Bidder:" FontSize="12" Margin="0,0,6,2"
+                                <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="110,*" Margin="0,-7,0,0"
+                                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Current Bidder:" FontSize="12" Margin="0,0,0,0"
                                                />
                                     <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentBidder}" FontSize="12" FontWeight="Bold" Margin="0,0,0,2"
                                                />
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Current Bid:" FontSize="12" Margin="0,0,6,2"
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Current Bid:" FontSize="12" Margin="0,0,0,0"
                                                />
                                     <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentBid}" FontSize="12" FontWeight="Bold" Margin="0,0,0,2"
                                                />
@@ -71,26 +131,49 @@
                                                />
                                     <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Server}" FontSize="12"
                                                />
+
+                                    <!-- §310. The line the Bids tab exists for.
+                                         A current-bidder name does not tell you
+                                         that you have been outbid; it makes you
+                                         read it and remember your own name. It
+                                         is blank on a selling card, and blank
+                                         on a bid until the tracker has been
+                                         told who you are - guessing which of
+                                         the bidders is the person reading the
+                                         window would be worse than not saying.
+                                         -->
+                                    <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+                                               Text="{Binding StandingText}" FontSize="12" FontWeight="Bold"
+                                               Margin="0,5,0,0" TextTrimming="CharacterEllipsis"
+                                               IsVisible="{Binding IsBid}"
+                                               Classes.losingBid="{Binding Losing}" />
                                 </Grid>
 
 
-                                <Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="Auto,*,Auto,Auto,Auto" Margin="0,10,0,0">
-                                    <TextBlock Grid.Column="0" Text="{Binding CheckedText}" FontSize="10" Opacity="0.6"
-                                               VerticalAlignment="Center"
-                                               />
-                                    <Button Grid.Column="2" Content="Refresh" FontSize="12"
+                                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Spacing="8"
+                                            HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                    <Button Content="Refresh" FontSize="12"
                                             Command="{Binding $parent[ItemsControl].((vm:AuctionTrackerViewModel)DataContext).RefreshCardCommand}"
                                             CommandParameter="{Binding}"
                                             ToolTip.Tip="Reads this listing now, rather than waiting for the next two-minute check." />
-                                    <Button Grid.Column="3" Content="End Auction" FontSize="12" Margin="8,0,0,0"
+                                    <!-- §310: "End Auction" on a bid would read
+                                         as though pressing it closed somebody
+                                         else's auction. Same command either
+                                         way; it has only ever recorded a fact
+                                         here. -->
+                                    <Button Content="End Auction" FontSize="12" IsVisible="{Binding !IsBid}"
                                             Command="{Binding $parent[ItemsControl].((vm:AuctionTrackerViewModel)DataContext).EndAuctionCommand}"
                                             CommandParameter="{Binding}"
                                             ToolTip.Tip="Records it as finished here, at whatever the last read said. It does not close the auction on the forum." />
-                                    <Button Grid.Column="4" Content="Delete" FontSize="12" Margin="8,0,0,0"
+                                    <Button Content="Mark Ended" FontSize="12" IsVisible="{Binding IsBid}"
+                                            Command="{Binding $parent[ItemsControl].((vm:AuctionTrackerViewModel)DataContext).EndAuctionCommand}"
+                                            CommandParameter="{Binding}"
+                                            ToolTip.Tip="Records it as finished here, at whatever the last read said - whether you won it is read off who was leading." />
+                                    <Button Content="Delete" FontSize="12"
                                             Command="{Binding $parent[ItemsControl].((vm:AuctionTrackerViewModel)DataContext).DeleteCommand}"
                                             CommandParameter="{Binding}"
                                             ToolTip.Tip="Removes the card entirely. It counts toward nothing - use End Auction for one that actually ran." />
-                                </Grid>
+                                </StackPanel>
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -102,7 +185,12 @@
                    Foreground="{DynamicResource ThemeTextBrush}" />
 
         <Grid Grid.Row="3" ColumnDefinitions="*,Auto" Margin="0,10,0,0">
+            <!-- §310: two panels in one cell, one per tab. What a player made
+                 selling and what they spent bidding are different questions
+                 with different answers, and showing both at once would be four
+                 figures where two are always the ones being read. -->
             <Border Grid.Column="0" Classes="themedPanel" Padding="14" Margin="0,0,14,0"
+                    IsVisible="{Binding ShowingAuctions}"
                     BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4">
                 <StackPanel HorizontalAlignment="Center" Spacing="8">
                     <TextBlock Text="Total Made" FontSize="13" FontWeight="Bold" TextDecorations="Underline"
@@ -120,12 +208,50 @@
                 </StackPanel>
             </Border>
 
+            <Border Grid.Column="0" Classes="themedPanel" Padding="14" Margin="0,0,14,0"
+                    IsVisible="{Binding ShowingBids}"
+                    BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4">
+                <StackPanel HorizontalAlignment="Stretch" Spacing="6">
+                    <TextBlock Text="Total Spent" FontSize="13" FontWeight="Bold" TextDecorations="Underline"
+                               HorizontalAlignment="Center"
+                               />
+                    <TextBlock Text="{Binding TotalSpentText}" FontSize="16" FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               />
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" Margin="0,4,0,0">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Auctions Won" FontSize="13" FontWeight="Bold"
+                                   TextDecorations="Underline" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Auctions Lost" FontSize="13" FontWeight="Bold"
+                                   TextDecorations="Underline" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding WonText}" FontSize="16" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LostText}" FontSize="16" FontWeight="Bold"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0" />
+                    </Grid>
+
+                    <!-- §310. The three figures above are the only thing in
+                         this window that needs to know which of the bidders is
+                         the person reading it. There is no Save button: the
+                         name is written through as it is typed, because a
+                         setting with a Save button beside it is a setting
+                         somebody forgets to press. -->
+                    <TextBlock Text="Bidding as" FontSize="10" Opacity="0.7" Margin="0,6,0,0" />
+                    <TextBox Text="{Binding BiddingAsText, Mode=TwoWay}" FontSize="12"
+                             PlaceholderText="your forum name"
+                             ToolTip.Tip="The name you bid under on the forum. It is what tells a won auction from a lost one, and what turns the current bidder into 'you have been outbid'." />
+
+                    <TextBlock Text="{Binding BidNoticeText}" FontSize="10" Opacity="0.7" TextWrapping="Wrap"
+                               IsVisible="{Binding HasBidNotice}" />
+                </StackPanel>
+            </Border>
+
             <Grid Grid.Column="1" ColumnDefinitions="140,140" RowDefinitions="Auto,Auto" VerticalAlignment="Center">
                 <Button Grid.Row="0" Grid.Column="0" Content="{Binding HistoryButtonText}" Margin="0,0,8,8"
                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                         Command="{Binding ToggleHistoryCommand}"
                         ToolTip.Tip="Switches between the auctions still running and the ones already finished." />
-                <Button Grid.Row="0" Grid.Column="1" Content="Add Auction" Margin="0,0,0,8"
+                <Button Grid.Row="0" Grid.Column="1" Content="{Binding AddButtonText}" Margin="0,0,0,8"
                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                         Command="{Binding AddAuctionCommand}"
                         ToolTip.Tip="Asks for a Trade Zone address and reads the listing behind it. Everything on the card comes from the listing." />

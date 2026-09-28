@@ -18,9 +18,13 @@ namespace Foot_Tracker.ViewModels;
 /// capped at its MaxSavedBattles most recent entries - the lifetime count per
 /// opponent, shown as each row's TimesBattled, is tracked separately and never
 /// trimmed - see LifetimeStats.PvpOpponentBattleCounts, which will also power
-/// a future "who have you battled most" PVP stats view). Phase 1 of the
-/// planned PVP tracking feature: names only, no team detection yet - see
-/// PvpOpponentService.RegisterBattle's remarks for that planned follow-up.
+/// a future "who have you battled most" PVP stats view).
+///
+/// §276: each row now carries the battle's result, and clicking a name opens
+/// that opponent's own history (PvpOpponentDetailViewModel) - the head-to-head
+/// record, every battle against them, and what PRO printed during each. The
+/// opponent's team, their moves and their items are in those printed lines and
+/// are not yet broken out of them; see that view model for why.
 ///
 /// The list stays live while this window is open - PvpOpponentService raises
 /// OpponentsChanged whenever a battle is registered (or the saved-list cap
@@ -66,7 +70,7 @@ public sealed partial class PreviouslyBattledUsersViewModel : ViewModelBase, IDi
 
     /// <summary>Set by PreviouslyBattledUsersWindow.axaml.cs to show a Yes/No
     /// confirm before actually removing anything - same ConfirmDialogWindow.
-    /// ShowAsync pattern RemoveEventViewModel.ConfirmAsync uses. Required, not
+    /// ShowAsync pattern MainWindowViewModel.ConfirmAsync uses. Required, not
     /// just preferred: RemovePrevious/ClearAll refuse to remove anything if
     /// this hook isn't wired, rather than silently skipping the
     /// confirmation.</summary>
@@ -100,7 +104,13 @@ public sealed partial class PreviouslyBattledUsersViewModel : ViewModelBase, IDi
             {
                 Name = entry.Name,
                 TimesBattled = entry.TimesBattled,
-                BattledAt = entry.BattledAtUtc.ToLocalTime().ToString("g")
+                BattledAt = entry.BattledAtUtc.ToLocalTime().ToString("g"),
+                // §276: the result PRO printed, or a dash. Read off the entry
+                // rather than worked out here - HasOutcome is what separates
+                // "we never saw" from "you lost".
+                Result = entry.HasOutcome ? entry.Outcome : "-",
+                IsWin = entry.HasOutcome && entry.Won,
+                IsLoss = entry.HasOutcome && !entry.Won,
             });
         }
 

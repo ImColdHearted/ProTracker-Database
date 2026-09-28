@@ -1,17 +1,27 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Foot_Tracker.ViewModels;
 
 namespace Foot_Tracker.Views;
 
 public partial class BossListWindow : Window
 {
-    public BossListWindow()
+    public BossListWindow() : this(string.Empty)
+    {
+    }
+
+    /// <summary>§288. Opened from a Search hit with the boss's name already
+    /// in the box, so the database shows that one card - its difficulties,
+    /// its cooldown, its record - and nothing has to be typed twice. An empty
+    /// filter is the ordinary window.</summary>
+    public BossListWindow(string filter)
     {
         InitializeComponent();
 
         var vm = new BossListViewModel();
         DataContext = vm;
+
+        if (!string.IsNullOrWhiteSpace(filter))
+            vm.SearchText = filter;
 
         vm.OpenRequested += (bossId, difficulty) =>
         {
@@ -28,10 +38,5 @@ public partial class BossListWindow : Window
             // lifecycle, which is the point.
             detail.Show();
         };
-    }
-
-    private void BossList_DoubleTapped(object? sender, RoutedEventArgs e)
-    {
-        (DataContext as BossListViewModel)?.OpenCommand.Execute(null);
     }
 }

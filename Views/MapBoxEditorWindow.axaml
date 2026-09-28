@@ -1,0 +1,187 @@
+<!-- §399. The Map Boxes editor, behind the Admin Console's Spawns section:
+     a region's picture at any zoom, the boxes already published for its
+     maps, and one being dragged out - which, named, is published with the
+     map's page. The picture is an Image drawn without smoothing so its
+     pixels stay square at every zoom; the boxes are a MapBoxLayer over it,
+     one screen pixel thick whatever the zoom. The surface Panel takes the
+     pointer for both. §400: the wheel zooms, a drag pans in Pan mode (Draw
+     and Pan are one choice, two toggles), and Remove last takes back the
+     last box drawn. §406: the picture is the whole world. -->
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:controls="using:Foot_Tracker.Controls"
+        xmlns:services="using:Foot_Tracker.Services"
+        x:Class="Foot_Tracker.Views.MapBoxEditorWindow"
+        x:DataType="vm:MapBoxEditorViewModel"
+        Title="Map Boxes"
+        Width="1120" Height="740"
+        MinWidth="720" MinHeight="480"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <Border Classes="themedPanel">
+    <Grid Margin="12" RowDefinitions="Auto,Auto,*,Auto,Auto,Auto,Auto" ColumnDefinitions="*,270">
+
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="6">
+            <!-- §406: one world picture, no region to pick. §400: one
+                 choice shown as two toggles; the checked one is marked by
+                 the themedButton border. -->
+            <TextBlock Text="Mode:" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+            <ToggleButton Classes="themedButton" Content="Draw" FontSize="12" Padding="10,4"
+                          IsChecked="{Binding DrawMode, Mode=TwoWay}"
+                          ToolTip.Tip="Dragging on the picture draws a box." />
+            <ToggleButton Classes="themedButton" Content="Pan" FontSize="12" Padding="10,4"
+                          IsChecked="{Binding PanMode, Mode=TwoWay}"
+                          ToolTip.Tip="Dragging on the picture moves it about. The right or middle button pans in any mode." />
+            <!-- §409: a click puts the chosen boss's pin there; a drag pans. -->
+            <ToggleButton Classes="themedButton" Content="Boss" FontSize="12" Padding="10,4"
+                          IsChecked="{Binding BossMode, Mode=TwoWay}"
+                          ToolTip.Tip="Clicking on the picture places the chosen boss's pin there; dragging pans. Click a placed pin to select it." />
+            <!-- §419: a click puts a Pokéstop's pin there; a drag pans. -->
+            <ToggleButton Classes="themedButton" Content="Pokéstop" FontSize="12" Padding="10,4"
+                          IsChecked="{Binding PokestopMode, Mode=TwoWay}"
+                          ToolTip.Tip="Clicking on the picture places a Pokéstop there; dragging pans. Click a placed pin to select it." />
+            <Button Content="−" FontSize="12" Padding="10,4" Margin="10,0,0,0" Command="{Binding ZoomOutCommand}" ToolTip.Tip="Zoom out (or turn the wheel)" />
+            <TextBlock Text="{Binding ZoomText}" Width="48" TextAlignment="Center" VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <Button Content="+" FontSize="12" Padding="10,4" Command="{Binding ZoomInCommand}" ToolTip.Tip="Zoom in (or turn the wheel)" />
+            <Button Content="1:1" FontSize="12" Command="{Binding ZoomResetCommand}" ToolTip.Tip="One screen pixel per picture pixel" />
+            <Button Content="Fit" FontSize="12" Click="FitButton_Click" ToolTip.Tip="The largest zoom that shows the whole picture" />
+            <TextBlock Text="{Binding ImageMessage}" VerticalAlignment="Center" FontSize="11" Opacity="0.8"
+                       TextWrapping="Wrap" MaxWidth="420" Margin="8,0,0,0"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Margin="0,6,0,6" FontSize="11" Opacity="0.8" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="The wheel zooms about the pointer. Draw: drag a box round a route, name the map below, press Save box - a map may have several boxes, one per piece the picture draws it in. Pan: drag the picture about (the right or middle button pans in any mode). Boss: pick a boss, click where it stands, Save pin; click a pin to select it. Pokéstop: click where a stop stands, name it (before or after), Save pin - as many as you like; click one to rename or remove it. Link (the row below, in any mode): the main map is the one with the box (type it, pick it, or click its box while the field is empty - it stays until you change it), the secondary map shares that spot - Link, and players pick between them when they click it. Click a saved box to select it, then Remove box takes that one down. Remove last takes back the box being drawn, or failing that the box last saved from this window." />
+
+        <Border Grid.Row="2" Grid.Column="0" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                Background="#22000000">
+            <ScrollViewer Name="MapScroller" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <!-- Transparent so the whole surface takes the pointer;
+                     sized to the picture at the current zoom. -->
+                <Panel Name="MapSurface" Background="Transparent"
+                       HorizontalAlignment="Left" VerticalAlignment="Top"
+                       Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
+                       PointerPressed="Surface_PointerPressed"
+                       PointerMoved="Surface_PointerMoved"
+                       PointerReleased="Surface_PointerReleased"
+                       PointerCaptureLost="Surface_PointerCaptureLost">
+                    <Image Source="{Binding Image}" Stretch="Fill"
+                           RenderOptions.BitmapInterpolationMode="None" />
+                    <controls:MapBoxLayer Name="BoxLayer" />
+                </Panel>
+            </ScrollViewer>
+        </Border>
+
+        <Grid Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" RowDefinitions="Auto,*">
+            <TextBlock Grid.Row="0" Text="Boxes on this page:" FontWeight="Bold" FontSize="12" Margin="0,0,0,4"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <ListBox Grid.Row="1" ItemsSource="{Binding Boxes}" SelectedItem="{Binding SelectedBox, Mode=TwoWay}" FontSize="12">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:MapBoxItem">
+                        <TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="6" Margin="0,8,0,0">
+            <TextBlock Text="{Binding DraftText}" VerticalAlignment="Center" Width="250" TextWrapping="Wrap" FontSize="12"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <AutoCompleteBox Width="220" FontSize="12" Watermark="Map the box marks"
+                             ItemsSource="{Binding MapChoices}"
+                             Text="{Binding MapName, Mode=TwoWay}"
+                             FilterMode="Contains" MinimumPrefixLength="1"
+                             ToolTip.Tip="Every map the catalog knows and every map already published; a name the catalog lacks can be typed. The page it goes on is the one it has, else the catalog's region." />
+            <Button Content="Save box" FontSize="12" Command="{Binding SaveBoxCommand}" IsEnabled="{Binding CanSave}"
+                    ToolTip.Tip="Publishes the map with this box added to any it already has. A map not on the page yet is added by it." />
+            <Button Content="Remove box" FontSize="12" Command="{Binding RemoveBoxCommand}" IsEnabled="{Binding CanRemove}"
+                    ToolTip.Tip="Republishes the selected box's map without that box; its other boxes, the page and its Pokémon stay." />
+            <Button Content="Remove last" FontSize="12" Command="{Binding RemoveLastCommand}" IsEnabled="{Binding CanRemoveLast}"
+                    ToolTip.Tip="Takes back the box being drawn; with none, the box saved most recently from this window on this page (its map is republished without it)." />
+        </StackPanel>
+
+        <!-- §409: the boss row, in Boss mode - which boss, where the click
+             put it, Save pin / Remove pin. -->
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="6" Margin="0,8,0,0"
+                    IsVisible="{Binding BossMode}">
+            <TextBlock Text="Boss:" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+            <ComboBox Width="200" FontSize="12" ItemsSource="{Binding BossChoices}"
+                      SelectedItem="{Binding SelectedBoss, Mode=TwoWay}"
+                      ToolTip.Tip="The bosses in DataFiles/Bosses.">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="services:BossInfo">
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="{Binding DraftPinText}" VerticalAlignment="Center" Width="260" TextWrapping="Wrap" FontSize="12"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <Button Content="Save pin" FontSize="12" Command="{Binding SavePinCommand}" IsEnabled="{Binding CanSavePin}"
+                    ToolTip.Tip="Publishes the pin. A boss already pinned is moved." />
+            <Button Content="Remove pin" FontSize="12" Command="{Binding RemovePinCommand}" IsEnabled="{Binding CanRemovePin}"
+                    ToolTip.Tip="Takes the selected boss's pin down." />
+        </StackPanel>
+
+        <!-- §419: the Pokéstop row, in Pokéstop mode - where it stands (a
+             listed stop or any place typed), where the click put it, Save
+             pin / Remove pin, and how many are placed. -->
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="6" Margin="0,8,0,0"
+                    IsVisible="{Binding PokestopMode}">
+            <TextBlock Text="Pokéstop:" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+            <AutoCompleteBox Width="260" FontSize="12" Watermark="Name it (e.g. Viridian Forest)"
+                             ItemsSource="{Binding PokestopChoices}"
+                             Text="{Binding PokestopPlace, Mode=TwoWay}"
+                             FilterMode="Contains" MinimumPrefixLength="1"
+                             ToolTip.Tip="Any name - the PRO wiki's stops are offered as you type. Names the stop being placed, or renames the selected one." />
+            <TextBlock Text="{Binding DraftPinText}" VerticalAlignment="Center" Width="260" TextWrapping="Wrap" FontSize="12"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <Button Content="Save pin" FontSize="12" Command="{Binding SavePinCommand}" IsEnabled="{Binding CanSavePin}"
+                    ToolTip.Tip="Publishes the new Pokéstop, or the selected one under the name typed. Place as many as you like." />
+            <Button Content="Remove pin" FontSize="12" Command="{Binding RemovePinCommand}" IsEnabled="{Binding CanRemovePin}"
+                    ToolTip.Tip="Takes the selected pin down." />
+            <TextBlock Text="{Binding PokestopCountText}" VerticalAlignment="Center" FontSize="11" Opacity="0.85"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+        </StackPanel>
+
+        <!-- §412/§416: the link row, always there - the main map (the one
+             with the box), the secondary map to share its spot, the maps
+             already sharing it. Both names can be typed or picked. -->
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="6" Margin="0,8,0,0">
+            <TextBlock Text="Link:" VerticalAlignment="Center" FontSize="12" Width="30"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <AutoCompleteBox Width="210" FontSize="12" Watermark="Main map (has the box)"
+                             ItemsSource="{Binding SpotChoices}"
+                             Text="{Binding LinkSpotName, Mode=TwoWay}"
+                             FilterMode="Contains" MinimumPrefixLength="1"
+                             ToolTip.Tip="The map whose box the spot is. Type or pick it, or - while this is empty - click its box on the picture. It stays as set until you change it." />
+            <AutoCompleteBox Width="210" FontSize="12" Watermark="Secondary map (shares the spot)"
+                             ItemsSource="{Binding MapChoices}"
+                             Text="{Binding LinkName, Mode=TwoWay}"
+                             FilterMode="Contains" MinimumPrefixLength="1"
+                             ToolTip.Tip="The map to find at the main map's box - a floor, a room, an area. If it has a box of its own, linking takes that box down." />
+            <Button Content="Link" FontSize="12" Command="{Binding LinkMapCommand}" IsEnabled="{Binding CanLink}"
+                    ToolTip.Tip="Publishes the secondary map sharing the main map's spot. A map not on the page yet is added by it." />
+            <ComboBox Width="220" FontSize="12" ItemsSource="{Binding LinkedMaps}"
+                      SelectedItem="{Binding SelectedLinked, Mode=TwoWay}"
+                      PlaceholderText="Linked maps"
+                      ToolTip.Tip="The maps sharing this spot." />
+            <Button Content="Unlink" FontSize="12" Command="{Binding UnlinkCommand}" IsEnabled="{Binding CanUnlink}"
+                    ToolTip.Tip="Republishes the picked map without the link; its page stays." />
+            <TextBlock Text="{Binding LinkSpotText}" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="11" Opacity="0.85"
+                       MaxWidth="320" Foreground="{DynamicResource ThemeTextBrush}" />
+        </StackPanel>
+
+        <Grid Grid.Row="6" Grid.ColumnSpan="2" ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+            <TextBlock Grid.Column="0" Text="{Binding Status}" TextWrapping="Wrap" FontSize="12" VerticalAlignment="Center"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+            <Button Grid.Column="1" Content="Close" Click="CloseButton_Click" Margin="8,0,0,0" />
+        </Grid>
+    </Grid>
+    </Border>
+</Window>

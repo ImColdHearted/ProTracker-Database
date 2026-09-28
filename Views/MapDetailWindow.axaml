@@ -1,0 +1,95 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:conv="using:Foot_Tracker.Converters"
+        x:Class="Foot_Tracker.Views.MapDetailWindow"
+        x:DataType="vm:MapDetailViewModel"
+        Title="{Binding Title}"
+        Width="600" Height="540"
+        MinWidth="460" MinHeight="300"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <Window.Styles>
+        <!-- §220's header chip, as used by the encounter history and the boss
+             detail window. -->
+        <Style Selector="Border.tableHeader">
+            <Setter Property="Background" Value="{DynamicResource ThemeTableHeaderBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Margin" Value="0,0,0,2" />
+        </Style>
+        <Style Selector="Border.tableHeader > TextBlock">
+            <Setter Property="Margin" Value="6,5" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+        </Style>
+    </Window.Styles>
+
+    <Border Classes="themedPanel">
+    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,*,Auto">
+
+        <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="18" FontWeight="Bold"
+                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,4" />
+
+        <TextBlock Grid.Row="1" Text="{Binding SummaryLine}" Opacity="0.8" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,10"
+                   IsVisible="{Binding SummaryLine, Converter={x:Static conv:StringNotEmptyConverter.Instance}}" />
+
+        <!-- Same four columns the front table shows, minus the ones that are
+             about a live hunt. -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,90,80,80,90" Margin="0,0,0,4"
+              IsVisible="{Binding HasRows}">
+            <Border Grid.Column="0" Classes="tableHeader"><TextBlock Text="Pokémon" /></Border>
+            <Border Grid.Column="1" Classes="tableHeader"><TextBlock Text="Encounters" /></Border>
+            <Border Grid.Column="2" Classes="tableHeader"><TextBlock Text="Caught" /></Border>
+            <Border Grid.Column="3" Classes="tableHeader"><TextBlock Text="Fled" /></Border>
+            <Border Grid.Column="4" Classes="tableHeader"><TextBlock Text="Rate" /></Border>
+        </Grid>
+
+        <TextBlock Grid.Row="3" Text="{Binding EmptyMessage}" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeTextBrush}" VerticalAlignment="Top"
+                   IsVisible="{Binding !HasRows}" />
+
+        <ListBox Grid.Row="3" ItemsSource="{Binding Rows}"
+                 Background="Transparent" BorderThickness="0" Padding="0"
+                 IsVisible="{Binding HasRows}">
+            <ListBox.Styles>
+                <Style Selector="ListBoxItem">
+                    <Setter Property="Padding" Value="0,3" />
+                    <Setter Property="MinHeight" Value="0" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListBox.Styles>
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:EncounterCountRow">
+                    <Grid ColumnDefinitions="*,90,80,80,90">
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" Margin="4,0">
+                            <Image Source="{Binding Sprite}" Width="28" Height="28" Stretch="Uniform"
+                                   RenderOptions.BitmapInterpolationMode="None" />
+                            <TextBlock Text="{Binding PokemonName}" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Text="{Binding CountDisplay}" TextAlignment="Center"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Grid.Column="2" Text="{Binding CaughtDisplay}" TextAlignment="Center"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Grid.Column="3" Text="{Binding RanFromDisplay}" TextAlignment="Center"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Grid.Column="4" Text="{Binding RatePercent, Mode=OneWay, StringFormat={}{0:F1}%}"
+                                   TextAlignment="Center" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="Close" Click="CloseButton_Click" />
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>

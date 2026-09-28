@@ -1,3 +1,5 @@
+using Foot_Tracker.Services;
+
 namespace Foot_Tracker.ViewModels;
 
 /// <summary>Display-friendly wrapper around Models.PvpOpponentEntry for
@@ -15,4 +17,24 @@ public sealed class PvpOpponentDisplayItem
     public int TimesBattled { get; init; }
 
     public string BattledAt { get; init; } = string.Empty;
+
+    /// <summary>§279. Grouped, and the "x" applied here rather than by the
+    /// binding's StringFormat - one place builds the cell, which is this
+    /// type's whole reason for existing.</summary>
+    public string TimesBattledDisplay => $"{DisplayNumber.Count(TimesBattled)}x";
+
+    /// <summary>§276. "Won", "Lost", or a dash when the result was never read -
+    /// see PvpOpponentEntry.Outcome for why that third state is real and is
+    /// not a quiet loss.</summary>
+    public string Result { get; init; } = "-";
+
+    /// <summary>§276. Which of the three the row draws - a green Won, a red
+    /// Lost, or a plain dash. Three flags rather than a colour key and a
+    /// converter, because this codebase negates and switches visibility in
+    /// XAML and owns no brush converter to add one for.</summary>
+    public bool IsWin { get; init; }
+
+    public bool IsLoss { get; init; }
+
+    public bool IsUnknownResult => !IsWin && !IsLoss;
 }

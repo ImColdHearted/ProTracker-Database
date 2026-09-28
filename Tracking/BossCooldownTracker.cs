@@ -306,6 +306,15 @@ namespace Foot_Tracker.Tracking
 
             BossCooldownService.RegisterBossDefeat(currentBossId!);
 
+            // §277: the per-boss win/loss record, written HERE rather than
+            // beside the lifetime tally above. That tally counts each battle
+            // end on purpose, so both halves of a two-NPC boss count as their
+            // own fight; a RECORD wants the other granularity - beating both
+            // halves is one win, not two. This point is reached exactly once
+            // per attempt for every boss, with the outcome of the battle that
+            // decided it, which is the same thing the cooldown means.
+            BossRecordService.Record(currentBossId!, outcome == BossBattleOutcome.Won);
+
             Log.Information("Boss cooldown started for {BossId} (outcome: {Outcome})", currentBossId, outcome);
 
             StatusChanged?.Invoke(

@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Serilog;
 
 namespace Foot_Tracker.Services;
@@ -37,7 +39,21 @@ namespace Foot_Tracker.Services;
 ///      other map's distance outright - a tie is rejected ("Vulcan Cvve"
 ///      sits one edit from both Vulcan Cove and Vulcan Cave, so it matches
 ///      neither rather than guessing).
-/// Anything that fails all three returns null, and the caller's existing
+///   4. §356 INTERIOR FLOORS: the catalog lists "Mt. Summer", not
+///      "Mt. Summer 2F 2", and PRO's corner HUD shows the floor. Of 578
+///      entries exactly five carry a floor token (the Iron Island set), so
+///      every multi-floor interior in the game read as Unknown. A trailing
+///      interior suffix - a REQUIRED floor token (1F, 2F, B1F), then an
+///      optional instance number and an optional L/R side - is split off,
+///      the head goes through layers 1-3, and a confirmed parent is joined
+///      back to the tidied suffix. The floor token is what keeps this away
+///      from "Route 11" and every other bare-numbered name: no floor token,
+///      no layer 4. A result from this layer is therefore NOT itself a
+///      catalog entry - it is a catalog entry plus a floor - and it is the
+///      one case where TryMatch returns a name the dictionary does not
+///      contain. Callers record it as the location; nothing downstream
+///      looks the result back up.
+/// Anything that fails all four returns null, and the caller's existing
 /// "null means keep showing the previous reading" contract does the rest -
 /// garbage like "FEFE" or "VilkaRCor" (real reads from the §99 history
 /// windows) no longer replaces a good "Vulcan Cove".
@@ -111,11 +127,57 @@ public static class LocationDictionaryService
         if (foldedLookup!.TryGetValue(FoldConfusions(normalized), out string? folded))
             return folded;
 
-        // Layer 3 - bounded fuzzy. Deliberately refused for short strings:
-        // one or two edits are a large fraction of a short name, and short
-        // names ("Moon", route numbers) are exactly where a weak match picks
-        // the wrong map.
+        // Layer 3 - bounded fuzzy (its own method since §431, so the
+        // building-prefix layer can run it on a remainder). Deliberately
+        // refused for short strings: one or two edits are a large fraction
+        // of a short name, and short names ("Moon", route numbers) are
+        // exactly where a weak match picks the wrong map.
         if (normalized.Length < 6)
+            return null;
+
+        string? fuzzy = TryMatchFuzzy(normalized);
+
+        if (fuzzy is not null)
+            return fuzzy;
+
+        // §356 layer 4 - see the class doc. Only reached when the whole
+        // reading matched nothing, and only ever fires on a reading that
+        // ends in a floor token.
+        string? withFloor = TryMatchInteriorFloor(rawText);
+
+        if (withFloor is not null)
+            return withFloor;
+
+        // §431 layer 5. Inside a Pokecenter or a Pokemart the HUD prints
+        // the building before the town - "Pokecenter Lilycove City" - and
+        // the catalog knows the town. The town IS where the player is, and
+        // no wild Pokemon spawns indoors, so answering with it is right and
+        // costs nothing: the next encounter, on the route outside, brings
+        // its own reading. Only the building words are stripped, and only
+        // from the front; the remainder still has to be a confirmed map.
+        string? withoutBuilding = TryMatchWithoutBuilding(rawText);
+
+        if (withoutBuilding is not null)
+            return withoutBuilding;
+
+        // One Debug line per distinct rejected reading - the breadcrumb for
+        // extending the dictionary if a real map ever goes missing from it.
+        if (rawText != lastLoggedMiss)
+        {
+            lastLoggedMiss = rawText;
+            Log.Debug("LocationDictionary: no confident match for {RawText}", rawText);
+        }
+
+        return null;
+    }
+
+    /// <summary>Layer 3: the one catalog name within a bounded edit
+    /// distance of a normalised reading, with the same digits, and with no
+    /// second name as close - or null. The cap grows with the length:
+    /// one edit under ten characters, two under sixteen, three beyond.</summary>
+    private static string? TryMatchFuzzy(string normalized)
+    {
+        if (normalized.Length < 6 || fuzzyCandidates is null)
             return null;
 
         int cap = normalized.Length < 10 ? 1 : normalized.Length < 16 ? 2 : 3;
@@ -125,7 +187,7 @@ public static class LocationDictionaryService
         int bestDistance = cap + 1;
         int secondDistance = cap + 1;
 
-        foreach (KeyValuePair<string, string> candidate in fuzzyCandidates!)
+        foreach (KeyValuePair<string, string> candidate in fuzzyCandidates)
         {
             if (DigitsOf(candidate.Key) != rawDigits)
                 continue;
@@ -146,18 +208,166 @@ public static class LocationDictionaryService
             }
         }
 
-        if (best is not null && bestDistance <= cap && bestDistance < secondDistance)
-            return best;
+        return best is not null && bestDistance <= cap && bestDistance < secondDistance ? best : null;
+    }
 
-        // One Debug line per distinct rejected reading - the breadcrumb for
-        // extending the dictionary if a real map ever goes missing from it.
-        if (rawText != lastLoggedMiss)
+    /// <summary>§431. The reading with a leading "Pokecenter " or
+    /// "Pokemart " (spelt as the OCR spells them, accent or not) taken off
+    /// and the remainder put through layers 1-3; null when the reading has
+    /// no such prefix or the remainder is not a confirmed map. Never
+    /// recurses into layer 4 or itself, so "Pokecenter Pokecenter X" and a
+    /// building with a floor stay unmatched rather than guessed.</summary>
+    private static string? TryMatchWithoutBuilding(string rawText)
+    {
+        string trimmed = rawText.Trim();
+
+        foreach (string building in BuildingPrefixes)
         {
-            lastLoggedMiss = rawText;
-            Log.Debug("LocationDictionary: no confident match for {RawText}", rawText);
+            if (trimmed.Length <= building.Length + 3
+                || !trimmed.StartsWith(building, StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            string remainder = trimmed[building.Length..].Trim();
+
+            if (remainder.Length < 3)
+                continue;
+
+            string normalized = Normalize(remainder);
+
+            if (normalized.Length < 3 || exactLookup is null)
+                continue;
+
+            if (exactLookup.TryGetValue(normalized, out string? exact))
+                return exact;
+
+            if (foldedLookup is not null && foldedLookup.TryGetValue(FoldConfusions(normalized), out string? folded))
+                return folded;
+
+            // Layer 3 again, on the remainder alone.
+            string? fuzzy = TryMatchFuzzy(normalized);
+
+            if (fuzzy is not null)
+                return fuzzy;
         }
 
         return null;
+    }
+
+    private static readonly string[] BuildingPrefixes =
+    {
+        "Pokecenter ", "Pok\u00e9center ", "Pokemon Center ", "Pok\u00e9mon Center ",
+        "Pokemart ", "Pok\u00e9mart ", "Poke Mart ", "Pok\u00e9 Mart ",
+    };
+
+    /// <summary>
+    /// §356. "Mt. Summer 2F 2" when the catalog only knows "Mt. Summer":
+    /// split off a trailing interior suffix, confirm the HEAD through layers
+    /// 1-3, and rejoin. Returns null unless the head is a confirmed map, so
+    /// "Summer 2F 2" (head not in the catalog) and "2F 2" (no head at all)
+    /// both stay unmatched - this adds floors to known maps, it does not
+    /// invent maps.
+    ///
+    /// The suffix must contain a floor token. That single requirement is
+    /// what makes the layer safe on a catalog full of bare-numbered names:
+    /// "Route 11" has no floor token, so it is never split, and layers 1-3
+    /// have already answered it anyway.
+    /// </summary>
+    private static string? TryMatchInteriorFloor(string rawText)
+    {
+        Match split = InteriorSuffix.Match(rawText.Trim());
+
+        if (!split.Success)
+            return null;
+
+        string head = split.Groups["head"].Value.Trim();
+
+        if (head.Length == 0)
+            return null;
+
+        string? parent = TryMatch(head);
+
+        if (parent is null)
+            return null;
+
+        return parent + " " + TidyInteriorSuffix(split.Groups["suffix"].Value);
+    }
+
+    /// <summary>The §356 interior suffix: a floor token (optionally with a
+    /// space the OCR put inside it, "2 F"), then an optional instance number
+    /// and an optional side letter. Anchored to the END of the reading, and
+    /// the separator before it must be real whitespace or punctuation so a
+    /// name cannot be cut mid-word.</summary>
+    private static readonly Regex InteriorSuffix = new(
+        @"^(?<head>.*?)[\s,\.]+(?<suffix>B?\d{1,2}\s?F(?:\s+\d{1,2})?(?:\s+[LR])?)\s*$",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    /// <summary>Upper-cases the suffix and squeezes the OCR's stray spaces
+    /// out of the floor token itself, so "2 f 2" and "2F 2" record the same
+    /// location rather than two.</summary>
+    private static string TidyInteriorSuffix(string suffix)
+    {
+        string[] parts = suffix.ToUpperInvariant().Split(
+            ' ', StringSplitOptions.RemoveEmptyEntries);
+
+        var rebuilt = new List<string>(parts.Length);
+
+        foreach (string part in parts)
+        {
+            if (rebuilt.Count > 0
+                && rebuilt[^1].Length <= 2
+                && rebuilt[^1].All(char.IsAsciiDigit)
+                && part == "F")
+            {
+                rebuilt[^1] += "F";
+                continue;
+            }
+
+            if (rebuilt.Count > 0 && rebuilt[^1] == "B" && part.EndsWith("F", StringComparison.Ordinal))
+            {
+                rebuilt[^1] += part;
+                continue;
+            }
+
+            rebuilt.Add(part);
+        }
+
+        return string.Join(' ', rebuilt);
+    }
+
+    /// <summary>
+    /// §356. Whether two OCR readings are the same place name, used by
+    /// RouteDetector to decide that the spawn panel's "Pokemon in X" header
+    /// is talking about the map the corner HUD is showing - that panel has a
+    /// search box, so its header can name a map the player is not standing
+    /// on, and only agreement with the HUD makes it usable.
+    ///
+    /// Digits must match EXACTLY, so "2F 2" and "2F 3" are never the same
+    /// reading however similar they look; beyond that one or two edits of
+    /// slack, which is the size of the damage OCR does to these strings
+    /// (the report this came from lost the "t" out of "Mt.").
+    /// </summary>
+    public static bool LooksLikeSameName(string? a, string? b)
+    {
+        if (string.IsNullOrWhiteSpace(a) || string.IsNullOrWhiteSpace(b))
+            return false;
+
+        string left = Normalize(a);
+        string right = Normalize(b);
+
+        if (left.Length < 3 || right.Length < 3)
+            return false;
+
+        if (left == right)
+            return true;
+
+        if (DigitsOf(left) != DigitsOf(right))
+            return false;
+
+        int cap = Math.Min(left.Length, right.Length) < 6 ? 1 : 2;
+
+        return BoundedLevenshtein(left, right, cap) <= cap;
     }
 
     /// <summary>Admin Console's "Reload Location Dictionary" (§101): drops

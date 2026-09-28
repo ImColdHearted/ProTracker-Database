@@ -1,0 +1,299 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Foot_Tracker.ViewModels"
+             x:Class="ProTracker.Companion.Views.Pages.SimulatorPage"
+             x:DataType="vm:SimulatorViewModel">
+
+    <!-- §313. SimulatorWindow on a phone: the same view model, the same
+         engine, two views in one page exactly as the desktop has two views in
+         one window - InBattle picks which.
+
+         NO BATTLEFIELD. §201 draws the battle on a 937x755 stadium asset
+         inside a Viewbox with both Pokemon on painted pads, and that is a
+         desktop-shaped picture. This page renders the other half §201 kept:
+         BattlePanelsVisible, the pre-§201 two bordered panels, sprite beside
+         sprite. It does not bind that flag - it never draws the stadium at
+         all, and the code-behind switches the scene off so the view model
+         fills the panel sprites rather than the pad ones. -->
+
+    <Grid>
+
+        <!-- ================================================ setting up -->
+        <ScrollViewer IsVisible="{Binding !InBattle}">
+            <StackPanel Spacing="10">
+
+                <TextBlock Text="Your team" FontWeight="Bold" FontSize="13"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+
+                <!-- §314: no longer read-only. Import is still a desktop
+                     dialog and this page still supplies no RequestImport, so
+                     the phone cannot read the player's own cards - but
+                     RequestStoragePick is supplied now and answers out of the
+                     Pokedex, so Build, Replace and Remove all work here. -->
+
+                <Button Content="Build from Pokedex" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Command="{Binding PickFromStorageCommand}" />
+
+                <ItemsControl ItemsSource="{Binding TeamSlots}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:SimulatorSlotViewModel">
+                            <Border Classes="themedPanel" Margin="0,0,0,6" Padding="8"
+                                    BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                                    CornerRadius="4">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Panel Grid.Column="0" Width="56" Height="56" Margin="0,0,8,0">
+                                        <Image Source="{Binding Sprite}" Stretch="Uniform"
+                                               RenderOptions.BitmapInterpolationMode="None" />
+                                    </Panel>
+                                    <StackPanel Grid.Column="1" Spacing="2">
+                                        <TextBlock Text="{Binding Headline}" FontWeight="Bold" FontSize="12"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <TextBlock Text="{Binding SpreadLine}" FontSize="11" Opacity="0.85"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <TextBlock Text="{Binding MovesLine}" FontSize="11" Opacity="0.85"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <TextBlock Text="{Binding NoteLine}" FontSize="10" Opacity="0.7"
+                                                   TextWrapping="Wrap" IsVisible="{Binding HasNotes}"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                                        <!-- §314/§316. These reach the page's
+                                             view model the way §313's switch
+                                             button does, and hand it the row
+                                             they sit on. Replace keeps the
+                                             slot's place in the party order,
+                                             which is the whole point of
+                                             §198's command.
+
+                                             §316: Update comes FIRST, because
+                                             changing this Pokemon is the thing
+                                             wanted far more often than
+                                             swapping it for another. It is a
+                                             Click rather than a Command - it
+                                             opens the builder on this card and
+                                             writes the answer back, and that
+                                             round trip is the page's job, not
+                                             the shared view model's.
+
+                                             §316: the item button shows what
+                                             is held (ItemButtonText is "No
+                                             Item" when nothing is), and goes
+                                             through the same PickItemCommand
+                                             the desktop uses. -->
+                                        <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,4,0,0">
+                                            <Button Content="Update" FontSize="11" Padding="8,4"
+                                                    Click="Update_Click" />
+                                            <Button Content="Replace" FontSize="11" Padding="8,4"
+                                                    Command="{Binding $parent[ItemsControl].((vm:SimulatorViewModel)DataContext).ReplaceFromStorageCommand}"
+                                                    CommandParameter="{Binding}" />
+                                            <Button Content="Remove" FontSize="11" Padding="8,4"
+                                                    Command="{Binding $parent[ItemsControl].((vm:SimulatorViewModel)DataContext).RemoveSlotCommand}"
+                                                    CommandParameter="{Binding}" />
+                                        </StackPanel>
+
+                                        <Button Content="{Binding ItemButtonText}" FontSize="11" Padding="8,4"
+                                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                                Margin="0,4,0,0"
+                                                Command="{Binding $parent[ItemsControl].((vm:SimulatorViewModel)DataContext).PickItemCommand}"
+                                                CommandParameter="{Binding}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <TextBlock Text="Opponent" FontWeight="Bold" FontSize="13" Margin="0,4,0,0"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+
+                <RadioButton GroupName="Opponent" Content="Random" FontSize="12"
+                             IsChecked="{Binding UseRandomOpponent}" />
+                <RadioButton GroupName="Opponent" Content="Boss" FontSize="12"
+                             IsChecked="{Binding UseBossOpponent}" />
+                <RadioButton GroupName="Opponent" Content="A player I have battled" FontSize="12"
+                             IsChecked="{Binding UseCustomOpponent}" />
+                <!-- §423: "My own team" (UseModelOpponent) left the desktop
+                     view model; the three above are what it offers now. -->
+
+                <TextBox Text="{Binding BossSearch, Mode=TwoWay}" FontSize="12"
+                         PlaceholderText="Search bosses" IsVisible="{Binding UseBossOpponent}" />
+
+                <ComboBox ItemsSource="{Binding BossChoices}" SelectedItem="{Binding SelectedBoss}"
+                          HorizontalAlignment="Stretch" FontSize="12"
+                          IsVisible="{Binding UseBossOpponent}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:SimulatorBossGroup">
+                            <TextBlock Text="{Binding Title}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Text="{Binding BossListNote}" FontSize="11" Opacity="0.75" TextWrapping="Wrap"
+                           IsVisible="{Binding UseBossOpponent}"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+
+                <ComboBox ItemsSource="{Binding CustomBossChoices}" SelectedItem="{Binding SelectedCustomBoss}"
+                          HorizontalAlignment="Stretch" FontSize="12"
+                          IsVisible="{Binding UseCustomOpponent}" />
+
+                <TextBlock Text="{Binding CustomBossNote}" FontSize="11" Opacity="0.75" TextWrapping="Wrap"
+                           IsVisible="{Binding UseCustomOpponent}"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+
+                <CheckBox Content="Record my battles" FontSize="12"
+                          IsChecked="{Binding ObserverEnabled, Mode=TwoWay}" />
+
+                <TextBlock Text="{Binding ObserverStatusText}" FontSize="11" Opacity="0.75" TextWrapping="Wrap"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+
+                <Button Content="Start Battle" FontWeight="Bold" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center" Margin="0,4,0,0"
+                        Command="{Binding StartBattleCommand}" />
+
+                <TextBlock Text="{Binding SetupStatus}" FontSize="12" TextWrapping="Wrap"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ================================================== fighting -->
+        <ScrollViewer IsVisible="{Binding InBattle}">
+            <StackPanel Spacing="8">
+
+                <TextBlock Text="{Binding BattleTitle}" FontWeight="Bold" FontSize="14" TextWrapping="Wrap"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <TextBlock Text="{Binding TurnText}" FontSize="11" Opacity="0.85"
+                               Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Text="{Binding WeatherText}" FontSize="11" Opacity="0.85"
+                               Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Text="{Binding TerrainText}" FontSize="11" Opacity="0.85"
+                               Foreground="{DynamicResource ThemeTextBrush}" />
+                </StackPanel>
+
+                <!-- §313: sprite beside sprite, which is §201's own fallback
+                     and every binding on it is the one the desktop uses. -->
+                <Grid ColumnDefinitions="*,*">
+                    <Border Grid.Column="0" Classes="themedPanel" Margin="0,0,4,0" Padding="8"
+                            BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4">
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="{Binding PlayerHeader}" FontWeight="Bold" FontSize="12"
+                                       TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                            <Panel Height="96">
+                                <Image Source="{Binding PlayerSprite}" Stretch="Uniform"
+                                       RenderOptions.BitmapInterpolationMode="None" />
+                            </Panel>
+                            <ProgressBar Minimum="0" Maximum="{Binding PlayerMaxHp}" Value="{Binding PlayerHp}" Height="12" />
+                            <TextBlock Text="{Binding PlayerHpText}" FontSize="11"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <TextBlock Text="{Binding PlayerStatusText}" FontSize="10" Opacity="0.8"
+                                       TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                            <TextBlock Text="{Binding PlayerItemText}" FontSize="10" Opacity="0.8"
+                                       TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="1" Classes="themedPanel" Margin="4,0,0,0" Padding="8"
+                            BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4">
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="{Binding OpponentHeader}" FontWeight="Bold" FontSize="12"
+                                       TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                            <Panel Height="96">
+                                <Image Source="{Binding OpponentSprite}" Stretch="Uniform"
+                                       RenderOptions.BitmapInterpolationMode="None" />
+                            </Panel>
+                            <ProgressBar Minimum="0" Maximum="{Binding OpponentMaxHp}" Value="{Binding OpponentHp}" Height="12" />
+                            <TextBlock Text="{Binding OpponentHpText}" FontSize="11"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <TextBlock Text="{Binding OpponentStatusText}" FontSize="10" Opacity="0.8"
+                                       TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                            <TextBlock Text="{Binding OpponentItemText}" FontSize="10" Opacity="0.8"
+                                       TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <TextBlock Text="{Binding ResultText}" FontWeight="Bold" FontSize="13" TextWrapping="Wrap"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <ToggleButton Content="Mega Evolve" FontSize="11" IsChecked="{Binding MegaArmed}"
+                                  IsVisible="{Binding MegaAvailable}" />
+                    <ToggleButton Content="Z-Power" FontSize="11" IsChecked="{Binding ZArmed}"
+                                  IsVisible="{Binding ZAvailable}" />
+                </StackPanel>
+
+                <!-- Two by two rather than the desktop's row of four: a
+                     180-wide button four across does not fit a phone. -->
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                    <Button Grid.Row="0" Grid.Column="0" Margin="0,0,3,3" HorizontalAlignment="Stretch"
+                            Command="{Binding UseMove1Command}" IsEnabled="{Binding MoveButton1.IsEnabled}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding MoveButton1.Label}" FontWeight="Bold" FontSize="12" />
+                            <TextBlock Text="{Binding MoveButton1.Detail}" FontSize="10" Opacity="0.85" />
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="1" Margin="3,0,0,3" HorizontalAlignment="Stretch"
+                            Command="{Binding UseMove2Command}" IsEnabled="{Binding MoveButton2.IsEnabled}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding MoveButton2.Label}" FontWeight="Bold" FontSize="12" />
+                            <TextBlock Text="{Binding MoveButton2.Detail}" FontSize="10" Opacity="0.85" />
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Row="1" Grid.Column="0" Margin="0,3,3,0" HorizontalAlignment="Stretch"
+                            Command="{Binding UseMove3Command}" IsEnabled="{Binding MoveButton3.IsEnabled}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding MoveButton3.Label}" FontWeight="Bold" FontSize="12" />
+                            <TextBlock Text="{Binding MoveButton3.Detail}" FontSize="10" Opacity="0.85" />
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Row="1" Grid.Column="1" Margin="3,3,0,0" HorizontalAlignment="Stretch"
+                            Command="{Binding UseMove4Command}" IsEnabled="{Binding MoveButton4.IsEnabled}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding MoveButton4.Label}" FontWeight="Bold" FontSize="12" />
+                            <TextBlock Text="{Binding MoveButton4.Detail}" FontSize="10" Opacity="0.85" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <TextBlock Text="Team" FontWeight="Bold" FontSize="12" Margin="0,4,0,0"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+
+                <ItemsControl ItemsSource="{Binding BattleTeam}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:SimulatorTeamSlotItem">
+                            <Button Width="56" Height="56" Padding="0" Margin="0,0,6,6"
+                                    IsEnabled="{Binding CanSwitch}"
+                                    Command="{Binding $parent[ItemsControl].((vm:SimulatorViewModel)DataContext).SwitchToCommand}"
+                                    CommandParameter="{Binding}">
+                                <Panel Width="52" Height="52">
+                                    <Border BorderBrush="{DynamicResource ThemeTextBrush}" BorderThickness="2"
+                                            CornerRadius="4" IsVisible="{Binding IsActive}" />
+                                    <Image Source="{Binding Sprite}" Stretch="Uniform" Margin="3"
+                                           Opacity="{Binding SpriteOpacity}"
+                                           RenderOptions.BitmapInterpolationMode="None" />
+                                </Panel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Border Classes="themedPanel" Height="200" Padding="4"
+                        BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4">
+                    <ListBox ItemsSource="{Binding LogLines}" FontSize="11" />
+                </Border>
+
+                <Button Content="{Binding LeaveBattleText}" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Command="{Binding LeaveBattleCommand}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

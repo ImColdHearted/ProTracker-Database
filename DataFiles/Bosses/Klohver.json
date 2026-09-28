@@ -22,23 +22,19 @@
         "pokemon": [
           {
             "name": "Oddish",
-            "dexNumber": 43
+            "dexNumber": 43,
+            "winStreakRequired": 0
           },
           {
             "name": "Petilil",
-            "dexNumber": 548
+            "dexNumber": 548,
+            "winStreakRequired": 0
+
           },
           {
             "name": "Skiddo",
-            "dexNumber": 672
-          },
-          {
-            "name": "Chikorita",
-            "dexNumber": 152
-          },
-          {
-            "name": "Bulbasaur",
-            "dexNumber": 1
+            "dexNumber": 672,
+            "winStreakRequired": 0
           }
         ],
         "items": [
@@ -185,23 +181,38 @@
         "pokemon": [
           {
             "name": "Oddish",
-            "dexNumber": 43
+            "dexNumber": 43,
+            "winStreakRequired": 0
           },
           {
             "name": "Petilil",
-            "dexNumber": 548
+            "dexNumber": 548,
+            "winStreakRequired": 0
           },
           {
             "name": "Skiddo",
-            "dexNumber": 672
+            "dexNumber": 672,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Petilil",
+            "dexNumber": 548,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Skiddo",
+            "dexNumber": 672,
+            "winStreakRequired": 3
           },
           {
             "name": "Chikorita",
-            "dexNumber": 152
+            "dexNumber": 152,
+            "winStreakRequired": 3
           },
           {
             "name": "Bulbasaur",
-            "dexNumber": 1
+            "dexNumber": 1,
+            "winStreakRequired": 3
           }
         ],
         "items": [
@@ -351,23 +362,38 @@
         "pokemon": [
           {
             "name": "Oddish",
-            "dexNumber": 43
+            "dexNumber": 43,
+            "winStreakRequired": 0
           },
           {
             "name": "Petilil",
-            "dexNumber": 548
+            "dexNumber": 548,
+            "winStreakRequired": 0
           },
           {
             "name": "Skiddo",
-            "dexNumber": 672
+            "dexNumber": 672,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Petilil",
+            "dexNumber": 548,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Skiddo",
+            "dexNumber": 672,
+            "winStreakRequired": 3
           },
           {
             "name": "Chikorita",
-            "dexNumber": 152
+            "dexNumber": 152,
+            "winStreakRequired": 3
           },
           {
             "name": "Bulbasaur",
-            "dexNumber": 1
+            "dexNumber": 1,
+            "winStreakRequired": 3
           }
         ],
         "items": [

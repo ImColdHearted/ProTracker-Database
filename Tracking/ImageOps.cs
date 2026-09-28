@@ -166,8 +166,84 @@ internal static class ImageOps
     }
 
     /// <summary>
+    /// §321. Everything one grid pass over a frame can tell you: how bright it
+    /// was, and whether it is the same picture as last time.
+    ///
+    /// The second number is the point. §114 gave the log a mean brightness so a
+    /// black capture could be told from a working one, and §321 wanted to reuse
+    /// it for a harder question - is this window still being REDRAWN? - because
+    /// a Linux tester ran for three hours against a dead backing pixmap while
+    /// every capture reported success. Measuring real PROClient footage settled
+    /// whether the mean could answer that on its own, and it cannot: across five
+    /// recordings of live play the mean brightness repeated unchanged for up to
+    /// 8.2 seconds at a stretch, because the mean is taken over only ~1600 grid
+    /// points and a walking sprite frequently misses all of them. A hash of
+    /// those same samples never repeated for more than 0.4 seconds in the same
+    /// footage. So the hash is what a freeze is judged on; the mean stays
+    /// because the log, the blank-frame verdict and TrackingCheck all print it.
+    ///
+    /// Both come out of ONE pass over the same grid, so this costs the same
+    /// ~1600 reads MeanBrightness already cost and adds no work to a path that
+    /// runs several times a second.
+    /// </summary>
+    public readonly struct FrameFingerprint
+    {
+        public FrameFingerprint(int mean, int hash)
+        {
+            Mean = mean;
+            Hash = hash;
+        }
+
+        /// <summary>Mean brightness 0-255, or -1 if the frame was unusable.</summary>
+        public int Mean { get; }
+
+        /// <summary>Order-sensitive hash of the sampled points, or 0 if the
+        /// frame was unusable. Equal hashes mean the sampled grid did not
+        /// change; a live screen changes it within a frame or two.</summary>
+        public int Hash { get; }
+    }
+
+    /// <summary>§321. One grid pass; see FrameFingerprint for why both numbers
+    /// come from it.</summary>
+    public static FrameFingerprint Fingerprint(SKBitmap bitmap)
+    {
+        if (bitmap is null || bitmap.Width <= 0 || bitmap.Height <= 0)
+            return new FrameFingerprint(-1, 0);
+
+        // About 40x40 sample points wherever the frame is big enough, which
+        // is 1600 reads regardless of whether the client is 800x600 or 4K.
+        int stepX = Math.Max(1, bitmap.Width / 40);
+        int stepY = Math.Max(1, bitmap.Height / 40);
+
+        long total = 0;
+        int samples = 0;
+        int hash = 17;
+
+        for (int y = 0; y < bitmap.Height; y += stepY)
+        {
+            for (int x = 0; x < bitmap.Width; x += stepX)
+            {
+                SKColor pixel = bitmap.GetPixel(x, y);
+                int value = (pixel.Red + pixel.Green + pixel.Blue) / 3;
+
+                total += value;
+                samples++;
+
+                // Order-sensitive on purpose: two frames with the same pixels
+                // rearranged - a sprite that moved - must not hash the same.
+                hash = unchecked(hash * 31 + value);
+            }
+        }
+
+        if (samples == 0)
+            return new FrameFingerprint(-1, 0);
+
+        return new FrameFingerprint((int)(total / samples), hash & 0x7FFFFFFF);
+    }
+
+    /// <summary>
     /// §114. Mean brightness of a frame, 0-255, sampled rather than scanned:
-    /// this runs on every captured frame at roughly ten frames a second, so a
+    /// this runs on every captured frame several times a second, so a
     /// full pass over two million pixels would be real work for a number
     /// nobody needs to four decimal places. Every Nth pixel on a fixed grid is
     /// enough to tell a black frame from a game screen, which is the only
@@ -179,31 +255,8 @@ internal static class ImageOps
     /// image full of nothing. Width and height alone cannot tell that apart
     /// from a working frame - brightness can.
     /// </summary>
-    public static int MeanBrightness(SKBitmap bitmap)
-    {
-        if (bitmap is null || bitmap.Width <= 0 || bitmap.Height <= 0)
-            return -1;
-
-        // About 40x40 sample points wherever the frame is big enough, which
-        // is 1600 reads regardless of whether the client is 800x600 or 4K.
-        int stepX = Math.Max(1, bitmap.Width / 40);
-        int stepY = Math.Max(1, bitmap.Height / 40);
-
-        long total = 0;
-        int samples = 0;
-
-        for (int y = 0; y < bitmap.Height; y += stepY)
-        {
-            for (int x = 0; x < bitmap.Width; x += stepX)
-            {
-                SKColor pixel = bitmap.GetPixel(x, y);
-                total += (pixel.Red + pixel.Green + pixel.Blue) / 3;
-                samples++;
-            }
-        }
-
-        return samples == 0 ? -1 : (int)(total / samples);
-    }
+    public static int MeanBrightness(SKBitmap bitmap) =>
+        Fingerprint(bitmap).Mean;
 
     public static SKBitmap? DecodePng(byte[] pngBytes) =>
         SKBitmap.Decode(pngBytes);

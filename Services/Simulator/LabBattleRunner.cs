@@ -140,9 +140,14 @@ public static class LabBattleRunner
         CancellationToken cancellationToken,
         LabMatchup matchup = LabMatchup.ObserveOnly,
         IShadowEvaluator? evaluator = null,
-        double risk = 0)
+        double risk = 0,
+        TierFilter? tiers = null)
     {
         battles = Math.Clamp(battles, MinBattles, MaxBattles);
+
+        // §327: the corpus is made of these battles, so the tier pool is
+        // as much a property of the training data as the schema is.
+        tiers ??= TierFilter.Standard;
         risk = Math.Clamp(risk, 0.0, 1.0);
 
         // §171: the network can only play when a model actually loaded.
@@ -227,7 +232,7 @@ public static class LabBattleRunner
             };
 
             return BattleSimulator.Run(
-                stateFactory: i => BuildLabBattle(speciesSource, baseSeed, i, matchup),
+                stateFactory: i => BuildLabBattle(speciesSource, baseSeed, i, matchup, tiers),
                 simulations: battles,
                 baseSeed: baseSeed,
                 cancellationToken: cancellationToken,
@@ -290,10 +295,10 @@ public static class LabBattleRunner
     /// battle), named for who is playing which side. A rare unbuildable
     /// team re-rolls with a shifted seed rather than sinking the run.</summary>
     static BattleState BuildLabBattle(
-        ISpeciesSource speciesSource, int baseSeed, int index, LabMatchup matchup)
+        ISpeciesSource speciesSource, int baseSeed, int index, LabMatchup matchup, TierFilter tiers)
     {
-        var teamA = BuildTeam(speciesSource, baseSeed ^ (index * 2 + 1));
-        var teamB = BuildTeam(speciesSource, baseSeed ^ (index * 2 + 2));
+        var teamA = BuildTeam(speciesSource, baseSeed ^ (index * 2 + 1), tiers);
+        var teamB = BuildTeam(speciesSource, baseSeed ^ (index * 2 + 2), tiers);
 
         // The names ride into every observation record, so a corpus can
         // always be read back to see who was actually playing.
@@ -326,11 +331,12 @@ public static class LabBattleRunner
         };
     }
 
-    static List<PokemonState> BuildTeam(ISpeciesSource speciesSource, int seed)
+    static List<PokemonState> BuildTeam(ISpeciesSource speciesSource, int seed, TierFilter tiers)
     {
         for (int attempt = 0; attempt < 4; attempt++)
         {
-            TeamBuildResult team = RandomTeams.Build(speciesSource, TeamBuilder.MaxTeamSize, seed + attempt * 7919);
+            TeamBuildResult team = RandomTeams.Build(
+                speciesSource, TeamBuilder.MaxTeamSize, seed + attempt * 7919, tiers: tiers);
 
             if (team.Ok && team.Team.Count > 0)
                 return team.Team;

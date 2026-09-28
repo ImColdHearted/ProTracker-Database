@@ -129,6 +129,212 @@ namespace Foot_Tracker.Tracking
         private static int framesSinceCaptureLog;
         private static int battlesLocatedSinceCaptureLog;
 
+        // ---- §321 frozen-frame detection ----
+        //
+        // THE FAILURE THIS EXISTS FOR. A Linux tester ran for three hours and
+        // counted nothing. Every capture line in his log said "- ok". The
+        // capture never failed once - "last failed capture never" - and there
+        // were no errors. What his log did say, 177 times, was mean brightness
+        // of EXACTLY 170/255. Never 169, never 171. A mean over a whole frame
+        // cannot repeat to the byte across eleven thousand live frames; it was
+        // one dead image being re-read.
+        //
+        // He had two PRO clients open. The tracker had bound the one he was
+        // not playing on, and on Linux a capture is `import -window <id>`,
+        // which reads that window's backing pixmap. Under XWayland an occluded
+        // or unfocused X11 window is not repainted, so import kept handing
+        // back the last thing drawn into it. The capture SUCCEEDED every time.
+        // He fixed it by pressing Stop and Start, which re-bound the window -
+        // and nothing anywhere had told him that was the problem.
+        //
+        // So: a run of captures that are the same picture is not a healthy
+        // capture, whatever its return value says.
+        //
+        // WHAT "THE SAME PICTURE" MEANS, AND WHY IT IS NOT BRIGHTNESS. The
+        // first draft of this compared width, height and mean brightness,
+        // because those were already measured. Five real PROClient recordings
+        // say that is not good enough: during live play the sampled mean
+        // repeated unchanged for as long as 8.2 seconds, since ImageOps reads
+        // about 1600 grid points and a moving sprite regularly misses all of
+        // them. A hash of those same points never repeated past 0.4 seconds in
+        // the same footage. The hash is therefore what a freeze is judged on -
+        // it costs nothing extra, coming out of the same grid pass.
+        //
+        // WHY THE THRESHOLD IS A DURATION AND NOT ONLY A FRAME COUNT. The loop
+        // asks for a 200 ms delay, so five frames a second - but the tester's
+        // own log reports about 61 frames a minute, because on Linux every
+        // capture forks `import` and that dominates. One frame count therefore
+        // means five times as long on one machine as on another, which is no
+        // basis for a verdict. A freeze is called when the picture has been
+        // identical for FrozenFrameSeconds AND for at least FrozenFrameRun
+        // frames - the duration carries the meaning, the count stops a stalled
+        // or barely-running loop from being described as a frozen one.
+        private static int identicalFrameRun;
+        private static long identicalRunStartTicksUtc;
+        private static int lastFrameSignature = int.MinValue;
+        private static bool frozenAnnounced;
+
+        /// <summary>§321. How many captures in a row have been the same
+        /// picture (same size, same sampled-grid hash).</summary>
+        public static int IdenticalFrameRun => Volatile.Read(ref identicalFrameRun);
+
+        /// <summary>§321. How long that run has lasted. Zero when there is no
+        /// run.</summary>
+        public static TimeSpan IdenticalFrameRunLength
+        {
+            get
+            {
+                long started = Interlocked.Read(ref identicalRunStartTicksUtc);
+
+                if (started == 0 || IdenticalFrameRun < 1)
+                    return TimeSpan.Zero;
+
+                return TimeSpan.FromTicks(Math.Max(0, DateTime.UtcNow.Ticks - started));
+            }
+        }
+
+        /// <summary>
+        /// §321. Fifteen minutes of one unchanging picture.
+        ///
+        /// The number was argued up twice, both times by measurement.
+        ///
+        /// It began as a frame count of 60 with no clock at all. Real footage
+        /// killed that: see the hash discussion above, and the rate discussion
+        /// below.
+        ///
+        /// It was then five minutes, and the tester's own log killed that. His
+        /// log records only brightness, and an identical run necessarily has
+        /// identical brightness, so the longest stretch of his log showing no
+        /// brightness change is a hard upper bound on any run a
+        /// brightness-keyed detector could have seen. In the BROKEN half that
+        /// bound is 2h57m - one value, 170, start to finish. In the HEALTHY
+        /// half, after he restarted tracking and it worked, there is a 12m 05s
+        /// stretch and a 5m 01s one. Five minutes would have called his
+        /// working session frozen twice; ten minutes would still have reached
+        /// into the longer one. Fifteen clears every stretch in all 1356 of
+        /// them.
+        ///
+        /// That 12-minute stretch is also the sharpest evidence for the hash:
+        /// a battle window was located in all 928 of its frames, so the screen
+        /// was demonstrably not still while its brightness sat unchanged.
+        ///
+        /// So the threshold has two independent margins. Against the signature
+        /// actually used, the worst honest run measured on live footage is 0.4
+        /// seconds, and this is over two thousand times that. Against the much
+        /// weaker brightness signal, no stretch of the one real healthy
+        /// session on record comes near it either. What it costs is that the
+        /// tester's three-hour silence becomes a fifteen-minute one; what it
+        /// buys is that nobody who walked away from a paused game is told
+        /// their capture is broken.
+        ///
+        /// REJECTED, and worth recording so it is not re-proposed: also
+        /// requiring that no battle window was located during the run. It
+        /// would have suppressed both healthy stretches, and it is wrong -
+        /// a window frozen ON a battle screen locates a battle in every one
+        /// of its dead frames, so the guard would hide exactly the failure
+        /// this exists to catch. It only looked attractive because this one
+        /// tester's frozen frame happened to have no battle in it.
+        /// </summary>
+        public const int FrozenFrameSeconds = 900;
+
+        /// <summary>§321. The frame count that must ALSO be reached, so that a
+        /// loop which has stopped scanning cannot be reported as a frozen
+        /// capture. At the slowest rate seen in the wild - about one frame a
+        /// second on the tester's Linux box - fifteen minutes is roughly 900
+        /// frames, so this is never the binding constraint on a loop that is
+        /// actually running.</summary>
+        public const int FrozenFrameRun = 60;
+
+        /// <summary>§321. The capture is returning the same image over and
+        /// over - the bound window is not being redrawn.</summary>
+        public static bool FramesAreFrozen =>
+            IdenticalFrameRun >= FrozenFrameRun &&
+            IdenticalFrameRunLength >= TimeSpan.FromSeconds(FrozenFrameSeconds);
+
+        /// <summary>§321. "6m 12s (371 frames)" - the measurement both the log
+        /// verdict and TrackingCheck print, so the two cannot drift apart. The
+        /// wording around it belongs to each caller.</summary>
+        private static string FrozenRunDescription()
+        {
+            TimeSpan length = IdenticalFrameRunLength;
+
+            string span = length.TotalMinutes >= 1
+                ? $"{(int)length.TotalMinutes}m {length.Seconds}s"
+                : $"{(int)length.TotalSeconds}s";
+
+            return $"{span} ({IdenticalFrameRun} frames)";
+        }
+
+        /// <summary>
+        /// §333. Whether the saved boundaries still apply to what is being
+        /// captured, said as a verdict rather than as two numbers to compare.
+        ///
+        /// A box is only a measurement on the frame it was drawn on. On any
+        /// other it is the §135 centring rule's guess, and §333 stopped that
+        /// guess outranking a scan that succeeded - so what the box will
+        /// actually DO changes with this answer, and the reader has to be
+        /// told which case they are in.
+        /// </summary>
+        private static string ManualFrameVerdict(ManualBattleBounds manual)
+        {
+            int width = LastFrameWidth;
+            int height = LastFrameHeight;
+
+            if (width <= 0 || height <= 0)
+                return "No frame has been captured yet, so it cannot be checked against one.";
+
+            if (manual.FrameWidth == width && manual.FrameHeight == height)
+            {
+                return "That is this client's size, so the box is used as drawn: it takes over " +
+                       "when automatic detection finds nothing, and also when detection finds a " +
+                       "box away from it while this box holds a battle window.";
+            }
+
+            return $"THIS CLIENT IS {width}x{height}, WHICH IS NOT THE SIZE IT WAS DRAWN ON. The box " +
+                   "is re-centred onto the frame, which assumes the battle window stays centred - " +
+                   "true when the game window is resized, not true when it is a different shape or " +
+                   "on another monitor. It is therefore only used when automatic detection finds " +
+                   "NOTHING, and can no longer overrule detection that worked. If encounters are " +
+                   "being missed, redo Set Screen Boundaries on this client, or clear it.";
+        }
+
+        /// <summary>
+        /// §321. Appended to the frozen verdict: which PRO clients are open
+        /// right now.
+        ///
+        /// The tester had two. The log named neither, so the line that finally
+        /// explained his three hours could not point at the thing to click.
+        /// This deliberately does NOT claim which one is bound - the capture
+        /// interface exposes only whether something is selected, not what -
+        /// and it deliberately says nothing at all when there is only one
+        /// client, because then the wrong-client story is not the explanation
+        /// and suggesting it would send the reader down the wrong path.
+        ///
+        /// It runs at most once a heartbeat (a minute) and only while frozen,
+        /// so the enumeration it costs - a wmctrl fork on Linux - is paid
+        /// roughly never. Any failure is swallowed: a hint that cannot be
+        /// produced must not take the verdict down with it.
+        /// </summary>
+        private static string OtherClientsHint()
+        {
+            try
+            {
+                IReadOnlyList<ClientWindowInfo> windows =
+                    WindowCaptureServiceFactory.Instance.FindClientWindows("PROClient");
+
+                if (windows.Count < 2)
+                    return string.Empty;
+
+                return " There are " + windows.Count + " PRO clients open right now (" +
+                       string.Join(", ", windows.Select(w => "PID " + w.ProcessId)) +
+                       "), so picking the right one is very likely the fix.";
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
         /// <summary>§134. One call per encounter-loop frame, right after
         /// BattleWindowLocator.TryLocate. Two interlocked increments; no
         /// logging of its own.</summary>
@@ -141,11 +347,15 @@ namespace Foot_Tracker.Tracking
         }
 
         public static void RecordCapture(
-            bool ok, int width = 0, int height = 0, string? error = null, int meanBrightness = -1)
+            bool ok, int width = 0, int height = 0, string? error = null,
+            int meanBrightness = -1, int frameHash = 0)
         {
             if (ok)
             {
                 Interlocked.Exchange(ref lastCaptureOkTicksUtc, DateTime.UtcNow.Ticks);
+
+                NoteFrameSignature(width, height, meanBrightness, frameHash);
+
                 LastFrameWidth = width;
                 LastFrameHeight = height;
                 LastFrameBrightness = meanBrightness;
@@ -154,9 +364,55 @@ namespace Foot_Tracker.Tracking
             {
                 Interlocked.Exchange(ref lastCaptureFailTicksUtc, DateTime.UtcNow.Ticks);
                 LastCaptureError = error ?? string.Empty;
+
+                // A capture that failed is not a frozen one, and must not be
+                // allowed to keep a run alive across the gap either.
+                ResetIdenticalRun();
             }
 
             LogCaptureIfWorthIt(ok, width, height, error, meanBrightness);
+        }
+
+        /// <summary>§321. One comparison per frame. Callers that cannot supply
+        /// a hash (frameHash 0, or no brightness measured) end the run rather
+        /// than extend it - an unmeasured frame is not evidence of
+        /// anything.</summary>
+        private static void NoteFrameSignature(
+            int width, int height, int meanBrightness, int frameHash)
+        {
+            if (frameHash == 0 || meanBrightness < 0 || width <= 0 || height <= 0)
+            {
+                ResetIdenticalRun();
+                return;
+            }
+
+            int signature = unchecked((width * 397 ^ height) * 397 ^ frameHash);
+
+            if (signature == int.MinValue)
+                signature = int.MinValue + 1;
+
+            if (signature == lastFrameSignature)
+            {
+                Interlocked.Increment(ref identicalFrameRun);
+
+                // The run started with the frame BEFORE the first repeat, so
+                // the clock is only set the first time a repeat is seen.
+                Interlocked.CompareExchange(
+                    ref identicalRunStartTicksUtc, DateTime.UtcNow.Ticks, 0);
+            }
+            else
+            {
+                ResetIdenticalRun();
+            }
+
+            lastFrameSignature = signature;
+        }
+
+        private static void ResetIdenticalRun()
+        {
+            Interlocked.Exchange(ref identicalFrameRun, 0);
+            Interlocked.Exchange(ref identicalRunStartTicksUtc, 0);
+            frozenAnnounced = false;
         }
 
         /// <summary>
@@ -184,7 +440,16 @@ namespace Foot_Tracker.Tracking
             long sinceLog = nowTicks - Interlocked.Read(ref lastCaptureLogTicksUtc);
             bool heartbeatDue = sinceLog > TimeSpan.FromSeconds(CaptureLogHeartbeatSeconds).Ticks;
 
-            if (signature == lastCaptureSignature && !heartbeatDue)
+            // §321: a capture that has just gone frozen is worth a line
+            // immediately. Its brightness has by definition not changed, so
+            // the de-duplication above would otherwise hold it back for a
+            // whole heartbeat - which is exactly the silence being fixed.
+            bool frozenNow = FramesAreFrozen && !frozenAnnounced;
+
+            if (frozenNow)
+                frozenAnnounced = true;
+
+            if (signature == lastCaptureSignature && !heartbeatDue && !frozenNow)
                 return;
 
             lastCaptureSignature = signature;
@@ -216,6 +481,23 @@ namespace Foot_Tracker.Tracking
             else if (meanBrightness <= NearlyBlankFrameBrightness)
                 verdict = "ok but the frame is almost entirely dark - if nothing is " +
                           "being detected, suspect the capture rather than the OCR.";
+            else if (FramesAreFrozen)
+                // §321: the loudest verdict there is, because this is the one
+                // that looked like success for three hours. It names what was
+                // measured and then what usually causes it, in that order -
+                // the §134 rule that a verdict states what was seen rather
+                // than a culprit it cannot prove applies here too. The capture
+                // genuinely cannot tell a dead window from a game nobody is
+                // touching; five minutes of it is worth saying either way.
+                verdict = "THE CAPTURE IS FROZEN - every frame for the last " +
+                          FrozenRunDescription() +
+                          " has been the same picture, so nothing can be detected from it. " +
+                          "Either nothing at all is happening on the screen we are capturing, " +
+                          "or - far more likely if you are playing - we are bound to a window " +
+                          "that is not being redrawn: a second PRO client, one behind another " +
+                          "window or on another workspace, or a minimised one. Stop and Start " +
+                          "tracking to re-bind it, or use Assign Client to pick the client you " +
+                          "are actually playing on." + OtherClientsHint();
             else
                 verdict = "ok";
 
@@ -250,7 +532,7 @@ namespace Foot_Tracker.Tracking
         // the one extra capture it takes is the same call the Report a
         // Problem screenshot already makes.
 
-        public static string RunTrackingCheck()
+        public static string RunTrackingCheck(string? trackerWindow = null)
         {
             var lines = new List<string>();
 
@@ -302,21 +584,50 @@ namespace Foot_Tracker.Tracking
                             ? string.Empty
                             : " - " + capture.LastError)
                         : windows.Count + " found: " + string.Join("; ",
-                            windows.Select(w => $"PID {w.ProcessId}, handle 0x{w.Handle:X}, title '{w.DisplayName}'")));
+                            windows.Select(w => $"PID {w.ProcessId}, handle 0x{w.Handle:X}, title '{w.DisplayName}'{WindowBounds(w)}")));
 
+                // §391: the tracker's own window beside the game's, because
+                // on the screen-copy route (see "Capture environment") a
+                // tracker sitting over the game is captured in its place.
+                Stage("Tracker window", trackerWindow ?? "(not reported)");
+
+                // §391: "NO - tracking has nothing to capture" was wrong on
+                // both counts. A window is bound only when the player picks
+                // one; everyone else captures the first PRO client found,
+                // and always has (ScreenCapture.CaptureProWindow). A report
+                // said it while the loop was capturing every frame.
                 Stage("Bound window",
-                    capture.HasSelectedClient ? "yes" : "NO - tracking has nothing to capture");
+                    capture.HasSelectedClient
+                        ? "yes - chosen by the player"
+                        : windows.Count > 0
+                            ? "not chosen - the first PRO client window found is captured, as it always has been"
+                            : "NO - none chosen and none found to fall back to");
+
+                Stage("Capture environment",
+                    LastCaptureEnvironment.Length == 0 ? "(nothing logged yet this session)" : LastCaptureEnvironment);
 
                 ManualBattleBounds? manual = BattleWindowLocator.ManualBounds;
 
+                // §333: this line used to print the saved frame size beside
+                // the current one and leave the reader to compare them. A
+                // tester spent a day on a box drawn at 1440x1252 being
+                // re-centred onto a 1259x1366 client, landing 82 pixels out
+                // of place, and overruling a scan that had the window right.
+                // Every number needed was on this line. None of them said so.
                 Stage("Manual boundaries",
                     manual is null
                         ? "not set - automatic detection only"
                         : $"set: {manual.Width}x{manual.Height} at ({manual.X},{manual.Y}), drawn on a " +
-                          $"{manual.FrameWidth}x{manual.FrameHeight} frame; takes over when automatic detection " +
-                          "finds nothing, or finds a box away from it while it holds a battle window");
+                          $"{manual.FrameWidth}x{manual.FrameHeight} frame. " +
+                          ManualFrameVerdict(manual));
 
-                if (capture.HasSelectedClient)
+                // §391: whenever anything can be captured, not only when a
+                // window was chosen - the loop captures on the fallback, so
+                // the check must test the same thing. A player who never
+                // picked a window used to get a report with no Capture,
+                // Battle window or Title OCR line, which are the three that
+                // say why an encounter was not counted.
+                if (capture.HasSelectedClient || windows.Count > 0)
                 {
                     byte[]? png = capture.CaptureSelectedWindowPng();
 
@@ -336,13 +647,32 @@ namespace Foot_Tracker.Tracking
                         {
                             int brightness = ImageOps.MeanBrightness(frame);
 
+                            // §321: the run of identical frames goes on the
+                            // line a tester actually sends back. His report
+                            // said "Capture: ok" while the capture had been
+                            // dead for three hours.
+                            string frozen = FramesAreFrozen
+                                ? " - FROZEN: the tracking loop's frames have been identical for "
+                                  + FrozenRunDescription()
+                                  + ", so the bound window is not being redrawn"
+                                : IdenticalFrameRun > 1
+                                    ? " (the loop's last frames were identical for "
+                                      + FrozenRunDescription() + ")"
+                                    : string.Empty;
+
                             Stage("Capture",
                                 $"{frame.Width}x{frame.Height}, mean brightness {brightness}/255" +
                                 (brightness >= 0 && brightness <= BlankFrameBrightness
                                     ? " - BLANK FRAME"
-                                    : string.Empty));
+                                    : string.Empty)
+                                + frozen);
 
                             bool locatedNow = BattleWindowLocator.TryLocate(frame, out SKRectI bounds);
+
+                            // §342: and, when the scan has never found one,
+                            // whether it has been refusing runs for being
+                            // too large. Empty in every other case.
+                            string oversize = BattleWindowLocator.OversizeRefusal;
 
                             Stage("Battle window",
                                 locatedNow
@@ -352,15 +682,39 @@ namespace Foot_Tracker.Tracking
                                           : string.Empty)
                                     : "not in this frame (expected when no battle is open right now)");
 
+                            if (oversize.Length > 0)
+                                Stage("Battle window size", "REFUSED - " + oversize);
+
                             if (locatedNow)
                             {
-                                bool named = EncounterDetector.TryDetectEncounter(
-                                    frame, out string pokemonName, out bool looksLikeBattleTitle);
+                                // §363: this line used to say "a 'VS' title is
+                                // readable but no Pokemon name matched it" and
+                                // stop, which names the failure and withholds
+                                // the one fact that explains it. The map branch
+                                // below has printed what it read since it was
+                                // written; this branch never did. Read the title
+                                // through TryReadBattleTitle rather than
+                                // TryDetectEncounter so the text is in hand -
+                                // and so it is read from the same bounds the
+                                // "Battle window" line above just reported,
+                                // instead of locating the window a second time.
+                                bool readAny = EncounterDetector.TryReadBattleTitle(
+                                    frame, bounds, out string titleText,
+                                    out bool looksLikeBattleTitle, out string? matchedPokemon);
+
+                                string readAs =
+                                    " - OCR read: '" +
+                                    titleText.Replace("\r", " ").Replace("\n", " ").Trim() +
+                                    "'";
 
                                 Stage("Title OCR",
-                                    named ? "Pokemon read: " + pokemonName
-                                    : looksLikeBattleTitle ? "a 'VS' title is readable but no Pokemon name matched it"
-                                    : "no 'VS' title could be read from the located window");
+                                    !readAny
+                                        ? "nothing readable in the title strip - it is too dark, or Tesseract returned no text"
+                                    : matchedPokemon != null
+                                        ? "Pokemon read: " + matchedPokemon + readAs
+                                    : looksLikeBattleTitle
+                                        ? "a 'VS' title is readable but no Pokemon name matched it" + readAs
+                                        : "no 'VS' title could be read from the located window" + readAs);
                             }
                             else
                             {
@@ -407,6 +761,26 @@ namespace Foot_Tracker.Tracking
             return report;
         }
 
+        /// <summary>§391. " at (x,y) WxH" for a window on Windows, where the
+        /// finder can ask; empty elsewhere, or when the window is gone.</summary>
+        private static string WindowBounds(ClientWindowInfo window)
+        {
+            try
+            {
+                if (OperatingSystem.IsWindows()
+                    && ProWindowFinder.TryGetWindowBounds(new IntPtr(window.Handle), out System.Drawing.Rectangle bounds))
+                {
+                    return $" at ({bounds.X},{bounds.Y}) {bounds.Width}x{bounds.Height}";
+                }
+            }
+            catch
+            {
+                // A line of context, not worth failing the check over.
+            }
+
+            return string.Empty;
+        }
+
         private static string Age(DateTime utc)
         {
             if (utc == DateTime.MinValue)
@@ -423,8 +797,16 @@ namespace Foot_Tracker.Tracking
         /// Linux capture services for what each one puts in it.</summary>
         public static void LogCaptureEnvironment(string description)
         {
+            LastCaptureEnvironment = description;
             Log.Information("Capture environment: {Description}", description);
         }
+
+        /// <summary>§391. The last environment line, so the tracking check
+        /// can print which route the frames are coming through (PrintWindow,
+        /// the compositor, or a copy of the screen rectangle - the one route
+        /// on which the tracker's own window can cover the game) without a
+        /// reader having to find it in a log that may not have arrived.</summary>
+        public static volatile string LastCaptureEnvironment = string.Empty;
 
         public static void RecordEncounter(string pokemonName, string levelText, string location)
         {

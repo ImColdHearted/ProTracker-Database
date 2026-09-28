@@ -15,7 +15,9 @@ namespace Foot_Tracker.Services;
 /// normalized index (letters and digits only, case-insensitive) built once
 /// on first use. Decoded bitmaps are cached, misses included, exactly like
 /// PokemonSpriteService; everything is defensive - a missing folder or an
-/// unreadable file means a null sprite, never a throw.
+/// unreadable file means a null sprite, never a throw. §375: a file named
+/// with the catalog's "--bag" variant suffix also answers to the name
+/// without it - see BuildIndex.
 /// </summary>
 public static class ItemSpriteService
 {
@@ -42,10 +44,26 @@ public static class ItemSpriteService
             {
                 foreach (string file in Directory.EnumerateFiles(folder, "*.png"))
                 {
-                    string key = Normalize(Path.GetFileNameWithoutExtension(file));
+                    string stem = Path.GetFileNameWithoutExtension(file);
+                    string key = Normalize(stem);
 
                     if (key.Length > 0 && !built.ContainsKey(key))
                         built[key] = file;
+
+                    // §375: the PokeAPI catalog draws each Z-Crystal twice
+                    // and names the bag-sprite "waterium-z--bag.png", which
+                    // normalizes to "wateriumzbag" and so never answered to
+                    // "Waterium Z". The "--bag" suffix is a variant tag,
+                    // not part of the name: index the file under the name
+                    // without it as well, unless a plainer file already has
+                    // that name.
+                    if (stem.EndsWith("--bag", StringComparison.OrdinalIgnoreCase))
+                    {
+                        string bare = Normalize(stem.Substring(0, stem.Length - "--bag".Length));
+
+                        if (bare.Length > 0 && !built.ContainsKey(bare))
+                            built[bare] = file;
+                    }
                 }
             }
             else

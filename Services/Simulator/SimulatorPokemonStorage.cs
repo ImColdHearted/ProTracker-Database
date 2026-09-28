@@ -30,6 +30,14 @@ namespace Foot_Tracker.Services.Simulator
 
         public DateTime AddedUtc { get; set; }
 
+        /// <summary>§372. Finished Simulator battles this Pokemon was on the
+        /// team for, won and lost. A draw or a cancelled battle counts as
+        /// neither. Default 0 on both, so a storage file written before
+        /// this section loads with an empty record rather than failing.</summary>
+        public int Wins { get; set; }
+
+        public int Losses { get; set; }
+
         public string Fingerprint =>
             $"{SpeciesName}|{Level}|{NatureName}|{string.Join(",", Ivs)}|{string.Join(",", Evs)}";
 
@@ -111,14 +119,84 @@ namespace Foot_Tracker.Services.Simulator
                 bool replaced = existing >= 0;
 
                 if (replaced)
+                {
+                    // §372: a re-import is the same Pokemon read again - a
+                    // fresh scan after it levelled, say - and its record is
+                    // about the Pokemon, not the scan. Carried across, or
+                    // every re-import would zero it.
+                    entry.Wins = entries[existing].Wins;
+                    entry.Losses = entries[existing].Losses;
                     entries[existing] = entry;
+                }
                 else
+                {
                     entries.Add(entry);
+                }
 
                 Save();
 
                 return (entry, replaced);
             }
+        }
+
+        /// <summary>§372. One finished battle, written against every Pokemon
+        /// that was on the team for it. Matched the way Upsert matches - the
+        /// card's ID when one was read, else the build fingerprint - so the
+        /// slot on screen and the entry on disk are the same Pokemon. A team
+        /// member that is not in storage (which should not happen: every
+        /// import lands here) is skipped rather than invented. Saved once
+        /// for the whole team.</summary>
+        public static void RecordBattle(IEnumerable<ImportedPokemon> team, bool won)
+        {
+            lock (Gate)
+            {
+                EnsureLoaded();
+
+                bool any = false;
+
+                foreach (ImportedPokemon member in team)
+                {
+                    StoredPokemon? entry = Find(member);
+
+                    if (entry == null)
+                        continue;
+
+                    if (won)
+                        entry.Wins++;
+                    else
+                        entry.Losses++;
+
+                    any = true;
+                }
+
+                if (any)
+                    Save();
+            }
+        }
+
+        /// <summary>§372. The record behind a card - (0, 0) for a Pokemon
+        /// storage does not know.</summary>
+        public static (int Wins, int Losses) RecordFor(ImportedPokemon imported)
+        {
+            lock (Gate)
+            {
+                EnsureLoaded();
+
+                StoredPokemon? entry = Find(imported);
+
+                return entry == null ? (0, 0) : (entry.Wins, entry.Losses);
+            }
+        }
+
+        /// <summary>The same match Upsert and Remove use, in one place.
+        /// Caller holds the gate.</summary>
+        static StoredPokemon? Find(ImportedPokemon imported)
+        {
+            StoredPokemon probe = StoredPokemon.From(imported);
+
+            return entries!.Find(e =>
+                (probe.GameId != null && e.GameId == probe.GameId) ||
+                e.Fingerprint == probe.Fingerprint);
         }
 
         public static void Remove(StoredPokemon entry)

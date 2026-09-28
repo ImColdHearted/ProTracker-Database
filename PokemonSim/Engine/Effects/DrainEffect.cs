@@ -30,6 +30,14 @@ namespace PokemonSim.Engine.Effects
             if (damage <= 0 || attacker.Fainted || attacker.CurrentHP >= attacker.MaxHP)
                 return;
 
+            // §304: a heal-blocked attacker still deals the damage; it
+            // simply keeps none of it.
+            if (attacker.HealBlockTurns > 0)
+            {
+                state.Log.Write($"{attacker.Species} cannot heal!");
+                return;
+            }
+
             int heal = Math.Max(1, (int)(damage * fraction));
 
             attacker.CurrentHP =

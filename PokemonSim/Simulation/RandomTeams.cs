@@ -27,10 +27,41 @@ namespace PokemonSim.Simulation
     /// </summary>
     public static class RandomTeams
     {
-        public static TeamBuildResult Build(ISpeciesSource speciesSource, int count, int seed, int level = 100)
+        /// <summary>
+        /// §327. <paramref name="tiers"/> narrows which published sets a
+        /// team may be drawn from, and null means TierFilter.Standard -
+        /// OU and UU.
+        ///
+        /// THIS CHANGES THE DEFAULT. Before §327 every imported format was
+        /// one pool, so a random battle could be a UU wall against
+        /// Rayquaza; 71 of the 565 species with sets have them in nothing
+        /// but Ubers. That is not a position skill decides, and both the
+        /// AI's training corpus and the win rate it is measured by were
+        /// made of those battles. Pass TierFilter.All for exactly what
+        /// this did before.
+        ///
+        /// A RESTRICTED POOL DOES NOT FALL BACK TO LEARNSETS. The fallback
+        /// below builds a team out of a species' learnset when it has no
+        /// published set, and under a filter that is precisely the back
+        /// door an Ubers-only legendary would walk in through - it has no
+        /// set in these tiers, so it would qualify for the fallback. Under
+        /// a filter the pool IS the species with a qualifying set, and
+        /// nothing else is drawn.
+        /// </summary>
+        public static TeamBuildResult Build(
+            ISpeciesSource speciesSource, int count, int seed, int level = 100,
+            TierFilter? tiers = null)
         {
+            tiers ??= TierFilter.Standard;
+
             var rng = new Random(seed);
-            IReadOnlyList<string> names = speciesSource.AllSpeciesNames;
+
+            // Under a filter the catalog is not the pool: only species with
+            // a set in these tiers may be drawn, and only from the catalog
+            // the caller actually has.
+            IReadOnlyList<string> names = tiers.IsUnrestricted
+                ? speciesSource.AllSpeciesNames
+                : Eligible(speciesSource, tiers);
 
             var plans = new List<TeamSlotPlan>();
             int guard = 0;
@@ -46,7 +77,7 @@ namespace PokemonSim.Simulation
                 // The rng is drawn from either way so the sequence - and
                 // therefore the whole team - stays reproducible whichever
                 // branch a species takes.
-                if (CompetitiveSets.TryGet(info.Name, out IReadOnlyList<CompetitiveSet> sets))
+                if (CompetitiveSets.TryGet(info.Name, tiers, out IReadOnlyList<CompetitiveSet> sets))
                 {
                     TeamSlotPlan real = CompetitiveSets.ToPlan(
                         info.Name, sets[rng.Next(sets.Count)], level, rng);
@@ -57,6 +88,13 @@ namespace PokemonSim.Simulation
                         continue;
                     }
                 }
+
+                // §327: the learnset fallback belongs to the unrestricted
+                // pool. Reaching it under a filter would mean building a
+                // species that has no set in these tiers - the one thing
+                // the filter exists to prevent.
+                if (!tiers.IsUnrestricted)
+                    continue;
 
                 List<string> usable = TeamBuilder.UsableMoves(info);
 
@@ -99,6 +137,16 @@ namespace PokemonSim.Simulation
             }
 
             return TeamBuilder.Build(plans, speciesSource);
+        }
+
+        /// <summary>§327. The species this catalog and this filter agree
+        /// on. Order is the sorted pool's, so a seed still reproduces its
+        /// team.</summary>
+        static IReadOnlyList<string> Eligible(ISpeciesSource speciesSource, TierFilter tiers)
+        {
+            var known = new HashSet<string>(speciesSource.AllSpeciesNames, StringComparer.OrdinalIgnoreCase);
+
+            return CompetitiveSets.SpeciesIn(tiers).Where(known.Contains).ToList();
         }
 
         static Nature PickNature(SpeciesInfo info, Random rng)

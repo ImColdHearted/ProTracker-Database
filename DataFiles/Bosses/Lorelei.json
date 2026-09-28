@@ -22,15 +22,18 @@
         "pokemon": [
           {
             "name": "Lapras",
-            "dexNumber": 131
+            "dexNumber": 131,
+            "winStreakRequired": 0
           },
           {
             "name": "Sneasel",
-            "dexNumber": 215
+            "dexNumber": 215,
+            "winStreakRequired": 0
           },
           {
             "name": "Snover",
-            "dexNumber": 459
+            "dexNumber": 459,
+            "winStreakRequired": 0
           }
         ],
         "items": [
@@ -186,15 +189,33 @@
         "pokemon": [
           {
             "name": "Lapras",
-            "dexNumber": 131
+            "dexNumber": 131,
+            "winStreakRequired": 0
           },
           {
             "name": "Sneasel",
-            "dexNumber": 215
+            "dexNumber": 215,
+            "winStreakRequired": 0
           },
           {
             "name": "Snover",
-            "dexNumber": 459
+            "dexNumber": 459,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Lapras",
+            "dexNumber": 131,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Sneasel",
+            "dexNumber": 215,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Snover",
+            "dexNumber": 459,
+            "winStreakRequired": 3
           }
         ],
         "items": [
@@ -350,15 +371,33 @@
         "pokemon": [
           {
             "name": "Lapras",
-            "dexNumber": 131
+            "dexNumber": 131,
+            "winStreakRequired": 0
           },
           {
             "name": "Sneasel",
-            "dexNumber": 215
+            "dexNumber": 215,
+            "winStreakRequired": 0
           },
           {
             "name": "Snover",
-            "dexNumber": 459
+            "dexNumber": 459,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Lapras",
+            "dexNumber": 131,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Sneasel",
+            "dexNumber": 215,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Snover",
+            "dexNumber": 459,
+            "winStreakRequired": 3
           }
         ],
         "items": [

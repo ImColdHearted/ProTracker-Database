@@ -49,6 +49,11 @@ namespace PokemonSim.Shadow
         // Section 176: how many actions it scores - four (moves only) or
         // ActionSlots (moves and switches).
         readonly int outputWidth;
+
+        /// <summary>§320: WHICH output carries the policy. A three-headed
+        /// model's first result is not automatically the one to score with,
+        /// so the name is kept rather than the position.</summary>
+        readonly string outputName = "";
         int failures;
         ShadowEvaluatorStatus status;
 
@@ -80,7 +85,8 @@ namespace PokemonSim.Shadow
             {
                 session = new InferenceSession(modelPath);
 
-                string? problem = Validate(session, out inputName, out inputWidth, out outputWidth);
+                string? problem = Validate(session, out inputName, out outputName,
+                                           out inputWidth, out outputWidth);
 
                 if (problem != null)
                 {
@@ -125,9 +131,11 @@ namespace PokemonSim.Shadow
         }
 
         static string? Validate(InferenceSession session, out string inputName,
+                                out string outputName,
                                 out int inputWidth, out int outputWidth)
         {
             inputName = "";
+            outputName = "";
             inputWidth = 0;
             outputWidth = 0;
 
@@ -151,15 +159,46 @@ namespace PokemonSim.Shadow
                 widthOk;
 
             if (!inputOk)
+            {
+                // §311. A model asking for a RETIRED width is not a broken
+                // file, it is an old one, and saying so is the difference
+                // between "retrain this" and "something is wrong with my
+                // exporter". It is still refused: the prefix rule that made
+                // an old width safe to feed is gone, so handing it the first
+                // 205 columns of a 481-column vector would score nonsense
+                // rather than fail, which is the worse outcome.
+                if (inDims.Length == 2 &&
+                    Array.IndexOf(ObservationSchema.RetiredFeatureCounts, inDims[1]) >= 0)
+                {
+                    return $"input \"{input.Key}\" asks for {inDims[1]} features, which was the "
+                         + $"{GenerationOf(inDims[1])} layout. §311 re-laid the vector, so those "
+                         + $"columns no longer mean what they meant - this model has to be retrained "
+                         + $"at {ObservationSchema.FeatureCount}.";
+                }
+
                 return $"input \"{input.Key}\" is {input.Value.ElementType.Name}[{string.Join(",", inDims)}], "
                      + $"expected float[1,N] with N one of {string.Join("/", ObservationSchema.AcceptedFeatureCounts)}";
+            }
 
             inputWidth = inDims[1];
 
-            if (session.OutputMetadata.Count != 1)
-                return $"expected 1 output tensor, found {session.OutputMetadata.Count}";
+            // §320. A model may now carry three heads - policy, value and
+            // opponent prediction - from one shared trunk. The POLICY head is
+            // the one this evaluator scores with, and it is found by name
+            // when the exporter gave it one and by position otherwise.
+            //
+            // Position is a safe fallback and not a guess: §320's exporter
+            // writes policy_logits FIRST for exactly this reason, and a model
+            // from before §320 has one output, which is its policy. So both
+            // generations load, and neither has to be detected by version.
+            if (session.OutputMetadata.Count < 1)
+                return "the model has no outputs";
 
-            KeyValuePair<string, NodeMetadata> output = session.OutputMetadata.First();
+            KeyValuePair<string, NodeMetadata> output = session.OutputMetadata
+                .FirstOrDefault(o => o.Key == PolicyOutputName);
+
+            if (output.Key == null)
+                output = session.OutputMetadata.First();
 
             int[] outDims = output.Value.Dimensions;
 
@@ -173,9 +212,15 @@ namespace PokemonSim.Shadow
                      + $"expected [...,N] with N one of {string.Join("/", ObservationSchema.AcceptedActionCounts)}";
 
             inputName = input.Key;
+            outputName = output.Key;
             outputWidth = outDims[outDims.Length - 1];
             return null;
         }
+
+        /// <summary>§320. What the exporter calls the policy head. A model
+        /// without it is a single-head model from before §320, whose one
+        /// output IS its policy.</summary>
+        internal const string PolicyOutputName = "policy_logits";
 
         public ShadowPrediction? Predict(float[] state, float[] legalActionMask)
         {
@@ -203,7 +248,13 @@ namespace PokemonSim.Shadow
                 using IDisposableReadOnlyCollection<DisposableNamedOnnxValue> results = session.Run(
                     new[] { NamedOnnxValue.CreateFromTensor(inputName, tensor) });
 
-                float[] scores = results.First().AsEnumerable<float>().ToArray();
+                // §320: the POLICY output, by the name Validate settled on -
+                // not merely the first result, which on a three-headed model
+                // is only the policy by the exporter's convention.
+                DisposableNamedOnnxValue policy =
+                    results.FirstOrDefault(r => r.Name == outputName) ?? results.First();
+
+                float[] scores = policy.AsEnumerable<float>().ToArray();
 
                 if (scores.Length < outputWidth)
                     throw new InvalidOperationException($"model returned {scores.Length} scores");
@@ -251,14 +302,21 @@ namespace PokemonSim.Shadow
         }
 
         /// <summary>Section 177. Which generation an older input width
-        /// belongs to, for the status line - so "pre-177 features" tells
-        /// the reader exactly how far behind a loaded model is rather than
-        /// merely that it is behind.</summary>
-        static string GenerationOf(int width) =>
-            width == ObservationSchema.FeatureCountV1 ? "pre-175"
-            : width == ObservationSchema.FeatureCountV2 ? "pre-176"
-            : width == ObservationSchema.FeatureCountV3 ? "pre-177"
-            : $"{width}-feature";
+        /// belongs to, for the status line - so "§184" tells the reader
+        /// exactly how far behind a loaded model is rather than merely that
+        /// it is behind. §311 named the rest of them, because every one of
+        /// these is now a refusal rather than a slightly stale accept.
+        /// </summary>
+        static string GenerationOf(int width) => width switch
+        {
+            10 => "§156",
+            76 => "§175",
+            160 => "§176",
+            202 => "§177",
+            203 => "§182",
+            205 => "§184",
+            _ => $"{width}-feature",
+        };
 
         static string FirstLine(string text)
         {

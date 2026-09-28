@@ -69,6 +69,16 @@ namespace Foot_Tracker.Services
 
                 NormalizeRemovedPresetBackground(settings);
 
+                // §349. One Text Color, Border Color and Font became four of
+                // each. This copies the old values into the new fields so an
+                // existing appearance looks identical after the update - the
+                // new controls simply start where the old ones left off.
+                //
+                // Here rather than in the deserializer because it has to run
+                // for a file that HAS no version key, which is every file
+                // written before §349.
+                settings.MigrateGlobalsToSections();
+
                 return settings;
             }
             catch
@@ -203,16 +213,83 @@ namespace Foot_Tracker.Services
             public List<int> CustomGradientColorArgbs { get; set; } = new();
             public string CustomGradientDirection { get; set; } = string.Empty;
 
+            // §349. Legacy: one font for the window. Still written and still
+            // read, because a theme file shared by a pre-§349 build carries
+            // only these - see ImportTheme, which seeds the four sections
+            // from them when the per-section fields are absent.
             public string FontFamilyName { get; set; } = string.Empty;
             public string FontSizeName { get; set; } = string.Empty;
+
+            // §349. Four sections, each with its own border, text and font.
+            // Version stays 1: these are ADDITIVE, so an older build reads
+            // the file, finds the fields it knows, ignores these and lands on
+            // a theme that is simply less specific - which is what §209's
+            // "reads anything it recognises and ignores the rest" was for.
+            public int SpriteBoxBorderColorArgb { get; set; }
+            public int SpriteBoxTextColorArgb { get; set; }
+            public string SpriteBoxFontFamilyName { get; set; } = string.Empty;
+            public string SpriteBoxFontSizeName { get; set; } = string.Empty;
+
+            public int EncountersBorderColorArgb { get; set; }
+            public int EncountersTextColorArgb { get; set; }
+            public string EncountersFontFamilyName { get; set; } = string.Empty;
+            public string EncountersFontSizeName { get; set; } = string.Empty;
+
+            public int StatsBorderColorArgb { get; set; }
+            public int StatsTextColorArgb { get; set; }
+            public string StatsFontFamilyName { get; set; } = string.Empty;
+            public string StatsFontSizeName { get; set; } = string.Empty;
+
+            public int ButtonBorderColorArgb { get; set; }
+            public int ButtonTextColorArgb { get; set; }
+            public string ButtonFontFamilyName { get; set; } = string.Empty;
+            public string ButtonFontSizeName { get; set; } = string.Empty;
+
+            // §380. Nullable: a file from before §380 carries no such field,
+            // and every theme made then had bold headings, so absent reads
+            // as true in ImportTheme. Additive like §349, Version stays 1.
+            public bool? BoldHeadings { get; set; }
+
+            // §384. Border width and corner radius per section - numbers, so
+            // they travel, unlike the frame pictures. Nullable for the same
+            // reason as BoldHeadings: absent reads as the pre-§384 look.
+            public double? SpriteBoxBorderWidth { get; set; }
+            public double? SpriteBoxCornerRadius { get; set; }
+            public double? EncountersBorderWidth { get; set; }
+            public double? EncountersCornerRadius { get; set; }
+            public double? StatsBorderWidth { get; set; }
+            public double? StatsCornerRadius { get; set; }
+            public double? ButtonBorderWidth { get; set; }
+            public double? ButtonCornerRadius { get; set; }
+
+            // §387. The sprite row panel: two colours (0, transparent, when
+            // absent - which is also its default) and two numbers.
+            public int SpriteRowBackgroundColorArgb { get; set; }
+            public int SpriteRowBorderColorArgb { get; set; }
+
+            // §393. The menu bar's colours; absent reads as 0, automatic.
+            public int MenuTextColorArgb { get; set; }
+            public int MenuHighlightColorArgb { get; set; }
+
+            // §394. The menu bar's font; absent or empty follows Statistics.
+            public string MenuFontFamilyName { get; set; } = string.Empty;
+            public string MenuFontSizeName { get; set; } = string.Empty;
+            public double? SpriteRowBorderWidth { get; set; }
+            public double? SpriteRowCornerRadius { get; set; }
         }
 
-        /// <summary>§209. Writes the portable subset of these settings to a
-        /// file the user picked. Throws on failure - the caller shows the
-        /// message.</summary>
-        public static void ExportTheme(AppearanceSettings settings, string path, string? name = null)
+        /// <summary>§345. The portable subset of these settings as the DTO,
+        /// without writing it anywhere.
+        ///
+        /// Split out of ExportTheme because §345 needs the same object to
+        /// POST rather than to save. Sharing a theme to the community
+        /// gallery and saving one to a file must describe the identical
+        /// appearance, and the only way to guarantee that is for both to
+        /// come from here - a second field list would drift the first time
+        /// one of them gained a colour the other did not.</summary>
+        public static ThemeFile BuildThemeFile(AppearanceSettings settings, string? name = null)
         {
-            var file = new ThemeFile
+            return new ThemeFile
             {
                 Name = string.IsNullOrWhiteSpace(name) ? null : name.Trim(),
                 SavedUtc = DateTime.UtcNow.ToString("o"),
@@ -231,8 +308,56 @@ namespace Foot_Tracker.Services
                 CustomGradientDirection = settings.CustomGradientDirection,
 
                 FontFamilyName = settings.FontFamilyName,
-                FontSizeName = settings.FontSizeName
+                FontSizeName = settings.FontSizeName,
+
+                SpriteBoxBorderColorArgb = settings.SpriteBoxBorderColorArgb,
+                SpriteBoxTextColorArgb = settings.SpriteBoxTextColorArgb,
+                SpriteBoxFontFamilyName = settings.SpriteBoxFontFamilyName,
+                SpriteBoxFontSizeName = settings.SpriteBoxFontSizeName,
+
+                EncountersBorderColorArgb = settings.EncountersBorderColorArgb,
+                EncountersTextColorArgb = settings.EncountersTextColorArgb,
+                EncountersFontFamilyName = settings.EncountersFontFamilyName,
+                EncountersFontSizeName = settings.EncountersFontSizeName,
+
+                StatsBorderColorArgb = settings.StatsBorderColorArgb,
+                StatsTextColorArgb = settings.StatsTextColorArgb,
+                StatsFontFamilyName = settings.StatsFontFamilyName,
+                StatsFontSizeName = settings.StatsFontSizeName,
+
+                ButtonBorderColorArgb = settings.ButtonBorderColorArgb,
+                ButtonTextColorArgb = settings.ButtonTextColorArgb,
+                ButtonFontFamilyName = settings.ButtonFontFamilyName,
+                ButtonFontSizeName = settings.ButtonFontSizeName,
+
+                BoldHeadings = settings.BoldHeadings,
+
+                SpriteBoxBorderWidth = settings.SpriteBoxBorderWidth,
+                SpriteBoxCornerRadius = settings.SpriteBoxCornerRadius,
+                EncountersBorderWidth = settings.EncountersBorderWidth,
+                EncountersCornerRadius = settings.EncountersCornerRadius,
+                StatsBorderWidth = settings.StatsBorderWidth,
+                StatsCornerRadius = settings.StatsCornerRadius,
+                ButtonBorderWidth = settings.ButtonBorderWidth,
+                ButtonCornerRadius = settings.ButtonCornerRadius,
+
+                SpriteRowBackgroundColorArgb = settings.SpriteRowBackgroundColorArgb,
+                SpriteRowBorderColorArgb = settings.SpriteRowBorderColorArgb,
+                MenuTextColorArgb = settings.MenuTextColorArgb,
+                MenuHighlightColorArgb = settings.MenuHighlightColorArgb,
+                MenuFontFamilyName = settings.MenuFontFamilyName,
+                MenuFontSizeName = settings.MenuFontSizeName,
+                SpriteRowBorderWidth = settings.SpriteRowBorderWidth,
+                SpriteRowCornerRadius = settings.SpriteRowCornerRadius
             };
+        }
+
+        /// <summary>§209. Writes the portable subset of these settings to a
+        /// file the user picked. Throws on failure - the caller shows the
+        /// message.</summary>
+        public static void ExportTheme(AppearanceSettings settings, string path, string? name = null)
+        {
+            ThemeFile file = BuildThemeFile(settings, name);
 
             string json = JsonSerializer.Serialize(file, new JsonSerializerOptions { WriteIndented = true });
 
@@ -265,6 +390,20 @@ namespace Foot_Tracker.Services
             if (file is null || file.Version <= 0)
                 throw new InvalidDataException("That file is not a Pro Tracker theme.");
 
+            return ImportTheme(file, current);
+        }
+
+        /// <summary>§345. The same merge, from a theme already in memory.
+        ///
+        /// A community appearance arrives over HTTP rather than as a file on
+        /// disk, and it must land on the current settings by exactly the
+        /// rules a downloaded .protheme.json does - a gradient replacing the
+        /// background, an absent font leaving this machine's alone. So the
+        /// merge lives here and the file-reading overload above calls it,
+        /// rather than the gallery growing its own copy that would quietly
+        /// disagree the first time these rules changed.</summary>
+        public static AppearanceSettings ImportTheme(ThemeFile file, AppearanceSettings current)
+        {
             AppearanceSettings merged = Clone(current);
 
             merged.TextColorArgb = file.TextColorArgb;
@@ -297,6 +436,114 @@ namespace Foot_Tracker.Services
             if (!string.IsNullOrWhiteSpace(file.FontSizeName))
                 merged.FontSizeName = file.FontSizeName;
 
+            // §349. The per-section values, with the pre-§349 globals as the
+            // fallback for each.
+            //
+            // A file written before §349 carries no section fields at all:
+            // every colour reads 0, which is transparent, and applying that
+            // would turn someone's text invisible. So a section colour is
+            // taken only when the file actually claims one, and otherwise
+            // comes from the single global that file DID carry - which is
+            // exactly what that theme meant when it was made.
+            merged.SpriteBoxBorderColorArgb =
+                file.SpriteBoxBorderColorArgb != 0 ? file.SpriteBoxBorderColorArgb : file.BorderColorArgb;
+            merged.SpriteBoxTextColorArgb =
+                file.SpriteBoxTextColorArgb != 0 ? file.SpriteBoxTextColorArgb : file.TextColorArgb;
+
+            if (!string.IsNullOrWhiteSpace(file.SpriteBoxFontFamilyName))
+                merged.SpriteBoxFontFamilyName = file.SpriteBoxFontFamilyName;
+            else if (!string.IsNullOrWhiteSpace(file.FontFamilyName))
+                merged.SpriteBoxFontFamilyName = file.FontFamilyName;
+
+            if (!string.IsNullOrWhiteSpace(file.SpriteBoxFontSizeName))
+                merged.SpriteBoxFontSizeName = file.SpriteBoxFontSizeName;
+            else if (!string.IsNullOrWhiteSpace(file.FontSizeName))
+                merged.SpriteBoxFontSizeName = file.FontSizeName;
+
+            merged.EncountersBorderColorArgb =
+                file.EncountersBorderColorArgb != 0 ? file.EncountersBorderColorArgb : file.BorderColorArgb;
+            merged.EncountersTextColorArgb =
+                file.EncountersTextColorArgb != 0 ? file.EncountersTextColorArgb : file.TextColorArgb;
+
+            if (!string.IsNullOrWhiteSpace(file.EncountersFontFamilyName))
+                merged.EncountersFontFamilyName = file.EncountersFontFamilyName;
+            else if (!string.IsNullOrWhiteSpace(file.FontFamilyName))
+                merged.EncountersFontFamilyName = file.FontFamilyName;
+
+            if (!string.IsNullOrWhiteSpace(file.EncountersFontSizeName))
+                merged.EncountersFontSizeName = file.EncountersFontSizeName;
+            else if (!string.IsNullOrWhiteSpace(file.FontSizeName))
+                merged.EncountersFontSizeName = file.FontSizeName;
+
+            merged.StatsBorderColorArgb =
+                file.StatsBorderColorArgb != 0 ? file.StatsBorderColorArgb : file.BorderColorArgb;
+            merged.StatsTextColorArgb =
+                file.StatsTextColorArgb != 0 ? file.StatsTextColorArgb : file.TextColorArgb;
+
+            if (!string.IsNullOrWhiteSpace(file.StatsFontFamilyName))
+                merged.StatsFontFamilyName = file.StatsFontFamilyName;
+            else if (!string.IsNullOrWhiteSpace(file.FontFamilyName))
+                merged.StatsFontFamilyName = file.FontFamilyName;
+
+            if (!string.IsNullOrWhiteSpace(file.StatsFontSizeName))
+                merged.StatsFontSizeName = file.StatsFontSizeName;
+            else if (!string.IsNullOrWhiteSpace(file.FontSizeName))
+                merged.StatsFontSizeName = file.FontSizeName;
+
+            merged.ButtonBorderColorArgb =
+                file.ButtonBorderColorArgb != 0 ? file.ButtonBorderColorArgb : file.BorderColorArgb;
+            merged.ButtonTextColorArgb =
+                file.ButtonTextColorArgb != 0 ? file.ButtonTextColorArgb : file.TextColorArgb;
+
+            if (!string.IsNullOrWhiteSpace(file.ButtonFontFamilyName))
+                merged.ButtonFontFamilyName = file.ButtonFontFamilyName;
+            else if (!string.IsNullOrWhiteSpace(file.FontFamilyName))
+                merged.ButtonFontFamilyName = file.FontFamilyName;
+
+            if (!string.IsNullOrWhiteSpace(file.ButtonFontSizeName))
+                merged.ButtonFontSizeName = file.ButtonFontSizeName;
+            else if (!string.IsNullOrWhiteSpace(file.FontSizeName))
+                merged.ButtonFontSizeName = file.FontSizeName;
+
+            // §380. A theme describes the whole look, so a file that says
+            // nothing about its headings meant them bold - every theme made
+            // before the flag existed had them so.
+            merged.BoldHeadings = file.BoldHeadings ?? true;
+
+            // §384. Absent means the look every theme had before the setting
+            // existed; present, clamped like anything else that reaches the
+            // window, so a hand-edited file cannot draw a 900px border.
+            var defaults = new AppearanceSettings();
+            merged.SpriteBoxBorderWidth = ThemeManager.ClampBorderWidth(file.SpriteBoxBorderWidth ?? defaults.SpriteBoxBorderWidth);
+            merged.SpriteBoxCornerRadius = ThemeManager.ClampCornerRadius(file.SpriteBoxCornerRadius ?? defaults.SpriteBoxCornerRadius);
+            merged.EncountersBorderWidth = ThemeManager.ClampBorderWidth(file.EncountersBorderWidth ?? defaults.EncountersBorderWidth);
+            merged.EncountersCornerRadius = ThemeManager.ClampCornerRadius(file.EncountersCornerRadius ?? defaults.EncountersCornerRadius);
+            merged.StatsBorderWidth = ThemeManager.ClampBorderWidth(file.StatsBorderWidth ?? defaults.StatsBorderWidth);
+            merged.StatsCornerRadius = ThemeManager.ClampCornerRadius(file.StatsCornerRadius ?? defaults.StatsCornerRadius);
+            merged.ButtonBorderWidth = ThemeManager.ClampBorderWidth(file.ButtonBorderWidth ?? defaults.ButtonBorderWidth);
+            merged.ButtonCornerRadius = ThemeManager.ClampCornerRadius(file.ButtonCornerRadius ?? defaults.ButtonCornerRadius);
+
+            // §387. Transparent when absent is the panel's own default, so an
+            // older file lands on no panel, as it always meant.
+            merged.SpriteRowBackgroundColorArgb = file.SpriteRowBackgroundColorArgb;
+            merged.SpriteRowBorderColorArgb = file.SpriteRowBorderColorArgb;
+            merged.MenuTextColorArgb = file.MenuTextColorArgb;
+            merged.MenuHighlightColorArgb = file.MenuHighlightColorArgb;
+
+            // §394: no fall-back to the global here - a theme that names no
+            // menu font means the menu follows Statistics, which is the
+            // same thing the global would have given it.
+            merged.MenuFontFamilyName = file.MenuFontFamilyName ?? string.Empty;
+            merged.MenuFontSizeName = file.MenuFontSizeName ?? string.Empty;
+            merged.SpriteRowBorderWidth = ThemeManager.ClampBorderWidth(file.SpriteRowBorderWidth ?? defaults.SpriteRowBorderWidth);
+            merged.SpriteRowCornerRadius = ThemeManager.ClampCornerRadius(file.SpriteRowCornerRadius ?? defaults.SpriteRowCornerRadius);
+
+            // The receiving settings are already version 2 (Load migrates
+            // before anything can import), so nothing here needs to migrate
+            // again - and the flag must not be cleared, or the next Load
+            // would seed the sections from the legacy globals and undo this.
+            merged.SettingsVersion = 2;
+
             return merged;
         }
 
@@ -320,6 +567,60 @@ namespace Foot_Tracker.Services
         // second client to save a background would delete the first client's
         // image file out from under it, even though each has its own
         // AppearanceSettings.CustomBackgroundPath pointing at it.
+        /// <summary>§382. The panel pictures, stored the way the window
+        /// background is: one copy per client per panel in the same folder
+        /// (panel-stats-client1.png, panel-table-client1.jpg), the previous
+        /// copy under another extension deleted. <paramref name="slot"/> is
+        /// one of <see cref="PanelImageSlots"/>; anything else is refused so
+        /// a path can never be built from user text.</summary>
+        /// <summary>§383. The per-client copies a picture can be saved as:
+        /// the statistics panel, the encounter table, the sprite boxes.</summary>
+        public static readonly IReadOnlyList<string> PanelImageSlots =
+            new[] { "stats", "table", "sprites", "stats-frame", "table-frame", "sprites-frame", "sprite-row", "sprite-row-frame" };
+
+        public static string SavePanelImage(string sourcePath, string slot)
+        {
+            if (!PanelImageSlots.Contains(slot))
+                throw new ArgumentException("Unknown panel slot.", nameof(slot));
+
+            if (!File.Exists(sourcePath))
+            {
+                throw new FileNotFoundException(
+                    "The selected panel picture no longer exists.",
+                    sourcePath);
+            }
+
+            Directory.CreateDirectory(CustomBackgroundFolder);
+
+            string extension = Path.GetExtension(sourcePath).ToLowerInvariant();
+
+            if (string.IsNullOrWhiteSpace(extension))
+                extension = ".png";
+
+            int clientNumber = SessionPersistenceService.AppearanceClientNumber;
+
+            string baseFileName = clientNumber >= 1
+                ? $"panel-{slot}-client{clientNumber}"
+                : $"panel-{slot}";
+
+            string destinationPath = Path.Combine(CustomBackgroundFolder, $"{baseFileName}{extension}");
+
+            // The source may BE the destination (Apply pressed twice with
+            // nothing changed); copying a file onto itself would truncate it.
+            if (string.Equals(Path.GetFullPath(sourcePath), Path.GetFullPath(destinationPath), StringComparison.OrdinalIgnoreCase))
+                return destinationPath;
+
+            foreach (string existingFile in Directory.GetFiles(CustomBackgroundFolder, $"{baseFileName}.*"))
+            {
+                if (!string.Equals(existingFile, destinationPath, StringComparison.OrdinalIgnoreCase))
+                    File.Delete(existingFile);
+            }
+
+            File.Copy(sourcePath, destinationPath, overwrite: true);
+
+            return destinationPath;
+        }
+
         public static string SaveCustomBackground(
             string sourcePath)
         {

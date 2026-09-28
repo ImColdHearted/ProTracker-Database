@@ -1,0 +1,347 @@
+{
+  "_help": "Section 419. The Pokéstops the Map Boxes editor places and the Maps window describes. From https://wiki.pokemonrevolution.net/index.php?title=Pokéstops, except the Exp. Candy quantities (the wiki says '?'; in play XS/S/M give 1-5 and L/XL 1-3). A stop's id is 'Pokestop' + its name's letters; a pin is published under it. A place not listed can be typed in the editor.",
+  "name": "Pokéstop",
+  "picture": "SharedPokemonLibrary/Assets/Bosses/pokestop.png",
+  "cooldownHours": 48,
+  "itemsPerVisit": 2,
+  "requirements": {
+    "Kanto": "4 Kanto badges",
+    "Johto": "All 8 Johto badges",
+    "Hoenn": "None listed",
+    "Sinnoh": "None listed"
+  },
+  "rewards": [
+    {
+      "item": "Poké Ball",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Great Ball",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Ultra Ball",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Repel",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Super Repel",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Max Repel",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Revive",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Ether",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Max Ether",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "PP Up",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "PP Max",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Rare Candy",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Potion",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Super Potion",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Hyper Potion",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Max Potion",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Full Heal",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Full Restore",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "TM45 (Thunder Wave)",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "TM24 (Thunderbolt)",
+      "min": 1,
+      "max": 1
+    },
+    {
+      "item": "Exp. Candy XS",
+      "min": 1,
+      "max": 5
+    },
+    {
+      "item": "Exp. Candy S",
+      "min": 1,
+      "max": 5
+    },
+    {
+      "item": "Exp. Candy M",
+      "min": 1,
+      "max": 5
+    },
+    {
+      "item": "Exp. Candy L",
+      "min": 1,
+      "max": 3
+    },
+    {
+      "item": "Exp. Candy XL",
+      "min": 1,
+      "max": 3
+    }
+  ],
+  "stops": [
+    {
+      "id": "PokestopViridianCityGym",
+      "region": "Kanto",
+      "name": "Viridian City Gym"
+    },
+    {
+      "id": "PokestopViridianForest",
+      "region": "Kanto",
+      "name": "Viridian Forest"
+    },
+    {
+      "id": "PokestopPewterCityMuseum",
+      "region": "Kanto",
+      "name": "Pewter City Museum"
+    },
+    {
+      "id": "PokestopMtMoonEntranceAtRoute3",
+      "region": "Kanto",
+      "name": "Mt. Moon entrance at Route 3"
+    },
+    {
+      "id": "PokestopCeruleanCaveEntrance",
+      "region": "Kanto",
+      "name": "Cerulean Cave entrance"
+    },
+    {
+      "id": "PokestopBillSHouseOnRoute25",
+      "region": "Kanto",
+      "name": "Bill's house on Route 25"
+    },
+    {
+      "id": "PokestopDaycareCenterOnRoute5",
+      "region": "Kanto",
+      "name": "Daycare Center on Route 5"
+    },
+    {
+      "id": "PokestopCinnabarIsland",
+      "region": "Kanto",
+      "name": "Cinnabar Island"
+    },
+    {
+      "id": "PokestopRockTunnelEntranceOnRoute10",
+      "region": "Kanto",
+      "name": "Rock Tunnel Entrance on Route 10"
+    },
+    {
+      "id": "PokestopDiglettSCaveEntrance2",
+      "region": "Kanto",
+      "name": "Diglett's Cave Entrance 2"
+    },
+    {
+      "id": "PokestopVermilionCityDock",
+      "region": "Kanto",
+      "name": "Vermilion City dock"
+    },
+    {
+      "id": "PokestopBaseOfSproutTowerInVioletCity",
+      "region": "Johto",
+      "name": "Base of Sprout Tower in Violet City"
+    },
+    {
+      "id": "PokestopUnionCaveEntranceFromRoute32",
+      "region": "Johto",
+      "name": "Union Cave entrance from Route 32"
+    },
+    {
+      "id": "PokestopSlowpokeWellInAzaleaTown",
+      "region": "Johto",
+      "name": "Slowpoke Well in Azalea Town"
+    },
+    {
+      "id": "PokestopIlexForest",
+      "region": "Johto",
+      "name": "Ilex Forest"
+    },
+    {
+      "id": "PokestopNationalPark",
+      "region": "Johto",
+      "name": "National Park"
+    },
+    {
+      "id": "PokestopBurnedTowerInEcruteakCity",
+      "region": "Johto",
+      "name": "Burned Tower in Ecruteak City"
+    },
+    {
+      "id": "PokestopGlitterLighthouse",
+      "region": "Johto",
+      "name": "Glitter Lighthouse"
+    },
+    {
+      "id": "PokestopDarkCaveEntranceOnRoute45",
+      "region": "Johto",
+      "name": "Dark Cave Entrance on Route 45"
+    },
+    {
+      "id": "PokestopLakeOfRage",
+      "region": "Johto",
+      "name": "Lake Of Rage"
+    },
+    {
+      "id": "PokestopSouthernExitOfPetalburgWoods",
+      "region": "Hoenn",
+      "name": "Southern exit of Petalburg Woods"
+    },
+    {
+      "id": "PokestopSouthernSectionOfRoute115",
+      "region": "Hoenn",
+      "name": "Southern section of Route 115"
+    },
+    {
+      "id": "PokestopNearSlateportMuseum",
+      "region": "Hoenn",
+      "name": "Near Slateport Museum"
+    },
+    {
+      "id": "PokestopBicyclePathInRoute110",
+      "region": "Hoenn",
+      "name": "Bicycle Path in Route 110"
+    },
+    {
+      "id": "PokestopNorthwestOfLavaridgeTownGym",
+      "region": "Hoenn",
+      "name": "Northwest of Lavaridge Town Gym"
+    },
+    {
+      "id": "PokestopFootOfTrainerTowerInRoute111Desert",
+      "region": "Hoenn",
+      "name": "Foot of Trainer Tower in Route 111 Desert"
+    },
+    {
+      "id": "PokestopNearWeatherInstituteInRoute119A",
+      "region": "Hoenn",
+      "name": "Near Weather Institute in Route 119A"
+    },
+    {
+      "id": "PokestopFrontOfLilycoveMuseum",
+      "region": "Hoenn",
+      "name": "Front of Lilycove Museum"
+    },
+    {
+      "id": "PokestopNearMossdeepCitySpaceCenter",
+      "region": "Hoenn",
+      "name": "Near Mossdeep City Space Center"
+    },
+    {
+      "id": "PokestopRightOfSootopolisCityPokecenter",
+      "region": "Hoenn",
+      "name": "Right of Sootopolis City Pokécenter"
+    },
+    {
+      "id": "PokestopFrontOfPacifidlogTownPokecenter",
+      "region": "Hoenn",
+      "name": "Front of Pacifidlog Town Pokécenter"
+    },
+    {
+      "id": "PokestopLeftOfJubilifeTVBuildingInJubilifeCity",
+      "region": "Sinnoh",
+      "name": "Left of Jubilife TV building in Jubilife City"
+    },
+    {
+      "id": "PokestopNearOldChateauEntranceInEternaForest",
+      "region": "Sinnoh",
+      "name": "Near Old Chateau entrance in Eterna Forest"
+    },
+    {
+      "id": "PokestopFrontOfHearthomeCityPokemart",
+      "region": "Sinnoh",
+      "name": "Front of Hearthome City Pokémart"
+    },
+    {
+      "id": "PokestopFrontOfGalacticHQInVeilstoneCity",
+      "region": "Sinnoh",
+      "name": "Front of Galactic HQ in Veilstone City"
+    },
+    {
+      "id": "PokestopEntranceToManiacTunnelFromSolaceonTown",
+      "region": "Sinnoh",
+      "name": "Entrance to Maniac Tunnel from Solaceon Town"
+    },
+    {
+      "id": "PokestopNorthernPartOfCelesticTown",
+      "region": "Sinnoh",
+      "name": "Northern part of Celestic Town"
+    },
+    {
+      "id": "PokestopEntranceOfSendoffSpring",
+      "region": "Sinnoh",
+      "name": "Entrance of Sendoff Spring"
+    },
+    {
+      "id": "PokestopOutsidePastoriaCityPokecenter",
+      "region": "Sinnoh",
+      "name": "Outside Pastoria City Pokécenter"
+    },
+    {
+      "id": "PokestopSnowpointCityHarbor",
+      "region": "Sinnoh",
+      "name": "Snowpoint City harbor"
+    },
+    {
+      "id": "PokestopNearVistaLighthouseEntranceInSunyshoreCity",
+      "region": "Sinnoh",
+      "name": "Near Vista Lighthouse entrance in Sunyshore City"
+    }
+  ]
+}

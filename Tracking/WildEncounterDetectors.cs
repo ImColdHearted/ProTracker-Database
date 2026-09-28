@@ -139,6 +139,9 @@ namespace Foot_Tracker.Tracking
 
             if (!ContainsEnoughBrightPixels(titleCrop))
             {
+                LogTitleOcrIfChanged(
+                    "too-dark", string.Empty, titleRegion, battleBounds,
+                    screenshot.Width, screenshot.Height, interesting: false);
                 return false;
             }
 
@@ -146,7 +149,12 @@ namespace Foot_Tracker.Tracking
                 ReadText(prepared);
 
             if (string.IsNullOrWhiteSpace(rawText))
+            {
+                LogTitleOcrIfChanged(
+                    "no-text", string.Empty, titleRegion, battleBounds,
+                    screenshot.Width, screenshot.Height, interesting: false);
                 return false;
+            }
 
             titleText =
                 NormalizeOcrText(rawText);
@@ -162,7 +170,77 @@ namespace Foot_Tracker.Tracking
                 matchedPokemon = pokemonName;
             }
 
+            // §363: this is the line the report could not answer. "A 'VS'
+            // title is readable but no Pokemon name matched it" was all a
+            // Report a Problem could say, because this method logged
+            // nothing. The outcome name says which of the four ways the
+            // read ended, and the text says what Tesseract actually
+            // produced - so a garbled species, a crop that cut the name
+            // off, and a species genuinely missing from the table stop
+            // looking identical from the outside.
+            LogTitleOcrIfChanged(
+                matchedPokemon is not null
+                    ? "matched:" + matchedPokemon
+                    : looksLikeBattleTitle
+                        ? "title-but-no-species"
+                        : "not-a-title",
+                titleText, titleRegion, battleBounds,
+                screenshot.Width, screenshot.Height,
+                interesting: looksLikeBattleTitle);
+
             return true;
+        }
+
+        // §363. EncounterDetector runs on every scan tick - roughly ten a
+        // second - whatever is on screen, so an unconditional log line would
+        // bury the file. Two throttles: a line is written only when the
+        // outcome or the text changes, and an uninteresting outcome (no
+        // battle title in the crop) is written at most once every two
+        // seconds on top of that. A title that reads as a battle is never
+        // rate-limited, because that is the case worth having.
+        private static string? lastLoggedTitleOutcome;
+        private static long lastUninterestingTitleLogTicks;
+
+        private static void LogTitleOcrIfChanged(
+            string outcome,
+            string text,
+            SKRectI region,
+            SKRectI battleBounds,
+            int screenshotWidth,
+            int screenshotHeight,
+            bool interesting)
+        {
+            string normalized =
+                string.IsNullOrWhiteSpace(text)
+                    ? "(empty)"
+                    : text.Trim();
+
+            string key = outcome + "|" + normalized;
+
+            if (key == lastLoggedTitleOutcome)
+                return;
+
+            if (!interesting)
+            {
+                long now = Environment.TickCount64;
+
+                if (now - lastUninterestingTitleLogTicks < 2000)
+                    return;
+
+                lastUninterestingTitleLogTicks = now;
+            }
+
+            lastLoggedTitleOutcome = key;
+
+            Log.Information(
+                "EncounterDetector title OCR attempt: outcome={Outcome}, text='{OcrText}', " +
+                "region=({RX},{RY},{RW}x{RH}), battleBounds=({BX},{BY},{BW}x{BH}), " +
+                "screenshot={SW}x{SH}",
+                outcome,
+                normalized,
+                region.Left, region.Top, region.Width, region.Height,
+                battleBounds.Left, battleBounds.Top, battleBounds.Width, battleBounds.Height,
+                screenshotWidth, screenshotHeight);
         }
 
         private static string ReadText(
@@ -382,6 +460,39 @@ namespace Foot_Tracker.Tracking
     }
 
     /// <summary>
+    /// §396. How much a level read is worth, in the order the consensus
+    /// trusts it: the tally in EncounterTracker keeps one count per value of
+    /// this enum and the BEST quality that produced any read decides the
+    /// battle's level - see EncounterTracker's level-consensus comment for
+    /// why a count of agreeing reads is the weaker signal. Declared in
+    /// trust order on purpose; the tracker indexes its tallies by the
+    /// integer value.
+    /// </summary>
+    public enum LevelReadQuality
+    {
+        /// <summary>The SparseText read held the label and one number and
+        /// nothing else - "Lv.23", "L.36": the tag exactly as PRO draws it,
+        /// which every measured corpus reads right when it reads at all.</summary>
+        Clean,
+
+        /// <summary>The SparseText read carried more than the tag - a glint
+        /// line under it, a status badge's letters, a split "3 0", a label
+        /// letter digitised ("L5.39") - and ExtractLevel had to pick the
+        /// number out from among other digit runs, or the label was gone
+        /// altogether. Usually still right, but something else was in the
+        /// crop.</summary>
+        Cluttered,
+
+        /// <summary>SparseText found nothing usable and the large-window
+        /// SingleBlock retry supplied the value. Right most of the time, and
+        /// when wrong, wrong in a clean-looking systematic way - §98 caught
+        /// it reading a level-37 tag as "Lv.87" on every frame - and a
+        /// systematic misread agrees with itself on every frame, so many
+        /// rescued reads are no stronger than one.</summary>
+        Rescued
+    }
+
+    /// <summary>
     /// Reads the wild Pokemon's own name/level tag - the small "&lt;Name&gt; &lt;gender
     /// symbol&gt; Lv. NN" label PRO draws directly above its HP bar during a battle,
     /// top-left of the battle panel (the player's own active Pokemon gets an
@@ -420,6 +531,14 @@ namespace Foot_Tracker.Tracking
     /// Level or Gender) - the next "Report a Problem" will show directly whether
     /// this region is landing in the right place, which the raw OCR text logged
     /// by LogOcrAttemptIfChanged below will show for the read itself.
+    ///
+    /// §396: every read also reports a <see cref="LevelReadQuality"/> - the tag
+    /// alone, the tag among other things, or the SingleBlock rescue - because
+    /// a wrong read from this crop is systematic (the same frame content misreads
+    /// the same way on every sample), so EncounterTracker's consensus ranks reads
+    /// by how they were obtained before it counts them. A level-23 Hariyama that
+    /// registered as 23 and was then "corrected" to 28 by later reads of the
+    /// same, unchanged tag is the report behind it.
     /// </summary>
     public static class LevelDetector
     {
@@ -444,8 +563,18 @@ namespace Foot_Tracker.Tracking
         /// calibration caveat for why this is more likely to happen here than for
         /// the longer-tuned detectors elsewhere in this folder.
         /// </summary>
-        public static int? TryDetectLevel(SKBitmap screenshot, SKRectI battleBounds)
+        public static int? TryDetectLevel(SKBitmap screenshot, SKRectI battleBounds) =>
+            TryDetectLevel(screenshot, battleBounds, out _);
+
+        /// <summary>
+        /// §396. The same read, also saying how it was obtained - see
+        /// <see cref="LevelReadQuality"/>. The quality is meaningful only
+        /// when a level comes back; for a null read it is left at Clean and
+        /// means nothing.
+        /// </summary>
+        public static int? TryDetectLevel(SKBitmap screenshot, SKRectI battleBounds, out LevelReadQuality quality)
         {
+            quality = LevelReadQuality.Clean;
             SKRectI levelRegion = GetLevelRegion(battleBounds);
 
             using SKBitmap levelCrop = ImageOps.Crop(screenshot, levelRegion);
@@ -475,6 +604,15 @@ namespace Foot_Tracker.Tracking
 
             int? level = ExtractLevel(rawText);
 
+            if (level is not null)
+            {
+                // §396: the tag and nothing but the tag, or a read that had
+                // company in the crop - the consensus ranks the two apart.
+                quality = ReadsAsTagAlone(rawText)
+                    ? LevelReadQuality.Clean
+                    : LevelReadQuality.Cluttered;
+            }
+
             // Large-GUI retry (MIGRATION_GUIDE.md §96): at bigger GUI scales
             // the tag's strokes render proportionally thinner after isolation,
             // and SparseText - measured against a real large-GUI clip - goes
@@ -492,10 +630,25 @@ namespace Foot_Tracker.Tracking
                 LogOcrAttemptIfChanged("[block] " + blockText, levelRegion);
 
                 level = ExtractLevel(blockText);
+
+                // §396: a rescued value, whatever the block text looked like
+                // - this mode's known failure is a clean-looking wrong digit,
+                // not clutter, so its text cannot vouch for it.
+                quality = LevelReadQuality.Rescued;
             }
 
             return level;
         }
+
+        /// <summary>§396. Whether a SparseText read is the tag and nothing
+        /// else: the label's "L" is present (the whitelist admits no other
+        /// letter) and the text holds exactly one digit run - the level.
+        /// "Lv.23" and "L.36" qualify; "Lv.3 0", "L5.39", "Lv.30" over a
+        /// glint's "4", and a bare "23" with the label gone do not. Those
+        /// still parse (ExtractLevel's cascade exists for them) but they are
+        /// counted as Cluttered, below the reads that needed no picking.</summary>
+        private static bool ReadsAsTagAlone(string rawText) =>
+            rawText.Contains('L') && Regex.Matches(rawText, @"\d+").Count == 1;
 
         /// <summary>Same crop DebugRegionOverlay.cs draws a box for in a "Report a
         /// Problem" screenshot - see the class doc comment above for how these
@@ -1129,7 +1282,17 @@ namespace Foot_Tracker.Tracking
 
     public static class CatchDetector
     {
-        public static CatchResult Detect(
+        /// <summary>
+        /// §276. The lower dialogue box, read as text - lifted out of
+        /// <see cref="Detect"/> unchanged so the PVP battle-log reader
+        /// (Tracking/PvpBattleLogReader.cs) can read the SAME box through the
+        /// SAME crop and the SAME preparation, rather than growing a second
+        /// opinion of where PRO prints its battle text and how to OCR it.
+        ///
+        /// Empty when the crop lands outside the screenshot or reads as
+        /// nothing, which is not an error - the box is blank between messages.
+        /// </summary>
+        public static string ReadBattleMessage(
             SKBitmap screenshot,
             SKRectI battleBounds)
         {
@@ -1142,7 +1305,7 @@ namespace Foot_Tracker.Tracking
             if (region.Width <= 0 ||
                 region.Height <= 0)
             {
-                return CatchResult.None;
+                return string.Empty;
             }
 
             using SKBitmap crop =
@@ -1163,6 +1326,19 @@ namespace Foot_Tracker.Tracking
             // user's GUI scale/resolution, even though it's confirmed working for
             // several users already.
             LogOcrAttemptIfChanged(rawText, region, battleBounds, screenshot.Width, screenshot.Height);
+
+            return rawText;
+        }
+
+        public static CatchResult Detect(
+            SKBitmap screenshot,
+            SKRectI battleBounds)
+        {
+            string rawText =
+                ReadBattleMessage(
+                    screenshot,
+                    battleBounds
+                );
 
             if (string.IsNullOrWhiteSpace(rawText))
                 return CatchResult.None;
@@ -1873,9 +2049,14 @@ namespace Foot_Tracker.Tracking
         /// <summary>
         /// Crops the top-right corner of <paramref name="screenshot"/> and OCRs
         /// it for a map name, returning true only when a candidate line was
-        /// CONFIRMED against the map catalog - a true result always carries a
-        /// canonical map name in <paramref name="routeName"/>. Callers treat
-        /// false as "leave whatever was shown before," never "clear it."
+        /// CONFIRMED against the map catalog. Callers treat false as "leave
+        /// whatever was shown before," never "clear it."
+        ///
+        /// §356: a true result is a canonical map name OR a canonical map
+        /// name plus an interior floor - "Mt. Summer 2F 2" when the catalog
+        /// only lists "Mt. Summer". It is NOT itself a catalog entry in that
+        /// case; see LocationDictionaryService's layer 4 for the rule and for
+        /// why a floor token is required before anything is split.
         /// (Before §102 this also parsed a day/night bucket from the corner's
         /// "Poke Time" readout; that output fed nothing any window displayed
         /// and was removed - see MIGRATION_GUIDE.md §102.)
@@ -1921,20 +2102,80 @@ namespace Foot_Tracker.Tracking
             // that as "keep showing the previous reading."
             routeName = null;
 
-            foreach (string candidate in EnumerateRouteNameCandidates(rawText))
-            {
-                string corrected = MapNameCorrectionService.Apply(candidate);
-                string? matched = LocationDictionaryService.TryMatch(corrected);
+            List<string> candidates = EnumerateRouteNameCandidates(rawText);
 
-                if (matched != null)
+            // §356: PRO's spawn list, when it is open, prints the map name a
+            // second time as "Pokemon in <map>" - on a solid blue panel, so
+            // it OCRs far better than the HUD line over the game world. In
+            // the report this came from the HUD line read "M. Summer 2F 2"
+            // and the panel read "Mt. Summer 2F 2" in the same frame.
+            //
+            // It is NOT trusted on its own. That panel has a Map Name search
+            // box, so its header can name a map the player is not standing
+            // on, and a tracker that believed it would silently record the
+            // wrong location. It is used only when a corner-HUD line agrees
+            // that it is the same place - and "same place" requires the
+            // digits to match exactly, so 2F 2 never stands in for 2F 3.
+            string? panelName = ExtractSpawnPanelName(rawText);
+
+            if (panelName != null
+                && candidates.Any(c => LocationDictionaryService.LooksLikeSameName(c, panelName)))
+            {
+                string correctedPanel = MapNameCorrectionService.Apply(panelName);
+                routeName = LocationDictionaryService.TryMatch(correctedPanel);
+            }
+
+            if (routeName == null)
+            {
+                foreach (string candidate in candidates)
                 {
-                    routeName = matched;
-                    break;
+                    string corrected = MapNameCorrectionService.Apply(candidate);
+                    string? matched = LocationDictionaryService.TryMatch(corrected);
+
+                    if (matched != null)
+                    {
+                        routeName = matched;
+                        break;
+                    }
                 }
             }
 
             return routeName != null;
         }
+
+        /// <summary>
+        /// §356. The map name out of the spawn list's "Pokemon in &lt;map&gt;"
+        /// header, or null when that panel is not in the crop. Deliberately
+        /// tolerant about the word "Pokemon" itself - it is the part the OCR
+        /// mangles and the part that carries no information - and deliberately
+        /// strict about there being an " in " after it.
+        ///
+        /// The caller checks this against the HUD line before using it; see
+        /// TryDetectCorner for why it is never trusted alone.
+        /// </summary>
+        private static string? ExtractSpawnPanelName(string rawText)
+        {
+            foreach (string line in rawText.Split(
+                         '\n',
+                         StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                Match header = SpawnPanelHeader.Match(line);
+
+                if (!header.Success)
+                    continue;
+
+                string name = header.Groups["name"].Value.Trim();
+
+                if (name.Length >= 3 && name.Count(char.IsLetter) >= 3)
+                    return name;
+            }
+
+            return null;
+        }
+
+        private static readonly Regex SpawnPanelHeader = new(
+            @"^Pok[^\s]{0,6}\s+in\s+(?<name>.+?)\s*$",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         /// <summary>
         /// Every OCR'd line that could plausibly be a place name, longest
@@ -1948,7 +2189,7 @@ namespace Foot_Tracker.Tracking
         /// pure digit/punctuation junk (dash runs, "50", a stray "J") never
         /// reaches the matcher.
         /// </summary>
-        private static IEnumerable<string> EnumerateRouteNameCandidates(string rawText)
+        private static List<string> EnumerateRouteNameCandidates(string rawText)
         {
             string[] lines = rawText.Split(
                 '\n',
@@ -1962,6 +2203,12 @@ namespace Foot_Tracker.Tracking
                     continue;
 
                 if (line.Contains("Time", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                // §356: the spawn panel's header is handled separately in
+                // TryDetectCorner and must never be matched as if it were
+                // the corner HUD - it can name a searched map.
+                if (SpawnPanelHeader.IsMatch(line))
                     continue;
 
                 int letterCount = line.Count(char.IsLetter);

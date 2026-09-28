@@ -22,23 +22,28 @@
         "pokemon": [
           {
             "name": "Lotad",
-            "dexNumber": 270
+            "dexNumber": 270,
+            "winStreakRequired": 3
           },
           {
             "name": "Electrike",
-            "dexNumber": 309
+            "dexNumber": 309,
+            "winStreakRequired": 3
           },
           {
             "name": "Blitzle",
-            "dexNumber": 522
+            "dexNumber": 522,
+            "winStreakRequired": 3
           },
           {
             "name": "Tynamo",
-            "dexNumber": 602
+            "dexNumber": 602,
+            "winStreakRequired": 3
           },
           {
             "name": "Raikou",
-            "dexNumber": 243
+            "dexNumber": 243,
+            "winStreakRequired": 3
           }
         ],
         "items": [

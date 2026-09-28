@@ -51,6 +51,31 @@ namespace PokemonSim.Engine.Effects
     /// hit's real damage (they used to run before any damage existed,
     /// multiplying zero).
     /// </summary>
+    /// <summary>
+    /// §311. An effect that makes its owner untouchable by one whole type.
+    ///
+    /// Every one of these already existed and every one of them already
+    /// worked; what did not exist was any way to ASK. The observer's feature
+    /// encoder computed a move's type effectiveness straight off the type
+    /// chart, so it told the network that an Earthquake does double to a
+    /// Levitate Bronzong and that a Thunderbolt is a fine idea into a Volt
+    /// Absorb Lanturn. The network had no ability input either, so it could
+    /// not even learn the correction - it was being taught the wrong number
+    /// with nothing to condition it on.
+    ///
+    /// Answering "which type does this cancel" from the effect itself is what
+    /// keeps the encoder from carrying a second list of immunity abilities
+    /// that would go stale the moment one was added. A new absorb implements
+    /// this and the encoder knows about it without being edited.
+    ///
+    /// Only for whole-type CANCELLATION. Thick Fat halves and Wonder Guard
+    /// reads the chart rather than one type, so neither belongs here.
+    /// </summary>
+    public interface ITypeNullifier
+    {
+        PokemonType NullifiedType { get; }
+    }
+
     public interface IMoveEffect
     {
         MovePhase Phase { get; }
@@ -72,8 +97,10 @@ namespace PokemonSim.Engine.Effects
         void ApplyStat(StatContext context);
     }
 
-    public class LevitateEffect : BaseMoveEffect
+    public class LevitateEffect : BaseMoveEffect, ITypeNullifier
     {
+        public PokemonType NullifiedType => PokemonType.Ground;
+
         public override MovePhase Phase => MovePhase.BeforeMove;
 
         // §197: the defender's immunity. Run from the attacker's list it made
@@ -310,8 +337,10 @@ namespace PokemonSim.Engine.Effects
         }
     }
 
-    public class FlashFireEffect : BaseMoveEffect
+    public class FlashFireEffect : BaseMoveEffect, ITypeNullifier
     {
+        public PokemonType NullifiedType => PokemonType.Fire;
+
         public override MovePhase Phase => MovePhase.BeforeMove;
 
         // §197: the defender's absorb - the Water Absorb bug in its
@@ -383,8 +412,10 @@ namespace PokemonSim.Engine.Effects
         }
     }
 
-    public class VoltAbsorbEffect : BaseMoveEffect
+    public class VoltAbsorbEffect : BaseMoveEffect, ITypeNullifier
     {
+        public PokemonType NullifiedType => PokemonType.Electric;
+
         public override MovePhase Phase => MovePhase.BeforeMove;
 
         // §197: the defender's reaction to being hit.

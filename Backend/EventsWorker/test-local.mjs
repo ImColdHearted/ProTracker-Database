@@ -75,7 +75,7 @@ const tokenB = "b".repeat(40);
 
 console.log("1. Health and routing"); console.log("=".repeat(100));
 let r = await call("GET", "/v1/health");
-ck("health 200 ok schema 1, admin token visible", [200, true, 1, true], [r.status, r.data.ok, r.data.schema, r.data.adminTokenConfigured]);
+ck("health 200 ok schema 2, admin token visible", [200, true, 2, true], [r.status, r.data.ok, r.data.schema, r.data.adminTokenConfigured]);
 r = await call("GET", "/v1/health", { env: { DB: env.DB } });
 ck("health with no ADMIN_TOKEN reports adminTokenConfigured=false (and never a value)", [false, false], [r.data.adminTokenConfigured, JSON.stringify(r.data).includes(ADMIN)]);
 r = await call("POST", "/v1/health");
@@ -85,7 +85,7 @@ ck("unknown route -> 404", 404, r.status);
 r = await call("GET", "/v1/events/");
 ck("trailing slash tolerated (board)", 200, r.status);
 r = await call("GET", "/v1/events");
-ck("empty board", { schema: 1, events: [] }, r.data);
+ck("empty board", { schema: 2, events: [] }, r.data);
 
 console.log("\n2. Admin gate"); console.log("=".repeat(100));
 const draft = { type: "Giveaway", title: "Shiny Wingull giveaway", message: "Post your Summer Wingull, one winner Sunday.", postedBy: "Michael", pokemonName: "Wingull", pokeDollars: 250000 };
@@ -249,7 +249,7 @@ r = await call("POST", "/v1/presence", { body: { runId: runB } });
 ck("second tracker -> 200", 200, r.status);
 r = await call("GET", "/v1/admin/presence", { admin: ADMIN });
 ck("two trackers, the repeat (upper-cased) heartbeat not double counted", 2, r.data.activeTrackers);
-ck("the table holds only run_id and last_seen_utc", ["run_id", "last_seen_utc"], env.DB._db.prepare("PRAGMA table_info(presence)").all().map((c) => c.name));
+ck("the table holds only run_id, last_seen_utc and the section 231 version", ["run_id", "last_seen_utc", "version"], env.DB._db.prepare("PRAGMA table_info(presence)").all().map((c) => c.name));
 ck("...and never an install token hash or a name", false, JSON.stringify(env.DB._db.prepare("SELECT * FROM presence").all()).includes("aaaa"));
 // age tracker B out of the window but not yet past pruning, then past pruning
 env.DB._db.prepare("UPDATE presence SET last_seen_utc = ? WHERE run_id = ?").run(new Date(Date.now() - 12 * 60000).toISOString(), runB);
@@ -325,7 +325,9 @@ r = await call("GET", "/v1/admin/logins", { admin: ADMIN });
 ck("empty login list for the master", [200, []], [r.status, r.data.logins]);
 r = await call("GET", "/v1/admin/logins");
 ck("list without credentials -> 401", 401, r.status);
-r = await call("POST", "/v1/admin/logins", { body: { username: "Bob", verifier: bobVerifier, canViewStatus: false }, admin: ADMIN });
+// Section 347 made posting events a permission of its own, so Bob is
+// created with it - the rest of this section is about his posting.
+r = await call("POST", "/v1/admin/logins", { body: { username: "Bob", verifier: bobVerifier, canViewStatus: false, canManageEvents: true }, admin: ADMIN });
 ck("create Bob -> 201, events only", [201, "Bob", false, false], [r.status, r.data.login.username, r.data.login.canViewStatus, r.data.login.revoked]);
 ck("the reply carries neither the verifier nor its digest", [false, false], [JSON.stringify(r.data).includes(bobVerifier), JSON.stringify(r.data).includes(sha256(bobVerifier))]);
 r = await call("POST", "/v1/admin/logins", { body: { username: "ann", verifier: annVerifier, canViewStatus: true }, admin: ADMIN });
@@ -364,7 +366,7 @@ ck("a revoked login is just wrong -> 401", 401, r.status);
 r = await call("POST", `/v1/admin/logins/9999/revoke`, { admin: ADMIN });
 ck("revoking an unknown id -> 404", 404, r.status);
 const bobNewVerifier = deriveVerifier("BOB", "a brand new password");
-r = await call("POST", "/v1/admin/logins", { body: { username: "BOB", verifier: bobNewVerifier, canViewStatus: true }, admin: ADMIN });
+r = await call("POST", "/v1/admin/logins", { body: { username: "BOB", verifier: bobNewVerifier, canViewStatus: true, canManageEvents: true }, admin: ADMIN });
 ck("posting the name again resets it -> 200, revocation lifted, permission updated", [200, false, true], [r.status, r.data.login.revoked, r.data.login.canViewStatus]);
 r = await call("POST", "/v1/events", { body: draft, ...asLogin("bob", bobVerifier) });
 ck("the old password is gone", 401, r.status);
@@ -395,6 +397,120 @@ r = await call("POST", "/v1/admin/logins", { body: { username: "onemore", verifi
 ck("the 51st login is refused", 429, r.status);
 r = await call("POST", "/v1/admin/logins", { body: { username: "filler7", verifier: "0".repeat(64) }, admin: ADMIN, env: bare });
 ck("resetting an existing one at the cap still works", 200, r.status);
+
+console.log("\n11. Ending a World Quest (section 298)"); console.log("=".repeat(100));
+// A quest of the admin's own (section 234) is stored exactly where an
+// announced one goes, so everything below is what a real quest would do.
+r = await call("POST", "/v1/admin/world-quests/test", { body: { pokemon: "Wingull", totalIvs: 2000 }, admin: ADMIN });
+ck("a test quest starts -> 201", 201, r.status);
+const questId = r.data.quest.messageId;
+const derivedEnd = r.data.quest.endsUtc;
+ck("...and is not ended", null, r.data.quest.endedUtc);
+
+r = await call("GET", "/v1/world-quests");
+ck("it is the running quest", questId, r.data.active?.messageId);
+
+r = await call("POST", `/v1/admin/world-quests/${questId}/end`);
+ck("ending it without the admin token -> 401", 401, r.status);
+
+r = await call("POST", `/v1/admin/world-quests/${questId}/end`, { admin: ADMIN });
+const endedAt = r.data.quest?.endedUtc;
+ck("ending it -> 200, changed, with the time it ended", [200, true, true], [r.status, r.data.changed, /Z$/.test(endedAt || "")]);
+ck("...and the end reported is the declared one, not the derived 24 hours", [true, true], [r.data.quest.endsUtc === endedAt, endedAt < derivedEnd]);
+
+r = await call("GET", "/v1/world-quests");
+ck("nothing is running now", null, r.data.active);
+ck("...but it is still in the history, marked ended", [questId, endedAt], [r.data.recent[0].messageId, r.data.recent[0].endedUtc]);
+
+r = await call("POST", `/v1/admin/world-quests/${questId}/end`, { admin: ADMIN });
+ck("ending an ended quest changes nothing and keeps the first time", [200, false, endedAt], [r.status, r.data.changed, r.data.quest.endedUtc]);
+
+r = await call("DELETE", `/v1/admin/world-quests/${questId}/end`, { admin: ADMIN });
+ck("reopening it -> 200, changed, no end time", [200, true, null], [r.status, r.data.changed, r.data.quest.endedUtc]);
+ck("...and the derived end is back", derivedEnd, r.data.quest.endsUtc);
+
+r = await call("GET", "/v1/world-quests");
+ck("it is running again", questId, r.data.active?.messageId);
+
+r = await call("DELETE", `/v1/admin/world-quests/${questId}/end`, { admin: ADMIN });
+ck("reopening a running quest changes nothing", [200, false], [r.status, r.data.changed]);
+
+r = await call("POST", "/v1/admin/world-quests/999999999999999999/end", { admin: ADMIN });
+ck("an unknown quest id -> 404", 404, r.status);
+
+r = await call("GET", `/v1/admin/world-quests/${questId}/end`, { admin: ADMIN });
+ck("GET on the end route -> 405 with Allow", [405, "POST, DELETE"], [r.status, r.headers.get("Allow")]);
+
+// A database made before section 298 has the quests table without the
+// column. The Worker adds it on first use, the same way section 231's
+// presence version column is added.
+const preDb = makeD1();
+preDb._db.exec("ALTER TABLE world_quests DROP COLUMN ended_utc");
+ck("a database from before this section is missing the column", false,
+   preDb._db.prepare("PRAGMA table_info(world_quests)").all().map((c) => c.name).includes("ended_utc"));
+const preEnv = { DB: preDb, ADMIN_TOKEN: ADMIN };
+r = await call("POST", "/v1/admin/world-quests/test", { body: { pokemon: "Rattata", totalIvs: 500 }, admin: ADMIN, env: preEnv });
+const preQuestId = r.data.quest?.messageId;
+r = await call("POST", `/v1/admin/world-quests/${preQuestId}/end`, { admin: ADMIN, env: preEnv });
+ck("...and it grows it on first use, so the quest can be ended", [200, true], [r.status, /Z$/.test(r.data.quest?.endedUtc || "")]);
+
+// ---- section 429: spawn level ranges -------------------------------------
+console.log("\nsection 429: spawn level ranges");
+
+r = await call("GET", "/v1/levels");
+ck("empty to begin with", [200, 0, null], [r.status, r.data.levels.length, r.data.updatedUtc]);
+
+r = await call("POST", "/v1/levels", { body: { sightings: "no" } });
+ck("sightings must be an array", 400, r.status);
+
+r = await call("POST", "/v1/levels", { body: { sightings: [] } });
+ck("an empty post is fine and accepts nothing", [200, 0], [r.status, r.data.accepted]);
+
+r = await call("POST", "/v1/levels", { body: { sightings: [{ map: "Route 1", species: "Pidgey", min: 0, max: 5 }] } });
+ck("a level outside 1..100 is dropped, and nothing usable -> 400", 400, r.status);
+
+r = await call("POST", "/v1/levels", { body: { sightings: [
+  { map: "Route 1", species: "Pidgey", min: 3, max: 5, count: 2 },
+  { map: "Route 1", species: "Pidgey", min: 2, max: 4, count: 1 },     // same row, folded
+  { map: "Route 1", species: "Rattata", min: 2, max: 3 },              // no count -> 1
+  { map: "Route 1", species: "Rattata<script>", min: 2, max: 3 },      // bad name, dropped
+  { map: "", species: "Pidgey", min: 2, max: 3 },                      // no map, dropped
+] } });
+ck("a post folds its own duplicates and drops the unusable", [200, 2], [r.status, r.data.accepted]);
+
+r = await call("GET", "/v1/levels");
+ck("both rows, keyed as the spawn pages key maps", ["route1", "Pidgey", 2, 5, 3],
+   [r.data.levels[0].map, r.data.levels[0].species, r.data.levels[0].min, r.data.levels[0].max, r.data.levels[0].samples]);
+ck("a sighting with no count counts once", [2, 3, 1], [r.data.levels[1].min, r.data.levels[1].max, r.data.levels[1].samples]);
+
+r = await call("POST", "/v1/levels", { body: { sightings: [{ map: "route1", species: "Pidgey", min: 4, max: 4 }] } });
+r = await call("GET", "/v1/levels");
+ck("a later post inside the range widens nothing and counts one more", [2, 5, 4],
+   [r.data.levels[0].min, r.data.levels[0].max, r.data.levels[0].samples]);
+
+r = await call("POST", "/v1/levels", { body: { sightings: [{ map: "Route 1", species: "pidgey", min: 1, max: 9 }] } });
+r = await call("GET", "/v1/levels");
+ck("a post outside it widens both ends; the species key is case-insensitive", [2, 1, 9],
+   [r.data.levels.length, r.data.levels[0].min, r.data.levels[0].max]);
+
+const tooMany = Array.from({ length: 201 }, (_, i) => ({ map: "Route 2", species: "Pidgey", min: 1, max: 1 }));
+r = await call("POST", "/v1/levels", { body: { sightings: tooMany } });
+ck("more than 200 sightings in one post -> 400", 400, r.status);
+
+r = await call("DELETE", "/v1/admin/levels/route1?species=Rattata");
+ck("taking a row down needs the master token", 401, r.status);
+
+r = await call("DELETE", "/v1/admin/levels/route1?species=rattata", { admin: ADMIN });
+ck("one species' row on a map, case-insensitively", [200, 1], [r.status, r.data.removed]);
+
+r = await call("DELETE", "/v1/admin/levels/route1", { admin: ADMIN });
+ck("then the rest of the map", [200, 1], [r.status, r.data.removed]);
+
+r = await call("DELETE", "/v1/admin/levels/route1", { admin: ADMIN });
+ck("nothing left -> 404", 404, r.status);
+
+r = await call("PUT", "/v1/levels", { body: {} });
+ck("PUT -> 405 with Allow", [405, "GET, POST"], [r.status, r.headers.get("Allow")]);
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed ? 1 : 0);

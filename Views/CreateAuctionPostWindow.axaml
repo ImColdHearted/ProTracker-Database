@@ -24,7 +24,7 @@
 
         <TextBox Grid.Row="2" FontSize="12" Text="{Binding LinkText}"
                  IsEnabled="{Binding !Busy}"
-                 Watermark="https://pokemonrevolution.net/forum/trade/9557/" />
+                 PlaceholderText="https://pokemonrevolution.net/forum/trade/9557/" />
 
         <TextBlock Grid.Row="3" Text="{Binding StatusMessage}" TextWrapping="Wrap" FontSize="11"
                    VerticalAlignment="Center" Margin="0,8,0,0"

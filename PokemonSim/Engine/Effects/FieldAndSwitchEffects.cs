@@ -103,7 +103,7 @@ namespace PokemonSim.Engine.Effects
 
             var dragged = bench[state.Rng.Next(bench.Count)];
 
-            SwitchResolver.Resolve(state, owner, dragged, voluntary: false);
+            SwitchResolver.Resolve(state, owner, dragged, voluntary: false, slot: owner.SlotOf(defender));
             state.Log.Write($"{dragged.Species} was dragged out!");
         }
     }
@@ -143,7 +143,7 @@ namespace PokemonSim.Engine.Effects
             int evasion = attacker.EvasionStage;
             int substitute = attacker.SubstituteHP;
 
-            SwitchResolver.Resolve(state, player, next);
+            SwitchResolver.Resolve(state, player, next, slot: player.SlotOf(attacker));
 
             // Hazards on entry can faint the recipient - nothing passes on.
             if (player.ActivePokemon != next || next.Fainted)

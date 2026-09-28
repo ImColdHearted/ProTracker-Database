@@ -25,10 +25,30 @@ namespace PokemonSim.Tests
     {
         static int Field(int offset) => ObserverEncoder.FieldBlockStart + offset;
 
-        static int Mine(int offset) => ObserverEncoder.ActiveBlockStart + offset;
+        /// <summary>§311. §177's per-active block was four stat stages then
+        /// eight volatiles. The stages moved into the position block, beside
+        /// the three §156 already had; the volatiles stayed. These two keep
+        /// §177's own offsets - 0-3 a stage, 4-11 a volatile - and send each
+        /// to wherever §311 put it, so every fact below still asserts the
+        /// thing it was written to assert.</summary>
+        static int Mine(int offset) => offset < 4
+            ? ObserverEncoder.PositionBlockStart + 2 + StageOffset(offset)
+            : ObserverEncoder.ActiveBlockStart + (offset - 4);
 
-        static int Theirs(int offset) =>
-            ObserverEncoder.ActiveBlockStart + ObserverEncoder.ActiveBlockStride + offset;
+        static int Theirs(int offset) => offset < 4
+            ? ObserverEncoder.PositionBlockStart + 9 + StageOffset(offset)
+            : ObserverEncoder.ActiveBlockStart + ObserverEncoder.ActiveBlockStride + (offset - 4);
+
+        /// <summary>§177 wrote SpAtk, SpDef, accuracy, evasion; §311's seven
+        /// are Atk, Def, SpAtk, SpDef, Speed, accuracy, evasion.</summary>
+        static int StageOffset(int section177Offset) => section177Offset switch
+        {
+            0 => 2,   // SpAttack
+            1 => 3,   // SpDefense
+            2 => 5,   // accuracy
+            3 => 6,   // evasion
+            _ => throw new ArgumentOutOfRangeException(nameof(section177Offset)),
+        };
 
         static (BattleState State, PokemonState Self, PokemonState Foe) Setup(int seed = 777)
         {
@@ -43,7 +63,8 @@ namespace PokemonSim.Tests
         [Fact]
         public void TheTwoNewBlocksSitBehindTheSection176Vector()
         {
-            Assert.Equal(ObservationSchema.FeatureCountV3, ObserverEncoder.FieldBlockStart);
+            Assert.Equal(ObserverEncoder.HazardBlockStart + ObserverEncoder.HazardBlockSize,
+                         ObserverEncoder.FieldBlockStart);
 
             Assert.Equal(ObserverEncoder.FieldBlockStart + ObserverEncoder.FieldBlockSize,
                          ObserverEncoder.ActiveBlockStart);
@@ -53,14 +74,17 @@ namespace PokemonSim.Tests
             // so this is now the width of V4 rather than of the whole
             // thing - which is exactly what "every earlier width is a
             // prefix" has to mean once something is added.
-            Assert.Equal(ObservationSchema.FeatureCountV4,
+            Assert.Equal(ObserverEncoder.RiskBlockStart,
                          ObserverEncoder.ActiveBlockStart + 2 * ObserverEncoder.ActiveBlockStride);
 
             Assert.Equal(6, ObservationSchema.Version);
             Assert.Equal(205, ObservationSchema.FeatureCount);
-            Assert.Equal(203, ObservationSchema.FeatureCountV5);
-            Assert.Equal(202, ObservationSchema.FeatureCountV4);
-            Assert.Equal(160, ObservationSchema.FeatureCountV3);
+            // §311: the retired widths are history rather than compatibility
+            // now, and this is where they are written down.
+            Assert.Equal(new[] { 10, 76, 160, 202, 203, 205 },
+                         ObservationSchema.RetiredFeatureCounts);
+            Assert.Equal(new[] { ObservationSchema.FeatureCount },
+                         ObservationSchema.AcceptedFeatureCounts);
 
             // Newest first, and every earlier width is genuinely smaller -
             // the prefix rule the evaluator leans on.
@@ -86,12 +110,15 @@ namespace PokemonSim.Tests
 
             Assert.Equal(ObservationSchema.FeatureCount, f.Length);
 
-            // Spot the landmarks of all three earlier generations.
-            Assert.Equal(0.5f, f[0]);                                   // section 156
-            Assert.Equal(2f, f[2]);
-            Assert.Equal((float)WeatherType.Rain, f[8]);
-            Assert.Equal(-1f, f[7]);
-            Assert.Equal(0.5f, f[ObserverEncoder.GlobalBlockStart + 20]); // section 175, level
+            // §311: the landmarks are still all there, in the blocks they
+            // were re-laid into. Weather is the one that changed SHAPE as
+            // well as position - an ordinal at f[8] became a one-hot, which
+            // is the whole reason §311 was willing to break the layout.
+            Assert.Equal(0.5f, f[0]);                                    // hp fraction
+            Assert.Equal(2f, f[ObserverEncoder.PositionBlockStart + 2]); // my Attack stage
+            Assert.Equal(-1f, f[ObserverEncoder.PositionBlockStart + 10]); // their Defense stage
+            Assert.Equal(1f, f[Field(14) + (int)WeatherType.Rain]);
+            Assert.Equal(0.5f, f[ObserverEncoder.PositionBlockStart + 28]); // §175's level, re-laid
             Assert.Equal(1f, f[ObserverEncoder.TeamBlockStart]);          // section 176, present
             Assert.Equal(1f, f[ObserverEncoder.HazardBlockStart]);        // section 176, rocks
         }
@@ -225,10 +252,16 @@ namespace PokemonSim.Tests
             Assert.Equal(1f, f[Field(12)]);
             Assert.Equal(0.5f, f[Field(13)], 4);
 
-            // The weather ITSELF is still where section 156 put it - the
-            // clock is new, the enum is not.
-            Assert.Equal((float)WeatherType.Sandstorm, f[8]);
-            Assert.Equal((float)TerrainType.Grassy, f[9]);
+            // §311: the weather itself is a one-hot now, not §156's ordinal.
+            // Exactly one of the five is lit, which is the property an
+            // ordinal could never have.
+            Assert.Equal(1f, f[Field(14) + (int)WeatherType.Sandstorm]);
+            Assert.Equal(1f, f[Field(19) + (int)TerrainType.Grassy]);
+
+            Assert.Equal(1, Enumerable.Range(0, ObserverEncoder.WeatherSlots)
+                             .Count(i => f[Field(14) + i] > 0f));
+            Assert.Equal(1, Enumerable.Range(0, ObserverEncoder.TerrainSlots)
+                             .Count(i => f[Field(19) + i] > 0f));
         }
 
         [Fact]
@@ -352,8 +385,9 @@ namespace PokemonSim.Tests
                 Assert.Equal(0f, f[Field(i)]);
 
             // And every volatile flag on both actives, which is what makes
-            // a set flag mean something.
-            for (int offset = 4; offset < ObserverEncoder.ActiveBlockStride; offset++)
+            // a set flag mean something. §177's offsets 4-11 are §311's
+            // whole block, which Mine and Theirs map for us.
+            for (int offset = 4; offset < 4 + ObserverEncoder.ActiveBlockStride; offset++)
             {
                 Assert.Equal(0f, f[Mine(offset)]);
                 Assert.Equal(0f, f[Theirs(offset)]);
@@ -364,7 +398,7 @@ namespace PokemonSim.Tests
         public void WriteActiveFillsExactlyItsOwnStride()
         {
             var mon = TestKit.Mon("Solo");
-            mon.SpAttackStage = 1;
+            mon.ConfusionTurns = 2;
             mon.LeechSeeded = true;
 
             var features = new float[ObserverEncoder.ActiveBlockStride * 3];
@@ -378,8 +412,10 @@ namespace PokemonSim.Tests
                 Assert.Equal(0f, features[ObserverEncoder.ActiveBlockStride * 2 + i]);
             }
 
+            // §311: the stat stages left this block, so confusion is its
+            // first entry and the seed its second.
             Assert.Equal(1f, features[ObserverEncoder.ActiveBlockStride]);
-            Assert.Equal(1f, features[ObserverEncoder.ActiveBlockStride + 5]);
+            Assert.Equal(1f, features[ObserverEncoder.ActiveBlockStride + 1]);
         }
     }
 }

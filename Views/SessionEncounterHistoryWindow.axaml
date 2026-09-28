@@ -94,14 +94,22 @@
                  repeats the row template's ColumnDefinitions verbatim - the
                  two have to stay in step by hand. -->
             <DockPanel IsVisible="{Binding !ShowAllTime}" LastChildFill="True">
-                <Grid DockPanel.Dock="Top" ColumnDefinitions="*,70,1.1*,130,50,88"
+                <!-- §273: no Pokemon column. Every row here is the same
+                     species - the window title says which - so the column was
+                     the same word repeated down the page. The All time list
+                     had already dropped it; this brings the two into line. -->
+                <Grid DockPanel.Dock="Top" ColumnDefinitions="70,1.1*,130,50,88"
                       Margin="0,0,0,4">
-                    <Border Grid.Column="0" Classes="tableHeader"><TextBlock Text="Pokémon" /></Border>
-                    <Border Grid.Column="1" Classes="tableHeader"><TextBlock Text="Level" /></Border>
-                    <Border Grid.Column="2" Classes="tableHeader"><TextBlock Text="Map" /></Border>
-                    <Border Grid.Column="3" Classes="tableHeader"><TextBlock Text="Timestamp" /></Border>
-                    <Border Grid.Column="4" Classes="tableHeader"><TextBlock><Run Text="♀" Foreground="#D9145E" /><Run Text="/" Foreground="{DynamicResource ThemeTextBrush}" /><Run Text="♂" Foreground="#08A3F4" /></TextBlock></Border>
-                    <Border Grid.Column="5" Classes="tableHeader"><TextBlock Text="Shiny/Form" /></Border>
+                    <Border Grid.Column="0" Classes="tableHeader"><TextBlock Text="Level" /></Border>
+                    <Border Grid.Column="1" Classes="tableHeader"><TextBlock Text="Map" /></Border>
+                    <Border Grid.Column="2" Classes="tableHeader"><TextBlock Text="Timestamp" /></Border>
+                    <Border Grid.Column="3" Classes="tableHeader"><TextBlock><Run Text="♀" Foreground="#D9145E" /><Run Text="/" Foreground="{DynamicResource ThemeTextBrush}" /><Run Text="♂" Foreground="#08A3F4" /></TextBlock></Border>
+                    <!-- §273: the one header that sorts. -->
+                    <Border Grid.Column="4" Classes="tableHeader" Cursor="Hand"
+                            ToolTip.Tip="{Binding RareHeaderTip}"
+                            PointerPressed="RareHeader_PointerPressed">
+                        <TextBlock Text="{Binding RareHeaderText}" />
+                    </Border>
                 </Grid>
 
                 <ListBox ItemsSource="{Binding SessionPage}"
@@ -117,28 +125,23 @@
                     </ListBox.Styles>
                     <ListBox.ItemTemplate>
                         <DataTemplate x:DataType="models:SessionEncounterRecord">
-                            <Grid ColumnDefinitions="*,70,1.1*,130,50,88">
-                                <TextBlock Grid.Column="0" Text="{Binding PokemonName}"
-                                           Foreground="{DynamicResource ThemeTextBrush}"
-                                           VerticalAlignment="Center" Margin="8,3"
-                                           TextTrimming="CharacterEllipsis"
-                                           ToolTip.Tip="{Binding PokemonName}" />
-                                <TextBlock Grid.Column="1" Text="{Binding LevelDisplay}"
+                            <Grid ColumnDefinitions="70,1.1*,130,50,88">
+                                <TextBlock Grid.Column="0" Text="{Binding LevelDisplay}"
                                            Foreground="{DynamicResource ThemeTextBrush}"
                                            VerticalAlignment="Center" Margin="4,3" TextAlignment="Center" />
-                                <TextBlock Grid.Column="2" Text="{Binding LocationDisplay}"
+                                <TextBlock Grid.Column="1" Text="{Binding LocationDisplay}"
                                            Foreground="{DynamicResource ThemeTextBrush}"
                                            VerticalAlignment="Center" Margin="4,3" TextAlignment="Center"
                                            TextTrimming="CharacterEllipsis"
                                            ToolTip.Tip="{Binding LocationDisplay}" />
-                                <TextBlock Grid.Column="3" Text="{Binding WhenDisplay}"
+                                <TextBlock Grid.Column="2" Text="{Binding WhenDisplay}"
                                            Foreground="{DynamicResource ThemeTextBrush}"
                                            VerticalAlignment="Center" Margin="4,3" TextAlignment="Center"
                                            Opacity="0.8" />
-                                <TextBlock Grid.Column="4" Text="{Binding GenderDisplay}"
+                                <TextBlock Grid.Column="3" Text="{Binding GenderDisplay}"
                                            Foreground="{DynamicResource ThemeTextBrush}"
                                            VerticalAlignment="Center" Margin="4,3" TextAlignment="Center" />
-                                <TextBlock Grid.Column="5" Text="{Binding RareDisplay}"
+                                <TextBlock Grid.Column="4" Text="{Binding RareDisplay}"
                                            Foreground="{DynamicResource ThemeTextBrush}"
                                            VerticalAlignment="Center" Margin="4,3" TextAlignment="Center" />
                             </Grid>
@@ -166,7 +169,13 @@
                     <Border Grid.Column="1" Classes="tableHeader"><TextBlock Text="Map" /></Border>
                     <Border Grid.Column="2" Classes="tableHeader"><TextBlock Text="Timestamp" /></Border>
                     <Border Grid.Column="3" Classes="tableHeader"><TextBlock><Run Text="♀" Foreground="#D9145E" /><Run Text="/" Foreground="{DynamicResource ThemeTextBrush}" /><Run Text="♂" Foreground="#08A3F4" /></TextBlock></Border>
-                    <Border Grid.Column="4" Classes="tableHeader"><TextBlock Text="Shiny/Form" /></Border>
+                    <!-- §273: the same sorting header, over the log rather
+                         than the hunt. See QueryRareFirst for how it pages. -->
+                    <Border Grid.Column="4" Classes="tableHeader" Cursor="Hand"
+                            ToolTip.Tip="{Binding RareHeaderTip}"
+                            PointerPressed="RareHeader_PointerPressed">
+                        <TextBlock Text="{Binding RareHeaderText}" />
+                    </Border>
                 </Grid>
 
                 <ListBox ItemsSource="{Binding AllTimeRecords}"

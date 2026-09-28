@@ -10,6 +10,28 @@ namespace PokemonSim.Actions
 
         public MoveState? Move;
 
+        /// <summary>
+        /// §305. What this move is aimed at.
+        ///
+        /// In singles there is exactly one thing it could be aimed at, and
+        /// the engine used to work that out for itself at the moment of
+        /// resolution - it read the opposing side's active. That is the same
+        /// answer, but it is the ENGINE's answer rather than the chooser's,
+        /// and in doubles the chooser is the one who knows. So the target
+        /// travels with the action now, filled in by LegalActions when the
+        /// action is offered.
+        ///
+        /// Null means "whatever the engine would have picked", which keeps
+        /// every caller that builds a BattleAction by hand - the tests, the
+        /// tracker's Simulator window, the dev console - working exactly as
+        /// it did.
+        /// </summary>
+        public PokemonState? Target;
+
+        /// <summary>Which of the opposing side's slots Target is standing
+        /// in, or 0 in singles where there is only the one.</summary>
+        public int TargetSlot;
+
         public PokemonState? SwitchTarget;
 
         public int Priority;
@@ -35,5 +57,11 @@ namespace PokemonSim.Actions
         // synthesizes the Z-Move from Move when this is set and the side's
         // Z-Power is still unspent.
         public bool UseZMove;
+
+        // §375: the user's Quick Claw went off for this action. Rolled by
+        // the engine as the action is queued (HeldItems.QuickClawTriggers),
+        // read by ActionQueue.Sort ahead of Speed and behind Priority, and
+        // announced when the action comes up.
+        public bool QuickClaw;
     }
 }

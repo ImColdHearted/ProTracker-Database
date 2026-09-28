@@ -492,8 +492,8 @@
   {
     "pokemonId": 29,
     "dexNumber": 29,
-    "name": "Nidoran♀",
-    "speciesName": "Nidoran♀",
+    "name": "Nidoran F",
+    "speciesName": "Nidoran F",
     "types": [
       "Poison"
     ],
@@ -502,6 +502,7 @@
     "isDefaultForm": true,
     "sprite": "29.png",
     "ocrAliases": [
+      "Nidoran F",
       "Nidoran♀",
       "nidoran f",
       "nidoran-f"
@@ -545,8 +546,8 @@
   {
     "pokemonId": 32,
     "dexNumber": 32,
-    "name": "Nidoran♂",
-    "speciesName": "Nidoran♂",
+    "name": "Nidoran M",
+    "speciesName": "Nidoran M",
     "types": [
       "Poison"
     ],
@@ -555,6 +556,7 @@
     "isDefaultForm": true,
     "sprite": "32.png",
     "ocrAliases": [
+      "Nidoran M",
       "Nidoran♂",
       "nidoran m",
       "nidoran-m"

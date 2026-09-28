@@ -62,7 +62,37 @@ public partial class AdminLoginWindow : Window
         string username = this.FindControl<TextBox>("UsernameBox")!.Text ?? string.Empty;
         string password = passwordBox.Text ?? string.Empty;
 
+        // §348. The local credential first. It belongs to whoever owns this
+        // install, it works with no network, and it is the way back in when
+        // the events server is unreachable - OCR Inspector, Diagnostics and
+        // Support Bundle need nothing from it, and it would be perverse if a
+        // Cloudflare outage locked the owner out of their own log folder.
         bool verified = AdminAuthService.Verify(username, password);
+
+        if (verified)
+        {
+            EventsSyncService.SetLocalOwnerIdentity();
+        }
+        else if (EventsSyncService.IsOnline)
+        {
+            // §348. Then the server's own logins, so a moderator signs in
+            // once rather than here and again at the first section that
+            // talks to the server. The attempt is guarded like a failure
+            // delay because deriving the verifier is deliberately slow
+            // (PBKDF2, 210k iterations) and Enter could otherwise start a
+            // second one over the top of it.
+            try
+            {
+                attemptInProgress = true;
+                SetInputsEnabled(false);
+                verified = await TryServerLoginAsync(username, password);
+            }
+            finally
+            {
+                attemptInProgress = false;
+                SetInputsEnabled(true);
+            }
+        }
 
         // Never keep the typed secret in the control once it has been
         // handed to Verify - on success the dialog is closing anyway, on
@@ -100,6 +130,38 @@ public partial class AdminLoginWindow : Window
             attemptInProgress = false;
             SetInputsEnabled(true);
             errorText.Text = "Incorrect username or password.";
+        }
+    }
+
+    /// <summary>§348. Signs in against the events server's delegated logins.
+    ///
+    /// The credential is set BEFORE it is checked, because the check is a
+    /// request that has to carry it - and dropped again the moment the
+    /// server says no, so a failed attempt never leaves this run holding a
+    /// credential that does not work. Success leaves it in place on
+    /// purpose: that is the whole point, one sign-in rather than two.
+    ///
+    /// Any failure is a plain false. The dialog says "incorrect username or
+    /// password" either way, which is also the right thing to tell someone
+    /// whose password is right and whose server is down - they cannot get
+    /// in with it either way, and a message distinguishing the two would
+    /// tell an attacker which usernames exist.</summary>
+    private static async Task<bool> TryServerLoginAsync(string username, string password)
+    {
+        try
+        {
+            string verifier = await Task.Run(() => EventsSyncService.DeriveLoginVerifier(username, password));
+
+            EventsSyncService.SetAdminLogin(username, verifier);
+
+            await EventsSyncService.WhoAmIAsync();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            EventsSyncService.ForgetAdminCredentials();
+            return false;
         }
     }
 

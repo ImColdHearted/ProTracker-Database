@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="ProTracker.Companion.Views.MainView"
+             Background="{DynamicResource ThemeBackgroundBrush}">
+
+    <!-- §295. The one screen: a title bar with Back, the current page, and
+         the bottom bar of tabs. Pages are UserControls pushed through Nav. -->
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Background="{DynamicResource ThemeTableHeaderBrush}">
+            <Button Grid.Column="0" Name="BackButton" Content="‹ Back" Margin="6,6,0,6" Padding="10,6"
+                    Click="Back_Click" />
+            <TextBlock Grid.Column="1" Name="TitleText" FontSize="17" FontWeight="Bold" Margin="12,0"
+                       VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+        </Grid>
+
+        <ContentControl Grid.Row="1" Name="Host" Margin="8" />
+
+        <!-- §423: Maps in, PVP and Stats out for now - the pages stay in
+             the project (a Search hit on a player still opens its PVP
+             detail), only the bar no longer offers them. -->
+        <UniformGrid Grid.Row="2" Columns="6" Background="{DynamicResource ThemeTableHeaderBrush}">
+            <Button Classes="tab" Name="TabBosses" Content="Bosses" Click="Tab_Click" Tag="bosses" />
+            <Button Classes="tab" Name="TabPokedex" Content="Pokédex" Click="Tab_Click" Tag="pokedex" />
+            <Button Classes="tab" Name="TabSearch" Content="Search" Click="Tab_Click" Tag="search" />
+            <Button Classes="tab" Name="TabMaps" Content="Maps" Click="Tab_Click" Tag="maps" />
+            <Button Classes="tab" Name="TabBattle" Content="Battle" Click="Tab_Click" Tag="battle" />
+            <Button Classes="tab" Name="TabData" Content="Data" Click="Tab_Click" Tag="data" />
+        </UniformGrid>
+    </Grid>
+</UserControl>

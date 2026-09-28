@@ -86,6 +86,22 @@ namespace Foot_Tracker.Models
             }
         }
 
+        /// <summary>§349. Which shape this file is in.
+        ///
+        /// 1 is everything written before §349: one Text Color, one Border
+        /// Color and one Font for the whole window. 2 is per-section.
+        /// Defaults to 1 rather than 2 deliberately - an older file has no
+        /// such key, and System.Text.Json leaves the initializer's value, so
+        /// defaulting to 2 would mark every old file as already migrated and
+        /// silently lose its colours.</summary>
+        public int SettingsVersion { get; set; } = 1;
+
+        // §349. The four below are LEGACY. Nothing sets them any more and the
+        // Appearance window no longer shows them - each section has its own
+        // now. They stay declared because the migration has to READ them:
+        // remove the property and System.Text.Json drops the key before
+        // anyone can copy it, which is the §104 comment's point running in
+        // reverse.
         public int TextColorArgb { get; set; } =
             ToArgbInt(Colors.White);
 
@@ -162,6 +178,176 @@ namespace Foot_Tracker.Models
         public int HeaderBackgroundColorArgb { get; set; } =
             ToArgbInt(Colors.Transparent);
 
+        // ------------------------------------------------ §349 per section
+        //
+        // Four sections, the same five controls each: background, border,
+        // text, font, size. Encounter Tables carries a header colour on top.
+        //
+        // Sprites gets a text colour and a font like the rest, which the
+        // §349 mockup did not draw. Its labels ("Hunting", "Current",
+        // "Previous") are text and had to render in SOMETHING - and with the
+        // global gone, that something would have been a fallback chosen in
+        // code that nobody could see or change.
+        //
+        // Every default here matches the global it replaces, so a file that
+        // somehow arrives unmigrated still looks like it always did.
+
+        public int SpriteBoxBorderColorArgb { get; set; } = ToArgbInt(Colors.White);
+        public int SpriteBoxTextColorArgb { get; set; } = ToArgbInt(Colors.White);
+        public string SpriteBoxFontFamilyName { get; set; } = "Default";
+        public string SpriteBoxFontSizeName { get; set; } = ThemeManager.DefaultFontSizeName;
+
+        public int EncountersBorderColorArgb { get; set; } = ToArgbInt(Colors.White);
+        public int EncountersTextColorArgb { get; set; } = ToArgbInt(Colors.White);
+        public string EncountersFontFamilyName { get; set; } = "Default";
+        public string EncountersFontSizeName { get; set; } = ThemeManager.DefaultFontSizeName;
+
+        public int StatsBorderColorArgb { get; set; } = ToArgbInt(Colors.White);
+        public int StatsTextColorArgb { get; set; } = ToArgbInt(Colors.White);
+        public string StatsFontFamilyName { get; set; } = "Default";
+        public string StatsFontSizeName { get; set; } = ThemeManager.DefaultFontSizeName;
+
+        public int ButtonBorderColorArgb { get; set; } = ToArgbInt(Colors.White);
+        public int ButtonTextColorArgb { get; set; } = ToArgbInt(Colors.White);
+        public string ButtonFontFamilyName { get; set; } = "Default";
+        public string ButtonFontSizeName { get; set; } = ThemeManager.DefaultFontSizeName;
+
+        // §380. Whether the headings - the statistics labels, the three
+        // sprite-box titles, the encounter table's column headers - are drawn
+        // bold. Off for a font that ships one weight only (Griffy, say):
+        // Bold text in such a font falls back to Inter (see
+        // ThemeManager.BuildFontFamily), so the headings would be the one
+        // thing on the window not in the chosen font. One flag for the whole
+        // window rather than one per section, because a heading is bold or
+        // the theme is not that kind of theme.
+        public bool BoldHeadings { get; set; } = true;
+
+        // §382. A picture behind the statistics panel and one behind the
+        // encounter table, drawn OVER the window background and UNDER the
+        // panel's fill colour, so the fill's alpha tints it - see
+        // ThemeManager.BuildPanelBrush. Paths on this disk, like
+        // CustomBackgroundPath, and like it never carried by a theme file.
+        // Empty means no picture, which is what every existing file reads as.
+        public string StatsBackgroundImagePath { get; set; } = string.Empty;
+
+        public string EncountersBackgroundImagePath { get; set; } = string.Empty;
+
+        // §383. The same for the three sprite boxes, which share one fill
+        // (SpriteBoxBackgroundColorArgb) and so share one picture.
+        public string SpriteBoxBackgroundImagePath { get; set; } = string.Empty;
+
+        // §384. Border width and corner radius per section, in pixels. The
+        // defaults are what every window drew before there was a setting:
+        // a 1px line, square corners - and 3 on buttons, which is Fluent's
+        // own ControlCornerRadius. Clamped on the way in by ThemeManager
+        // (ClampBorderWidth/ClampCornerRadius), so a hand-edited file cannot
+        // draw a 900px border.
+        public double SpriteBoxBorderWidth { get; set; } = 1;
+        public double SpriteBoxCornerRadius { get; set; } = 0;
+        public double EncountersBorderWidth { get; set; } = 1;
+        public double EncountersCornerRadius { get; set; } = 0;
+        public double StatsBorderWidth { get; set; } = 1;
+        public double StatsCornerRadius { get; set; } = 0;
+        public double ButtonBorderWidth { get; set; } = 1;
+        public double ButtonCornerRadius { get; set; } = 3;
+
+        // §384. A frame picture around the statistics panel, the encounter
+        // table and each sprite box: a PNG with a transparent middle, drawn
+        // in nine slices (Controls/NineSliceFrame) with the corner size in
+        // the picture's pixels. Files on this disk, like the pictures above;
+        // not carried by a theme file. Empty means no frame.
+        public string StatsFrameImagePath { get; set; } = string.Empty;
+        public double StatsFrameInset { get; set; } = 24;
+        public string EncountersFrameImagePath { get; set; } = string.Empty;
+        public double EncountersFrameInset { get; set; } = 24;
+        public string SpriteBoxFrameImagePath { get; set; } = string.Empty;
+        public double SpriteBoxFrameInset { get; set; } = 24;
+
+        // §387. A panel behind the whole sprite row - the three groups with
+        // their captions - the way the Halloween mock-up drew a box round
+        // them. Its own fill, border, corners, picture and frame; the
+        // captions keep the Pokémon Sprites text and font. Everything
+        // defaults to nothing (transparent fill and border), so a window
+        // that never set it looks exactly as it did: ThemeManager derives
+        // the border thickness and padding from whether anything shows.
+        public int SpriteRowBackgroundColorArgb { get; set; } = ToArgbInt(Colors.Transparent);
+        public int SpriteRowBorderColorArgb { get; set; } = ToArgbInt(Colors.Transparent);
+        public double SpriteRowBorderWidth { get; set; } = 1;
+        public double SpriteRowCornerRadius { get; set; } = 0;
+        public string SpriteRowBackgroundImagePath { get; set; } = string.Empty;
+        public string SpriteRowFrameImagePath { get; set; } = string.Empty;
+        public double SpriteRowFrameInset { get; set; } = 24;
+
+        // §393. The menu bar's own colours - the text of File, Game Info and
+        // the rest, and the highlight behind the one the pointer is on or
+        // that is open. Transparent (the default, and what every file from
+        // before this section reads as) means automatic: black or white by
+        // the background behind the strip, as §141 has always chosen, and
+        // Fluent's own faint highlight. The menu keeps the window font.
+        public int MenuTextColorArgb { get; set; } = ToArgbInt(Colors.Transparent);
+        public int MenuHighlightColorArgb { get; set; } = ToArgbInt(Colors.Transparent);
+
+        // §394. The menu bar's font. Empty - the default, and what every
+        // file from before this section reads as - follows Statistics, the
+        // window font the menu has always worn; a name is its own. See
+        // ThemeManager.EffectiveMenuFontFamilyName.
+        public string MenuFontFamilyName { get; set; } = string.Empty;
+        public string MenuFontSizeName { get; set; } = string.Empty;
+
+        // §393. How far each frame picture reaches past its panel's edge,
+        // over whatever is around it - the way an ornate frame sits round a
+        // box rather than inside it. Zero, the default, draws the frame
+        // within the panel as §384 did. Files like the frames themselves,
+        // not part of a shared theme.
+        public double StatsFrameOverhang { get; set; }
+        public double EncountersFrameOverhang { get; set; }
+        public double SpriteBoxFrameOverhang { get; set; }
+        public double SpriteRowFrameOverhang { get; set; }
+
+        /// <summary>§349. Copies the four globals into the sixteen
+        /// per-section fields, once.
+        ///
+        /// Called from Load. Guarded by SettingsVersion so it runs exactly
+        /// once per file: running it twice would be harmless today, but only
+        /// because nothing has edited a section yet - after that it would
+        /// overwrite real choices with a stale global.</summary>
+        public void MigrateGlobalsToSections()
+        {
+            if (SettingsVersion >= 2)
+                return;
+
+            SpriteBoxBorderColorArgb = BorderColorArgb;
+            EncountersBorderColorArgb = BorderColorArgb;
+            StatsBorderColorArgb = BorderColorArgb;
+            ButtonBorderColorArgb = BorderColorArgb;
+
+            SpriteBoxTextColorArgb = TextColorArgb;
+            EncountersTextColorArgb = TextColorArgb;
+            StatsTextColorArgb = TextColorArgb;
+            ButtonTextColorArgb = TextColorArgb;
+
+            SpriteBoxFontFamilyName = FontFamilyName;
+            EncountersFontFamilyName = FontFamilyName;
+            StatsFontFamilyName = FontFamilyName;
+            ButtonFontFamilyName = FontFamilyName;
+
+            SpriteBoxFontSizeName = FontSizeName;
+            EncountersFontSizeName = FontSizeName;
+            StatsFontSizeName = FontSizeName;
+            ButtonFontSizeName = FontSizeName;
+
+            SettingsVersion = 2;
+        }
+
+        [JsonIgnore] public Color SpriteBoxBorderColor => FromArgbInt(SpriteBoxBorderColorArgb);
+        [JsonIgnore] public Color SpriteBoxTextColor => FromArgbInt(SpriteBoxTextColorArgb);
+        [JsonIgnore] public Color EncountersBorderColor => FromArgbInt(EncountersBorderColorArgb);
+        [JsonIgnore] public Color EncountersTextColor => FromArgbInt(EncountersTextColorArgb);
+        [JsonIgnore] public Color StatsBorderColor => FromArgbInt(StatsBorderColorArgb);
+        [JsonIgnore] public Color StatsTextColor => FromArgbInt(StatsTextColorArgb);
+        [JsonIgnore] public Color ButtonBorderColor => FromArgbInt(ButtonBorderColorArgb);
+        [JsonIgnore] public Color ButtonTextColor => FromArgbInt(ButtonTextColorArgb);
+
         [JsonIgnore]
         public Color TextColor =>
             FromArgbInt(TextColorArgb);
@@ -173,6 +359,11 @@ namespace Foot_Tracker.Models
         [JsonIgnore]
         public Color SpriteBoxBackgroundColor =>
             FromArgbInt(SpriteBoxBackgroundColorArgb);
+
+        [JsonIgnore] public Color SpriteRowBackgroundColor => FromArgbInt(SpriteRowBackgroundColorArgb);
+        [JsonIgnore] public Color SpriteRowBorderColor => FromArgbInt(SpriteRowBorderColorArgb);
+        [JsonIgnore] public Color MenuTextColor => FromArgbInt(MenuTextColorArgb);
+        [JsonIgnore] public Color MenuHighlightColor => FromArgbInt(MenuHighlightColorArgb);
 
         [JsonIgnore]
         public IReadOnlyList<Color> CustomGradientColors =>

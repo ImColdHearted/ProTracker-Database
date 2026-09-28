@@ -228,6 +228,7 @@ namespace Foot_Tracker.Services
                 // that is already there, so an existing log keeps the v1
                 // shape and every read of the two new columns would throw.
                 AddMissingColumns(opened);
+                RenameLegacySpecies(opened);
 
                 connection = opened;
                 Log.Information("Encounter log opened at {Path}", DatabasePath);
@@ -271,6 +272,30 @@ namespace Foot_Tracker.Services
         /// gender, and a blank cell says so honestly where a backfilled
         /// "Unknown" would look like a reading that failed.
         /// </summary>
+        /// <summary>§405. Rows logged under the old spelling of the two
+        /// Nidoran - "Nidoran♀"/"Nidoran♂" - become "Nidoran F"/"Nidoran M",
+        /// the library's spelling now, so the count and the history for a
+        /// species are one whole. Two indexed lookups; nothing to do on
+        /// every run after the first.</summary>
+        private static void RenameLegacySpecies(SqliteConnection open)
+        {
+            using SqliteCommand rename = open.CreateCommand();
+
+            rename.CommandText =
+                "UPDATE encounters SET species = $f WHERE species = $legacyF;" +
+                "UPDATE encounters SET species = $m WHERE species = $legacyM;";
+
+            rename.Parameters.AddWithValue("$f", "Nidoran F");
+            rename.Parameters.AddWithValue("$legacyF", "Nidoran\u2640");
+            rename.Parameters.AddWithValue("$m", "Nidoran M");
+            rename.Parameters.AddWithValue("$legacyM", "Nidoran\u2642");
+
+            int changed = rename.ExecuteNonQuery();
+
+            if (changed > 0)
+                Log.Information("Encounter log: {Count} Nidoran rows renamed to the F/M spelling.", changed);
+        }
+
         private static void AddMissingColumns(SqliteConnection open)
         {
             var present = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -500,30 +525,185 @@ namespace Foot_Tracker.Services
                     using SqliteDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
-                    {
-                        DateTime whenUtc = DateTime.TryParse(
-                            reader.GetString(1),
-                            null,
-                            System.Globalization.DateTimeStyles.RoundtripKind,
-                            out DateTime parsed)
-                            ? parsed
-                            : DateTime.UtcNow;
-
-                        results.Add(new EncounterLogRow(
-                            reader.GetInt64(0),
-                            whenUtc,
-                            reader.GetString(2),
-                            reader.IsDBNull(3) ? null : reader.GetInt32(3),
-                            reader.GetString(4),
-                            // Null on every row written before §124, and on
-                            // any encounter whose reading never resolved.
-                            reader.IsDBNull(5) ? null : reader.GetString(5),
-                            reader.IsDBNull(6) ? null : reader.GetString(6)));
-                    }
+                        results.Add(ReadRow(reader));
                 }
                 catch (Exception ex)
                 {
                     Log.Warning(ex, "Encounter log read failed");
+                }
+            }
+
+            return results;
+        }
+
+        /// <summary>§273. The seven selected columns, in the one order both
+        /// readers ask for them. Was inline in Query; lifted out when
+        /// QueryRank arrived, because two copies of a column-index mapping is
+        /// how one of them ends up off by one.</summary>
+        private static EncounterLogRow ReadRow(SqliteDataReader reader)
+        {
+            DateTime whenUtc = DateTime.TryParse(
+                reader.GetString(1),
+                null,
+                System.Globalization.DateTimeStyles.RoundtripKind,
+                out DateTime parsed)
+                ? parsed
+                : DateTime.UtcNow;
+
+            return new EncounterLogRow(
+                reader.GetInt64(0),
+                whenUtc,
+                reader.GetString(2),
+                reader.IsDBNull(3) ? null : reader.GetInt32(3),
+                reader.GetString(4),
+                // Null on every row written before §124, and on any encounter
+                // whose reading never resolved.
+                reader.IsDBNull(5) ? null : reader.GetString(5),
+                reader.IsDBNull(6) ? null : reader.GetString(6));
+        }
+
+        /// <summary>
+        /// §273. How a row ranks when the history is sorted rare-first: forms
+        /// before shinies before everything else, which is the order the
+        /// Shiny/Form header asks for.
+        ///
+        /// Written once, as SQL, because it is used in two places that must
+        /// agree - the filter that selects one rank and the ORDER BY inside
+        /// it - and because it has to match RareEncounterType's own spelling.
+        /// The column holds "Shiny", "Form", or "&lt;Event&gt; Form" (see
+        /// MainWindowViewModel's two RefineCurrentRareType calls), so "not
+        /// shiny and not empty" is what makes a form, rather than a list of
+        /// event names this file would have to be told about.
+        /// </summary>
+        private const string RareRankExpression =
+            "CASE WHEN rare IS NULL OR rare = '' OR rare = 'None' THEN 2 " +
+            "     WHEN rare = 'Shiny' THEN 1 " +
+            "     ELSE 0 END";
+
+        /// <summary>Ranks, named. Anything outside 0-2 is not a rank.</summary>
+        public const int RankForm = 0;
+        public const int RankShiny = 1;
+        public const int RankOrdinary = 2;
+
+        /// <summary>§273. One page of the rare-first order, and where the next
+        /// one starts. <see cref="NextRank"/> past <see cref="RankOrdinary"/>
+        /// means the log is exhausted.</summary>
+        public sealed record RankedPage(
+            IReadOnlyList<EncounterLogRow> Rows,
+            int NextRank,
+            long? NextBeforeId);
+
+        /// <summary>
+        /// §273. One page of the log with forms first, then shinies, then the
+        /// rest - each group newest first.
+        ///
+        /// NOT one query with an ORDER BY over the computed rank. That would
+        /// make SQLite materialise and sort every row of the species on every
+        /// page turn, which is exactly the cost §112 built keyset paging to
+        /// avoid - and the reason this is worth doing carefully is that an
+        /// event can mark THOUSANDS of encounters as a form, so "the rare rows
+        /// are few, just load them all" is not true either.
+        ///
+        /// Instead each rank is paged on its own, in rank order, by the same
+        /// keyset the ordinary view uses: ask rank 0 for rows older than the
+        /// cursor, and when that rank runs dry inside a page, carry on into
+        /// rank 1 from its top. Every individual query is the indexed
+        /// "species, client, id DESC" lookup with a LIMIT, so a page costs
+        /// what a page has always cost however deep it is.
+        ///
+        /// The cursor is therefore a PAIR - which rank, and which id within it
+        /// - and the caller keeps it the same way it already keeps the plain
+        /// one (§128's stack).
+        /// </summary>
+        public static RankedPage QueryRareFirst(
+            string species, int client, int startRank, long? beforeId, int limit)
+        {
+            var results = new List<EncounterLogRow>();
+
+            int rank = Math.Clamp(startRank, RankForm, RankOrdinary);
+            long? cursor = beforeId;
+
+            if (string.IsNullOrWhiteSpace(species) || limit <= 0)
+                return new RankedPage(results, rank, cursor);
+
+            while (rank <= RankOrdinary && results.Count < limit)
+            {
+                IReadOnlyList<EncounterLogRow> slice =
+                    QueryRank(species, client, rank, cursor, limit - results.Count);
+
+                results.AddRange(slice);
+
+                if (results.Count >= limit)
+                {
+                    // Full page. The next one continues inside whichever rank
+                    // the last row belongs to, after that row.
+                    EncounterLogRow last = results[results.Count - 1];
+
+                    return new RankedPage(results, RankOf(last), last.Id);
+                }
+
+                // That rank is exhausted - the next starts at the top of the
+                // next one, which is why the cursor is dropped here rather
+                // than carried across.
+                rank++;
+                cursor = null;
+            }
+
+            return new RankedPage(results, rank, null);
+        }
+
+        /// <summary>The same rank rule as <see cref="RareRankExpression"/>,
+        /// in C#, so a row already read can be placed without asking the
+        /// database again. The two are one rule in two languages and have to
+        /// keep saying the same thing.</summary>
+        public static int RankOf(EncounterLogRow row) =>
+            string.IsNullOrWhiteSpace(row.RareType) || row.RareType == "None"
+                ? RankOrdinary
+                : row.RareType == "Shiny"
+                    ? RankShiny
+                    : RankForm;
+
+        /// <summary>One rank's own keyset page - the ordinary query with the
+        /// rank filter added, so the index still drives it.</summary>
+        private static IReadOnlyList<EncounterLogRow> QueryRank(
+            string species, int client, int rank, long? beforeId, int limit)
+        {
+            var results = new List<EncounterLogRow>();
+
+            lock (gate)
+            {
+                SqliteConnection? open = EnsureOpen();
+
+                if (open is null)
+                    return results;
+
+                try
+                {
+                    using SqliteCommand command = open.CreateCommand();
+
+                    command.CommandText =
+                        "SELECT id, utc, species, level, location, gender, rare FROM encounters " +
+                        "WHERE species = $species AND client = $client " +
+                        $"AND {RareRankExpression} = $rank " +
+                        (beforeId is null ? string.Empty : "AND id < $beforeId ") +
+                        "ORDER BY id DESC LIMIT $limit;";
+
+                    command.Parameters.AddWithValue("$species", species);
+                    command.Parameters.AddWithValue("$client", client);
+                    command.Parameters.AddWithValue("$rank", rank);
+                    command.Parameters.AddWithValue("$limit", limit);
+
+                    if (beforeId is long before)
+                        command.Parameters.AddWithValue("$beforeId", before);
+
+                    using SqliteDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                        results.Add(ReadRow(reader));
+                }
+                catch (Exception ex)
+                {
+                    Log.Warning(ex, "Encounter log rare-first read failed");
                 }
             }
 

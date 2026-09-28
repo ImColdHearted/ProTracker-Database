@@ -21,7 +21,10 @@ public sealed partial class AnnouncementRow : ObservableObject
 
     public string Title => Source.Title;
     public string PublishedDisplay => Source.PublishedDisplay;
-    public string Body => Source.Body;
+    // §343: the rendered post, not the raw one. Discord's timestamp markup
+    // becomes a date in this reader's own timezone; Source.Body keeps the
+    // original.
+    public string Body => Source.Display;
     public bool HasImage => Source.HasImage;
 
     [ObservableProperty] private Bitmap? image;
@@ -52,6 +55,14 @@ public sealed partial class AnnouncementsViewModel : ViewModelBase
         "cdn.discordapp.com",
         "media.discordapp.net",
         "pokemonrevolution.net",
+        // §357: where the Worker now keeps the copy. Discord signs its
+        // attachment URLs with a 24-hour expiry, so the address that arrived
+        // with a post was a 404 by the time anybody scrolled back to it; the
+        // picture is copied into the bucket at poll time and served from
+        // here. Discord's own hosts stay on the list - a copy that could not
+        // be made falls back to the original, which is right for the first
+        // day and no worse than before after that.
+        "dl.protrackerdb.com",
     };
 
     /// <summary>A post's picture is a screenshot, not a video. Anything past

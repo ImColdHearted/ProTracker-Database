@@ -22,31 +22,38 @@
         "pokemon": [
           {
             "name": "Pikachu",
-            "dexNumber": 25
+            "dexNumber": 25,
+            "winStreakRequired": 0
           },
           {
             "name": "Electrike",
-            "dexNumber": 309
+            "dexNumber": 309,
+            "winStreakRequired": 0
           },
           {
             "name": "Shinx",
-            "dexNumber": 403
+            "dexNumber": 403,
+            "winStreakRequired": 0
           },
           {
             "name": "Elekid",
-            "dexNumber": 239
+            "dexNumber": 239,
+            "winStreakRequired": 0
           },
           {
             "name": "Helioptile",
-            "dexNumber": 694
+            "dexNumber": 694,
+            "winStreakRequired": 0
           },
           {
             "name": "Rotom",
-            "dexNumber": 479
+            "dexNumber": 479,
+            "winStreakRequired": 0
           },
           {
             "name": "Tynamo",
-            "dexNumber": 602
+            "dexNumber": 602,
+            "winStreakRequired": 0
           }
         ],
         "items": [
@@ -202,31 +209,63 @@
         "pokemon": [
           {
             "name": "Pikachu",
-            "dexNumber": 25
+            "dexNumber": 25,
+            "winStreakRequired": 0
           },
           {
             "name": "Electrike",
-            "dexNumber": 309
+            "dexNumber": 309,
+            "winStreakRequired": 0
           },
           {
             "name": "Shinx",
-            "dexNumber": 403
+            "dexNumber": 403,
+            "winStreakRequired": 0
           },
           {
             "name": "Elekid",
-            "dexNumber": 239
+            "dexNumber": 239,
+            "winStreakRequired": 0
           },
           {
             "name": "Helioptile",
-            "dexNumber": 694
+            "dexNumber": 694,
+            "winStreakRequired": 0
           },
           {
             "name": "Rotom",
-            "dexNumber": 479
+            "dexNumber": 479,
+            "winStreakRequired": 0
           },
           {
             "name": "Tynamo",
-            "dexNumber": 602
+            "dexNumber": 602,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Helioptile",
+            "dexNumber": 694,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Tynamo",
+            "dexNumber": 602,
+            "winStreakRequired": 3
           }
         ],
         "items": [
@@ -382,31 +421,63 @@
         "pokemon": [
           {
             "name": "Pikachu",
-            "dexNumber": 25
+            "dexNumber": 25,
+            "winStreakRequired": 0
           },
           {
             "name": "Electrike",
-            "dexNumber": 309
+            "dexNumber": 309,
+            "winStreakRequired": 0
           },
           {
             "name": "Shinx",
-            "dexNumber": 403
+            "dexNumber": 403,
+            "winStreakRequired": 0
           },
           {
             "name": "Elekid",
-            "dexNumber": 239
+            "dexNumber": 239,
+            "winStreakRequired": 0
           },
           {
             "name": "Helioptile",
-            "dexNumber": 694
+            "dexNumber": 694,
+            "winStreakRequired": 0
           },
           {
             "name": "Rotom",
-            "dexNumber": 479
+            "dexNumber": 479,
+            "winStreakRequired": 0
           },
           {
             "name": "Tynamo",
-            "dexNumber": 602
+            "dexNumber": 602,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Electrike",
+            "dexNumber": 309,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Shinx",
+            "dexNumber": 403,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Helioptile",
+            "dexNumber": 694,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Rotom",
+            "dexNumber": 479,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Tynamo",
+            "dexNumber": 602,
+            "winStreakRequired": 3
           }
         ],
         "items": [

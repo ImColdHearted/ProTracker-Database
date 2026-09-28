@@ -207,6 +207,37 @@ public sealed partial class BossDetailViewModel : ViewModelBase
     [ObservableProperty] private string windowTitle = "Boss";
     [ObservableProperty] private string headerNameText = string.Empty;
     [ObservableProperty] private string headerDifficultyText = string.Empty;
+
+    /// <summary>§289. The boss's cooldown, beside the name - "02:11:40 left"
+    /// or "Ready", the same dd:hh:mm the Boss Database card shows, so the
+    /// window that opens a fight also says whether the fight is available.
+    /// Keyed by the FILE's boss name, which is what RegisterBossDefeat writes
+    /// - not the NPC name a dual-boss file switches the header to.</summary>
+    [ObservableProperty] private string headerCooldownText = string.Empty;
+
+    /// <summary>§289. Re-read from BossCooldownService. Called on load and
+    /// whenever the window is activated, so a fight finished while it sat
+    /// open is current when the player comes back to it.</summary>
+    public void RefreshCooldown()
+    {
+        if (boss is null)
+        {
+            HeaderCooldownText = string.Empty;
+            return;
+        }
+
+        Models.BossCooldownEntry? cooldown = BossCooldownService.GetCooldown(boss.Name);
+
+        if (cooldown is null || cooldown.TimeRemaining <= TimeSpan.Zero)
+        {
+            HeaderCooldownText = "Ready";
+            return;
+        }
+
+        TimeSpan left = cooldown.TimeRemaining;
+
+        HeaderCooldownText = $"{left.Days:00}:{left.Hours:00}:{left.Minutes:00} left";
+    }
     // The big header image: the LOCATION, permanently (§108). §93's swap
     // button that traded it for the boss portrait is gone - the portraits
     // have their own strip now, and a picture that moves out from under you
@@ -217,6 +248,22 @@ public sealed partial class BossDetailViewModel : ViewModelBase
     [ObservableProperty] private bool hasHeaderImage;
     [ObservableProperty] private string locationText = string.Empty;
     [ObservableProperty] private string requirementText = string.Empty;
+
+    /// <summary>§277. "4 wins, 2 losses" against this boss on this client
+    /// profile - see BossRecordService. Empty until the boss has been fought,
+    /// and the window shows nothing rather than a 0-0 that reads as a
+    /// result.</summary>
+    [ObservableProperty] private string recordText = string.Empty;
+
+    /// <summary>§277. Whether the record line has anything to say.</summary>
+    [ObservableProperty] private bool hasRecord;
+
+    /// <summary>§277. Why the number is not split by difficulty - said on the
+    /// hover rather than in the line, which is a reading of the record and not
+    /// a footnote about it.</summary>
+    public string RecordTip =>
+        "Wins and losses this client profile has recorded against this boss. "
+        + "PRO's battle screen does not say which difficulty was picked, so this counts every difficulty together.";
     [ObservableProperty] private string pokedollarsText = string.Empty;
     [ObservableProperty] private string pveCoinsText = string.Empty;
     [ObservableProperty] private string? errorMessage;
@@ -286,6 +333,11 @@ public sealed partial class BossDetailViewModel : ViewModelBase
 
             HeaderNameText = boss.Name;
             HeaderDifficultyText = $"{difficulty} Difficulty";
+            RefreshCooldown();
+
+            // §277: read by the FILE NAME id, which is what the tracker
+            // records against and what BossRepository.Load just opened.
+            ApplyRecord(BossRecordService.Get(bossId));
             WindowTitle = $"{boss.Name} ({difficulty})";
             string locationPicturePath = !string.IsNullOrWhiteSpace(boss.LocationPicture)
                 ? boss.LocationPicture
@@ -315,7 +367,10 @@ public sealed partial class BossDetailViewModel : ViewModelBase
             LocationText = boss.Location;
             RequirementText = !string.IsNullOrWhiteSpace(boss.Requirement) ? boss.Requirement : boss.Requirements;
 
-            PokedollarsText = $"${selected.Rewards.Pokedollars.Minimum:N0} - ${selected.Rewards.Pokedollars.Maximum:N0}";
+            // §279: the same grouping every other counted number now uses.
+            PokedollarsText =
+                $"${DisplayNumber.Count(selected.Rewards.Pokedollars.Minimum)} - " +
+                $"${DisplayNumber.Count(selected.Rewards.Pokedollars.Maximum)}";
             PveCoinsText = $"{selected.Rewards.PveCoins} PVE Coins";
 
             ItemRewards.Clear();
@@ -515,5 +570,37 @@ public sealed partial class BossDetailViewModel : ViewModelBase
         string fullPath = Path.IsPathRooted(normalized) ? normalized : Path.Combine(AppContext.BaseDirectory, normalized);
 
         return File.Exists(fullPath) ? new Bitmap(fullPath) : null;
+    }
+
+    /// <summary>
+    /// §277. Turns this boss's record into the one line the header shows.
+    ///
+    /// A boss never fought says nothing at all: "0 wins, 0 losses" reads as a
+    /// result rather than as an absence, and the header has better things to
+    /// do with the space.
+    ///
+    /// Attempts whose result was never read - the manual "start the cooldown"
+    /// click (§274) - are named rather than folded into either side, so the
+    /// numbers not adding up to the attempt count is explained instead of
+    /// looking wrong. Same rule §276 applies to a PVP battle with no result.
+    /// </summary>
+    private void ApplyRecord(Models.BossRecordEntry? record)
+    {
+        if (record is null || record.Attempts == 0)
+        {
+            RecordText = string.Empty;
+            HasRecord = false;
+            return;
+        }
+
+        string line =
+            $"{DisplayNumber.Count(record.Wins)} {(record.Wins == 1 ? "win" : "wins")}, " +
+            $"{DisplayNumber.Count(record.Losses)} {(record.Losses == 1 ? "loss" : "losses")}";
+
+        if (record.Unknown > 0)
+            line += $" ({DisplayNumber.Count(record.Unknown)} with no result read)";
+
+        RecordText = line;
+        HasRecord = true;
     }
 }

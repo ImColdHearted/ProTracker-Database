@@ -84,8 +84,12 @@ namespace PokemonSim.Engine.Abilities
         public void OnAttach(PokemonState pokemon, BattleState state) { }
     }
 
-    public class AbsorbEffect : BaseMoveEffect
+    public class AbsorbEffect : BaseMoveEffect, ITypeNullifier
     {
+        /// <summary>§311: the one it eats, so the observer can ask rather
+        /// than keep its own list of which abilities absorb what.</summary>
+        public PokemonType NullifiedType => type;
+
         readonly PokemonType type;
         readonly bool heals;
         readonly string boostStat;

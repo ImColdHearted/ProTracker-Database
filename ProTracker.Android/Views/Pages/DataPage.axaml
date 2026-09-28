@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="ProTracker.Companion.Views.Pages.DataPage">
+
+    <!-- §295. Where the phone's copy of the tracker's data comes from and
+         goes. The desktop keeps its data in %LocalAppData%\ProTracker; a zip
+         of that folder, picked here, is unpacked into the phone's own
+         ProTracker folder, and every page reads it. -->
+    <ScrollViewer>
+        <StackPanel Spacing="10">
+            <Border Classes="themedPanel" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4" Padding="12">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Bring the tracker's data to this phone" FontWeight="Bold" FontSize="15"
+                               Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}"
+                               Text="On the PC, zip the folder %LocalAppData%\ProTracker (paste that into Explorer's address bar; right-click the ProTracker folder, Compress). Send the zip to this phone, then pick it here. Boss records, PVP history, lifetime stats and Pokédex areas all come across; importing again replaces them with the newer copy." />
+                    <Button Content="Import ProTracker zip…" Click="Import_Click" HorizontalAlignment="Left" Padding="14,8" />
+                    <TextBlock Name="ImportStatus" TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" />
+                </StackPanel>
+            </Border>
+
+            <Border Classes="themedPanel" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4" Padding="12">
+                <StackPanel Spacing="6">
+                    <TextBlock Text="About" FontWeight="Bold" FontSize="15" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Name="VersionText" FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Name="DataFolderText" FontSize="11" Opacity="0.8" TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock Name="BundleFolderText" FontSize="11" Opacity="0.8" TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <TextBlock TextWrapping="Wrap" FontSize="12" Opacity="0.8" Foreground="{DynamicResource ThemeTextBrush}"
+                               Text="This companion reads what the desktop tracker recorded. Live encounter tracking stays on the PC: it needs the game window, and a phone does not have one." />
+                </StackPanel>
+            </Border>
+
+            <Border Name="ErrorPanel" IsVisible="False" BorderBrush="{DynamicResource ThemeErrorBrush}" BorderThickness="1" CornerRadius="4" Padding="12">
+                <StackPanel Spacing="6">
+                    <TextBlock Text="The app did not start cleanly" FontWeight="Bold" Foreground="{DynamicResource ThemeErrorBrush}" />
+                    <SelectableTextBlock Name="ErrorText" FontSize="11" TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

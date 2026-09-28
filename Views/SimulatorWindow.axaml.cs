@@ -74,10 +74,24 @@ public partial class SimulatorWindow : Window
         // not throw away picks already made. allowMultiple is false for
         // Replace from Storage, which wants exactly one and gets a window
         // that closes on the first click.
-        vm.RequestStoragePick = async allowMultiple =>
+        // §275: the picker is told how many slots are free and how to say so.
+        // The notice is the shared ConfirmDialogWindow in its OK-only mode,
+        // owned by the PICKER rather than by this window - it is modal over
+        // this one, so a dialog owned by the Simulator would open behind the
+        // window the player is looking at.
+        vm.RequestStoragePick = async (allowMultiple, freeSlots) =>
         {
-            var dialogVm = new SimulatorStorageViewModel { AllowMultiple = allowMultiple };
+            var dialogVm = new SimulatorStorageViewModel
+            {
+                AllowMultiple = allowMultiple,
+                FreeTeamSlots = freeSlots,
+                MaxTeamSize = vm.MaxTeamSize,
+            };
+
             var dialog = new SimulatorStorageWindow { DataContext = dialogVm };
+
+            dialogVm.WarnAsync = message =>
+                ConfirmDialogWindow.NotifyAsync(dialog, message, "Team is full");
 
             await dialog.ShowDialog<bool?>(this);
 
@@ -175,7 +189,7 @@ public partial class SimulatorWindow : Window
             return;
 
         Point at = e.GetPosition(teamSlotList);
-        int index = IndexAt(at.Y, nearest: false);
+        int index = IndexAt(at, nearest: false);
 
         if (index < 0 || index >= vm.TeamSlots.Count)
             return;
@@ -211,10 +225,11 @@ public partial class SimulatorWindow : Window
 
             dragging = true;
             e.Pointer.Capture(teamSlotList);
-            teamSlotList.Cursor = new Cursor(StandardCursorType.SizeNorthSouth);
+            // §372: the cards are a grid now, so the drag goes any way.
+            teamSlotList.Cursor = new Cursor(StandardCursorType.SizeAll);
         }
 
-        int target = IndexAt(at.Y, nearest: true);
+        int target = IndexAt(at, nearest: true);
 
         // The list reorders live under the pointer, which is the whole of
         // the feedback - no ghost card, no insertion line, and nothing
@@ -254,16 +269,22 @@ public partial class SimulatorWindow : Window
             vm.MoveSlot(slot, from);
     }
 
-    /// <summary>Which card a Y coordinate falls on, measured from the
-    /// containers' own boxes. Hit-testing whatever visual is under the
-    /// pointer would land on a sprite or a line of text instead.
+    /// <summary>Which card a point falls on, measured from the containers'
+    /// own boxes. Hit-testing whatever visual is under the pointer would
+    /// land on a sprite or a line of text instead.
     ///
-    /// With nearest, a coordinate in the gap between two cards - or past
-    /// either end of the list - answers with the closest card, which is
-    /// what a drag in flight wants. Without it, only a coordinate actually
-    /// inside a card answers, so pressing in the gap between two of them
-    /// does not pick either one up.</summary>
-    int IndexAt(double y, bool nearest)
+    /// §372: a point, not a Y. The cards were one column, so a Y was the
+    /// whole question; they are two across now, and two cards share every
+    /// Y band. A Y-only test always answered with the left-hand card of the
+    /// row, which would have made the right-hand column undraggable and
+    /// every drop land one card early.
+    ///
+    /// With nearest, a point in the gap between cards - or past the edge of
+    /// the list - answers with the closest card by distance to its box,
+    /// which is what a drag in flight wants. Without it, only a point
+    /// actually inside a card answers, so pressing in a gap does not pick
+    /// anything up.</summary>
+    int IndexAt(Point p, bool nearest)
     {
         if (DataContext is not SimulatorViewModel vm)
             return -1;
@@ -283,16 +304,23 @@ public partial class SimulatorWindow : Window
             if (corner == null)
                 continue;
 
+            double left = corner.Value.X;
             double top = corner.Value.Y;
+            double right = left + container.Bounds.Width;
             double bottom = top + container.Bounds.Height;
 
-            if (y >= top && y < bottom)
+            if (p.X >= left && p.X < right && p.Y >= top && p.Y < bottom)
                 return i;
 
             if (!nearest)
                 continue;
 
-            double gap = y < top ? top - y : y - bottom;
+            // Distance from the point to the box: zero along any axis the
+            // point already overlaps, so a point directly beside a card is
+            // measured only by the gap between them.
+            double dx = p.X < left ? left - p.X : p.X > right ? p.X - right : 0;
+            double dy = p.Y < top ? top - p.Y : p.Y > bottom ? p.Y - bottom : 0;
+            double gap = Math.Sqrt(dx * dx + dy * dy);
 
             if (gap < nearestGap)
             {

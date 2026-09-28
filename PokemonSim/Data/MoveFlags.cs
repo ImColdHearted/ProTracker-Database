@@ -64,8 +64,21 @@ namespace PokemonSim.Data
             "Make It Rain", "Glacial Lance"
         };
 
+        /// <summary>§304. The flatteners: moves that squash a Minimized
+        /// target for double damage and cannot miss it. Showdown carries
+        /// this as a `minimize` move flag; it is mechanics knowledge, so it
+        /// lives here with the rest of them rather than in the data file.</summary>
+        static readonly HashSet<string> FlatteningMoves = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "Astonish", "Body Slam", "Dragon Rush", "Flying Press",
+            "Heat Crash", "Heavy Slam", "Malicious Moonsault", "Steamroller",
+            "Stomp", "Supercell Slam"
+        };
+
         public static void Annotate(MoveState move)
         {
+            move.IsFlattening = FlatteningMoves.Contains(move.Name);
+
             move.IsContact = move.Category == MoveCategory.Physical
                 ? !NonContactPhysical.Contains(move.Name)
                 : move.Category == MoveCategory.Special && ContactSpecial.Contains(move.Name);

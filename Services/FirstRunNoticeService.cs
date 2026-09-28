@@ -23,11 +23,55 @@ namespace Foot_Tracker.Services
     /// A failed WRITE is only logged - the player has read the notice by
     /// then, and refusing to open the window they asked for would be a
     /// strange thing to do about a missing flag file.
+    ///
+    /// §267 widened what it holds without changing what it is: "a set of
+    /// things this machine has already been shown, once". Alongside the
+    /// first-run notices it now carries which World Quests have been entered
+    /// and which announcements have been read, both of which want exactly
+    /// this store's behaviour - per machine rather than per client, and
+    /// failing towards "already seen", which for a highlight means a quiet
+    /// menu rather than one that cannot be cleared.
     /// </summary>
     public static class FirstRunNoticeService
     {
         /// <summary>The Simulator's "teams come from your own client" note.</summary>
         public const string SimulatorImport = "simulator-import";
+
+        /// <summary>§267. This quest's World Quest mode has been entered at
+        /// least once, so its menu item has said what it had to say and stops
+        /// colouring itself when the mode is left. Keyed by the quest's own
+        /// id, so next month's quest colours again.</summary>
+        public static string WorldQuestEntered(string questId) =>
+            $"world-quest-entered-{Sanitise(questId)}";
+
+        /// <summary>§267. This announcement has been read - the News item's
+        /// highlight is for posts the player has not opened yet. Keyed by the
+        /// post's id, so the next post lights it again.</summary>
+        public static string NewsRead(string announcementId) =>
+            $"news-read-{Sanitise(announcementId)}";
+
+        /// <summary>Ids come from Discord and from a test quest (§234) and go
+        /// into a JSON key, so they are filtered the same way §250 filters the
+        /// quest id it builds a FILE NAME from - letters, digits, hyphen and
+        /// underscore, capped - rather than trusted whole.</summary>
+        private static string Sanitise(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+                return "none";
+
+            var builder = new System.Text.StringBuilder(id.Length);
+
+            foreach (char c in id.Trim())
+            {
+                if (char.IsLetterOrDigit(c) || c == '-' || c == '_')
+                    builder.Append(c);
+
+                if (builder.Length == 64)
+                    break;
+            }
+
+            return builder.Length == 0 ? "none" : builder.ToString();
+        }
 
         private static readonly string NoticePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),

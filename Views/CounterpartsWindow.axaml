@@ -37,11 +37,10 @@
                              §196: the outline and the fill are both new. This was a bare
                              hit target with no chrome at all, which is why the grid read
                              as one sheet rather than as cards. -->
-                        <Border Width="130" Height="186" Margin="8" Cursor="Hand"
+                        <Border Width="130" Height="186" Margin="8"
                                 Classes="themedPanel"
                                 BorderBrush="{DynamicResource ThemeBorderBrush}"
-                                BorderThickness="1" CornerRadius="4"
-                                PointerPressed="Card_PointerPressed">
+                                BorderThickness="1" CornerRadius="4">
                             <StackPanel>
                                 <Image Source="{Binding Sprite}" Width="120" Height="120" Stretch="Uniform" />
                                 <TextBlock> </TextBlock>
@@ -65,42 +64,5 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-
-        <!-- Inline detail panel: replaces the floating CounterpartHoverForm tool window.
-             DataContext is set to SelectedCard itself (rather than binding through
-             "SelectedCard.Sprite"/"SelectedCard.Name" from the outer DataContext) so
-             Avalonia doesn't log a binding error every time it evaluates this panel
-             while nothing is selected yet (SelectedCard is null before the first click) -
-             same pattern as BossDetailWindow.axaml's team-member panel. -->
-        <Border Grid.Row="3" Classes="themedPanel" IsVisible="{Binding HasSelectedCard}"
-                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" Padding="12" Margin="0,8,0,0">
-            <StackPanel Orientation="Horizontal" Spacing="12"
-                        DataContext="{Binding SelectedCard}" x:DataType="vm:CounterpartCardItem">
-                <Image Source="{Binding Sprite}" Width="80" Height="80" Stretch="Uniform" />
-                <StackPanel Spacing="4">
-                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
-                        <ItemsControl ItemsSource="{Binding Types}" VerticalAlignment="Center">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" Spacing="3" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="x:String">
-                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}" Width="20" Height="20" Stretch="Uniform" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                    <!-- §219: the Notes line is gone. It was showing
-                         "Notes: None" for almost every counterpart, because
-                         almost none carry one. CounterpartEntry.Notes stays
-                         on the model so the JSON keeps round tripping - what
-                         went is the display, not the data. -->
-                    <TextBlock Text="{Binding $parent[Window].((vm:CounterpartsViewModel)DataContext).SpawnLocationsText}" Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" />
-                </StackPanel>
-            </StackPanel>
-        </Border>
     </Grid>
 </Window>

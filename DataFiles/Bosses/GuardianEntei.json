@@ -22,23 +22,28 @@
         "pokemon": [
           {
             "name": "Bulbasaur",
-            "dexNumber": 1
+            "dexNumber": 1,
+            "winStreakRequired": 3
           },
           {
             "name": "Charmander",
-            "dexNumber": 4
+            "dexNumber": 4,
+            "winStreakRequired": 3
           },
           {
             "name": "Chimchar",
-            "dexNumber": 390
+            "dexNumber": 390,
+            "winStreakRequired": 3
           },
           {
             "name": "Tepig",
-            "dexNumber": 498
+            "dexNumber": 498,
+            "winStreakRequired": 3
           },
           {
             "name": "Entei",
-            "dexNumber": 244
+            "dexNumber": 244,
+            "winStreakRequired": 3
           }
         ],
         "items": [

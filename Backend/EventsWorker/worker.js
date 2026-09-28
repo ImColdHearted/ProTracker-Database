@@ -55,11 +55,19 @@
 //   POST   /v1/admin/announcements             section 239: add one by hand (the seed, and anything PRO did not post)
 //   DELETE /v1/admin/announcements/{id}        section 239: remove one
 //   DELETE /v1/admin/world-quests/test         section 234: remove every test quest
+//   POST   /v1/admin/world-quests/{id}/end     section 298: declare a quest over - both servers have met the goal
+//   DELETE /v1/admin/world-quests/{id}/end     section 298: put it back, for a quest ended by mistake
 //   POST   /v1/presence                        section 150: a hunting tracker's anonymous heartbeat
 //   GET    /v1/admin/presence                  admin with status permission: how many are hunting, plus a week of history
 //   GET    /v1/admin/logins                    master only: the delegated admin logins (never a digest)
 //   POST   /v1/admin/logins                    master only: create a login - or reset one, by posting its name again
 //   POST   /v1/admin/logins/{id}/revoke        master only: revoke a login
+//   GET    /v1/spawns                          section 397: every published spawn page - maps by region, each with its species
+//   PUT    /v1/admin/spawns/{key}              master only: publish one map's page (region + species, sections 399/402: + its boxes on the region picture, section 412: + the map whose spot it shares); key = the name folded to [a-z0-9]
+//   GET    /v1/bosses                          section 409: every boss pin on the world picture (public)
+//   PUT    /v1/admin/bosses/{id}               master only: place one boss's pin; id = the boss file's name folded to [a-z0-9]
+//   DELETE /v1/admin/bosses/{id}               master only: take the pin down
+//   DELETE /v1/admin/spawns/{key}              master only: take one map down
 //
 // Player identity is a per-install token the tracker generates once and sends
 // as X-Install-Token. Only its SHA-256 hash is stored, next to each entry, so
@@ -95,6 +103,7 @@
 // eight days; the admin route summarises the last seven (peak, average when
 // anyone is hunting, average per hour of the day). No id ever reaches it.
 
+
 const SCHEMA_VERSION = 2;
 
 // §234. The last MIGRATION_GUIDE.md section this file carries, reported by
@@ -105,7 +114,7 @@ const SCHEMA_VERSION = 2;
 // built for a route the deployed Worker has never heard of fails with a flat
 // 404 that says nothing about which half is behind. Bump this in any section
 // that changes this file.
-const WORKER_SECTION = 241;
+const WORKER_SECTION = 412;
 const MAX_BODY_BYTES = 16 * 1024;
 const MAX_EVENTS_RETURNED = 200;
 const MAX_ENTRIES_RETURNED = 1000;
@@ -257,6 +266,10 @@ async function route(request, env) {
     // §226: same shape as adminTokenConfigured - a yes/no, never the value.
     const webhook = await reportWebhook(env);
     const presence = await presenceWebhook(env);
+    // §345: the same yes/no for the appearance approvals channel. Without
+    // it a submission saves fine and simply never reaches Discord, which
+    // looks like nothing happening rather than like a misconfiguration.
+    const themes = await themeWebhook(env);
     return json({
       ok: true,
       schema: SCHEMA_VERSION,
@@ -266,11 +279,19 @@ async function route(request, env) {
       adminTokenConfigured: secret !== null,
       reportWebhookConfigured: webhook !== null,
       presenceWebhookConfigured: presence !== null,
+      themeWebhookConfigured: themes !== null,
       // §232: both halves, because either one missing means no quests.
       worldQuestsConfigured: (await discordBotToken(env)) !== null && questChannelId(env) !== null,
       // §239: the same yes/no for the announcements channel. Both halves,
       // because either one missing means no announcements.
       announcementsConfigured: (await discordBotToken(env)) !== null && announcementsChannelId(env) !== null,
+      // §357: configured is not the same as working. A follow that Discord
+      // has quietly dropped leaves everything configured and nothing
+      // arriving, which looks exactly like PRO having a quiet week - so say
+      // when the last real post came in, and list the times somebody had to
+      // reconnect the channel. Three reconnects in ten days is the answer to
+      // "why did it stop again".
+      announcementsFeed: await announcementsFeedHealth(env),
     });
   }
 
@@ -377,6 +398,27 @@ async function route(request, env) {
     return methodNotAllowed("POST, DELETE");
   }
 
+  // §298. The end a quest actually has. A World Quest runs 24 hours OR stops
+  // the moment the community goal is met, whichever comes first, and nothing
+  // in the announcement, the channel or the clock says when the second one
+  // happened - only someone playing both servers knows. POST records that
+  // judgement; DELETE takes it back, because a quest ended by mistake would
+  // otherwise stay wrongly over for everyone until it ran out on its own.
+  // The id matches a Discord message id (all digits) or a test quest's.
+  if ((m = path.match(/^\/v1\/admin\/world-quests\/([A-Za-z0-9_-]{1,64})\/end$/))) {
+    if (method === "POST") return setQuestEnded(request, env, m[1], true);
+    if (method === "DELETE") return setQuestEnded(request, env, m[1], false);
+    return methodNotAllowed("POST, DELETE");
+  }
+
+  // §348. Deliberately above the permission-gated admin routes: this is the
+  // one any valid credential may call, and it is how the console learns
+  // which of the others are worth showing.
+  if (path === "/v1/admin/whoami") {
+    if (method === "GET") return whoAmI(request, env);
+    return methodNotAllowed("GET");
+  }
+
   if (path === "/v1/admin/logins") {
     if (method === "GET") return listAdminLogins(request, env);
     if (method === "POST") return saveAdminLogin(request, env);
@@ -386,6 +428,85 @@ async function route(request, env) {
   if ((m = path.match(/^\/v1\/admin\/logins\/(\d{1,10})\/revoke$/))) {
     if (method === "POST") return revokeAdminLogin(request, env, Number(m[1]));
     return methodNotAllowed("POST");
+  }
+
+  // §345. Community appearances. Public reads, tracker-only writes.
+  if (path === "/v1/themes") {
+    if (method === "GET") return listThemes(request, env);
+    if (method === "POST") return postTheme(request, env);
+    return methodNotAllowed("GET, POST");
+  }
+
+  if ((m = path.match(/^\/v1\/themes\/([0-9a-f]{32})$/))) {
+    if (method === "GET") return getTheme(env, m[1]);
+    return methodNotAllowed("GET");
+  }
+
+  if ((m = path.match(/^\/v1\/themes\/([0-9a-f]{32})\/applied$/))) {
+    if (method === "POST") return themeApplied(env, m[1]);
+    return methodNotAllowed("POST");
+  }
+
+  // §345. The moderation link from the approvals channel. GET renders and
+  // changes nothing - Discord fetches link targets to build previews, so a
+  // decision on GET would approve every submission the moment it posted.
+  if ((m = path.match(/^\/v1\/themes\/decide\/([0-9a-f]{32})$/))) {
+    if (method === "GET") return decidePage(env, m[1]);
+    if (method === "POST") return decideTheme(request, env, m[1]);
+    return methodNotAllowed("GET, POST");
+  }
+
+  if (path === "/v1/admin/themes") {
+    if (method === "GET") return listThemesForAdmin(request, env);
+    return methodNotAllowed("GET");
+  }
+
+  if ((m = path.match(/^\/v1\/admin\/themes\/([0-9a-f]{32})$/))) {
+    if (method === "DELETE") return deleteTheme(request, env, m[1]);
+    return methodNotAllowed("DELETE");
+  }
+
+  // §397. The spawn pages. Public read, same reasoning as the active-event
+  // list: what spawns where is a fact about the game, not a secret. Writes
+  // are the MASTER token's alone - see putSpawnMap.
+  if (path === "/v1/spawns") {
+    if (method === "GET") return listSpawnMaps(env);
+    return methodNotAllowed("GET");
+  }
+
+  if ((m = path.match(/^\/v1\/admin\/spawns\/([a-z0-9]{1,64})$/))) {
+    if (method === "PUT") return putSpawnMap(request, env, m[1]);
+    if (method === "DELETE") return deleteSpawnMap(request, env, m[1]);
+    return methodNotAllowed("PUT, DELETE");
+  }
+
+  // §409. Boss pins on the world picture: where each boss stands. Public
+  // read and master-only writes, exactly as the spawn pages.
+  if (path === "/v1/bosses") {
+    if (method === "GET") return listBossPins(env);
+    return methodNotAllowed("GET");
+  }
+
+  if ((m = path.match(/^\/v1\/admin\/bosses\/([a-z0-9]{1,64})$/))) {
+    if (method === "PUT") return putBossPin(request, env, m[1]);
+    if (method === "DELETE") return deleteBossPin(request, env, m[1]);
+    return methodNotAllowed("PUT, DELETE");
+  }
+
+  // §429. Spawn level ranges: the lowest and highest level anyone who opted
+  // in has met each species at on each map. Public read, as the spawn pages;
+  // public WRITE too, since every tracker contributes - a post can only ever
+  // widen a range, never narrow one or name a person. A row a misread has
+  // spoiled is the master token's to take down.
+  if (path === "/v1/levels") {
+    if (method === "GET") return listSpawnLevels(env);
+    if (method === "POST") return postSpawnLevels(request, env);
+    return methodNotAllowed("GET, POST");
+  }
+
+  if ((m = path.match(/^\/v1\/admin\/levels\/([a-z0-9]{1,64})$/))) {
+    if (method === "DELETE") return deleteSpawnLevels(request, env, m[1], url);
+    return methodNotAllowed("DELETE");
   }
 
   return json({ error: "No such route." }, 404);
@@ -440,6 +561,36 @@ const ANNOUNCE_MAX_AUTHOR = 80;
 const ANNOUNCE_KEEP = 60;
 const ANNOUNCE_MANUAL_PREFIX = "manual-";
 
+// §357. Which Discord message types are an actual post: 0 DEFAULT and
+// 19 REPLY. Everything else in a followed channel is Discord narrating
+// itself.
+//
+// This mattered because type 6, CHANNEL_FOLLOW_ADD, is NOT an empty message:
+// its content is the NAME of the channel that was followed. So the poll's
+// "nothing to show at all" guard - which only checked for an empty body and
+// no image - waved three of them straight into the feed, where they showed
+// as an announcement by the person who set the follow up, reading
+// "Pokemon Revolution Online #announcements". Three of the seven rows the
+// live feed was serving were that.
+const ANNOUNCE_POST_TYPES = [0, 19];
+const ANNOUNCE_FOLLOW_ADD_TYPE = 6;
+
+// §357. Those follow notices are not rubbish, they are just not
+// announcements: each one is the moment somebody (re)connected PRO's
+// channel to the relay. Kept as feed health, newest last, so a run of them
+// is visible as what it is - a relay that keeps dropping.
+const ANNOUNCE_FOLLOW_EVENTS_KEY = "announcements_follow_events";
+const ANNOUNCE_FOLLOW_EVENTS_KEEP = 10;
+
+// §357. Where a re-hosted announcement picture lives in the bucket, and the
+// most this will copy. Discord's CDN signs attachment URLs with an expiry -
+// the Summer Event post's URL carried ex=6aab08c5, which is 24 hours after
+// it was issued - so a URL stored on the 15th is a 404 by the 17th. The
+// picture is copied into R2 at poll time and served from the same origin
+// the themes are, which has no expiry.
+const ANNOUNCE_IMAGE_PREFIX = "announcements/";
+const ANNOUNCE_MAX_IMAGE_BYTES = 8 * 1024 * 1024;
+
 // Where an announcement image may come from. A feed the client renders
 // pictures out of is a feed that can point the client at any URL on the
 // internet, so the hosts are named rather than trusted: Discord's own CDN,
@@ -449,6 +600,10 @@ const ANNOUNCE_IMAGE_HOSTS = [
   "cdn.discordapp.com",
   "media.discordapp.net",
   "pokemonrevolution.net",
+  // §357: where a re-hosted picture is served from. Discord's own URL stays
+  // allowed because it is still what arrives from Discord and what a copy
+  // falls back to when the bucket is not bound.
+  "dl.protrackerdb.com",
 ];
 
 // §234. Random characters appended to the timestamp in a test quest's id. The
@@ -673,9 +828,21 @@ async function ensureQuestTable(env) {
        ends_utc      TEXT,
        parsed        INTEGER NOT NULL DEFAULT 0,
        raw           TEXT,
-       seen_utc      TEXT NOT NULL
+       seen_utc      TEXT NOT NULL,
+       ended_utc     TEXT
      )`
   ).run();
+
+  // §298: a database made before §298 already has the table, so the CREATE
+  // above leaves it without the column. Same idiom, and the same reason for
+  // swallowing the error, as the presence table's version column - SQLite
+  // has no ADD COLUMN IF NOT EXISTS, and "it is already there" is the
+  // expected outcome of every run after the first.
+  try {
+    await env.DB.prepare(`ALTER TABLE world_quests ADD COLUMN ended_utc TEXT`).run();
+  } catch {
+    // Already has it.
+  }
 
   await env.DB.prepare(
     `CREATE INDEX IF NOT EXISTS idx_quests_started ON world_quests (started_utc DESC)`
@@ -723,6 +890,20 @@ async function storeQuest(env, quest) {
 }
 
 function questOut(row) {
+  // §298. A quest the admin declared over ended THEN, not when its 24 hours
+  // would have run out. The stored ends_utc is left alone - it is still the
+  // Worker's arithmetic on the announced duration - but what goes out is the
+  // earlier of the two, because every countdown downstream is really asking
+  // "when did this stop". Reporting it this way also ends the quest for
+  // trackers built before §298, which know nothing about endedUtc and would
+  // otherwise go on counting down to a time that no longer means anything.
+  const endedUtc = row.ended_utc || null;
+
+  const endsUtc =
+    endedUtc && (!row.ends_utc || Date.parse(endedUtc) < Date.parse(row.ends_utc))
+      ? endedUtc
+      : row.ends_utc;
+
   return {
     messageId: row.message_id,
     pokemon: row.pokemon,
@@ -734,7 +915,10 @@ function questOut(row) {
     duration: row.duration,
     endTimeText: row.end_time_text,
     startedUtc: row.started_utc,
-    endsUtc: row.ends_utc,
+    endsUtc,
+    // §298: null unless someone said so. The tracker shows a quest that
+    // ended early differently from one whose day simply ran out.
+    endedUtc,
     parsed: Boolean(row.parsed),
   };
 }
@@ -753,8 +937,13 @@ async function getWorldQuests(env) {
   const rows = (results || []).map(questOut);
   const now = Date.now();
 
+  // §298: `!q.endedUtc` is redundant with the clamp questOut applies - a
+  // declared end is already in the past by the time it is read - and it is
+  // written anyway, because "a quest someone ended is not running" is the
+  // rule, and a rule that survives only as a side effect of an arithmetic
+  // elsewhere is one refactor away from being lost.
   const active = rows.find(
-    (q) => q.parsed && q.endsUtc && Date.parse(q.endsUtc) > now && Date.parse(q.startedUtc) <= now
+    (q) => q.parsed && !q.endedUtc && q.endsUtc && Date.parse(q.endsUtc) > now && Date.parse(q.startedUtc) <= now
   ) || null;
 
   return json({ active, recent: rows, asOfUtc: nowIso() });
@@ -1259,6 +1448,53 @@ async function clearTestQuests(request, env) {
   return json({ ok: true, removed: changes(result) });
 }
 
+/// §298. Declares a quest over, or takes that back.
+///
+/// The tracker counts a quest down from a time this Worker worked out: the
+/// message's own timestamp plus the announced duration. That time is a
+/// MAXIMUM. The quest also stops the instant the community goal is met, and
+/// the goal is met per server - so the quest is really over only once both
+/// of them have finished, which is a thing a person playing them knows and
+/// nothing here can see. This is where that knowledge is written down.
+///
+/// It is a row update, not a delete: the quest stays in the history with the
+/// time it ended, which is the figure a later section wants when it starts
+/// collecting what the IVs were last seen at on each server.
+///
+/// DELETE undoes it. A quest ended by mistake would otherwise read as over
+/// for every tracker until its own clock ran out, and there is no good
+/// reason to make that unrecoverable.
+async function setQuestEnded(request, env, messageId, ended) {
+  const auth = await requireAdmin(request, env);
+  if (auth.failure) return auth.failure;
+
+  await ensureQuestTable(env);
+
+  const row = await env.DB.prepare(
+    `SELECT * FROM world_quests WHERE message_id = ?`
+  ).bind(messageId).first();
+
+  if (!row) return bad("No World Quest with that id.", 404);
+
+  // Ending an ended quest re-stamps it, which would move the recorded end.
+  // The first answer is the one that was true, so it stands.
+  if (ended && row.ended_utc) {
+    return json({ ok: true, changed: false, quest: questOut(row) });
+  }
+
+  if (!ended && !row.ended_utc) {
+    return json({ ok: true, changed: false, quest: questOut(row) });
+  }
+
+  const endedUtc = ended ? nowIso() : null;
+
+  await env.DB.prepare(
+    `UPDATE world_quests SET ended_utc = ? WHERE message_id = ?`
+  ).bind(endedUtc, messageId).run();
+
+  return json({ ok: true, changed: true, quest: questOut({ ...row, ended_utc: endedUtc }) });
+}
+
 // ------------------------------------------------------------- announcements
 // §239. Replaces the client's own read of PRO's "Update Logs" forum topic.
 // That read parsed themed forum HTML - the class it lived in said so itself,
@@ -1311,13 +1547,32 @@ function announcementImage(message) {
   const candidates = [];
 
   for (const a of Array.isArray(message.attachments) ? message.attachments : []) {
+    if (a && typeof a.proxy_url === "string") candidates.push(a.proxy_url);
     if (a && typeof a.url === "string") candidates.push(a.url);
   }
 
+  // §358: proxy_url BEFORE url, on both halves of the embed.
+  //
+  // PRO posted a picture as a LINK rather than an upload - a bare
+  // https://walrosskastanie.com/....png in the message - and Discord turned
+  // it into an image embed. The embed's `url` is that same third-party
+  // address, which safeImageUrl refuses because it is not a named host, so
+  // the post arrived with its URL as the body text and no picture at all.
+  //
+  // `proxy_url` is Discord's own copy of that external image, served from
+  // media.discordapp.net, which IS a named host. Preferring it does not
+  // widen the trust by one host: the bytes still come from Discord. It also
+  // means §357 re-hosts the picture into the bucket like any other, so a
+  // link to somebody's personal domain ends up as a permanent copy that the
+  // client never has to go to that domain for.
   for (const embed of Array.isArray(message.embeds) ? message.embeds : []) {
     if (!embed) continue;
-    if (embed.image && typeof embed.image.url === "string") candidates.push(embed.image.url);
-    if (embed.thumbnail && typeof embed.thumbnail.url === "string") candidates.push(embed.thumbnail.url);
+
+    for (const part of [embed.image, embed.thumbnail, embed.video]) {
+      if (!part) continue;
+      if (typeof part.proxy_url === "string") candidates.push(part.proxy_url);
+      if (typeof part.url === "string") candidates.push(part.url);
+    }
   }
 
   for (const candidate of candidates) {
@@ -1357,15 +1612,46 @@ function safeImageUrl(value) {
 // what PRO actually posted, rows stored before the rule existed get it too, and
 // changing the rule later needs a redeploy rather than a reseed.
 function announcementOut(row) {
+  const imageUrl = row.image_url || "";
+  const body = multilineText(stripMentions(row.body || ""), ANNOUNCE_MAX_BODY);
+
   return {
     id: row.id,
     author: row.author || "",
-    body: multilineText(stripMentions(row.body || ""), ANNOUNCE_MAX_BODY),
-    imageUrl: row.image_url || "",
+    // §358: when the whole post is a bare link to a picture and we HAVE the
+    // picture, the link is not the announcement - showing it leaves a row
+    // reading "https://walrosskastanie.com/ac2c24934fc48397311051c1.png" and
+    // nothing else. Dropped here rather than before the insert, the same way
+    // §241 strips the pings: the table keeps what PRO actually posted, rows
+    // stored before the rule existed get it too, and no image means the link
+    // stays, because a link is better than an empty row.
+    body: imageUrl && isBareImageLink(body) ? "" : body,
+    imageUrl,
     link: row.link || "",
     postedUtc: row.posted_utc,
     source: row.source,
   };
+}
+
+/// §358. A body that is one https URL ending in an image extension and
+/// nothing else. Deliberately strict - one token, no surrounding words - so
+/// a post that says anything at all keeps every word of it.
+function isBareImageLink(body) {
+  const trimmed = (body || "").trim();
+
+  if (!trimmed || /\s/.test(trimmed)) return false;
+
+  let url;
+
+  try {
+    url = new URL(trimmed);
+  } catch {
+    return false;
+  }
+
+  if (url.protocol !== "https:") return false;
+
+  return /\.(png|jpe?g|gif|webp)$/i.test(url.pathname);
 }
 
 /// §239. What the tracker asks for. Public and unauthenticated, the same
@@ -1454,18 +1740,44 @@ async function pollAnnouncements(env) {
 
   let stored = 0;
   let newest = seenRow || null;
+  const followEvents = [];
 
   for (const message of messages) {
     if (!message || !message.id) continue;
 
+    // Before any filtering: a message that is skipped has still been seen,
+    // and must not be fetched again on the next poll.
     newest = String(message.id);
 
-    const body = multilineText(questText(message), ANNOUNCE_MAX_BODY);
-    const imageUrl = announcementImage(message);
+    const type = typeof message.type === "number" ? message.type : 0;
 
-    // Nothing to show at all. A join notice or a bare reaction is not an
-    // announcement.
-    if (!body && !imageUrl) continue;
+    // §357: the follow notice. Recorded as feed health, never as a post.
+    if (type === ANNOUNCE_FOLLOW_ADD_TYPE) {
+      followEvents.push({
+        id: String(message.id),
+        by: announcementAuthor(message),
+        channel: multilineText(questText(message), ANNOUNCE_MAX_AUTHOR),
+        atUtc: typeof message.timestamp === "string" ? message.timestamp : nowIso(),
+      });
+      continue;
+    }
+
+    // §357: pins, joins, boosts, everything else Discord writes into a
+    // channel on its own behalf.
+    if (!ANNOUNCE_POST_TYPES.includes(type)) continue;
+
+    const body = multilineText(questText(message), ANNOUNCE_MAX_BODY);
+    const discordImage = announcementImage(message);
+
+    // Nothing to show at all. A bare reaction is not an announcement.
+    if (!body && !discordImage) continue;
+
+    // §357: Discord's attachment URLs expire in 24 hours. Copy the picture
+    // into the bucket and keep the copy's address instead; if that cannot be
+    // done, the Discord URL is still better than nothing for the first day.
+    const imageUrl = discordImage
+      ? (await rehostAnnouncementImage(env, String(message.id), discordImage)) || discordImage
+      : "";
 
     const postedUtc = typeof message.timestamp === "string" ? message.timestamp : nowIso();
 
@@ -1482,6 +1794,10 @@ async function pollAnnouncements(env) {
     }
   }
 
+  if (followEvents.length > 0) {
+    await recordFollowEvents(env, followEvents);
+  }
+
   if (newest && newest !== seenRow) {
     await env.DB.prepare(
       `INSERT INTO settings (key, value, updated_utc, updated_by)
@@ -1492,7 +1808,182 @@ async function pollAnnouncements(env) {
 
   await trimAnnouncements(env);
 
-  return { checked: true, stored };
+  return { checked: true, stored, followEvents: followEvents.length };
+}
+
+/// §357. Appends follow notices to the feed-health list, newest last, keeping
+/// the most recent ANNOUNCE_FOLLOW_EVENTS_KEEP. Stored as one settings row
+/// rather than a table: it is a short list nobody queries, and a table would
+/// be a migration for ten rows.
+async function recordFollowEvents(env, events) {
+  const existing = await readFollowEvents(env);
+  const merged = existing.concat(events);
+  const seen = new Set();
+  const unique = [];
+
+  // Newest last, and a message id can only appear once however many polls
+  // saw it.
+  for (const event of merged) {
+    if (!event || !event.id || seen.has(event.id)) continue;
+    seen.add(event.id);
+    unique.push(event);
+  }
+
+  const kept = unique.slice(-ANNOUNCE_FOLLOW_EVENTS_KEEP);
+
+  await env.DB.prepare(
+    `INSERT INTO settings (key, value, updated_utc, updated_by)
+     VALUES (?, ?, ?, ?)
+     ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_utc = excluded.updated_utc`
+  ).bind(ANNOUNCE_FOLLOW_EVENTS_KEY, JSON.stringify(kept), nowIso(), "scheduled").run();
+}
+
+/// §357. When the last REAL announcement arrived, and every follow notice
+/// still on record. Both read from what is already stored - no new state,
+/// and nothing here can fail in a way that should stop /v1/status answering.
+async function announcementsFeedHealth(env) {
+  try {
+    await ensureAnnouncementsTable(env);
+    await ensureSettingsTable(env);
+
+    const last = await env.DB.prepare(
+      `SELECT MAX(posted_utc) AS latest FROM announcements WHERE source = 'discord'`
+    ).first("latest");
+
+    return {
+      lastPostUtc: last || "",
+      followEvents: await readFollowEvents(env),
+    };
+  } catch (err) {
+    console.error("announcements health failed", err && err.message ? err.message : String(err));
+    return { lastPostUtc: "", followEvents: [] };
+  }
+}
+
+async function readFollowEvents(env) {
+  const row = await env.DB.prepare(
+    `SELECT value FROM settings WHERE key = ?`
+  ).bind(ANNOUNCE_FOLLOW_EVENTS_KEY).first("value");
+
+  if (!row) return [];
+
+  try {
+    const parsed = JSON.parse(row);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+/// §357. Copies an announcement's picture into the bucket and returns the
+/// address it is served from, or "" when it could not be copied - in which
+/// case the caller keeps Discord's own URL, which works until it expires.
+///
+/// The bytes are sniffed with the same imageKind the theme uploads use, so
+/// only a real JPEG, PNG or GIF is ever written, and the key is the message
+/// id, so a message polled twice overwrites its own object rather than
+/// filling the bucket.
+async function rehostAnnouncementImage(env, messageId, sourceUrl) {
+  if (!env.THEMES) return "";
+
+  let response;
+
+  try {
+    response = await fetch(sourceUrl);
+  } catch (err) {
+    console.error("announcement image fetch failed", err && err.message ? err.message : String(err));
+    return "";
+  }
+
+  if (!response.ok) {
+    console.error("announcement image fetch rejected", response.status);
+    return "";
+  }
+
+  const length = Number(response.headers.get("content-length") || 0);
+
+  if (length > ANNOUNCE_MAX_IMAGE_BYTES) return "";
+
+  const bytes = new Uint8Array(await response.arrayBuffer());
+
+  if (bytes.length === 0 || bytes.length > ANNOUNCE_MAX_IMAGE_BYTES) return "";
+
+  const kind = imageKind(bytes);
+
+  if (kind === null) return "";
+
+  const key = `${ANNOUNCE_IMAGE_PREFIX}${messageId}.${kind.ext}`;
+
+  try {
+    await env.THEMES.put(key, bytes, {
+      httpMetadata: {
+        contentType: kind.type,
+        cacheControl: "public, max-age=31536000, immutable",
+      },
+    });
+  } catch (err) {
+    console.error("announcement image store failed", err && err.message ? err.message : String(err));
+    return "";
+  }
+
+  return `${themeImageOrigin(env)}/${key}`;
+}
+
+/// §357. Puts the pictures back on announcements already in the table whose
+/// stored address is one of Discord's expiring ones. Re-fetching the message
+/// by id hands back a FRESHLY signed URL, so a post from last week can still
+/// be copied - which is the only reason the Summer Event sprites are
+/// recoverable at all. Runs on the admin "poll now" button, not on the
+/// schedule: it is a repair, not routine work.
+async function repairAnnouncementImages(env, token, channel) {
+  if (!env.THEMES) return { repaired: 0, reason: "no bucket bound" };
+
+  const rows = await env.DB.prepare(
+    `SELECT id, image_url FROM announcements
+      WHERE source = 'discord' AND image_url != ''
+      ORDER BY posted_utc DESC LIMIT ?`
+  ).bind(ANNOUNCE_KEEP).all();
+
+  const origin = themeImageOrigin(env);
+  let repaired = 0;
+
+  for (const row of (rows && rows.results) || []) {
+    if (!row || !row.id || !row.image_url) continue;
+
+    // Already ours.
+    if (row.image_url.startsWith(origin + "/")) continue;
+
+    let message;
+
+    try {
+      const response = await fetch(
+        `https://discord.com/api/v10/channels/${channel}/messages/${row.id}`,
+        { headers: { Authorization: `Bot ${token}`, "User-Agent": "ProTracker (announcements, v1)" } }
+      );
+
+      if (!response.ok) continue;
+
+      message = await response.json();
+    } catch {
+      continue;
+    }
+
+    const fresh = announcementImage(message);
+
+    if (!fresh) continue;
+
+    const copied = await rehostAnnouncementImage(env, String(row.id), fresh);
+
+    if (!copied) continue;
+
+    await env.DB.prepare(
+      `UPDATE announcements SET image_url = ? WHERE id = ?`
+    ).bind(copied, row.id).run();
+
+    repaired += 1;
+  }
+
+  return { repaired };
 }
 
 /// Keeps the newest ANNOUNCE_KEEP. The window shows a list; a year of history
@@ -1511,9 +2002,25 @@ async function pollAnnouncementsNow(request, env) {
 
   const result = await pollAnnouncements(env);
 
-  return result.checked
-    ? json({ ok: true, stored: result.stored })
-    : json({ error: `Nothing was checked: ${result.reason}.` }, 503);
+  if (!result.checked) {
+    return json({ error: `Nothing was checked: ${result.reason}.` }, 503);
+  }
+
+  // §357: and while we are here, put back any picture whose stored address
+  // is one of Discord's expired ones. Only on this route - the schedule
+  // should not re-fetch sixty messages every five minutes.
+  const token = await discordBotToken(env);
+  const channel = announcementsChannelId(env);
+  const repair = token && channel
+    ? await repairAnnouncementImages(env, token, channel)
+    : { repaired: 0 };
+
+  return json({
+    ok: true,
+    stored: result.stored,
+    followEvents: result.followEvents || 0,
+    imagesRepaired: repair.repaired || 0,
+  });
 }
 
 /// §239. Adds one by hand. Written for the seed - the channel was followed on
@@ -2043,7 +2550,7 @@ async function listEvents(env) {
 }
 
 async function postEvent(request, env) {
-  const auth = await requireAdmin(request, env);
+  const auth = await requireAdmin(request, env, { events: true });
   if (auth.failure) return auth.failure;
 
   const body = await readJson(request);
@@ -2090,7 +2597,7 @@ async function postEvent(request, env) {
 }
 
 async function deleteEvent(request, env, id) {
-  const auth = await requireAdmin(request, env);
+  const auth = await requireAdmin(request, env, { events: true });
   if (auth.failure) return auth.failure;
 
   const existing = await env.DB.prepare(`SELECT id FROM events WHERE id = ?`).bind(id).first();
@@ -2223,6 +2730,26 @@ async function ensureAdminLoginsTable(env) {
        locked_until_utc TEXT
      )`
   ).run();
+
+  // §347: databases made before this section already have the table, so
+  // CREATE TABLE IF NOT EXISTS leaves them without the new columns. SQLite
+  // has no ADD COLUMN IF NOT EXISTS, and the error for a column that is
+  // already there is the expected outcome on every run after the first -
+  // swallowed rather than treated as a fault, the same shape §231 used for
+  // presence.version.
+  //
+  // Both default to 0. An existing login does not silently gain a power
+  // because a new one was invented; every permission is granted on purpose.
+  for (const column of ["can_moderate_themes", "can_manage_events"]) {
+    try {
+      await env.DB.prepare(
+        `ALTER TABLE admin_logins ADD COLUMN ${column} INTEGER NOT NULL DEFAULT 0`
+      ).run();
+    } catch {
+      // Already has it.
+    }
+  }
+
   adminLoginsReady.add(env.DB);
 }
 
@@ -2340,6 +2867,644 @@ async function putActiveEvents(request, env) {
   return json({ schema: SCHEMA_VERSION, events, updatedUtc: stamp, updatedBy: who });
 }
 
+// ------------------------------------------------------------ spawns (§397)
+//
+// The Spawns pages under the tracker's Game Data menu: Kanto, Johto, Hoenn,
+// Sinnoh, Other. The admin files a map under one of them from the Admin
+// Console, and the tracker composes the map's page - every species its
+// Pokedex scans (§281) name the map for, with how, when and whether
+// membership is needed - and sends the whole page here. One row per map;
+// a publish replaces the row outright, so the page is exactly what the
+// admin's scans said at the moment of publishing, never a merge of old
+// and new.
+//
+// The key is the map's name folded to [a-z0-9] - the tracker computes the
+// same fold and puts it in the path, and the body's name has to fold to the
+// same key, so one map can never be filed twice under two spellings. The
+// name as typed is what the page shows.
+//
+// Master token only. The pages are game reference data every player sees,
+// and a delegated login's permissions are for the things they were created
+// for; the master owns this one, as it owns the logins themselves.
+
+const spawnMapsReady = new WeakSet();
+
+const SPAWN_REGIONS = ["Kanto", "Johto", "Hoenn", "Sinnoh", "Other"];
+// A cap on rows, so a bug in a loop cannot fill the table; PRO has under
+// six hundred maps in the tracker's catalog.
+const SPAWN_MAX_MAPS = 800;
+const SPAWN_MAX_MAP_NAME = 60;
+const SPAWN_MAX_POKEMON = 250;
+const SPAWN_MAX_POKEMON_NAME = 40;
+// §399. A box on the region picture: pixel coordinates, so the picture's
+// size is the only sensible bound - and no picture here is anywhere near
+// this wide.
+const SPAWN_MAX_IMAGE_PIXELS = 20000;
+// §402. Boxes per map - a route drawn in pieces needs a few, never dozens.
+const SPAWN_MAX_MARKERS = 20;
+// §412. The map whose spot on the picture a page shares - the six areas of
+// a safari zone behind one box. A map name, so the same cap.
+// A page is 250 species at most, at under a hundred bytes each; the
+// ordinary 16 KB body cap would refuse a busy map.
+const SPAWN_MAX_BODY_BYTES = 64 * 1024;
+
+async function ensureSpawnMapsTable(env) {
+  if (spawnMapsReady.has(env.DB)) return;
+  await env.DB.prepare(
+    `CREATE TABLE IF NOT EXISTS spawn_maps (
+       map_key     TEXT PRIMARY KEY,
+       region      TEXT NOT NULL,
+       map         TEXT NOT NULL,
+       pokemon     TEXT NOT NULL,
+       marker      TEXT,
+       updated_utc TEXT NOT NULL,
+       updated_by  TEXT NOT NULL
+     )`
+  ).run();
+
+  // §399: a table made by a §397 deploy has no marker column. The same
+  // shape as §347's admin_logins columns - the error for a column that is
+  // already there is the expected outcome on every run after the first.
+  try {
+    await env.DB.prepare(`ALTER TABLE spawn_maps ADD COLUMN marker TEXT`).run();
+  } catch {
+    // Already has it.
+  }
+
+  // §412: likewise the link to another map's spot.
+  try {
+    await env.DB.prepare(`ALTER TABLE spawn_maps ADD COLUMN linked_to TEXT`).run();
+  } catch {
+    // Already has it.
+  }
+
+  spawnMapsReady.add(env.DB);
+}
+
+// §399. The box off the body, checked: absent or null is "no box"; anything
+// else must be six non-negative integers that describe a box with area,
+// inside a picture of a believable size. Answers { marker } (null for none)
+// or { error }.
+function spawnMarker(raw) {
+  if (raw === undefined || raw === null) return { marker: null };
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return { error: bad("marker must be an object or null.") };
+
+  const fields = ["x", "y", "width", "height", "imageWidth", "imageHeight"];
+  const m = {};
+
+  for (const f of fields) {
+    const v = raw[f];
+    if (typeof v !== "number" || !Number.isInteger(v) || v < 0 || v > SPAWN_MAX_IMAGE_PIXELS) {
+      return { error: bad(`marker.${f} must be a whole number between 0 and ${SPAWN_MAX_IMAGE_PIXELS}.`) };
+    }
+    m[f] = v;
+  }
+
+  if (m.width < 1 || m.height < 1) return { error: bad("marker must have a width and a height.") };
+  if (m.imageWidth < 1 || m.imageHeight < 1) return { error: bad("marker must say how big its picture is.") };
+  if (m.x + m.width > m.imageWidth || m.y + m.height > m.imageHeight) return { error: bad("marker falls outside its picture.") };
+
+  return { marker: m };
+}
+
+// §402. The boxes off the body - `markers`, an array of the above, capped;
+// absent or null is "no boxes". A §399 body's single `marker` is taken
+// too, as a list of one, and so is a §399 row's stored object, so nothing
+// published before this is lost. Answers { markers } or { error }.
+function spawnMarkers(raw, legacy) {
+  if (raw === undefined || raw === null) {
+    if (legacy === undefined || legacy === null) return { markers: [] };
+    const one = spawnMarker(legacy);
+    return one.error ? one : { markers: [one.marker] };
+  }
+
+  if (!Array.isArray(raw)) {
+    // A stored §399 row holds one object, not a list.
+    if (raw && typeof raw === "object") {
+      const one = spawnMarker(raw);
+      return one.error ? one : { markers: [one.marker] };
+    }
+    return { error: bad("markers must be an array of boxes.") };
+  }
+
+  if (raw.length > SPAWN_MAX_MARKERS) return { error: bad(`A map may have at most ${SPAWN_MAX_MARKERS} boxes.`) };
+
+  const markers = [];
+  for (const item of raw) {
+    const one = spawnMarker(item);
+    if (one.error) return one;
+    if (one.marker) markers.push(one.marker);
+  }
+
+  return { markers };
+}
+
+// The fold both sides use for the key. Letters and digits only, lower-case:
+// "Mt. Moon 1F" -> "mtmoon1f". Anything else - accents included - drops out.
+function spawnMapKey(name) {
+  return String(name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+// §412. The link off the body: absent, null or blank is "no link"; anything
+// else a map name that folds to a key, and not this map's own. Answers
+// { linkedTo } (null for none) or { error }.
+function spawnLink(raw, key) {
+  if (raw === undefined || raw === null) return { linkedTo: null };
+  if (typeof raw !== "string") return { error: bad("linkedTo must be a map's name or null.") };
+
+  const name = text(raw, SPAWN_MAX_MAP_NAME);
+  if (!name) return { linkedTo: null };
+
+  const target = spawnMapKey(name);
+  if (!target) return { error: bad("linkedTo must be a map's name.") };
+  if (target === key) return { error: bad("A map cannot share its own spot.") };
+
+  return { linkedTo: name };
+}
+
+function spawnRegion(v) {
+  const wanted = text(v, 16).toLowerCase();
+  return SPAWN_REGIONS.find((r) => r.toLowerCase() === wanted) || null;
+}
+
+// One row, as every reply renders it.
+function spawnMapRow(row) {
+  let pokemon = [];
+  let markers = [];
+
+  if (row && row.pokemon) {
+    try {
+      const parsed = JSON.parse(row.pokemon);
+      if (Array.isArray(parsed)) pokemon = parsed;
+    } catch (err) {
+      console.error("spawn_maps row did not parse", row.map_key, String(err));
+    }
+  }
+
+  // §399. Stored boxes are re-checked on the way out, so a row written by
+  // hand cannot hand the tracker a box it would refuse anyway. §402: a
+  // list; a §399 row's single object reads as a list of one.
+  if (row && row.marker) {
+    try {
+      const checked = spawnMarkers(JSON.parse(row.marker));
+      if (!checked.error) markers = checked.markers;
+    } catch (err) {
+      console.error("spawn_maps marker did not parse", row.map_key, String(err));
+    }
+  }
+
+  return {
+    region: row.region,
+    map: row.map,
+    pokemon,
+    markers,
+    // §412: the map whose spot this page shares, or null.
+    linkedTo: row.linked_to || null,
+    updatedUtc: row.updated_utc,
+    updatedBy: row.updated_by || "",
+  };
+}
+
+// The body's species list, checked and tidied: names trimmed and capped,
+// blanks and repeats (case-insensitively) dropped, every flag a real
+// boolean, sorted by name so two publishes of the same scans are the same
+// row. Answers { pokemon } or { error }.
+function spawnPokemonList(raw) {
+  if (!Array.isArray(raw)) return { error: bad("pokemon must be an array.") };
+  if (raw.length > SPAWN_MAX_POKEMON) return { error: bad(`pokemon holds more than ${SPAWN_MAX_POKEMON} species.`) };
+
+  const seen = new Set();
+  const pokemon = [];
+
+  for (const entry of raw) {
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) return { error: bad("Each pokemon must be an object.") };
+
+    const name = text(entry.name, SPAWN_MAX_POKEMON_NAME);
+    if (!name) continue;
+
+    const key = name.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+
+    pokemon.push({
+      name,
+      land: entry.land === true,
+      water: entry.water === true,
+      morning: entry.morning === true,
+      day: entry.day === true,
+      night: entry.night === true,
+      membersOnly: entry.membersOnly === true,
+    });
+  }
+
+  pokemon.sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }));
+
+  return { pokemon };
+}
+
+async function listSpawnMaps(env) {
+  await ensureSpawnMapsTable(env);
+
+  const result = await env.DB.prepare(
+    `SELECT map_key, region, map, pokemon, marker, linked_to, updated_utc, updated_by
+       FROM spawn_maps
+      ORDER BY region COLLATE NOCASE, map COLLATE NOCASE`
+  ).all();
+
+  const rows = result.results || [];
+  const maps = rows.map(spawnMapRow);
+
+  let updatedUtc = null;
+  for (const row of rows) {
+    if (row.updated_utc && (updatedUtc === null || row.updated_utc > updatedUtc)) updatedUtc = row.updated_utc;
+  }
+
+  return json({ schema: SCHEMA_VERSION, maps, updatedUtc });
+}
+
+async function putSpawnMap(request, env, key) {
+  const auth = await requireAdmin(request, env, { spawns: true });
+  if (auth.failure) return auth.failure;
+
+  const body = await readJson(request, SPAWN_MAX_BODY_BYTES);
+  if (body.error) return body.error;
+
+  const b = body.value;
+
+  const region = spawnRegion(b.region);
+  if (!region) return bad(`region must be one of ${SPAWN_REGIONS.join(", ")}.`);
+
+  const map = text(b.map, SPAWN_MAX_MAP_NAME);
+  if (!map) return bad("map must be the map's name.");
+  if (spawnMapKey(map) !== key) return bad("The map's name does not fold to the key in the path.");
+
+  const list = spawnPokemonList(b.pokemon);
+  if (list.error) return list.error;
+
+  // §399/§402. Stored exactly as sent: a publish without boxes takes them
+  // all down, one fewer takes one down - which is how the editor removes.
+  const boxes = spawnMarkers(b.markers, b.marker);
+  if (boxes.error) return boxes.error;
+
+  // §412. Stored exactly as sent, as the boxes are: a publish without a
+  // link takes it down.
+  const link = spawnLink(b.linkedTo, key);
+  if (link.error) return link.error;
+  const linkedTo = link.linkedTo;
+
+  await ensureSpawnMapsTable(env);
+
+  const existing = await env.DB.prepare(`SELECT map_key FROM spawn_maps WHERE map_key = ?`).bind(key).first();
+
+  if (!existing) {
+    const count = await env.DB.prepare(`SELECT COUNT(*) AS n FROM spawn_maps`).first();
+    if (count && Number(count.n) >= SPAWN_MAX_MAPS) return bad(`The spawn list already holds ${SPAWN_MAX_MAPS} maps.`, 409);
+  }
+
+  // One clock reading for the row and the reply, as putActiveEvents does.
+  const stamp = nowIso();
+  const who = auth.master ? "master" : auth.username || "admin";
+  const pokemon = JSON.stringify(list.pokemon);
+  const marker = boxes.markers.length > 0 ? JSON.stringify(boxes.markers) : null;
+
+  await env.DB.prepare(
+    `INSERT INTO spawn_maps (map_key, region, map, pokemon, marker, linked_to, updated_utc, updated_by)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+     ON CONFLICT(map_key) DO UPDATE SET region = excluded.region,
+                                        map = excluded.map,
+                                        pokemon = excluded.pokemon,
+                                        marker = excluded.marker,
+                                        linked_to = excluded.linked_to,
+                                        updated_utc = excluded.updated_utc,
+                                        updated_by = excluded.updated_by`
+  ).bind(key, region, map, pokemon, marker, linkedTo, stamp, who).run();
+
+  return json({
+    schema: SCHEMA_VERSION,
+    map: spawnMapRow({ map_key: key, region, map, pokemon, marker, linked_to: linkedTo, updated_utc: stamp, updated_by: who }),
+  });
+}
+
+// ------------------------------------------------------------ boss pins
+
+// §409. Where a boss stands on the world picture: one point per boss, in
+// the picture's pixels with the picture's size (as a map box is, §399), so
+// a pin placed on one version of the picture can be placed on another by
+// proportion. The id is the boss file's name folded the way a map's is.
+// §420: boss pins and Pokéstops share the table, and there is no fixed
+// number of stops.
+const BOSS_MAX_PINS = 2000;
+const BOSS_MAX_NAME = 60;
+
+const bossPinsReady = new WeakSet();
+
+async function ensureBossPinsTable(env) {
+  if (bossPinsReady.has(env.DB)) return;
+  await env.DB.prepare(
+    `CREATE TABLE IF NOT EXISTS boss_pins (
+       boss_id      TEXT PRIMARY KEY,
+       boss         TEXT NOT NULL,
+       x            INTEGER NOT NULL,
+       y            INTEGER NOT NULL,
+       image_width  INTEGER NOT NULL,
+       image_height INTEGER NOT NULL,
+       updated_utc  TEXT NOT NULL,
+       updated_by   TEXT NOT NULL
+     )`
+  ).run();
+  bossPinsReady.add(env.DB);
+}
+
+// The point off the body, checked: four whole numbers, the point inside
+// its picture. Answers { pin } or { error }.
+function bossPoint(raw) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return { error: bad("The body must be an object.") };
+
+  const fields = ["x", "y", "imageWidth", "imageHeight"];
+  const p = {};
+
+  for (const f of fields) {
+    const v = raw[f];
+    if (typeof v !== "number" || !Number.isInteger(v) || v < 0 || v > SPAWN_MAX_IMAGE_PIXELS) {
+      return { error: bad(`${f} must be a whole number between 0 and ${SPAWN_MAX_IMAGE_PIXELS}.`) };
+    }
+    p[f] = v;
+  }
+
+  if (p.imageWidth < 1 || p.imageHeight < 1) return { error: bad("The pin must say how big its picture is.") };
+  if (p.x >= p.imageWidth || p.y >= p.imageHeight) return { error: bad("The pin falls outside its picture.") };
+
+  return { pin: p };
+}
+
+function bossPinRow(row) {
+  return {
+    bossId: row.boss_id,
+    boss: row.boss,
+    x: Number(row.x),
+    y: Number(row.y),
+    imageWidth: Number(row.image_width),
+    imageHeight: Number(row.image_height),
+    updatedUtc: row.updated_utc,
+    updatedBy: row.updated_by || "",
+  };
+}
+
+async function listBossPins(env) {
+  await ensureBossPinsTable(env);
+
+  const result = await env.DB.prepare(
+    `SELECT boss_id, boss, x, y, image_width, image_height, updated_utc, updated_by
+       FROM boss_pins
+      ORDER BY boss COLLATE NOCASE`
+  ).all();
+
+  const rows = result.results || [];
+  const pins = rows.map(bossPinRow);
+
+  let updatedUtc = null;
+  for (const row of rows) {
+    if (row.updated_utc && (updatedUtc === null || row.updated_utc > updatedUtc)) updatedUtc = row.updated_utc;
+  }
+
+  return json({ schema: SCHEMA_VERSION, pins, updatedUtc });
+}
+
+async function putBossPin(request, env, id) {
+  const auth = await requireAdmin(request, env, { spawns: true });
+  if (auth.failure) return auth.failure;
+
+  const body = await readJson(request);
+  if (body.error) return body.error;
+
+  const b = body.value;
+
+  const boss = text(b.boss, BOSS_MAX_NAME);
+  if (!boss) return bad("boss must be the boss's name.");
+
+  const bossId = text(b.bossId, BOSS_MAX_NAME);
+  if (!bossId || spawnMapKey(bossId) !== id) return bad("The boss id does not fold to the id in the path.");
+
+  const point = bossPoint(b);
+  if (point.error) return point.error;
+
+  await ensureBossPinsTable(env);
+
+  const existing = await env.DB.prepare(`SELECT boss_id FROM boss_pins WHERE boss_id = ?`).bind(id).first();
+
+  if (!existing) {
+    const count = await env.DB.prepare(`SELECT COUNT(*) AS n FROM boss_pins`).first();
+    if (count && Number(count.n) >= BOSS_MAX_PINS) return bad(`The pin list already holds ${BOSS_MAX_PINS} bosses.`, 409);
+  }
+
+  const stamp = nowIso();
+  const who = auth.master ? "master" : auth.username || "admin";
+  const p = point.pin;
+
+  await env.DB.prepare(
+    `INSERT INTO boss_pins (boss_id, boss, x, y, image_width, image_height, updated_utc, updated_by)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+     ON CONFLICT(boss_id) DO UPDATE SET boss = excluded.boss,
+                                        x = excluded.x,
+                                        y = excluded.y,
+                                        image_width = excluded.image_width,
+                                        image_height = excluded.image_height,
+                                        updated_utc = excluded.updated_utc,
+                                        updated_by = excluded.updated_by`
+  ).bind(id, boss, p.x, p.y, p.imageWidth, p.imageHeight, stamp, who).run();
+
+  return json({
+    schema: SCHEMA_VERSION,
+    pin: bossPinRow({ boss_id: id, boss, x: p.x, y: p.y, image_width: p.imageWidth, image_height: p.imageHeight, updated_utc: stamp, updated_by: who }),
+  });
+}
+
+async function deleteBossPin(request, env, id) {
+  const auth = await requireAdmin(request, env, { spawns: true });
+  if (auth.failure) return auth.failure;
+
+  await ensureBossPinsTable(env);
+
+  const result = await env.DB.prepare(`DELETE FROM boss_pins WHERE boss_id = ?`).bind(id).run();
+  const removed = result && result.meta ? Number(result.meta.changes || 0) : 0;
+
+  if (removed === 0) return json({ error: "No pin is placed for that boss." }, 404);
+
+  return json({ ok: true });
+}
+
+async function deleteSpawnMap(request, env, key) {
+  const auth = await requireAdmin(request, env, { spawns: true });
+  if (auth.failure) return auth.failure;
+
+  await ensureSpawnMapsTable(env);
+
+  const result = await env.DB.prepare(`DELETE FROM spawn_maps WHERE map_key = ?`).bind(key).run();
+  const removed = result && result.meta ? Number(result.meta.changes || 0) : 0;
+
+  if (removed === 0) return json({ error: "No spawn page is published under that key." }, 404);
+
+  return json({ ok: true });
+}
+
+// ------------------------------------------------------- spawn levels
+
+// §429. One row per (map, species): the lowest and highest level met there,
+// and how many sightings went into it. Written by every tracker whose owner
+// ticked "Share level data" - the tracker sends a batch of (map, species,
+// min, max, count) after a hunt's encounters are final, and the server
+// keeps MIN of the mins and MAX of the maxes. That is the whole model: no
+// per-encounter rows, no who, no when beyond the row's own last update. A
+// range can only grow, which is what makes an anonymous public write safe
+// to accept - the worst a bad actor or a bad OCR read can do is widen one
+// row, and a widened row is one DELETE away from starting over.
+
+const spawnLevelsReady = new WeakSet();
+
+const LEVEL_MIN = 1;
+const LEVEL_MAX = 100;
+const LEVEL_MAX_SIGHTINGS = 200;          // per post
+const LEVEL_MAX_SPECIES_NAME = 40;
+const LEVEL_SPECIES_SHAPE = /^[A-Za-z0-9][A-Za-z0-9 .'\-]*$/;
+const LEVEL_MAX_BODY_BYTES = 64 * 1024;
+
+async function ensureSpawnLevelsTable(env) {
+  if (spawnLevelsReady.has(env.DB)) return;
+  await env.DB.prepare(
+    `CREATE TABLE IF NOT EXISTS spawn_levels (
+       map_key     TEXT NOT NULL,
+       species     TEXT NOT NULL COLLATE NOCASE,
+       min_level   INTEGER NOT NULL,
+       max_level   INTEGER NOT NULL,
+       samples     INTEGER NOT NULL DEFAULT 0,
+       updated_utc TEXT NOT NULL,
+       PRIMARY KEY (map_key, species)
+     )`
+  ).run();
+  spawnLevelsReady.add(env.DB);
+}
+
+async function listSpawnLevels(env) {
+  await ensureSpawnLevelsTable(env);
+
+  const result = await env.DB.prepare(
+    `SELECT map_key, species, min_level, max_level, samples, updated_utc
+       FROM spawn_levels
+      ORDER BY map_key, species COLLATE NOCASE`
+  ).all();
+
+  const rows = result.results || [];
+  let updatedUtc = null;
+
+  const levels = rows.map((row) => {
+    if (row.updated_utc && (updatedUtc === null || row.updated_utc > updatedUtc)) updatedUtc = row.updated_utc;
+    return {
+      map: row.map_key,
+      species: row.species,
+      min: Number(row.min_level),
+      max: Number(row.max_level),
+      samples: Number(row.samples),
+      updatedUtc: row.updated_utc,
+    };
+  });
+
+  return json({ schema: SCHEMA_VERSION, levels, updatedUtc });
+}
+
+function levelOf(v) {
+  const n = typeof v === "number" ? v : typeof v === "string" ? Number(v) : NaN;
+  if (!Number.isInteger(n) || n < LEVEL_MIN || n > LEVEL_MAX) return 0;
+  return n;
+}
+
+async function postSpawnLevels(request, env) {
+  const body = await readJson(request, LEVEL_MAX_BODY_BYTES);
+  if (body.error) return body.error;
+
+  const list = Array.isArray(body.value.sightings) ? body.value.sightings : null;
+  if (!list) return bad("sightings must be an array.");
+  if (list.length === 0) return json({ ok: true, accepted: 0 });
+  if (list.length > LEVEL_MAX_SIGHTINGS) return bad(`At most ${LEVEL_MAX_SIGHTINGS} sightings per post.`);
+
+  // Fold the batch first, so two entries for one (map, species) become one
+  // statement and the batch below stays under D1's statement limit.
+  const folded = new Map();
+
+  for (const item of list) {
+    if (!item || typeof item !== "object") continue;
+
+    const key = spawnMapKey(item.map);
+    if (!key || key.length > 64) continue;
+
+    const species = text(item.species, LEVEL_MAX_SPECIES_NAME + 1);
+    if (!species || species.length > LEVEL_MAX_SPECIES_NAME || !LEVEL_SPECIES_SHAPE.test(species)) continue;
+
+    const min = levelOf(item.min);
+    const max = levelOf(item.max);
+    if (!min || !max || min > max) continue;
+
+    const count = Math.min(Math.max(nonNegativeInt(item.count), 1), 100_000);
+
+    const id = key + "|" + species.toLowerCase();
+    const have = folded.get(id);
+
+    if (have) {
+      have.min = Math.min(have.min, min);
+      have.max = Math.max(have.max, max);
+      have.count += count;
+    } else {
+      folded.set(id, { key, species, min, max, count });
+    }
+  }
+
+  if (folded.size === 0) return bad("No sighting in the post was usable.");
+
+  await ensureSpawnLevelsTable(env);
+
+  const now = nowIso();
+  const statements = [];
+
+  for (const s of folded.values()) {
+    statements.push(
+      env.DB.prepare(
+        `INSERT INTO spawn_levels (map_key, species, min_level, max_level, samples, updated_utc)
+         VALUES (?, ?, ?, ?, ?, ?)
+         ON CONFLICT(map_key, species) DO UPDATE SET
+           min_level   = MIN(min_level, excluded.min_level),
+           max_level   = MAX(max_level, excluded.max_level),
+           samples     = samples + excluded.samples,
+           updated_utc = excluded.updated_utc`
+      ).bind(s.key, s.species, s.min, s.max, s.count, now)
+    );
+  }
+
+  await env.DB.batch(statements);
+
+  return json({ ok: true, accepted: folded.size });
+}
+
+// The whole map's rows, or one species' on it (?species=Name). Master token,
+// as the spawn pages: a range only ever widens on its own, so narrowing one
+// is an editorial act.
+async function deleteSpawnLevels(request, env, key, url) {
+  const auth = await requireAdmin(request, env, { spawns: true });
+  if (auth.failure) return auth.failure;
+
+  await ensureSpawnLevelsTable(env);
+
+  const species = text(url.searchParams.get("species"), LEVEL_MAX_SPECIES_NAME);
+
+  const result = species
+    ? await env.DB.prepare(`DELETE FROM spawn_levels WHERE map_key = ? AND species = ? COLLATE NOCASE`).bind(key, species).run()
+    : await env.DB.prepare(`DELETE FROM spawn_levels WHERE map_key = ?`).bind(key).run();
+
+  const removed = changes(result);
+
+  if (removed === 0) return json({ error: "No level range is recorded under that key." }, 404);
+
+  return json({ ok: true, removed });
+}
+
 // A username + verifier pair from the headers, checked against the table.
 // Unknown name, revoked login and wrong password all answer with the same
 // words - only a lock says anything more, because the person it talks to is
@@ -2352,7 +3517,8 @@ async function loginAuth(env, username, verifier) {
   await ensureAdminLoginsTable(env);
 
   const row = await env.DB.prepare(
-    `SELECT id, username, verifier_digest, can_view_status, revoked, failed_attempts, locked_until_utc
+    `SELECT id, username, verifier_digest, can_view_status, can_moderate_themes,
+            can_manage_events, revoked, failed_attempts, locked_until_utc
      FROM admin_logins WHERE username = ?`
   ).bind(username).first();
 
@@ -2377,7 +3543,46 @@ async function loginAuth(env, username, verifier) {
   await env.DB.prepare(`UPDATE admin_logins SET failed_attempts = 0, locked_until_utc = NULL, last_used_utc = ? WHERE id = ?`)
     .bind(nowIso(), row.id).run();
 
-  return { master: false, loginId: Number(row.id), username: row.username, canViewStatus: !!row.can_view_status };
+  return {
+    master: false,
+    loginId: Number(row.id),
+    username: row.username,
+    canViewStatus: !!row.can_view_status,
+    canModerateThemes: !!row.can_moderate_themes,
+    canManageEvents: !!row.can_manage_events,
+  };
+}
+
+/**
+ * §348. GET /v1/admin/whoami - "is this credential good, and what may it do?"
+ *
+ * Every other admin route demands a SPECIFIC permission, which makes it
+ * useless for answering that question: a 403 from /v1/admin/presence could
+ * mean the password is right and the login simply lacks status, and a
+ * console cannot tell that from a wrong password. So this one takes any
+ * valid credential and refuses none of them.
+ *
+ * It returns the permission set rather than a bare ok, so the console can
+ * disable the sections a login cannot use instead of letting someone click
+ * into one and collect a 403.
+ *
+ * No permission is required and none is implied: this says what you have,
+ * it does not grant anything.
+ */
+async function whoAmI(request, env) {
+  const auth = await requireAdmin(request, env);
+  if (auth.failure) return auth.failure;
+
+  return json({
+    master: !!auth.master,
+    // The master token is not a person and has no username. An empty string
+    // rather than a made-up one, so the console can say "master token"
+    // itself rather than displaying something that looks like a login.
+    username: auth.master ? "" : (auth.username || ""),
+    canViewStatus: !!auth.canViewStatus,
+    canModerateThemes: !!auth.canModerateThemes,
+    canManageEvents: !!auth.canManageEvents,
+  });
 }
 
 async function listAdminLogins(request, env) {
@@ -2387,7 +3592,8 @@ async function listAdminLogins(request, env) {
   await ensureAdminLoginsTable(env);
 
   const { results } = await env.DB.prepare(
-    `SELECT id, username, can_view_status, created_utc, last_used_utc, revoked
+    `SELECT id, username, can_view_status, can_moderate_themes, can_manage_events,
+            created_utc, last_used_utc, revoked
      FROM admin_logins ORDER BY revoked, username`
   ).all();
 
@@ -2405,6 +3611,8 @@ async function saveAdminLogin(request, env) {
   const username = typeof b.username === "string" ? b.username.trim() : "";
   const verifier = typeof b.verifier === "string" ? b.verifier.trim().toLowerCase() : "";
   const canViewStatus = b.canViewStatus === true ? 1 : 0;
+  const canModerateThemes = b.canModerateThemes === true ? 1 : 0;
+  const canManageEvents = b.canManageEvents === true ? 1 : 0;
 
   if (!LOGIN_USERNAME.test(username)) return bad("username must be 3-24 letters, digits, dots, dashes or underscores.");
   if (!LOGIN_VERIFIER.test(verifier)) return bad("verifier must be 64 hex characters - the tracker derives it from the password.");
@@ -2421,18 +3629,22 @@ async function saveAdminLogin(request, env) {
   // Posting an existing name again is the reset path: new password, fresh
   // permission, lock and failure count cleared, revocation lifted.
   await env.DB.prepare(
-    `INSERT INTO admin_logins (username, verifier_digest, can_view_status, created_utc, revoked, failed_attempts, locked_until_utc)
-     VALUES (?, ?, ?, ?, 0, 0, NULL)
+    `INSERT INTO admin_logins (username, verifier_digest, can_view_status, can_moderate_themes,
+                               can_manage_events, created_utc, revoked, failed_attempts, locked_until_utc)
+     VALUES (?, ?, ?, ?, ?, ?, 0, 0, NULL)
      ON CONFLICT(username) DO UPDATE SET
        verifier_digest = excluded.verifier_digest,
        can_view_status = excluded.can_view_status,
+       can_moderate_themes = excluded.can_moderate_themes,
+       can_manage_events = excluded.can_manage_events,
        revoked = 0,
        failed_attempts = 0,
        locked_until_utc = NULL`
-  ).bind(username, await sha256Hex(verifier), canViewStatus, nowIso()).run();
+  ).bind(username, await sha256Hex(verifier), canViewStatus, canModerateThemes,
+         canManageEvents, nowIso()).run();
 
   const row = await env.DB.prepare(
-    `SELECT id, username, can_view_status, created_utc, last_used_utc, revoked FROM admin_logins WHERE username = ?`
+    `SELECT id, username, can_view_status, can_moderate_themes, can_manage_events, created_utc, last_used_utc, revoked FROM admin_logins WHERE username = ?`
   ).bind(username).first();
 
   return json({ login: loginOut(row) }, existing ? 200 : 201);
@@ -2448,7 +3660,7 @@ async function revokeAdminLogin(request, env, id) {
   if (!changes(result)) return json({ error: "No such login." }, 404);
 
   const row = await env.DB.prepare(
-    `SELECT id, username, can_view_status, created_utc, last_used_utc, revoked FROM admin_logins WHERE id = ?`
+    `SELECT id, username, can_view_status, can_moderate_themes, can_manage_events, created_utc, last_used_utc, revoked FROM admin_logins WHERE id = ?`
   ).bind(id).first();
 
   return json({ login: loginOut(row) });
@@ -2459,6 +3671,8 @@ function loginOut(r) {
     id: Number(r.id),
     username: r.username,
     canViewStatus: !!r.can_view_status,
+    canModerateThemes: !!r.can_moderate_themes,
+    canManageEvents: !!r.can_manage_events,
     createdUtc: r.created_utc,
     lastUsedUtc: r.last_used_utc || null,
     revoked: !!r.revoked,
@@ -2505,7 +3719,7 @@ async function adminAuth(request, env) {
     const a = await sha256Hex(m[1].trim());
     const b = await sha256Hex(secret);
     return constantTimeEqual(a, b)
-      ? { master: true, canViewStatus: true }
+      ? { master: true, canViewStatus: true, canModerateThemes: true, canManageEvents: true }
       : { failure: json({ error: "Admin token missing or wrong." }, 401) };
   }
 
@@ -2528,6 +3742,23 @@ async function requireAdmin(request, env, opts = {}) {
     return { failure: json({ error: "Only the master admin token can manage admin logins." }, 403) };
   }
 
+  // §397. The spawn pages are the master's too - reference data every
+  // player sees, owned by whoever owns the server rather than by any login.
+  if (opts.spawns && !auth.master) {
+    return { failure: json({ error: "Only the master admin token can publish or remove spawn pages." }, 403) };
+  }
+
+  // §347. Managing logins is deliberately NOT one of these: it stays
+  // opts.master above. A login that could create logins could grant itself
+  // anything, which would make every flag below decorative.
+  if (opts.themes && !auth.canModerateThemes) {
+    return { failure: json({ error: "This admin login is not allowed to moderate community appearances." }, 403) };
+  }
+
+  if (opts.events && !auth.canManageEvents) {
+    return { failure: json({ error: "This admin login is not allowed to manage events." }, 403) };
+  }
+
   if (opts.status && !auth.canViewStatus) {
     return { failure: json({ error: "This admin login is not allowed to read the tracker count - the master token, or a login created with that permission, is needed." }, 403) };
   }
@@ -2546,6 +3777,858 @@ function installToken(request) {
   if (!/^[A-Za-z0-9._-]+$/.test(t)) return null;
   return t;
 }
+
+// ===================================================================
+// Section 345. Community appearances.
+//
+// Paste this block into Backend/EventsWorker/worker.js above the helpers
+// section, and add the route entries from routes-themes.txt to route().
+//
+// Bindings this needs, added under the Worker's Settings -> Bindings:
+//   THEMES   R2 bucket   -> protracker-downloads  (the images live under
+//                           the themes/ prefix, served by dl.protrackerdb.com)
+//   THEME_WEBHOOK  secret -> the Discord webhook URL for the approvals
+//                            channel. A PRIVATE channel. See decideTheme.
+// ===================================================================
+
+const THEME_CAPS = {
+  // Per install token per rolling day. Three is generous for someone
+  // sharing their own work and uninteresting to someone spamming.
+  perDay: 3,
+  // Unreviewed submissions one tracker may have outstanding at once. Stops
+  // a single install filling the approvals channel while you are asleep.
+  pending: 2,
+};
+
+// The app re-encodes every image with SkiaSharp before it uploads (decode,
+// cap the dimensions, write JPEG), which is what actually guarantees this
+// is an image, normalises the format, and strips EXIF - camera-roll
+// wallpapers carry GPS. These numbers are the backstop for a client that
+// did not do that, not the primary defence.
+const THEME_MAX_IMAGE_BYTES = 2 * 1024 * 1024;
+
+// §346. A GIF gets its own, larger ceiling, because it cannot be shrunk on
+// the way in: Skia decodes the format and does not write it, so the client
+// refuses an oversized animation rather than resizing it. Four megabytes is
+// about eight times a typical shared background.
+const THEME_MAX_GIF_BYTES = 4 * 1024 * 1024;
+const THEME_MAX_ANY_IMAGE_BYTES = Math.max(THEME_MAX_IMAGE_BYTES, THEME_MAX_GIF_BYTES);
+const THEME_MAX_IMAGE_DIM = 2560;
+const THEME_NAME_MAX = 40;
+const THEME_AUTHOR_MAX = 32;
+
+// How long an approval link in Discord stays live.
+const THEME_DECISION_DAYS = 30;
+
+// These three lists MUST match ThemeManager's catalogs and
+// AppearanceViewModel.SystemFontFamilyNames exactly. They are duplicated
+// here because the Worker cannot read the C# - which means they can drift,
+// and a drifted list silently rejects themes that the app itself would
+// accept. Worth a check in the battery that reads both sides and compares.
+const THEME_FONT_SIZES = new Set([
+  "8px", "9px", "10px", "11px", "12px", "13px", "14px", "15px",
+]);
+
+// §385. Any family name up to 40 characters. Until §385 this was an
+// allowlist of the fonts the app ships, and a theme naming anything else
+// was refused; users can add their own font files now, and a shared
+// theme may name one. A receiver without that font sees Inter, the rest
+// of the theme applies, and the gallery card shows the name - the user's
+// choice over refusing the theme. The name is still text(), so it is
+// trimmed, capped and stripped of control characters.
+const THEME_FONT_NAME_MAX = 40;
+
+function fontNameError(field, family) {
+  if (family.length > THEME_FONT_NAME_MAX) return `${field} is longer than ${THEME_FONT_NAME_MAX} characters.`;
+  if (/[#,\\/]/.test(family)) return `${field} may not contain #, comma, slash or backslash.`;
+  return null;
+}
+
+
+const THEME_GRADIENT_DIRECTIONS = new Set([
+  "Left to Right", "Right to Left", "Top to Bottom",
+  "Bottom to Top", "Diagonal Down", "Diagonal Up",
+]);
+
+// Section 209's ThemeFile, field for field. Order matters only for
+// readability; every one of these is required to be a signed 32-bit int.
+// §349. Four sections, each with its own border, text and font.
+const THEME_SECTIONS = ["SpriteBox", "Encounters", "Stats", "Button"];
+
+// §394. The menu bar has a font of its own but no border or text colour of
+// the §349 kind (its colours are the optional pair below), so it joins the
+// font loop only. Empty means "follows Statistics", which absent reads as.
+const THEME_FONT_SECTIONS = [...THEME_SECTIONS, "Menu"];
+
+// §349. Optional, because a tracker older than §349 sends none of them and
+// its themes must still be accepted. Absent reads as 0, which the client
+// treats as "fall back to the single global this file DID carry" - so an
+// old theme lands on what it always meant rather than on transparent.
+const THEME_SECTION_COLOUR_FIELDS = THEME_SECTIONS.flatMap((s) => [
+  `${s}BorderColorArgb`,
+  `${s}TextColorArgb`,
+]);
+
+// §384. [field, maximum, default when absent]. The defaults are the
+// pre-§384 look: a 1px line, square corners, Fluent's 3px on buttons.
+const THEME_BORDER_FIELDS = [
+  ["SpriteBoxBorderWidth", 8, 1],
+  ["SpriteBoxCornerRadius", 40, 0],
+  ["EncountersBorderWidth", 8, 1],
+  ["EncountersCornerRadius", 40, 0],
+  ["StatsBorderWidth", 8, 1],
+  ["StatsCornerRadius", 40, 0],
+  ["ButtonBorderWidth", 8, 1],
+  ["ButtonCornerRadius", 40, 3],
+  // §387: the sprite row panel's line and corners.
+  ["SpriteRowBorderWidth", 8, 1],
+  ["SpriteRowCornerRadius", 40, 0],
+];
+
+// §387. The sprite row panel's two colours: optional, 0 (transparent -
+// its own default, meaning no panel) when absent, like the §349 section
+// colours.
+const THEME_OPTIONAL_COLOUR_FIELDS = [
+  "SpriteRowBackgroundColorArgb",
+  "SpriteRowBorderColorArgb",
+  // §393: the menu bar's text and highlight; absent or 0 is automatic.
+  "MenuTextColorArgb",
+  "MenuHighlightColorArgb",
+];
+
+const THEME_COLOUR_FIELDS = [
+  "TextColorArgb",
+  "BorderColorArgb",
+  "SpriteBoxBackgroundColorArgb",
+  "EncountersBackgroundColorArgb",
+  "HeaderBackgroundColorArgb",
+  "StatsBackgroundColorArgb",
+  "ButtonColorArgb",
+  "CustomBackgroundColorArgb",
+];
+
+function int32(v) {
+  if (typeof v !== "number" || !Number.isInteger(v)) return null;
+  if (v < -2147483648 || v > 2147483647) return null;
+  return v;
+}
+
+/**
+ * Section 345. Rebuilds a theme from what arrived, rather than checking
+ * what arrived and storing it.
+ *
+ * The difference matters: a validator that inspects and then stores the
+ * original passes through every field it forgot to think about. This one
+ * can only ever emit the fields listed above, with the types listed above,
+ * so a row in `themes` is by construction something the app could have
+ * produced itself. Anything extra in the request is not rejected - it is
+ * simply never copied.
+ */
+function validateColours(raw) {
+  if (raw === null || typeof raw !== "object" || Array.isArray(raw)) {
+    return { error: "The theme body must be a JSON object." };
+  }
+
+  const out = { Version: 1, App: "PRO Tracker & Database" };
+
+  for (const field of THEME_COLOUR_FIELDS) {
+    const n = int32(raw[field]);
+    if (n === null) return { error: `${field} must be a 32-bit integer.` };
+    out[field] = n;
+  }
+
+  if (typeof raw.UseCustomGradient !== "boolean") {
+    return { error: "UseCustomGradient must be true or false." };
+  }
+  out.UseCustomGradient = raw.UseCustomGradient;
+
+  const stops = raw.CustomGradientColorArgbs;
+  if (!Array.isArray(stops) || stops.length > 8) {
+    return { error: "CustomGradientColorArgbs must be an array of at most 8 colours." };
+  }
+  out.CustomGradientColorArgbs = [];
+  for (const stop of stops) {
+    const n = int32(stop);
+    if (n === null) return { error: "Every gradient colour must be a 32-bit integer." };
+    out.CustomGradientColorArgbs.push(n);
+  }
+
+  // The empty string is legal: it is what a theme with no gradient carries.
+  const direction = text(raw.CustomGradientDirection, 32);
+  if (direction !== "" && !THEME_GRADIENT_DIRECTIONS.has(direction)) {
+    return { error: "CustomGradientDirection is not one of the known directions." };
+  }
+  out.CustomGradientDirection = direction;
+
+  // A gradient that says it is on but carries fewer than two stops would
+  // render as nothing on the receiver. Better to refuse it here than to
+  // publish a theme that looks broken to everyone who applies it.
+  if (out.UseCustomGradient && out.CustomGradientColorArgbs.length < 2) {
+    return { error: "A gradient needs at least two colours." };
+  }
+
+  // A gradient that is on but has no direction falls back somewhere on the
+  // receiver's side, which is how one theme ends up looking different on
+  // two machines. The Appearance window always sets one, so anything
+  // arriving without it did not come from the window.
+  if (out.UseCustomGradient && out.CustomGradientDirection === "") {
+    return { error: "A gradient needs a direction." };
+  }
+
+  const family = text(raw.FontFamilyName, 200);
+  const familyError = family === "" ? null : fontNameError("FontFamilyName", family);
+  if (familyError) {
+    return { error: familyError };
+  }
+  out.FontFamilyName = family;
+
+  const size = text(raw.FontSizeName, 8);
+  if (size !== "" && !THEME_FONT_SIZES.has(size)) {
+    return { error: "FontSizeName is not one of the catalog sizes." };
+  }
+  out.FontSizeName = size;
+
+  // §349. The per-section fields, held to the same rules as the globals
+  // above - and rebuilt the same way, so a section cannot smuggle through
+  // anything the single-font version could not.
+  for (const field of THEME_SECTION_COLOUR_FIELDS) {
+    if (raw[field] === undefined) {
+      out[field] = 0;
+      continue;
+    }
+    const n = int32(raw[field]);
+    if (n === null) return { error: `${field} must be a 32-bit integer.` };
+    out[field] = n;
+  }
+
+  for (const section of THEME_FONT_SECTIONS) {
+    const familyField = `${section}FontFamilyName`;
+    const sizeField = `${section}FontSizeName`;
+
+    const sectionFamily = text(raw[familyField], 200);
+    const sectionFamilyError = sectionFamily === "" ? null : fontNameError(familyField, sectionFamily);
+    if (sectionFamilyError) {
+      return { error: sectionFamilyError };
+    }
+    out[familyField] = sectionFamily;
+
+    const sectionSize = text(raw[sizeField], 8);
+    if (sectionSize !== "" && !THEME_FONT_SIZES.has(sectionSize)) {
+      return { error: `${sizeField} is not one of the catalog sizes.` };
+    }
+    out[sizeField] = sectionSize;
+  }
+
+  // §380. Optional, for the same reason as the section fields: a tracker
+  // older than §380 sends nothing, and every theme it makes has bold
+  // headings, so absent is true. Present, it has to be a boolean.
+  if (raw.BoldHeadings === undefined) {
+    out.BoldHeadings = true;
+  } else if (typeof raw.BoldHeadings !== "boolean") {
+    return { error: "BoldHeadings must be true or false." };
+  } else {
+    out.BoldHeadings = raw.BoldHeadings;
+  }
+
+  // §387. See THEME_OPTIONAL_COLOUR_FIELDS.
+  for (const field of THEME_OPTIONAL_COLOUR_FIELDS) {
+    if (raw[field] === undefined) {
+      out[field] = 0;
+      continue;
+    }
+    const n = int32(raw[field]);
+    if (n === null) return { error: `${field} must be a 32-bit integer.` };
+    out[field] = n;
+  }
+
+  // §384. Border width and corner radius per section: optional numbers,
+  // absent meaning the look every theme had before the setting existed,
+  // present held to the same bounds the app's own sliders have
+  // (ThemeManager.MaxBorderWidth / MaxCornerRadius), so a hand-made body
+  // cannot publish a 900px border for everyone who applies it.
+  for (const [field, max, fallback] of THEME_BORDER_FIELDS) {
+    if (raw[field] === undefined) {
+      out[field] = fallback;
+      continue;
+    }
+    const n = raw[field];
+    if (typeof n !== "number" || !Number.isFinite(n) || n < 0 || n > max) {
+      return { error: `${field} must be a number between 0 and ${max}.` };
+    }
+    out[field] = n;
+  }
+
+  return { value: out };
+}
+
+// JPEG (FF D8 FF), PNG (89 50 4E 47) and, since §346, GIF (GIF87a/GIF89a).
+// The app sends JPEG for a still and the original bytes for an animation;
+// PNG is here because a future build might send one for a flat-colour
+// background, where JPEG's ringing shows and PNG is smaller and cleaner.
+//
+// The cap travels with the kind: a GIF is allowed more room because the
+// client cannot resize one, and the limit is the only thing standing
+// between the bucket and somebody's screen recording.
+function imageKind(bytes) {
+  if (bytes.length > 3 && bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) {
+    return { type: "image/jpeg", ext: "jpg", max: THEME_MAX_IMAGE_BYTES };
+  }
+  if (
+    bytes.length > 8 &&
+    bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47
+  ) {
+    return { type: "image/png", ext: "png", max: THEME_MAX_IMAGE_BYTES };
+  }
+  if (
+    bytes.length > 6 &&
+    bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x38 &&
+    (bytes[4] === 0x37 || bytes[4] === 0x39) && bytes[5] === 0x61
+  ) {
+    return { type: "image/gif", ext: "gif", max: THEME_MAX_GIF_BYTES };
+  }
+  return null;
+}
+
+function themeOut(row, origin) {
+  return {
+    id: row.id,
+    name: row.name,
+    author: row.author,
+    colours: JSON.parse(row.colours_json),
+    imageUrl: row.image_key ? `${origin}/${row.image_key}` : "",
+    imageWidth: row.image_width,
+    imageHeight: row.image_height,
+    submittedUtc: row.submitted_utc,
+    applied: row.applied_count,
+  };
+}
+
+// Where dl.protrackerdb.com serves the bucket from. Kept as a binding so a
+// test deployment can point somewhere else without a code change.
+function themeImageOrigin(env) {
+  return (env.THEME_IMAGE_ORIGIN || "https://dl.protrackerdb.com").replace(/\/+$/, "");
+}
+
+async function ensureThemeTables(env) {
+  await env.DB.batch([
+    env.DB.prepare(
+      `CREATE TABLE IF NOT EXISTS themes (
+         id TEXT PRIMARY KEY, name TEXT NOT NULL, author TEXT NOT NULL DEFAULT '',
+         submitter_hash TEXT NOT NULL, colours_json TEXT NOT NULL,
+         image_key TEXT NOT NULL DEFAULT '', image_bytes INTEGER NOT NULL DEFAULT 0,
+         image_width INTEGER NOT NULL DEFAULT 0, image_height INTEGER NOT NULL DEFAULT 0,
+         state TEXT NOT NULL DEFAULT 'pending', decided_by TEXT, decided_utc TEXT,
+         submitted_utc TEXT NOT NULL, applied_count INTEGER NOT NULL DEFAULT 0,
+         app_version TEXT NOT NULL DEFAULT '')`
+    ),
+    env.DB.prepare(
+      `CREATE INDEX IF NOT EXISTS idx_themes_public ON themes (state, submitted_utc DESC)`
+    ),
+    env.DB.prepare(
+      `CREATE INDEX IF NOT EXISTS idx_themes_submitter ON themes (submitter_hash, submitted_utc DESC)`
+    ),
+    env.DB.prepare(
+      `CREATE TABLE IF NOT EXISTS theme_decisions (
+         token TEXT PRIMARY KEY, theme_id TEXT NOT NULL,
+         expires_utc TEXT NOT NULL, used_utc TEXT)`
+    ),
+    env.DB.prepare(
+      `CREATE INDEX IF NOT EXISTS idx_theme_decisions_expiry ON theme_decisions (expires_utc)`
+    ),
+  ]);
+}
+
+/**
+ * POST /v1/themes
+ *
+ * multipart/form-data, from the tracker only:
+ *   name    the title, required
+ *   author  optional display name
+ *   theme   the ThemeFile JSON as a string
+ *   image   optional, already re-encoded by the app
+ *
+ * Section 227's lesson applies to the C# that calls this: every
+ * Content-Disposition parameter must be a quoted string, and a filename*
+ * parameter fails the WHOLE body, not just its part. Use
+ * MultipartFormDataContent.Add(content, "\"name\"") shapes that do not
+ * emit FileNameStar, or this returns a flat 400 from a working route.
+ */
+async function postTheme(request, env) {
+  await ensureThemeTables(env);
+
+  const token = installToken(request);
+  if (!token) return bad("X-Install-Token header is required.", 401);
+
+  const declared = Number(request.headers.get("Content-Length") || 0);
+  if (declared > THEME_MAX_ANY_IMAGE_BYTES + 64 * 1024) {
+    return json({ error: "That appearance is too large to send." }, 413);
+  }
+
+  let form;
+  try {
+    form = await request.formData();
+  } catch {
+    console.error("theme form parse failed", request.headers.get("Content-Type") || "(no content-type)");
+    return bad(
+      "The body could not be read as a form. A filename* parameter or an unquoted name= will fail here; both parameters must be quoted strings."
+    );
+  }
+
+  const name = text(form.get("name"), THEME_NAME_MAX);
+  if (!name) return bad("An appearance needs a name.");
+
+  const author = text(form.get("author"), THEME_AUTHOR_MAX);
+  const version = text(form.get("version"), 40);
+
+  let parsed;
+  try {
+    parsed = JSON.parse(String(form.get("theme") || ""));
+  } catch {
+    return bad("The theme part was not valid JSON.");
+  }
+
+  const checked = validateColours(parsed);
+  if (checked.error) return bad(checked.error);
+
+  const hash = await sha256Hex(token);
+  const dayAgo = new Date(Date.now() - 86400_000).toISOString();
+
+  const perDay = await env.DB.prepare(
+    `SELECT COUNT(*) AS n FROM themes WHERE submitter_hash = ? AND submitted_utc >= ?`
+  ).bind(hash, dayAgo).first("n");
+  if (perDay >= THEME_CAPS.perDay) {
+    return json({ error: "Too many appearances from this tracker today." }, 429);
+  }
+
+  const waiting = await env.DB.prepare(
+    `SELECT COUNT(*) AS n FROM themes WHERE submitter_hash = ? AND state = 'pending'`
+  ).bind(hash).first("n");
+  if (waiting >= THEME_CAPS.pending) {
+    return json(
+      { error: "You already have appearances waiting to be reviewed." },
+      429
+    );
+  }
+
+  const id = newId();
+  let imageKey = "";
+  let imageBytes = 0;
+  let imageWidth = nonNegativeInt(form.get("width"));
+  let imageHeight = nonNegativeInt(form.get("height"));
+
+  const entry = form.get("image");
+  if (entry && typeof entry !== "string") {
+    // The generous gate first, since the kind is not known until the bytes
+    // are read; the kind's own cap is applied below.
+    if (entry.size > THEME_MAX_ANY_IMAGE_BYTES) {
+      return json({ error: "That background image is too large." }, 413);
+    }
+    if (imageWidth > THEME_MAX_IMAGE_DIM || imageHeight > THEME_MAX_IMAGE_DIM) {
+      return bad("That background image is larger than this app will use.");
+    }
+
+    const bytes = new Uint8Array(await entry.arrayBuffer());
+    const kind = imageKind(bytes);
+    if (!kind) return bad("The background must be a JPEG, PNG or GIF.");
+
+    if (bytes.length > kind.max) {
+      return json(
+        { error: `That ${kind.ext.toUpperCase()} is larger than the ${Math.round(kind.max / 1024 / 1024)} MB limit for that format.` },
+        413
+      );
+    }
+
+    // The id is the key. It is 128 bits of randomness, which matters:
+    // a pending image IS reachable at this URL before you approve it,
+    // because Discord has to fetch it to show you what you are deciding
+    // on. Unguessable and unlinked is the guarantee here, not unreachable.
+    imageKey = `themes/${id}.${kind.ext}`;
+    imageBytes = bytes.length;
+
+    await env.THEMES.put(imageKey, bytes, {
+      httpMetadata: {
+        contentType: kind.type,
+        // The key never changes for a given theme, so this is safe to
+        // cache hard. Deleting a rejected theme removes the object.
+        cacheControl: "public, max-age=31536000, immutable",
+      },
+    });
+  }
+
+  await env.DB.prepare(
+    `INSERT INTO themes
+       (id, name, author, submitter_hash, colours_json, image_key, image_bytes,
+        image_width, image_height, state, submitted_utc, app_version)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?)`
+  ).bind(
+    id, name, author, hash, JSON.stringify(checked.value),
+    imageKey, imageBytes, imageWidth, imageHeight, nowIso(), version
+  ).run();
+
+  await announceThemeForReview(env, id, name, author, hash, checked.value, imageKey);
+
+  return json({ id, state: "pending" }, 201);
+}
+
+/** GET /v1/themes - the gallery. Approved only, newest first. */
+async function listThemes(request, env) {
+  await ensureThemeTables(env);
+
+  const url = new URL(request.url);
+  const limit = Math.min(Math.max(nonNegativeInt(url.searchParams.get("limit")) || 60, 1), 200);
+
+  const { results } = await env.DB.prepare(
+    `SELECT * FROM themes WHERE state = 'approved'
+      ORDER BY submitted_utc DESC LIMIT ?`
+  ).bind(limit).all();
+
+  const origin = themeImageOrigin(env);
+  return json(
+    { themes: (results || []).map((r) => themeOut(r, origin)) },
+    200,
+    // The gallery is public and changes rarely. A minute of edge cache
+    // keeps a busy day off D1 without anyone noticing a delay.
+    { "Cache-Control": "public, max-age=60" }
+  );
+}
+
+/** GET /v1/themes/:id - one approved appearance, for a shared link. */
+async function getTheme(env, id) {
+  await ensureThemeTables(env);
+
+  const row = await env.DB.prepare(
+    `SELECT * FROM themes WHERE id = ? AND state = 'approved'`
+  ).bind(id).first();
+
+  if (!row) return json({ error: "No such appearance." }, 404);
+  return json(themeOut(row, themeImageOrigin(env)), 200, {
+    "Cache-Control": "public, max-age=60",
+  });
+}
+
+/**
+ * POST /v1/themes/:id/applied
+ *
+ * Fire and forget from the tracker when someone applies one. Deliberately
+ * not authenticated and deliberately not exact - it is a popularity hint
+ * for ordering the gallery, not a metric anyone should defend. If it ever
+ * needs to be trustworthy it wants the install-token treatment and a table
+ * to deduplicate against, which is a different feature.
+ */
+async function themeApplied(env, id) {
+  await ensureThemeTables(env);
+  const result = await env.DB.prepare(
+    `UPDATE themes SET applied_count = applied_count + 1
+      WHERE id = ? AND state = 'approved'`
+  ).bind(id).run();
+  return json({ ok: changes(result) > 0 });
+}
+
+// ------------------------------------------------- Discord approvals
+
+async function themeWebhook(env) {
+  // The same shape reportWebhook uses, and for the same reason: the
+  // binding may be a plain secret OR a Secrets Store binding, which is an
+  // object you have to await .get() on. A sync version of this works in
+  // testing and returns "[object Object]" in production.
+  let value = env.THEME_WEBHOOK;
+
+  if (value && typeof value === "object" && typeof value.get === "function") {
+    try {
+      value = await value.get();
+    } catch (err) {
+      console.error("THEME_WEBHOOK binding could not be read", err && err.message ? err.message : String(err));
+      return null;
+    }
+  }
+
+  if (typeof value !== "string") return null;
+
+  const url = value.trim();
+
+  // Discord over https, or nothing. Without this a mistyped binding turns
+  // this route into an open relay that posts users' uploaded images at
+  // whatever the typo pointed to.
+  return /^https:\/\/(discord\.com|discordapp\.com)\/api\/webhooks\//.test(url) ? url : null;
+}
+
+// The decision links are addressed to this Worker, not to the dashboard,
+// so they work from a phone with nothing installed.
+function themeApiOrigin(env) {
+  return (env.THEME_API_ORIGIN || "https://api.protrackerdb.com").replace(/\/+$/, "");
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
+// ARGB int -> the 24-bit RGB int a Discord embed colour wants.
+function rgbOf(argb) {
+  return (argb >>> 0) & 0xffffff;
+}
+
+function swatchCss(argb) {
+  const rgb = rgbOf(argb).toString(16).padStart(6, "0");
+  return `#${rgb}`;
+}
+
+/**
+ * Section 345. Puts one pending appearance in the approvals channel with a
+ * single link that opens a page with Approve and Reject on it.
+ *
+ * That channel must be PRIVATE. The link is the whole authorisation - it
+ * carries 128 bits of randomness and nothing else - so anyone who can read
+ * the message can decide the submission. That is the trade being made
+ * deliberately: a one-click decision from a phone, in exchange for the
+ * channel's permissions being the fence. If that ever stops being
+ * acceptable, the page is the place to add a login, not the link.
+ */
+async function announceThemeForReview(env, id, name, author, hash, colours, imageKey) {
+  const webhook = await themeWebhook(env);
+  if (!webhook) {
+    // Not the submitter's problem. The row is already pending and can be
+    // approved from the admin console instead.
+    console.error("theme submitted but no approvals webhook is configured", id);
+    return;
+  }
+
+  const token = newId();
+  const expires = new Date(Date.now() + THEME_DECISION_DAYS * 86400_000).toISOString();
+
+  await env.DB.prepare(
+    `INSERT INTO theme_decisions (token, theme_id, expires_utc) VALUES (?, ?, ?)`
+  ).bind(token, id, expires).run();
+
+  // Prune spent and expired rows on every write, the way reports and
+  // presence are pruned. Nothing here is worth keeping once it is dead.
+  await env.DB.prepare(
+    `DELETE FROM theme_decisions WHERE expires_utc < ? OR used_utc IS NOT NULL`
+  ).bind(nowIso()).run();
+
+  const decideUrl = `${themeApiOrigin(env)}/v1/themes/decide/${token}`;
+  const imageUrl = imageKey ? `${themeImageOrigin(env)}/${imageKey}` : "";
+
+  const body = {
+    username: "Pro Tracker appearances",
+    // §345. The decision link on its own line above the embed, not only as
+    // the embed's title. A title that happens to be clickable is not
+    // discoverable: the first real submission sat unapproved because the
+    // only hint was a footer that said "open" without saying what to open.
+    // Angle brackets keep it a link while suppressing the second preview
+    // card Discord would otherwise build from it.
+    content: `**${name}** is waiting for review\n<${decideUrl}>`,
+    embeds: [
+      {
+        title: name,
+        description: author ? `by ${author}` : "(no author given)",
+        url: decideUrl,
+        // The theme's own background colour down the side of the embed, so
+        // the channel is skimmable without opening anything.
+        color: rgbOf(colours.CustomBackgroundColorArgb),
+        fields: [
+          { name: "Text", value: swatchCss(colours.TextColorArgb), inline: true },
+          { name: "Buttons", value: swatchCss(colours.ButtonColorArgb), inline: true },
+          { name: "Header", value: swatchCss(colours.HeaderBackgroundColorArgb), inline: true },
+          {
+            name: "Font",
+            value: `${colours.FontFamilyName || "Default"} ${colours.FontSizeName || "11px"}`,
+            inline: true,
+          },
+          {
+            name: "Gradient",
+            value: colours.UseCustomGradient
+              ? `${colours.CustomGradientColorArgbs.length} stops, ${colours.CustomGradientDirection}`
+              : "none",
+            inline: true,
+          },
+          // The first eight characters of the install hash, the same shape
+          // reports use: enough to recognise a repeat submitter, not
+          // enough - and not the kind of thing - to identify a person.
+          { name: "Tracker", value: hash.slice(0, 8), inline: true },
+        ],
+        ...(imageUrl ? { image: { url: imageUrl } } : {}),
+        footer: { text: "Use the link above to approve or reject" },
+      },
+    ],
+  };
+
+  const response = await fetch(webhook, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    console.error("approvals webhook rejected the post", response.status, await response.text());
+  }
+}
+
+function decisionShell(title, inner) {
+  return new Response(
+    `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${escapeHtml(title)}</title>
+<style>
+  body { margin:0; padding:24px; background:#0f0f10; color:#eee;
+         font:15px/1.5 system-ui, -apple-system, Segoe UI, Arial, sans-serif; }
+  main { max-width:520px; margin:0 auto; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  p.by { opacity:.7; margin:0 0 20px; }
+  .swatches { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 20px; }
+  .sw { width:64px; height:64px; border-radius:8px; border:1px solid #333; }
+  img { max-width:100%; height:auto; border-radius:8px; display:block; margin:0 0 20px; }
+  form { display:flex; gap:12px; flex-wrap:wrap; }
+  button { flex:1 1 140px; padding:14px 20px; font-size:16px; font-weight:600;
+           border:0; border-radius:10px; cursor:pointer; color:#fff; }
+  .yes { background:#1f7a3d; } .no { background:#8c2018; }
+  .note { margin-top:24px; opacity:.6; font-size:13px; }
+</style></head><body><main>${inner}</main></body></html>`,
+    { status: 200, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } }
+  );
+}
+
+/**
+ * GET /v1/themes/decide/:token
+ *
+ * Shows the submission and two buttons. This route CHANGES NOTHING, and
+ * that is not tidiness - it is the whole reason the flow is shaped this
+ * way. Discord fetches the links in its own messages to build previews, so
+ * a decision that happened on GET would approve every submission the
+ * instant it was posted, silently, before you ever saw it. The buttons
+ * below POST; a crawler never does.
+ */
+async function decidePage(env, token) {
+  await ensureThemeTables(env);
+
+  const decision = await env.DB.prepare(
+    `SELECT * FROM theme_decisions WHERE token = ?`
+  ).bind(token).first();
+
+  if (!decision) return decisionShell("Not found", "<h1>That link is no longer valid.</h1>");
+  if (decision.used_utc) return decisionShell("Already decided", "<h1>This one has already been decided.</h1>");
+  if (decision.expires_utc < nowIso()) return decisionShell("Expired", "<h1>That link has expired.</h1>");
+
+  const row = await env.DB.prepare(`SELECT * FROM themes WHERE id = ?`).bind(decision.theme_id).first();
+  if (!row) return decisionShell("Not found", "<h1>That appearance is gone.</h1>");
+
+  const colours = JSON.parse(row.colours_json);
+  const swatches = THEME_COLOUR_FIELDS
+    .map((f) => `<div class="sw" style="background:${swatchCss(colours[f])}" title="${f}"></div>`)
+    .join("");
+
+  const image = row.image_key
+    ? `<img src="${themeImageOrigin(env)}/${escapeHtml(row.image_key)}" alt="">`
+    : "";
+
+  return decisionShell(
+    row.name,
+    `<h1>${escapeHtml(row.name)}</h1>
+     <p class="by">${row.author ? "by " + escapeHtml(row.author) : "(no author given)"}
+        &middot; tracker ${escapeHtml(row.submitter_hash.slice(0, 8))}</p>
+     <div class="swatches">${swatches}</div>
+     ${image}
+     <form method="post">
+       <button class="yes" name="verdict" value="approve" type="submit">Approve</button>
+       <button class="no" name="verdict" value="reject" type="submit">Reject</button>
+     </form>
+     <p class="note">Rejecting deletes the image immediately and keeps the row,
+        so the same tracker sending it again is visible.</p>`
+  );
+}
+
+/** POST /v1/themes/decide/:token - the decision itself. */
+async function decideTheme(request, env, token) {
+  await ensureThemeTables(env);
+
+  const form = await request.formData().catch(() => null);
+  const verdict = form ? text(form.get("verdict"), 10) : "";
+  if (verdict !== "approve" && verdict !== "reject") {
+    return decisionShell("Nothing to do", "<h1>No verdict was sent.</h1>");
+  }
+
+  // Spend the token first, and only if it was still unspent. Two taps on a
+  // phone, or a retry on a flaky connection, then decide once rather than
+  // racing - changes() is 0 for the second one.
+  const spent = await env.DB.prepare(
+    `UPDATE theme_decisions SET used_utc = ?
+      WHERE token = ? AND used_utc IS NULL AND expires_utc >= ?`
+  ).bind(nowIso(), token, nowIso()).run();
+
+  if (changes(spent) === 0) {
+    return decisionShell("Already decided", "<h1>That link has already been used, or has expired.</h1>");
+  }
+
+  const decision = await env.DB.prepare(
+    `SELECT theme_id FROM theme_decisions WHERE token = ?`
+  ).bind(token).first();
+
+  const row = await env.DB.prepare(`SELECT * FROM themes WHERE id = ?`)
+    .bind(decision.theme_id).first();
+  if (!row) return decisionShell("Not found", "<h1>That appearance is gone.</h1>");
+
+  await env.DB.prepare(
+    `UPDATE themes SET state = ?, decided_by = 'discord', decided_utc = ? WHERE id = ?`
+  ).bind(verdict === "approve" ? "approved" : "rejected", nowIso(), row.id).run();
+
+  // A rejected image goes now rather than on a sweep later. The row stays:
+  // it is how a tracker that keeps sending the same thing becomes visible,
+  // and it costs a few hundred bytes.
+  if (verdict === "reject" && row.image_key) {
+    await env.THEMES.delete(row.image_key);
+    await env.DB.prepare(`UPDATE themes SET image_key = '' WHERE id = ?`).bind(row.id).run();
+  }
+
+  return decisionShell(
+    verdict === "approve" ? "Approved" : "Rejected",
+    `<h1>${escapeHtml(row.name)} ${verdict === "approve" ? "is now in the gallery." : "was rejected."}</h1>`
+  );
+}
+
+/** GET /v1/admin/themes?state=pending - the console's view. */
+async function listThemesForAdmin(request, env) {
+  const auth = await requireAdmin(request, env, { themes: true });
+  if (auth.failure) return auth.failure;
+
+  await ensureThemeTables(env);
+
+  const url = new URL(request.url);
+  const state = text(url.searchParams.get("state"), 12) || "pending";
+  if (!["pending", "approved", "rejected"].includes(state)) return bad("Unknown state.");
+
+  const { results } = await env.DB.prepare(
+    `SELECT * FROM themes WHERE state = ? ORDER BY submitted_utc DESC LIMIT 200`
+  ).bind(state).all();
+
+  const origin = themeImageOrigin(env);
+  return json({
+    state,
+    themes: (results || []).map((r) => ({
+      ...themeOut(r, origin),
+      tracker: r.submitter_hash.slice(0, 8),
+      appVersion: r.app_version,
+    })),
+  });
+}
+
+/** DELETE /v1/admin/themes/:id - take one down after the fact. */
+async function deleteTheme(request, env, id) {
+  const auth = await requireAdmin(request, env, { themes: true });
+  if (auth.failure) return auth.failure;
+
+  await ensureThemeTables(env);
+
+  const row = await env.DB.prepare(`SELECT image_key FROM themes WHERE id = ?`).bind(id).first();
+  if (!row) return json({ error: "No such appearance." }, 404);
+
+  if (row.image_key) await env.THEMES.delete(row.image_key);
+  await env.DB.prepare(`DELETE FROM themes WHERE id = ?`).bind(id).run();
+  await env.DB.prepare(`DELETE FROM theme_decisions WHERE theme_id = ?`).bind(id).run();
+
+  return json({ ok: true });
+}
+
 
 // ---------------------------------------------------------------- helpers
 
@@ -2578,9 +4661,11 @@ function entryOut(r, myHash) {
   };
 }
 
-async function readJson(request) {
+// §397: maxBytes - the ordinary cap unless a route says otherwise (a spawn
+// page can carry a couple of hundred species).
+async function readJson(request, maxBytes = MAX_BODY_BYTES) {
   const declared = Number(request.headers.get("Content-Length") || 0);
-  if (declared > MAX_BODY_BYTES) return { error: json({ error: "Request body too large." }, 413) };
+  if (declared > maxBytes) return { error: json({ error: "Request body too large." }, 413) };
 
   let raw;
   try {
@@ -2588,7 +4673,7 @@ async function readJson(request) {
   } catch {
     return { error: bad("Request body could not be read.") };
   }
-  if (raw.length > MAX_BODY_BYTES) return { error: json({ error: "Request body too large." }, 413) };
+  if (raw.length > maxBytes) return { error: json({ error: "Request body too large." }, 413) };
 
   try {
     const value = raw.trim() === "" ? {} : JSON.parse(raw);
@@ -2739,3 +4824,4 @@ function bad(message, status = 400) {
 function methodNotAllowed(allow) {
   return json({ error: "Method not allowed." }, 405, { Allow: allow });
 }
+

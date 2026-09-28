@@ -5,255 +5,425 @@
         x:Class="Foot_Tracker.Views.DamageCalculatorWindow"
         x:DataType="vm:DamageCalculatorViewModel"
         Title="Damage Calculator"
-        Width="1010" Height="760"
-        WindowStartupLocation="CenterOwner"
-        Background="{DynamicResource ThemeBackgroundBrush}"
-        BorderBrush="{DynamicResource ThemeBorderBrush}"
-        BorderThickness="1">
+        Width="1180" Height="850"
+        MinWidth="900" MinHeight="600"
+        Background="{DynamicResource ThemeBackgroundBrush}">
 
-    <!-- §188: the content sits on a themedPanel so it reads off a surface
-         rather than off the background image. The panel follows the Stats
-         Background colour and is invisible until that colour is set - no
-         fill, no outline, no inset. Its child is deliberately not
-         re-indented. See App.axaml. -->
-    <Border Classes="themedPanel">
-    <Grid Margin="16" RowDefinitions="Auto,*,Auto">
+    <Window.Resources>
+        <!-- §261. The two columns are the SAME markup, used twice, because
+             they are the same class used twice. The old window wrote the
+             attacker's controls and the defender's out separately, which is
+             how they drifted. -->
+        <DataTemplate x:Key="SideTemplate" DataType="vm:DamageCalculatorSideViewModel">
+            <Border Classes="themedPanel" BorderBrush="{DynamicResource ThemeBorderBrush}"
+                    BorderThickness="1" CornerRadius="4" Padding="10">
+                <StackPanel Spacing="8">
 
-        <StackPanel Grid.Row="0" Margin="0,0,0,8">
-            <TextBlock Text="Damage Calculator" FontSize="18" FontWeight="Bold"
-                       Foreground="{DynamicResource ThemeTextBrush}" />
-            <TextBlock Text="Damage shows as a min-max range because the game rolls 85-100% on every hit. Pick both Pokémon and a move, adjust anything, then press Calculate."
-                       TextWrapping="Wrap" FontSize="11" Opacity="0.7"
-                       Foreground="{DynamicResource ThemeTextBrush}" Margin="0,2,0,0" />
-        </StackPanel>
+                    <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="14" />
 
-        <!-- Classic three-column damage-calculator shape: attacker | move+results | defender.
-             The whole middle row scrolls as one piece so smaller screens still reach
-             everything (the panels are sized to fit 760 tall without it). -->
-        <ScrollViewer Grid.Row="1">
-            <Grid ColumnDefinitions="*,320,*">
+                    <TextBox Text="{Binding SearchText}" PlaceholderText="Search Pokemon..." />
 
-                <!-- ============ Attacker ============ -->
-                <Border Grid.Column="0" BorderBrush="{DynamicResource ThemeBorderBrush}"
-                        BorderThickness="1" CornerRadius="4" Padding="10">
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Attacker" FontWeight="Bold"
-                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    <ComboBox ItemsSource="{Binding SpeciesNames}"
+                              SelectedItem="{Binding SelectedSpeciesName}"
+                              HorizontalAlignment="Stretch"
+                              PlaceholderText="Pick a Pokemon" />
 
-                        <TextBox Text="{Binding AttackerSearchText}" PlaceholderText="Search Pokémon..." />
-                        <ListBox Height="130" ItemsSource="{Binding AttackerNames}"
-                                 SelectedItem="{Binding SelectedAttackerName, Mode=TwoWay}" />
+                    <!-- §262. The sprite takes the left half and the spread
+                         controls the right, which is what halves them: they
+                         were full-panel width and read as a wall of boxes.
+                         §263: the types are icons under the sprite rather than
+                         the words "Grass / Poison", the same icon row the rest
+                         of the app already uses, and the controls are pulled to
+                         the top of their half so they sit beside the sprite
+                         rather than below its middle. -->
+                    <Grid ColumnDefinitions="*,*">
 
-                        <TextBlock Text="{Binding AttackerTypesLine}" FontSize="11" Opacity="0.7"
-                                   Foreground="{DynamicResource ThemeTextBrush}" />
-                        <TextBlock Text="{Binding AttackerBaseLine}" FontSize="11" Opacity="0.7"
-                                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <StackPanel Grid.Column="0" VerticalAlignment="Top" Spacing="4" Margin="0,5,0,0">
+                        <Panel Height="110">
+                            <Image Source="{Binding Sprite}" Stretch="Uniform"
+                                   IsVisible="{Binding HasSprite}"
+                                   RenderOptions.BitmapInterpolationMode="None" />
+                            <TextBlock Text="{Binding SelectedSpeciesName}" FontSize="10"
+                                       TextWrapping="Wrap" TextAlignment="Center" Opacity="0.5"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       IsVisible="{Binding !HasSprite}" />
+                        </Panel>
 
-                        <Grid ColumnDefinitions="92,*">
-                            <TextBlock Grid.Column="0" Text="Level" VerticalAlignment="Center"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBox Grid.Column="1" Width="64" MinWidth="0" HorizontalAlignment="Left"
-                                     Text="{Binding AttackerLevelText}" />
-                        </Grid>
-
-                        <Grid ColumnDefinitions="92,*">
-                            <TextBlock Grid.Column="0" Text="Nature" VerticalAlignment="Center"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
-                            <ComboBox Grid.Column="1" ItemsSource="{Binding NatureOptions}"
-                                      SelectedItem="{Binding SelectedAttackerNature, Mode=TwoWay}" />
-                        </Grid>
-
-                        <!-- Six IVs over six EVs, one thin column per stat -->
-                        <Grid ColumnDefinitions="26,*,*,*,*,*,*" RowDefinitions="Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="HP" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Atk" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBlock Grid.Row="0" Grid.Column="3" Text="Def" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBlock Grid.Row="0" Grid.Column="4" Text="SpA" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBlock Grid.Row="0" Grid.Column="5" Text="SpD" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBlock Grid.Row="0" Grid.Column="6" Text="Spe" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="IV" FontSize="11" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBox Grid.Row="1" Grid.Column="1" MinWidth="0" Margin="1" Text="{Binding AttackerIvHpText}" />
-                            <TextBox Grid.Row="1" Grid.Column="2" MinWidth="0" Margin="1" Text="{Binding AttackerIvAttackText}" />
-                            <TextBox Grid.Row="1" Grid.Column="3" MinWidth="0" Margin="1" Text="{Binding AttackerIvDefenseText}" />
-                            <TextBox Grid.Row="1" Grid.Column="4" MinWidth="0" Margin="1" Text="{Binding AttackerIvSpAttackText}" />
-                            <TextBox Grid.Row="1" Grid.Column="5" MinWidth="0" Margin="1" Text="{Binding AttackerIvSpDefenseText}" />
-                            <TextBox Grid.Row="1" Grid.Column="6" MinWidth="0" Margin="1" Text="{Binding AttackerIvSpeedText}" />
-
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="EV" FontSize="11" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBox Grid.Row="2" Grid.Column="1" MinWidth="0" Margin="1" Text="{Binding AttackerEvHpText}" />
-                            <TextBox Grid.Row="2" Grid.Column="2" MinWidth="0" Margin="1" Text="{Binding AttackerEvAttackText}" />
-                            <TextBox Grid.Row="2" Grid.Column="3" MinWidth="0" Margin="1" Text="{Binding AttackerEvDefenseText}" />
-                            <TextBox Grid.Row="2" Grid.Column="4" MinWidth="0" Margin="1" Text="{Binding AttackerEvSpAttackText}" />
-                            <TextBox Grid.Row="2" Grid.Column="5" MinWidth="0" Margin="1" Text="{Binding AttackerEvSpDefenseText}" />
-                            <TextBox Grid.Row="2" Grid.Column="6" MinWidth="0" Margin="1" Text="{Binding AttackerEvSpeedText}" />
-                        </Grid>
-
-                        <Grid ColumnDefinitions="92,*">
-                            <TextBlock Grid.Column="0" Text="Attack stage" VerticalAlignment="Center"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
-                            <ComboBox Grid.Column="1" Width="80" HorizontalAlignment="Left"
-                                      ItemsSource="{Binding StageOptions}"
-                                      SelectedItem="{Binding SelectedAttackStage, Mode=TwoWay}" />
-                        </Grid>
-
-                        <Grid ColumnDefinitions="92,*">
-                            <TextBlock Grid.Column="0" Text="Item" VerticalAlignment="Center"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
-                            <ComboBox Grid.Column="1" ItemsSource="{Binding AttackerItemOptions}"
-                                      SelectedItem="{Binding SelectedAttackerItem, Mode=TwoWay}" />
-                        </Grid>
-
-                        <Grid ColumnDefinitions="92,*">
-                            <TextBlock Grid.Column="0" Text="Ability" VerticalAlignment="Center"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
-                            <ComboBox Grid.Column="1" ItemsSource="{Binding AttackerAbilityOptions}"
-                                      SelectedItem="{Binding SelectedAttackerAbility, Mode=TwoWay}" />
-                        </Grid>
-
-                        <CheckBox Content="Burned (halves physical damage)" IsChecked="{Binding AttackerBurned}" />
+                        <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Image Source="{Binding Converter={x:Static conv:TypeIconConverter.Instance}}"
+                                           Width="24" Height="24" Stretch="Uniform" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
-                </Border>
 
-                <!-- ============ Move, field and results ============ -->
-                <Border Grid.Column="1" Margin="10,0" BorderBrush="{DynamicResource ThemeBorderBrush}"
-                        BorderThickness="1" CornerRadius="4" Padding="10">
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Move" FontWeight="Bold"
-                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    <Grid Grid.Column="1" VerticalAlignment="Top" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" >
+                        <TextBlock Grid.Row="0" Text="Level"   VerticalAlignment="Center" Margin="0,2,8,2" FontSize="11" />
+                        <TextBox   Grid.Row="0" Grid.Column="1" Text="{Binding LevelText}" Margin="0,2" />
 
-                        <TextBox Text="{Binding MoveSearchText}" PlaceholderText="Search moves..." />
-                        <CheckBox Content="Only damaging moves" IsChecked="{Binding OnlyDamagingMoves}" />
-                        <CheckBox Content="Only moves the attacker learns" IsChecked="{Binding OnlyLearnsetMoves}" />
-                        <ListBox Height="120" ItemsSource="{Binding MoveNames}"
-                                 SelectedItem="{Binding SelectedMoveName, Mode=TwoWay}" />
+                        <TextBlock Grid.Row="1" Text="Nature"  VerticalAlignment="Center" Margin="0,2,8,2" FontSize="11" />
+                        <ComboBox  Grid.Row="1" Grid.Column="1" ItemsSource="{Binding NatureOptions}"
+                                   SelectedItem="{Binding SelectedNature}" HorizontalAlignment="Stretch" Margin="0,2" />
 
-                        <TextBlock Text="{Binding MoveInfoLine}" FontSize="11" Opacity="0.7"
-                                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Grid.Row="2" Text="Ability" VerticalAlignment="Center" Margin="0,2,8,2" FontSize="11" />
+                        <ComboBox  Grid.Row="2" Grid.Column="1" ItemsSource="{Binding AbilityOptions}"
+                                   SelectedItem="{Binding SelectedAbility}" HorizontalAlignment="Stretch" Margin="0,2" />
 
-                        <Grid ColumnDefinitions="92,*">
-                            <TextBlock Grid.Column="0" Text="Power" VerticalAlignment="Center"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBox Grid.Column="1" Width="64" MinWidth="0" HorizontalAlignment="Left"
-                                     Text="{Binding MovePowerText}" />
-                        </Grid>
+                        <TextBlock Grid.Row="3" Text="Item"    VerticalAlignment="Center" Margin="0,2,8,2" FontSize="11" />
+                        <ComboBox  Grid.Row="3" Grid.Column="1" ItemsSource="{Binding ItemOptions}"
+                                   SelectedItem="{Binding SelectedItem}" HorizontalAlignment="Stretch" Margin="0,2" />
 
-                        <Grid ColumnDefinitions="92,*">
-                            <TextBlock Grid.Column="0" Text="Weather" VerticalAlignment="Center"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
-                            <ComboBox Grid.Column="1" ItemsSource="{Binding WeatherChoices}"
-                                      SelectedItem="{Binding SelectedWeather, Mode=TwoWay}" />
-                        </Grid>
+                        <TextBlock Grid.Row="4" Text="Status"  VerticalAlignment="Center" Margin="0,2,8,2" FontSize="11" />
+                        <ComboBox  Grid.Row="4" Grid.Column="1" ItemsSource="{Binding StatusOptions}"
+                                   SelectedItem="{Binding SelectedStatus}" HorizontalAlignment="Stretch" Margin="0,2"
+                                   ToolTip.Tip="Only Burn changes a damage roll, so it is the only status offered." />
+                    </Grid>
 
-                        <Button Content="Calculate" Command="{Binding CalculateCommand}"
-                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                                FontWeight="Bold" Margin="0,4,0,0" />
+                    </Grid>
 
-                        <Border BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
-                                CornerRadius="4" Padding="8" Margin="0,4,0,0">
-                            <StackPanel Spacing="4">
-                                <TextBlock Text="{Binding DamageRangeLine}" FontSize="15" FontWeight="Bold"
-                                           Foreground="{DynamicResource ThemeTextBrush}" />
-                                <TextBlock Text="{Binding PercentLine}" TextWrapping="Wrap"
-                                           Foreground="{DynamicResource ThemeTextBrush}" />
-                                <TextBlock Text="{Binding KoLine}" TextWrapping="Wrap"
-                                           Foreground="{DynamicResource ThemeTextBrush}" />
-                                <TextBlock Text="{Binding CritLine}" TextWrapping="Wrap"
-                                           Foreground="{DynamicResource ThemeTextBrush}" />
-                                <TextBlock Text="{Binding EffectivenessLine}" TextWrapping="Wrap"
-                                           Foreground="{DynamicResource ThemeTextBrush}" />
-                                <TextBlock Text="{Binding WeatherLine}" TextWrapping="Wrap" FontSize="12"
-                                           Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.85"
-                                           IsVisible="{Binding WeatherLine, Converter={x:Static conv:StringNotEmptyConverter.Instance}}" />
-                                <TextBlock Text="{Binding StatsLine}" FontSize="11" Opacity="0.7"
-                                           TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </Border>
+                    <!-- §308. The four things the simulator asks about that
+                         are a NUMBER rather than a switch. They sat in the
+                         field column, which was the wrong home: none of them
+                         is a property of the battlefield - they belong to the
+                         Pokemon, next to its level and its nature. -->
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0,6,0,0">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="HP left %" FontSize="10" Opacity="0.7" Margin="0,0,3,0" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Happiness" FontSize="10" Opacity="0.7" Margin="3,0,0,0" />
 
-                <!-- ============ Defender ============ -->
-                <Border Grid.Column="2" BorderBrush="{DynamicResource ThemeBorderBrush}"
-                        BorderThickness="1" CornerRadius="4" Padding="10">
-                    <StackPanel Spacing="6">
-                        <TextBlock Text="Defender" FontWeight="Bold"
-                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBox Grid.Row="1" Grid.Column="0" Margin="0,0,3,0" FontSize="11"
+                                 Text="{Binding HpPercentText, Mode=TwoWay}"
+                                 ToolTip.Tip="Reversal, Flail, Eruption and Water Spout read the user's; Hard Press and Crush Grip read the target's." />
+                        <ComboBox Grid.Row="1" Grid.Column="1" Margin="3,0,0,0" FontSize="11"
+                                  HorizontalAlignment="Stretch"
+                                  ItemsSource="{Binding HappinessOptions}"
+                                  SelectedItem="{Binding SelectedHappiness, Mode=TwoWay}"
+                                  ToolTip.Tip="Return and Frustration, and nothing else." />
 
-                        <TextBox Text="{Binding DefenderSearchText}" PlaceholderText="Search Pokémon..." />
-                        <ListBox Height="130" ItemsSource="{Binding DefenderNames}"
-                                 SelectedItem="{Binding SelectedDefenderName, Mode=TwoWay}" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Hits taken (Rage Fist)" FontSize="10" Opacity="0.7" Margin="0,4,3,0" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="Turns in a row" FontSize="10" Opacity="0.7" Margin="3,4,0,0" />
 
-                        <TextBlock Text="{Binding DefenderTypesLine}" FontSize="11" Opacity="0.7"
-                                   Foreground="{DynamicResource ThemeTextBrush}" />
-                        <TextBlock Text="{Binding DefenderBaseLine}" FontSize="11" Opacity="0.7"
-                                   TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBox Grid.Row="3" Grid.Column="0" Margin="0,0,3,0" FontSize="11"
+                                 Text="{Binding TimesAttackedText, Mode=TwoWay}"
+                                 ToolTip.Tip="Rage Fist: fifty more power for every hit this Pokemon has taken, up to 350." />
+                        <TextBox Grid.Row="3" Grid.Column="1" Margin="3,0,0,0" FontSize="11"
+                                 Text="{Binding ConsecutiveUsesText, Mode=TwoWay}"
+                                 ToolTip.Tip="Fury Cutter, Echoed Voice and Rollout, counting this use." />
+                    </Grid>
 
-                        <Grid ColumnDefinitions="92,*">
-                            <TextBlock Grid.Column="0" Text="Level" VerticalAlignment="Center"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBox Grid.Column="1" Width="64" MinWidth="0" HorizontalAlignment="Left"
-                                     Text="{Binding DefenderLevelText}" />
-                        </Grid>
+                    <!-- §265: four stages, one per stat, each labelled. The
+                         pair this side attacks with is on the left and the
+                         pair it is hit on is on the right; which of each pair
+                         applies is decided by the move's category. -->
+                    <Grid ColumnDefinitions="Auto,*,*,Auto,*,*" RowDefinitions="Auto,Auto" Margin="0,6,0,0">
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Atk" FontSize="10" TextAlignment="Center" Opacity="0.7" />
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Def" FontSize="10" TextAlignment="Center" Opacity="0.7" />
+                        <TextBlock Grid.Row="0" Grid.Column="4" Text="SpA" FontSize="10" TextAlignment="Center" Opacity="0.7" />
+                        <TextBlock Grid.Row="0" Grid.Column="5" Text="SpD" FontSize="10" TextAlignment="Center" Opacity="0.7" />
 
-                        <Grid ColumnDefinitions="92,*">
-                            <TextBlock Grid.Column="0" Text="Nature" VerticalAlignment="Center"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
-                            <ComboBox Grid.Column="1" ItemsSource="{Binding NatureOptions}"
-                                      SelectedItem="{Binding SelectedDefenderNature, Mode=TwoWay}" />
-                        </Grid>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Boosts" FontSize="11"
+                                   VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <ComboBox Grid.Row="1" Grid.Column="1" Margin="1" FontSize="11" HorizontalAlignment="Stretch"
+                                  ItemsSource="{Binding StageOptions}" SelectedItem="{Binding SelectedAtkStage}"
+                                  ToolTip.Tip="This side's Attack stage - applied when it uses a physical move." />
+                        <ComboBox Grid.Row="1" Grid.Column="2" Margin="1" FontSize="11" HorizontalAlignment="Stretch"
+                                  ItemsSource="{Binding StageOptions}" SelectedItem="{Binding SelectedDefStage}"
+                                  ToolTip.Tip="This side's Defense stage - applied when a physical move hits it." />
+                        <ComboBox Grid.Row="1" Grid.Column="4" Margin="1" FontSize="11" HorizontalAlignment="Stretch"
+                                  ItemsSource="{Binding StageOptions}" SelectedItem="{Binding SelectedSpAStage}"
+                                  ToolTip.Tip="This side's Sp. Atk stage - applied when it uses a special move." />
+                        <ComboBox Grid.Row="1" Grid.Column="5" Margin="1" FontSize="11" HorizontalAlignment="Stretch"
+                                  ItemsSource="{Binding StageOptions}" SelectedItem="{Binding SelectedSpDStage}"
+                                  ToolTip.Tip="This side's Sp. Def stage - applied when a special move hits it." />
+                    </Grid>
 
-                        <Grid ColumnDefinitions="26,*,*,*,*,*,*" RowDefinitions="Auto,Auto,Auto">
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="HP" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Atk" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBlock Grid.Row="0" Grid.Column="3" Text="Def" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBlock Grid.Row="0" Grid.Column="4" Text="SpA" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBlock Grid.Row="0" Grid.Column="5" Text="SpD" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBlock Grid.Row="0" Grid.Column="6" Text="Spe" FontSize="10" Opacity="0.7" HorizontalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                    <!-- IVs and EVs, in the games' own stat order. -->
+                    <Grid ColumnDefinitions="Auto,*,*,*,*,*,*" RowDefinitions="Auto,Auto,Auto">
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="HP"  FontSize="10" TextAlignment="Center" Opacity="0.7" />
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Atk" FontSize="10" TextAlignment="Center" Opacity="0.7" />
+                        <TextBlock Grid.Row="0" Grid.Column="3" Text="Def" FontSize="10" TextAlignment="Center" Opacity="0.7" />
+                        <TextBlock Grid.Row="0" Grid.Column="4" Text="SpA" FontSize="10" TextAlignment="Center" Opacity="0.7" />
+                        <TextBlock Grid.Row="0" Grid.Column="5" Text="SpD" FontSize="10" TextAlignment="Center" Opacity="0.7" />
+                        <TextBlock Grid.Row="0" Grid.Column="6" Text="Spe" FontSize="10" TextAlignment="Center" Opacity="0.7" />
 
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="IV" FontSize="11" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBox Grid.Row="1" Grid.Column="1" MinWidth="0" Margin="1" Text="{Binding DefenderIvHpText}" />
-                            <TextBox Grid.Row="1" Grid.Column="2" MinWidth="0" Margin="1" Text="{Binding DefenderIvAttackText}" />
-                            <TextBox Grid.Row="1" Grid.Column="3" MinWidth="0" Margin="1" Text="{Binding DefenderIvDefenseText}" />
-                            <TextBox Grid.Row="1" Grid.Column="4" MinWidth="0" Margin="1" Text="{Binding DefenderIvSpAttackText}" />
-                            <TextBox Grid.Row="1" Grid.Column="5" MinWidth="0" Margin="1" Text="{Binding DefenderIvSpDefenseText}" />
-                            <TextBox Grid.Row="1" Grid.Column="6" MinWidth="0" Margin="1" Text="{Binding DefenderIvSpeedText}" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="IV" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding IvHpText}"        Margin="1" FontSize="11" />
+                        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding IvAttackText}"    Margin="1" FontSize="11" />
+                        <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding IvDefenseText}"   Margin="1" FontSize="11" />
+                        <TextBox Grid.Row="1" Grid.Column="4" Text="{Binding IvSpAttackText}"  Margin="1" FontSize="11" />
+                        <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding IvSpDefenseText}" Margin="1" FontSize="11" />
+                        <TextBox Grid.Row="1" Grid.Column="6" Text="{Binding IvSpeedText}"     Margin="1" FontSize="11" />
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="EV" FontSize="11" VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
-                            <TextBox Grid.Row="2" Grid.Column="1" MinWidth="0" Margin="1" Text="{Binding DefenderEvHpText}" />
-                            <TextBox Grid.Row="2" Grid.Column="2" MinWidth="0" Margin="1" Text="{Binding DefenderEvAttackText}" />
-                            <TextBox Grid.Row="2" Grid.Column="3" MinWidth="0" Margin="1" Text="{Binding DefenderEvDefenseText}" />
-                            <TextBox Grid.Row="2" Grid.Column="4" MinWidth="0" Margin="1" Text="{Binding DefenderEvSpAttackText}" />
-                            <TextBox Grid.Row="2" Grid.Column="5" MinWidth="0" Margin="1" Text="{Binding DefenderEvSpDefenseText}" />
-                            <TextBox Grid.Row="2" Grid.Column="6" MinWidth="0" Margin="1" Text="{Binding DefenderEvSpeedText}" />
-                        </Grid>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="EV" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EvHpText}"        Margin="1" FontSize="11" />
+                        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding EvAttackText}"    Margin="1" FontSize="11" />
+                        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding EvDefenseText}"   Margin="1" FontSize="11" />
+                        <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding EvSpAttackText}"  Margin="1" FontSize="11" />
+                        <TextBox Grid.Row="2" Grid.Column="5" Text="{Binding EvSpDefenseText}" Margin="1" FontSize="11" />
+                        <TextBox Grid.Row="2" Grid.Column="6" Text="{Binding EvSpeedText}"     Margin="1" FontSize="11" />
+                    </Grid>
 
-                        <Grid ColumnDefinitions="92,*">
-                            <TextBlock Grid.Column="0" Text="Defense stage" VerticalAlignment="Center"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
-                            <ComboBox Grid.Column="1" Width="80" HorizontalAlignment="Left"
-                                      ItemsSource="{Binding StageOptions}"
-                                      SelectedItem="{Binding SelectedDefenseStage, Mode=TwoWay}" />
-                        </Grid>
+                    <!-- The four slots, one row each: pick, then read across.
+                         The list is always this species' own learnset (§262),
+                         and the radio chooses which one the banner is quoting
+                         (§263). -->
+                    <ItemsControl ItemsSource="{Binding MoveSlots}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="vm:DamageMoveSlot">
+                                <!-- §265: no border. Four boxed rows read as
+                                     four panels inside a panel; the radio and
+                                     the picker already say where a row starts
+                                     and ends. -->
+                                <Grid ColumnDefinitions="Auto,150,*" Margin="0,3">
+                                        <!-- §263: the radio picks which of the
+                                             eight slots the banner is showing.
+                                             Always present, so choosing a move
+                                             does not shift the row sideways;
+                                             disabled until there is something
+                                             to show. -->
+                                        <RadioButton Grid.Column="0" VerticalAlignment="Center" Margin="0,0,4,0"
+                                                     IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                                     IsEnabled="{Binding HasResult}"
+                                                     ToolTip.Tip="Show this move's calculation in the banner." />
 
-                        <Grid ColumnDefinitions="92,*">
-                            <TextBlock Grid.Column="0" Text="Ability" VerticalAlignment="Center"
-                                       Foreground="{DynamicResource ThemeTextBrush}" />
-                            <ComboBox Grid.Column="1" ItemsSource="{Binding DefenderAbilityOptions}"
-                                      SelectedItem="{Binding SelectedDefenderAbility, Mode=TwoWay}" />
-                        </Grid>
+                                        <ComboBox Grid.Column="1" ItemsSource="{Binding MoveOptions}"
+                                                  SelectedItem="{Binding SelectedMoveName}"
+                                                  HorizontalAlignment="Stretch" FontSize="11"
+                                                  PlaceholderText="{Binding Number, StringFormat='Move {0}'}" />
 
-                        <CheckBox Content="At full HP (for Multiscale)" IsChecked="{Binding DefenderAtFullHp}" />
-                        <CheckBox Content="Reflect / Light Screen up" IsChecked="{Binding ScreenUp}" />
-                    </StackPanel>
-                </Border>
-            </Grid>
-        </ScrollViewer>
+                                        <StackPanel Grid.Column="2" Margin="10,0,0,0" Spacing="1"
+                                                    VerticalAlignment="Center">
+                                            <!-- §266: the move's own facts and
+                                                 nothing else. The numbers are
+                                                 in the banner, for whichever
+                                                 row the radio is on. -->
+                                            <TextBlock Text="{Binding MoveInfo}" FontSize="12" Opacity="0.85"
+                                                       TextWrapping="Wrap"
+                                                       IsVisible="{Binding MoveInfo, Converter={x:Static conv:StringNotEmptyConverter.Instance}}" />
+                                        </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
 
-        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="0,10,0,0">
-            <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Foreground="{DynamicResource ThemeErrorBrush}"
-                       TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,8,0" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*" Margin="12">
+
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,8">
+            <TextBlock Text="Damage Calculator" FontSize="16" FontWeight="Bold"
+                       Foreground="{DynamicResource ThemeTextBrush}" VerticalAlignment="Center" />
             <Button Grid.Column="1" Content="Close" Click="CloseButton_Click" />
         </Grid>
+
+        <Border Grid.Row="1" Classes="themedPanel" BorderBrush="{DynamicResource ThemeBorderBrush}"
+                BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,0,0,10">
+            <StackPanel Spacing="4">
+                <TextBlock Text="{Binding BannerSentence}" TextWrapping="Wrap" FontSize="13" />
+                <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" FontSize="11"
+                           Foreground="{DynamicResource ThemeErrorBrush}"
+                           IsVisible="{Binding StatusMessage, Converter={x:Static conv:StringNotEmptyConverter.Instance}}" />
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Grid.Row="2">
+            <Grid ColumnDefinitions="*,Auto,*" >
+
+                <ContentControl Grid.Column="0" Content="{Binding Attacker}"
+                                ContentTemplate="{StaticResource SideTemplate}" Margin="0,0,6,0" />
+
+                <!-- The field -->
+                <Border Grid.Column="1" Width="300" Classes="themedPanel"
+                        BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                        CornerRadius="4" Padding="10" Margin="6,0">
+                    <!-- §306: the field column carries roughly three times what
+                         §261 gave it, so it scrolls rather than stretching the
+                         window past the screen. -->
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="10">
+
+                        <TextBlock Text="Field" FontWeight="Bold" FontSize="14" />
+
+                        <TextBlock Text="Terrain" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" />
+                        <WrapPanel HorizontalAlignment="Center">
+                            <ToggleButton Content="Electric" Margin="3" FontSize="11" Classes="themedButton"
+                                          IsChecked="{Binding IsElectricTerrain, Mode=OneWay}"
+                                          Command="{Binding ToggleTerrainCommand}" CommandParameter="Electric" />
+                            <ToggleButton Content="Grassy" Margin="3" FontSize="11" Classes="themedButton"
+                                          IsChecked="{Binding IsGrassyTerrain, Mode=OneWay}"
+                                          Command="{Binding ToggleTerrainCommand}" CommandParameter="Grassy" />
+                            <ToggleButton Content="Misty" Margin="3" FontSize="11" Classes="themedButton"
+                                          IsChecked="{Binding IsMistyTerrain, Mode=OneWay}"
+                                          Command="{Binding ToggleTerrainCommand}" CommandParameter="Misty"
+                                          ToolTip.Tip="Misty Terrain gives no damage boost - it halves Dragon moves aimed at a grounded target." />
+                            <ToggleButton Content="Psychic" Margin="3" FontSize="11" Classes="themedButton"
+                                          IsChecked="{Binding IsPsychicTerrain, Mode=OneWay}"
+                                          Command="{Binding ToggleTerrainCommand}" CommandParameter="Psychic" />
+                        </WrapPanel>
+
+                        <TextBlock Text="Weather" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" />
+                        <WrapPanel HorizontalAlignment="Center">
+                            <ToggleButton Content="Sun" Margin="3" FontSize="11" Classes="themedButton"
+                                          IsChecked="{Binding IsSun, Mode=OneWay}"
+                                          Command="{Binding ToggleWeatherCommand}" CommandParameter="Sun" />
+                            <ToggleButton Content="Rain" Margin="3" FontSize="11" Classes="themedButton"
+                                          IsChecked="{Binding IsRain, Mode=OneWay}"
+                                          Command="{Binding ToggleWeatherCommand}" CommandParameter="Rain" />
+                            <ToggleButton Content="Sand" Margin="3" FontSize="11" Classes="themedButton"
+                                          IsChecked="{Binding IsSandstorm, Mode=OneWay}"
+                                          Command="{Binding ToggleWeatherCommand}" CommandParameter="Sandstorm"
+                                          ToolTip.Tip="Sandstorm gives Rock-type defenders x1.5 Special Defense." />
+                            <ToggleButton Content="Hail" Margin="3" FontSize="11" Classes="themedButton"
+                                          IsChecked="{Binding IsHail, Mode=OneWay}"
+                                          Command="{Binding ToggleWeatherCommand}" CommandParameter="Hail (Snow)"
+                                          ToolTip.Tip="PRO implements Hail, not modern Snow - no Ice-type Defense boost, so it changes no damage roll." />
+                        </WrapPanel>
+
+                        <WrapPanel HorizontalAlignment="Center">
+                            <ToggleButton Content="Magic Room" Margin="3" FontSize="11" Classes="themedButton"
+                                          IsChecked="{Binding MagicRoom, Mode=TwoWay}"
+                                          ToolTip.Tip="Magic Room switches every held item off." />
+                            <ToggleButton Content="Wonder Room" Margin="3" FontSize="11" Classes="themedButton"
+                                          IsChecked="{Binding WonderRoom, Mode=TwoWay}"
+                                          ToolTip.Tip="Wonder Room swaps everyone's Defense and Special Defense - the stats, not the stages." />
+                            <ToggleButton Content="Gravity" Margin="3" FontSize="11" Classes="themedButton"
+                                          IsChecked="{Binding Gravity, Mode=TwoWay}"
+                                          ToolTip.Tip="Gravity grounds everything, so a terrain reaches what it could not before." />
+                        </WrapPanel>
+
+                        <Rectangle Height="1" Fill="{DynamicResource ThemeBorderBrush}" Margin="0,4" />
+
+                        <!-- Screens belong to the side they were set up on, so
+                             each column's three sit under that column. -->
+                        <Grid ColumnDefinitions="*,*">
+                            <StackPanel Grid.Column="0" Spacing="4" DataContext="{Binding Attacker}"
+                                        x:DataType="vm:DamageCalculatorSideViewModel">
+                                <TextBlock Text="{Binding Title}" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" />
+                                <ToggleButton Content="Reflect" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding Reflect, Mode=TwoWay}" />
+                                <ToggleButton Content="Light Screen" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding LightScreen, Mode=TwoWay}" />
+                                <ToggleButton Content="Aurora Veil" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding AuroraVeil, Mode=TwoWay}" />
+
+                                <Rectangle Height="1" Fill="{DynamicResource ThemeBorderBrush}" Margin="0,4" />
+
+                                <!-- §308: the hazards. They change no damage roll - they
+                                     change how many hits a KO takes, which is the other half
+                                     of what a calculator is for. -->
+                                <ToggleButton Content="Stealth Rock" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding StealthRock, Mode=TwoWay}"
+                                              ToolTip.Tip="Chip damage on entry, scaled by how Rock treats this Pokemon." />
+                                <TextBlock Text="Spikes" FontSize="10" Opacity="0.7" />
+                                <ComboBox ItemsSource="{Binding SpikesOptions}" FontSize="11"
+                                          HorizontalAlignment="Stretch"
+                                          SelectedItem="{Binding SelectedSpikes, Mode=TwoWay}" />
+
+                                <Rectangle Height="1" Fill="{DynamicResource ThemeBorderBrush}" Margin="0,4" />
+
+                                <ToggleButton Content="Charge" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding Charge, Mode=TwoWay}"
+                                              ToolTip.Tip="Doubles this side's next Electric move." />
+                                <ToggleButton Content="Foresight" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding Foresight, Mode=TwoWay}"
+                                              ToolTip.Tip="Normal and Fighting moves reach this side's Ghosts." />
+
+                                <Rectangle Height="1" Fill="{DynamicResource ThemeBorderBrush}" Margin="0,4" />
+
+                                <ToggleButton Content="Tailwind" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding Tailwind, Mode=TwoWay}"
+                                              ToolTip.Tip="Doubles this side's Speed, which Gyro Ball and Electro Ball both read." />
+                                <ToggleButton Content="Flower Gift" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding FlowerGift, Mode=TwoWay}"
+                                              ToolTip.Tip="In sun, half again this side's Attack and Special Defense." />
+                                <ToggleButton Content="Leech Seed" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding LeechSeed, Mode=TwoWay}"
+                                              ToolTip.Tip="An eighth of this side's maximum HP at the end of every turn." />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Spacing="4" Margin="6,0,0,0" DataContext="{Binding Defender}"
+                                        x:DataType="vm:DamageCalculatorSideViewModel">
+                                <TextBlock Text="{Binding Title}" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" />
+                                <ToggleButton Content="Reflect" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding Reflect, Mode=TwoWay}" />
+                                <ToggleButton Content="Light Screen" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding LightScreen, Mode=TwoWay}" />
+                                <ToggleButton Content="Aurora Veil" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding AuroraVeil, Mode=TwoWay}" />
+
+                                <Rectangle Height="1" Fill="{DynamicResource ThemeBorderBrush}" Margin="0,4" />
+
+                                <!-- §308: the hazards. They change no damage roll - they
+                                     change how many hits a KO takes, which is the other half
+                                     of what a calculator is for. -->
+                                <ToggleButton Content="Stealth Rock" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding StealthRock, Mode=TwoWay}"
+                                              ToolTip.Tip="Chip damage on entry, scaled by how Rock treats this Pokemon." />
+                                <TextBlock Text="Spikes" FontSize="10" Opacity="0.7" />
+                                <ComboBox ItemsSource="{Binding SpikesOptions}" FontSize="11"
+                                          HorizontalAlignment="Stretch"
+                                          SelectedItem="{Binding SelectedSpikes, Mode=TwoWay}" />
+
+                                <Rectangle Height="1" Fill="{DynamicResource ThemeBorderBrush}" Margin="0,4" />
+
+                                <ToggleButton Content="Charge" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding Charge, Mode=TwoWay}"
+                                              ToolTip.Tip="Doubles this side's next Electric move." />
+                                <ToggleButton Content="Foresight" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding Foresight, Mode=TwoWay}"
+                                              ToolTip.Tip="Normal and Fighting moves reach this side's Ghosts." />
+
+                                <Rectangle Height="1" Fill="{DynamicResource ThemeBorderBrush}" Margin="0,4" />
+
+                                <ToggleButton Content="Tailwind" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding Tailwind, Mode=TwoWay}"
+                                              ToolTip.Tip="Doubles this side's Speed, which Gyro Ball and Electro Ball both read." />
+                                <ToggleButton Content="Flower Gift" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding FlowerGift, Mode=TwoWay}"
+                                              ToolTip.Tip="In sun, half again this side's Attack and Special Defense." />
+                                <ToggleButton Content="Leech Seed" FontSize="11" Classes="themedButton"
+                                              HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                                              IsChecked="{Binding LeechSeed, Mode=TwoWay}"
+                                              ToolTip.Tip="An eighth of this side's maximum HP at the end of every turn." />
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock TextWrapping="Wrap" FontSize="10" Opacity="0.6"
+                                   Text="A screen protects the side it stands on, and none of the three applies to a critical hit. Stealth Rock, Spikes and Leech Seed change no damage roll - they change how many hits a KO takes, and the sentence counts them. A move whose power turns on something this window no longer asks about - Pursuit on a target that is leaving, Payback on moving last - is priced without it, and the move's own line says what the other number would be." />
+
+                    </StackPanel>
+                    </ScrollViewer>
+                </Border>
+
+                <ContentControl Grid.Column="2" Content="{Binding Defender}"
+                                ContentTemplate="{StaticResource SideTemplate}" Margin="6,0,0,0" />
+            </Grid>
+        </ScrollViewer>
     </Grid>
-    </Border>
 </Window>

@@ -161,6 +161,216 @@ namespace Foot_Tracker.Tracking
             return LocateByScan(screenshot, screenshot.Pixels, out battleBounds);
         }
 
+        /// <summary>
+        /// §334. The scan's running state while it crosses a frame: the bar
+        /// it is inside now, the widest bar it has finished, and the widest
+        /// bar that lost - which the log names so a reader can see there was
+        /// a contest at all.
+        ///
+        /// A mutable struct, held in one local and never copied, so the whole
+        /// search costs no allocation on the hottest path in the tracker.
+        /// </summary>
+        private struct TitleBarSearch
+        {
+            public SKRectI BestWidest;
+            public int BestTop;
+
+            /// <summary>§378. The bar's chosen box: the widest row that ends
+            /// where most of its rows end, not the widest row it had - see
+            /// ChooseBox. The name stays, because every reader of it wants
+            /// "the bar's box" and this is now the honest one.</summary>
+            public SKRectI BarWidest;
+            public int BarFirstRow;
+            public int BarFirstTop;
+
+            public int BarsSeen;
+            public int RunnerUpWidth;
+            public int RunnerUpTop;
+
+            // §378. Every candidate the current bar offered, so CloseBar can
+            // ask which width its rows AGREE on. At most one or two per row
+            // and TitleBarProbeRows rows per bar; the array is allocated on
+            // the first offer of a frame, which only happens when a battle is
+            // on screen - the no-battle case that runs forever still costs
+            // nothing here.
+            private SKRectI[]? samples;
+            private int sampleCount;
+
+            /// <summary>§378. What the frame's chosen bar looked like before
+            /// the rows voted, for the once-per-change log line: the widest
+            /// row it had, and how many rows end where the chosen one does.</summary>
+            public int BestWidestRow;
+            public int BestAgreeingRows;
+
+            public static TitleBarSearch Start()
+            {
+                TitleBarSearch search = default;
+
+                search.BestWidest = SKRectI.Empty;
+                search.BarWidest = SKRectI.Empty;
+                search.BarFirstRow = -1;
+                search.RunnerUpTop = -1;
+
+                return search;
+            }
+
+            /// <summary>§120's rule, now applied within a bar: the first row
+            /// of THIS bar knows its top; §378: the width is the one most of
+            /// its rows agree on, decided when the bar closes. A candidate
+            /// more than TitleBarProbeRows below the bar's first row is not
+            /// part of it, so it closes that bar and opens a new one.</summary>
+            public void Offer(SKRectI candidate, int row)
+            {
+                if (BarFirstRow >= 0 &&
+                    row > BarFirstRow + TitleBarProbeRows)
+                {
+                    CloseBar();
+                }
+
+                if (BarFirstRow < 0)
+                {
+                    BarFirstRow = row;
+                    BarFirstTop = candidate.Top;
+                }
+
+                samples ??= new SKRectI[SampleCapacity];
+
+                if (sampleCount < samples.Length)
+                    samples[sampleCount++] = candidate;
+            }
+
+            /// <summary>Fold the bar just finished into the frame's best, and
+            /// remember the widest bar that did NOT win.</summary>
+            public void CloseBar()
+            {
+                if (BarFirstRow < 0)
+                    return;
+
+                BarsSeen++;
+
+                int widestRow;
+                int agreeingRows;
+                BarWidest = ChooseBox(samples!, sampleCount, out widestRow, out agreeingRows);
+                sampleCount = 0;
+
+                if (BarWidest.Width > BestWidest.Width)
+                {
+                    if (BestWidest.Width > RunnerUpWidth)
+                    {
+                        RunnerUpWidth = BestWidest.Width;
+                        RunnerUpTop = BestTop;
+                    }
+
+                    BestWidest = BarWidest;
+                    BestTop = BarFirstTop;
+                    BestWidestRow = widestRow;
+                    BestAgreeingRows = agreeingRows;
+                }
+                else if (BarWidest.Width > RunnerUpWidth)
+                {
+                    RunnerUpWidth = BarWidest.Width;
+                    RunnerUpTop = BarFirstTop;
+                }
+
+                BarFirstRow = -1;
+                BarWidest = SKRectI.Empty;
+            }
+
+            /// <summary>Rows per bar, with room for a row that offered two runs.</summary>
+            private const int SampleCapacity = 2 * (TitleBarProbeRows + 1);
+
+            /// <summary>
+            /// §378. The bar's box, from the right edge its rows AGREE on.
+            ///
+            /// §119 took the widest row, on the reasoning that a row can only
+            /// ever understate the bar - the logo cuts the top rows short,
+            /// the title text cuts the middle rows into pieces, and a partial
+            /// view of a bar cannot be wider than the bar. That holds for the
+            /// bar's own pixels and fails the moment another dark-grey thing
+            /// touches the bar's right end in some of its rows. On a Linux
+            /// tester's frames it was the Pokemon PREVIEW panel, docked at
+            /// the top right of the game: its bottom strip is the same grey
+            /// as the title bar and ends a few rows below the bar's top, so
+            /// in those rows one run crossed from the bar into the panel and
+            /// on to the frame's edge. The widest row was one of those, the
+            /// box came out 1436 wide for a 1250 window, and every region
+            /// derived from it moved: the catch-message crop went off the
+            /// bottom of the battle window, "run away" was never read, and
+            /// the tracker waited fifteen minutes for a battle that had long
+            /// closed, accepting nothing in between. A restart bought it one
+            /// encounter, then the same again - "recognizes the first one and
+            /// then it stops".
+            ///
+            /// What the bar's rows share is not their width - the text splits
+            /// most of them, so the run that qualifies in a middle row is the
+            /// piece to the RIGHT of the text - but where they END. Every row
+            /// of the bar, split or whole, ends at the bar's right edge, give
+            /// or take the anti-aliasing there; the rows a neighbour ran into
+            /// end at the neighbour's far side and nowhere else. So the rows
+            /// vote on the right edge: each candidate's edge is backed by the
+            /// candidates within AgreeTolerance of it, the most backed edge
+            /// wins (§119's "wider" breaks a tie), and the box is the WIDEST
+            /// candidate that ends there - which is the text-free row with the
+            /// bar's whole left half in it, exactly the row §119 wanted. A
+            /// left-hand neighbour would need the same treatment on the other
+            /// edge; nothing docks there in this client, so the left keeps
+            /// §119's rule and this comment is where that decision lives.
+            /// </summary>
+            internal static SKRectI ChooseBox(SKRectI[] samples, int count, out int widestRow, out int agreeingRows)
+            {
+                widestRow = 0;
+                agreeingRows = 0;
+
+                if (count <= 0)
+                    return SKRectI.Empty;
+
+                int bestIndex = 0;
+                int bestBacking = -1;
+
+                for (int i = 0; i < count; i++)
+                {
+                    if (samples[i].Width > widestRow)
+                        widestRow = samples[i].Width;
+
+                    int backing = 0;
+
+                    for (int j = 0; j < count; j++)
+                    {
+                        if (Math.Abs(samples[j].Right - samples[i].Right) <= AgreeTolerance)
+                            backing++;
+                    }
+
+                    if (backing > bestBacking ||
+                        (backing == bestBacking && samples[i].Width > samples[bestIndex].Width))
+                    {
+                        bestBacking = backing;
+                        bestIndex = i;
+                    }
+                }
+
+                agreeingRows = bestBacking;
+
+                SKRectI chosen = samples[bestIndex];
+
+                for (int j = 0; j < count; j++)
+                {
+                    if (Math.Abs(samples[j].Right - samples[bestIndex].Right) <= AgreeTolerance &&
+                        samples[j].Width > chosen.Width)
+                    {
+                        chosen = samples[j];
+                    }
+                }
+
+                return chosen;
+            }
+
+            /// <summary>§378. How far apart two rows' right edges may be and
+            /// still count as the same edge. The bar's own rows differ by a
+            /// pixel or three from the anti-aliasing at its end; a panel that
+            /// took the run to the frame's edge is a couple of hundred away.</summary>
+            internal const int AgreeTolerance = 6;
+        }
+
         private static bool LocateByScan(
             SKBitmap screenshot,
             SKColor[] pixels,
@@ -237,21 +447,58 @@ namespace Foot_Tracker.Tracking
             //
             // The no-battle case, the one that actually runs constantly, is
             // untouched - it never accepts a candidate and never probes.
-            SKRectI widest = SKRectI.Empty;
-            int firstAcceptedRow = -1;
-            int firstAcceptedTop = 0;
+            // ================================================================
+            // §334: ONE FRAME CAN HOLD MORE THAN ONE TITLE BAR
+            // ================================================================
+            //
+            // §119 and §120 above are about finding the right numbers within
+            // ONE title bar. They assume the bar the scan meets first is the
+            // battle window's - which was true for as long as nothing else on
+            // screen looked like a battle title bar.
+            //
+            // PRO's own in-game popups do. The Battle Log is a dark title bar
+            // with bright title text, floating clear of both edges, and it
+            // builds a perfectly well-formed candidate: on the Linux tester's
+            // 1259x1366 frames it came out as (152,54) 786x462, passing
+            // LooksLikeBattleTitleBar, BuildCandidate's size and aspect
+            // checks, the edge rule (it is a floating popup, 152 pixels in)
+            // and HasBrightBattleTitle.
+            //
+            // It also sits ABOVE the battle window. The old probe band opened
+            // at the first accepted row and closed sixty rows later, so a bar
+            // accepted at y=64 closed the scan at y=124 - and the real battle
+            // window's bar, at y=525 on those same frames, was never reached.
+            // His log shows the consequence directly: the located window
+            // alternating between (152,54) 786x462 and the real (4,515)
+            // 1255x738, with 'no VS title could be read' on the frames the
+            // popup won.
+            //
+            // So the band becomes per BAR rather than per FRAME. Every
+            // accepted candidate within sixty rows of the bar's first row
+            // belongs to that bar; a candidate past that starts a new one.
+            // Each bar keeps §120's split intact - its top from its own first
+            // row, its width from its own widest row - and the frame's answer
+            // is the WIDEST bar, not the highest.
+            //
+            // Widest is the right tie-break because PRO's battle window is
+            // very nearly the full game canvas: 1255 of 1259 pixels on his
+            // client. A popup drawn over it is necessarily narrower, and the
+            // Battle Log's 786 loses to the battle window's 1255 on every
+            // frame where both are up.
+            //
+            // The cost of dropping the break is close to nothing, and it is
+            // worth being precise about why: the no-battle case - the one
+            // that runs five times a second forever - never accepted a
+            // candidate, so it never broke early and has ALWAYS scanned the
+            // full frame. The only case that got faster from the break was
+            // the one where a battle is on screen. Every frame now costs what
+            // the common frame has always cost.
+            TitleBarSearch search = TitleBarSearch.Start();
 
             for (int y = 0;
                  y < screenshot.Height - 40;
                  y++)
             {
-                // Far enough past the first hit to have seen the whole bar.
-                if (firstAcceptedRow >= 0 &&
-                    y > firstAcceptedRow + TitleBarProbeRows)
-                {
-                    break;
-                }
-
                 int rowStart = y * width;
                 int runStart = -1;
                 int runLength = 0;
@@ -289,14 +536,7 @@ namespace Foot_Tracker.Tracking
                                     screenshot.Height,
                                     candidate.Value))
                             {
-                                if (candidate.Value.Width > widest.Width)
-                                    widest = candidate.Value;
-
-                                if (firstAcceptedRow < 0)
-                                {
-                                    firstAcceptedRow = y;
-                                    firstAcceptedTop = candidate.Value.Top;
-                                }
+                                search.Offer(candidate.Value, y);
                             }
                         }
 
@@ -323,37 +563,86 @@ namespace Foot_Tracker.Tracking
                             screenshot.Height,
                             candidate.Value))
                     {
-                        if (candidate.Value.Width > widest.Width)
-                            widest = candidate.Value;
-
-                        if (firstAcceptedRow < 0)
-                        {
-                            firstAcceptedRow = y;
-                            firstAcceptedTop = candidate.Value.Top;
-                        }
+                        search.Offer(candidate.Value, y);
                     }
                 }
             }
 
-            if (widest.Width > 0)
+            // §334: the frame is over, so the bar still open is finished.
+            search.CloseBar();
+
+            if (search.BestWidest.Width > 0)
             {
-                // Left/width/height from the widest row, top from the first.
-                // The height needs no re-clamp: firstAcceptedTop is at or
-                // above widest.Top, and widest was already clamped to fit the
-                // frame, so this can only move the box UP - never off the
-                // bottom edge.
+                // Left/width/height from the winning bar's widest row, top
+                // from that same bar's first row. The height needs no
+                // re-clamp: BestTop is at or above BestWidest.Top, and
+                // BestWidest was already clamped to fit the frame, so this
+                // can only move the box UP - never off the bottom edge.
                 battleBounds =
                     ImageOps.MakeRect(
-                        widest.Left,
-                        firstAcceptedTop,
-                        widest.Width,
-                        widest.Height
+                        search.BestWidest.Left,
+                        search.BestTop,
+                        search.BestWidest.Width,
+                        search.BestWidest.Height
                     );
+
+                // §342: the scan has worked at least once, so the oversize
+                // hint has nothing left to explain.
+                ScanEverLocated = true;
+
+                // §334: when the frame held more than one, say which was
+                // chosen and what it beat. Once per change, not per frame -
+                // this runs five times a second. Without it the tester's log
+                // showed the scan's answer alternating between two boxes with
+                // nothing anywhere saying a second candidate existed.
+                // §378: and when the chosen bar's rows overruled its widest
+                // row, say so - a box that used to come out too wide now
+                // explains what it refused.
+                string bars =
+                    search.BarsSeen > 1
+                        ? $"{search.BarsSeen} candidate title bars on this frame - using the widest, " +
+                          $"{search.BestWidest.Width} wide at y={search.BestTop}, over " +
+                          $"{search.RunnerUpWidth} wide at y={search.RunnerUpTop}. A narrower one is " +
+                          "usually an in-game popup such as the Battle Log."
+                        : string.Empty;
+
+                string overruled =
+                    search.BestWidestRow - search.BestWidest.Width > TitleBarSearch.AgreeTolerance
+                        ? $"the bar at y={search.BestTop} had a row {search.BestWidestRow} wide, but " +
+                          $"{search.BestAgreeingRows} of its rows end at x={search.BestWidest.Right}, so the box is " +
+                          $"{search.BestWidest.Width} wide - something dark beside the bar (a Pokemon PREVIEW " +
+                          "panel, usually) ran into it in the wider rows."
+                        : string.Empty;
+
+                LogScanIfChanged(
+                    bars.Length > 0 && overruled.Length > 0 ? bars + " " + overruled
+                    : bars.Length > 0 ? bars
+                    : overruled);
 
                 return true;
             }
 
+            LogScanIfChanged(string.Empty);
+
             return false;
+        }
+
+        // §334: the scan's own once-per-change line. Deliberately a separate
+        // latch from the manual box's, so neither can silence the other on a
+        // frame where both have something to say.
+        private static string lastScanState = string.Empty;
+
+        private static void LogScanIfChanged(string state)
+        {
+            if (string.Equals(state, lastScanState, StringComparison.Ordinal))
+                return;
+
+            lastScanState = state;
+
+            if (state.Length == 0)
+                return;
+
+            Log.Information("Battle window scan: {State}", state);
         }
 
         // ---- §135 manual boundaries ---------------------------------
@@ -391,6 +680,55 @@ namespace Foot_Tracker.Tracking
         /// the saved box rather than the scan. A hint for messages, written
         /// by whichever tracker located last.</summary>
         public static volatile bool LastLocateUsedManual;
+
+        // §342. The widest run the scan refused because the box it implied
+        // was larger than a battle window is allowed to be, and the frame it
+        // was refused on.
+        //
+        // A hint, not a measurement: several trackers scan concurrently and
+        // these are written without a lock, exactly as LastLocateUsedManual
+        // above is. Wrong occasionally is fine for something that only ever
+        // appears in a diagnostic. Silent is not.
+        //
+        // Only the WIDTH cap is recorded. The height cap cannot be reached
+        // first: a box is MaxBattleHeight tall only once it is
+        // MaxBattleHeight x BattleAspectRatio = 1870 pixels wide, and 1870
+        // is past MaxBattleWidth, so the width check has already refused it.
+        private static volatile int oversizeWidth;
+        private static volatile int oversizeFrameWidth;
+
+        static void NoteOversize(int width, int frameWidth)
+        {
+            if (width <= oversizeWidth)
+                return;
+
+            oversizeWidth = width;
+            oversizeFrameWidth = frameWidth;
+        }
+
+        /// <summary>§342. Whether the automatic scan has ever found a battle
+        /// window since the process started. A saved manual box does not
+        /// count: the question this answers is whether the SCAN works.</summary>
+        public static volatile bool ScanEverLocated;
+
+        /// <summary>
+        /// §342. Set when the scan has refused a run for being too big and
+        /// has never once found a battle window itself. Empty otherwise.
+        ///
+        /// The second half is what keeps it quiet. A run gets refused for
+        /// size on plenty of frames where detection works perfectly well,
+        /// and saying so then would be noise. It is worth reading only when
+        /// the answer to "where is the battle window" is nowhere - and then
+        /// it is the difference between a tester sending a report and a
+        /// tester giving up.
+        /// </summary>
+        public static string OversizeRefusal =>
+            oversizeWidth > 0 && !ScanEverLocated
+                ? $"a bar {oversizeWidth} pixels wide was found on this {oversizeFrameWidth}-wide " +
+                  $"capture and refused as too large for a battle window (the limit is " +
+                  $"{MaxBattleWidth}). If the game is at a high GUI scale on a large display, " +
+                  "lowering it one step should bring the window back inside that limit."
+                : string.Empty;
 
         public static void SetManualBounds(ManualBattleBounds? bounds)
         {
@@ -434,9 +772,17 @@ namespace Foot_Tracker.Tracking
 
             battleBounds = clamped;
 
+            // §333: on the frame it was drawn on this is a measurement; on
+            // any other it is the centring rule's guess, and the log should
+            // not present the two as the same thing.
             LogManualIfChanged(
                 $"battle window accepted from the saved box at ({clamped.Left},{clamped.Top}) " +
-                $"{clamped.Width}x{clamped.Height}");
+                $"{clamped.Width}x{clamped.Height}" +
+                (DrawnOnThisFrame(manual, screenshot)
+                    ? string.Empty
+                    : $" - NOTE it was drawn on a {manual.FrameWidth}x{manual.FrameHeight} frame and this " +
+                      $"one is {screenshot.Width}x{screenshot.Height}, so its position here is a guess; " +
+                      "redo Set Screen Boundaries on this client"));
 
             return true;
         }
@@ -460,6 +806,28 @@ namespace Foot_Tracker.Tracking
             ManualBattleBounds? manual = manualBounds;
 
             if (manual is null)
+                return false;
+
+            // §333: the override exists because the player's box was drawn
+            // AGAINST THIS VERY GAME WINDOW in Set Screen Boundaries - that
+            // is the whole reason it is allowed to beat a scan that
+            // succeeded. On a differently-sized frame it is not that any
+            // more; it is a guess made by the re-centring rule below, and a
+            // guess must not outrank a measurement.
+            //
+            // A Linux tester's report is what settled it. His box was
+            // 1252x736 drawn on a 1440x1252 frame, and his client is now
+            // 1259x1366. Re-centred and clamped, the box lands at (0,445)
+            // 1174x736 - the right SIZE within three pixels of the real
+            // window, and 82 pixels left and 70 pixels above it. Close
+            // enough to hold a battle window, so the override fired; far
+            // enough that every OCR region derived from it read the wrong
+            // pixels, and the encounters stopped.
+            //
+            // The box is still used as a FALLBACK on a mismatched frame,
+            // where a wrong guess is better than nothing. It simply may no
+            // longer overrule a scan that found something.
+            if (!DrawnOnThisFrame(manual, screenshot))
                 return false;
 
             if (!TryPlaceManualBox(manual, screenshot, out SKRectI placed))
@@ -492,10 +860,58 @@ namespace Foot_Tracker.Tracking
             SKRectI manual,
             int frameWidth,
             int frameHeight)
+            => SameWindow(scan, manual, frameWidth, frameHeight);
+
+        /// <summary>§293. The §142 rule, for any two boxes: EncounterTracker
+        /// uses it to tell a battle window lingering after "run away" from a
+        /// different window the locator has settled on once the battle is
+        /// gone. One rule for "same window", not two that could drift.</summary>
+        internal static bool SameWindow(
+            SKRectI a,
+            SKRectI b,
+            int frameWidth,
+            int frameHeight)
         {
-            return Math.Abs(scan.Left - manual.Left) <= frameWidth * AgreeLeftTopFraction &&
-                   Math.Abs(scan.Top - manual.Top) <= frameHeight * AgreeLeftTopFraction &&
-                   Math.Abs(scan.Width - manual.Width) <= manual.Width * AgreeWidthFraction;
+            return Math.Abs(a.Left - b.Left) <= frameWidth * AgreeLeftTopFraction &&
+                   Math.Abs(a.Top - b.Top) <= frameHeight * AgreeLeftTopFraction &&
+                   Math.Abs(a.Width - b.Width) <= b.Width * AgreeWidthFraction;
+        }
+
+        /// <summary>
+        /// §333. Whether the saved box was drawn on a frame this size.
+        ///
+        /// §135 re-places a box onto a different frame by shifting it half
+        /// the difference, on the measured grounds that PRO's battle window
+        /// opens centred: across seventeen frames at eight window sizes it
+        /// sat +37 pixels right of centre and within about ten pixels of
+        /// vertical centre.
+        ///
+        /// That holds for a window that was RESIZED. It does not hold for a
+        /// different layout. On the tester's 1259x1366 client the battle
+        /// window sits +2 horizontally and +201 VERTICALLY from centre,
+        /// because the game canvas is at the bottom of a tall window with
+        /// the chat and Battle Log above it. The centring model is not
+        /// wrong; it is being asked a question it was never measured on.
+        ///
+        /// So the frame size is the licence. Exact, not approximate: the
+        /// existing 10% fit tolerance let his box through at 6.2% clipped,
+        /// which is how a box 82 pixels out of place came to outrank a scan
+        /// that had found the window correctly.
+        /// </summary>
+        public static bool DrawnOnThisFrame(ManualBattleBounds manual, SKBitmap screenshot) =>
+            manual.FrameWidth == screenshot.Width &&
+            manual.FrameHeight == screenshot.Height;
+
+        /// <summary>§333. The saved box, and whether this frame is the one it
+        /// was drawn on - for the diagnostics to say so in words rather than
+        /// leaving two numbers side by side for a reader to compare.</summary>
+        public static bool ManualBoundsMatchFrame(int frameWidth, int frameHeight)
+        {
+            ManualBattleBounds? manual = manualBounds;
+
+            return manual is not null &&
+                   manual.FrameWidth == frameWidth &&
+                   manual.FrameHeight == frameHeight;
         }
 
         /// <summary>§135's placement and fit check, shared by the fallback
@@ -744,11 +1160,30 @@ namespace Foot_Tracker.Tracking
             int battleWidth =
                 runLength + leftExpansion;
 
-            if (battleWidth < MinBattleWidth ||
-                battleWidth > MaxBattleWidth)
+            if (battleWidth > MaxBattleWidth)
             {
+                // §342: remember the biggest one refused this way, but only
+                // when it is below the top chrome band.
+                //
+                // On a 4K capture a battle window is already 1555 pixels
+                // wide - the Windows report that prompted this - so one
+                // notch of GUI scale can put it past 1800, and the refusal
+                // is silent. The tracker then says "no battle window on
+                // screen" forever with a battle plainly open.
+                //
+                // The band is §142's, and it is what keeps this honest. A
+                // bordered client's own title bar spans nearly the whole
+                // capture and is refused here too, on every frame, for a
+                // reason that has nothing to do with GUI scale. It lives at
+                // the very top; a battle window never does.
+                if (y >= screenshot.Height * TopChromeFraction)
+                    NoteOversize(battleWidth, screenshot.Width);
+
                 return null;
             }
+
+            if (battleWidth < MinBattleWidth)
+                return null;
 
 
             // The scanned row is slightly inside the title bar.
@@ -859,6 +1294,45 @@ namespace Foot_Tracker.Tracking
             //
             // Title bar height scales with PRO's GUI - ~9% of total battle
             // height gives us enough room at both small and large GUI scales.
+            //
+            // §363: that sentence was true of the 9%, and false of the clamp
+            // that used to sit under it. The clamp read
+            // Math.Clamp(height, 45, 75): an ABSOLUTE ceiling on a
+            // PROPORTIONAL measurement. It does nothing until 9% of the
+            // battle height passes 75 - a battle window about 838 pixels
+            // tall - and from there up it stops the region scaling at all,
+            // so the bigger the player's GUI the smaller a share of the
+            // title bar got cropped. The reference screenshots every other
+            // number in this class was measured from were all below that,
+            // which is why it went unnoticed.
+            //
+            // Measured on the 3840x2160 frame from the report that found
+            // this, battleBounds 1951x1148 at (1033,461), title
+            // "Maiskolben VS. Wild Wingull":
+            //
+            //   9% of 1148          = 103 px  (what the formula asks for)
+            //   old clamp           =  75 px  (what it got)
+            //   title bar itself    = ~88 px  (dark bar ends here; below it
+            //                                 is the battle scene's border)
+            //   near-white text     = rows 33..80 below battleBounds.Top
+            //   the g's lower loop  = rows 77..80  <- BELOW the old 75
+            //
+            // So the crop cut the descenders off. A "g" with its loop
+            // removed OCRs as a/o/q, "Wingull" came back as something that
+            // matches no species, and TryDetectEncounter's §111 gate
+            // reported exactly what the user saw: a readable 'VS' title
+            // with no Pokemon name in it. The same hunt's last SUCCESSFUL
+            // read was "Remoraid" - no descender in it. That is the whole
+            // of the intermittency: names with g/y/j/p/q failed, names
+            // without them worked, on the same screen, in the same session.
+            //
+            // The ceiling is therefore gone rather than raised - a raised
+            // number would be one more absolute bound waiting for a bigger
+            // monitor. The 9% is the calibrated quantity and it already
+            // clears the bar (88/1148 = 7.7%); the 45 stays as a floor for
+            // windows too small for a percentage to be meaningful. For any
+            // battle window 838 px tall or shorter this produces the exact
+            // same rectangle as before, so nothing that worked changes.
 
             int x =
                 battleBounds.Left +
@@ -876,10 +1350,9 @@ namespace Foot_Tracker.Tracking
                 );
 
             height =
-                Math.Clamp(
+                Math.Max(
                     height,
-                    45,
-                    75
+                    45
                 );
 
             return ImageOps.MakeRect(

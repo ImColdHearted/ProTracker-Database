@@ -1,0 +1,70 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.TrackerSettingsWindow"
+        x:DataType="vm:TrackerSettingsViewModel"
+        Title="Tracker Settings"
+        Width="520" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1"
+        CanResize="False">
+
+    <!-- §188: the content sits on a themedPanel so it reads off a surface
+         rather than off the background image. -->
+    <Border Classes="themedPanel">
+    <StackPanel Margin="20" Spacing="14">
+
+        <TextBlock Text="How the encounter table is kept" FontSize="16" FontWeight="Bold"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <TextBlock TextWrapping="Wrap" Opacity="0.8" Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="This changes the Session Encounters table only. Your stats - time hunting, Since Shiny, Since Form, catches and catch rate - always cover the whole hunt, whichever option is picked." />
+
+        <RadioButton GroupName="TrackingMode" IsChecked="{Binding WholeHuntSelected, Mode=TwoWay}">
+            <StackPanel Spacing="2">
+                <TextBlock Text="One table for the whole hunt" FontWeight="Bold"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock TextWrapping="Wrap" FontSize="12" Opacity="0.75"
+                           Foreground="{DynamicResource ThemeTextBrush}"
+                           Text="The tracker as it has always worked. Every encounter of the hunt is in one table, wherever it happened. Nothing extra is written to disk." />
+            </StackPanel>
+        </RadioButton>
+
+        <RadioButton GroupName="TrackingMode" IsChecked="{Binding PerMapSelected, Mode=TwoWay}">
+            <StackPanel Spacing="2">
+                <TextBlock Text="A table per map" FontWeight="Bold"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock TextWrapping="Wrap" FontSize="12" Opacity="0.75"
+                           Foreground="{DynamicResource ThemeTextBrush}"
+                           Text="Walking onto a map shows that map's own table, and walking back later brings it straight back. Each map keeps its own small file, so this uses more disk the more places you hunt." />
+            </StackPanel>
+        </RadioButton>
+
+        <!-- §429: the level-sharing opt-in. Off until ticked; the box
+             says exactly what leaves the machine, because a setting that
+             sends something should. -->
+        <TextBlock Text="Shared level ranges" FontSize="16" FontWeight="Bold" Margin="0,10,0,0"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <TextBlock TextWrapping="Wrap" Opacity="0.8" Foreground="{DynamicResource ThemeTextBrush}"
+                   Text="The Map Explorer can show the level range each Pokémon spawns in on each map - and with it the level to set a lead at for a repel trick. Those ranges come from players who choose to share what they meet." />
+
+        <CheckBox IsChecked="{Binding ShareLevelData, Mode=TwoWay}">
+            <StackPanel Spacing="2">
+                <TextBlock Text="Share level data" FontWeight="Bold"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+                <TextBlock TextWrapping="Wrap" FontSize="12" Opacity="0.75"
+                           Foreground="{DynamicResource ThemeTextBrush}"
+                           Text="Sends the species, map and level of each Pokémon you meet - once its level and map are settled, in a batch every couple of minutes. Nothing else goes: not your name, not the time, not what you caught. The server keeps only the lowest and highest level seen per Pokémon per map. Off unless you tick it." />
+            </StackPanel>
+        </CheckBox>
+
+        <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" FontSize="12"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+        <Button Content="Close" HorizontalAlignment="Right" Click="CloseButton_Click" />
+    </StackPanel>
+    </Border>
+</Window>

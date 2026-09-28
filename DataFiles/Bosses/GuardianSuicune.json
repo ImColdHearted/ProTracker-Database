@@ -22,23 +22,28 @@
         "pokemon": [
           {
             "name": "Spheal",
-            "dexNumber": 363
+            "dexNumber": 363,
+            "winStreakRequired": 3
           },
           {
             "name": "Snover",
-            "dexNumber": 459
+            "dexNumber": 459,
+            "winStreakRequired": 3
           },
           {
             "name": "Oshawott",
-            "dexNumber": 501
+            "dexNumber": 501,
+            "winStreakRequired": 3
           },
           {
             "name": "Bergmite",
-            "dexNumber": 712
+            "dexNumber": 712,
+            "winStreakRequired": 3
           },
           {
             "name": "Suicune",
-            "dexNumber": 245
+            "dexNumber": 245,
+            "winStreakRequired": 3
           }
         ],
         "items": [

@@ -30,6 +30,26 @@ public sealed partial class SwapPokemonViewModel : ViewModelBase
 
     public ObservableCollection<PokemonCardItem> SearchResults { get; } = new();
 
+    /// <summary>§272. The forms/event-skins column for the target already in
+    /// this slot - the same column PokemonSelectorWindow shows, built by the
+    /// same code. This window is what a left-click on a target sprite opens,
+    /// so it is where "change how this one is drawn" belongs; §271 had it
+    /// behind a right-click in a window of its own, which is a second window
+    /// for a choice that belongs beside the choice it modifies.
+    ///
+    /// Deliberately pinned to the CURRENT target rather than following
+    /// whatever is searched on the left. The two halves do different jobs:
+    /// the left replaces this target, the right restyles it, and a column
+    /// that moved under the search would make the second one impossible to
+    /// aim.</summary>
+    public ObservableCollection<PokemonCardItem> AvailableForms { get; } = new();
+
+    public bool HasForms => AvailableForms.Count > 0;
+
+    /// <summary>§272. What the last click in that column did - its own line,
+    /// for the same reason PokemonSelectorViewModel gives.</summary>
+    [ObservableProperty] private string skinMessage = string.Empty;
+
     [ObservableProperty] private string? searchText;
 
     /// <summary>Set once a card is picked - see SelectCard below.</summary>
@@ -41,6 +61,11 @@ public sealed partial class SwapPokemonViewModel : ViewModelBase
     public SwapPokemonViewModel(string currentTargetName)
     {
         CurrentTargetName = currentTargetName;
+
+        foreach (PokemonCardItem card in TargetSkinPicker.BuildForms(currentTargetName))
+        {
+            AvailableForms.Add(card);
+        }
 
         _searchDelayTimer.Tick += (_, _) =>
         {
@@ -93,5 +118,14 @@ public sealed partial class SwapPokemonViewModel : ViewModelBase
     {
         SelectedPokemon = card.Name;
         Confirmed?.Invoke();
+    }
+
+    /// <summary>§272. A click in the forms column - the shared rule. Picking a
+    /// skin does NOT close this window: the two halves are independent, and
+    /// somebody restyling a target has not asked to replace it.</summary>
+    [RelayCommand]
+    private void SelectSkin(PokemonCardItem card)
+    {
+        SkinMessage = TargetSkinPicker.ApplyReskin(CurrentTargetName, card, AvailableForms);
     }
 }

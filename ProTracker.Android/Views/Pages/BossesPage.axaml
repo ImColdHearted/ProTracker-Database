@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Foot_Tracker.ViewModels"
+             x:Class="ProTracker.Companion.Views.Pages.BossesPage"
+             x:DataType="vm:BossListViewModel">
+
+    <!-- §295. BossListWindow, one card per row instead of a wrap of 208px
+         cards - a phone is one card wide. Same view model, same commands. -->
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,8">
+            <TextBox Text="{Binding SearchText}" PlaceholderText="Search by name or location" />
+            <TextBlock Grid.Column="1" Text="{Binding CountText}" VerticalAlignment="Center" Margin="10,0,2,0"
+                       FontSize="12" Foreground="{DynamicResource ThemeTextBrush}" />
+        </Grid>
+
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding Bosses}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:BossListItem">
+                        <Border Margin="0,0,0,8" Padding="10" Classes="themedPanel"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1" CornerRadius="4">
+                            <StackPanel Spacing="8">
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Panel Width="48" Height="64" VerticalAlignment="Top">
+                                        <Image Source="{Binding Portrait}" Stretch="Uniform"
+                                               IsVisible="{Binding HasPortrait}"
+                                               RenderOptions.BitmapInterpolationMode="None" />
+                                        <TextBlock Text="{Binding Name}" FontSize="9" TextWrapping="Wrap" TextAlignment="Center"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   IsVisible="{Binding !HasPortrait}" Opacity="0.6" />
+                                    </Panel>
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0" Spacing="3">
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding Location}" FontSize="11" TextWrapping="Wrap" Opacity="0.75" />
+                                        <TextBlock Text="{Binding CooldownText}" FontSize="11" Opacity="0.75" />
+                                    </StackPanel>
+                                </Grid>
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Button Content="Easy" FontSize="12" Padding="14,6" IsVisible="{Binding HasEasy}"
+                                            Command="{Binding $parent[ItemsControl].((vm:BossListViewModel)DataContext).OpenEasyCommand}"
+                                            CommandParameter="{Binding}" />
+                                    <Button Content="Medium" FontSize="12" Padding="14,6" IsVisible="{Binding HasMedium}"
+                                            Command="{Binding $parent[ItemsControl].((vm:BossListViewModel)DataContext).OpenMediumCommand}"
+                                            CommandParameter="{Binding}" />
+                                    <Button Content="Hard" FontSize="12" Padding="14,6" IsVisible="{Binding HasHard}"
+                                            Command="{Binding $parent[ItemsControl].((vm:BossListViewModel)DataContext).OpenHardCommand}"
+                                            CommandParameter="{Binding}" />
+                                    <TextBlock Text="No difficulties in this file" FontSize="11" Opacity="0.6"
+                                               VerticalAlignment="Center" IsVisible="{Binding HasNoDifficulty}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <TextBlock Grid.Row="1" Text="No boss matches that search." IsVisible="{Binding IsEmpty}"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.75" />
+    </Grid>
+</UserControl>

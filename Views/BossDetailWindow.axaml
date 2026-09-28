@@ -48,8 +48,18 @@
 
                 <!-- Name, difficulty, and the mode controls -->
                 <StackPanel Grid.Column="1" Margin="14,0" VerticalAlignment="Center" Spacing="4">
-                    <TextBlock Text="{Binding HeaderNameText}" FontSize="24" FontWeight="Bold"
-                               Foreground="{DynamicResource ThemeTextBrush}" />
+                    <!-- §289: the cooldown at the end of the name, a 5px gap,
+                         half the name's size - "02:11:40 left" or "Ready" -
+                         so the window that opens a fight says whether the
+                         fight is there to be had. -->
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="{Binding HeaderNameText}" FontSize="24" FontWeight="Bold"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding HeaderCooldownText}" FontSize="12" Opacity="0.8"
+                                   VerticalAlignment="Center" Margin="0,4,0,0"
+                                   Foreground="{DynamicResource ThemeTextBrush}"
+                                   ToolTip.Tip="Days:hours:minutes until this boss can be fought again on this profile." />
+                    </StackPanel>
                     <TextBlock Text="{Binding HeaderDifficultyText}" FontSize="13" Opacity="0.75"
                                Foreground="{DynamicResource ThemeTextBrush}" />
 
@@ -105,6 +115,16 @@
                                       IsEnabled="{Binding HasStreakBonusRewards}"
                                       ToolTip.Tip="Swap the panels below to the win-streak bonus rewards. Disabled when this boss has none." />
                     </StackPanel>
+
+                    <!-- §277: how this profile has fared against this boss.
+                         Under the two buttons, where it was asked for; hidden
+                         entirely for a boss never fought, because "0 wins, 0
+                         losses" reads as a result rather than as an absence. -->
+                    <TextBlock Text="{Binding RecordText}" FontSize="12" FontWeight="Bold"
+                               Foreground="{DynamicResource ThemeTextBrush}"
+                               IsVisible="{Binding HasRecord}"
+                               ToolTip.Tip="{Binding RecordTip}"
+                               Margin="0,6,0,0" />
                 </StackPanel>
 
                 <!-- Requirements + location -->
@@ -143,6 +163,13 @@
                      Background="Transparent" BorderThickness="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="vm:BossTeamMemberItem">
+                        <!-- §290: no sprite background here. §289 put the
+                             main window's Picture BG behind these and it
+                             read as a grid of boxes fighting the ListBox's
+                             own hover and selection chrome - a square inside
+                             a square, the thing §189 removed. The big sprite
+                             in the summary keeps it; here the column is
+                             cleaner bare. -->
                         <Image Source="{Binding Sprite}" Width="56" Height="56" Stretch="Uniform"
                                Margin="2"
                                ToolTip.Tip="{Binding Pokemon.Name}"
@@ -165,8 +192,10 @@
                              it sits in is a panel now, and a bordered square
                              inside a bordered panel is two frames around one
                              Pokemon. -->
-                        <Image Grid.Column="0" Width="96" Height="96"
-                               Source="{Binding Sprite}" Stretch="Uniform" Margin="2" />
+                        <Border Grid.Column="0" Classes="huntingSprite" CornerRadius="4" Margin="2"
+                                VerticalAlignment="Top">
+                            <Image Width="96" Height="96" Source="{Binding Sprite}" Stretch="Uniform" />
+                        </Border>
                         <StackPanel Grid.Column="1" Margin="12,0,0,0" Spacing="4" VerticalAlignment="Center">
                             <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
                                 <TextBlock Text="{Binding Pokemon.Name}" FontSize="16" FontWeight="Bold"

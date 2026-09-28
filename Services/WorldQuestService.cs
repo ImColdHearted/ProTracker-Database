@@ -12,7 +12,15 @@ namespace Foot_Tracker.Services
     /// duration), NOT the date printed in the announcement: the announcement
     /// repeats a stale date - the September post still read "Sunday, August
     /// 16" - so EndTimeText is kept only to show what the post said, and every
-    /// countdown runs off EndsUtc.</summary>
+    /// countdown runs off EndsUtc.
+    ///
+    /// §298. EndedUtc is set when the admin declared the quest over because
+    /// both servers had met the goal - the half of "24 hours OR the goal,
+    /// whichever comes first" that nothing on the wire can see. It is null
+    /// for every quest nobody has ended. The Worker also reports EndsUtc as
+    /// the EARLIER of the two, so a countdown that knows nothing about
+    /// EndedUtc still stops; EndedUtc is what lets the panel say the goal was
+    /// met rather than that the day simply ran out.</summary>
     public sealed record WorldQuest(
         string MessageId,
         string Pokemon,
@@ -25,6 +33,7 @@ namespace Foot_Tracker.Services
         string EndTimeText,
         DateTime StartedUtc,
         DateTime? EndsUtc,
+        DateTime? EndedUtc,
         bool Parsed);
 
     /// <summary>§233. One catch counted toward the player's own total.</summary>
@@ -99,16 +108,74 @@ namespace Foot_Tracker.Services
         /// <summary>The quest running right now, or null when there is none
         /// (which is the normal state - quests run about once a month). Throws
         /// EventsSyncException when the server cannot be reached, which the
-        /// window shows on its status line.</summary>
-        public static async Task<WorldQuest?> FetchActiveAsync(CancellationToken cancellationToken = default)
+        /// caller shows on the status line.</summary>
+        public static async Task<WorldQuest?> FetchActiveAsync(CancellationToken cancellationToken = default) =>
+            (await FetchActiveAndAsync(null, cancellationToken)).Active;
+
+        /// <summary>§298. The running quest AND one named quest, from a single
+        /// fetch. The main window needs both on the same poll: which quest is
+        /// running decides the menu colour, and what has become of the quest
+        /// the player is actually IN decides whether their countdown should
+        /// still be running - a quest someone ended is over for them too, and
+        /// they are the person it matters most to. One call rather than two,
+        /// so the two answers cannot come from different minutes.
+        ///
+        /// <paramref name="messageId"/> null, or a quest the server no longer
+        /// lists, gives Named null. Active is null when nothing is running.</summary>
+        public static async Task<(WorldQuest? Active, WorldQuest? Named)> FetchActiveAndAsync(
+            string? messageId, CancellationToken cancellationToken = default)
         {
             IReadOnlyList<WorldQuest> quests = await EventsSyncService.FetchWorldQuestsAsync(cancellationToken);
 
             DateTime now = DateTime.UtcNow;
 
+            WorldQuest? active = null;
+            WorldQuest? named = null;
+
             foreach (WorldQuest quest in quests)
             {
-                if (quest.Parsed && quest.EndsUtc is not null && quest.EndsUtc > now && quest.StartedUtc <= now)
+                // §298: a quest that was ended is not running, whatever its
+                // derived end time says. The Worker already reports EndsUtc as
+                // the earlier of the two, so the date test alone would do it;
+                // the rule is written out anyway, here as in the Worker,
+                // because it IS the rule rather than a consequence of one.
+                if (active is null
+                    && quest.Parsed
+                    && quest.EndedUtc is null
+                    && quest.EndsUtc is not null
+                    && quest.EndsUtc > now
+                    && quest.StartedUtc <= now)
+                {
+                    active = quest;
+                }
+
+                if (named is null
+                    && messageId is not null
+                    && string.Equals(quest.MessageId, messageId, StringComparison.Ordinal))
+                {
+                    named = quest;
+                }
+            }
+
+            return (active, named);
+        }
+
+        /// <summary>§251. The quest with this id, running or not, or null when
+        /// the server no longer lists it. World Quest mode is entered for ONE
+        /// quest and stays on it across a restart (WorldQuestMode's marker);
+        /// the figures shown for it after that restart must be that quest's,
+        /// not whichever quest happens to be running by then. Same exception
+        /// as FetchActiveAsync when the server cannot be reached.</summary>
+        public static async Task<WorldQuest?> FetchAsync(string messageId, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(messageId))
+                return null;
+
+            IReadOnlyList<WorldQuest> quests = await EventsSyncService.FetchWorldQuestsAsync(cancellationToken);
+
+            foreach (WorldQuest quest in quests)
+            {
+                if (string.Equals(quest.MessageId, messageId, StringComparison.Ordinal))
                     return quest;
             }
 
@@ -179,26 +246,42 @@ namespace Foot_Tracker.Services
             }
         }
 
-        /// <summary>Removes the most recent catch - the undo behind the
-        /// window's Remove Last button, which is the only thing standing
-        /// between a bad automatic read and a count the player has to rebuild
-        /// by hand.</summary>
-        public static WorldQuestProgress RemoveLast(string questId)
+        /// <summary>§254. Removes one specific catch - the first stored entry
+        /// whose time and total both match - and returns the progress without
+        /// it, with whether anything was actually removed. Matched on the two
+        /// values rather than on a position in the list, because Auto Detect
+        /// can count a catch between the list being shown and the click,
+        /// which moves every position by one; the time is stored to a tenth
+        /// of a microsecond, so two catches sharing it AND a total are the
+        /// same catch for every purpose here. Nothing is written when nothing
+        /// matched.</summary>
+        public static (WorldQuestProgress Progress, bool Removed) Remove(string questId, DateTime atUtc, int total)
         {
             if (string.IsNullOrWhiteSpace(questId))
-                return new WorldQuestProgress(string.Empty, Array.Empty<WorldQuestSubmission>());
+                return (new WorldQuestProgress(string.Empty, Array.Empty<WorldQuestSubmission>()), false);
 
             lock (Gate)
             {
                 Dictionary<string, List<StoredSubmission>> all = ReadFile();
+                bool removed = false;
 
-                if (all.TryGetValue(questId, out List<StoredSubmission>? stored) && stored.Count > 0)
+                if (all.TryGetValue(questId, out List<StoredSubmission>? stored))
                 {
-                    stored.RemoveAt(stored.Count - 1);
-                    WriteFile(all);
+                    for (int i = 0; i < stored.Count; i++)
+                    {
+                        if (stored[i].Total != total || ParseUtc(stored[i].AtUtc) != atUtc)
+                            continue;
+
+                        stored.RemoveAt(i);
+                        removed = true;
+                        break;
+                    }
+
+                    if (removed)
+                        WriteFile(all);
                 }
 
-                return Load(questId);
+                return (Load(questId), removed);
             }
         }
 

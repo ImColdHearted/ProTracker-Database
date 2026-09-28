@@ -11,6 +11,7 @@ using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
+using Foot_Tracker.Services;
 using Foot_Tracker.ViewModels;
 
 namespace Foot_Tracker.Views;
@@ -37,6 +38,16 @@ public partial class AdminConsoleWindow : Window
         // master token), asked for once per run - the same window Create
         // Event and Remove Event use.
         vm.RequestAdminSignIn = () => AdminTokenWindow.ShowAsync(this);
+
+        // §399: the Map Boxes editor, one window at a time, independent of
+        // the console (WindowRegistry, not ShowDialog) so the picture can
+        // stay open while maps are added here.
+        vm.OpenMapBoxes = () => WindowRegistry.ShowOrActivate(this, () => new MapBoxEditorWindow());
+
+        // §298: ending a World Quest changes what every other tracker sees,
+        // so it asks first - the same Yes/No box the main window and the
+        // Hunt Log use.
+        vm.ConfirmAsync = message => ConfirmDialogWindow.ShowAsync(this, message);
 
         vm.RequestScreenshotPaths = async multiple =>
         {
@@ -89,7 +100,7 @@ public partial class AdminConsoleWindow : Window
                 rendered.Render(mainWindow);
 
                 await using var stream = File.Create(path);
-                rendered.Save(stream);
+                rendered.Save(stream, new PngBitmapEncoderOptions());
             }
 
             return (path, new Bitmap(path));

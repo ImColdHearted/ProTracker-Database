@@ -22,11 +22,8 @@
         "pokemon": [
           {
             "name": "Timburr",
-            "dexNumber": 390
-          },
-          {
-            "name": "Chimchar",
-            "dexNumber": 532
+            "dexNumber": 390,
+            "winStreakRequired": 0
           }
         ],
         "items": [
@@ -152,11 +149,18 @@
         "pokemon": [
           {
             "name": "Timburr",
-            "dexNumber": 390
+            "dexNumber": 390,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Timburr",
+            "dexNumber": 390,
+            "winStreakRequired": 3
           },
           {
             "name": "Chimchar",
-            "dexNumber": 532
+            "dexNumber": 532,
+            "winStreakRequired": 3
           }
         ],
         "items": [
@@ -282,11 +286,18 @@
         "pokemon": [
           {
             "name": "Timburr",
-            "dexNumber": 390
+            "dexNumber": 390,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Timburr",
+            "dexNumber": 390,
+            "winStreakRequired": 3
           },
           {
             "name": "Chimchar",
-            "dexNumber": 532
+            "dexNumber": 532,
+            "winStreakRequired": 3
           }
         ],
         "items": [

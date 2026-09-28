@@ -67,6 +67,106 @@ namespace PokemonSim.Models
         // legal action on the release turn, so the engine must remember it.
         public MoveState? ChargingMove;
 
+        // §301: Hyper Beam and its four siblings. Set by RechargeEffect when
+        // the move lands; the following turn is spent paying for it -
+        // LegalActions offers nothing else and refuses the switch, and
+        // MoveResolver consumes the turn before any status gate runs.
+        //
+        // The mirror image of Charging: a charge turn costs the turn BEFORE
+        // the damage and a recharge turn costs the one after, so the two
+        // keep the same shape - a flag and the move it belongs to.
+        public bool MustRecharge;
+
+        public MoveState? RechargeMove;
+
+        // ---- §304: the lock-ins, the counters and the leftovers. ----
+
+        /// <summary>§304. The multi-turn lock: Outrage, Thrash, Petal
+        /// Dance, Uproar and Rollout all take the user's next turns and
+        /// spend them on the same move. LegalActions offers only this move
+        /// while it stands, and MoveResolver counts a turn off it once the
+        /// move has been used.
+        ///
+        /// The move instance, not its name, for the same reason Charging
+        /// and MustRecharge keep theirs: LegalActions hands the instance
+        /// straight back as the one legal action, and a clone must point at
+        /// its own copy or it spends the original's PP.</summary>
+        public MoveState? LockedMove;
+
+        /// <summary>Turns of the lock still to spend, this one included.</summary>
+        public int LockedTurns;
+
+        /// <summary>Whether running the lock out confuses the user - true
+        /// for the Outrage family, false for Uproar and Rollout. Breaking
+        /// the lock early (a miss, an immune target, a full paralysis)
+        /// never confuses, in any of them.</summary>
+        public bool LockConfusesOnEnd;
+
+        /// <summary>§304. Fury Cutter, Echoed Voice and Rollout get
+        /// stronger the more turns in a row they are used. One counter, not
+        /// three: it counts uses of whichever move it is holding and resets
+        /// the moment a different move is used, which is the rule all three
+        /// share. 1 on the first use.</summary>
+        public string? ConsecutiveMoveName;
+
+        public int ConsecutiveMoveUses;
+
+        /// <summary>§304. Rage Fist: how many times this Pokemon has been
+        /// hit by a damaging move. Survives switching in the games, and
+        /// survives it here - it is a count of what happened to this
+        /// Pokemon in this battle, not a condition on the field.</summary>
+        public int TimesAttacked;
+
+        /// <summary>§304. Stomping Tantrum and Temper Flare double when the
+        /// user's LAST move failed, so the answer has to outlive the turn
+        /// that produced it. MoveResolver sets MoveFailedThisTurn wherever
+        /// it gives up on a move; the end-of-turn pass rolls this turn's
+        /// answer into last turn's and clears it.</summary>
+        public bool MoveFailedThisTurn;
+
+        public bool MoveFailedLastTurn;
+
+        /// <summary>§304. Psychic Noise: no healing for two turns.</summary>
+        public int HealBlockTurns;
+
+        /// <summary>§304. Smack Down and Thousand Arrows: knocked out of
+        /// the air, so Ground reaches it. Read by Grounding.</summary>
+        public bool SmackedDown;
+
+        /// <summary>§304. Glaive Rush: until the user's next turn, attacks
+        /// against it cannot miss and deal double damage.</summary>
+        public bool GlaiveRushActive;
+
+        /// <summary>§304. Rage: while it stands, being hit by a damaging
+        /// move raises the user's Attack. Cleared when the user next
+        /// moves.</summary>
+        public bool RageActive;
+
+        /// <summary>§304. Charge: the user's next Electric move has double
+        /// power. Spent by that move, whatever it is.</summary>
+        public bool ChargeActive;
+
+        /// <summary>§304. Defense Curl: doubles Rollout from then on. A
+        /// one-way latch - nothing in the games turns it off short of
+        /// leaving the field.</summary>
+        public bool DefenseCurled;
+
+        /// <summary>§304. Minimize: moves that flatten a minimized target
+        /// (Stomp, Body Slam, Heat Crash and the rest) cannot miss it and
+        /// deal double. A latch, like Defense Curl.</summary>
+        public bool Minimized;
+
+        /// <summary>§304. Roost: the user gives up its Flying type for the
+        /// rest of the turn it heals on. Cleared at end of turn.</summary>
+        public bool RoostedThisTurn;
+
+        /// <summary>§304. Return and Frustration read it, and nothing else
+        /// does. NOT volatile and not reset by anything in a battle: it
+        /// belongs to the Pokemon, like its nature. 255 - the maximum - is
+        /// the default, which is the value Return has effectively been
+        /// using all along (the data listed it at its 102-power maximum).</summary>
+        public int Happiness = 255;
+
         public int SubstituteHP;
 
         public class TrapEffect
@@ -247,6 +347,12 @@ namespace PokemonSim.Models
         /// holding one. Cleared on leaving the field.</summary>
         public string? ChoiceLockedMoveName;
 
+        /// <summary>§375. True from the hit a Gem was spent on to the end of
+        /// that move, so every hit of a multi-hit move gets the boost the
+        /// Gem paid for. Set and cleared by HeldItems (ModifyOutgoingDamage,
+        /// AfterMoveUsed); never outlives the move.</summary>
+        public bool GemBoosting;
+
         // ---- Section 161: mega evolution. ----
 
         /// <summary>True once this Pokemon has mega evolved. Permanent for
@@ -366,6 +472,23 @@ namespace PokemonSim.Models
                 ProtectedThisTurn = ProtectedThisTurn,
                 ConsecutiveProtects = ConsecutiveProtects,
                 Charging = Charging,
+                MustRecharge = MustRecharge,
+                LockedTurns = LockedTurns,
+                LockConfusesOnEnd = LockConfusesOnEnd,
+                ConsecutiveMoveName = ConsecutiveMoveName,
+                ConsecutiveMoveUses = ConsecutiveMoveUses,
+                TimesAttacked = TimesAttacked,
+                MoveFailedThisTurn = MoveFailedThisTurn,
+                MoveFailedLastTurn = MoveFailedLastTurn,
+                HealBlockTurns = HealBlockTurns,
+                SmackedDown = SmackedDown,
+                GlaiveRushActive = GlaiveRushActive,
+                RageActive = RageActive,
+                ChargeActive = ChargeActive,
+                DefenseCurled = DefenseCurled,
+                Minimized = Minimized,
+                RoostedThisTurn = RoostedThisTurn,
+                Happiness = Happiness,
                 SubstituteHP = SubstituteHP,
                 Trap = Trap?.Clone(),
                 LeechSeeded = LeechSeeded,
@@ -402,6 +525,7 @@ namespace PokemonSim.Models
                 HeldItemId = HeldItemId,
                 LostItem = LostItem,
                 ChoiceLockedMoveName = ChoiceLockedMoveName,
+                GemBoosting = GemBoosting,
                 MegaEvolved = MegaEvolved,
                 IsShiny = IsShiny,
                 SpritePath = SpritePath,
@@ -417,6 +541,24 @@ namespace PokemonSim.Models
             {
                 int index = Moves.IndexOf(ChargingMove);
                 clone.ChargingMove = index >= 0 ? clone.Moves[index] : ChargingMove.Clone();
+            }
+
+            // §301: and the recharging one, for the same reason - a clone
+            // that pointed at the original's move would spend the original's
+            // PP when the search engine played it out.
+            if (RechargeMove != null)
+            {
+                int index = Moves.IndexOf(RechargeMove);
+                clone.RechargeMove = index >= 0 ? clone.Moves[index] : RechargeMove.Clone();
+            }
+
+            // §304: and the locked-in one, for the third time and the same
+            // reason - Outrage spends PP on the turn it is pressed, and a
+            // clone pointing at the original's move would spend it there.
+            if (LockedMove != null)
+            {
+                int index = Moves.IndexOf(LockedMove);
+                clone.LockedMove = index >= 0 ? clone.Moves[index] : LockedMove.Clone();
             }
 
             return clone;

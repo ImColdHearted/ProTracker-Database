@@ -14,6 +14,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Foot_Tracker.ViewModels"
+        xmlns:models="using:Foot_Tracker.Models"
         x:Class="Foot_Tracker.Views.AdminConsoleWindow"
         x:DataType="vm:AdminConsoleViewModel"
         Title="Admin Console"
@@ -56,6 +57,7 @@
 
             <WrapPanel Grid.Row="0" Margin="0,0,0,8">
                 <Button Classes="section" Classes.active="{Binding IsStatusSection}" Content="Status"
+                        IsEnabled="{Binding MayViewStatus}"
                         Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Status" />
                 <Button Classes="section" Classes.active="{Binding IsRecoverySection}" Content="Recovery"
                         Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Recovery" />
@@ -67,16 +69,52 @@
                         Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Data Health" />
                 <Button Classes="section" Classes.active="{Binding IsSupportBundleSection}" Content="Support Bundle"
                         Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Support Bundle" />
-                <Button Classes="section" Classes.active="{Binding IsEventLoginsSection}" Content="Event Logins"
-                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Event Logins" />
+                <Button Classes="section" Classes.active="{Binding IsAdminLoginsSection}" Content="Admin Logins"
+                        IsEnabled="{Binding MayManageLogins}"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Admin Logins" />
                 <Button Classes="section" Classes.active="{Binding IsActiveEventsSection}" Content="Active Events"
+                        IsEnabled="{Binding MayManageEvents}"
                         Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Active Events" />
                 <Button Classes="section" Classes.active="{Binding IsWorldQuestSection}" Content="World Quest"
                         Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="World Quest" />
-                <Button Classes="section" Classes.active="{Binding IsSpriteScraperSection}" Content="Sprite Scraper"
-                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Sprite Scraper" />
+                <!-- §347: approving happens in Discord. This is for seeing
+                     what is live and taking one back down. -->
+                <Button Classes="section" Classes.active="{Binding IsAppearancesSection}" Content="Appearances"
+                        IsEnabled="{Binding MayModerateAppearances}"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Appearances" />
+                <Button Classes="section" Classes.active="{Binding IsPokedexScraperSection}" Content="Pokedex Scraper"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Pokedex Scraper" />
+                <!-- §397: publishes what the scraper scanned - which maps go
+                     on which Spawns page, and what spawns on each. -->
+                <Button Classes="section" Classes.active="{Binding IsSpawnsSection}" Content="Spawns"
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Spawns" />
                 <Button Classes="section" Classes.active="{Binding IsBattleLabSection}" Content="Battle Lab"
-                        Margin="0,0,0,4" Command="{Binding ShowSectionCommand}" CommandParameter="Battle Lab" />
+                        Margin="0,0,6,4" Command="{Binding ShowSectionCommand}" CommandParameter="Battle Lab" />
+                <!-- §325: next to the Battle Lab and not inside it. The lab
+                     COLLECTS - every battle goes into the training corpus.
+                     This MEASURES and writes no battles at all. One panel
+                     with both buttons is how an evaluation run ends up
+                     adding its own play to the data it was judging. -->
+                <Button Classes="section" Classes.active="{Binding IsEvaluationSection}" Content="AI Evaluation"
+                        Margin="0,0,0,4" Command="{Binding ShowSectionCommand}" CommandParameter="AI Evaluation" />
+                <!-- §348. Which credential this run is holding. A disabled
+                     section button is only readable as a permission if it
+                     is obvious WHOSE permission - otherwise it reads as a
+                     bug. -->
+                <TextBlock Text="{Binding SignedInAs}" FontSize="11" Opacity="0.65"
+                           Margin="2,4,0,0" TextWrapping="Wrap"
+                           Foreground="{DynamicResource ThemeTextBrush}" />
+                <!-- §286: the main window's pin, here. The Pokedex scan is
+                     used with the client in front, and a console that drops
+                     behind it on every click is one that has to be found
+                     again for every screenful. Same control as the main
+                     window's - bound straight to Topmost, checked state shown
+                     by the themedButton border, not colour alone. -->
+                <ToggleButton Classes="themedButton" Padding="8,4" FontSize="12" Content="📌"
+                              Margin="6,0,0,4"
+                              IsChecked="{Binding $parent[Window].Topmost, Mode=TwoWay}"
+                              ToolTip.Tip="Always on top"
+                              AutomationProperties.Name="Always on top" />
             </WrapPanel>
 
             <Panel Grid.Row="1">
@@ -257,15 +295,18 @@
                 </ScrollViewer>
             </Panel>
 
-            <!-- §153: delegated sign-ins for the shared Events board. The
-                 list, the create/reset row and Revoke all need the MASTER
+            <!-- §153: delegated admin sign-ins. §253: "Admin Logins" now -
+                 they were "Event Logins" while the Events board was what they
+                 posted to; what they unlock today is the ordinary admin
+                 level on the events server (Active Events, the test quest).
+                 The list, the create/reset row and Revoke all need the MASTER
                  token server-side; the logins this tab creates then need
                  only their own username + password in the sign-in window. -->
-            <Panel IsVisible="{Binding IsEventLoginsSection}">
+            <Panel IsVisible="{Binding IsAdminLoginsSection}">
                 <ScrollViewer>
                     <StackPanel Spacing="8" Margin="6">
                         <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
-                                   Text="Separate admin sign-ins for the shared Events board. Each has its own username and password, can post and remove events without the master token, and can be revoked here at any time. Only the master admin token can manage this list." />
+                                   Text="Separate admin sign-ins for the events server. Each has its own username and password, can publish Active Events and start test World Quests without the master token, and can be revoked here at any time. Only the master admin token can manage this list." />
 
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <Button Content="Refresh List" FontSize="12" Command="{Binding RefreshAdminLoginsCommand}" />
@@ -290,8 +331,23 @@
                             <TextBox Text="{Binding NewLoginPassword}" Width="140" PlaceholderText="Password" PasswordChar="&#8226;" FontSize="12" />
                             <Button Content="Create / Reset" FontSize="12" Command="{Binding SaveAdminLoginCommand}" />
                         </StackPanel>
-                        <CheckBox Content="May also read the Status tab's tracker counts" FontSize="12"
+                        <!-- §347: three permissions now, and none of them
+                             is implied. Posting events used to come free
+                             with any login; it is a tick like the others,
+                             so a login created with nothing ticked can do
+                             nothing - the right default for a credential
+                             you are about to hand someone.
+
+                             Managing logins is deliberately absent: that
+                             stays with the master token, because a login
+                             that could create logins could grant itself
+                             everything above and make these decorative. -->
+                        <CheckBox Content="May post and delete events" FontSize="12"
+                                  IsChecked="{Binding NewLoginCanManageEvents}" />
+                        <CheckBox Content="May read the Status tab's tracker counts" FontSize="12"
                                   IsChecked="{Binding NewLoginCanViewStatus}" />
+                        <CheckBox Content="May moderate community appearances (list and remove)" FontSize="12"
+                                  IsChecked="{Binding NewLoginCanModerateThemes}" />
 
                         <TextBlock Text="{Binding AdminLoginsStatus}" TextWrapping="Wrap" FontSize="12"
                                    Foreground="{DynamicResource ThemeTextBrush}" />
@@ -361,6 +417,43 @@
             <Panel IsVisible="{Binding IsWorldQuestSection}">
                 <ScrollViewer>
                     <StackPanel Spacing="8" Margin="6">
+                        <!-- §298: the announced quest, above the test one. A
+                             quest runs 24 hours OR stops the moment the
+                             community goal is met, per server - so it is over
+                             once both servers have finished, which only a
+                             person who played them knows. This is where that
+                             is said, once, to every tracker. -->
+                        <TextBlock Text="The announced quest" FontWeight="Bold" FontSize="13"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="A World Quest ends 24 hours after it starts, or the moment the community goal is met - whichever comes first. Nothing the events server can read says when the goal was met, so the countdown every tracker shows is only a maximum. Once you know both servers have finished, end it here and every tracker stops counting it." />
+
+                        <TextBlock Text="{Binding AnnouncedQuestText}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Button Content="Refresh" FontSize="12"
+                                    Command="{Binding RefreshAnnouncedQuestCommand}"
+                                    ToolTip.Tip="Reads the latest World Quest from the events server, running or not. No sign-in needed." />
+                            <Button Content="End it for everyone" FontSize="12" FontWeight="Bold"
+                                    Command="{Binding EndAnnouncedQuestCommand}"
+                                    IsEnabled="{Binding CanEndAnnouncedQuest}"
+                                    ToolTip.Tip="Records that both servers have met the goal. Every tracker stops counting the quest down. Asks first, and needs an admin sign-in." />
+                            <Button Content="Reopen" FontSize="12"
+                                    Command="{Binding ReopenAnnouncedQuestCommand}"
+                                    IsEnabled="{Binding CanReopenAnnouncedQuest}"
+                                    ToolTip.Tip="Takes back an end recorded by mistake, so the quest runs again until its own 24 hours are up." />
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding AnnouncedQuestStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <Separator Margin="0,6,0,2" />
+
+                        <TextBlock Text="Test quests" FontWeight="Bold" FontSize="13"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
                         <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
                                    Text="Starts a World Quest of your own for testing. It goes in the same place a real quest does, so Menu &gt; World Quest, the countdown and the catch preview reader all behave exactly as they will on the real thing." />
 
@@ -370,12 +463,12 @@
                         <TextBlock Text="Pokémon" FontWeight="Bold" FontSize="12"
                                    Foreground="{DynamicResource ThemeTextBrush}" />
                         <TextBox Width="220" HorizontalAlignment="Left" FontSize="12"
-                                 Watermark="Rattata" Text="{Binding TestQuestPokemon}" />
+                                 PlaceholderText="Rattata" Text="{Binding TestQuestPokemon}" />
 
                         <TextBlock Text="Total IV's (the community goal)" FontWeight="Bold" FontSize="12"
                                    Foreground="{DynamicResource ThemeTextBrush}" />
                         <TextBox Width="220" HorizontalAlignment="Left" FontSize="12"
-                                 Watermark="2000" Text="{Binding TestQuestTotalIvsText}" />
+                                 PlaceholderText="2000" Text="{Binding TestQuestTotalIvsText}" />
 
                         <TextBlock Text="{Binding TestQuestTiers}" TextWrapping="Wrap" FontSize="11"
                                    Foreground="{DynamicResource ThemeTextBrush}" />
@@ -399,11 +492,56 @@
                  dropping the blue backdrop and the platform, so the counterpart
                  library can be grown from the game rather than hunted for. The
                  result is always shown before anything is written. -->
-            <Panel IsVisible="{Binding IsSpriteScraperSection}">
+            <!-- §347. The undo for an approval. Approving is a link in the
+                 Discord channel; this is the only place that can take one
+                 back down, whether it was a mistake or somebody else's. -->
+            <Panel IsVisible="{Binding IsAppearancesSection}">
+                <ScrollViewer>
+                    <StackPanel Spacing="8" Margin="0,0,0,8">
+                        <TextBlock Text="Community appearances" FontWeight="Bold" FontSize="13"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <ComboBox ItemsSource="{Binding AppearancesStates}"
+                                      SelectedItem="{Binding AppearancesState}"
+                                      Width="130" FontSize="12" />
+                            <Button Content="Refresh" FontSize="12"
+                                    Command="{Binding RefreshAppearancesCommand}" />
+                            <Button Content="Remove" FontSize="12"
+                                    Command="{Binding RemoveSelectedAppearanceCommand}" />
+                        </StackPanel>
+
+                        <ListBox ItemsSource="{Binding AdminThemes}"
+                                 SelectedItem="{Binding SelectedAdminTheme}"
+                                 Height="300" FontSize="12">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <TextBlock Text="{Binding AppearancesStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <TextBlock FontSize="11" Opacity="0.7" TextWrapping="Wrap"
+                                   Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Removing deletes the row and its picture permanently. Press Remove once to arm it and again to confirm - changing the selection cancels." />
+                    </StackPanel>
+                </ScrollViewer>
+            </Panel>
+
+            <Panel IsVisible="{Binding IsPokedexScraperSection}">
                 <ScrollViewer>
                     <StackPanel Spacing="8" Margin="6">
                         <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
-                                   Text="Open the Pokedex in game with a Pokemon selected, then press Grab. The backdrop and the platform are removed and the sprite is placed on a 120x120 canvas, the same shape the counterpart library already uses." />
+                                   Text="Open the Pokedex in game with a Pokemon selected. This section reads two things off that one panel: its sprite, and its Area list. Type the Pokemon's name once below and both halves use it." />
+
+                        <TextBlock Text="Sprite" FontWeight="Bold" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,4,0,0" />
+
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Press Grab. The backdrop and the platform are removed and the sprite is placed on a 120x120 canvas, the same shape the counterpart library already uses." />
 
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <Button Content="Grab from client" FontSize="12"
@@ -429,6 +567,122 @@
 
                         <TextBlock Text="{Binding ScraperStatus}" TextWrapping="Wrap" FontSize="12"
                                    Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <!-- §282: the other half of the same panel. The Area
+                             list scrolls, so sixty locations take several
+                             passes - overlapping ones cost nothing, because
+                             PokedexService merges by map name and a row
+                             already known is counted rather than written. -->
+                        <TextBlock Text="Areas" FontWeight="Bold" FontSize="12" Margin="0,10,0,0"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Reads the Area list - where this Pokemon spawns, by grass or surf, morning, day or night, and whether the area needs membership. Press Scan areas once per screenful; scroll the list a few rows and scan again. Overlapping scans cost nothing, so overlap on purpose." />
+
+                        <Button Content="Scan areas" FontSize="12" HorizontalAlignment="Left"
+                                Command="{Binding ScanPokedexAreasCommand}" IsEnabled="{Binding !IsBusy}"
+                                ToolTip.Tip="Captures the same bound PRO window the sprite grab uses and reads every Area row on screen." />
+
+                        <TextBlock Text="{Binding AreaScanStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <TextBlock Text="{Binding KnownSpawnsSummary}" TextWrapping="Wrap" FontSize="12"
+                                   FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <!-- §420: areas typed by hand. The scanner can only
+                             read a Pokedex that lists the species, so a
+                             spawn added to the game last week, or a Pokemon
+                             nobody here owns, has no panel to scan. Its maps
+                             go in here instead - one per line, or comma
+                             separated, as an announcement lists them - and
+                             are filed through the same merge a scan uses,
+                             marked M so a later scan can be seen to confirm
+                             or correct them. -->
+                        <TextBlock Text="Add areas by hand" FontWeight="Bold" FontSize="12" Margin="0,10,0,0"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="For a Pokemon the Pokedex on this machine cannot show yet - a newly released spawn, or one nobody here owns. Uses the same name box above. List its maps one per line or separated by commas, tick how and when it spawns, then Add areas. Names the location catalog knows are filed under the catalog's spelling." />
+
+                        <TextBox FontSize="12" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="54" MaxHeight="120"
+                                 PlaceholderText="Mt. Pyre 1F, Mt. Pyre 2F, Route 110"
+                                 Text="{Binding ManualMapNames, Mode=TwoWay}"
+                                 ToolTip.Tip="One map per line, or several on a line separated by commas or semicolons. The same map listed twice is filed once." />
+
+                        <WrapPanel>
+                            <CheckBox Content="Grass" FontSize="12" Margin="0,0,10,0" IsChecked="{Binding ManualLand, Mode=TwoWay}"
+                                      ToolTip.Tip="The land icon. Leave Grass and Surf both unticked for a fishing spawn - that is how the Pokedex draws one." />
+                            <CheckBox Content="Surf" FontSize="12" Margin="0,0,16,0" IsChecked="{Binding ManualWater, Mode=TwoWay}"
+                                      ToolTip.Tip="The water icon." />
+                            <CheckBox Content="Morning" FontSize="12" Margin="0,0,10,0" IsChecked="{Binding ManualMorning, Mode=TwoWay}" />
+                            <CheckBox Content="Day" FontSize="12" Margin="0,0,10,0" IsChecked="{Binding ManualDay, Mode=TwoWay}" />
+                            <CheckBox Content="Night" FontSize="12" Margin="0,0,16,0" IsChecked="{Binding ManualNight, Mode=TwoWay}"
+                                      ToolTip.Tip="All three ticked is 'All day' - the right reading when the announcement does not say." />
+                            <CheckBox Content="Members only" FontSize="12" IsChecked="{Binding ManualMembersOnly, Mode=TwoWay}"
+                                      ToolTip.Tip="The area needs membership - the Pokedex draws these names in pink." />
+                        </WrapPanel>
+
+                        <Button Content="Add areas" FontSize="12" HorizontalAlignment="Left"
+                                Command="{Binding AddManualAreasCommand}" IsEnabled="{Binding !IsBusy}"
+                                ToolTip.Tip="Files every map listed under the Pokemon named above, with the ticked method and times. A map already known is corrected rather than duplicated." />
+
+                        <TextBlock Text="{Binding ManualAreaStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <!-- §284: where it all lands, in the panel rather than
+                             in a log. One file per species, shared by every
+                             profile on this machine - where a Pokemon spawns
+                             is a fact about the game, not about an account. -->
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Margin="0,6,0,0" Opacity="0.8"
+                                   Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Saved as one file per Pokemon, shared by every profile on this machine:" />
+
+                        <SelectableTextBlock Text="{Binding PokedexStoreLocation}" TextWrapping="Wrap"
+                                             FontSize="11" Opacity="0.8"
+                                             Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <Button Content="Open folder" FontSize="12" HorizontalAlignment="Left"
+                                Command="{Binding OpenPokedexFolderCommand}"
+                                ToolTip.Tip="Opens the folder the scanned areas are written to. A scan that reads nothing leaves the frame it captured in the Diagnostics folder inside it." />
+
+                        <ItemsControl ItemsSource="{Binding KnownSpawns}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models:PokedexSpawn">
+                                    <Grid ColumnDefinitions="*,90,130,30,24,26" Margin="0,1">
+                                        <TextBlock Grid.Column="0" Text="{Binding MapName}" FontSize="11"
+                                                   TextTrimming="CharacterEllipsis" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <TextBlock Grid.Column="1" Text="{Binding MethodText}" FontSize="11"
+                                                   TextAlignment="Center" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <TextBlock Grid.Column="2" Text="{Binding TimeText}" FontSize="11"
+                                                   TextAlignment="Center" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                                        <!-- Pink, the colour the Pokedex itself
+                                             marks these in. -->
+                                        <TextBlock Grid.Column="3" Text="MS" FontSize="11" FontWeight="Bold"
+                                                   TextAlignment="Center" VerticalAlignment="Center" Foreground="#FFAAFF"
+                                                   IsVisible="{Binding MembersOnly}"
+                                                   ToolTip.Tip="This area needs membership." />
+                                        <!-- §420: typed by hand rather than
+                                             scanned. Goes away when a scan
+                                             of the real panel confirms it. -->
+                                        <TextBlock Grid.Column="4" Text="M" FontSize="11" FontWeight="Bold"
+                                                   TextAlignment="Center" VerticalAlignment="Center" Opacity="0.7"
+                                                   Foreground="{DynamicResource ThemeTextBrush}"
+                                                   IsVisible="{Binding Manual}"
+                                                   ToolTip.Tip="Typed by hand, not scanned. A scan of the Pokedex that agrees will clear this mark." />
+                                        <!-- §420: the undo for a map typed wrong
+                                             (or, rarely, read wrong). -->
+                                        <Button Grid.Column="5" Content="×" FontSize="11" Padding="4,0" MinHeight="0"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                Command="{Binding $parent[Window].((vm:AdminConsoleViewModel)DataContext).RemoveKnownSpawnCommand}"
+                                                CommandParameter="{Binding}"
+                                                ToolTip.Tip="Removes this area from the Pokemon's record on this machine. A published Spawns page keeps it until republished." />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
                 </ScrollViewer>
             </Panel>
@@ -437,6 +691,73 @@
                  the Simulator's AIs battle fresh random teams headlessly,
                  every battle recorded by the §156 observer; meant to churn
                  for hours while the machine is otherwise idle. -->
+            <!-- §397: the Spawns pages under Game Data. A map is filed under
+                 one of five pages and its page - every species this
+                 machine's Pokedex scans name it for - goes to the events
+                 server, where every tracker reads it. Master token only;
+                 the server refuses a delegated login with its own sentence. -->
+            <Panel IsVisible="{Binding IsSpawnsSection}">
+                <ScrollViewer>
+                    <StackPanel Spacing="8" Margin="6">
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Files maps under the five pages of Game Data → Spawns (Kanto, Johto, Hoenn, Sinnoh, Other). Adding a map publishes its page - every Pokémon this machine's Pokedex scans name it for, with how and when - and every tracker shows it. Scans made after a map was added reach players when it is republished. Master token only." />
+
+                        <TextBlock Text="Add a map:" FontWeight="Bold" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <ComboBox Width="110" FontSize="12" ItemsSource="{Binding SpawnRegionChoices}"
+                                      SelectedItem="{Binding SpawnRegion, Mode=TwoWay}"
+                                      ToolTip.Tip="The page the map goes on. Picking a catalog map suggests one; change it if the map belongs elsewhere." />
+                            <AutoCompleteBox Width="220" FontSize="12" Watermark="Map name"
+                                             ItemsSource="{Binding SpawnMapChoices}"
+                                             Text="{Binding SpawnMapName, Mode=TwoWay}"
+                                             FilterMode="Contains" MinimumPrefixLength="1"
+                                             ToolTip.Tip="The map's name as the game prints it. The list offers the location catalog; a name it lacks can be typed." />
+                            <Button Content="Add" FontSize="12" Command="{Binding AddSpawnMapCommand}"
+                                    IsEnabled="{Binding !SpawnsBusy}"
+                                    ToolTip.Tip="Publishes this map's page from the scans on this machine. A map already published is replaced." />
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding SpawnMapPreview}" TextWrapping="Wrap" FontSize="11"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <TextBlock Text="Published:" FontWeight="Bold" FontSize="12" Margin="0,4,0,0"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <ListBox ItemsSource="{Binding PublishedSpawnMaps}"
+                                 SelectedItem="{Binding SelectedPublishedSpawnMap, Mode=TwoWay}"
+                                 Height="150" FontSize="12">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="vm:AdminSpawnMapItem">
+                                    <TextBlock Text="{Binding Text}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Button Content="Read Published" FontSize="12" Command="{Binding ReadPublishedSpawnsCommand}"
+                                    IsEnabled="{Binding !SpawnsBusy}"
+                                    ToolTip.Tip="Reads what the server currently holds. No sign-in needed - this is the same route every tracker reads." />
+                            <Button Content="Republish" FontSize="12" Command="{Binding RepublishSpawnMapCommand}"
+                                    IsEnabled="{Binding !SpawnsBusy}"
+                                    ToolTip.Tip="Publishes the selected map again from this machine's scans - how scans made since it was added reach players." />
+                            <Button Content="Remove" FontSize="12" Command="{Binding RemoveSpawnMapCommand}"
+                                    IsEnabled="{Binding !SpawnsBusy}"
+                                    ToolTip.Tip="Takes the selected map off every tracker's page. The scans on this machine are untouched." />
+                            <Button Content="Republish All" FontSize="12" Command="{Binding RepublishAllSpawnMapsCommand}"
+                                    IsEnabled="{Binding !SpawnsBusy}"
+                                    ToolTip.Tip="Every published map again, from this machine's scans - after a scanning session, so every page catches up." />
+                            <Button Content="Map boxes…" FontSize="12" Command="{Binding ShowMapBoxesCommand}"
+                                    ToolTip.Tip="Opens the region picture: zoom in, drag a one-pixel box round a route, name the map it marks. The box is published with the map's page." />
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding SpawnsStatus}" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Panel>
+
             <Panel IsVisible="{Binding IsBattleLabSection}">
                 <ScrollViewer>
                     <StackPanel Spacing="8" Margin="6">
@@ -498,6 +819,18 @@
 
                         <TextBlock Text="{Binding LabModelStatus}" TextWrapping="Wrap" FontSize="11" Opacity="0.85"
                                    Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <!-- §327: the corpus is made of these battles, so
+                             the tier pool is as much a property of the
+                             training data as the schema is. -->
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Teams from:" FontSize="12" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <ComboBox ItemsSource="{Binding TierPoolNames}" Width="200" FontSize="12"
+                                      SelectedIndex="{Binding LabTierIndex, Mode=TwoWay}"
+                                      IsEnabled="{Binding !LabRunning}"
+                                      ToolTip.Tip="Which competitive tiers the random opponents are drawn from. OU and UU is the default - a corpus where a third of the battles are decided by a box legendary teaches the matchup rather than the play." />
+                        </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <TextBlock Text="Battles (100-100000):" FontSize="12" VerticalAlignment="Center"
@@ -574,6 +907,115 @@
                         </StackPanel>
                         <TextBlock Text="{Binding LabArchiveStatus}" TextWrapping="Wrap" FontSize="12"
                                    Foreground="{DynamicResource ThemeTextBrush}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Panel>
+
+            <!-- §325: the win-rate harness (§324) with a button on it. The
+                 whole point of this panel is answering "did the new model
+                 actually get better at playing Pokemon", which no training
+                 number can answer - imitation accuracy measures agreement
+                 with a teacher, not strength. -->
+            <Panel IsVisible="{Binding IsEvaluationSection}">
+                <ScrollViewer>
+                    <StackPanel Spacing="8" Margin="6">
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Plays the installed model against an opponent and reports a win rate. Battles run in PAIRS - the same two teams played twice with the seats swapped - so a result cannot be won by drawing the better team or sitting in the better seat. Nothing here is recorded: this panel never writes to the observation corpus." />
+
+                        <!-- §326: two seats, each taking any brain. Picking
+                             the same brain on both sides IS the mirror test,
+                             and the report detects that on the configuration
+                             rather than needing a mode of its own. -->
+                        <TextBlock Text="Match" FontWeight="Bold" FontSize="12" Margin="0,4,0,0"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Contender:" FontSize="12" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <ComboBox ItemsSource="{Binding EvalBrainNames}" Width="170" FontSize="12"
+                                      SelectedIndex="{Binding EvalContenderIndex, Mode=TwoWay}"
+                                      IsEnabled="{Binding !EvalRunning}" />
+                            <TextBlock Text="vs" FontSize="12" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <ComboBox ItemsSource="{Binding EvalBrainNames}" Width="170" FontSize="12"
+                                      SelectedIndex="{Binding EvalOpponentIndex, Mode=TwoWay}"
+                                      IsEnabled="{Binding !EvalRunning}" />
+                        </StackPanel>
+
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Opacity="0.85"
+                                   Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="The same brain on both sides is the sanity check - it should land near 50/50 and says nothing about strength. Monte Carlo against the baseline is the other one worth running: it tells you what a strong player scores here, which is the ceiling any model is being measured against." />
+
+                        <StackPanel Orientation="Horizontal" Spacing="6"
+                                    IsVisible="{Binding EvalContenderNeedsFile}">
+                            <Button Content="Choose contender model..." FontSize="12"
+                                    Command="{Binding PickContenderModelCommand}"
+                                    IsEnabled="{Binding !EvalRunning}" />
+                            <TextBlock Text="{Binding EvalContenderModelPath}" FontSize="11" Opacity="0.85"
+                                       VerticalAlignment="Center" TextTrimming="CharacterEllipsis" MaxWidth="420"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="6"
+                                    IsVisible="{Binding EvalOpponentNeedsFile}">
+                            <Button Content="Choose opponent model..." FontSize="12"
+                                    Command="{Binding PickOpponentModelCommand}"
+                                    IsEnabled="{Binding !EvalRunning}" />
+                            <TextBlock Text="{Binding EvalOpponentModelPath}" FontSize="11" Opacity="0.85"
+                                       VerticalAlignment="Center" TextTrimming="CharacterEllipsis" MaxWidth="420"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding EvalModelStatus}" TextWrapping="Wrap" FontSize="11" Opacity="0.85"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <!-- §327: which competitive tiers the random teams
+                             come from. On the panel rather than buried in a
+                             setting because it changes what the win rate
+                             MEANS - a model measured on OU/UU teams and one
+                             measured against box legendaries are not two
+                             readings of the same quantity. -->
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Teams from:" FontSize="12" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <ComboBox ItemsSource="{Binding TierPoolNames}" Width="200" FontSize="12"
+                                      SelectedIndex="{Binding EvalTierIndex, Mode=TwoWay}"
+                                      IsEnabled="{Binding !EvalRunning}"
+                                      ToolTip.Tip="OU and UU is the default: 352 of the 565 species with published sets, and none of the 71 that exist only in Ubers. Every format is still here." />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Battles:" FontSize="12" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <TextBox Text="{Binding EvalBattlesText}" Width="80" FontSize="12"
+                                     IsEnabled="{Binding !EvalRunning}" />
+                            <TextBlock Text="Seed (blank = a new one each run):" FontSize="12" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ThemeTextBrush}" />
+                            <TextBox Text="{Binding EvalSeedText}" Width="100" FontSize="12"
+                                     IsEnabled="{Binding !EvalRunning}" />
+                            <Button Content="Run Evaluation" FontSize="12" Command="{Binding RunEvaluationCommand}"
+                                    IsEnabled="{Binding !EvalRunning}" />
+                            <Button Content="Cancel" FontSize="12" Command="{Binding CancelEvaluationCommand}"
+                                    IsEnabled="{Binding EvalRunning}" />
+                        </StackPanel>
+
+                        <!-- §324's own arithmetic, on the panel rather than
+                             in the guide, because the commonest way to
+                             misread one of these is to run a hundred
+                             battles and treat the answer as settled. -->
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Opacity="0.85"
+                                   Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="About 384 battles are needed to resolve a five-point difference at 95% confidence; roughly 1,070 for three points and 2,400 for two. A hundred battles cannot tell 45% from 50%, so the report says so rather than letting the number speak. Leave the seed blank and every run is an independent sample on new teams - which is what you want, and the result tells you which seed it used. Type a seed back in only to replay one specific run, battle for battle." />
+
+                        <TextBlock Text="{Binding EvalProgress}" FontWeight="Bold" FontSize="12"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+                        <SelectableTextBlock Text="{Binding EvalStatus}" TextWrapping="Wrap" FontSize="12"
+                                             Foreground="{DynamicResource ThemeTextBrush}" />
+                        <TextBlock Text="{Binding EvalSavedTo}" TextWrapping="Wrap" FontSize="11" Opacity="0.85"
+                                   Foreground="{DynamicResource ThemeTextBrush}" />
+
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Opacity="0.85" Margin="0,6,0,0"
+                                   Foreground="{DynamicResource ThemeTextBrush}"
+                                   Text="Every result is also written as JSON beside the observation corpus, one file per match named for the matchup and the time. They are kept as a sequence on purpose: a single file that got overwritten would answer 'how is it doing' and never 'is it getting better', which is the only question worth asking of a model." />
                     </StackPanel>
                 </ScrollViewer>
             </Panel>

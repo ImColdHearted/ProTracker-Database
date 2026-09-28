@@ -325,12 +325,14 @@ namespace PokemonSim.Tests
         [Fact]
         public void TheRiskFeatureIsTheLastOneAndDisturbsNothingBeforeIt()
         {
-            Assert.Equal(ObservationSchema.FeatureCountV4, ObservationSchema.RiskFeatureIndex);
+            // §311: the dial is still last, but "last" is a block now rather
+            // than "one past the previous width".
+            Assert.Equal(ObserverEncoder.TotalFeatures - 1, ObserverEncoder.RiskBlockStart);
 
             // Section 184 appended Sticky Web after it, so the risk feature
             // now ends version 5 rather than the whole vector. What has to
             // stay true is that nothing before it moved.
-            Assert.Equal(ObservationSchema.RiskFeatureIndex + 1, ObservationSchema.FeatureCountV5);
+            Assert.Equal(ObserverEncoder.RiskBlockStart + 1, ObservationSchema.FeatureCount);
 
             var (state, _) = TestKit.Battle(1826,
                 new List<PokemonState> { TestKit.Mon("Mine", hp: 200) },
@@ -339,12 +341,12 @@ namespace PokemonSim.Tests
             float[] careful = ObserverEncoder.Encode(state, state.Player1, null, 0f);
             float[] reckless = ObserverEncoder.Encode(state, state.Player1, null, 1f);
 
-            Assert.Equal(0f, careful[ObservationSchema.RiskFeatureIndex]);
-            Assert.Equal(1f, reckless[ObservationSchema.RiskFeatureIndex]);
+            Assert.Equal(0f, careful[ObserverEncoder.RiskBlockStart]);
+            Assert.Equal(1f, reckless[ObserverEncoder.RiskBlockStart]);
 
             // Nothing else moved: every earlier width is still a prefix,
             // which is what lets a 202-input model read a 203-wide state.
-            for (int i = 0; i < ObservationSchema.FeatureCountV4; i++)
+            for (int i = 0; i < ObserverEncoder.RiskBlockStart; i++)
                 Assert.Equal(careful[i], reckless[i]);
         }
 
@@ -357,9 +359,9 @@ namespace PokemonSim.Tests
 
             Assert.Equal(0f, ObservationSchema.NeutralRisk);
             Assert.Equal(ObservationSchema.NeutralRisk,
-                         ObserverEncoder.Encode(state, state.Player1)[ObservationSchema.RiskFeatureIndex]);
-            Assert.Equal(1f, ObserverEncoder.Encode(state, state.Player1, null, 9f)[ObservationSchema.RiskFeatureIndex]);
-            Assert.Equal(0f, ObserverEncoder.Encode(state, state.Player1, null, -9f)[ObservationSchema.RiskFeatureIndex]);
+                         ObserverEncoder.Encode(state, state.Player1)[ObserverEncoder.RiskBlockStart]);
+            Assert.Equal(1f, ObserverEncoder.Encode(state, state.Player1, null, 9f)[ObserverEncoder.RiskBlockStart]);
+            Assert.Equal(0f, ObserverEncoder.Encode(state, state.Player1, null, -9f)[ObserverEncoder.RiskBlockStart]);
         }
 
         [Fact]
@@ -389,7 +391,7 @@ namespace PokemonSim.Tests
             Assert.NotEmpty(mine);
             Assert.All(mine, r => Assert.Equal(0.75,
                 (double)r.GetProperty("State").EnumerateArray()
-                    .ElementAt(ObservationSchema.RiskFeatureIndex).GetSingle(), 3));
+                    .ElementAt(ObserverEncoder.RiskBlockStart).GetSingle(), 3));
         }
 
         // ---------------- the action space mapping -----------------------

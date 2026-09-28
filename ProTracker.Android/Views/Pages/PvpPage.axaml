@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Foot_Tracker.ViewModels"
+             x:Class="ProTracker.Companion.Views.Pages.PvpPage"
+             x:DataType="vm:PreviouslyBattledUsersViewModel">
+
+    <!-- §295. PreviouslyBattledUsersWindow (§276), read-only: the desktop's
+         Remove/Clear/Export stay on the desktop, where the log is written. -->
+    <Grid RowDefinitions="Auto,Auto,*">
+        <TextBlock Grid.Row="0" Text="Every PVP battle the tracker detected, most recent first. Tap a name for that opponent's history."
+                   TextWrapping="Wrap" FontSize="12" Opacity="0.8" Margin="0,0,0,8"
+                   Foreground="{DynamicResource ThemeTextBrush}" />
+        <Grid Grid.Row="1" ColumnDefinitions="*,64,48,96" Margin="0,0,0,4">
+            <Border Grid.Column="0" Classes="tableHeader"><TextBlock Text="Name" /></Border>
+            <Border Grid.Column="1" Classes="tableHeader"><TextBlock Text="Result" /></Border>
+            <Border Grid.Column="2" Classes="tableHeader"><TextBlock Text="Faced" /></Border>
+            <Border Grid.Column="3" Classes="tableHeader"><TextBlock Text="When" /></Border>
+        </Grid>
+        <ScrollViewer Grid.Row="2">
+            <StackPanel>
+                <TextBlock Text="No PVP battles on this phone yet - import the tracker's data from the Data tab."
+                           TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}"
+                           IsVisible="{Binding HasNoOpponents}" Margin="0,8,0,0" />
+                <ItemsControl ItemsSource="{Binding Opponents}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:PvpOpponentDisplayItem">
+                            <Border Classes="row" Padding="0,8" PointerPressed="OpponentRow_PointerPressed">
+                                <Grid ColumnDefinitions="*,64,48,96">
+                                    <TextBlock Grid.Column="0" Text="{Binding Name}" Margin="6,0" VerticalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis" Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <Panel Grid.Column="1">
+                                        <TextBlock Text="Won" Foreground="#4CAF50" FontWeight="Bold" TextAlignment="Center"
+                                                   VerticalAlignment="Center" IsVisible="{Binding IsWin}" />
+                                        <TextBlock Text="Lost" Foreground="#E05252" FontWeight="Bold" TextAlignment="Center"
+                                                   VerticalAlignment="Center" IsVisible="{Binding IsLoss}" />
+                                        <TextBlock Text="-" Opacity="0.6" TextAlignment="Center" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource ThemeTextBrush}" IsVisible="{Binding IsUnknownResult}" />
+                                    </Panel>
+                                    <TextBlock Grid.Column="2" Text="{Binding TimesBattledDisplay}" TextAlignment="Center"
+                                               VerticalAlignment="Center" Foreground="{DynamicResource ThemeTextBrush}" />
+                                    <TextBlock Grid.Column="3" Text="{Binding BattledAt}" FontSize="11" TextAlignment="Center"
+                                               VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{DynamicResource ThemeTextBrush}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

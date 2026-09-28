@@ -4,13 +4,19 @@
         x:Class="Foot_Tracker.Views.SimulatorItemPickerWindow"
         x:DataType="vm:SimulatorItemPickerViewModel"
         Title="Choose a Held Item"
-        Width="430" Height="520"
+        Width="445" Height="520"
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource ThemeBackgroundBrush}">
 
     <!-- §159: the Simulator's held-item picker. A fixed battle-relevant
          pool (everything here actually works in the engine), one click to
          pick, No Item to clear the slot. -->
+    <!-- §375: rebuilt from a mockup. It opens on six shelves - black cards
+         with one item's sprite for a face - and shows a shelf's items when
+         one is clicked, with a Back button over them. The search box at
+         the top searches every shelf at once. The cards are black, as the
+         mockup draws them and as §368 made the gallery's, so a sprite
+         reads the same on every appearance. -->
     <!-- §188: the content sits on a themedPanel so it reads off a surface
          rather than off the background image. The panel follows the Stats
          Background colour and is invisible until that colour is set - no
@@ -19,34 +25,70 @@
     <Border Classes="themedPanel">
     <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="12">
 
-        <TextBox Grid.Row="0" PlaceholderText="Search items..." Text="{Binding SearchText}" Margin="0,0,0,6" />
+        <TextBox Grid.Row="0" PlaceholderText="Search items..." Text="{Binding SearchText}" Margin="0,0,0,8" />
 
-        <TextBlock Grid.Row="1" Text="Click an item to give it to this Pokémon."
-                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.7" Margin="0,0,0,6" />
+        <!-- §375: over a shelf's items or a search's - never over the shelves. -->
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" Margin="0,0,0,6" IsVisible="{Binding !ShowingCategories}">
+            <Button Grid.Column="0" Content="Back" FontSize="11" Padding="8,3" Command="{Binding BackCommand}" />
+            <TextBlock Grid.Column="1" Text="{Binding ListTitle}" FontWeight="Bold" FontSize="12"
+                       VerticalAlignment="Center" Margin="10,0,0,0"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+        </Grid>
 
-        <ScrollViewer Grid.Row="2">
-            <ItemsControl ItemsSource="{Binding Cards}">
+        <Panel Grid.Row="2">
+
+            <!-- §375: the six shelves, three across. -->
+            <ItemsControl ItemsSource="{Binding Categories}" IsVisible="{Binding ShowingCategories}"
+                          HorizontalAlignment="Left" VerticalAlignment="Top">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="vm:SimulatorItemCard">
-                        <Border Width="94" Height="96" Margin="3" Padding="4"
-                                BorderThickness="2" CornerRadius="4"
-                                BorderBrush="Gray" Cursor="Hand"
-                                PointerPressed="Card_PointerPressed">
-                            <StackPanel>
-                                <Image Source="{Binding Sprite}" Width="40" Height="40" Stretch="Uniform"
+                    <DataTemplate x:DataType="vm:SimulatorItemCategory">
+                        <Border Width="120" Height="108" Margin="0,0,12,12" Padding="6"
+                                Background="Black" BorderBrush="White" BorderThickness="2"
+                                CornerRadius="3" Cursor="Hand"
+                                ToolTip.Tip="{Binding Tip}"
+                                PointerPressed="Category_PointerPressed">
+                            <StackPanel VerticalAlignment="Center" Spacing="4">
+                                <Image Source="{Binding Face}" Width="44" Height="44" Stretch="Uniform"
                                        RenderOptions.BitmapInterpolationMode="None" />
-                                <TextBlock Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap" FontSize="11" />
+                                <TextBlock Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap"
+                                           FontSize="12" FontWeight="Bold" Foreground="White" />
                             </StackPanel>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </ScrollViewer>
+
+            <!-- A shelf's items, or a search's, four across. -->
+            <ScrollViewer IsVisible="{Binding !ShowingCategories}">
+                <ItemsControl ItemsSource="{Binding Cards}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:SimulatorItemCard">
+                            <Border Width="94" Height="96" Margin="3" Padding="4"
+                                    Background="Black" BorderBrush="White" BorderThickness="1"
+                                    CornerRadius="3" Cursor="Hand"
+                                    PointerPressed="Card_PointerPressed">
+                                <StackPanel VerticalAlignment="Center" Spacing="2">
+                                    <Image Source="{Binding Sprite}" Width="40" Height="40" Stretch="Uniform"
+                                           RenderOptions.BitmapInterpolationMode="None" />
+                                    <TextBlock Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap"
+                                               FontSize="11" Foreground="White" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Panel>
 
         <Grid Grid.Row="3" ColumnDefinitions="Auto,*,Auto" Margin="0,8,0,0">
             <Button Grid.Column="0" Content="No Item" Command="{Binding PickNoneCommand}" />

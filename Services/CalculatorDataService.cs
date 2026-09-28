@@ -101,8 +101,11 @@ namespace Foot_Tracker.Services
             if (loaded)
                 return;
 
-            loaded = true;
-
+            // §316: set only once something was actually read - see
+            // PokemonDex.Load. It used to be set here, so a first call that
+            // found no file left this service permanently empty even after
+            // the file arrived. Retrying costs a File.Exists per call while
+            // it is missing, and nothing once it is not.
             try
             {
                 string path = Path.Combine(
@@ -161,6 +164,8 @@ namespace Foot_Tracker.Services
                 sortedNames = speciesByName.Keys
                     .OrderBy(n => n, StringComparer.OrdinalIgnoreCase)
                     .ToList();
+
+                loaded = true;
             }
             catch
             {

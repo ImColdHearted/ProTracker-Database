@@ -53,66 +53,73 @@ namespace PokemonSim.Observation
         /// break the prefix rule the whole scheme rests on. A version 5
         /// record is a version 6 record with no web on either side, which
         /// is exactly true - the move did not exist when it was recorded.
-        public const int Version = 6;
+        public const int Version = 8;
+
+        /// <summary>
+        /// §319. The comparison encoder's own id, deliberately nowhere near
+        /// the fair one.
+        ///
+        /// The omniscient vector is §311's - the one that reads the
+        /// opponent's stats, ability and item - and it is kept so the cost of
+        /// honesty can be MEASURED rather than argued about: train both, play
+        /// them against each other, and the gap is the value of the
+        /// information the fair agent gave up. It must never be trained
+        /// together with a fair corpus or shipped by accident, so it carries
+        /// an id of its own rather than a flag on a shared one. A bucket is a
+        /// stronger separation than a boolean.
+        /// </summary>
+        public const int OmniscientVersion = 108;
 
         /// <summary>The engine's mechanics generation the states were
         /// produced under (the MIGRATION_GUIDE section that last changed
         /// battle mechanics). Training data from different mechanics
-        /// generations should not be silently mixed.</summary>
-        public const string MechanicsVersion = "156";
+        /// generations should not be silently mixed.
+        ///
+        /// §311 moved it off "156" for the first time. §309 gave an
+        /// unpopped Air Balloon a real Ground immunity, which is a change to
+        /// what a battle DOES, not only to what the observer writes down.
+        /// </summary>
+        public const string MechanicsVersion = "319";
 
-        /// <summary>Section 176's vector - see ObserverEncoder for the
-        /// layout. Every earlier width is a PREFIX of this one, entry for
-        /// entry, which is the whole compatibility story: a model trained
-        /// on any past width is fed the front of a current state and
-        /// behaves exactly as it always did.</summary>
-        public const int FeatureCount = 205;
+        /// <summary>
+        /// §311's vector - see ObserverEncoder for the layout.
+        ///
+        /// The prefix rule is gone. Every width before this one was a prefix
+        /// of the next, so a model trained on any of them could be fed the
+        /// front of a current state and behave as it always had. §311 re-laid
+        /// the vector in blocks, so column 8 no longer means what it meant
+        /// and no earlier width is a prefix of anything. That is the point:
+        /// the old layout had no concept of a type, an ability, an item or a
+        /// stat, and there is no way to add those by appending that does not
+        /// also leave weather encoded as an ordinal for ever.
+        /// </summary>
+        public static readonly int FeatureCount = ObservationV8.Map.Count;
 
-        /// <summary>The section 156 width: two hp fractions, six stat
-        /// stages, weather, terrain.</summary>
-        public const int FeatureCountV1 = 10;
+        /// <summary>
+        /// §311. The widths that used to be accepted, kept so a refusal can
+        /// NAME the generation a model came from instead of just declining a
+        /// number. 10 was §156, 76 §175, 160 §176, 202 §177, 203 §182, 205
+        /// §184.
+        ///
+        /// They are history, not compatibility. Feeding 205 of §311's columns
+        /// to a 205-input model would not throw - it would score nonsense,
+        /// because those 205 columns are a different 205 things - and a
+        /// silent wrong answer is worse than a refusal.
+        ///
+        /// §319 retired 483 - every model trained on it learned with the
+        /// opponent's stats, ability and item in front of it, so it is not
+        /// merely a different width, it is a different game.
+        /// </summary>
+        public static readonly int[] RetiredFeatureCounts = { 10, 76, 160, 202, 203, 205, 483 };
 
-        /// <summary>The section 175 width: V1 plus the four move slots and
-        /// the whole-position block.</summary>
-        public const int FeatureCountV2 = 76;
-
-        /// <summary>The section 176 width: V2 plus the effect flags, the
-        /// bench and the entry hazards.</summary>
-        public const int FeatureCountV3 = 160;
-
-        /// <summary>The section 177 width: V3 plus field conditions, the
-        /// two special stat stages and the volatiles. Section 182 appended
-        /// the risk feature after it.</summary>
-        public const int FeatureCountV4 = 202;
-
-        /// <summary>The section 182 width: V4 plus the risk dial. Section
-        /// 184 appended the two Sticky Web entries after it.</summary>
-        public const int FeatureCountV5 = 203;
-
-        /// <summary>The section 156 width under its original name, still
-        /// used where "the old ten" is what is meant.</summary>
-        public const int LegacyFeatureCount = FeatureCountV1;
-
-        /// <summary>Every input width a shipped model may declare, newest
-        /// first. OnnxShadowEvaluator matches a model against this list and
-        /// feeds it that many features.</summary>
-        public static readonly int[] AcceptedFeatureCounts =
-            { FeatureCount, FeatureCountV5, FeatureCountV4, FeatureCountV3, FeatureCountV2, FeatureCountV1 };
-
-        /// <summary>Section 182. Where the risk feature sits: the last
-        /// entry, so every earlier width stays a prefix.</summary>
-        public const int RiskFeatureIndex = FeatureCountV4;
+        /// <summary>Every input width a shipped model may declare.
+        /// §311: exactly one. See RetiredFeatureCounts.</summary>
+        public static readonly int[] AcceptedFeatureCounts = { FeatureCount };
 
         /// <summary>The default risk appetite - plain expected value, the
         /// only thing any teacher did before section 182. Written into
-        /// every state whose caller does not ask for something else, and
-        /// what a widened version 4 record is given.</summary>
+        /// every state whose caller does not ask for something else.</summary>
         public const float NeutralRisk = 0f;
-
-        /// <summary>Section 184. Where the two Sticky Web entries sit -
-        /// mine, then theirs - after the risk feature rather than inside
-        /// the hazard block, so every earlier width stays a prefix.</summary>
-        public const int WebFeatureIndex = FeatureCountV5;
 
         /// <summary>The four move slots. Unchanged since section 156, and
         /// still the first four outputs of every model.</summary>
@@ -215,6 +222,35 @@ namespace PokemonSim.Observation
         /// reimplement the teacher to find out what it wanted.
         /// </summary>
         public int TeacherActionIndex { get; set; } = -1;
+
+        /// <summary>§319. Which encoder wrote State: "fair" or "omniscient".
+        /// Written on every record so a corpus can be sorted without
+        /// guessing from its width.</summary>
+        public string Encoder { get; set; } = "fair";
+
+        /// <summary>
+        /// §319. WHAT THE OPPONENT ACTUALLY DID on this same turn, as an index
+        /// into their own action space, or -1 when it is not known.
+        ///
+        /// This is a LABEL, not an observation. It is written after the turn
+        /// resolves, it is never encoded into State, and the network cannot
+        /// see it while choosing - which is the whole point. Pokemon is
+        /// simultaneous, so "what are they doing right now" IS the prediction
+        /// problem, and this is the answer, recorded for the head that will
+        /// one day learn to guess it.
+        ///
+        /// What they do on the turn AFTER is deliberately not written here.
+        /// The corpus already contains it - every decision is a line carrying
+        /// its battle, its turn and its side - so the trainer derives it with
+        /// a join rather than the observer holding records back for a turn
+        /// and risking losing the last one of every cancelled battle.
+        /// </summary>
+        public int OpponentActionIndex { get; set; } = -1;
+
+        /// <summary>§319. Whether the opponent switched on this turn -
+        /// the same label, reduced to the one bit a switch-prediction head
+        /// needs. Also written after the fact, also never in State.</summary>
+        public bool OpponentSwitched { get; set; }
     }
 
     public sealed class ObservedAction

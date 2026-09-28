@@ -24,6 +24,11 @@ namespace PokemonSim.Engine
             if (pokemon.Rooted)
                 return true;
 
+            // §304: Smack Down and Thousand Arrows bring it down and keep
+            // it down, over anything that was holding it up.
+            if (pokemon.SmackedDown)
+                return true;
+
             if (pokemon.MagnetRiseTurns > 0)
                 return false;
 
@@ -31,7 +36,9 @@ namespace PokemonSim.Engine
             if (Items.HeldItems.Normalize(pokemon.HeldItemId) == "airballoon")
                 return false;
 
-            if (pokemon.Types.Contains(PokemonType.Flying))
+            // §304: Roost costs the user its Flying type for the turn,
+            // which is exactly what stops it hovering.
+            if (pokemon.Types.Contains(PokemonType.Flying) && !pokemon.RoostedThisTurn)
                 return false;
 
             if (pokemon.AbilityId != null &&

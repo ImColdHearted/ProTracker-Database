@@ -24,6 +24,11 @@ internal static class WaveVolume
     private const ushort FormatIeeeFloat = 3;
     private const ushort FormatExtensible = 0xFFFE;
 
+    /// <summary>§389. The fmt chunk, as waveOut wants it back: the tag is
+    /// the real one (an extensible file's SubFormat), the rest verbatim.</summary>
+    internal readonly record struct WaveFormat(
+        ushort FormatTag, ushort Channels, uint SampleRate, uint ByteRate, ushort BlockAlign, ushort BitsPerSample);
+
     /// <summary>A copy of <paramref name="wave"/> with every sample multiplied
     /// by <paramref name="gain"/> (0..1; anything above 1 is "nothing to do"
     /// and returns the input itself). Null, with <paramref name="reason"/>
@@ -38,9 +43,11 @@ internal static class WaveVolume
         if (gain < 0)
             gain = 0;
 
-        if (!TryLocateSamples(wave, out ushort formatTag, out ushort bitsPerSample, out int dataStart, out int dataLength, out reason))
+        if (!TryLocateSamples(wave, out WaveFormat format, out int dataStart, out int dataLength, out reason))
             return null;
 
+        ushort formatTag = format.FormatTag;
+        ushort bitsPerSample = format.BitsPerSample;
         int bytesPerSample = bitsPerSample / 8;
         int wholeSamples = dataLength - dataLength % bytesPerSample;
 
@@ -116,12 +123,15 @@ internal static class WaveVolume
 
     /// <summary>Walks the RIFF chunks for the sample format and the sample
     /// bytes. The data chunk's declared size is trusted only as far as the
-    /// file goes - a streaming writer can leave it as 0xFFFFFFFF.</summary>
-    private static bool TryLocateSamples(
-        byte[] wave, out ushort formatTag, out ushort bitsPerSample, out int dataStart, out int dataLength, out string reason)
+    /// file goes - a streaming writer can leave it as 0xFFFFFFFF. §389:
+    /// internal, and the whole format, for SoundNotificationService's
+    /// waveOut path, which hands the samples to a chosen device itself.</summary>
+    internal static bool TryLocateSamples(
+        byte[] wave, out WaveFormat format, out int dataStart, out int dataLength, out string reason)
     {
-        formatTag = 0;
-        bitsPerSample = 0;
+        format = default;
+        ushort formatTag = 0;
+        ushort bitsPerSample = 0;
         dataStart = 0;
         dataLength = 0;
         reason = string.Empty;
@@ -150,6 +160,10 @@ internal static class WaveVolume
                 }
 
                 formatTag = BinaryPrimitives.ReadUInt16LittleEndian(wave.AsSpan(bodyStart, 2));
+                ushort channels = BinaryPrimitives.ReadUInt16LittleEndian(wave.AsSpan(bodyStart + 2, 2));
+                uint sampleRate = BinaryPrimitives.ReadUInt32LittleEndian(wave.AsSpan(bodyStart + 4, 4));
+                uint byteRate = BinaryPrimitives.ReadUInt32LittleEndian(wave.AsSpan(bodyStart + 8, 4));
+                ushort blockAlign = BinaryPrimitives.ReadUInt16LittleEndian(wave.AsSpan(bodyStart + 12, 2));
                 bitsPerSample = BinaryPrimitives.ReadUInt16LittleEndian(wave.AsSpan(bodyStart + 14, 2));
 
                 // WAVE_FORMAT_EXTENSIBLE: the real format is the first two
@@ -165,6 +179,7 @@ internal static class WaveVolume
                     formatTag = BinaryPrimitives.ReadUInt16LittleEndian(wave.AsSpan(bodyStart + 24, 2));
                 }
 
+                format = new WaveFormat(formatTag, channels, sampleRate, byteRate, blockAlign, bitsPerSample);
                 haveFormat = true;
             }
             else if (IsTag(wave, position, "data"))

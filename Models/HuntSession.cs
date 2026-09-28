@@ -128,20 +128,61 @@ namespace Foot_Tracker.Models
         public void RegisterRunAway(string pokemonName) =>
             Increment(RanFromCounts, pokemonName);
 
-        /// <summary>Sum of EncounterCounts for every currently-targeted Pokemon -
-        /// used for the "Targeted Encounters" stat.</summary>
-        public int GetTargetedEncounterCount()
+        /// <summary>§364. The one piece of arithmetic behind all three
+        /// target stats: add up a species-keyed tally over the DISTINCT
+        /// species currently targeted.
+        ///
+        /// §361 is why "distinct" is the whole point, and it applies to
+        /// every tally alike. The same Pokemon can hold more than one target
+        /// slot - one drawn as its form, one as its shiny - and those slots
+        /// share a tally, because an event is counted once under the species
+        /// and the form is a picture. Walking the target list as it stands
+        /// would count the same catch twice for two slots and three times for
+        /// three, and the number would grow by hunting nothing at all.
+        ///
+        /// Compared the way every other species key in this file is compared,
+        /// so "Mareanie" and "mareanie" are one species and not two.</summary>
+        private int SumOverDistinctTargets(
+            Dictionary<string, int> counts)
         {
             int total = 0;
 
+            var counted = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
             foreach (string target in TargetPokemons)
             {
-                if (EncounterCounts.TryGetValue(target, out int count))
+                if (!counted.Add(target))
+                    continue;
+
+                if (counts.TryGetValue(target, out int count))
                     total += count;
             }
 
             return total;
         }
+
+        /// <summary>How many of the encounters so far were a targeted
+        /// species - the "Target Pokemon Found" stat.</summary>
+        public int GetTargetedEncounterCount() =>
+            SumOverDistinctTargets(EncounterCounts);
+
+        /// <summary>§364. How many of those were caught - the "Target Pokemon
+        /// Caught" stat. Deliberately NOT the same number as
+        /// SuccessfulCatches, which counts every catch in the session: a
+        /// hunter catches things he is not hunting, and the user who asked
+        /// for this said so in as many words. Both stats stay, side by side,
+        /// counting different things.</summary>
+        public int GetTargetedCaughtCount() =>
+            SumOverDistinctTargets(CaughtCounts);
+
+        /// <summary>§364. How many were fled from - the "Target Pokemon
+        /// Fled" stat, and the same quantity the encounter table's Fled
+        /// column shows, narrowed to the targets. It means what RanFromCounts
+        /// means and nothing wider: runs the game announced, "You have run
+        /// away from the wild Pokemon." See that dictionary's remarks for why
+        /// these numbers deliberately do not sum to the encounter count.</summary>
+        public int GetTargetedRanFromCount() =>
+            SumOverDistinctTargets(RanFromCounts);
 
         public TimeSpan ElapsedTime { get; private set; } =
             TimeSpan.Zero;
@@ -224,13 +265,32 @@ namespace Foot_Tracker.Models
             CurrentEncounterFormImage = string.Empty;
             PreviousEncounterForm = string.Empty;
             PreviousEncounterFormImage = string.Empty;
-            EncountersSinceForm = 0;
             SuccessfulCatches = 0;
             FailedCatches = 0;
 
             TotalEncounters = 0;
-            EncountersSinceShiny = 0;
 
+            // §360: EncountersSinceShiny and EncountersSinceForm are NOT reset
+            // here any more, and that is the point of this section.
+            //
+            // Reset is what you press between hunts - 200 encounters on one
+            // thing, reset, 300 on the next. Zeroing the two "since" counters
+            // with the hunt made them count since the last RESET rather than
+            // since the last shiny, which is not what they are for and not
+            // what their labels say. A hunter who resets four times a session
+            // could never see the real drought.
+            //
+            // They now move for exactly one reason each: a shiny sets Since
+            // Shiny to zero, a form sets Since Form to zero
+            // (MainWindowViewModel's rare-encounter switch). That is the same
+            // rule SinceFormPaused has followed since it was added, one line
+            // below, and for the same reason - it outlives the hunt because
+            // what it is counting outlives the hunt.
+            //
+            // A brand-new session still starts at zero: these are 0 on a fresh
+            // HuntSession and Restore() takes them from the save file, so
+            // nothing about a first run or a client switch changes.
+            //
             // SinceFormPaused is intentionally NOT reset here - see its own comment.
 
             ElapsedTime = TimeSpan.Zero;

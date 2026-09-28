@@ -4,7 +4,9 @@
 		<OutputType>WinExe</OutputType>
 		<!-- Cross-platform TFM (the original was net10.0-windows). Windows-only pieces
          (Win32 window capture, WindowCaptureService, NativeMethods, the Tracking
-         engine) are marked accordingly - see MIGRATION_GUIDE.md. -->
+         engine) are marked accordingly - see MIGRATION_GUIDE.md. §257: this is
+         the framework for every NON-Windows build; the Windows build overrides
+         it a few lines down, after the RuntimeIdentifier it depends on. -->
 		<TargetFramework>net10.0</TargetFramework>
 		<!-- Pinned so local builds only pull in Windows' native binaries (SkiaSharp,
          HarfBuzz, Tesseract) instead of every platform's copy at once - without
@@ -18,6 +20,23 @@
          forced every publish back to win-x64 regardless of -r - see
          MIGRATION_GUIDE.md. -->
 		<RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win-x64</RuntimeIdentifier>
+		<!-- §257: the Windows build targets the Windows-specific framework so
+         the Windows SDK projections are available - Windows.Graphics.Capture,
+         which Tracking/Capture/GraphicsCapture.cs uses to read a PRO client
+         that is running as administrator without this tracker having to be.
+         It must come AFTER the RuntimeIdentifier default above, not beside
+         the plain TargetFramework: MSBuild evaluates properties in order, and
+         the default RID is what this condition reads on a plain build or an
+         F5. Every other RID keeps net10.0 and compiles the file's stub.
+         The minimum OS is left at the oldest the projections support, so the
+         app still starts on any Windows 10 it started on before; the capture
+         code checks the version it needs at run time (1903). The Windows
+         publish profile (Properties/PublishProfiles/FolderProfile.pubxml)
+         names this framework too - a profile's properties are applied over the
+         project's, so a profile still saying net10.0 would silently win and
+         publish the stub. -->
+		<TargetFramework Condition="$(RuntimeIdentifier.StartsWith('win'))">net10.0-windows10.0.22621.0</TargetFramework>
+		<SupportedOSPlatformVersion Condition="$(RuntimeIdentifier.StartsWith('win'))">10.0.17763.0</SupportedOSPlatformVersion>
 		<!-- PublishSingleFile is deliberately not set here (the cross-platform
          default is a plain multi-file publish), but single-file IS fine on
          Windows: §10's OCR-breaking single-file failure turned out to be
@@ -43,7 +62,7 @@
 		     place; Version drives AssemblyVersion, FileVersion and
 		     InformationalVersion together, and Services/AppVersion.cs is
 		     what reads it back at runtime. -->
-		<Version>1.0.2</Version>
+		<Version>1.1.2</Version>
 		<RootNamespace>ProTrackerDatabase</RootNamespace>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -56,26 +75,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="12.1.1" />
-		<PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
-		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
-		<PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.1" />
+		<PackageReference Include="Avalonia" Version="12.1.2" />
+		<PackageReference Include="Avalonia.Desktop" Version="12.1.2" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.2" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.2" />
 		<PackageReference Include="Avalonia.Controls.DataGrid" Version="12.1.2" />
-		<PackageReference Include="Avalonia.Controls.ColorPicker" Version="12.1.1" />
+		<PackageReference Include="Avalonia.Controls.ColorPicker" Version="12.1.2" />
 		<!-- Design-time preview support (safe to keep even outside the IDE) -->
 		<PackageReference Include="Avalonia.Diagnostics" Version="11.3.20" Condition="'$(Configuration)' == 'Debug'" />
 
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
 		<PackageReference Include="Serilog" Version="4.4.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-		<!-- Sends Report a Problem's screenshots/log by email (Services/BugReportEmailService.cs) -
-         not System.Net.Mail.SmtpClient, which Microsoft's own docs recommend against for
-         new code in favor of a maintained library. MailKit ships a net10.0 target
-         already, needs nothing beyond Gmail's plain SMTP+STARTTLS+App Password support
-         (no OAuth app registration required), and pulls in nothing heavier than MimeKit
-         plus BouncyCastle (used by MimeKit for S/MIME, not for this feature's TLS
-         transport, which is plain SslStream). See MIGRATION_GUIDE.md §73. -->
-		<PackageReference Include="MailKit" Version="4.17.0" />
 		<!-- Switched from the "Tesseract" package (charlesw) to this actively-maintained
          fork: charlesw's package only ships Windows native binaries (confirmed via
          their own open GitHub issue #503, "Linux support missing for .NET Core") -
@@ -96,9 +107,9 @@
          (reported as version 116) instead of failing cleanly. Confirmed via
          SkiaSharp's own docs that these native-assets packages are required
          separately per-platform, not bundled automatically. See MIGRATION_GUIDE.md. -->
-		<PackageReference Include="SkiaSharp" Version="4.151.1" />
-		<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="4.151.1" />
-		<PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="4.151.1" />
+		<PackageReference Include="SkiaSharp" Version="4.152.0" />
+		<PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="4.152.0" />
+		<PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="4.152.0" />
 
 		<!-- §112 permanent encounter log. Microsoft.Data.Sqlite brings its own
          native e_sqlite3 through SQLitePCLRaw, and lands the same way SkiaSharp
@@ -116,10 +127,10 @@
          actually exists for the .NET 10 train. Pin it to the resolved version
          once the first restore reports one - every other package here is
          pinned, and this should be too. -->
-		<PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.11" />
+		<PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.12" />
 
 		<!-- Windows-only capture path (System.Drawing.Common no-ops on other OSes) -->
-		<PackageReference Include="System.Drawing.Common" Version="10.0.11" />
+		<PackageReference Include="System.Drawing.Common" Version="10.0.12" />
 
 		<!-- Transitive dependency (pulled in via Avalonia's Linux D-Bus desktop
          integration - file pickers, notifications, etc.) - pinned directly here to
@@ -127,7 +138,7 @@
          GHSA-xrw6-gwf8-vvr9 (high severity): fixed in 0.21.3 (backported fix) or
          0.92.0. Using the minimal 0.21.3 backport rather than jumping to 0.92.0,
          to avoid risking unrelated breaking changes from a larger version bump. -->
-		<PackageReference Include="Tmds.DBus.Protocol" Version="0.95.0" />
+		<PackageReference Include="Tmds.DBus.Protocol" Version="0.95.1" />
 
 		<!-- Guide HTML rendering (Mega Stones etc.) uses a hand-written renderer -
          see Views/GuideRendering/ - not an embedded browser, so no WebView-related
@@ -142,12 +153,16 @@
 	     below, and the engine's DataFiles arrive in the output under
 	     PokemonSimData/ via that reference's content items. -->
 	<ItemGroup>
-		<Compile Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**" />
+		<!-- §295: ProTracker.Android is the phone companion, its own project
+		     in its own subfolder, and it LINKS this project's files - so this
+		     project must not glob its files back, or every page and the
+		     activity would be compiled into the desktop app. -->
+		<Compile Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**;ProTracker.Android\**" />
 		<Compile Remove="SharedPokemonLibrary\Assets\Counterparts\World Cup\**" />
-		<None Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**" />
+		<None Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**;ProTracker.Android\**" />
 		<None Remove="SharedPokemonLibrary\Assets\Counterparts\World Cup\**" />
-		<Content Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**" />
-		<AvaloniaXaml Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**" />
+		<Content Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**;ProTracker.Android\**" />
+		<AvaloniaXaml Remove="PokemonSim\**;PokemonSim.Tests\**;PokemonSim.DevConsole\**;PokemonSim.Shadow\**;ProTracker.Android\**" />
 		<AvaloniaXaml Remove="SharedPokemonLibrary\Assets\Counterparts\World Cup\**" />
 		<EmbeddedResource Remove="SharedPokemonLibrary\Assets\Counterparts\World Cup\**" />
 	</ItemGroup>
@@ -205,10 +220,6 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 		</Content>
-		<Content Include="Data\**\*.*">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-		</Content>
 		<Content Include="tessdata\eng.traineddata">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
@@ -256,6 +267,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="SharedPokemonLibrary\Assets\Counterparts\Chromas\" />
 	  <Folder Include="SharedPokemonLibrary\Data\Counterparts\" />
 	</ItemGroup>
 

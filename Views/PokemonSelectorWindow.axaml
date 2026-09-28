@@ -35,7 +35,11 @@
 
         <TextBox Grid.Row="0" Grid.ColumnSpan="2" PlaceholderText="Search Pokémon…" Text="{Binding SearchText}" Margin="0,0,0,8" />
 
-        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="Click up to 4 cards to hunt them together - click a selected card again to remove it."
+        <!-- §362: the instruction had to change with the interaction. A grid
+             click used to add a target; now it opens that Pokemon's cards on
+             the right, and every slot - the ordinary sprite included - is
+             added from there. -->
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="Click a Pokémon to see its sprites, then click one on the right to hunt it - up to 4, and 3 of any one Pokémon. Click a chosen sprite again to drop it."
                    Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.7" Margin="0,0,0,8" />
 
         <!-- Search result cards: replaces flpPokemon FlowLayoutPanel + CreatePokemonCard/CreateRegionalPokemonCard -->
@@ -95,7 +99,21 @@
         <Border Grid.Row="2" Grid.Column="1"
                 BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1,0,0,0"
                 Margin="8,0,0,0" Padding="8,0,0,0">
-            <ScrollViewer IsVisible="{Binding HasForms}">
+            <!-- §272: the column is a picker now, not a display. Its cards
+                 were listed and inert - the event skins sat right there and a
+                 click did nothing. A header says what a click does and a line
+                 under it says what the last one did; the message is separate
+                 from StatusMessage below because that one is drawn in the
+                 error brush. -->
+            <DockPanel IsVisible="{Binding HasForms}">
+                <TextBlock DockPanel.Dock="Top"
+                           Text="Click a sprite to hunt this Pokémon with it - click it again to stop."
+                           Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.55"
+                           FontSize="11" TextWrapping="Wrap" Margin="4,0,4,4" />
+                <TextBlock DockPanel.Dock="Bottom" Text="{Binding SkinMessage}"
+                           Foreground="{DynamicResource ThemeTextBrush}"
+                           FontSize="11" TextWrapping="Wrap" Margin="4,4,4,0" />
+                <ScrollViewer>
                 <ItemsControl ItemsSource="{Binding AvailableForms}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -106,7 +124,13 @@
                         <DataTemplate x:DataType="vm:PokemonCardItem">
                             <!-- Height bumped 148->164 to fit the new type-icon row without
                                  clipping against this Border's fixed size. -->
-                            <Border Width="116" Height="164" Margin="4" Classes="themedPanel">
+                            <!-- The same .selected outline the search grid uses,
+                                 here marking the sprite this target is ALREADY
+                                 drawn with rather than a picked target. -->
+                            <Border Width="116" Height="164" Margin="4" Classes="themedPanel"
+                                    BorderThickness="2" CornerRadius="4" Cursor="Hand"
+                                    Classes.selected="{Binding IsSelected}"
+                                    PointerPressed="FormCard_PointerPressed">
                                 <StackPanel>
                                     <Image Source="{Binding Sprite}" Width="96" Height="96" Stretch="Uniform" />
                                     <TextBlock Text="{Binding Tag, StringFormat=[{0}]}" FontSize="10" TextAlignment="Center" />
@@ -131,7 +155,8 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </ScrollViewer>
+                </ScrollViewer>
+            </DockPanel>
         </Border>
 
         <!-- §219: the column stands there from the moment the window opens,

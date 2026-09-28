@@ -61,6 +61,33 @@ namespace PokemonSim.Models
         /// its Sp. Atk.</summary>
         public bool UsesHigherOffense;
 
+        // ---- §304 ----
+
+        /// <summary>Shell Side Arm: physical or special, whichever would
+        /// actually hurt more - which means comparing whole damage rolls,
+        /// the target's two defences included, not just the user's two
+        /// attacking stats. UsesHigherOffense is the weaker rule beside it
+        /// and belongs to Tera Blast.</summary>
+        public bool UsesBetterDamage;
+
+        /// <summary>Darkest Lariat and Sacred Sword: the target's stat
+        /// stages are not there. Defensive boosts are ignored for damage
+        /// and the evasion boost for accuracy - the same pair of rules
+        /// Unaware already implements as an ability.</summary>
+        public bool IgnoresDefensiveBoosts;
+
+        public bool IgnoresEvasion;
+
+        /// <summary>Thousand Arrows: a Ground move that reaches a Flying
+        /// target, and reaches it for neutral rather than for nothing.</summary>
+        public bool IgnoresFlyingImmunity;
+
+        /// <summary>Stomp, Body Slam and the rest of the flatteners: twice
+        /// the damage into a Minimized target, and they cannot miss it.
+        /// Derived from MoveFlags at load time like IsContact, because it
+        /// is mechanics knowledge rather than a per-game number.</summary>
+        public bool IsFlattening;
+
         // Derived from MoveFlags at load time, not stored in the data file.
         public bool IsContact;
         public bool IsPulse;
@@ -98,6 +125,11 @@ namespace PokemonSim.Models
                 UsesDefenseAsOffense = UsesDefenseAsOffense,
                 UsesTargetAttack = UsesTargetAttack,
                 UsesHigherOffense = UsesHigherOffense,
+                UsesBetterDamage = UsesBetterDamage,
+                IgnoresDefensiveBoosts = IgnoresDefensiveBoosts,
+                IgnoresEvasion = IgnoresEvasion,
+                IgnoresFlyingImmunity = IgnoresFlyingImmunity,
+                IsFlattening = IsFlattening,
                 IsContact = IsContact,
                 IsPulse = IsPulse,
                 IsSpread = IsSpread,

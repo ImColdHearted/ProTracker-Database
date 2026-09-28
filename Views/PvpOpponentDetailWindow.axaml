@@ -1,0 +1,115 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Foot_Tracker.ViewModels"
+        x:Class="Foot_Tracker.Views.PvpOpponentDetailWindow"
+        x:DataType="vm:PvpOpponentDetailViewModel"
+        Title="{Binding Title}"
+        Width="620" Height="560"
+        MinWidth="460" MinHeight="360"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ThemeBackgroundBrush}"
+        BorderBrush="{DynamicResource ThemeBorderBrush}"
+        BorderThickness="1">
+
+    <Window.Styles>
+        <!-- §220's header chip, the same one the encounter history and the
+             main window's tables use. -->
+        <Style Selector="Border.tableHeader">
+            <Setter Property="Background" Value="{DynamicResource ThemeTableHeaderBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Margin" Value="0,0,0,2" />
+        </Style>
+        <Style Selector="Border.tableHeader > TextBlock">
+            <Setter Property="Margin" Value="6,5" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+        </Style>
+        <!-- §203's idiom: the row being read stays in place and says so. -->
+        <Style Selector="Border.selectedRow">
+            <Setter Property="Background" Value="{DynamicResource ThemeTableHeaderBrush}" />
+        </Style>
+    </Window.Styles>
+
+    <Border Classes="themedPanel">
+    <Grid Margin="16" RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto,Auto">
+
+        <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="18" FontWeight="Bold"
+                   Foreground="{DynamicResource ThemeTextBrush}" Margin="0,0,0,4" />
+
+        <TextBlock Grid.Row="1" Text="{Binding RecordLine}" FontWeight="Bold"
+                   Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap" />
+
+        <TextBlock Grid.Row="2" Text="{Binding FacedLine}" Opacity="0.8"
+                   Foreground="{DynamicResource ThemeTextBrush}" TextWrapping="Wrap"
+                   Margin="0,2,0,10" />
+
+        <Grid Grid.Row="3" ColumnDefinitions="*,110" Margin="0,0,0,4">
+            <Border Grid.Column="0" Classes="tableHeader"><TextBlock Text="Battle" /></Border>
+            <Border Grid.Column="1" Classes="tableHeader"><TextBlock Text="Result" /></Border>
+        </Grid>
+
+        <ScrollViewer Grid.Row="4" MaxHeight="180">
+            <ItemsControl ItemsSource="{Binding Battles}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PvpBattleRow">
+                        <Border Cursor="Hand" Padding="0,3" CornerRadius="3"
+                                Background="Transparent"
+                                Classes.selectedRow="{Binding IsSelected}"
+                                PointerPressed="BattleRow_PointerPressed">
+                            <Grid ColumnDefinitions="*,110">
+                                <TextBlock Grid.Column="0" Text="{Binding When}" Margin="6,0"
+                                           Foreground="{DynamicResource ThemeTextBrush}" VerticalAlignment="Center" />
+                                <Panel Grid.Column="1">
+                                    <TextBlock Text="Won" Foreground="#4CAF50" FontWeight="Bold"
+                                               TextAlignment="Center" IsVisible="{Binding IsWin}" />
+                                    <TextBlock Text="Lost" Foreground="#E05252" FontWeight="Bold"
+                                               TextAlignment="Center" IsVisible="{Binding IsLoss}" />
+                                    <TextBlock Text="-" Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.6"
+                                               TextAlignment="Center" IsVisible="{Binding IsUnknownResult}"
+                                               ToolTip.Tip="The result was never read - the battle window went away before PRO printed one." />
+                                </Panel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- §276: the message box as PRO printed it. Their Pokemon, their
+             moves and any item all appear here, in PRO's own sentences -
+             breaking them out needs the wording confirmed rather than
+             guessed, so this section captures and a later one parses. -->
+        <TextBlock Grid.Row="5" Text="What PRO printed during this battle"
+                   FontWeight="Bold" Foreground="{DynamicResource ThemeTextBrush}"
+                   Margin="0,12,0,4" IsVisible="{Binding HasSelectedBattle}" />
+
+        <Border Grid.Row="6" BorderBrush="{DynamicResource ThemeBorderBrush}" BorderThickness="1"
+                CornerRadius="3" Padding="8" MinHeight="110"
+                IsVisible="{Binding HasSelectedBattle}">
+            <ScrollViewer MaxHeight="150"
+                          DataContext="{Binding SelectedBattle}" x:DataType="vm:PvpBattleRow">
+                <StackPanel>
+                    <TextBlock Text="Nothing was captured for this battle - it was recorded before the battle log was kept."
+                               TextWrapping="Wrap" Opacity="0.7"
+                               Foreground="{DynamicResource ThemeTextBrush}"
+                               IsVisible="{Binding !HasLog}" />
+                    <ItemsControl ItemsSource="{Binding Log}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <TextBlock Text="{Binding}" TextWrapping="Wrap" FontSize="12"
+                                           Foreground="{DynamicResource ThemeTextBrush}" Margin="0,1" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="Close" Click="CloseButton_Click" />
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>

@@ -59,6 +59,10 @@
     "formIdentifier": "wormadam-sandy",
     "isDefaultForm": false,
     "sprite": "10004.png",
+    "types": [
+      "Bug",
+      "Ground"
+    ],
     "ocrAliases": [
       "Wormadam",
       "Wormadam Sandy",
@@ -76,6 +80,10 @@
     "formIdentifier": "wormadam-trash",
     "isDefaultForm": false,
     "sprite": "10005.png",
+    "types": [
+      "Bug",
+      "Steel"
+    ],
     "ocrAliases": [
       "Wormadam",
       "Wormadam Trash",
@@ -93,6 +101,10 @@
     "formIdentifier": "shaymin-sky",
     "isDefaultForm": false,
     "sprite": "10006.png",
+    "types": [
+      "Grass",
+      "Flying"
+    ],
     "ocrAliases": [
       "Shaymin",
       "Shaymin Sky",
@@ -127,6 +139,10 @@
     "formIdentifier": "rotom-heat",
     "isDefaultForm": false,
     "sprite": "10008.png",
+    "types": [
+      "Electric",
+      "Fire"
+    ],
     "ocrAliases": [
       "Rotom",
       "Rotom Heat",
@@ -144,6 +160,10 @@
     "formIdentifier": "rotom-wash",
     "isDefaultForm": false,
     "sprite": "10009.png",
+    "types": [
+      "Electric",
+      "Water"
+    ],
     "ocrAliases": [
       "Rotom",
       "Rotom Wash",
@@ -161,6 +181,10 @@
     "formIdentifier": "rotom-frost",
     "isDefaultForm": false,
     "sprite": "10010.png",
+    "types": [
+      "Electric",
+      "Ice"
+    ],
     "ocrAliases": [
       "Rotom",
       "Rotom Frost",
@@ -178,6 +202,10 @@
     "formIdentifier": "rotom-fan",
     "isDefaultForm": false,
     "sprite": "10011.png",
+    "types": [
+      "Electric",
+      "Flying"
+    ],
     "ocrAliases": [
       "Rotom",
       "Rotom Fan",
@@ -195,6 +223,10 @@
     "formIdentifier": "rotom-mow",
     "isDefaultForm": false,
     "sprite": "10012.png",
+    "types": [
+      "Electric",
+      "Grass"
+    ],
     "ocrAliases": [
       "Rotom",
       "Rotom Mow",
@@ -212,6 +244,9 @@
     "formIdentifier": "castform-sunny",
     "isDefaultForm": false,
     "sprite": "10013.png",
+    "types": [
+      "Fire"
+    ],
     "ocrAliases": [
       "Castform",
       "Castform Sunny",
@@ -229,6 +264,9 @@
     "formIdentifier": "castform-rainy",
     "isDefaultForm": false,
     "sprite": "10014.png",
+    "types": [
+      "Water"
+    ],
     "ocrAliases": [
       "Castform",
       "Castform Rainy",
@@ -246,6 +284,9 @@
     "formIdentifier": "castform-snowy",
     "isDefaultForm": false,
     "sprite": "10015.png",
+    "types": [
+      "Ice"
+    ],
     "ocrAliases": [
       "Castform",
       "Castform Snowy",
@@ -280,6 +321,10 @@
     "formIdentifier": "darmanitan-zen",
     "isDefaultForm": false,
     "sprite": "10017.png",
+    "types": [
+      "Fire",
+      "Psychic"
+    ],
     "ocrAliases": [
       "Darmanitan",
       "Darmanitan Zen",
@@ -297,6 +342,10 @@
     "formIdentifier": "meloetta-pirouette",
     "isDefaultForm": false,
     "sprite": "10018.png",
+    "types": [
+      "Normal",
+      "Fighting"
+    ],
     "ocrAliases": [
       "Meloetta",
       "Meloetta Pirouette",
@@ -569,6 +618,10 @@
     "formIdentifier": "charizard-mega-x",
     "isDefaultForm": false,
     "sprite": "10034.png",
+    "types": [
+      "Fire",
+      "Dragon"
+    ],
     "ocrAliases": [
       "Charizard",
       "Charizard Mega X",
@@ -671,6 +724,10 @@
     "formIdentifier": "pinsir-mega",
     "isDefaultForm": false,
     "sprite": "10040.png",
+    "types": [
+      "Bug",
+      "Flying"
+    ],
     "ocrAliases": [
       "Pinsir",
       "Pinsir Mega",
@@ -688,6 +745,10 @@
     "formIdentifier": "gyarados-mega",
     "isDefaultForm": false,
     "sprite": "10041.png",
+    "types": [
+      "Water",
+      "Dark"
+    ],
     "ocrAliases": [
       "Gyarados",
       "Gyarados Mega",
@@ -722,6 +783,10 @@
     "formIdentifier": "mewtwo-mega-x",
     "isDefaultForm": false,
     "sprite": "10043.png",
+    "types": [
+      "Psychic",
+      "Fighting"
+    ],
     "ocrAliases": [
       "Mewtwo",
       "Mewtwo Mega X",
@@ -756,6 +821,10 @@
     "formIdentifier": "ampharos-mega",
     "isDefaultForm": false,
     "sprite": "10045.png",
+    "types": [
+      "Electric",
+      "Dragon"
+    ],
     "ocrAliases": [
       "Ampharos",
       "Ampharos Mega",
@@ -892,6 +961,9 @@
     "formIdentifier": "aggron-mega",
     "isDefaultForm": false,
     "sprite": "10053.png",
+    "types": [
+      "Steel"
+    ],
     "ocrAliases": [
       "Aggron",
       "Aggron Mega",
@@ -1096,6 +1168,10 @@
     "formIdentifier": "sceptile-mega",
     "isDefaultForm": false,
     "sprite": "10065.png",
+    "types": [
+      "Grass",
+      "Dragon"
+    ],
     "ocrAliases": [
       "Sceptile",
       "Sceptile Mega",
@@ -1130,6 +1206,10 @@
     "formIdentifier": "altaria-mega",
     "isDefaultForm": false,
     "sprite": "10067.png",
+    "types": [
+      "Dragon",
+      "Fairy"
+    ],
     "ocrAliases": [
       "Altaria",
       "Altaria Mega",
@@ -1164,6 +1244,10 @@
     "formIdentifier": "audino-mega",
     "isDefaultForm": false,
     "sprite": "10069.png",
+    "types": [
+      "Normal",
+      "Fairy"
+    ],
     "ocrAliases": [
       "Audino",
       "Audino Mega",
@@ -1317,6 +1401,10 @@
     "formIdentifier": "groudon-primal",
     "isDefaultForm": false,
     "sprite": "10078.png",
+    "types": [
+      "Ground",
+      "Fire"
+    ],
     "ocrAliases": [
       "Groudon",
       "Groudon Primal",
@@ -1453,6 +1541,10 @@
     "formIdentifier": "hoopa-unbound",
     "isDefaultForm": false,
     "sprite": "10086.png",
+    "types": [
+      "Psychic",
+      "Dark"
+    ],
     "ocrAliases": [
       "Hoopa",
       "Hoopa Unbound",
@@ -1487,6 +1579,10 @@
     "formIdentifier": "lopunny-mega",
     "isDefaultForm": false,
     "sprite": "10088.png",
+    "types": [
+      "Normal",
+      "Fighting"
+    ],
     "ocrAliases": [
       "Lopunny",
       "Lopunny Mega",
@@ -1538,6 +1634,10 @@
     "formIdentifier": "rattata-alolan",
     "isDefaultForm": false,
     "sprite": "10091.png",
+    "types": [
+      "Dark",
+      "Normal"
+    ],
     "ocrAliases": [
       "Rattata",
       "Rattata Alolan",
@@ -1560,6 +1660,10 @@
     "formIdentifier": "raticate-alolan",
     "isDefaultForm": false,
     "sprite": "10092.png",
+    "types": [
+      "Dark",
+      "Normal"
+    ],
     "ocrAliases": [
       "Raticate",
       "Raticate Alolan",
@@ -1581,6 +1685,10 @@
     "formIdentifier": "raticate-totem-alolan",
     "isDefaultForm": false,
     "sprite": "10093.png",
+    "types": [
+      "Dark",
+      "Normal"
+    ],
     "ocrAliases": [
       "Raticate",
       "Raticate Totem Alola",
@@ -1683,6 +1791,9 @@
     "formIdentifier": "pikachu-alolan-cap",
     "isDefaultForm": false,
     "sprite": "10099.png",
+    "types": [
+      "Electric"
+    ],
     "ocrAliases": [
       "Pikachu",
       "Pikachu Alola Cap",
@@ -1700,6 +1811,10 @@
     "formIdentifier": "raichu-alolan",
     "isDefaultForm": false,
     "sprite": "10100.png",
+    "types": [
+      "Electric",
+      "Psychic"
+    ],
     "ocrAliases": [
       "Raichu",
       "Raichu Alolan",
@@ -1721,6 +1836,10 @@
     "formIdentifier": "sandshrew-alolan",
     "isDefaultForm": false,
     "sprite": "10101.png",
+    "types": [
+      "Ice",
+      "Steel"
+    ],
     "ocrAliases": [
       "Sandshrew",
       "Sandshrew Alolan",
@@ -1742,6 +1861,10 @@
     "formIdentifier": "sandslash-alolan",
     "isDefaultForm": false,
     "sprite": "10102.png",
+    "types": [
+      "Ice",
+      "Steel"
+    ],
     "ocrAliases": [
       "Sandslash",
       "Sandslash Alolan",
@@ -1763,6 +1886,9 @@
     "formIdentifier": "vulpix-alolan",
     "isDefaultForm": false,
     "sprite": "10103.png",
+    "types": [
+      "Ice"
+    ],
     "ocrAliases": [
       "Vulpix",
       "Vulpix Alolan",
@@ -1784,6 +1910,10 @@
     "formIdentifier": "ninetales-alolan",
     "isDefaultForm": false,
     "sprite": "10104.png",
+    "types": [
+      "Ice",
+      "Fairy"
+    ],
     "ocrAliases": [
       "Ninetales",
       "Ninetales Alolan",
@@ -1805,6 +1935,10 @@
     "formIdentifier": "diglett-alolan",
     "isDefaultForm": false,
     "sprite": "10105.png",
+    "types": [
+      "Ground",
+      "Steel"
+    ],
     "ocrAliases": [
       "Diglett",
       "Diglett Alolan",
@@ -1826,6 +1960,10 @@
     "formIdentifier": "dugtrio-alolan",
     "isDefaultForm": false,
     "sprite": "10106.png",
+    "types": [
+      "Ground",
+      "Steel"
+    ],
     "ocrAliases": [
       "Dugtrio",
       "Dugtrio Alolan",
@@ -1847,6 +1985,9 @@
     "formIdentifier": "meowth-alolan",
     "isDefaultForm": false,
     "sprite": "10107.png",
+    "types": [
+      "Dark"
+    ],
     "ocrAliases": [
       "Meowth",
       "Meowth Alolan",
@@ -1868,6 +2009,9 @@
     "formIdentifier": "persian-alolan",
     "isDefaultForm": false,
     "sprite": "10108.png",
+    "types": [
+      "Dark"
+    ],
     "ocrAliases": [
       "Persian",
       "Persian Alolan",
@@ -1889,6 +2033,10 @@
     "formIdentifier": "geodude-alolan",
     "isDefaultForm": false,
     "sprite": "10109.png",
+    "types": [
+      "Rock",
+      "Electric"
+    ],
     "ocrAliases": [
       "Geodude",
       "Geodude Alolan",
@@ -1910,6 +2058,10 @@
     "formIdentifier": "graveler-alolan",
     "isDefaultForm": false,
     "sprite": "10110.png",
+    "types": [
+      "Rock",
+      "Electric"
+    ],
     "ocrAliases": [
       "Graveler",
       "Graveler Alolan",
@@ -1931,6 +2083,10 @@
     "formIdentifier": "golem-alolan",
     "isDefaultForm": false,
     "sprite": "10111.png",
+    "types": [
+      "Rock",
+      "Electric"
+    ],
     "ocrAliases": [
       "Golem",
       "Golem Alolan",
@@ -1952,6 +2108,10 @@
     "formIdentifier": "grimer-alolan",
     "isDefaultForm": false,
     "sprite": "10112.png",
+    "types": [
+      "Poison",
+      "Dark"
+    ],
     "ocrAliases": [
       "Grimer",
       "Grimer Alolan",
@@ -1973,6 +2133,10 @@
     "formIdentifier": "muk-alolan",
     "isDefaultForm": false,
     "sprite": "10113.png",
+    "types": [
+      "Poison",
+      "Dark"
+    ],
     "ocrAliases": [
       "Muk",
       "Muk Alolan",
@@ -1994,6 +2158,10 @@
     "formIdentifier": "exeggutor-alolan",
     "isDefaultForm": false,
     "sprite": "10114.png",
+    "types": [
+      "Grass",
+      "Dragon"
+    ],
     "ocrAliases": [
       "Exeggutor",
       "Exeggutor Alolan",
@@ -2015,6 +2183,10 @@
     "formIdentifier": "marowak-alolan",
     "isDefaultForm": false,
     "sprite": "10115.png",
+    "types": [
+      "Fire",
+      "Ghost"
+    ],
     "ocrAliases": [
       "Marowak",
       "Marowak Alolan",
@@ -2036,6 +2208,10 @@
     "formIdentifier": "greninja-battle-bond",
     "isDefaultForm": false,
     "sprite": "10116.png",
+    "types": [
+      "Water",
+      "Dark"
+    ],
     "ocrAliases": [
       "Greninja",
       "Greninja Battle Bond",
@@ -2053,6 +2229,10 @@
     "formIdentifier": "greninja-ash",
     "isDefaultForm": false,
     "sprite": "10117.png",
+    "types": [
+      "Water",
+      "Dark"
+    ],
     "ocrAliases": [
       "Greninja",
       "Greninja Ash",
@@ -2155,6 +2335,10 @@
     "formIdentifier": "oricorio-pom-pom",
     "isDefaultForm": false,
     "sprite": "10123.png",
+    "types": [
+      "Electric",
+      "Flying"
+    ],
     "ocrAliases": [
       "Oricorio",
       "Oricorio Pom Pom",
@@ -2172,6 +2356,10 @@
     "formIdentifier": "oricorio-pau",
     "isDefaultForm": false,
     "sprite": "10124.png",
+    "types": [
+      "Psychic",
+      "Flying"
+    ],
     "ocrAliases": [
       "Oricorio",
       "Oricorio Pau",
@@ -2189,6 +2377,10 @@
     "formIdentifier": "oricorio-sensu",
     "isDefaultForm": false,
     "sprite": "10125.png",
+    "types": [
+      "Ghost",
+      "Flying"
+    ],
     "ocrAliases": [
       "Oricorio",
       "Oricorio Sensu",
@@ -2699,6 +2891,10 @@
     "formIdentifier": "necrozma-dusk",
     "isDefaultForm": false,
     "sprite": "10155.png",
+    "types": [
+      "Psychic",
+      "Steel"
+    ],
     "ocrAliases": [
       "Necrozma",
       "Necrozma Dusk",
@@ -2716,6 +2912,10 @@
     "formIdentifier": "necrozma-dawn",
     "isDefaultForm": false,
     "sprite": "10156.png",
+    "types": [
+      "Psychic",
+      "Ghost"
+    ],
     "ocrAliases": [
       "Necrozma",
       "Necrozma Dawn",
@@ -2733,6 +2933,10 @@
     "formIdentifier": "necrozma-ultra",
     "isDefaultForm": false,
     "sprite": "10157.png",
+    "types": [
+      "Psychic",
+      "Dragon"
+    ],
     "ocrAliases": [
       "Necrozma",
       "Necrozma Ultra",
@@ -2767,6 +2971,9 @@
     "formIdentifier": "meowth-galarian",
     "isDefaultForm": false,
     "sprite": "10161.png",
+    "types": [
+      "Steel"
+    ],
     "ocrAliases": [
       "Meowth",
       "Meowth Galarian",
@@ -2788,6 +2995,9 @@
     "formIdentifier": "ponyta-galarian",
     "isDefaultForm": false,
     "sprite": "10162.png",
+    "types": [
+      "Psychic"
+    ],
     "ocrAliases": [
       "Ponyta",
       "Ponyta Galarian",
@@ -2809,6 +3019,10 @@
     "formIdentifier": "rapidash-galarian",
     "isDefaultForm": false,
     "sprite": "10163.png",
+    "types": [
+      "Psychic",
+      "Fairy"
+    ],
     "ocrAliases": [
       "Rapidash",
       "Rapidash Galarian",
@@ -2830,6 +3044,9 @@
     "formIdentifier": "slowpoke-galarian",
     "isDefaultForm": false,
     "sprite": "10164.png",
+    "types": [
+      "Psychic"
+    ],
     "ocrAliases": [
       "Slowpoke",
       "Slowpoke Galarian",
@@ -2851,6 +3068,10 @@
     "formIdentifier": "slowbro-galarian",
     "isDefaultForm": false,
     "sprite": "10165.png",
+    "types": [
+      "Poison",
+      "Psychic"
+    ],
     "ocrAliases": [
       "Slowbro",
       "Slowbro Galarian",
@@ -2872,6 +3093,9 @@
     "formIdentifier": "farfetchd-galarian",
     "isDefaultForm": false,
     "sprite": "10166.png",
+    "types": [
+      "Fighting"
+    ],
     "ocrAliases": [
       "Farfetchd Galarian",
       "Farfetchd-Galarian",
@@ -2892,6 +3116,10 @@
     "formIdentifier": "weezing-galarian",
     "isDefaultForm": false,
     "sprite": "10167.png",
+    "types": [
+      "Poison",
+      "Fairy"
+    ],
     "ocrAliases": [
       "Weezing",
       "Weezing Galarian",
@@ -2913,6 +3141,10 @@
     "formIdentifier": "mr-mime-galarian",
     "isDefaultForm": false,
     "sprite": "10168.png",
+    "types": [
+      "Ice",
+      "Psychic"
+    ],
     "ocrAliases": [
       "Mr Mime",
       "Mr Mime Galarian",
@@ -2939,6 +3171,10 @@
     "formIdentifier": "articuno-galarian",
     "isDefaultForm": false,
     "sprite": "10169.png",
+    "types": [
+      "Psychic",
+      "Flying"
+    ],
     "ocrAliases": [
       "Articuno",
       "Articuno Galarian",
@@ -2960,6 +3196,10 @@
     "formIdentifier": "zapdos-galarian",
     "isDefaultForm": false,
     "sprite": "10170.png",
+    "types": [
+      "Fighting",
+      "Flying"
+    ],
     "ocrAliases": [
       "Zapdos",
       "Zapdos Galarian",
@@ -2981,6 +3221,10 @@
     "formIdentifier": "moltres-galarian",
     "isDefaultForm": false,
     "sprite": "10171.png",
+    "types": [
+      "Dark",
+      "Flying"
+    ],
     "ocrAliases": [
       "Moltres",
       "Moltres Galarian",
@@ -3002,6 +3246,10 @@
     "formIdentifier": "slowking-galarian",
     "isDefaultForm": false,
     "sprite": "10172.png",
+    "types": [
+      "Poison",
+      "Psychic"
+    ],
     "ocrAliases": [
       "Slowking",
       "Slowking Galarian",
@@ -3023,6 +3271,9 @@
     "formIdentifier": "corsola-galarian",
     "isDefaultForm": false,
     "sprite": "10173.png",
+    "types": [
+      "Ghost"
+    ],
     "ocrAliases": [
       "Corsola",
       "Corsola Galarian",
@@ -3044,6 +3295,10 @@
     "formIdentifier": "zigzagoon-galarian",
     "isDefaultForm": false,
     "sprite": "10174.png",
+    "types": [
+      "Dark",
+      "Normal"
+    ],
     "ocrAliases": [
       "Zigzagoon",
       "Zigzagoon Galarian",
@@ -3065,6 +3320,10 @@
     "formIdentifier": "linoone-galarian",
     "isDefaultForm": false,
     "sprite": "10175.png",
+    "types": [
+      "Dark",
+      "Normal"
+    ],
     "ocrAliases": [
       "Linoone",
       "Linoone Galarian",
@@ -3086,6 +3345,9 @@
     "formIdentifier": "darumaka-galarian",
     "isDefaultForm": false,
     "sprite": "10176.png",
+    "types": [
+      "Ice"
+    ],
     "ocrAliases": [
       "Darumaka",
       "Darumaka Galarian",
@@ -3107,6 +3369,9 @@
     "formIdentifier": "darmanitan-galarian-standard",
     "isDefaultForm": false,
     "sprite": "10177.png",
+    "types": [
+      "Ice"
+    ],
     "ocrAliases": [
       "Darmanitan",
       "Darmanitan Galarian Standard",
@@ -3128,6 +3393,10 @@
     "formIdentifier": "darmanitan-galarian-zen",
     "isDefaultForm": false,
     "sprite": "10178.png",
+    "types": [
+      "Ice",
+      "Fire"
+    ],
     "ocrAliases": [
       "Darmanitan",
       "Darmanitan Galarian Zen",
@@ -3149,6 +3418,10 @@
     "formIdentifier": "yamask-galarian",
     "isDefaultForm": false,
     "sprite": "10179.png",
+    "types": [
+      "Ground",
+      "Ghost"
+    ],
     "ocrAliases": [
       "Yamask",
       "Yamask Galarian",
@@ -3170,6 +3443,10 @@
     "formIdentifier": "stunfisk-galarian",
     "isDefaultForm": false,
     "sprite": "10180.png",
+    "types": [
+      "Ground",
+      "Steel"
+    ],
     "ocrAliases": [
       "Stunfisk",
       "Stunfisk Galarian",
@@ -3310,6 +3587,10 @@
     "formIdentifier": "zacian-crowned",
     "isDefaultForm": false,
     "sprite": "10188.png",
+    "types": [
+      "Fairy",
+      "Steel"
+    ],
     "ocrAliases": [
       "Zacian",
       "Zacian Crowned",
@@ -3327,6 +3608,10 @@
     "formIdentifier": "zamazenta-crowned",
     "isDefaultForm": false,
     "sprite": "10189.png",
+    "types": [
+      "Fighting",
+      "Steel"
+    ],
     "ocrAliases": [
       "Zamazenta",
       "Zamazenta Crowned",
@@ -3361,6 +3646,10 @@
     "formIdentifier": "urshifu-rapid-strike",
     "isDefaultForm": false,
     "sprite": "10191.png",
+    "types": [
+      "Fighting",
+      "Water"
+    ],
     "ocrAliases": [
       "Urshifu",
       "Urshifu Rapid Strike",
@@ -3395,6 +3684,10 @@
     "formIdentifier": "calyrex-ice",
     "isDefaultForm": false,
     "sprite": "10193.png",
+    "types": [
+      "Psychic",
+      "Ice"
+    ],
     "ocrAliases": [
       "Calyrex",
       "Calyrex Ice",
@@ -3412,6 +3705,10 @@
     "formIdentifier": "calyrex-shadow",
     "isDefaultForm": false,
     "sprite": "10194.png",
+    "types": [
+      "Psychic",
+      "Ghost"
+    ],
     "ocrAliases": [
       "Calyrex",
       "Calyrex Shadow",
@@ -3973,6 +4270,10 @@
     "formIdentifier": "urshifu-rapid-strike-gmax",
     "isDefaultForm": false,
     "sprite": "10227.png",
+    "types": [
+      "Fighting",
+      "Water"
+    ],
     "ocrAliases": [
       "Urshifu",
       "Urshifu Rapid Strike Gmax",
@@ -4007,6 +4308,10 @@
     "formIdentifier": "growlithe-hisui",
     "isDefaultForm": false,
     "sprite": "10229.png",
+    "types": [
+      "Fire",
+      "Rock"
+    ],
     "ocrAliases": [
       "Growlithe",
       "Growlithe Hisui",
@@ -4028,6 +4333,10 @@
     "formIdentifier": "arcanine-Hisui",
     "isDefaultForm": false,
     "sprite": "10230.png",
+    "types": [
+      "Fire",
+      "Rock"
+    ],
     "ocrAliases": [
       "Arcanine",
       "Arcanine Hisui",
@@ -4049,6 +4358,10 @@
     "formIdentifier": "voltorb-Hisui",
     "isDefaultForm": false,
     "sprite": "10231.png",
+    "types": [
+      "Electric",
+      "Grass"
+    ],
     "ocrAliases": [
       "Voltorb",
       "Voltorb Hisui",
@@ -4070,6 +4383,10 @@
     "formIdentifier": "electrode-Hisui",
     "isDefaultForm": false,
     "sprite": "10232.png",
+    "types": [
+      "Electric",
+      "Grass"
+    ],
     "ocrAliases": [
       "Electrode",
       "Electrode Hisui",
@@ -4091,6 +4408,10 @@
     "formIdentifier": "typhlosion-Hisui",
     "isDefaultForm": false,
     "sprite": "10233.png",
+    "types": [
+      "Fire",
+      "Ghost"
+    ],
     "ocrAliases": [
       "Typhlosion",
       "Typhlosion Hisui",
@@ -4112,6 +4433,10 @@
     "formIdentifier": "qwilfish-Hisui",
     "isDefaultForm": false,
     "sprite": "10234.png",
+    "types": [
+      "Dark",
+      "Poison"
+    ],
     "ocrAliases": [
       "Qwilfish",
       "Qwilfish Hisui",
@@ -4133,6 +4458,10 @@
     "formIdentifier": "sneasel-Hisui",
     "isDefaultForm": false,
     "sprite": "10235.png",
+    "types": [
+      "Fighting",
+      "Poison"
+    ],
     "ocrAliases": [
       "Sneasel",
       "Sneasel Hisui",
@@ -4154,6 +4483,10 @@
     "formIdentifier": "samurott-Hisui",
     "isDefaultForm": false,
     "sprite": "10236.png",
+    "types": [
+      "Water",
+      "Dark"
+    ],
     "ocrAliases": [
       "Samurott",
       "Samurott Hisui",
@@ -4175,6 +4508,10 @@
     "formIdentifier": "lilligant-Hisui",
     "isDefaultForm": false,
     "sprite": "10237.png",
+    "types": [
+      "Grass",
+      "Fighting"
+    ],
     "ocrAliases": [
       "Lilligant",
       "Lilligant Hisui",
@@ -4196,6 +4533,10 @@
     "formIdentifier": "zorua-Hisui",
     "isDefaultForm": false,
     "sprite": "10238.png",
+    "types": [
+      "Normal",
+      "Ghost"
+    ],
     "ocrAliases": [
       "Zorua",
       "Zorua Hisui",
@@ -4217,6 +4558,10 @@
     "formIdentifier": "zoroark-Hisui",
     "isDefaultForm": false,
     "sprite": "10239.png",
+    "types": [
+      "Normal",
+      "Ghost"
+    ],
     "ocrAliases": [
       "Zoroark",
       "Zoroark Hisui",
@@ -4238,6 +4583,10 @@
     "formIdentifier": "braviary-Hisui",
     "isDefaultForm": false,
     "sprite": "10240.png",
+    "types": [
+      "Psychic",
+      "Flying"
+    ],
     "ocrAliases": [
       "Braviary",
       "Braviary Hisui",
@@ -4259,6 +4608,10 @@
     "formIdentifier": "sliggoo-Hisui",
     "isDefaultForm": false,
     "sprite": "10241.png",
+    "types": [
+      "Steel",
+      "Dragon"
+    ],
     "ocrAliases": [
       "Sliggoo",
       "Sliggoo Hisui",
@@ -4280,6 +4633,10 @@
     "formIdentifier": "goodra-Hisui",
     "isDefaultForm": false,
     "sprite": "10242.png",
+    "types": [
+      "Steel",
+      "Dragon"
+    ],
     "ocrAliases": [
       "Goodra",
       "Goodra Hisui",
@@ -4301,6 +4658,10 @@
     "formIdentifier": "avalugg-Hisui",
     "isDefaultForm": false,
     "sprite": "10243.png",
+    "types": [
+      "Ice",
+      "Rock"
+    ],
     "ocrAliases": [
       "Avalugg",
       "Avalugg Hisui",
@@ -4322,6 +4683,10 @@
     "formIdentifier": "decidueye-Hisui",
     "isDefaultForm": false,
     "sprite": "10244.png",
+    "types": [
+      "Grass",
+      "Fighting"
+    ],
     "ocrAliases": [
       "Decidueye",
       "Decidueye Hisui",
@@ -4428,6 +4793,9 @@
     "formIdentifier": "tauros-paldea-combat-breed",
     "isDefaultForm": false,
     "sprite": "10250.png",
+    "types": [
+      "Fighting"
+    ],
     "ocrAliases": [
       "Tauros",
       "Tauros Paldea Combat Breed",
@@ -4445,6 +4813,10 @@
     "formIdentifier": "tauros-paldea-blaze-breed",
     "isDefaultForm": false,
     "sprite": "10251.png",
+    "types": [
+      "Fighting",
+      "Fire"
+    ],
     "ocrAliases": [
       "Tauros",
       "Tauros Paldea Blaze Breed",
@@ -4462,6 +4834,10 @@
     "formIdentifier": "tauros-paldea-aqua-breed",
     "isDefaultForm": false,
     "sprite": "10252.png",
+    "types": [
+      "Fighting",
+      "Water"
+    ],
     "ocrAliases": [
       "Tauros",
       "Tauros Paldea Aqua Breed",
@@ -4479,6 +4855,10 @@
     "formIdentifier": "wooper-paldea",
     "isDefaultForm": false,
     "sprite": "10253.png",
+    "types": [
+      "Poison",
+      "Ground"
+    ],
     "ocrAliases": [
       "Wooper",
       "Wooper Paldea",
@@ -4683,6 +5063,10 @@
     "formIdentifier": "ogerpon-wellspring-mask",
     "isDefaultForm": false,
     "sprite": "10273.png",
+    "types": [
+      "Grass",
+      "Water"
+    ],
     "ocrAliases": [
       "Ogerpon",
       "Ogerpon Wellspring Mask",
@@ -4700,6 +5084,10 @@
     "formIdentifier": "ogerpon-hearthflame-mask",
     "isDefaultForm": false,
     "sprite": "10274.png",
+    "types": [
+      "Grass",
+      "Fire"
+    ],
     "ocrAliases": [
       "Ogerpon",
       "Ogerpon Hearthflame Mask",
@@ -4717,6 +5105,10 @@
     "formIdentifier": "ogerpon-cornerstone-mask",
     "isDefaultForm": false,
     "sprite": "10275.png",
+    "types": [
+      "Grass",
+      "Rock"
+    ],
     "ocrAliases": [
       "Ogerpon",
       "Ogerpon Cornerstone Mask",
@@ -4836,6 +5228,10 @@
     "formIdentifier": "meganium-mega",
     "isDefaultForm": false,
     "sprite": "10282.png",
+    "types": [
+      "Grass",
+      "Fairy"
+    ],
     "ocrAliases": [
       "Meganium",
       "Meganium Mega",
@@ -4853,6 +5249,10 @@
     "formIdentifier": "feraligatr-mega",
     "isDefaultForm": false,
     "sprite": "10283.png",
+    "types": [
+      "Water",
+      "Dark"
+    ],
     "ocrAliases": [
       "Feraligatr",
       "Feraligatr Mega",

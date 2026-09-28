@@ -7,17 +7,17 @@ namespace Foot_Tracker.Views;
 /// <summary>
 /// Small launcher shown after a successful Admin Login (see
 /// MainWindow.AdminLoginButton_Click) - lets the admin choose which gated
-/// action to take instead of jumping straight into one, the way §29 did for
-/// CreateEventWindow alone. §101 added the Admin Client toggle and the Admin
-/// Console entry alongside the two original Events-board actions; everything
-/// here sits behind the same single authenticated login (AdminAuthService -
-/// the credential itself is unchanged). Mostly code-behind by design: like
-/// AdminLoginWindow/ConfirmDialogWindow there's no real state here, just
-/// buttons that each open another window or flip AdminModeService.
+/// action to take instead of jumping straight into one. §101 added the
+/// Admin Client toggle and the Admin Console entry, §194 the two scrapers;
+/// §253 removed the two Events-board actions (Create Event, Remove Event)
+/// the window was first built around. Everything here sits behind the same
+/// single authenticated login (AdminAuthService - the credential itself is
+/// unchanged). Mostly code-behind by design: like AdminLoginWindow/
+/// ConfirmDialogWindow there's no real state here, just buttons that each
+/// open another window or flip AdminModeService.
 ///
-/// Stays open (non-modal, like CreateEventWindow/EventsWindow/
-/// RemoveEventWindow) after any button is used, so taking two admin actions
-/// doesn't need logging in twice.
+/// Stays open (non-modal) after any button is used, so taking two admin
+/// actions doesn't need logging in twice.
 /// </summary>
 public partial class AdminActionsWindow : Window
 {
@@ -87,17 +87,6 @@ public partial class AdminActionsWindow : Window
     {
         AdminModeService.ClearAuthentication();
         Close();
-    }
-
-    private void CreateEventButton_Click(object? sender, RoutedEventArgs e)
-    {
-        // §189: unowned - see WindowRegistry.ShowUnowned.
-        WindowRegistry.ShowUnowned(new CreateEventWindow(), this);
-    }
-
-    private void RemoveEventButton_Click(object? sender, RoutedEventArgs e)
-    {
-        WindowRegistry.ShowUnowned(new RemoveEventWindow(), this);
     }
 
     private void CloseButton_Click(object? sender, RoutedEventArgs e) => Close();

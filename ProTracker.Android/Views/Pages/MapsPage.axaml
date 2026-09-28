@@ -1,0 +1,537 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Foot_Tracker.ViewModels"
+             xmlns:controls="using:Foot_Tracker.Controls"
+             xmlns:models="using:Foot_Tracker.Models"
+             x:Class="ProTracker.Companion.Views.Pages.MapsPage"
+             x:DataType="vm:MapsViewModel">
+
+    <!-- §423. The desktop's Map Explorer (§407/§410, MapsWindow) on a phone:
+         the same view model, the same picture and MapBoxLayer, the same
+         cards - stacked rather than side by side, because a phone is one
+         column. The search sits over the picture, the filters fold away
+         behind one button, and the card the search answers with sits UNDER
+         the picture and scrolls on its own.
+
+         What changed and why:
+         - No DataGrid. The companion does not carry the DataGrid package,
+           and a finger cannot sort by clicking a 30px header anyway; the
+           two tables are ItemsControls of tappable rows, as every list in
+           the companion is.
+         - No hover. A finger has none. A row's markers light when the row
+           is tapped (which also selects it), and a marker tapped picks its
+           row or opens its card, as a click does on the desktop.
+         - Touch does the rest: the picture pans with a drag (the
+           ScrollViewer's own gesture), zooms with a pinch (MapsPage.axaml.cs)
+           and with the +/- buttons. -->
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="MapsMembersBrush" Color="#D850E8" />
+        <SolidColorBrush x:Key="MapsBossBrush" Color="#FFD040" />
+        <SolidColorBrush x:Key="MapsStopBrush" Color="#40B8FF" />
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+        </Style>
+        <Style Selector="TextBlock.section">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextDecorations" Value="Underline" />
+            <Setter Property="Margin" Value="0,14,0,6" />
+        </Style>
+        <Style Selector="TextBlock.dim">
+            <Setter Property="Opacity" Value="0.75" />
+            <Setter Property="FontSize" Value="11" />
+        </Style>
+        <Style Selector="Border.tableRow">
+            <Setter Property="Background" Value="{DynamicResource ThemeEncountersBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeEncountersBorderBrush}" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="Padding" Value="6,8" />
+        </Style>
+        <Style Selector="Border.tableRow TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeEncountersTextBrush}" />
+        </Style>
+        <Style Selector="Border.tableHead">
+            <Setter Property="Background" Value="{DynamicResource ThemeTableHeaderBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="6,4" />
+        </Style>
+        <Style Selector="Border.tableHead TextBlock">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="11" />
+        </Style>
+        <Style Selector="Border.mapsFrame">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+        <Style Selector="Border.spriteFrame">
+            <Setter Property="Background" Value="{DynamicResource ThemeSpriteBoxBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="MinHeight" Value="34" />
+        </Style>
+        <Style Selector="Button.small">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Padding" Value="10,6" />
+        </Style>
+        <Style Selector="ToggleButton.small">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Padding" Value="10,6" />
+        </Style>
+        <Style Selector="ListBox.areas">
+            <Setter Property="Background" Value="{DynamicResource ThemeEncountersBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeEncountersBorderBrush}" />
+        </Style>
+        <Style Selector="ListBox.areas TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeEncountersTextBrush}" />
+        </Style>
+        <Style Selector="ListBox.areas ListBoxItem">
+            <Setter Property="Padding" Value="8,8" />
+            <Setter Property="MinHeight" Value="0" />
+        </Style>
+        <Style Selector="ListBox.areas ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ThemeMenuHighlightBrush}" />
+        </Style>
+        <Style Selector="ProgressBar">
+            <Setter Property="Background" Value="{DynamicResource ThemeMenuHighlightBrush}" />
+            <Setter Property="Height" Value="8" />
+            <Setter Property="MinHeight" Value="8" />
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,3*,4*,Auto">
+
+        <!-- search -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto" Margin="0,0,0,6">
+            <AutoCompleteBox Grid.Column="0" Name="QueryBox" FontSize="13" MinHeight="36"
+                             PlaceholderText="Pokémon, map, boss, or Pokéstop…"
+                             ItemsSource="{Binding Choices}"
+                             Text="{Binding Query, Mode=TwoWay}"
+                             FilterMode="Contains" MinimumPrefixLength="2"
+                             SelectionChanged="QueryBox_SelectionChanged"
+                             KeyDown="QueryBox_KeyDown" />
+            <Button Grid.Column="1" Classes="small" Content="Search" Margin="6,0,0,0" Command="{Binding SearchCommand}" />
+            <ToggleButton Grid.Column="2" Classes="themedButton small" Name="FiltersToggle" Content="Filters" Margin="6,0,0,0" />
+        </Grid>
+
+        <!-- filters, folded behind the Filters button -->
+        <WrapPanel Grid.Row="1" IsVisible="{Binding #FiltersToggle.IsChecked}" Margin="0,0,0,6">
+            <ComboBox Width="118" Margin="0,0,6,6" ItemsSource="{Binding RegionChoices}" SelectedItem="{Binding SelectedRegion, Mode=TwoWay}" />
+            <ComboBox Width="118" Margin="0,0,6,6" ItemsSource="{Binding MethodChoices}" SelectedItem="{Binding SelectedMethod, Mode=TwoWay}" />
+            <ComboBox Width="108" Margin="0,0,6,6" ItemsSource="{Binding TimeChoices}" SelectedItem="{Binding SelectedTime, Mode=TwoWay}" />
+            <ToggleButton Classes="themedButton small" Content="Bosses only" Margin="0,0,6,6" IsChecked="{Binding BossesOnly, Mode=TwoWay}" />
+            <Button Classes="small" Content="{Binding BossesToggleText}" Margin="0,0,6,6" Command="{Binding ToggleBossesCommand}" />
+            <Button Classes="small" Content="{Binding PokestopsToggleText}" Margin="0,0,6,6" Command="{Binding TogglePokestopsCommand}" />
+            <Button Classes="small" Content="Clear" Margin="0,0,6,6" Command="{Binding ClearFiltersCommand}" />
+            <TextBlock Text="{Binding FilterText}" Classes="dim" VerticalAlignment="Center" Margin="2,0,0,6" />
+        </WrapPanel>
+
+        <!-- picture -->
+        <Border Grid.Row="2" Classes="mapsFrame" Background="#22000000" ClipToBounds="True">
+            <Panel>
+                <ScrollViewer Name="MapScroller" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                    <Panel Name="MapSurface" Background="Transparent"
+                           HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
+                           PointerPressed="Surface_PointerPressed"
+                           PointerReleased="Surface_PointerReleased">
+                        <Image Source="{Binding Image}" Stretch="Fill"
+                               RenderOptions.BitmapInterpolationMode="None" />
+                        <controls:MapBoxLayer Name="BoxLayer" />
+                    </Panel>
+                </ScrollViewer>
+                <TextBlock Text="The world picture is missing." IsVisible="{Binding !HasImage}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.7" />
+
+                <!-- zoom, in the picture's corner where a thumb reaches -->
+                <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="6" CornerRadius="4"
+                        Background="#A0101830" Padding="4">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <Button Classes="small" Content="−" Command="{Binding ZoomOutCommand}" />
+                        <TextBlock Text="{Binding ZoomText}" Width="44" TextAlignment="Center" VerticalAlignment="Center" FontSize="12" />
+                        <Button Classes="small" Content="+" Command="{Binding ZoomInCommand}" />
+                    </StackPanel>
+                </Border>
+            </Panel>
+        </Border>
+
+        <!-- card -->
+        <Border Grid.Row="3" Classes="mapsFrame" Padding="10" Margin="0,6,0,0">
+            <ScrollViewer>
+                <StackPanel>
+
+                    <!-- empty state -->
+                    <StackPanel IsVisible="{Binding ShowsNothing}" Spacing="6" Margin="0,4,0,0">
+                        <TextBlock Text="MAP EXPLORER" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" />
+                        <TextBlock Text="Where everything spawns, on one picture." HorizontalAlignment="Center" Classes="dim" FontSize="12" />
+                        <TextBlock Text="Search a Pokémon for its card and every place it spawns; a map for what spawns there; a boss for where it stands; Pokéstop for every stop. Or tap any marker on the picture."
+                                   TextWrapping="Wrap" TextAlignment="Center" Margin="4,8,4,0" FontSize="12" />
+
+                        <TextBlock Text="Legend" Classes="section" HorizontalAlignment="Center" />
+                        <Grid ColumnDefinitions="28,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" Margin="12,0">
+                            <controls:MethodIcon Grid.Row="0" Grid.Column="0" Method="Grass" IconSize="16" Margin="0,3" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="Grass - met on land" VerticalAlignment="Center" FontSize="12" />
+                            <controls:MethodIcon Grid.Row="1" Grid.Column="0" Method="Surf" IconSize="16" Margin="0,3" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="Surf - met on the water" VerticalAlignment="Center" FontSize="12" />
+                            <controls:MethodIcon Grid.Row="2" Grid.Column="0" Method="Fishing" IconSize="16" Margin="0,3" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="Fishing - met with a rod" VerticalAlignment="Center" FontSize="12" />
+                            <Ellipse Grid.Row="3" Grid.Column="0" Width="14" Height="14" Fill="#C03030" Stroke="{StaticResource MapsBossBrush}" StrokeThickness="2" HorizontalAlignment="Left" Margin="1,3" />
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="Boss - where a boss stands" VerticalAlignment="Center" FontSize="12" />
+                            <Rectangle Grid.Row="4" Grid.Column="0" Width="14" Height="14" Fill="#60FFE030" Stroke="#FFE030" StrokeThickness="1" HorizontalAlignment="Left" Margin="1,3" />
+                            <TextBlock Grid.Row="4" Grid.Column="1" Text="Found - a marker the search lit" VerticalAlignment="Center" FontSize="12" />
+                            <TextBlock Grid.Row="5" Grid.Column="0" Text="MS" FontWeight="Bold" FontSize="11" Foreground="{StaticResource MapsMembersBrush}" VerticalAlignment="Center" Margin="0,3" />
+                            <TextBlock Grid.Row="5" Grid.Column="1" Text="Members only" VerticalAlignment="Center" FontSize="12" Foreground="{StaticResource MapsMembersBrush}" />
+                            <Ellipse Grid.Row="6" Grid.Column="0" Width="14" Height="14" Fill="#E03838" Stroke="{StaticResource MapsStopBrush}" StrokeThickness="2" HorizontalAlignment="Left" Margin="1,3" />
+                            <TextBlock Grid.Row="6" Grid.Column="1" Text="Pokéstop - two random items, every 2 days" VerticalAlignment="Center" FontSize="12" />
+                        </Grid>
+                        <TextBlock Text="The Lv. column is the level range players who share their encounters have met each Pokémon at there - tick Share level data in the desktop tracker's settings to add yours."
+                                   TextWrapping="Wrap" TextAlignment="Center" Classes="dim" Margin="4,8,4,0" />
+
+                        <TextBlock Text="Tips" Classes="section" HorizontalAlignment="Center" />
+                        <TextBlock Text="Pinch to zoom, drag to pan, tap a marker. Filters narrow both the picture and the table."
+                                   TextWrapping="Wrap" TextAlignment="Center" Classes="dim" Margin="4,0" />
+                    </StackPanel>
+
+                    <!-- a Pokémon's card -->
+                    <StackPanel IsVisible="{Binding ShowsPokemon}">
+                        <Border Classes="mapsFrame" Padding="10">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Border Grid.Column="0" Width="80" Height="80" Classes="spriteFrame">
+                                    <Image Source="{Binding CardSprite}" Width="72" Height="72" Stretch="Uniform"
+                                           RenderOptions.BitmapInterpolationMode="None" />
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Spacing="5">
+                                    <TextBlock Text="{Binding CardTitle}" FontWeight="Bold" FontSize="17" TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding CardSubtitle}" Classes="dim" />
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Source="{Binding TypeIcon1}" Height="18" Stretch="Uniform"
+                                               IsVisible="{Binding TypeIcon1, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                                        <Image Source="{Binding TypeIcon2}" Height="18" Stretch="Uniform"
+                                               IsVisible="{Binding TypeIcon2, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Encounter Locations first on a phone: "where do I
+                             find it" is the question in the field, and the
+                             rest is a scroll away. -->
+                        <TextBlock Text="{Binding LocationsHeading}" Classes="section" />
+                        <Border Classes="tableHead">
+                            <Grid ColumnDefinitions="*,80,64,44">
+                                <TextBlock Grid.Column="0" Text="Location" />
+                                <TextBlock Grid.Column="1" Text="Method" />
+                                <TextBlock Grid.Column="2" Text="Time" />
+                                <TextBlock Grid.Column="3" Text="Lv." />
+                            </Grid>
+                        </Border>
+                        <ItemsControl ItemsSource="{Binding Locations}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:MapsLocationRow">
+                                    <Border Classes="tableRow" PointerPressed="LocationRow_PointerPressed">
+                                        <Grid ColumnDefinitions="*,80,64,44">
+                                            <StackPanel Grid.Column="0" Spacing="1" VerticalAlignment="Center">
+                                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                                    <TextBlock Text="{Binding Location}" Foreground="{Binding TitleBrush}" FontSize="12"
+                                                               TextWrapping="Wrap" VerticalAlignment="Center" />
+                                                    <TextBlock Text="MS" IsVisible="{Binding IsMembers}" Foreground="{Binding TitleBrush}"
+                                                               FontSize="10" FontWeight="Bold" VerticalAlignment="Center" />
+                                                    <TextBlock Text="·" IsVisible="{Binding !OnPicture}" Classes="dim" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                                <TextBlock Text="{Binding Region}" Classes="dim" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="3" VerticalAlignment="Center">
+                                                <ItemsControl ItemsSource="{Binding Methods}" VerticalAlignment="Center">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" Spacing="2" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate x:DataType="models:EncounterMethod">
+                                                            <controls:MethodIcon Method="{Binding}" IconSize="14" />
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                                <TextBlock Text="{Binding MethodText}" FontSize="10" VerticalAlignment="Center" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2" Text="{Binding TimeText}" FontSize="11" VerticalAlignment="Center" TextWrapping="Wrap" />
+                                            <!-- §429: the shared level range. -->
+                                            <TextBlock Grid.Column="3" Text="{Binding LevelText}" FontSize="11" VerticalAlignment="Center" TextWrapping="Wrap"
+                                                       ToolTip.Tip="{Binding LevelNote}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text="No location passes the filters." Classes="dim" Margin="6,4"
+                                   IsVisible="{Binding HasNoLocations}" />
+
+                        <TextBlock Text="Encounter Summary" Classes="section" />
+                        <ItemsControl ItemsSource="{Binding Summary}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:MapsFactRow">
+                                    <Border Classes="tableRow">
+                                        <Grid ColumnDefinitions="100,*">
+                                            <TextBlock Grid.Column="0" Text="{Binding Label}" Classes="dim" VerticalAlignment="Center" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Value}" TextWrapping="Wrap" FontSize="12" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock Text="Abilities" Classes="section" />
+                        <ItemsControl ItemsSource="{Binding Abilities}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:MapsAbilityRow">
+                                    <Border Classes="tableRow">
+                                        <Grid ColumnDefinitions="100,*">
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Top">
+                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="12" TextWrapping="Wrap" />
+                                                <TextBlock Text="Hidden" IsVisible="{Binding Hidden}" FontSize="10" FontStyle="Italic" Opacity="0.8" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" FontSize="11" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text="{Binding AbilitiesNote}" IsVisible="{Binding HasAbilitiesNote}" Classes="dim" Margin="6,2" TextWrapping="Wrap" />
+
+                        <TextBlock Text="Base Stats" Classes="section" />
+                        <Border Classes="tableHead" IsVisible="{Binding !HasStatsNote}">
+                            <Grid ColumnDefinitions="64,40,*">
+                                <TextBlock Grid.Column="0" Text="Stat" />
+                                <TextBlock Grid.Column="1" Text="Base" TextAlignment="Right" />
+                                <TextBlock Grid.Column="2" Text="{Binding StatsTotal}" TextAlignment="Right" />
+                            </Grid>
+                        </Border>
+                        <ItemsControl ItemsSource="{Binding Stats}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:MapsStatRow">
+                                    <Border Classes="tableRow">
+                                        <Grid ColumnDefinitions="64,40,*">
+                                            <TextBlock Grid.Column="0" Text="{Binding Name}" FontSize="12" VerticalAlignment="Center" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Value}" FontSize="12" FontWeight="Bold" TextAlignment="Right" VerticalAlignment="Center" />
+                                            <ProgressBar Grid.Column="2" Margin="10,0,0,0" Minimum="0" Maximum="255" Value="{Binding Value}"
+                                                         Foreground="{Binding Bar}" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text="{Binding StatsNote}" IsVisible="{Binding HasStatsNote}" Classes="dim" Margin="6,2" TextWrapping="Wrap" />
+
+                        <TextBlock Text="Weaknesses" Classes="section" />
+                        <ItemsControl ItemsSource="{Binding Weaknesses}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:MapsTypeRow">
+                                    <Border Classes="tableRow">
+                                        <Grid ColumnDefinitions="40,*,50">
+                                            <Image Grid.Column="0" Source="{Binding Icon}" Height="16" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Type}" Foreground="{Binding Brush}" FontWeight="Bold" FontSize="12" VerticalAlignment="Center" />
+                                            <TextBlock Grid.Column="2" Text="{Binding Multiplier}" Foreground="{Binding Brush}" FontWeight="Bold" FontSize="12" TextAlignment="Right" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text="{Binding WeaknessesNote}" IsVisible="{Binding HasWeaknessesNote}" Classes="dim" Margin="6,2" TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <!-- a map's card -->
+                    <StackPanel IsVisible="{Binding ShowsMap}">
+                        <Border Classes="mapsFrame" Padding="10,8">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="{Binding CardTitle}" FontWeight="Bold" FontSize="17" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding CardSubtitle}" Classes="dim" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+
+                        <StackPanel IsVisible="{Binding HasAreas}">
+                            <TextBlock Text="{Binding AreasHeading}" Classes="section" TextWrapping="Wrap" />
+                            <ListBox Classes="areas"
+                                     ItemsSource="{Binding Areas}"
+                                     SelectedItem="{Binding SelectedArea, Mode=TwoWay}"
+                                     SelectionMode="Single" BorderThickness="1" MaxHeight="220">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:MapsAreaRow">
+                                        <Grid ColumnDefinitions="*,Auto" Margin="2,0">
+                                            <TextBlock Grid.Column="0" Text="{Binding Name}" FontSize="12" TextWrapping="Wrap" VerticalAlignment="Center" />
+                                            <TextBlock Grid.Column="1" Text="{Binding CountText}" Classes="dim" Margin="8,0,0,0" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+
+                        <TextBlock Text="Spawns here" Classes="section" />
+                        <Border Classes="tableHead">
+                            <Grid ColumnDefinitions="*,80,64,44">
+                                <TextBlock Grid.Column="0" Text="Pokémon" />
+                                <TextBlock Grid.Column="1" Text="Method" />
+                                <TextBlock Grid.Column="2" Text="Time" />
+                                <TextBlock Grid.Column="3" Text="Lv." />
+                            </Grid>
+                        </Border>
+                        <ItemsControl ItemsSource="{Binding MapRows}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:MapsLocationRow">
+                                    <Border Classes="tableRow" PointerPressed="SpeciesRow_PointerPressed">
+                                        <Grid ColumnDefinitions="*,80,64,44">
+                                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                                <Image Source="{Binding Sprite}" Width="30" Height="30" Stretch="Uniform"
+                                                       RenderOptions.BitmapInterpolationMode="None" />
+                                                <TextBlock Text="{Binding Species}" Foreground="{Binding TitleBrush}" FontSize="12"
+                                                           TextWrapping="Wrap" VerticalAlignment="Center" />
+                                                <TextBlock Text="MS" IsVisible="{Binding IsMembers}" Foreground="{Binding TitleBrush}"
+                                                           FontSize="10" FontWeight="Bold" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="3" VerticalAlignment="Center">
+                                                <ItemsControl ItemsSource="{Binding Methods}" VerticalAlignment="Center">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" Spacing="2" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate x:DataType="models:EncounterMethod">
+                                                            <controls:MethodIcon Method="{Binding}" IconSize="14" />
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                                <TextBlock Text="{Binding MethodText}" FontSize="10" VerticalAlignment="Center" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2" Text="{Binding TimeText}" FontSize="11" VerticalAlignment="Center" TextWrapping="Wrap" />
+                                            <!-- §429: the shared level range. -->
+                                            <TextBlock Grid.Column="3" Text="{Binding LevelText}" FontSize="11" VerticalAlignment="Center" TextWrapping="Wrap"
+                                                       ToolTip.Tip="{Binding LevelNote}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text="No Pokémon passes the filters." Classes="dim" Margin="6,4"
+                                   IsVisible="{Binding HasNoMapRows}" />
+                    </StackPanel>
+
+                    <!-- a boss's card -->
+                    <StackPanel IsVisible="{Binding ShowsBoss}">
+                        <Border Classes="mapsFrame" Padding="10">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Border Grid.Column="0" Width="80" Height="80" CornerRadius="40"
+                                        BorderBrush="{StaticResource MapsBossBrush}" BorderThickness="2" Background="{DynamicResource ThemeSpriteBoxBackgroundBrush}">
+                                    <Image Source="{Binding BossPortrait}" Width="66" Height="66" Stretch="Uniform"
+                                           RenderOptions.BitmapInterpolationMode="None" />
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Spacing="5">
+                                    <TextBlock Text="{Binding CardTitle}" FontWeight="Bold" FontSize="17" TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding CardSubtitle}" Foreground="{StaticResource MapsBossBrush}" FontSize="11" FontWeight="Bold" TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding BossPinText}" Classes="dim" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <TextBlock Text="Boss" Classes="section" />
+                        <ItemsControl ItemsSource="{Binding BossFacts}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:MapsFactRow">
+                                    <Border Classes="tableRow">
+                                        <Grid ColumnDefinitions="100,*">
+                                            <TextBlock Grid.Column="0" Text="{Binding Label}" Classes="dim" VerticalAlignment="Center" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Value}" TextWrapping="Wrap" FontSize="12" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Button Content="Open boss" HorizontalAlignment="Center" Margin="0,14,0,4" Classes="small"
+                                Command="{Binding OpenShownBossCommand}" />
+                    </StackPanel>
+
+                    <!-- a Pokéstop's card, or every stop's -->
+                    <StackPanel IsVisible="{Binding ShowsPokestop}">
+                        <Border Classes="mapsFrame" Padding="10">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Border Grid.Column="0" Width="80" Height="80" CornerRadius="40"
+                                        BorderBrush="{StaticResource MapsStopBrush}" BorderThickness="2" Background="{DynamicResource ThemeSpriteBoxBackgroundBrush}">
+                                    <Image Source="{Binding PokestopPortrait}" Width="60" Height="60" Stretch="Uniform"
+                                           RenderOptions.BitmapInterpolationMode="None" />
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Spacing="5">
+                                    <TextBlock Text="{Binding CardTitle}" FontWeight="Bold" FontSize="17" TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding CardSubtitle}" Foreground="{StaticResource MapsStopBrush}" FontSize="11" FontWeight="Bold" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <TextBlock Text="Pokéstop" Classes="section" />
+                        <ItemsControl ItemsSource="{Binding PokestopFacts}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:MapsFactRow">
+                                    <Border Classes="tableRow">
+                                        <Grid ColumnDefinitions="110,*">
+                                            <TextBlock Grid.Column="0" Text="{Binding Label}" Classes="dim" VerticalAlignment="Center" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Value}" TextWrapping="Wrap" FontSize="12" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock Text="Rewards" Classes="section" />
+                        <Border Classes="tableHead">
+                            <Grid ColumnDefinitions="*,70">
+                                <TextBlock Grid.Column="0" Text="Item" />
+                                <TextBlock Grid.Column="1" Text="Quantity" TextAlignment="Right" />
+                            </Grid>
+                        </Border>
+                        <ItemsControl ItemsSource="{Binding PokestopRewards}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:MapsFactRow">
+                                    <Border Classes="tableRow">
+                                        <Grid ColumnDefinitions="*,70">
+                                            <TextBlock Grid.Column="0" Text="{Binding Label}" FontSize="12" TextWrapping="Wrap" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Value}" FontSize="12" FontWeight="Bold" TextAlignment="Right" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text="{Binding PokestopNote}" Classes="dim" Margin="6,4" TextWrapping="Wrap" />
+
+                        <StackPanel IsVisible="{Binding HasPlacedStops}">
+                            <TextBlock Text="On the picture" Classes="section" />
+                            <ItemsControl ItemsSource="{Binding PlacedStops}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:MapsStopRow">
+                                        <Border Classes="tableRow" PointerPressed="StopRow_PointerPressed">
+                                            <Grid ColumnDefinitions="*,70">
+                                                <TextBlock Grid.Column="0" Text="{Binding Name}" FontSize="12" TextWrapping="Wrap" />
+                                                <TextBlock Grid.Column="1" Text="{Binding Region}" Classes="dim" TextAlignment="Right" VerticalAlignment="Center" />
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <TextBlock Grid.Row="4" Text="{Binding Status}" TextWrapping="Wrap" Classes="dim" Margin="2,6,2,0" />
+    </Grid>
+</UserControl>

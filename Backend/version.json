@@ -1,0 +1,32 @@
+{
+  "version": "1.1.2",
+  "published": "2026-09-28",
+  "notes": "/nAdded levels to maps./n/nThere is an option on maps to opt in sharing level data as you encounter pokemon./n/nThis data is then shared across the entire set of trackers keeping only the lowest and highest levels found./n/nFixed Linux auto update, did not realize - was missing in the links./n/nUnsure why news keeps disconnecting from pro announcements.",
+  "downloads": {
+    "win-x64": {
+      "url": "https://dl.protrackerdb.com/stable/builds/1.1.2/ProTrackerDatabase-win-x64.zip",
+      "sha256": "",
+      "bytes": 0
+    },
+    "linux-x64": {
+      "url": "https://dl.protrackerdb.com/stable/builds/1.1.2/ProTrackerDatabase-Linux-x64.zip",
+      "sha256": "f5d9af8e727c652e1aa28fbc5a3b67647f9c3af23e2b41ef71f6cea1950da9c7",
+      "bytes": 121696798
+    },
+    "linux-arm64": {
+      "url": "https://dl.protrackerdb.com/stable/builds/1.1.2/ProTrackerDatabase-Linux-arm64.zip",
+      "sha256": "88f80966f36148195bfc750061ce32f3c35ee9b0c3dd0bf6b3aa9d0fd03b4717",
+      "bytes": 118351599
+    },
+    "osx-x64": {
+      "url": "https://dl.protrackerdb.com/stable/builds/1.1.2/ProTrackerDatabase-osx-x64.zip",
+      "sha256": "bddafc2adbcde490b6278127e6a8771df7ad1f691e4906a7b1eee954832eabfb",
+      "bytes": 113197356
+    },
+    "osx-arm64": {
+      "url": "https://dl.protrackerdb.com/stable/builds/1.1.2/ProTrackerDatabase-osx-arm64.zip",
+      "sha256": "bc05988af24aaf6a00c2313dcac34bec636e15a3b91125621ec9e3175104a0ac",
+      "bytes": 123549288
+    }
+  }
+}

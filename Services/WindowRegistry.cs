@@ -56,6 +56,19 @@ public static class WindowRegistry
         ShowUnowned(window, owner);
     }
 
+    /// <summary>§407. The open window of a type, if there is one - for a
+    /// caller that wants to hand it something before bringing it forward,
+    /// as the Search's Locations does with the Maps window.</summary>
+    public static TWindow? TryGet<TWindow>(string? contentKey = null)
+        where TWindow : Window
+    {
+        string key = contentKey is null
+            ? typeof(TWindow).FullName!
+            : $"{typeof(TWindow).FullName}|{contentKey}";
+
+        return openWindows.TryGetValue(key, out Window? existing) ? existing as TWindow : null;
+    }
+
     /// <summary>
     /// §189. Shows a non-modal window WITHOUT making it an OWNED window, and
     /// then puts it where WindowStartupLocation="CenterOwner" would have.

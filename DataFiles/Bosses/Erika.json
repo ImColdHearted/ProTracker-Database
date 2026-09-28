@@ -22,23 +22,28 @@
         "pokemon": [
           {
             "name": "Lotad",
-            "dexNumber": 270
+            "dexNumber": 270,
+            "winStreakRequired": 0
           },
           {
             "name": "Tangela",
-            "dexNumber": 114
+            "dexNumber": 114,
+            "winStreakRequired": 0
           },
           {
             "name": "Turtwig",
-            "dexNumber": 387
+            "dexNumber": 387,
+            "winStreakRequired": 0
           },
           {
             "name": "Ferroseed",
-            "dexNumber": 597
+            "dexNumber": 597,
+            "winStreakRequired": 0
           },
           {
             "name": "Larvesta",
-            "dexNumber": 636
+            "dexNumber": 636,
+            "winStreakRequired": 0
           }
         ],
         "items": [
@@ -164,23 +169,48 @@
         "pokemon": [
           {
             "name": "Lotad",
-            "dexNumber": 270
+            "dexNumber": 270,
+            "winStreakRequired": 0
           },
           {
             "name": "Tangela",
-            "dexNumber": 114
+            "dexNumber": 114,
+            "winStreakRequired": 0
           },
           {
             "name": "Turtwig",
-            "dexNumber": 387
+            "dexNumber": 387,
+            "winStreakRequired": 0
           },
           {
             "name": "Ferroseed",
-            "dexNumber": 597
+            "dexNumber": 597,
+            "winStreakRequired": 0
           },
           {
             "name": "Larvesta",
-            "dexNumber": 636
+            "dexNumber": 636,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Lotad",
+            "dexNumber": 270,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Turtwig",
+            "dexNumber": 387,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Ferroseed",
+            "dexNumber": 597,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "winStreakRequired": 3
           }
         ],
         "items": [
@@ -306,23 +336,48 @@
         "pokemon": [
           {
             "name": "Lotad",
-            "dexNumber": 270
+            "dexNumber": 270,
+            "winStreakRequired": 0
           },
           {
             "name": "Tangela",
-            "dexNumber": 114
+            "dexNumber": 114,
+            "winStreakRequired": 0
           },
           {
             "name": "Turtwig",
-            "dexNumber": 387
+            "dexNumber": 387,
+            "winStreakRequired": 0
           },
           {
             "name": "Ferroseed",
-            "dexNumber": 597
+            "dexNumber": 597,
+            "winStreakRequired": 0
           },
           {
             "name": "Larvesta",
-            "dexNumber": 636
+            "dexNumber": 636,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Lotad",
+            "dexNumber": 270,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Turtwig",
+            "dexNumber": 387,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Ferroseed",
+            "dexNumber": 597,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Larvesta",
+            "dexNumber": 636,
+            "winStreakRequired": 3
           }
         ],
         "items": [

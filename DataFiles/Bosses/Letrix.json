@@ -22,23 +22,28 @@
         "pokemon": [
           {
             "name": "Magikarp",
-            "dexNumber": 129
+            "dexNumber": 129,
+            "winStreakRequired": 0
           },
           {
             "name": "Wailmer",
-            "dexNumber": 320
+            "dexNumber": 320,
+            "winStreakRequired": 0
           },
           {
             "name": "Togepi",
-            "dexNumber": 175
+            "dexNumber": 175,
+            "winStreakRequired": 0
           },
           {
             "name": "Solosis",
-            "dexNumber": 577
+            "dexNumber": 577,
+            "winStreakRequired": 0
           },
           {
             "name": "Drilbur",
-            "dexNumber": 529
+            "dexNumber": 529,
+            "winStreakRequired": 0
           }
         ],
         "items": [
@@ -170,23 +175,43 @@
         "pokemon": [
           {
             "name": "Magikarp",
-            "dexNumber": 129
+            "dexNumber": 129,
+            "winStreakRequired": 0
           },
           {
             "name": "Wailmer",
-            "dexNumber": 320
+            "dexNumber": 320,
+            "winStreakRequired": 0
           },
           {
             "name": "Togepi",
-            "dexNumber": 175
+            "dexNumber": 175,
+            "winStreakRequired": 0
           },
           {
             "name": "Solosis",
-            "dexNumber": 577
+            "dexNumber": 577,
+            "winStreakRequired": 0
           },
           {
             "name": "Drilbur",
-            "dexNumber": 529
+            "dexNumber": 529,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Drilbur",
+            "dexNumber": 529,
+            "winStreakRequired": 3
           }
         ],
         "items": [
@@ -318,23 +343,43 @@
         "pokemon": [
           {
             "name": "Magikarp",
-            "dexNumber": 129
+            "dexNumber": 129,
+            "winStreakRequired": 0
           },
           {
             "name": "Wailmer",
-            "dexNumber": 320
+            "dexNumber": 320,
+            "winStreakRequired": 0
           },
           {
             "name": "Togepi",
-            "dexNumber": 175
+            "dexNumber": 175,
+            "winStreakRequired": 0
           },
           {
             "name": "Solosis",
-            "dexNumber": 577
+            "dexNumber": 577,
+            "winStreakRequired": 0
           },
           {
             "name": "Drilbur",
-            "dexNumber": 529
+            "dexNumber": 529,
+            "winStreakRequired": 0
+          },
+          {
+            "name": "Togepi",
+            "dexNumber": 175,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Solosis",
+            "dexNumber": 577,
+            "winStreakRequired": 3
+          },
+          {
+            "name": "Drilbur",
+            "dexNumber": 529,
+            "winStreakRequired": 3
           }
         ],
         "items": [

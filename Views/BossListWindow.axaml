@@ -4,31 +4,124 @@
         x:Class="Foot_Tracker.Views.BossListWindow"
         x:DataType="vm:BossListViewModel"
         Title="Boss Database"
-        Width="420" Height="520"
-        MinWidth="320" MinHeight="380"
+        Width="684" Height="660"
+        MinWidth="480" MinHeight="380"
         Background="{DynamicResource ThemeBackgroundBrush}">
 
-    <!-- §188: the content sits on a themedPanel so it reads off a surface
-         rather than off the background image. The panel follows the Stats
-         Background colour and is invisible until that colour is set - no
-         fill, no outline, no inset. Its child is deliberately not
-         re-indented. See App.axaml. -->
-    <Border Classes="themedPanel">
-    <Grid RowDefinitions="*,Auto,Auto" Margin="12">
-        <ListBox Grid.Row="0" ItemsSource="{Binding Bosses}" SelectedItem="{Binding SelectedBoss}"
-                 DoubleTapped="BossList_DoubleTapped">
-            <ListBox.ItemTemplate>
-                <DataTemplate x:DataType="vm:BossListItem">
-                    <TextBlock Text="{Binding DisplayName}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+    <!-- §260. The window itself carries no themedPanel. §196 made that
+         correction for the Counterparts grid and the reasoning is the same
+         here: one panel behind everything makes the page a single dark sheet,
+         while a panel per card makes each boss a tile with the window's own
+         background running between them. The two header controls sit on the
+         background the way that window's title and status line do, with an
+         explicit ThemeTextBrush so they stay readable when a custom
+         background image is set. -->
+    <Grid RowDefinitions="Auto,*" Margin="12">
 
-        <ComboBox Grid.Row="1" Margin="0,8" HorizontalAlignment="Stretch"
-                  ItemsSource="{Binding DifficultyOptions}"
-                  SelectedItem="{Binding SelectedDifficulty}" />
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+            <TextBox Text="{Binding SearchText}"
+                     PlaceholderText="Search by name or location"
+                     ToolTip.Tip="Filters the grid as you type - matches the boss's name or where it is fought." />
 
-        <Button Grid.Row="2" Content="Open Boss" Command="{Binding OpenCommand}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Column="1" Text="{Binding CountText}"
+                       VerticalAlignment="Center" Margin="12,0,4,0"
+                       Foreground="{DynamicResource ThemeTextBrush}" />
+        </Grid>
+
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding Bosses}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:BossListItem">
+                        <Border Width="208" Margin="6" Padding="10"
+                                Classes="themedPanel"
+                                BorderBrush="{DynamicResource ThemeBorderBrush}"
+                                BorderThickness="1" CornerRadius="4">
+                            <StackPanel Spacing="8">
+
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <!-- The portraits are 28x42 overworld
+                                         trainer sprites (Letrix's 96x96 is the
+                                         one outlier), so they are scaled up
+                                         here. BitmapInterpolationMode="None"
+                                         keeps that scaling crisp instead of
+                                         blurred, the same as every sprite in
+                                         the Simulator. -->
+                                    <Panel Width="48" Height="64" VerticalAlignment="Top">
+                                        <Image Source="{Binding Portrait}" Stretch="Uniform"
+                                               IsVisible="{Binding HasPortrait}"
+                                               RenderOptions.BitmapInterpolationMode="None" />
+                                        <TextBlock Text="{Binding Name}" FontSize="9"
+                                                   TextWrapping="Wrap" TextAlignment="Center"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   IsVisible="{Binding !HasPortrait}"
+                                                   Opacity="0.6" />
+                                    </Panel>
+
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0" Spacing="3">
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding Location}" FontSize="11"
+                                                   TextWrapping="Wrap" Opacity="0.75" />
+                                        <!-- §274: the cooldown line is also the
+                                             way to START one, now that the Boss
+                                             Cooldown window is gone. Its own
+                                             Button rather than a PointerPressed
+                                             on the TextBlock, so it is reachable
+                                             by keyboard and says it is a control;
+                                             stripped to nothing but the text so
+                                             the card still reads as three lines
+                                             under the name. -->
+                                        <Button Content="{Binding CooldownText}"
+                                                FontSize="11" Opacity="0.75"
+                                                Background="Transparent" BorderThickness="0"
+                                                Padding="0" HorizontalAlignment="Left"
+                                                Cursor="Hand"
+                                                ToolTip.Tip="Click to start this boss's cooldown by hand - for a fight the tracker did not catch."
+                                                Command="{Binding $parent[ItemsControl].((vm:BossListViewModel)DataContext).StartCooldownCommand}"
+                                                CommandParameter="{Binding}" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Only the difficulties this boss's own file
+                                     has. Ten of the 49 do not have all three -
+                                     see BossListViewModel. The commands live
+                                     on the window's view model and take the
+                                     card as their parameter, reached through
+                                     the same $parent cast the main window
+                                     already uses from inside a template. -->
+                                <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
+                                    <Button Content="Easy" FontSize="11" Padding="10,4"
+                                            IsVisible="{Binding HasEasy}"
+                                            Command="{Binding $parent[ItemsControl].((vm:BossListViewModel)DataContext).OpenEasyCommand}"
+                                            CommandParameter="{Binding}" />
+                                    <Button Content="Medium" FontSize="11" Padding="10,4"
+                                            IsVisible="{Binding HasMedium}"
+                                            Command="{Binding $parent[ItemsControl].((vm:BossListViewModel)DataContext).OpenMediumCommand}"
+                                            CommandParameter="{Binding}" />
+                                    <Button Content="Hard" FontSize="11" Padding="10,4"
+                                            IsVisible="{Binding HasHard}"
+                                            Command="{Binding $parent[ItemsControl].((vm:BossListViewModel)DataContext).OpenHardCommand}"
+                                            CommandParameter="{Binding}" />
+                                    <TextBlock Text="No difficulties in this file" FontSize="11"
+                                               Opacity="0.6" VerticalAlignment="Center"
+                                               IsVisible="{Binding HasNoDifficulty}" />
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Declared after the ScrollViewer so it draws on top of the empty
+             grid rather than under it. -->
+        <TextBlock Grid.Row="1" Text="No boss matches that search."
+                   IsVisible="{Binding IsEmpty}"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Foreground="{DynamicResource ThemeTextBrush}" Opacity="0.75" />
+
     </Grid>
-    </Border>
 </Window>

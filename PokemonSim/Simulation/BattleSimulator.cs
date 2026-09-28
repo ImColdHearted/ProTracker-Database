@@ -67,7 +67,9 @@ namespace PokemonSim.Simulation
             Func<int, IBattleStrategy>? player1Strategy = null,
             Func<int, IBattleStrategy>? player2Strategy = null,
             Func<int, IBattleTurnObserver?>? observerFactory = null,
-            Action<int, BattleOutcome>? onBattleCompleted = null)
+            Action<int, BattleOutcome>? onBattleCompleted = null,
+            Func<int, int>? seedForBattle = null,
+            Action<int, BattleOutcome, BattleState>? onBattleFinished = null)
         {
             var result = new SimulationResult { Simulations = simulations };
 
@@ -78,7 +80,13 @@ namespace PokemonSim.Simulation
             {
                 var state = stateFactory(i);
 
-                state.Rng = new BattleRng(baseSeed + i);
+                // §324: the seed is the caller's to choose when it has a
+                // reason. The win-rate harness has one: it plays each team
+                // pairing TWICE with the seats swapped, and the two halves
+                // of that pair are only a controlled comparison if they
+                // start from the same roll. Everything that does not pass
+                // this gets exactly what it always got.
+                state.Rng = new BattleRng(seedForBattle?.Invoke(i) ?? (baseSeed + i));
                 state.Log.Silent = true;
 
                 BattleInitializer.Initialize(state);
@@ -106,6 +114,18 @@ namespace PokemonSim.Simulation
                     Interlocked.Add(ref turns, state.TurnNumber);
 
                 onBattleCompleted?.Invoke(i, outcome);
+
+                // §324: the same moment, with the finished battle in hand.
+                // A separate callback rather than a third argument on the
+                // one above, so no existing caller's two-argument lambda
+                // has to be rewritten to gain a parameter it ignores.
+                //
+                // The state is handed over for READING - how much of each
+                // team was still standing, how much HP was left. It is a
+                // live object on a Parallel.For worker; a callback that
+                // mutated it would be corrupting a battle that has only
+                // just stopped being played.
+                onBattleFinished?.Invoke(i, outcome, state);
             });
 
             result.Player1Wins = p1;

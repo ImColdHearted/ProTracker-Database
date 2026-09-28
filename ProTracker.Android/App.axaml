@@ -1,0 +1,109 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="ProTracker.Companion.App"
+             RequestedThemeVariant="Dark">
+
+    <!-- §295. The desktop App.axaml's styles and resource keys, with the
+         Appearance window's values fixed at their defaults: the linked pages
+         bind the same Theme* keys the desktop windows do, so they must exist
+         here, and there is no ThemeManager on the phone yet to rewrite them. -->
+
+    <Application.Styles>
+        <FluentTheme />
+
+        <Style Selector="Button, ToggleButton.themedButton">
+            <Setter Property="Background" Value="{DynamicResource ThemeButtonBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+        </Style>
+
+        <Style Selector="ToggleButton.themedButton:checked">
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeTextBrush}" />
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+
+        <Style Selector="Border.themedPanel">
+            <Setter Property="Background" Value="{DynamicResource ThemeStatsBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="BorderThickness" Value="{DynamicResource ThemePanelBorderThickness}" />
+            <Setter Property="Margin" Value="{DynamicResource ThemePanelMargin}" />
+        </Style>
+
+        <Style Selector="Border.themedPanel TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+        </Style>
+
+        <Style Selector="Border.huntingSprite">
+            <Setter Property="Background" Value="{DynamicResource ThemeSpriteBoxBackgroundBrush}" />
+        </Style>
+
+        <!-- §220's header chip, as the desktop windows declare it locally. -->
+        <Style Selector="Border.tableHeader">
+            <Setter Property="Background" Value="{DynamicResource ThemeTableHeaderBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Margin" Value="0,0,0,2" />
+        </Style>
+        <Style Selector="Border.tableHeader > TextBlock">
+            <Setter Property="Margin" Value="6,5" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{DynamicResource ThemeTextBrush}" />
+        </Style>
+        <Style Selector="Border.selectedRow">
+            <Setter Property="Background" Value="{DynamicResource ThemeTableHeaderBrush}" />
+        </Style>
+
+        <!-- The bottom bar's tabs: the active one carries the doubled
+             border the Admin Console's section buttons use - not a colour
+             change alone. -->
+        <Style Selector="Button.tab">
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Padding" Value="4,8" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+        <Style Selector="Button.tab.active">
+            <Setter Property="BorderBrush" Value="{DynamicResource ThemeTextBrush}" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <!-- A tappable list row: the desktop's cursor-hand rows, at a
+             finger's height. -->
+        <Style Selector="Border.row">
+            <Setter Property="Padding" Value="8,10" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+    </Application.Styles>
+
+    <Application.Resources>
+        <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="#0F185A" />
+        <SolidColorBrush x:Key="ThemeTextBrush" Color="White" />
+        <SolidColorBrush x:Key="ThemeBorderBrush" Color="White" />
+        <SolidColorBrush x:Key="ThemeButtonBrush" Color="#2A2F55" />
+        <SolidColorBrush x:Key="ThemeButtonHoverBrush" Color="#4A4A4A" />
+        <SolidColorBrush x:Key="ThemeButtonPressedBrush" Color="#5C5C5C" />
+        <SolidColorBrush x:Key="ThemeButtonDisabledBrush" Color="#2A2F55" />
+        <SolidColorBrush x:Key="ThemeErrorBrush" Color="#E05252" />
+        <SolidColorBrush x:Key="ThemeWarningBrush" Color="#E0A030" />
+        <SolidColorBrush x:Key="ThemeStatsBackgroundBrush" Color="#182466" />
+        <SolidColorBrush x:Key="ThemeSpriteBoxBackgroundBrush" Color="Transparent" />
+        <SolidColorBrush x:Key="ThemeTableHeaderBrush" Color="#2C346E" />
+        <Thickness x:Key="ThemePanelBorderThickness">1</Thickness>
+        <Thickness x:Key="ThemePanelMargin">0</Thickness>
+
+        <!-- §423. What the Map Explorer's page binds beyond the keys above,
+             at the desktop's Appearance defaults (AppearanceSettings): the
+             tables' ink, border and (transparent) fill, the row highlight,
+             and the key MapsViewModel reads its row ink from. -->
+        <SolidColorBrush x:Key="ThemeEncountersTextBrush" Color="White" />
+        <SolidColorBrush x:Key="ThemeEncountersBorderBrush" Color="White" />
+        <SolidColorBrush x:Key="ThemeEncountersBackgroundBrush" Color="Transparent" />
+        <SolidColorBrush x:Key="ThemeMenuHighlightBrush" Color="#26FFFFFF" />
+    </Application.Resources>
+
+</Application>

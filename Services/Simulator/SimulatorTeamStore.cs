@@ -17,6 +17,17 @@ namespace Foot_Tracker.Services.Simulator
         public string? GameId { get; set; }
         public string Fingerprint { get; set; } = "";
         public string? ItemName { get; set; }
+
+        /// <summary>§317. The Pokemon itself, for a slot whose reference
+        /// resolves to nothing - which is every slot on a phone, where the
+        /// team is built out of the Pokedex and storage does not exist.
+        /// Null in a file written before §317, and that is a legal state:
+        /// the reader falls back to it only when the lookup fails, so an old
+        /// file behaves exactly as it always did. StoredPokemon rather than
+        /// ImportedPokemon because ImportedPokemon is public FIELDS, which
+        /// System.Text.Json does not serialize without options - and this
+        /// type was already the serializable shape of one.</summary>
+        public StoredPokemon? Pokemon { get; set; }
     }
 
     /// <summary>
@@ -28,13 +39,25 @@ namespace Foot_Tracker.Services.Simulator
     /// read off a summary card. Everything else is looked back up out of
     /// storage on the way in.
     ///
-    /// That is deliberate. Every Pokemon on a team is already in storage -
-    /// section 198 made every successful import land there, and From Storage
-    /// only offers what is there - so copying them would be a second copy of
-    /// the same data, free to drift, and a Pokemon re-imported with better
-    /// EVs would come back stale. A reference cannot go stale; it can only
-    /// go missing, and a slot whose Pokemon was deleted from storage is
-    /// simply dropped with a note rather than resurrecting something the
+    /// That is deliberate, and it is still how a slot is READ: every Pokemon
+    /// on a desktop team is already in storage - section 198 made every
+    /// successful import land there, and From Storage only offers what is
+    /// there - so treating the copy as authoritative would let a Pokemon
+    /// re-imported with better EVs come back stale. A reference cannot go
+    /// stale; it can only go missing.
+    ///
+    /// §317: it can also go missing FOREVER, which §203 did not have to think
+    /// about. §314 gave the phone a builder that makes Pokemon out of the
+    /// Pokedex, and a phone has no storage for them to land in - so every
+    /// reference missed, every slot was dropped, and a team built on a phone
+    /// simply was not there the next morning. So each slot now carries the
+    /// Pokemon as well. The lookup still wins; the copy is read only when the
+    /// lookup finds nothing.
+    ///
+    /// And the copy is written for, and only for, a slot storage does not
+    /// hold at save time. That is what keeps this from quietly becoming a
+    /// second storage: a Pokemon that IS in storage saves no copy, so deleting
+    /// it there still drops the slot rather than resurrecting something the
     /// player threw away.
     /// </summary>
     public static class SimulatorTeamStore

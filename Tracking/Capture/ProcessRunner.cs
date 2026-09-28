@@ -8,6 +8,21 @@ namespace Foot_Tracker.Tracking.Capture;
 /// </summary>
 internal static class ProcessRunner
 {
+    /// <summary>§300. How long a capture tool gets before it is killed.
+    ///
+    /// ImageMagick's `import`, handed a -window id that no longer resolves,
+    /// does not fail: it falls back to picking a window INTERACTIVELY, which
+    /// means grabbing the pointer and waiting for a click. A Linux tester's
+    /// log caught it mid-fall ("unable to grab mouse") and his report was
+    /// titled "Mouse is a cross". The grab is why a capture helper must never
+    /// be waited on without a limit: one that does go interactive would hold
+    /// both this thread and the user's pointer until the app was killed.
+    ///
+    /// Four seconds is twenty times the longest capture in any log here and
+    /// a fifth of the watchdog's patience, so a tool that trips this is
+    /// genuinely stuck rather than slow.</summary>
+    private const int DefaultTimeoutMs = 4000;
+
     /// <summary>
     /// Runs a process and returns its raw stdout bytes (binary-safe - important for
     /// PNG data, which ReadToEnd()-as-text would corrupt). stderr is drained
@@ -16,7 +31,11 @@ internal static class ProcessRunner
     /// single argument string) so arguments containing spaces/quotes - e.g.
     /// AppleScript source lines - don't need manual shell-style escaping.
     /// </summary>
-    public static byte[]? RunCaptureStdout(string fileName, IEnumerable<string> arguments, out string stderr)
+    public static byte[]? RunCaptureStdout(string fileName, IEnumerable<string> arguments, out string stderr) =>
+        RunCaptureStdout(fileName, arguments, DefaultTimeoutMs, out stderr);
+
+    public static byte[]? RunCaptureStdout(
+        string fileName, IEnumerable<string> arguments, int timeoutMs, out string stderr)
     {
         var startInfo = new ProcessStartInfo(fileName)
         {
@@ -39,11 +58,39 @@ internal static class ProcessRunner
 
         using var stdoutBuffer = new MemoryStream();
         Task copyTask = process.StandardOutput.BaseStream.CopyToAsync(stdoutBuffer);
+        Task<string> stderrTask = process.StandardError.ReadToEndAsync();
 
-        stderr = process.StandardError.ReadToEnd();
+        // §300: the timeout covers the WAIT, not the reads - a process that
+        // is holding a pointer grab is not writing to either pipe, so reading
+        // stderr to the end first (as this used to) would block before the
+        // timeout could ever be reached.
+        if (!process.WaitForExit(timeoutMs))
+        {
+            try
+            {
+                process.Kill(entireProcessTree: true);
+                process.WaitForExit(1000);
+            }
+            catch
+            {
+                // Already gone, or not ours to kill; either way there is
+                // nothing further to do about it.
+            }
+
+            stderr =
+                $"'{fileName}' did not finish within {timeoutMs}ms and was stopped. " +
+                "On Linux this is what an `import` that fell back to picking a window " +
+                "interactively looks like - it grabs the pointer and waits for a click.";
+
+            return null;
+        }
+
+        // The timed overload can return before the redirected streams are
+        // finished; the parameterless one is what waits for them.
+        process.WaitForExit();
 
         copyTask.GetAwaiter().GetResult();
-        process.WaitForExit();
+        stderr = stderrTask.GetAwaiter().GetResult();
 
         return process.ExitCode == 0 ? stdoutBuffer.ToArray() : null;
     }
